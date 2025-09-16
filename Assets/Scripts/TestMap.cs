@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using ProvinceSystem;
 
 public class TestMap : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class TestMap : MonoBehaviour
         SetupCameraController();
 
         // Generate 3D provinces
-        var generator = GetComponent<ProvinceMeshGenerator>();
+        var generator = GetComponent<OptimizedProvinceMeshGenerator>();
         if (generator != null)
         {
             generator.provinceMap = provinceMap;

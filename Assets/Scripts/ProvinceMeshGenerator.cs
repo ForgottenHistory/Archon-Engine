@@ -758,7 +758,7 @@ public class ProvinceComponent : MonoBehaviour
         if (lastHovered != this)
         {
             lastHovered = this;
-            Debug.Log($"Mouse entered province: {provinceName} (ID: {provinceId}, Pixels: {pixelCount})");
+            //Debug.Log($"Mouse entered province: {provinceName} (ID: {provinceId}, Pixels: {pixelCount})");
             
             // Highlight on hover
             if (meshRenderer != null && meshRenderer.material != null)
