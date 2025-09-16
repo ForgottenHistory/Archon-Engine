@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using ProvinceSystem.Services;
 
 namespace ProvinceSystem
@@ -47,7 +48,12 @@ namespace ProvinceSystem
         [Header("Debug")]
         public bool showDebugInfo = true;
         public bool showGenerationProgress = true;
-        
+
+        [Header("Events")]
+        public UnityEvent OnGenerationStarted = new UnityEvent();
+        public UnityEvent OnGenerationCompleted = new UnityEvent();
+        public UnityEvent OnGenerationFailed = new UnityEvent();
+
         // Services
         private ProvinceDataService dataService;
         private ProvinceAnalysisService analysisService;
@@ -88,15 +94,16 @@ namespace ProvinceSystem
             if (provinceMap == null)
             {
                 Debug.LogError("No province map assigned!");
+                OnGenerationFailed?.Invoke();
                 return;
             }
-            
+
             if (isGenerating)
             {
                 Debug.LogWarning("Generation already in progress!");
                 return;
             }
-            
+
             if (generateAsync)
             {
                 StartCoroutine(GenerateProvincesAsync());
@@ -111,7 +118,9 @@ namespace ProvinceSystem
         {
             generationStartTime = Time.realtimeSinceStartup;
             Debug.Log($"Starting province generation (Sync, Job System: {useJobSystem})");
-            
+
+            OnGenerationStarted?.Invoke();
+
             // Clear existing provinces
             if (clearExistingProvinces)
             {
@@ -133,14 +142,16 @@ namespace ProvinceSystem
             {
                 GenerateBorders();
             }
-            
+
             float generationTime = Time.realtimeSinceStartup - generationStartTime;
             Debug.Log($"Province generation complete! Generated {dataService.GetProvinceCount()} provinces in {generationTime:F2} seconds");
-            
+
             if (showDebugInfo)
             {
                 LogStatistics();
             }
+
+            OnGenerationCompleted?.Invoke();
         }
         
         private IEnumerator GenerateProvincesAsync()
@@ -148,7 +159,9 @@ namespace ProvinceSystem
             isGenerating = true;
             generationStartTime = Time.realtimeSinceStartup;
             Debug.Log($"Starting province generation (Async, Job System: {useJobSystem})");
-            
+
+            OnGenerationStarted?.Invoke();
+
             // Clear existing provinces
             if (clearExistingProvinces)
             {
@@ -181,16 +194,17 @@ namespace ProvinceSystem
                 GenerateBorders();
                 yield return null;
             }
-            
+
             float generationTime = Time.realtimeSinceStartup - generationStartTime;
             Debug.Log($"Province generation complete! Generated {dataService.GetProvinceCount()} provinces in {generationTime:F2} seconds");
-            
+
             if (showDebugInfo)
             {
                 LogStatistics();
             }
-            
+
             isGenerating = false;
+            OnGenerationCompleted?.Invoke();
         }
         
         private void SetupContainer()

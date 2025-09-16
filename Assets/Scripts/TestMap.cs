@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using ProvinceSystem;
+using ProvinceSystem.Services;
 
 public class TestMap : MonoBehaviour
 {
@@ -8,12 +9,19 @@ public class TestMap : MonoBehaviour
     public GameObject mapPlane;
     public Camera mapCamera;
     public Texture2D provinceTexture;
+    public ProvinceDefinitionLoader provinceDefinitionLoader;
 
     [Header("Camera Controller")]
     public ParadoxStyleCameraController cameraController;
     
+    [Header("Adjacency Scanner")]
+    public FastAdjacencyScanner adjacencyScanner; // NEW
+    
     [Header("Visual Settings")]
     public float mapScale = 10f; // Base scale for the map
+
+    [Header("Debug")]
+    public GameObject buttonStart;
 
     private Texture2D provinceMap;
     private Material mapMaterial;
@@ -23,6 +31,9 @@ public class TestMap : MonoBehaviour
     // For highlighting provinces
     private int selectedProvinceId = -1;
     private int hoveredProvinceId = -1;
+
+    // Debug flags
+    private bool generateOnStart = false;
 
     // Province data structure
     public class ProvinceData
@@ -36,19 +47,148 @@ public class TestMap : MonoBehaviour
 
     void Start()
     {
+        if (generateOnStart)
+            Initialize();
+    }
+
+    // Run through button
+    // Let Unity compile, then we can load our stuff. Easy fix
+    public void Initialize()
+    {
+        buttonStart.SetActive(false);
+
         LoadProvinceMap();
         SetupMapPlane();
         SetupCameraController();
+        
+        // Setup adjacency scanner BEFORE generating provinces
+        SetupAdjacencyScanner();
 
-        // Generate 3D provinces
+        // Generate 3D provinces with event-driven sequencing
         var generator = GetComponent<OptimizedProvinceMeshGenerator>();
         if (generator != null)
         {
+            // Subscribe to generation completion event
+            generator.OnGenerationCompleted.RemoveAllListeners();
+            generator.OnGenerationCompleted.AddListener(OnProvinceGenerationCompleted);
+            generator.OnGenerationFailed.RemoveAllListeners();
+            generator.OnGenerationFailed.AddListener(OnProvinceGenerationFailed);
+
             generator.provinceMap = provinceMap;
             generator.mapPlane = mapPlane;
             generator.GenerateProvinces();
         }
+        else
+        {
+            Debug.LogError("OptimizedProvinceMeshGenerator component not found!");
+        }
     }
+    
+    private void SetupAdjacencyScanner()
+    {
+        // Get or create FastAdjacencyScanner
+        if (adjacencyScanner == null)
+        {
+            adjacencyScanner = GetComponent<FastAdjacencyScanner>();
+        }
+        
+        if (adjacencyScanner == null)
+        {
+            adjacencyScanner = gameObject.AddComponent<FastAdjacencyScanner>();
+            Debug.Log("Created FastAdjacencyScanner component");
+        }
+        
+        // Configure the scanner
+        adjacencyScanner.provinceMap = provinceMap;
+        adjacencyScanner.ignoreDiagonals = false; // Include diagonal neighbors
+        adjacencyScanner.blackThreshold = 10f; // Threshold for ocean/borders
+        
+        // Run the fast adjacency scan
+        Debug.Log("Starting fast adjacency scan...");
+        var scanResult = adjacencyScanner.ScanForAdjacenciesParallel(); // Use parallel version for speed
+        
+        if (scanResult != null)
+        {
+            Debug.Log($"Fast adjacency scan completed in {scanResult.scanTime:F3} seconds");
+            Debug.Log($"Found {scanResult.provinceCount} provinces with {scanResult.connectionCount} connections");
+        }
+        else
+        {
+            Debug.LogError("Adjacency scan failed!");
+        }
+    }
+
+    private void OnProvinceGenerationCompleted()
+    {
+        Debug.Log("Province generation completed, integrating neighbor data...");
+
+        // Get the ProvinceDataService from the mesh generator
+        var generator = GetComponent<OptimizedProvinceMeshGenerator>();
+        var dataServiceField = generator.GetType()
+            .GetField("dataService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        var dataService = dataServiceField?.GetValue(generator) as ProvinceDataService;
+        
+        if (dataService != null && adjacencyScanner != null)
+        {
+            // Convert color adjacencies to ID adjacencies using the data service
+            adjacencyScanner.BuildColorToIdMapFromDataService(dataService);
+            
+            // Now update ProvinceManager with pre-calculated adjacency data
+            var provinceManager = GetComponent<ProvinceManager>();
+            if (provinceManager != null)
+            {
+                // Instead of building neighbor map from scratch, inject the pre-calculated data
+                InjectAdjacencyDataIntoProvinceManager(provinceManager, adjacencyScanner);
+                Debug.Log("Initialization sequence completed successfully with fast adjacency data!");
+            }
+            else
+            {
+                Debug.LogError("ProvinceManager component not found!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Could not access ProvinceDataService or AdjacencyScanner!");
+        }
+    }
+    
+    private void InjectAdjacencyDataIntoProvinceManager(ProvinceManager provinceManager, FastAdjacencyScanner scanner)
+    {
+        // Use reflection to inject the pre-calculated adjacency data
+        var neighborField = provinceManager.GetType()
+            .GetField("provinceNeighbors", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        
+        if (neighborField != null && scanner.IdAdjacencies != null)
+        {
+            // Convert to the format ProvinceManager expects
+            var convertedNeighbors = new Dictionary<int, HashSet<int>>();
+            foreach (var kvp in scanner.IdAdjacencies)
+            {
+                convertedNeighbors[kvp.Key] = new HashSet<int>(kvp.Value);
+            }
+            
+            neighborField.SetValue(provinceManager, convertedNeighbors);
+            Debug.Log($"Injected {convertedNeighbors.Count} province adjacencies into ProvinceManager");
+            
+            // Also update the last calculation time
+            var timeField = provinceManager.GetType()
+                .GetField("lastNeighborCalculationTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (timeField != null)
+            {
+                timeField.SetValue(provinceManager, scanner.LastScanTime);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Could not inject adjacency data, falling back to traditional neighbor detection");
+            provinceManager.BuildNeighborMap();
+        }
+    }
+
+    private void OnProvinceGenerationFailed()
+    {
+        Debug.LogError("Province generation failed! Initialization sequence aborted.");
+    }   
 
     void Update()
     {
@@ -271,6 +411,29 @@ public class TestMap : MonoBehaviour
         {
             CenterCameraOnProvince(selectedProvinceId);
         }
+        
+        // Debug: Press N to show neighbors of selected province
+        if (Input.GetKeyDown(KeyCode.N) && selectedProvinceId > 0)
+        {
+            ShowNeighborsOfProvince(selectedProvinceId);
+        }
+    }
+    
+    void ShowNeighborsOfProvince(int provinceId)
+    {
+        if (adjacencyScanner != null && adjacencyScanner.IdAdjacencies != null)
+        {
+            var neighbors = adjacencyScanner.GetNeighborsForId(provinceId);
+            if (neighbors != null && neighbors.Count > 0)
+            {
+                string neighborList = string.Join(", ", neighbors);
+                Debug.Log($"Province {provinceId} has {neighbors.Count} neighbors: {neighborList}");
+            }
+            else
+            {
+                Debug.Log($"Province {provinceId} has no neighbors (island or isolated)");
+            }
+        }
     }
 
     void DetectProvinceAtMousePosition(bool isClick)
@@ -346,13 +509,7 @@ public class TestMap : MonoBehaviour
     void HighlightProvince(int provinceId)
     {
         // This is a placeholder for province highlighting
-        // You could implement this by:
-        // 1. Creating a shader that highlights specific colors
-        // 2. Using a separate overlay texture
-        // 3. Drawing borders around provinces
-        // 4. Creating mesh overlays
-        
-        //Debug.Log($"Highlighting province {provinceId} (visual highlighting not yet implemented)");
+        // The ProvinceManager should handle the actual visual highlighting
     }
 
     // Public API for other systems to interact with provinces
