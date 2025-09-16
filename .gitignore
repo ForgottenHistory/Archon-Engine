@@ -78,3 +78,4 @@ crashlytics-build.properties
 .vscode/launch.json
 .vscode/extensions.json
 .claude/settings.local.json
+/Assets/TextMesh Pro
