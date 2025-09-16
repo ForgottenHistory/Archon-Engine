@@ -73,3 +73,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+/Packages/com.mibdev.fullscreen-editor
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.claude/settings.local.json
