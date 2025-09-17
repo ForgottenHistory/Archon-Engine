@@ -1,0 +1,238 @@
+using UnityEngine;
+using ProvinceSystem.Countries;
+using ProvinceSystem.Map;
+using System.Collections.Generic;
+
+namespace ProvinceSystem.MapModes
+{
+    /// <summary>
+    /// Political map mode showing country ownership
+    /// </summary>
+    public class PoliticalMapMode : BaseMapMode
+    {
+        private CountryDataService countryService;
+        private MapDefinitionLoader.MapDefinition mapDefinition;
+        private Color unownedLandColor = new Color(0.3f, 0.3f, 0.3f, 1f);
+        private Color seaColor = new Color(0.1f, 0.2f, 0.4f, 1f);
+        private Color lakeColor = new Color(0.15f, 0.3f, 0.5f, 1f);
+        private bool showBorders = true;
+        private float borderDarkenFactor = 0.8f;
+
+        public override string ModeName => "Political";
+
+        public PoliticalMapMode(CountryDataService service, MapDefinitionLoader.MapDefinition definition = null)
+        {
+            countryService = service;
+            mapDefinition = definition;
+        }
+
+        public void SetMapDefinition(MapDefinitionLoader.MapDefinition definition)
+        {
+            mapDefinition = definition;
+            if (IsActive)
+            {
+                UpdateAllProvinceColors();
+            }
+        }
+
+        public override void Initialize(ProvinceManager manager)
+        {
+            base.Initialize(manager);
+
+            // Try to load map definition if not provided
+            if (mapDefinition == null)
+            {
+                string mapDefPath = System.IO.Path.Combine(Application.dataPath, "Resources", "default.map");
+                if (System.IO.File.Exists(mapDefPath))
+                {
+                    mapDefinition = MapDefinitionLoader.LoadMapDefinition(mapDefPath);
+                }
+            }
+        }
+
+        public override void OnEnterMode()
+        {
+            base.OnEnterMode();
+
+            if (countryService == null)
+            {
+                Debug.LogWarning("PoliticalMapMode: No CountryDataService available!");
+            }
+        }
+
+        public override void UpdateProvinceColor(int provinceId)
+        {
+            // Check if it's a water province first
+            if (mapDefinition != null)
+            {
+                if (mapDefinition.IsSeaProvince(provinceId))
+                {
+                    provinceColors[provinceId] = seaColor;
+                    return;
+                }
+                else if (mapDefinition.IsLakeProvince(provinceId))
+                {
+                    provinceColors[provinceId] = lakeColor;
+                    return;
+                }
+            }
+
+            if (countryService == null)
+            {
+                provinceColors[provinceId] = unownedLandColor;
+                return;
+            }
+
+            var country = countryService.GetProvinceOwner(provinceId);
+
+            if (country != null)
+            {
+                Color baseColor = country.color;
+
+                // Darken border provinces slightly for visual distinction
+                if (showBorders)
+                {
+                    bool isBorder = IsProvinceBorder(provinceId, country.id);
+                    if (isBorder)
+                    {
+                        baseColor = baseColor * borderDarkenFactor;
+                    }
+                }
+
+                provinceColors[provinceId] = baseColor;
+            }
+            else
+            {
+                // Unowned land province
+                provinceColors[provinceId] = unownedLandColor;
+            }
+        }
+
+        private bool IsProvinceBorder(int provinceId, int countryId)
+        {
+            if (provinceManager == null) return false;
+
+            var neighbors = provinceManager.GetNeighbors(provinceId);
+
+            foreach (int neighborId in neighbors)
+            {
+                int neighborOwnerId = countryService.GetProvinceOwnerId(neighborId);
+                if (neighborOwnerId != countryId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void SetBorderVisualization(bool show)
+        {
+            showBorders = show;
+            if (IsActive)
+            {
+                UpdateAllProvinceColors();
+            }
+        }
+
+        public void SetBorderDarkenFactor(float factor)
+        {
+            borderDarkenFactor = Mathf.Clamp(factor, 0.5f, 1f);
+            if (IsActive && showBorders)
+            {
+                UpdateAllProvinceColors();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Extended political map mode with additional features
+    /// </summary>
+    public class DetailedPoliticalMapMode : PoliticalMapMode
+    {
+        private bool showCapitals = true;
+        private Dictionary<int, GameObject> capitalMarkers = new Dictionary<int, GameObject>();
+
+        public override string ModeName => "Political (Detailed)";
+
+        public DetailedPoliticalMapMode(CountryDataService service) : base(service) { }
+
+        public override void OnEnterMode()
+        {
+            base.OnEnterMode();
+
+            if (showCapitals)
+            {
+                CreateCapitalMarkers();
+            }
+        }
+
+        public override void OnExitMode()
+        {
+            base.OnExitMode();
+            ClearCapitalMarkers();
+        }
+
+        private void CreateCapitalMarkers()
+        {
+            ClearCapitalMarkers();
+
+            if (countryService == null) return;
+
+            var dataService = GetDataService();
+            if (dataService == null) return;
+
+            foreach (var country in countryService.GetAllCountries().Values)
+            {
+                if (country.capitalProvinceId >= 0)
+                {
+                    var province = dataService.GetProvinceById(country.capitalProvinceId);
+                    if (province != null)
+                    {
+                        // Create a simple capital marker (star or sphere)
+                        GameObject marker = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        marker.name = $"Capital_{country.name}";
+                        marker.transform.position = new Vector3(province.center.x, 2f, province.center.y);
+                        marker.transform.localScale = Vector3.one * 2f;
+
+                        // Set capital color to be brighter version of country color
+                        var renderer = marker.GetComponent<MeshRenderer>();
+                        if (renderer != null)
+                        {
+                            Material mat = new Material(renderer.sharedMaterial);
+                            mat.color = country.color * 1.5f;
+                            renderer.material = mat;
+                        }
+
+                        // Disable collider to prevent interference with province selection
+                        var collider = marker.GetComponent<Collider>();
+                        if (collider != null)
+                            collider.enabled = false;
+
+                        capitalMarkers[country.id] = marker;
+                    }
+                }
+            }
+        }
+
+        private void ClearCapitalMarkers()
+        {
+            foreach (var marker in capitalMarkers.Values)
+            {
+                if (marker != null)
+                    GameObject.Destroy(marker);
+            }
+            capitalMarkers.Clear();
+        }
+
+        private CountryDataService countryService
+        {
+            get
+            {
+                var field = this.GetType().BaseType
+                    .GetField("countryService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                return field?.GetValue(this) as CountryDataService;
+            }
+        }
+    }
+}

@@ -287,6 +287,14 @@ namespace ProvinceSystem
             var definition = GetDefinitionById(provinceId);
             return definition != null && definition.category == "lake";
         }
+
+        /// <summary>
+        /// Get all definitions by color for lookup
+        /// </summary>
+        public Dictionary<Color32, ProvinceDefinition> GetDefinitionsByColor()
+        {
+            return definitionsByColor;
+        }
         
         /// <summary>
         /// Check if a province is land

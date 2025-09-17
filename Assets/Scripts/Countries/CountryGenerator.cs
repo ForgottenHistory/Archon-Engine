@@ -1,0 +1,702 @@
+using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+using ProvinceSystem.Map;
+
+namespace ProvinceSystem.Countries
+{
+    /// <summary>
+    /// Generates countries using a spreading algorithm similar to Paradox games
+    /// </summary>
+    public class CountryGenerator : MonoBehaviour
+    {
+        [Header("Generation Settings")]
+        [Range(5, 100)]
+        public int targetCountryCount = 20;
+
+        [Range(0.1f, 1f)]
+        public float expansionProbability = 0.7f;
+
+        [Range(1, 20)]
+        public int minCountrySize = 3;
+
+        [Range(10, 200)]
+        public int maxCountrySize = 50;
+
+        [Header("Country Name Generation")]
+        public bool useRandomNames = true;
+        public List<string> countryNamePool = new List<string>
+        {
+            "Aurelia", "Valoria", "Nordheim", "Meridia", "Westmark",
+            "Eastshire", "Southland", "Highland", "Riverlands", "Ironhold",
+            "Goldreach", "Silverwind", "Stormgate", "Sunhaven", "Moonvale",
+            "Starfall", "Dawnbreak", "Twilight", "Shadowmere", "Brightwood"
+        };
+
+        [Header("Color Settings")]
+        public bool useDistinctColors = true;
+        public float minColorDistance = 0.3f;
+
+        [Header("Debug")]
+        public bool showGenerationLog = true;
+        public bool visualizeGrowth = false;
+
+        [Header("Map Definition")]
+        public string mapDefinitionPath = "Assets/Resources/default.map";
+        public ProvinceDefinitionLoader provinceDefinitionLoader;
+
+        private CountryDataService countryService;
+        private ProvinceManager provinceManager;
+        private MapDefinitionLoader.MapDefinition mapDefinition;
+        private Dictionary<Color32, ProvinceDefinition> provinceDefinitions;
+        private List<Color> usedColors = new List<Color>();
+
+        public CountryDataService CountryService => countryService;
+
+        void Awake()
+        {
+            countryService = new CountryDataService();
+        }
+
+        public void GenerateCountries(ProvinceManager manager)
+        {
+            provinceManager = manager;
+
+            if (provinceManager == null || provinceManager.ProvinceNeighbors == null ||
+                provinceManager.ProvinceNeighbors.Count == 0)
+            {
+                Debug.LogError("ProvinceManager or neighbor data not available!");
+                return;
+            }
+
+            StartCoroutine(GenerateCountriesCoroutine());
+        }
+
+        private System.Collections.IEnumerator GenerateCountriesCoroutine()
+        {
+            countryService.Clear();
+            usedColors.Clear();
+
+            // Load map definition if available
+            LoadMapDefinition();
+            LoadProvinceDefinitions();
+
+            var allAvailableProvinces = countryService.GetUnassignedProvinces(provinceManager);
+            var unassignedProvinces = new List<int>(allAvailableProvinces);
+
+            // Debug logging
+            if (showGenerationLog)
+            {
+                Debug.Log($"Total provinces available: {allAvailableProvinces.Count}");
+
+                // Sample check for water provinces
+                var sampleWaterIds = new List<int> { 1252, 1253, 1254, 1255, 1250, 1251 };
+                foreach (var id in sampleWaterIds)
+                {
+                    if (allAvailableProvinces.Contains(id))
+                    {
+                        Debug.Log($"Water province {id} found in available provinces - will be filtered");
+                    }
+                }
+            }
+
+            // Filter out water provinces
+            var landProvinces = new List<int>();
+            var waterProvinces = new List<int>();
+
+            foreach (int provinceId in allAvailableProvinces)
+            {
+                if (IsProvinceWater(provinceId))
+                {
+                    waterProvinces.Add(provinceId);
+                }
+                else
+                {
+                    landProvinces.Add(provinceId);
+                }
+            }
+
+            if (landProvinces.Count > 0 || waterProvinces.Count > 0)
+            {
+
+                unassignedProvinces = landProvinces;
+
+                if (showGenerationLog)
+                {
+                    Debug.Log($"Province filtering results:");
+                    Debug.Log($"  - Total provinces: {allAvailableProvinces.Count}");
+                    Debug.Log($"  - Water provinces filtered: {waterProvinces.Count}");
+                    Debug.Log($"  - Land provinces remaining: {landProvinces.Count}");
+
+                    // Log first few water provinces for verification
+                    if (waterProvinces.Count > 0)
+                    {
+                        var sample = string.Join(", ", waterProvinces.Take(10).Select(id => id.ToString()));
+                        Debug.Log($"  - Sample water province IDs: {sample}...");
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Map definition not loaded - cannot filter water provinces!");
+            }
+
+            var allProvinceIds = new List<int>(unassignedProvinces);
+
+            if (showGenerationLog)
+                Debug.Log($"Starting country generation with {allProvinceIds.Count} provinces");
+
+            int countryIdCounter = 1;
+            int actualCountries = 0;
+            int maxAttempts = targetCountryCount * 3;
+            int attempts = 0;
+
+            // Phase 1: Create seed countries
+            while (actualCountries < targetCountryCount && unassignedProvinces.Count > 0 && attempts < maxAttempts)
+            {
+                attempts++;
+
+                // Pick a random unassigned province as capital
+                int capitalProvinceId = unassignedProvinces[Random.Range(0, unassignedProvinces.Count)];
+
+                // Create country
+                string countryName = GetCountryName(countryIdCounter);
+                Color countryColor = GetDistinctColor();
+
+                var country = countryService.CreateCountry(countryIdCounter, countryName, countryColor, capitalProvinceId);
+                unassignedProvinces.Remove(capitalProvinceId);
+
+                if (showGenerationLog)
+                    Debug.Log($"Created {countryName} with capital at province {capitalProvinceId}");
+
+                countryIdCounter++;
+                actualCountries++;
+
+                if (visualizeGrowth)
+                    yield return null;
+            }
+
+            // Phase 2: Expand countries using spreading algorithm
+            bool anyExpansion = true;
+            int expansionRounds = 0;
+            int maxExpansionRounds = 200; // Increased for larger maps
+
+            while (anyExpansion && expansionRounds < maxExpansionRounds)
+            {
+                anyExpansion = false;
+                expansionRounds++;
+
+                var countries = countryService.GetAllCountries().Values.ToList();
+
+                // Randomize order to prevent bias
+                countries = countries.OrderBy(x => Random.value).ToList();
+
+                foreach (var country in countries)
+                {
+                    if (country.provinces.Count >= maxCountrySize)
+                        continue;
+
+                    // Try to expand
+                    var expansionCandidates = GetExpansionCandidates(country.id);
+
+                    if (expansionCandidates.Count > 0)
+                    {
+                        // Weight expansion based on various factors
+                        var selectedProvince = SelectExpansionProvince(expansionCandidates, country);
+
+                        if (selectedProvince != -1 && Random.value < expansionProbability)
+                        {
+                            countryService.AssignProvinceToCountry(selectedProvince, country.id);
+                            unassignedProvinces.Remove(selectedProvince);
+                            anyExpansion = true;
+
+                            if (visualizeGrowth && expansionRounds % 5 == 0)
+                                yield return null;
+                        }
+                    }
+                }
+
+                // Allow Unity to process other tasks periodically
+                if (expansionRounds % 10 == 0)
+                {
+                    yield return null; // Give control back to Unity every 10 rounds
+                }
+            }
+
+            // Phase 3: Assign remaining unassigned provinces to nearest countries
+            if (showGenerationLog && unassignedProvinces.Count > 0)
+            {
+                Debug.Log($"Phase 3: Assigning {unassignedProvinces.Count} remaining provinces...");
+            }
+
+            int assignmentRounds = 0;
+            int maxAssignmentRounds = 50;
+            var failedAssignments = new List<int>();
+
+            while (unassignedProvinces.Count > 0 && assignmentRounds < maxAssignmentRounds)
+            {
+                assignmentRounds++;
+                var provincesToProcess = new List<int>(unassignedProvinces);
+                unassignedProvinces.Clear();
+
+                foreach (int provinceToAssign in provincesToProcess)
+                {
+                    // Skip water provinces that somehow got through
+                    if (IsProvinceWater(provinceToAssign))
+                    {
+                        if (showGenerationLog)
+                            Debug.LogWarning($"Skipping water province {provinceToAssign} in phase 3");
+                        continue;
+                    }
+
+                    int nearestCountry = FindNearestCountry(provinceToAssign);
+
+                    if (nearestCountry != -1)
+                    {
+                        countryService.AssignProvinceToCountry(provinceToAssign, nearestCountry);
+                    }
+                    else
+                    {
+                        // Couldn't find a country, try again next round
+                        unassignedProvinces.Add(provinceToAssign);
+                    }
+                }
+
+                // If we're not making progress, force assignment
+                if (unassignedProvinces.Count == provincesToProcess.Count)
+                {
+                    if (showGenerationLog)
+                        Debug.LogWarning($"No progress in round {assignmentRounds}, forcing assignment of {unassignedProvinces.Count} provinces");
+
+                    // Force assign to random existing country
+                    var allCountries = countryService.GetAllCountries();
+                    if (allCountries.Count > 0)
+                    {
+                        var countryIds = allCountries.Keys.ToList();
+                        foreach (int provinceId in unassignedProvinces)
+                        {
+                            // Still skip water provinces
+                            if (IsProvinceWater(provinceId))
+                                continue;
+
+                            int randomCountry = countryIds[Random.Range(0, countryIds.Count)];
+                            countryService.AssignProvinceToCountry(provinceId, randomCountry);
+                            failedAssignments.Add(provinceId);
+                        }
+                        unassignedProvinces.Clear();
+                    }
+                    break;
+                }
+
+                if (visualizeGrowth && assignmentRounds % 5 == 0)
+                    yield return null;
+            }
+
+            if (showGenerationLog)
+            {
+                if (failedAssignments.Count > 0)
+                {
+                    Debug.LogWarning($"Force-assigned {failedAssignments.Count} isolated provinces");
+                }
+                if (unassignedProvinces.Count > 0)
+                {
+                    Debug.LogError($"Failed to assign {unassignedProvinces.Count} provinces!");
+                }
+            }
+
+            // Phase 4: Clean up small countries
+            CleanupSmallCountries();
+
+            // Update statistics
+            countryService.UpdateCountryStatistics(provinceManager);
+
+            // Final verification - ensure no water provinces are owned
+            if (mapDefinition != null && showGenerationLog)
+            {
+                var ownedWaterProvinces = new List<int>();
+                var unownedLandProvinces = new List<int>();
+
+                var dataService = GetDataService(provinceManager);
+                if (dataService != null)
+                {
+                    foreach (var province in dataService.GetAllProvinces().Values)
+                    {
+                        int provinceId = province.id;
+                        int ownerId = countryService.GetProvinceOwnerId(provinceId);
+
+                        if (IsProvinceWater(provinceId))
+                        {
+                            if (ownerId != -1)
+                            {
+                                ownedWaterProvinces.Add(provinceId);
+                                // Fix: Remove water province from country
+                                countryService.RemoveProvinceFromCountry(provinceId);
+                            }
+                        }
+                        else // Land province
+                        {
+                            if (ownerId == -1)
+                            {
+                                unownedLandProvinces.Add(provinceId);
+                            }
+                        }
+                    }
+                }
+
+                if (ownedWaterProvinces.Count > 0)
+                {
+                    Debug.LogWarning($"Found and removed {ownedWaterProvinces.Count} water provinces that were incorrectly assigned to countries");
+                    var sample = string.Join(", ", ownedWaterProvinces.Take(10).Select(id => id.ToString()));
+                    Debug.LogWarning($"Sample water province IDs that were owned: {sample}");
+                }
+
+                if (unownedLandProvinces.Count > 0)
+                {
+                    Debug.LogWarning($"WARNING: {unownedLandProvinces.Count} land provinces remain unowned!");
+                    var sample = string.Join(", ", unownedLandProvinces.Take(10).Select(id => id.ToString()));
+                    Debug.LogWarning($"Sample unowned land province IDs: {sample}");
+                }
+            }
+
+            if (showGenerationLog)
+            {
+                var finalCountries = countryService.GetAllCountries();
+                Debug.Log($"Country generation complete! Created {finalCountries.Count} countries");
+
+                foreach (var country in finalCountries.Values)
+                {
+                    Debug.Log($"  {country.name}: {country.provinces.Count} provinces, " +
+                             $"{country.stats.borderProvinces} border provinces");
+                }
+            }
+
+            // Notify that generation is complete
+            SendMessage("OnCountryGenerationComplete", SendMessageOptions.DontRequireReceiver);
+        }
+
+        private Services.ProvinceDataService GetDataService(ProvinceManager provinceManager)
+        {
+            if (provinceManager == null) return null;
+
+            var field = provinceManager.GetType()
+                .GetField("dataService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            return field?.GetValue(provinceManager) as Services.ProvinceDataService;
+        }
+
+        private void LoadMapDefinition()
+        {
+            string fullPath = System.IO.Path.Combine(Application.dataPath, "..", mapDefinitionPath);
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                mapDefinition = MapDefinitionLoader.LoadMapDefinition(fullPath);
+
+                if (mapDefinition != null && showGenerationLog)
+                {
+                    Debug.Log($"Loaded map definition: {mapDefinition.seaProvinces.Count} sea provinces, {mapDefinition.lakeProvinces.Count} lake provinces");
+                }
+            }
+            else if (showGenerationLog)
+            {
+                Debug.LogWarning($"Map definition file not found at: {fullPath}. Proceeding without water province filtering.");
+            }
+        }
+
+        private void LoadProvinceDefinitions()
+        {
+            // Try to get province definitions from the loader
+            if (provinceDefinitionLoader == null)
+            {
+                provinceDefinitionLoader = FindObjectOfType<ProvinceDefinitionLoader>();
+            }
+
+            if (provinceDefinitionLoader != null)
+            {
+                provinceDefinitions = provinceDefinitionLoader.GetDefinitionsByColor();
+                if (showGenerationLog && provinceDefinitions != null)
+                {
+                    Debug.Log($"Loaded {provinceDefinitions.Count} province definitions from ProvinceDefinitionLoader");
+                }
+            }
+        }
+
+        private bool IsProvinceWater(int provinceId)
+        {
+            // First check if we have province definitions
+            if (provinceDefinitions != null && provinceDefinitions.Count > 0)
+            {
+                var dataService = GetDataService(provinceManager);
+                if (dataService != null)
+                {
+                    var province = dataService.GetProvinceById(provinceId);
+                    if (province != null)
+                    {
+                        // Convert to Color32 for lookup
+                        Color32 color32 = new Color32(
+                            (byte)(province.color.r * 255),
+                            (byte)(province.color.g * 255),
+                            (byte)(province.color.b * 255),
+                            255
+                        );
+
+                        if (provinceDefinitions.TryGetValue(color32, out ProvinceDefinition def))
+                        {
+                            // Check the actual province ID from definition
+                            if (def.category == "sea" || def.category == "lake")
+                            {
+                                return true;
+                            }
+
+                            // Also check if the definition ID is in our water lists
+                            if (mapDefinition != null && mapDefinition.IsWaterProvince(def.id))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Fallback to checking auto-generated ID against map definition
+            if (mapDefinition != null)
+            {
+                return mapDefinition.IsWaterProvince(provinceId);
+            }
+
+            return false;
+        }
+
+        private List<int> GetExpansionCandidates(int countryId)
+        {
+            var candidates = new HashSet<int>();
+            var country = countryService.GetCountry(countryId);
+
+            if (country == null) return new List<int>();
+
+            foreach (int provinceId in country.provinces)
+            {
+                var neighbors = provinceManager.GetNeighbors(provinceId);
+
+                foreach (int neighborId in neighbors)
+                {
+                    // Skip if already owned
+                    if (countryService.GetProvinceOwnerId(neighborId) != -1)
+                        continue;
+
+                    // Skip water provinces
+                    if (IsProvinceWater(neighborId))
+                        continue;
+
+                    candidates.Add(neighborId);
+                }
+            }
+
+            return candidates.ToList();
+        }
+
+        private int SelectExpansionProvince(List<int> candidates, CountryDataService.Country country)
+        {
+            if (candidates.Count == 0) return -1;
+
+            // Weight selection based on various factors
+            var weights = new Dictionary<int, float>();
+
+            foreach (int provinceId in candidates)
+            {
+                float weight = 1f;
+
+                // Prefer provinces with more owned neighbors (cohesion)
+                var neighbors = provinceManager.GetNeighbors(provinceId);
+                int ownedNeighbors = 0;
+
+                foreach (int neighborId in neighbors)
+                {
+                    if (country.provinces.Contains(neighborId))
+                        ownedNeighbors++;
+                }
+
+                weight += ownedNeighbors * 0.5f;
+
+                // Slightly prefer provinces closer to capital
+                if (country.capitalProvinceId >= 0)
+                {
+                    var path = provinceManager.FindPath(country.capitalProvinceId, provinceId);
+                    if (path != null && path.Count > 0)
+                    {
+                        weight += 1f / (path.Count + 1);
+                    }
+                }
+
+                weights[provinceId] = weight;
+            }
+
+            // Weighted random selection
+            float totalWeight = weights.Values.Sum();
+            float randomValue = Random.value * totalWeight;
+            float currentWeight = 0;
+
+            foreach (var kvp in weights)
+            {
+                currentWeight += kvp.Value;
+                if (randomValue <= currentWeight)
+                    return kvp.Key;
+            }
+
+            return candidates[Random.Range(0, candidates.Count)];
+        }
+
+        private int FindNearestCountry(int provinceId)
+        {
+            var neighbors = provinceManager.GetNeighbors(provinceId);
+
+            // First, check immediate neighbors
+            foreach (int neighborId in neighbors)
+            {
+                // Skip water provinces
+                if (IsProvinceWater(neighborId))
+                    continue;
+
+                int ownerId = countryService.GetProvinceOwnerId(neighborId);
+                if (ownerId != -1)
+                    return ownerId;
+            }
+
+            // If no immediate neighbors owned, do BFS to find nearest
+            var visited = new HashSet<int>();
+            var queue = new Queue<int>();
+            queue.Enqueue(provinceId);
+            visited.Add(provinceId);
+
+            int maxDepth = 20; // Increased for water-separated provinces
+            int currentDepth = 0;
+
+            while (queue.Count > 0 && currentDepth < maxDepth)
+            {
+                int count = queue.Count;
+
+                for (int i = 0; i < count; i++)
+                {
+                    int current = queue.Dequeue();
+                    var currentNeighbors = provinceManager.GetNeighbors(current);
+
+                    foreach (int neighborId in currentNeighbors)
+                    {
+                        if (!visited.Contains(neighborId))
+                        {
+                            visited.Add(neighborId);
+
+                            // Skip water provinces in pathfinding, but allow traversal
+                            if (!IsProvinceWater(neighborId))
+                            {
+                                int ownerId = countryService.GetProvinceOwnerId(neighborId);
+                                if (ownerId != -1)
+                                    return ownerId;
+                            }
+
+                            queue.Enqueue(neighborId);
+                        }
+                    }
+                }
+
+                currentDepth++;
+            }
+
+            return -1;
+        }
+
+        private void CleanupSmallCountries()
+        {
+            var countries = countryService.GetAllCountries();
+            var countriesToRemove = new List<int>();
+
+            foreach (var country in countries.Values)
+            {
+                if (country.provinces.Count < minCountrySize)
+                {
+                    countriesToRemove.Add(country.id);
+                }
+            }
+
+            foreach (int countryId in countriesToRemove)
+            {
+                var country = countryService.GetCountry(countryId);
+                var provinces = new List<int>(country.provinces);
+
+                foreach (int provinceId in provinces)
+                {
+                    int nearestCountry = FindNearestCountry(provinceId);
+                    if (nearestCountry != -1 && nearestCountry != countryId)
+                    {
+                        countryService.AssignProvinceToCountry(provinceId, nearestCountry);
+                    }
+                }
+
+                // Remove the country
+                countries.Remove(countryId);
+            }
+
+            if (countriesToRemove.Count > 0 && showGenerationLog)
+            {
+                Debug.Log($"Removed {countriesToRemove.Count} small countries during cleanup");
+            }
+        }
+
+        private string GetCountryName(int index)
+        {
+            if (!useRandomNames && countryNamePool.Count > 0)
+            {
+                return countryNamePool[index % countryNamePool.Count];
+            }
+
+            if (countryNamePool.Count > 0)
+            {
+                return countryNamePool[Random.Range(0, countryNamePool.Count)];
+            }
+
+            return $"Country {index}";
+        }
+
+        private Color GetDistinctColor()
+        {
+            Color newColor;
+            int attempts = 0;
+            int maxAttempts = 100;
+
+            do
+            {
+                newColor = new Color(
+                    Random.Range(0.2f, 0.9f),
+                    Random.Range(0.2f, 0.9f),
+                    Random.Range(0.2f, 0.9f),
+                    1f
+                );
+
+                attempts++;
+
+                if (!useDistinctColors || attempts >= maxAttempts)
+                    break;
+
+            } while (!IsColorDistinct(newColor));
+
+            usedColors.Add(newColor);
+            return newColor;
+        }
+
+        private bool IsColorDistinct(Color color)
+        {
+            foreach (Color usedColor in usedColors)
+            {
+                float distance = Mathf.Sqrt(
+                    Mathf.Pow(color.r - usedColor.r, 2) +
+                    Mathf.Pow(color.g - usedColor.g, 2) +
+                    Mathf.Pow(color.b - usedColor.b, 2)
+                );
+
+                if (distance < minColorDistance)
+                    return false;
+            }
+
+            return true;
+        }
+    }
+}

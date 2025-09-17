@@ -2,6 +2,11 @@ using UnityEngine;
 using System.Collections.Generic;
 using ProvinceSystem;
 using ProvinceSystem.Services;
+using ProvinceSystem.MapSystem;
+using ProvinceSystem.MapModes;
+using ProvinceSystem.Countries;
+using ProvinceSystem.Utils;
+using ProvinceSystem.UI;
 
 public class TestMap : MonoBehaviour
 {
@@ -13,10 +18,17 @@ public class TestMap : MonoBehaviour
 
     [Header("Camera Controller")]
     public ParadoxStyleCameraController cameraController;
-    
+
     [Header("Adjacency Scanner")]
     public FastAdjacencyScanner adjacencyScanner; // NEW
-    
+
+    [Header("Map System Integration")]
+    public MapSystemController mapSystemController;
+
+    [Header("Logging System")]
+    public ProvinceSystem.Utils.FileLogger fileLogger;
+    public ProvinceSystem.UI.LogViewer logViewer;
+
     [Header("Visual Settings")]
     public float mapScale = 10f; // Base scale for the map
 
@@ -57,12 +69,21 @@ public class TestMap : MonoBehaviour
     {
         buttonStart.SetActive(false);
 
+        // Initialize logging system first
+        SetupLoggingSystem();
+
+        ProvinceSystem.Utils.DominionLogger.LogSection("DOMINION INITIALIZATION");
+        ProvinceSystem.Utils.DominionLogger.Log("Starting map initialization sequence...");
+
         LoadProvinceMap();
         SetupMapPlane();
         SetupCameraController();
-        
+
         // Setup adjacency scanner BEFORE generating provinces
         SetupAdjacencyScanner();
+
+        // Setup Map System Controller for country generation and map modes
+        SetupMapSystemController();
 
         // Generate 3D provinces with event-driven sequencing
         var generator = GetComponent<OptimizedProvinceMeshGenerator>();
@@ -118,8 +139,51 @@ public class TestMap : MonoBehaviour
         }
     }
 
+    private void SetupLoggingSystem()
+    {
+        // Initialize FileLogger
+        if (fileLogger == null)
+        {
+            fileLogger = ProvinceSystem.Utils.FileLogger.Instance;
+        }
+
+        // Setup log viewer
+        if (logViewer == null)
+        {
+            logViewer = GetComponent<ProvinceSystem.UI.LogViewer>();
+        }
+
+        if (logViewer == null)
+        {
+            logViewer = gameObject.AddComponent<ProvinceSystem.UI.LogViewer>();
+            Debug.Log("Created LogViewer component");
+        }
+
+        Debug.Log($"Logging system initialized. Logs will be saved to: Logs/dominion_log_[timestamp].txt");
+        Debug.Log("Press F12 to toggle the log viewer window");
+    }
+
+    private void SetupMapSystemController()
+    {
+        // Get or create MapSystemController
+        if (mapSystemController == null)
+        {
+            mapSystemController = GetComponent<MapSystemController>();
+        }
+
+        if (mapSystemController == null)
+        {
+            mapSystemController = gameObject.AddComponent<MapSystemController>();
+            Debug.Log("Created MapSystemController component");
+        }
+
+        // The controller will auto-initialize and handle the rest
+        mapSystemController.adjacencyScanner = adjacencyScanner;
+    }
+
     private void OnProvinceGenerationCompleted()
     {
+        ProvinceSystem.Utils.DominionLogger.LogSeparator("Province Generation Complete");
         Debug.Log("Province generation completed, integrating neighbor data...");
 
         // Get the ProvinceDataService from the mesh generator

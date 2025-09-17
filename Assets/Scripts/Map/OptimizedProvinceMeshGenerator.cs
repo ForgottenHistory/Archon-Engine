@@ -379,8 +379,6 @@ namespace ProvinceSystem
             comp.provinceId = province.id;
             comp.provinceName = province.name;
             comp.provinceColor = province.color;
-            comp.displayColor = province.displayColor;
-            comp.pixelCount = province.pixels.Count;
             
             // Register with data service
             dataService.RegisterProvinceGameObject(province.color, provinceObj);

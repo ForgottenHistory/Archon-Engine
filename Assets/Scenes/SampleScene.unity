@@ -471,6 +471,7 @@ GameObject:
   - component: {fileID: 666654918}
   - component: {fileID: 666654920}
   - component: {fileID: 666654921}
+  - component: {fileID: 666654922}
   m_Layer: 0
   m_Name: MapLoader
   m_TagString: Untagged
@@ -495,6 +496,7 @@ MonoBehaviour:
   provinceTexture: {fileID: 0}
   provinceDefinitionLoader: {fileID: 285150422}
   cameraController: {fileID: 330585548}
+  adjacencyScanner: {fileID: 0}
   mapScale: 10
   buttonStart: {fileID: 697807310}
 --- !u!4 &666654919
@@ -546,6 +548,15 @@ MonoBehaviour:
   clearExistingProvinces: 0
   showDebugInfo: 1
   showGenerationProgress: 1
+  OnGenerationStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGenerationCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGenerationFailed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &666654921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,16 +570,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshGenerator: {fileID: 666654920}
+  adjacencyScanner: {fileID: 666654922}
   mainCamera: {fileID: 330585545}
   selectedMaterial: {fileID: 2100000, guid: 1f60e0b40024f2e44a5f9b1f2e058db7, type: 2}
   neighborMaterial: {fileID: 2100000, guid: f7f90e748596c604f83bb3623712b8b1, type: 2}
   selectedColor: {r: 1, g: 0.8, b: 0, a: 1}
   neighborColor: {r: 1, g: 0, b: 0, a: 1}
-  useJobSystemForNeighbors: 1
-  cacheNeighbors: 1
-  neighborSearchRadius: 1
   showDebugInfo: 0
   visualizeNeighbors: 1
+--- !u!114 &666654922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666654917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a2258c7c8915048a30a384865563b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  provinceMap: {fileID: 0}
+  scanOnStart: 1
+  ignoreDiagonals: 0
+  blackThreshold: 10
+  showDebugInfo: 1
 --- !u!1 &697807310
 GameObject:
   m_ObjectHideFlags: 0
