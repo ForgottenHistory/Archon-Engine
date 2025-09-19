@@ -44,8 +44,14 @@ namespace ProvinceSystem.Utils
         public float flushInterval = 1f; // Flush to disk every second
 
         private string logFilePath;
+        private string infoLogFilePath;
+        private string warningLogFilePath;
         private StreamWriter logWriter;
+        private StreamWriter infoLogWriter;
+        private StreamWriter warningLogWriter;
         private Queue<string> pendingLogs = new Queue<string>();
+        private Queue<string> pendingInfoLogs = new Queue<string>();
+        private Queue<string> pendingWarningLogs = new Queue<string>();
         private object logLock = new object();
         private float lastFlushTime;
         private bool isInitialized = false;
@@ -67,32 +73,39 @@ namespace ProvinceSystem.Utils
         {
             if (isInitialized) return;
 
-            // Create logs directory
-            string logsDir = Path.Combine(Application.dataPath, "..", "Logs");
+            // Create logs directory inside Assets
+            string logsDir = Path.Combine(Application.dataPath, "Logs");
             if (!Directory.Exists(logsDir))
             {
                 Directory.CreateDirectory(logsDir);
             }
 
-            // Setup log file path with timestamp
-            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            string baseFileName = Path.GetFileNameWithoutExtension(logFileName);
-            string extension = Path.GetExtension(logFileName);
-            logFilePath = Path.Combine(logsDir, $"{baseFileName}_{timestamp}{extension}");
+            // Setup log file paths (overwrite existing for testing)
+            logFilePath = Path.Combine(logsDir, logFileName);
+            infoLogFilePath = Path.Combine(logsDir, "dominion_info.txt");
+            warningLogFilePath = Path.Combine(logsDir, "dominion_warnings.txt");
 
-            // Create or open log file
+            // Create or open log files
             try
             {
-                logWriter = new StreamWriter(logFilePath, true, Encoding.UTF8);
+                logWriter = new StreamWriter(logFilePath, false, Encoding.UTF8); // false = overwrite
                 logWriter.AutoFlush = !useAsyncWrite;
 
+                infoLogWriter = new StreamWriter(infoLogFilePath, false, Encoding.UTF8);
+                infoLogWriter.AutoFlush = !useAsyncWrite;
+
+                warningLogWriter = new StreamWriter(warningLogFilePath, false, Encoding.UTF8);
+                warningLogWriter.AutoFlush = !useAsyncWrite;
+
                 WriteHeader();
+                WriteInfoHeader();
+                WriteWarningHeader();
 
                 // Subscribe to Unity's log message received event
                 Application.logMessageReceived += HandleLog;
 
                 isInitialized = true;
-                Debug.Log($"FileLogger initialized. Log file: {logFilePath}");
+                Debug.Log($"FileLogger initialized. Main log: {logFilePath}");
             }
             catch (Exception e)
             {
@@ -103,12 +116,30 @@ namespace ProvinceSystem.Utils
         void WriteHeader()
         {
             logWriter.WriteLine("========================================");
-            logWriter.WriteLine($"Dominion Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            logWriter.WriteLine($"Dominion Complete Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
             logWriter.WriteLine($"Unity Version: {Application.unityVersion}");
             logWriter.WriteLine($"Platform: {Application.platform}");
             logWriter.WriteLine($"Map: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
             logWriter.WriteLine("========================================");
             logWriter.WriteLine();
+        }
+
+        void WriteInfoHeader()
+        {
+            infoLogWriter.WriteLine("========================================");
+            infoLogWriter.WriteLine($"Dominion Info Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            infoLogWriter.WriteLine($"Info messages only");
+            infoLogWriter.WriteLine("========================================");
+            infoLogWriter.WriteLine();
+        }
+
+        void WriteWarningHeader()
+        {
+            warningLogWriter.WriteLine("========================================");
+            warningLogWriter.WriteLine($"Dominion Warnings Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            warningLogWriter.WriteLine($"Warnings and errors only");
+            warningLogWriter.WriteLine("========================================");
+            warningLogWriter.WriteLine();
         }
 
         void HandleLog(string logString, string stackTrace, LogType type)
@@ -165,11 +196,22 @@ namespace ProvinceSystem.Utils
                 lock (logLock)
                 {
                     pendingLogs.Enqueue(logEntry);
+
+                    // Add to specific log queues
+                    if (type == LogType.Log)
+                    {
+                        pendingInfoLogs.Enqueue(logEntry);
+                    }
+                    else if (type == LogType.Warning || type == LogType.Error || type == LogType.Exception || type == LogType.Assert)
+                    {
+                        pendingWarningLogs.Enqueue(logEntry);
+                    }
                 }
             }
             else
             {
                 WriteToFile(logEntry);
+                WriteToSpecificFile(logEntry, type);
             }
         }
 
@@ -187,9 +229,11 @@ namespace ProvinceSystem.Utils
 
         void FlushPendingLogs()
         {
-            if (pendingLogs.Count == 0) return;
+            if (pendingLogs.Count == 0 && pendingInfoLogs.Count == 0 && pendingWarningLogs.Count == 0) return;
 
             List<string> logsToWrite = new List<string>();
+            List<string> infoLogsToWrite = new List<string>();
+            List<string> warningLogsToWrite = new List<string>();
 
             lock (logLock)
             {
@@ -197,17 +241,38 @@ namespace ProvinceSystem.Utils
                 {
                     logsToWrite.Add(pendingLogs.Dequeue());
                 }
+                while (pendingInfoLogs.Count > 0)
+                {
+                    infoLogsToWrite.Add(pendingInfoLogs.Dequeue());
+                }
+                while (pendingWarningLogs.Count > 0)
+                {
+                    warningLogsToWrite.Add(pendingWarningLogs.Dequeue());
+                }
             }
 
+            // Write to main log
             foreach (string log in logsToWrite)
             {
                 WriteToFile(log);
             }
 
-            if (logWriter != null)
+            // Write to info log
+            foreach (string log in infoLogsToWrite)
             {
-                logWriter.Flush();
+                WriteToInfoFile(log);
             }
+
+            // Write to warning log
+            foreach (string log in warningLogsToWrite)
+            {
+                WriteToWarningFile(log);
+            }
+
+            // Flush all writers
+            if (logWriter != null) logWriter.Flush();
+            if (infoLogWriter != null) infoLogWriter.Flush();
+            if (warningLogWriter != null) warningLogWriter.Flush();
         }
 
         void WriteToFile(string logEntry)
@@ -228,6 +293,46 @@ namespace ProvinceSystem.Utils
             {
                 // Can't use Debug.LogError here as it would create infinite loop
                 Console.WriteLine($"Failed to write to log file: {e.Message}");
+            }
+        }
+
+        void WriteToInfoFile(string logEntry)
+        {
+            if (infoLogWriter == null) return;
+
+            try
+            {
+                infoLogWriter.WriteLine(logEntry);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Failed to write to info log file: {e.Message}");
+            }
+        }
+
+        void WriteToWarningFile(string logEntry)
+        {
+            if (warningLogWriter == null) return;
+
+            try
+            {
+                warningLogWriter.WriteLine(logEntry);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Failed to write to warning log file: {e.Message}");
+            }
+        }
+
+        void WriteToSpecificFile(string logEntry, LogType type)
+        {
+            if (type == LogType.Log)
+            {
+                WriteToInfoFile(logEntry);
+            }
+            else if (type == LogType.Warning || type == LogType.Error || type == LogType.Exception || type == LogType.Assert)
+            {
+                WriteToWarningFile(logEntry);
             }
         }
 
@@ -316,6 +421,16 @@ namespace ProvinceSystem.Utils
                 {
                     logWriter.WriteLine("\n========== Session Ended ==========");
                     logWriter.Close();
+                }
+                if (infoLogWriter != null)
+                {
+                    infoLogWriter.WriteLine("\n========== Session Ended ==========");
+                    infoLogWriter.Close();
+                }
+                if (warningLogWriter != null)
+                {
+                    warningLogWriter.WriteLine("\n========== Session Ended ==========");
+                    warningLogWriter.Close();
                 }
             }
         }

@@ -79,3 +79,9 @@ crashlytics-build.properties
 .vscode/extensions.json
 .claude/settings.local.json
 /Assets/TextMesh Pro
+/Assets/EU IV Files
+/Assets/Resources/Test Files
+/Assets/Data
+Assets/Data.meta
+Assets/.claude/settings.local.json
+/Assets/Logs
