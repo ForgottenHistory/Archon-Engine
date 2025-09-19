@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using ProvinceSystem.Services;
+using ProvinceSystem.Data;
+using ParadoxDataLib.Core.Parsers.Csv.DataStructures;
 
 namespace ProvinceSystem
 {
@@ -356,6 +358,128 @@ namespace ProvinceSystem
             #endif
         }
         
+        /// <summary>
+        /// Load definitions from ParadoxDataService
+        /// </summary>
+        [ContextMenu("Load from ParadoxDataService")]
+        public void LoadFromParadoxDataService()
+        {
+            var paradoxDataService = FindObjectOfType<ParadoxDataService>();
+            if (paradoxDataService == null)
+            {
+                Debug.LogError("ParadoxDataService not found! Please add it to the scene.");
+                return;
+            }
+
+            if (!paradoxDataService.IsLoaded)
+            {
+                Debug.LogWarning("ParadoxDataService not loaded yet. Loading will start automatically.");
+                StartCoroutine(WaitForParadoxDataAndLoad(paradoxDataService));
+                return;
+            }
+
+            LoadFromParadoxData(paradoxDataService);
+        }
+
+        private System.Collections.IEnumerator WaitForParadoxDataAndLoad(ParadoxDataService paradoxDataService)
+        {
+            yield return new WaitUntil(() => paradoxDataService.IsLoaded);
+            LoadFromParadoxData(paradoxDataService);
+        }
+
+        private void LoadFromParadoxData(ParadoxDataService paradoxDataService)
+        {
+            definitionsById = new Dictionary<int, ProvinceDefinition>();
+            definitionsByColor = new Dictionary<Color32, ProvinceDefinition>(new Color32Comparer());
+            colorToIdMap = new Dictionary<Color32, int>(new Color32Comparer());
+
+            totalProvinces = 0;
+            landProvinces = 0;
+            seaProvinces = 0;
+            lakeProvinces = 0;
+
+            foreach (var paradoxDef in paradoxDataService.GetAllProvinceDefinitions())
+            {
+                // Convert ParadoxDataLib definition to our format
+                var unityDef = new ProvinceDefinition(
+                    paradoxDef.ProvinceId,
+                    paradoxDef.Red,
+                    paradoxDef.Green,
+                    paradoxDef.Blue,
+                    "land" // Default to land, will be updated from default.map
+                );
+                unityDef.name = paradoxDef.Name;
+
+                // Determine category from default.map data if available
+                var defaultMapData = paradoxDataService.GetDefaultMapData();
+                if (defaultMapData != null)
+                {
+                    unityDef.category = DetermineProvinceCategory(paradoxDef.ProvinceId, defaultMapData);
+                }
+
+                // Filter provinces if needed
+                if ((filterSeaProvinces && unityDef.category == "sea") ||
+                    (filterLakeProvinces && unityDef.category == "lake"))
+                {
+                    continue;
+                }
+
+                // Add to dictionaries
+                definitionsById[unityDef.id] = unityDef;
+                definitionsByColor[unityDef.color] = unityDef;
+                colorToIdMap[unityDef.color] = unityDef.id;
+
+                // Update statistics
+                totalProvinces++;
+                switch (unityDef.category)
+                {
+                    case "land": landProvinces++; break;
+                    case "sea": seaProvinces++; break;
+                    case "lake": lakeProvinces++; break;
+                }
+            }
+
+            Debug.Log($"Loaded {totalProvinces} provinces from ParadoxDataService");
+
+            if (showDebugInfo)
+            {
+                LogStatistics();
+            }
+        }
+
+        private string DetermineProvinceCategory(int provinceId, ParadoxDataLib.Core.Common.ParadoxNode defaultMapData)
+        {
+            // Check if province is in sea_starts list
+            var seaStarts = defaultMapData.GetChild("sea_starts");
+            if (seaStarts != null)
+            {
+                var seaProvinces = defaultMapData.GetValues<string>("sea_starts");
+                foreach (var seaProvince in seaProvinces)
+                {
+                    if (int.TryParse(seaProvince, out int seaId) && seaId == provinceId)
+                    {
+                        return "sea";
+                    }
+                }
+            }
+
+            // Check if province is in lakes list
+            var lakes = defaultMapData.GetChild("lakes");
+            if (lakes != null)
+            {
+                var lakeProvinces = defaultMapData.GetValues<string>("lakes");
+                foreach (var lakeProvince in lakeProvinces)
+                {
+                    if (int.TryParse(lakeProvince, out int lakeId) && lakeId == provinceId)
+                    {
+                        return "lake";
+                    }
+                }
+            }
+
+            return "land"; // Default to land
+        }
+
         [ContextMenu("Log Statistics")]
         private void LogStatistics()
         {
