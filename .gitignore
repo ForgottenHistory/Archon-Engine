@@ -85,3 +85,4 @@ crashlytics-build.properties
 Assets/Data.meta
 Assets/.claude/settings.local.json
 /Assets/Logs
+Assets/Scripts/ParadoxDataLib/
