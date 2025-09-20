@@ -1,0 +1,571 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using ProvinceSystem.Services;
+using ProvinceSystem.Utils;
+using ProvinceSystem.UI;
+
+namespace ProvinceSystem.Services
+{
+    /// <summary>
+    /// Comprehensive testing system for ParadoxDataLib integration
+    /// Provides automated tests, performance benchmarks, and validation tools
+    /// </summary>
+    public class ParadoxDataTester : MonoBehaviour
+    {
+        [Header("Test Configuration")]
+        [SerializeField] private bool runTestsOnStart = false;
+        [SerializeField] private bool enablePerformanceBenchmarks = true;
+        [SerializeField] private bool enableDetailedLogging = true;
+        [SerializeField] private bool enableMemoryMonitoring = true;
+
+        [Header("Test Targets")]
+        [SerializeField] private ParadoxDataManager paradoxDataManager;
+        [SerializeField] private EnhancedProvinceDefinitionLoader provinceLoader;
+        [SerializeField] private ParadoxDataLoadingUI loadingUI;
+
+        [Header("Test Parameters")]
+        [SerializeField] private int[] testProvinceIds = { 1, 10, 100, 500, 1000, 3000 };
+        [SerializeField] private Color32[] testColors = {
+            new Color32(68, 107, 163, 255),   // Example colors
+            new Color32(96, 43, 67, 255),
+            new Color32(155, 101, 107, 255)
+        };
+
+        // Test results
+        private TestResults _testResults;
+        private DateTime _testStartTime;
+
+        // Events
+        public event Action<TestResults> OnTestsComplete;
+        public event Action<string> OnTestProgress;
+
+        #region Unity Lifecycle
+
+        private void Start()
+        {
+            if (runTestsOnStart)
+            {
+                StartCoroutine(RunAllTestsCoroutine());
+            }
+        }
+
+        #endregion
+
+        #region Public Test Methods
+
+        /// <summary>
+        /// Run all comprehensive tests
+        /// </summary>
+        [ContextMenu("Run All Tests")]
+        public void RunAllTests()
+        {
+            StartCoroutine(RunAllTestsCoroutine());
+        }
+
+        /// <summary>
+        /// Test basic functionality
+        /// </summary>
+        [ContextMenu("Test Basic Functionality")]
+        public void TestBasicFunctionality()
+        {
+            Debug.Log("=== Basic Functionality Test ===");
+
+            // Test ParadoxDataManager
+            TestParadoxDataManager();
+
+            // Test Enhanced Province Loader
+            TestProvinceLoader();
+
+            // Test data consistency
+            TestDataConsistency();
+
+            Debug.Log("✅ Basic functionality tests completed");
+        }
+
+        /// <summary>
+        /// Run performance benchmarks
+        /// </summary>
+        [ContextMenu("Run Performance Benchmarks")]
+        public void RunPerformanceBenchmarks()
+        {
+            StartCoroutine(PerformanceBenchmarkCoroutine());
+        }
+
+        /// <summary>
+        /// Test error handling
+        /// </summary>
+        [ContextMenu("Test Error Handling")]
+        public void TestErrorHandling()
+        {
+            Debug.Log("=== Error Handling Test ===");
+
+            // Test with invalid province ID
+            var invalidProvince = paradoxDataManager?.GetProvinceDefinition(-1);
+            Debug.Log($"Invalid Province ID Test: {(invalidProvince == null ? "✅ Handled correctly" : "❌ Should return null")}");
+
+            // Test with invalid color
+            var invalidColor = new Color32(255, 255, 255, 255); // Unlikely to exist
+            var invalidId = paradoxDataManager?.GetProvinceIdFromColor(invalidColor);
+            Debug.Log($"Invalid Color Test: {(invalidId == null ? "✅ Handled correctly" : "❌ Should return null")}");
+
+            // Test error statistics
+            var errorStats = ParadoxDataErrorHandler.GetErrorStatistics();
+            Debug.Log($"Error Statistics: {errorStats.TotalErrors} total errors recorded");
+
+            Debug.Log("✅ Error handling tests completed");
+        }
+
+        /// <summary>
+        /// Test memory usage and performance
+        /// </summary>
+        [ContextMenu("Test Memory Usage")]
+        public void TestMemoryUsage()
+        {
+            Debug.Log("=== Memory Usage Test ===");
+
+            // Force garbage collection
+            GC.Collect();
+            var beforeMemory = GC.GetTotalMemory(true);
+
+            if (paradoxDataManager != null)
+            {
+                Debug.Log($"ParadoxDataManager Memory: {paradoxDataManager.MemoryUsageBytes / 1024f / 1024f:F2} MB");
+            }
+
+            // Test memory after operations
+            for (int i = 0; i < 1000; i++)
+            {
+                paradoxDataManager?.GetProvinceDefinition(i);
+            }
+
+            GC.Collect();
+            var afterMemory = GC.GetTotalMemory(true);
+            var memoryDiff = (afterMemory - beforeMemory) / 1024f / 1024f;
+
+            Debug.Log($"Memory Usage: Before: {beforeMemory / 1024f / 1024f:F2} MB, After: {afterMemory / 1024f / 1024f:F2} MB");
+            Debug.Log($"Memory Difference: {memoryDiff:F2} MB");
+
+            if (memoryDiff < 10) // Less than 10MB increase is acceptable
+            {
+                Debug.Log("✅ Memory usage within acceptable limits");
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ High memory usage detected - investigate potential leaks");
+            }
+        }
+
+        /// <summary>
+        /// Validate data integrity across all systems
+        /// </summary>
+        [ContextMenu("Validate Data Integrity")]
+        public void ValidateDataIntegrity()
+        {
+            Debug.Log("=== Data Integrity Validation ===");
+
+            if (paradoxDataManager == null || !paradoxDataManager.IsLoaded)
+            {
+                Debug.LogError("❌ ParadoxDataManager not loaded - cannot validate");
+                return;
+            }
+
+            var validationResults = new List<string>();
+
+            // Test province ID consistency
+            TestProvinceIdConsistency(validationResults);
+
+            // Test color mapping consistency
+            TestColorMappingConsistency(validationResults);
+
+            // Test data completeness
+            TestDataCompleteness(validationResults);
+
+            // Report results
+            if (validationResults.Count == 0)
+            {
+                Debug.Log("✅ All data integrity checks passed");
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ Data integrity issues found:\n{string.Join("\n", validationResults)}");
+            }
+        }
+
+        #endregion
+
+        #region Comprehensive Test Coroutine
+
+        private IEnumerator RunAllTestsCoroutine()
+        {
+            _testStartTime = DateTime.Now;
+            _testResults = new TestResults();
+
+            Debug.Log("🧪 Starting Comprehensive ParadoxDataLib Tests");
+            OnTestProgress?.Invoke("Starting tests...");
+
+            // Wait for services to be ready
+            yield return StartCoroutine(WaitForServicesReady());
+
+            // Test 1: Basic Functionality
+            OnTestProgress?.Invoke("Testing basic functionality...");
+            yield return StartCoroutine(TestBasicFunctionalityCoroutine());
+
+            // Test 2: Performance Benchmarks
+            if (enablePerformanceBenchmarks)
+            {
+                OnTestProgress?.Invoke("Running performance benchmarks...");
+                yield return StartCoroutine(PerformanceBenchmarkCoroutine());
+            }
+
+            // Test 3: Error Handling
+            OnTestProgress?.Invoke("Testing error handling...");
+            TestErrorHandling();
+            yield return null;
+
+            // Test 4: Memory Usage
+            if (enableMemoryMonitoring)
+            {
+                OnTestProgress?.Invoke("Testing memory usage...");
+                TestMemoryUsage();
+                yield return null;
+            }
+
+            // Test 5: Data Integrity
+            OnTestProgress?.Invoke("Validating data integrity...");
+            ValidateDataIntegrity();
+            yield return null;
+
+            // Complete tests
+            _testResults.TestDuration = DateTime.Now - _testStartTime;
+            Debug.Log($"🎉 All tests completed in {_testResults.TestDuration.TotalSeconds:F2} seconds");
+
+            OnTestsComplete?.Invoke(_testResults);
+            OnTestProgress?.Invoke("Tests completed!");
+
+            // Generate test report
+            GenerateTestReport();
+        }
+
+        private IEnumerator WaitForServicesReady()
+        {
+            OnTestProgress?.Invoke("Waiting for services to initialize...");
+
+            // Find services if not assigned
+            if (paradoxDataManager == null)
+                paradoxDataManager = FindObjectOfType<ParadoxDataManager>();
+            if (provinceLoader == null)
+                provinceLoader = FindObjectOfType<EnhancedProvinceDefinitionLoader>();
+
+            if (paradoxDataManager == null)
+            {
+                Debug.LogError("❌ ParadoxDataManager not found! Add it to the scene.");
+                yield break;
+            }
+
+            // Start loading if not already loaded
+            if (!paradoxDataManager.IsLoaded && !paradoxDataManager.IsLoading)
+            {
+                Debug.Log("Starting ParadoxDataManager loading...");
+                StartCoroutine(paradoxDataManager.LoadAllDataCoroutine());
+            }
+
+            // Wait for loading to complete
+            yield return new WaitUntil(() => paradoxDataManager.IsLoaded || !paradoxDataManager.IsLoading);
+
+            if (!paradoxDataManager.IsLoaded)
+            {
+                Debug.LogError("❌ Failed to load ParadoxDataManager - tests cannot proceed");
+                yield break;
+            }
+
+            Debug.Log("✅ Services ready for testing");
+        }
+
+        #endregion
+
+        #region Individual Test Methods
+
+        private void TestParadoxDataManager()
+        {
+            Debug.Log("Testing ParadoxDataManager...");
+
+            if (paradoxDataManager == null)
+            {
+                Debug.LogError("❌ ParadoxDataManager not found");
+                _testResults.FailedTests++;
+                return;
+            }
+
+            // Test basic properties
+            Debug.Log($"  State: {paradoxDataManager.CurrentState}");
+            Debug.Log($"  Memory Usage: {paradoxDataManager.MemoryUsageBytes / 1024f / 1024f:F2} MB");
+            Debug.Log($"  Is Loaded: {paradoxDataManager.IsLoaded}");
+
+            // Test data access
+            var definitions = paradoxDataManager.GetAllProvinceDefinitions();
+            Debug.Log($"  Province Definitions: {definitions.Count()}");
+            _testResults.ProvinceCount = definitions.Count();
+
+            var mapData = paradoxDataManager.GetDefaultMapData();
+            Debug.Log($"  Default Map Data: {(mapData != null ? "✅ Available" : "❌ Missing")}");
+
+            if (definitions.Any())
+            {
+                Debug.Log("✅ ParadoxDataManager tests passed");
+                _testResults.PassedTests++;
+            }
+            else
+            {
+                Debug.LogError("❌ ParadoxDataManager has no province data");
+                _testResults.FailedTests++;
+            }
+        }
+
+        private void TestProvinceLoader()
+        {
+            Debug.Log("Testing EnhancedProvinceDefinitionLoader...");
+
+            if (provinceLoader == null)
+            {
+                Debug.LogWarning("⚠️ EnhancedProvinceDefinitionLoader not found - skipping test");
+                return;
+            }
+
+            Debug.Log($"  Is Loaded: {provinceLoader.IsLoaded}");
+            Debug.Log($"  Total Provinces: {provinceLoader.TotalProvinces}");
+            Debug.Log($"  Land Provinces: {provinceLoader.LandProvinces}");
+            Debug.Log($"  Sea Provinces: {provinceLoader.SeaProvinces}");
+            Debug.Log($"  Lake Provinces: {provinceLoader.LakeProvinces}");
+
+            if (provinceLoader.IsLoaded && provinceLoader.TotalProvinces > 0)
+            {
+                Debug.Log("✅ EnhancedProvinceDefinitionLoader tests passed");
+                _testResults.PassedTests++;
+            }
+            else
+            {
+                Debug.LogError("❌ EnhancedProvinceDefinitionLoader failed");
+                _testResults.FailedTests++;
+            }
+        }
+
+        private void TestDataConsistency()
+        {
+            Debug.Log("Testing data consistency...");
+
+            int consistentResults = 0;
+            int totalTests = testProvinceIds.Length;
+
+            foreach (int provinceId in testProvinceIds)
+            {
+                var definition = paradoxDataManager.GetProvinceDefinition(provinceId);
+                if (definition != null)
+                {
+                    // Test color roundtrip
+                    var color = new Color32(definition.Red, definition.Green, definition.Blue, 255);
+                    var lookupId = paradoxDataManager.GetProvinceIdFromColor(color);
+
+                    if (lookupId == provinceId)
+                    {
+                        consistentResults++;
+                        if (enableDetailedLogging)
+                        {
+                            Debug.Log($"  Province {provinceId}: ✅ Consistent");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"  Province {provinceId}: ❌ Inconsistent (lookup returned {lookupId})");
+                    }
+                }
+                else if (enableDetailedLogging)
+                {
+                    Debug.Log($"  Province {provinceId}: ❓ Not found (may be normal)");
+                }
+            }
+
+            float consistencyRatio = (float)consistentResults / totalTests;
+            _testResults.ConsistencyRatio = consistencyRatio;
+
+            if (consistencyRatio > 0.8f) // 80% consistency threshold
+            {
+                Debug.Log($"✅ Data consistency test passed ({consistencyRatio:P1})");
+                _testResults.PassedTests++;
+            }
+            else
+            {
+                Debug.LogError($"❌ Data consistency test failed ({consistencyRatio:P1})");
+                _testResults.FailedTests++;
+            }
+        }
+
+        private IEnumerator TestBasicFunctionalityCoroutine()
+        {
+            TestParadoxDataManager();
+            yield return null;
+
+            TestProvinceLoader();
+            yield return null;
+
+            TestDataConsistency();
+            yield return null;
+        }
+
+        private IEnumerator PerformanceBenchmarkCoroutine()
+        {
+            Debug.Log("=== Performance Benchmarks ===");
+
+            // Benchmark province lookups
+            var startTime = DateTime.Now;
+            for (int i = 0; i < 10000; i++)
+            {
+                paradoxDataManager.GetProvinceDefinition(i % 1000);
+            }
+            var lookupTime = DateTime.Now - startTime;
+            _testResults.LookupPerformance = lookupTime;
+
+            Debug.Log($"Province Lookup Performance: {lookupTime.TotalMilliseconds:F2}ms for 10,000 lookups");
+            Debug.Log($"Average: {lookupTime.TotalMilliseconds / 10000:F4}ms per lookup");
+
+            yield return null;
+
+            // Benchmark color lookups
+            startTime = DateTime.Now;
+            for (int i = 0; i < 1000; i++)
+            {
+                var color = new Color32((byte)(i % 256), (byte)((i * 2) % 256), (byte)((i * 3) % 256), 255);
+                paradoxDataManager.GetProvinceIdFromColor(color);
+            }
+            var colorLookupTime = DateTime.Now - startTime;
+            _testResults.ColorLookupPerformance = colorLookupTime;
+
+            Debug.Log($"Color Lookup Performance: {colorLookupTime.TotalMilliseconds:F2}ms for 1,000 lookups");
+
+            if (lookupTime.TotalMilliseconds < 100) // Less than 100ms for 10k lookups
+            {
+                Debug.Log("✅ Performance benchmarks passed");
+                _testResults.PassedTests++;
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ Performance below expectations");
+                _testResults.FailedTests++;
+            }
+        }
+
+        #endregion
+
+        #region Data Validation Methods
+
+        private void TestProvinceIdConsistency(List<string> issues)
+        {
+            var definitions = paradoxDataManager.GetAllProvinceDefinitions().ToList();
+            var duplicateIds = definitions.GroupBy(d => d.ProvinceId)
+                                         .Where(g => g.Count() > 1)
+                                         .Select(g => g.Key);
+
+            if (duplicateIds.Any())
+            {
+                issues.Add($"Duplicate Province IDs: {string.Join(", ", duplicateIds)}");
+            }
+        }
+
+        private void TestColorMappingConsistency(List<string> issues)
+        {
+            var definitions = paradoxDataManager.GetAllProvinceDefinitions().ToList();
+            var colorGroups = definitions.GroupBy(d => new { d.Red, d.Green, d.Blue })
+                                        .Where(g => g.Count() > 1);
+
+            if (colorGroups.Any())
+            {
+                issues.Add($"Duplicate Colors: {colorGroups.Count()} color conflicts found");
+            }
+        }
+
+        private void TestDataCompleteness(List<string> issues)
+        {
+            var definitions = paradoxDataManager.GetAllProvinceDefinitions().ToList();
+
+            var missingNames = definitions.Where(d => string.IsNullOrEmpty(d.Name)).Count();
+            if (missingNames > 0)
+            {
+                issues.Add($"Missing Names: {missingNames} provinces without names");
+            }
+
+            var invalidIds = definitions.Where(d => d.ProvinceId <= 0).Count();
+            if (invalidIds > 0)
+            {
+                issues.Add($"Invalid IDs: {invalidIds} provinces with invalid IDs");
+            }
+        }
+
+        #endregion
+
+        #region Test Reporting
+
+        private void GenerateTestReport()
+        {
+            var report = $@"
+=== ParadoxDataLib Test Report ===
+Test Date: {DateTime.Now:yyyy-MM-dd HH:mm:ss}
+Test Duration: {_testResults.TestDuration.TotalSeconds:F2} seconds
+
+RESULTS SUMMARY:
+✅ Passed Tests: {_testResults.PassedTests}
+❌ Failed Tests: {_testResults.FailedTests}
+📊 Success Rate: {(_testResults.PassedTests / (float)(_testResults.PassedTests + _testResults.FailedTests)):P1}
+
+DATA STATISTICS:
+📋 Province Count: {_testResults.ProvinceCount}
+🎯 Data Consistency: {_testResults.ConsistencyRatio:P1}
+
+PERFORMANCE METRICS:
+⚡ Lookup Performance: {_testResults.LookupPerformance.TotalMilliseconds:F2}ms (10k operations)
+🎨 Color Lookup Performance: {_testResults.ColorLookupPerformance.TotalMilliseconds:F2}ms (1k operations)
+
+SYSTEM INFO:
+🖥️ Platform: {Application.platform}
+🎮 Unity Version: {Application.unityVersion}
+💾 Memory Usage: {GC.GetTotalMemory(false) / 1024f / 1024f:F2} MB
+";
+
+            Debug.Log(report);
+
+            // Save to file if FileLogger is available
+            if (FileLogger.Instance != null)
+            {
+                DominionLogger.LogSection("ParadoxDataLib Test Report");
+                FileLogger.Instance.Log(report);
+            }
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public TestResults GetLastTestResults() => _testResults;
+
+        #endregion
+    }
+
+    #region Supporting Classes
+
+    [System.Serializable]
+    public class TestResults
+    {
+        public int PassedTests = 0;
+        public int FailedTests = 0;
+        public int ProvinceCount = 0;
+        public float ConsistencyRatio = 0f;
+        public TimeSpan TestDuration;
+        public TimeSpan LookupPerformance;
+        public TimeSpan ColorLookupPerformance;
+
+        public float SuccessRate => PassedTests / (float)(PassedTests + FailedTests);
+    }
+
+    #endregion
+}
