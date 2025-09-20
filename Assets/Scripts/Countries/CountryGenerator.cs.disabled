@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using ProvinceSystem.Map;
+using ProvinceSystem.Services;
 
 namespace ProvinceSystem.Countries
 {
@@ -43,12 +44,12 @@ namespace ProvinceSystem.Countries
 
         [Header("Map Definition")]
         public string mapDefinitionPath = "Assets/Resources/default.map";
-        public ProvinceDefinitionLoader provinceDefinitionLoader;
+        public EnhancedProvinceDefinitionLoader provinceDefinitionLoader;
 
         private CountryDataService countryService;
         private ProvinceManager provinceManager;
-        private MapDefinitionLoader.MapDefinition mapDefinition;
-        private Dictionary<Color32, ProvinceDefinition> provinceDefinitions;
+        private EnhancedMapDefinitionLoader.MapDefinition mapDefinition;
+        private Dictionary<Color32, UnityProvinceDefinition> provinceDefinitions;
         private List<Color> usedColors = new List<Color>();
 
         public CountryDataService CountryService => countryService;
@@ -389,7 +390,7 @@ namespace ProvinceSystem.Countries
 
             if (System.IO.File.Exists(fullPath))
             {
-                mapDefinition = MapDefinitionLoader.LoadMapDefinition(fullPath);
+                mapDefinition = EnhancedMapDefinitionLoader.LoadMapDefinition(fullPath);
 
                 if (mapDefinition != null && showGenerationLog)
                 {
@@ -412,7 +413,7 @@ namespace ProvinceSystem.Countries
 
             if (provinceDefinitionLoader != null)
             {
-                provinceDefinitions = provinceDefinitionLoader.GetDefinitionsByColor();
+                provinceDefinitions = provinceDefinitionLoader.DefinitionsByColor;
                 if (showGenerationLog && provinceDefinitions != null)
                 {
                     Debug.Log($"Loaded {provinceDefinitions.Count} province definitions from ProvinceDefinitionLoader");

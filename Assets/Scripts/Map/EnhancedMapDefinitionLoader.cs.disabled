@@ -1,0 +1,535 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+using ParadoxDataLib.Core.Parsers;
+using ParadoxDataLib.Core.Common;
+using ProvinceSystem.Services;
+
+namespace ProvinceSystem.Map
+{
+    /// <summary>
+    /// Enhanced map definition loader using ParadoxDataLib GenericParadoxParser
+    /// Replaces regex-based parsing with robust ParadoxDataLib parsing
+    /// </summary>
+    public class EnhancedMapDefinitionLoader
+    {
+        /// <summary>
+        /// Enhanced map definition structure with ParadoxDataLib integration
+        /// </summary>
+        public class MapDefinition
+        {
+            public int width;
+            public int height;
+            public int maxProvinces;
+            public HashSet<int> seaProvinces = new HashSet<int>();
+            public HashSet<int> lakeProvinces = new HashSet<int>();
+            public HashSet<int> randomOnlyProvinces = new HashSet<int>();
+            public HashSet<int> wastelandProvinces = new HashSet<int>();
+            public HashSet<int> forceCoastalProvinces = new HashSet<int>();
+
+            public Dictionary<string, string> filePaths = new Dictionary<string, string>();
+            public List<CanalDefinition> canals = new List<CanalDefinition>();
+
+            // Enhanced properties
+            public DateTime loadTime;
+            public string filePath;
+            public bool isValid;
+            public List<string> parseWarnings = new List<string>();
+
+            // Province classification methods
+            public bool IsSeaProvince(int provinceId) => seaProvinces.Contains(provinceId);
+            public bool IsLakeProvince(int provinceId) => lakeProvinces.Contains(provinceId);
+            public bool IsWaterProvince(int provinceId) => IsSeaProvince(provinceId) || IsLakeProvince(provinceId);
+            public bool IsLandProvince(int provinceId) => !IsWaterProvince(provinceId) && !wastelandProvinces.Contains(provinceId);
+            public bool IsWasteland(int provinceId) => wastelandProvinces.Contains(provinceId);
+
+            // Statistics
+            public int TotalSeaProvinces => seaProvinces.Count;
+            public int TotalLakeProvinces => lakeProvinces.Count;
+            public int TotalWaterProvinces => TotalSeaProvinces + TotalLakeProvinces;
+            public int TotalWastelandProvinces => wastelandProvinces.Count;
+
+            public override string ToString()
+            {
+                return $"MapDefinition {width}x{height} - {maxProvinces} max provinces, {TotalSeaProvinces} seas, {TotalLakeProvinces} lakes, {TotalWastelandProvinces} wastelands";
+            }
+        }
+
+        /// <summary>
+        /// Canal definition structure
+        /// </summary>
+        public class CanalDefinition
+        {
+            public string name;
+            public int x;
+            public int y;
+            public Dictionary<string, object> properties = new Dictionary<string, object>();
+
+            public override string ToString()
+            {
+                return $"Canal '{name}' at ({x}, {y})";
+            }
+        }
+
+        private static GenericParadoxParser _parser = new GenericParadoxParser();
+
+        /// <summary>
+        /// Load map definition using ParadoxDataLib parser
+        /// </summary>
+        public static MapDefinition LoadMapDefinition(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                var error = ParadoxDataErrorHandler.HandleError(
+                    ParadoxDataErrorType.DefaultMapFileNotFound,
+                    new FileNotFoundException($"Map definition file not found: {filePath}"),
+                    filePath
+                );
+                Debug.LogError(error.Message);
+                return null;
+            }
+
+            try
+            {
+                var definition = new MapDefinition
+                {
+                    filePath = filePath,
+                    loadTime = DateTime.Now
+                };
+
+                string content = File.ReadAllText(filePath);
+                var rootNode = _parser.Parse(content);
+
+                if (rootNode == null)
+                {
+                    var error = ParadoxDataErrorHandler.HandleError(
+                        ParadoxDataErrorType.ParadoxNodeParsingFailed,
+                        new InvalidDataException("Failed to parse default.map file"),
+                        filePath
+                    );
+                    Debug.LogError(error.Message);
+                    return null;
+                }
+
+                // Parse using ParadoxDataLib structure
+                ParseBasicProperties(rootNode, definition);
+                ParseProvinceLists(rootNode, definition);
+                ParseFilePaths(rootNode, definition);
+                ParseCanals(rootNode, definition);
+
+                // Validate parsed data
+                ValidateMapDefinition(definition);
+
+                definition.isValid = true;
+                Debug.Log($"✅ Map definition loaded successfully: {definition}");
+
+                return definition;
+            }
+            catch (Exception ex)
+            {
+                var error = ParadoxDataErrorHandler.HandleError(
+                    ParadoxDataErrorType.ParadoxNodeParsingFailed,
+                    ex,
+                    $"Failed to load map definition from {filePath}"
+                );
+                Debug.LogError(error.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Load map definition with async support
+        /// </summary>
+        public static async System.Threading.Tasks.Task<MapDefinition> LoadMapDefinitionAsync(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                var error = ParadoxDataErrorHandler.HandleError(
+                    ParadoxDataErrorType.DefaultMapFileNotFound,
+                    new FileNotFoundException($"Map definition file not found: {filePath}"),
+                    filePath
+                );
+                Debug.LogError(error.Message);
+                return null;
+            }
+
+            try
+            {
+                var definition = new MapDefinition
+                {
+                    filePath = filePath,
+                    loadTime = DateTime.Now
+                };
+
+                string content = await File.ReadAllTextAsync(filePath);
+                var rootNode = _parser.Parse(content);
+
+                if (rootNode == null)
+                {
+                    var error = ParadoxDataErrorHandler.HandleError(
+                        ParadoxDataErrorType.ParadoxNodeParsingFailed,
+                        new InvalidDataException("Failed to parse default.map file"),
+                        filePath
+                    );
+                    Debug.LogError(error.Message);
+                    return null;
+                }
+
+                // Parse using ParadoxDataLib structure
+                ParseBasicProperties(rootNode, definition);
+                ParseProvinceLists(rootNode, definition);
+                ParseFilePaths(rootNode, definition);
+                ParseCanals(rootNode, definition);
+
+                // Validate parsed data
+                ValidateMapDefinition(definition);
+
+                definition.isValid = true;
+                Debug.Log($"✅ Map definition loaded successfully (async): {definition}");
+
+                return definition;
+            }
+            catch (Exception ex)
+            {
+                var error = ParadoxDataErrorHandler.HandleError(
+                    ParadoxDataErrorType.ParadoxNodeParsingFailed,
+                    ex,
+                    $"Failed to load map definition from {filePath}"
+                );
+                Debug.LogError(error.Message);
+                return null;
+            }
+        }
+
+        #region Parsing Methods
+
+        private static void ParseBasicProperties(ParadoxNode rootNode, MapDefinition definition)
+        {
+            // Parse basic integer properties
+            definition.width = ParseIntProperty(rootNode, "width", 0);
+            definition.height = ParseIntProperty(rootNode, "height", 0);
+            definition.maxProvinces = ParseIntProperty(rootNode, "max_provinces", 0);
+
+            if (definition.width <= 0 || definition.height <= 0)
+            {
+                definition.parseWarnings.Add("Invalid map dimensions detected");
+            }
+
+            if (definition.maxProvinces <= 0)
+            {
+                definition.parseWarnings.Add("Invalid max_provinces value detected");
+            }
+        }
+
+        private static void ParseProvinceLists(ParadoxNode rootNode, MapDefinition definition)
+        {
+            // Parse sea provinces
+            definition.seaProvinces = ParseProvinceList(rootNode, "sea_starts");
+            Debug.Log($"Parsed {definition.seaProvinces.Count} sea provinces");
+
+            // Parse lake provinces
+            definition.lakeProvinces = ParseProvinceList(rootNode, "lakes");
+            Debug.Log($"Parsed {definition.lakeProvinces.Count} lake provinces");
+
+            // Parse force coastal provinces
+            definition.forceCoastalProvinces = ParseProvinceList(rootNode, "force_coastal");
+
+            // Parse random only provinces
+            definition.randomOnlyProvinces = ParseProvinceList(rootNode, "only_used_for_random");
+
+            // Parse wasteland provinces (if they exist as a separate list)
+            definition.wastelandProvinces = ParseProvinceList(rootNode, "wasteland");
+
+            // Alternative: Extract wasteland provinces from comments in random only section
+            if (definition.wastelandProvinces.Count == 0)
+            {
+                ExtractWastelandFromComments(rootNode, definition);
+            }
+        }
+
+        private static void ParseFilePaths(ParadoxNode rootNode, MapDefinition definition)
+        {
+            var filePathKeys = new[]
+            {
+                "definitions", "provinces", "positions", "terrain",
+                "rivers", "heightmap", "adjacencies", "climate",
+                "continent", "tree", "island_region"
+            };
+
+            foreach (var key in filePathKeys)
+            {
+                var value = ParseStringProperty(rootNode, key, "");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    definition.filePaths[key] = value.Trim('"');
+                }
+            }
+
+            Debug.Log($"Parsed {definition.filePaths.Count} file path references");
+        }
+
+        private static void ParseCanals(ParadoxNode rootNode, MapDefinition definition)
+        {
+            // Find all canal_definition nodes
+            var canalNodes = FindChildrenByKey(rootNode, "canal_definition");
+
+            foreach (var canalNode in canalNodes)
+            {
+                try
+                {
+                    var canal = new CanalDefinition
+                    {
+                        name = ParseStringProperty(canalNode, "name", ""),
+                        x = ParseIntProperty(canalNode, "x", 0),
+                        y = ParseIntProperty(canalNode, "y", 0)
+                    };
+
+                    // Parse additional properties
+                    foreach (var child in canalNode.Children)
+                    {
+                        if (child.Key != "name" && child.Key != "x" && child.Key != "y")
+                        {
+                            canal.properties[child.Key] = child.Value;
+                        }
+                    }
+
+                    definition.canals.Add(canal);
+                }
+                catch (Exception ex)
+                {
+                    definition.parseWarnings.Add($"Failed to parse canal definition: {ex.Message}");
+                }
+            }
+
+            Debug.Log($"Parsed {definition.canals.Count} canal definitions");
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private static HashSet<int> ParseProvinceList(ParadoxNode rootNode, string key)
+        {
+            var provinces = new HashSet<int>();
+
+            try
+            {
+                var listNode = rootNode.GetChild(key);
+                if (listNode != null)
+                {
+                    var values = listNode.GetValues<string>();
+                    foreach (var value in values)
+                    {
+                        if (int.TryParse(value.Trim(), out int provinceId))
+                        {
+                            provinces.Add(provinceId);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"Failed to parse province list '{key}': {ex.Message}");
+            }
+
+            return provinces;
+        }
+
+        private static int ParseIntProperty(ParadoxNode node, string key, int defaultValue)
+        {
+            try
+            {
+                var value = node.GetValue(key);
+                if (int.TryParse(value, out int result))
+                {
+                    return result;
+                }
+            }
+            catch
+            {
+                // Return default value on any error
+            }
+
+            return defaultValue;
+        }
+
+        private static string ParseStringProperty(ParadoxNode node, string key, string defaultValue)
+        {
+            try
+            {
+                var value = node.GetValue(key);
+                return value ?? defaultValue;
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+
+        private static List<ParadoxNode> FindChildrenByKey(ParadoxNode node, string key)
+        {
+            var results = new List<ParadoxNode>();
+
+            foreach (var child in node.Children)
+            {
+                if (child.Key == key)
+                {
+                    results.Add(child);
+                }
+
+                // Recursively search in child nodes
+                results.AddRange(FindChildrenByKey(child, key));
+            }
+
+            return results;
+        }
+
+        private static void ExtractWastelandFromComments(ParadoxNode rootNode, MapDefinition definition)
+        {
+            // This is a fallback method for extracting wasteland provinces from comments
+            // Since ParadoxDataLib handles structured data, we may not need this
+            // but keeping it for compatibility
+
+            try
+            {
+                var randomOnlyNode = rootNode.GetChild("only_used_for_random");
+                if (randomOnlyNode != null)
+                {
+                    // Look for any child nodes that might contain wasteland references
+                    foreach (var child in randomOnlyNode.Children)
+                    {
+                        if (child.Key.ToLower().Contains("wasteland") ||
+                            child.Value?.ToString().ToLower().Contains("wasteland") == true)
+                        {
+                            var values = child.GetValues<string>();
+                            foreach (var value in values)
+                            {
+                                if (int.TryParse(value.Trim(), out int wastelandId))
+                                {
+                                    definition.wastelandProvinces.Add(wastelandId);
+                                    definition.randomOnlyProvinces.Remove(wastelandId);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                definition.parseWarnings.Add($"Failed to extract wasteland provinces: {ex.Message}");
+            }
+        }
+
+        private static void ValidateMapDefinition(MapDefinition definition)
+        {
+            // Check for reasonable map dimensions
+            if (definition.width <= 0 || definition.height <= 0)
+            {
+                definition.parseWarnings.Add("Invalid map dimensions");
+            }
+
+            // Check for reasonable province counts
+            if (definition.maxProvinces <= 0)
+            {
+                definition.parseWarnings.Add("Invalid max provinces value");
+            }
+
+            // Check for province ID overlaps
+            var allWaterProvinces = new HashSet<int>(definition.seaProvinces);
+            allWaterProvinces.UnionWith(definition.lakeProvinces);
+
+            var overlaps = definition.seaProvinces.Intersect(definition.lakeProvinces);
+            if (overlaps.Any())
+            {
+                definition.parseWarnings.Add($"Province ID overlap between seas and lakes: {string.Join(", ", overlaps)}");
+            }
+
+            // Check for essential file paths
+            var requiredPaths = new[] { "definitions", "provinces" };
+            foreach (var requiredPath in requiredPaths)
+            {
+                if (!definition.filePaths.ContainsKey(requiredPath) || string.IsNullOrEmpty(definition.filePaths[requiredPath]))
+                {
+                    definition.parseWarnings.Add($"Missing required file path: {requiredPath}");
+                }
+            }
+
+            // Log warnings
+            if (definition.parseWarnings.Any())
+            {
+                Debug.LogWarning($"Map definition validation warnings:\n{string.Join("\n", definition.parseWarnings)}");
+            }
+        }
+
+        #endregion
+
+        #region Utility Methods
+
+        /// <summary>
+        /// Create Unity-friendly wrapper for map definition
+        /// </summary>
+        public static UnityMapDefinition CreateUnityWrapper(MapDefinition mapDef)
+        {
+            if (mapDef == null)
+                return null;
+
+            // Create a dummy ParadoxNode for the wrapper constructor
+            // In a real scenario, you'd pass the actual ParadoxNode used for parsing
+            var unityWrapper = new UnityMapDefinition();
+
+            // Manually populate the wrapper since we don't have the original ParadoxNode
+            // This is a temporary solution - ideally we'd refactor to preserve the ParadoxNode
+            return unityWrapper;
+        }
+
+        /// <summary>
+        /// Export map definition to JSON for debugging
+        /// </summary>
+        public static string ExportToJson(MapDefinition definition)
+        {
+            try
+            {
+                var exportData = new
+                {
+                    definition.width,
+                    definition.height,
+                    definition.maxProvinces,
+                    seaProvinces = definition.seaProvinces.ToArray(),
+                    lakeProvinces = definition.lakeProvinces.ToArray(),
+                    wastelandProvinces = definition.wastelandProvinces.ToArray(),
+                    definition.filePaths,
+                    canals = definition.canals.Select(c => new { c.name, c.x, c.y, c.properties }).ToArray(),
+                    definition.loadTime,
+                    definition.filePath,
+                    definition.isValid,
+                    definition.parseWarnings
+                };
+
+                return JsonUtility.ToJson(exportData, true);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to export map definition to JSON: {ex.Message}");
+                return null;
+            }
+        }
+
+        #endregion
+
+        #region Backward Compatibility
+
+        /// <summary>
+        /// Legacy support method for existing code that expects the old regex-based parser
+        /// </summary>
+        [System.Obsolete("Use LoadMapDefinition instead")]
+        public static MapDefinition LoadMapDefinitionLegacy(string filePath)
+        {
+            Debug.LogWarning("Using legacy map definition loader. Consider updating to use ParadoxDataLib version.");
+            return LoadMapDefinition(filePath);
+        }
+
+        #endregion
+    }
+}

@@ -1,6 +1,7 @@
 using UnityEngine;
 using ProvinceSystem.Countries;
 using ProvinceSystem.Map;
+using ProvinceSystem.Services;
 using System.Collections.Generic;
 
 namespace ProvinceSystem.MapModes
@@ -11,7 +12,7 @@ namespace ProvinceSystem.MapModes
     public class PoliticalMapMode : BaseMapMode
     {
         private CountryDataService countryService;
-        private MapDefinitionLoader.MapDefinition mapDefinition;
+        private EnhancedMapDefinitionLoader.MapDefinition mapDefinition;
         private Color unownedLandColor = new Color(0.3f, 0.3f, 0.3f, 1f);
         private Color seaColor = new Color(0.1f, 0.2f, 0.4f, 1f);
         private Color lakeColor = new Color(0.15f, 0.3f, 0.5f, 1f);
@@ -20,13 +21,13 @@ namespace ProvinceSystem.MapModes
 
         public override string ModeName => "Political";
 
-        public PoliticalMapMode(CountryDataService service, MapDefinitionLoader.MapDefinition definition = null)
+        public PoliticalMapMode(CountryDataService service, EnhancedMapDefinitionLoader.MapDefinition definition = null)
         {
             countryService = service;
             mapDefinition = definition;
         }
 
-        public void SetMapDefinition(MapDefinitionLoader.MapDefinition definition)
+        public void SetMapDefinition(EnhancedMapDefinitionLoader.MapDefinition definition)
         {
             mapDefinition = definition;
             if (IsActive)
@@ -45,7 +46,7 @@ namespace ProvinceSystem.MapModes
                 string mapDefPath = System.IO.Path.Combine(Application.dataPath, "Resources", "default.map");
                 if (System.IO.File.Exists(mapDefPath))
                 {
-                    mapDefinition = MapDefinitionLoader.LoadMapDefinition(mapDefPath);
+                    mapDefinition = EnhancedMapDefinitionLoader.LoadMapDefinition(mapDefPath);
                 }
             }
         }

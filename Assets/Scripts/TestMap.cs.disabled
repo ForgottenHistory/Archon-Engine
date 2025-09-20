@@ -14,7 +14,7 @@ public class TestMap : MonoBehaviour
     public GameObject mapPlane;
     public Camera mapCamera;
     public Texture2D provinceTexture;
-    public ProvinceDefinitionLoader provinceDefinitionLoader;
+    public EnhancedProvinceDefinitionLoader provinceDefinitionLoader;
 
     [Header("Camera Controller")]
     public ParadoxStyleCameraController cameraController;
