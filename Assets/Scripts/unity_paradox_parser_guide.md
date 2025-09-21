@@ -79,13 +79,13 @@ Based on reference implementation (3,708 files in 1.6 seconds on consumer PC):
 ### Phase 2: Generic Parser Core (Week 1-2)
 
 #### 2.1 Tokenizer Foundation (Day 4)
-- [ ] Implement byte-level tokenization
-- [ ] Create token type enumeration
-- [ ] Design token stream structure
-- [ ] Implement whitespace handling
-- [ ] Add comment detection and skipping
-- [ ] Create line/column tracking
-- [ ] Setup token caching system
+- [x] Implement byte-level tokenization
+- [x] Create token type enumeration
+- [x] Design token stream structure
+- [x] Implement whitespace handling
+- [x] Add comment detection and skipping
+- [x] Create line/column tracking
+- [x] Setup token caching system
 
 #### 2.2 Burst-Compiled Tokenizer (Day 4-5)
 - [ ] Convert tokenizer to Burst job
