@@ -48,11 +48,41 @@ namespace ParadoxParser.Tokenization
         Dot,               // .
         Hash,              // #
 
+        // Basic arithmetic operators
+        Plus,              // +
+        Minus,             // -
+        Asterisk,          // *
+        Slash,             // /
+        Percent,           // %
+
         // Paradox-specific operators
         Add,               // += (often used in effects)
         Subtract,          // -=
         Multiply,          // *=
         Divide,            // /=
+        Modulo,            // %=
+
+        // Logical operators
+        LogicalAnd,        // &&
+        LogicalOr,         // ||
+
+        // Bitwise operators
+        Ampersand,         // &
+        Pipe,              // |
+        Caret,             // ^
+        Tilde,             // ~
+        LeftShift,         // <<
+        RightShift,        // >>
+        LeftShiftAssign,   // <<=
+        RightShiftAssign,  // >>=
+
+        // Special operators
+        Exclamation,       // !
+        Question,          // ?
+        At,                // @
+        Dollar,            // $
+        Arrow,             // ->
+        ScopeResolution,   // ::
 
         // Special tokens
         Invalid,           // Unrecognized token
@@ -101,7 +131,7 @@ namespace ParadoxParser.Tokenization
         /// </summary>
         public static bool IsOperator(this TokenType type)
         {
-            return type >= TokenType.Equals && type <= TokenType.Divide;
+            return type >= TokenType.Equals && type <= TokenType.ScopeResolution;
         }
 
         /// <summary>
@@ -195,10 +225,32 @@ namespace ParadoxParser.Tokenization
                 TokenType.Colon => ":",
                 TokenType.Dot => ".",
                 TokenType.Hash => "#",
+                TokenType.Plus => "+",
+                TokenType.Minus => "-",
+                TokenType.Asterisk => "*",
+                TokenType.Slash => "/",
+                TokenType.Percent => "%",
                 TokenType.Add => "+=",
                 TokenType.Subtract => "-=",
                 TokenType.Multiply => "*=",
                 TokenType.Divide => "/=",
+                TokenType.Modulo => "%=",
+                TokenType.LogicalAnd => "&&",
+                TokenType.LogicalOr => "||",
+                TokenType.Ampersand => "&",
+                TokenType.Pipe => "|",
+                TokenType.Caret => "^",
+                TokenType.Tilde => "~",
+                TokenType.LeftShift => "<<",
+                TokenType.RightShift => ">>",
+                TokenType.LeftShiftAssign => "<<=",
+                TokenType.RightShiftAssign => ">>=",
+                TokenType.Exclamation => "!",
+                TokenType.Question => "?",
+                TokenType.At => "@",
+                TokenType.Dollar => "$",
+                TokenType.Arrow => "->",
+                TokenType.ScopeResolution => "::",
                 TokenType.Variable => "Variable",
                 TokenType.Scope => "Scope",
                 TokenType.Invalid => "Invalid",

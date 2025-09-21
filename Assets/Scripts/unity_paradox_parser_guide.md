@@ -88,13 +88,13 @@ Based on reference implementation (3,708 files in 1.6 seconds on consumer PC):
 - [x] Setup token caching system
 
 #### 2.2 Burst-Compiled Tokenizer (Day 4-5)
-- [ ] Convert tokenizer to Burst job
-- [ ] Implement parallel tokenization for large files
-- [ ] Add SIMD optimizations for byte scanning
-- [ ] Create fast string hashing
-- [ ] Implement number parsing without allocations
-- [ ] Add date parsing (YYYY.MM.DD format)
-- [ ] Optimize operator detection
+- [x] Convert tokenizer to Burst job
+- [x] Implement parallel tokenization for large files
+- [x] Add SIMD optimizations for byte scanning
+- [x] Create fast string hashing
+- [x] Implement number parsing without allocations
+- [x] Add date parsing (YYYY.MM.DD format)
+- [x] Optimize operator detection
 
 #### 2.3 Parser State Machine (Day 5)
 - [ ] Design parser state enumeration
