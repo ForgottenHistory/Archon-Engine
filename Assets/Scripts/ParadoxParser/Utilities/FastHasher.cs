@@ -375,5 +375,51 @@ namespace ParadoxParser.Utilities
 
             return alphaCount > length / 2; // More than 50% alphabetic
         }
+
+        /// <summary>
+        /// Convenience overload for string literals
+        /// Converts string to UTF-8 bytes and hashes them
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint HashFNV1a32(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return FNV_OFFSET_BASIS_32;
+
+            // Convert string to UTF-8 bytes manually for better performance
+            var bytes = new NativeArray<byte>(str.Length * 3, Allocator.Temp); // Max UTF-8 expansion
+            try
+            {
+                int byteCount = 0;
+                for (int i = 0; i < str.Length; i++)
+                {
+                    char c = str[i];
+                    if (c <= 0x7F)
+                    {
+                        // Single byte (ASCII)
+                        bytes[byteCount++] = (byte)c;
+                    }
+                    else if (c <= 0x7FF)
+                    {
+                        // Two bytes
+                        bytes[byteCount++] = (byte)(0xC0 | (c >> 6));
+                        bytes[byteCount++] = (byte)(0x80 | (c & 0x3F));
+                    }
+                    else
+                    {
+                        // Three bytes (covers most Unicode)
+                        bytes[byteCount++] = (byte)(0xE0 | (c >> 12));
+                        bytes[byteCount++] = (byte)(0x80 | ((c >> 6) & 0x3F));
+                        bytes[byteCount++] = (byte)(0x80 | (c & 0x3F));
+                    }
+                }
+
+                return HashFNV1a32(bytes.Slice(0, byteCount));
+            }
+            finally
+            {
+                bytes.Dispose();
+            }
+        }
     }
 }
