@@ -1,7 +1,7 @@
 # Unity Paradox Parser - Claude Documentation
 
 ## Project Overview
-High-performance Unity-native parser for Paradox Interactive file formats (EU4, HOI4, CK3, etc.). Built with Unity Job System and Burst Compiler for maximum throughput on large game files.
+High-performance Unity-native parser for Paradox Interactive file formats (EU4, HOI4, CK3, etc.). Built with Unity Job System and Burst Compiler for maximum throughput on large game files. We are NOT rewmaking EU4, CK3, or any other specific game. We are doing our OWN game, with our own systems. Currently we are using EU 4 files for testing, to make sure our systems work. We will transition to our own later on.
 
 You, Claude, cannot run tests. I have to do that manually.
 

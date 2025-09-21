@@ -346,14 +346,15 @@ namespace ParadoxParser.Utilities
         }
 
         /// <summary>
-        /// Common Paradox epoch dates for reference
+        /// Example historical dates for reference
+        /// Applications should define their own meaningful dates
         /// </summary>
-        public static class CommonDates
+        public static class ExampleDates
         {
-            public static readonly ParadoxDate EU4Start = new ParadoxDate(1444, 11, 11);
-            public static readonly ParadoxDate HOI4Start = new ParadoxDate(1936, 1, 1);
-            public static readonly ParadoxDate CK3Start = new ParadoxDate(867, 1, 1);
-            public static readonly ParadoxDate VIC3Start = new ParadoxDate(1836, 1, 1);
+            public static readonly ParadoxDate EarlyMedieval = new ParadoxDate(867, 1, 1);
+            public static readonly ParadoxDate LateMedieval = new ParadoxDate(1444, 11, 11);
+            public static readonly ParadoxDate Industrial = new ParadoxDate(1836, 1, 1);
+            public static readonly ParadoxDate Modern = new ParadoxDate(1936, 1, 1);
         }
     }
 }

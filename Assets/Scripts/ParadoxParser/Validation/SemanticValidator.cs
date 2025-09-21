@@ -315,113 +315,54 @@ namespace ParadoxParser.Validation
 
         /// <summary>
         /// Get known keys for a validation context
+        /// In a real implementation, these would be loaded from configuration files
+        /// For now, returns empty rules to keep the system completely generic
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static NativeArray<ValidationRule> GetKnownKeysForContext(ValidationContext context)
         {
-            // This would normally be loaded from configuration
-            // For now, return a basic set based on context
-            switch (context)
-            {
-                case ValidationContext.Country:
-                    return CreateCountryValidationRules();
-                case ValidationContext.Province:
-                    return CreateProvinceValidationRules();
-                case ValidationContext.Technology:
-                    return CreateTechnologyValidationRules();
-                default:
-                    return new NativeArray<ValidationRule>(0, Allocator.Temp);
-            }
+            // TODO: Load validation rules from configuration files based on context
+            // This keeps the validation system completely generic
+            return new NativeArray<ValidationRule>(0, Allocator.Temp);
         }
 
         /// <summary>
         /// Get required keys for a validation context
+        /// In a real implementation, these would be loaded from configuration files
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static NativeArray<uint> GetRequiredKeysForContext(ValidationContext context)
         {
-            switch (context)
-            {
-                case ValidationContext.Country:
-                    var countryRequired = new NativeArray<uint>(2, Allocator.Temp);
-                    countryRequired[0] = FastHasher.HashFNV1a32("tag");
-                    countryRequired[1] = FastHasher.HashFNV1a32("government");
-                    return countryRequired;
-
-                case ValidationContext.Province:
-                    var provinceRequired = new NativeArray<uint>(1, Allocator.Temp);
-                    provinceRequired[0] = FastHasher.HashFNV1a32("owner");
-                    return provinceRequired;
-
-                default:
-                    return new NativeArray<uint>(0, Allocator.Temp);
-            }
+            // TODO: Load required keys from configuration files based on context
+            // This keeps the validation system completely generic
+            return new NativeArray<uint>(0, Allocator.Temp);
         }
 
         /// <summary>
         /// Get conflicting key pairs for a validation context
+        /// In a real implementation, these would be loaded from configuration files
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static NativeArray<uint> GetKeyConflictsForContext(ValidationContext context)
         {
-            switch (context)
-            {
-                case ValidationContext.Country:
-                    var conflicts = new NativeArray<uint>(2, Allocator.Temp);
-                    conflicts[0] = FastHasher.HashFNV1a32("monarchy");
-                    conflicts[1] = FastHasher.HashFNV1a32("republic");
-                    return conflicts;
-
-                default:
-                    return new NativeArray<uint>(0, Allocator.Temp);
-            }
+            // TODO: Load key conflicts from configuration files based on context
+            // This keeps the validation system completely generic
+            return new NativeArray<uint>(0, Allocator.Temp);
         }
 
-        // Helper methods to create validation rules
-        private static NativeArray<ValidationRule> CreateCountryValidationRules()
+        /// <summary>
+        /// Example method showing how to create validation rules
+        /// Applications should implement their own rule creation based on configuration
+        /// </summary>
+        public static NativeArray<ValidationRule> CreateExampleRules(ValidationContext context, Allocator allocator)
         {
-            var rules = new NativeArray<ValidationRule>(10, Allocator.Temp);
+            var rules = new NativeArray<ValidationRule>(3, allocator);
             int index = 0;
 
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("tag"), ValidationContext.Country, required: true);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("government"), ValidationContext.Country, required: true);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("technology_group"), ValidationContext.Country);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("capital"), ValidationContext.Country);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("primary_culture"), ValidationContext.Country);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("religion"), ValidationContext.Country);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("stability"), ValidationContext.Country);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("legitimacy"), ValidationContext.Country);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("prestige"), ValidationContext.Country);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("treasury"), ValidationContext.Country);
-
-            return rules;
-        }
-
-        private static NativeArray<ValidationRule> CreateProvinceValidationRules()
-        {
-            var rules = new NativeArray<ValidationRule>(8, Allocator.Temp);
-            int index = 0;
-
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("owner"), ValidationContext.Province, required: true);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("controller"), ValidationContext.Province);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("culture"), ValidationContext.Province);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("religion"), ValidationContext.Province);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("trade_goods"), ValidationContext.Province);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("tax"), ValidationContext.Province);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("production"), ValidationContext.Province);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("manpower"), ValidationContext.Province);
-
-            return rules;
-        }
-
-        private static NativeArray<ValidationRule> CreateTechnologyValidationRules()
-        {
-            var rules = new NativeArray<ValidationRule>(3, Allocator.Temp);
-            int index = 0;
-
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("military"), ValidationContext.Technology);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("diplomatic"), ValidationContext.Technology);
-            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("administrative"), ValidationContext.Technology);
+            // Generic examples - not tied to any specific game
+            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("id"), context, required: true);
+            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("name"), context, required: false);
+            rules[index++] = ValidationRule.Create(FastHasher.HashFNV1a32("type"), context, required: false);
 
             return rules;
         }

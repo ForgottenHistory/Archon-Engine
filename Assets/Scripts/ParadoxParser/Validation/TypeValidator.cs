@@ -476,63 +476,33 @@ namespace ParadoxParser.Validation
 
         /// <summary>
         /// Get type rules for a validation context
+        /// In a real implementation, these would be loaded from configuration files
+        /// For now, returns empty rules to keep the system completely generic
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static NativeArray<TypeRule> GetTypeRulesForContext(SemanticValidator.ValidationContext context)
         {
-            switch (context)
-            {
-                case SemanticValidator.ValidationContext.Country:
-                    return CreateCountryTypeRules();
-                case SemanticValidator.ValidationContext.Province:
-                    return CreateProvinceTypeRules();
-                case SemanticValidator.ValidationContext.Technology:
-                    return CreateTechnologyTypeRules();
-                default:
-                    return new NativeArray<TypeRule>(0, Allocator.Temp);
-            }
+            // TODO: Load type rules from configuration files based on context
+            // This keeps the validation system completely generic
+            return new NativeArray<TypeRule>(0, Allocator.Temp);
         }
 
-        private static NativeArray<TypeRule> CreateCountryTypeRules()
+        /// <summary>
+        /// Example method showing how to create type rules
+        /// Applications should implement their own rule creation based on configuration
+        /// </summary>
+        public static NativeArray<TypeRule> CreateExampleRules(Allocator allocator)
         {
-            var rules = new NativeArray<TypeRule>(8, Allocator.Temp);
+            var rules = new NativeArray<TypeRule>(6, allocator);
             int index = 0;
 
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("tag"), ExpectedType.String, strict: true);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("government"), ExpectedType.String);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("capital"), ExpectedType.Integer);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("stability"), ExpectedType.Float);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("legitimacy"), ExpectedType.Float);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("prestige"), ExpectedType.Float);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("treasury"), ExpectedType.Float);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("history"), ExpectedType.Block);
-
-            return rules;
-        }
-
-        private static NativeArray<TypeRule> CreateProvinceTypeRules()
-        {
-            var rules = new NativeArray<TypeRule>(6, Allocator.Temp);
-            int index = 0;
-
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("owner"), ExpectedType.String);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("tax"), ExpectedType.Float);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("production"), ExpectedType.Float);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("manpower"), ExpectedType.Float);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("discovered_by"), ExpectedType.List);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("history"), ExpectedType.Block);
-
-            return rules;
-        }
-
-        private static NativeArray<TypeRule> CreateTechnologyTypeRules()
-        {
-            var rules = new NativeArray<TypeRule>(3, Allocator.Temp);
-            int index = 0;
-
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("military"), ExpectedType.Integer);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("diplomatic"), ExpectedType.Integer);
-            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("administrative"), ExpectedType.Integer);
+            // Generic examples - not tied to any specific game
+            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("id"), ExpectedType.Integer, strict: true);
+            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("name"), ExpectedType.String);
+            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("value"), ExpectedType.Float);
+            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("enabled"), ExpectedType.Boolean);
+            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("config"), ExpectedType.Block);
+            rules[index++] = TypeRule.Create(FastHasher.HashFNV1a32("items"), ExpectedType.List);
 
             return rules;
         }

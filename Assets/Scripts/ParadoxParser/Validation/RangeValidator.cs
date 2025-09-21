@@ -219,95 +219,32 @@ namespace ParadoxParser.Validation
 
         /// <summary>
         /// Get range rules for a validation context
+        /// In a real implementation, these would be loaded from configuration files
+        /// For now, returns empty rules to keep the system completely generic
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static NativeArray<RangeRule> GetRangeRulesForContext(SemanticValidator.ValidationContext context)
         {
-            switch (context)
-            {
-                case SemanticValidator.ValidationContext.Country:
-                    return CreateCountryRangeRules();
-                case SemanticValidator.ValidationContext.Province:
-                    return CreateProvinceRangeRules();
-                case SemanticValidator.ValidationContext.Technology:
-                    return CreateTechnologyRangeRules();
-                default:
-                    return new NativeArray<RangeRule>(0, Allocator.Temp);
-            }
+            // TODO: Load rules from configuration files based on context
+            // This keeps the validation system completely generic
+            return new NativeArray<RangeRule>(0, Allocator.Temp);
         }
 
-        private static NativeArray<RangeRule> CreateCountryRangeRules()
+        /// <summary>
+        /// Example method showing how to create range rules
+        /// Applications should implement their own rule creation based on configuration
+        /// </summary>
+        public static NativeArray<RangeRule> CreateExampleRules(Allocator allocator)
         {
-            var rules = new NativeArray<RangeRule>(10, Allocator.Temp);
+            var rules = new NativeArray<RangeRule>(5, allocator);
             int index = 0;
 
-            // Basic country stats typically range from -3 to +3 in EU4/CK3
-            rules[index++] = RangeRule.Create(FastHasher.HashFNV1a32("stability"), -3.0f, 3.0f);
-            rules[index++] = RangeRule.Create(FastHasher.HashFNV1a32("legitimacy"), 0.0f, 100.0f);
-            rules[index++] = RangeRule.Create(FastHasher.HashFNV1a32("prestige"), -100.0f, 100.0f);
-
-            // Treasury can be negative (debt) but has practical limits
-            rules[index++] = RangeRule.Create(FastHasher.HashFNV1a32("treasury"), -999999.0f, 999999.0f);
-
-            // Province ID should be positive integer
-            rules[index++] = RangeRule.CreateInteger(FastHasher.HashFNV1a32("capital"), 1, 999999);
-
-            // Administrative efficiency and other percentages
-            rules[index++] = RangeRule.ZeroToOne(FastHasher.HashFNV1a32("administrative_efficiency"));
-            rules[index++] = RangeRule.Percentage(FastHasher.HashFNV1a32("inflation"));
-            rules[index++] = RangeRule.Percentage(FastHasher.HashFNV1a32("corruption"));
-
-            // Monarch point generation (typically 1-6)
-            rules[index++] = RangeRule.CreateInteger(FastHasher.HashFNV1a32("adm"), 1, 6);
-            rules[index++] = RangeRule.CreateInteger(FastHasher.HashFNV1a32("dip"), 1, 6);
-
-            return rules;
-        }
-
-        private static NativeArray<RangeRule> CreateProvinceRangeRules()
-        {
-            var rules = new NativeArray<RangeRule>(8, Allocator.Temp);
-            int index = 0;
-
-            // Province development values (typically 1-30+ in EU4)
-            rules[index++] = RangeRule.Create(FastHasher.HashFNV1a32("tax"), 1.0f, 99.0f);
-            rules[index++] = RangeRule.Create(FastHasher.HashFNV1a32("production"), 1.0f, 99.0f);
-            rules[index++] = RangeRule.Create(FastHasher.HashFNV1a32("manpower"), 1.0f, 99.0f);
-
-            // Development total (sum of tax, production, manpower)
-            rules[index++] = RangeRule.Create(FastHasher.HashFNV1a32("development"), 3.0f, 297.0f);
-
-            // Autonomy percentage
-            rules[index++] = RangeRule.Percentage(FastHasher.HashFNV1a32("autonomy"));
-
-            // Prosperity progress
-            rules[index++] = RangeRule.ZeroToOne(FastHasher.HashFNV1a32("prosperity"));
-
-            // Devastation percentage
-            rules[index++] = RangeRule.Percentage(FastHasher.HashFNV1a32("devastation"));
-
-            // Province ID should be positive
+            // Generic examples - not tied to any specific game
+            rules[index++] = RangeRule.Create(FastHasher.HashFNV1a32("numeric_value"), 0.0f, 100.0f);
             rules[index++] = RangeRule.CreateInteger(FastHasher.HashFNV1a32("id"), 1, 999999);
-
-            return rules;
-        }
-
-        private static NativeArray<RangeRule> CreateTechnologyRangeRules()
-        {
-            var rules = new NativeArray<RangeRule>(6, Allocator.Temp);
-            int index = 0;
-
-            // Technology levels (typically 0-32 in EU4)
-            rules[index++] = RangeRule.CreateInteger(FastHasher.HashFNV1a32("military"), 0, 32);
-            rules[index++] = RangeRule.CreateInteger(FastHasher.HashFNV1a32("diplomatic"), 0, 32);
-            rules[index++] = RangeRule.CreateInteger(FastHasher.HashFNV1a32("administrative"), 0, 32);
-
-            // Technology cost modifiers
-            rules[index++] = RangeRule.Percentage(FastHasher.HashFNV1a32("tech_cost_modifier"));
-            rules[index++] = RangeRule.Percentage(FastHasher.HashFNV1a32("idea_cost"));
-
-            // Innovation value
-            rules[index++] = RangeRule.ZeroToOne(FastHasher.HashFNV1a32("innovativeness"));
+            rules[index++] = RangeRule.Percentage(FastHasher.HashFNV1a32("percentage"));
+            rules[index++] = RangeRule.ZeroToOne(FastHasher.HashFNV1a32("ratio"));
+            rules[index++] = RangeRule.Positive(FastHasher.HashFNV1a32("count"));
 
             return rules;
         }
