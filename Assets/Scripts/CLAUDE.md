@@ -3,6 +3,8 @@
 ## Project Overview
 High-performance Unity-native parser for Paradox Interactive file formats (EU4, HOI4, CK3, etc.). Built with Unity Job System and Burst Compiler for maximum throughput on large game files.
 
+You, Claude, cannot run tests. I have to do that manually.
+
 ## Important files:
 - Data files are "Assets\Data" then follow a Paradox filepath format. history, common, map, etc.
 
