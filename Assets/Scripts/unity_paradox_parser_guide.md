@@ -377,39 +377,13 @@ Based on reference implementation (3,708 files in 1.6 seconds on consumer PC):
 
 ## Success Criteria
 
-### Performance Milestones
-
-#### Week 1 Targets
-- [ ] Basic tokenizer parsing at 1000+ files/second
-- [ ] Memory allocations under 10MB for test dataset
-- [ ] Single-threaded parsing working
-- [ ] No GC allocations during parsing
-
-#### Week 2 Targets
-- [ ] All file types parsing correctly
-- [ ] Performance at 2000+ files/second
-- [ ] Job system parallelization working
-- [ ] Memory usage under 40MB peak
-
-#### Week 3 Targets
-- [ ] Meeting all performance targets
-- [ ] Full mod support implemented
-- [ ] Hot reload working in editor
-- [ ] Zero GC allocations confirmed
-
-#### Week 4 Targets
-- [ ] Exceeding performance targets
-- [ ] All tests passing
-- [ ] Production ready
-- [ ] Documentation complete
-
 ### Quality Metrics
 
 - **Code Coverage**: >80% test coverage
-- **Performance**: Consistent 2500+ files/second
-- **Memory**: Peak usage under 60MB
+- **Performance**: Consistent 1500+ files/second
+- **Memory**: Peak usage under 500MB
 - **Reliability**: <0.1% parse failure rate
-- **Compatibility**: 100% mod compatibility
+- **Compatibility**: >80% mod compatibility
 - **Maintainability**: Clear separation of concerns
 
 ## Risk Mitigation
@@ -425,7 +399,3 @@ Based on reference implementation (3,708 files in 1.6 seconds on consumer PC):
 - **Performance Issues**: Early and continuous profiling
 - **Compatibility Problems**: Test with real mod files throughout
 - **Integration Delays**: Parallel development of systems
-
-## Conclusion
-
-This guide provides a comprehensive roadmap for building a Unity-native Paradox parser that matches or exceeds the performance of standalone implementations while leveraging Unity's unique capabilities. The modular phase structure allows for incremental development and testing, ensuring each component meets performance targets before moving forward.
