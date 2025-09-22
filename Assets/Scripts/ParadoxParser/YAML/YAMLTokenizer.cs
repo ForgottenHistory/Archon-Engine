@@ -12,7 +12,7 @@ namespace ParadoxParser.YAML
     /// <summary>
     /// High-performance YAML tokenizer for Paradox localization files
     /// Handles YAML format natively without preprocessing
-    /// Updated: Removed Burst compilation for stability
+    /// Updated: Selective Burst compilation for compatible functions
     /// </summary>
     public static class YAMLTokenizer
     {
@@ -322,6 +322,7 @@ namespace ParadoxParser.YAML
         /// <summary>
         /// Check if byte can start an identifier
         /// </summary>
+        [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsIdentifierStart(byte b)
         {
@@ -331,6 +332,7 @@ namespace ParadoxParser.YAML
         /// <summary>
         /// Check if byte can be part of identifier
         /// </summary>
+        [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsIdentifierChar(byte b)
         {
@@ -341,6 +343,7 @@ namespace ParadoxParser.YAML
         /// <summary>
         /// Check if byte is a digit
         /// </summary>
+        [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsDigit(byte b)
         {
