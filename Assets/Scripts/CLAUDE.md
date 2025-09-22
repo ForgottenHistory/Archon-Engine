@@ -1,12 +1,15 @@
-# Unity Paradox Parser - Claude Documentation
+# Dominion - Claude Documentation
 
 ## Project Overview
-High-performance Unity-native parser for Paradox Interactive file formats (EU4, HOI4, CK3, etc.). Built with Unity Job System and Burst Compiler for maximum throughput on large game files. We are NOT rewmaking EU4, CK3, or any other specific game. We are doing our OWN game, with our own systems. Currently we are using EU 4 files for testing, to make sure our systems work. We will transition to our own later on.
+Dominion is a grand strategy game that captures the political reality of ancient rulership - where every decision creates winners and losers among your subjects, and success comes from understanding and managing these internal dynamics rather than just optimizing abstract numbers. More is detailed in Docs folder.
+
+**Current Focus:** High-performance Unity-native parser for Paradox Interactive file formats (EU4, HOI4, CK3, etc.). Built with Unity Job System and Burst Compiler for maximum throughput on large game files. We are NOT remaking EU4, CK3, or any other specific game. We are doing our OWN game, with our own systems. Currently we are using EU 4 files for testing, to make sure our systems work. We will transition to our own later on.
 
 You, Claude, cannot run tests. I have to do that manually.
 
 ## Important files:
 - Data files are "Assets\Data" then follow a Paradox filepath format. history, common, map, etc.
+- Documents for game are in "Assets\Docs"
 
 ## Paradox Format Examples:
 ```
