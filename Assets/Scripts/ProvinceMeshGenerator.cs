@@ -585,18 +585,19 @@ public class ProvinceMeshGenerator : MonoBehaviour
                     }
                 }
                 
-                // Create a small quad for this border pixel
-                Vector3 worldPos = PixelToWorldPosition(borderPixel);
-                worldPos.y = provinceHeight + 0.01f; // Slightly above provinces to avoid z-fighting
-                
-                float halfWidth = borderWidth * 0.5f;
+                // Create a quad for this border pixel
+                // For borders, we want to cover the full pixel area like merged rectangles do
+                Vector3 pixelBottomLeft = PixelToWorldPosition(borderPixel);
+                Vector3 pixelTopRight = PixelToWorldPosition(new Vector2Int(borderPixel.x + 1, borderPixel.y + 1));
+
+                float yPos = provinceHeight + 0.01f; // Slightly above provinces to avoid z-fighting
                 int baseIndex = borderVertices.Count;
-                
-                // Add vertices for a small square
-                borderVertices.Add(worldPos + new Vector3(-halfWidth, 0, -halfWidth));
-                borderVertices.Add(worldPos + new Vector3(halfWidth, 0, -halfWidth));
-                borderVertices.Add(worldPos + new Vector3(halfWidth, 0, halfWidth));
-                borderVertices.Add(worldPos + new Vector3(-halfWidth, 0, halfWidth));
+
+                // Add vertices covering the full pixel area
+                borderVertices.Add(new Vector3(pixelBottomLeft.x - pixelToWorldX * 0.5f, yPos, pixelBottomLeft.z - pixelToWorldZ * 0.5f));
+                borderVertices.Add(new Vector3(pixelTopRight.x - pixelToWorldX * 0.5f, yPos, pixelBottomLeft.z - pixelToWorldZ * 0.5f));
+                borderVertices.Add(new Vector3(pixelTopRight.x - pixelToWorldX * 0.5f, yPos, pixelTopRight.z - pixelToWorldZ * 0.5f));
+                borderVertices.Add(new Vector3(pixelBottomLeft.x - pixelToWorldX * 0.5f, yPos, pixelTopRight.z - pixelToWorldZ * 0.5f));
                 
                 // Add triangles
                 borderTriangles.Add(baseIndex);
