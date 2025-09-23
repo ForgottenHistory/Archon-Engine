@@ -183,23 +183,22 @@ Based on reference implementation (3,708 files in 1.6 seconds on consumer PC):
 - [ ] Implement climate zone parsing
 
 #### 3.5 Localization Data Extraction
-- [x] **BREAKTHROUGH**: Direct YAML parser implemented (YAMLTokenizer.cs, YAMLParser.cs)
-- [x] **ZERO PREPROCESSING**: Parses YAML format natively without conversion
+- [x] Direct YAML parser implemented (YAMLTokenizer.cs, YAMLParser.cs)
+- [x] Parses YAML format natively without conversion
 - [x] Test coverage: LocalizationParserTests.cs (4 tests passing)
-- [x] **PERFORMANCE OPTIMIZED**: Single-pass parsing, no string conversions
+- [x] Single-pass parsing, no string conversions
 - [x] **KEY FEATURES IMPLEMENTED**:
   - Native YAML tokenization (`PROV1:0 "Stockholm"` format)
   - Version number handling (`:0`, `:1` extraction)
   - UTF-8 special character support ("Östergötland")
   - Hash-based string lookup for fast retrieval
   - Memory-efficient Native Collections usage
-- [x] **ARCHITECTURE DECISION**: Selective Burst compilation for optimal performance (Option C)
+- [x] Selective Burst compilation for optimal performance for now
   - ✅ Stable execution, zero crashes
   - ✅ Strategic Burst optimization on hot-path functions
   - ✅ 3-5x performance improvement on character classification
   - ✅ Full compatibility with existing API and tests
-  - 🎯 **BURST-COMPILED FUNCTIONS**: `IsIdentifierStart()`, `IsIdentifierChar()`, `IsDigit()`
-- [x] **PROVEN**: Handles "lots of local files" efficiently
+  - **BURST-COMPILED FUNCTIONS**: `IsIdentifierStart()`, `IsIdentifierChar()`, `IsDigit()`
 - [ ] Create multi-language extraction utilities
 - [ ] Implement fallback chains
 - [ ] Create string replacement system

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.Collections;
 using ParadoxParser.Core;
@@ -126,6 +127,120 @@ namespace ParadoxParser.Tests
                 sourceBytes.Dispose();
             }
         }
+
+        /*[Test]
+        public void MultiLanguageExtractor_LoadMultipleLanguages_ShouldSucceed()
+        {
+            // Create test YAML data for multiple languages
+            string englishYaml = @"l_english:
+ test_key_1: ""Hello World""
+ test_key_2: ""Welcome to the game""
+ test_key_3: ""Settings""";
+
+            string frenchYaml = @"l_french:
+ test_key_1: ""Bonjour le monde""
+ test_key_2: ""Bienvenue dans le jeu""
+ test_key_3: ""Paramètres""";
+
+            var languageFiles = new Dictionary<string, NativeArray<byte>>();
+
+            var englishBytes = ConvertStringToBytes(englishYaml);
+            var frenchBytes = ConvertStringToBytes(frenchYaml);
+
+            languageFiles.Add("english", englishBytes);
+            languageFiles.Add("french", frenchBytes);
+
+            try
+            {
+                var multiLangResult = MultiLanguageExtractor.LoadMultipleLanguages(languageFiles, Allocator.Temp);
+
+                Assert.IsTrue(multiLangResult.Success, "MultiLanguageExtractor should succeed");
+                Assert.AreEqual(2, multiLangResult.AvailableLanguages.Length, "Should have 2 languages");
+
+                UnityEngine.Debug.Log($"✓ MultiLanguageExtractor loaded {multiLangResult.AvailableLanguages.Length} languages");
+
+                multiLangResult.Dispose();
+            }
+            finally
+            {
+                foreach (var kvp in languageFiles)
+                {
+                    kvp.Value.Dispose();
+                }
+            }
+        }*/
+
+        /*[Test]
+        public void LocalizationFallbackChain_CreateChain_ShouldWork()
+        {
+            var fallbackChain = LocalizationFallbackChain.CreateFallbackChain(
+                new FixedString64Bytes("fr_CA"), Allocator.Temp);
+
+            Assert.GreaterOrEqual(fallbackChain.Length, 2, "Fallback chain should have at least 2 entries");
+
+            // Should include French and English
+            bool foundFrench = false;
+            bool foundEnglish = false;
+
+            for (int i = 0; i < fallbackChain.Length; i++)
+            {
+                var lang = fallbackChain[i].ToString();
+                if (lang == "fr") foundFrench = true;
+                if (lang == "en") foundEnglish = true;
+            }
+
+            Assert.IsTrue(foundFrench && foundEnglish, "Should include 'fr' and 'en' in fallback chain");
+
+            UnityEngine.Debug.Log($"✓ Fallback chain for fr_CA: {fallbackChain.Length} languages");
+
+            fallbackChain.Dispose();
+        }*/
+
+        /*[Test]
+        public void StringReplacementSystem_BasicReplacement_ShouldWork()
+        {
+            var context = StringReplacementSystem.CreateContext(2, Allocator.Temp);
+
+            try
+            {
+                StringReplacementSystem.AddParameter(ref context,
+                    new FixedString64Bytes("PLAYER"),
+                    new FixedString512Bytes("John"));
+
+                var input = new FixedString512Bytes("Hello $PLAYER$!");
+                var result = StringReplacementSystem.ProcessString(input, context);
+
+                Assert.IsTrue(result.Success, "String replacement should succeed");
+                Assert.IsTrue(result.ProcessedString.ToString().Contains("John"), "Should replace PLAYER with John");
+                Assert.AreEqual(1, result.ReplacementsMade, "Should make exactly 1 replacement");
+
+                UnityEngine.Debug.Log($"✓ String replacement: '{input}' -> '{result.ProcessedString}'");
+            }
+            finally
+            {
+                context.Dispose();
+            }
+        }*/
+
+        /*[Test]
+        public void ColoredTextMarkup_ParseColors_ShouldWork()
+        {
+            var input = new FixedString512Bytes("This is §rred text§! and §ggreen text§!");
+            var result = ColoredTextMarkup.ParseColorMarkup(input, Allocator.Temp);
+
+            Assert.IsTrue(result.Success, "Color parsing should succeed");
+            Assert.Greater(result.ColoredSegments.Length, 0, "Should find colored segments");
+
+            UnityEngine.Debug.Log($"✓ Color markup found {result.ColoredSegments.Length} colored segments");
+
+            // Test Unity Rich Text conversion
+            var richText = ColoredTextMarkup.ConvertToUnityRichText(input);
+            Assert.IsTrue(richText.ToString().Contains("<color="), "Should convert to Unity Rich Text format");
+
+            UnityEngine.Debug.Log($"✓ Rich text conversion: '{richText}'");
+
+            result.Dispose();
+        }*/
 
         /// <summary>
         /// Helper method to convert string to byte array for testing
