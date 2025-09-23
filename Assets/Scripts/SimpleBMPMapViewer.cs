@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Collections;
 using ParadoxParser.Bitmap;
 using System.IO;
+using ProvinceSystem;
 
 public class SimpleBMPMapViewer : MonoBehaviour
 {
@@ -14,9 +15,14 @@ public class SimpleBMPMapViewer : MonoBehaviour
     public GameObject mapPlane;
     public ParadoxStyleCameraController cameraController;
     public ProvinceMeshGenerator provinceMeshGenerator;
+    public FastAdjacencyScanner adjacencyScanner;
 
     [Header("3D Province Settings")]
     public bool generate3DProvinces = true;
+
+    [Header("Adjacency Settings")]
+    public bool scanAdjacencies = true;
+    public bool useParallelScanning = true;
 
     private Texture2D mapTexture;
     private Material mapMaterial;
@@ -30,6 +36,11 @@ public class SimpleBMPMapViewer : MonoBehaviour
         if (generate3DProvinces)
         {
             Setup3DProvinces();
+        }
+
+        if (scanAdjacencies)
+        {
+            SetupAdjacencyScanning();
         }
     }
 
@@ -224,6 +235,69 @@ public class SimpleBMPMapViewer : MonoBehaviour
         provinceMeshGenerator.GenerateProvinces();
 
         Debug.Log("3D province generation completed!");
+    }
+
+    void SetupAdjacencyScanning()
+    {
+        // Get or create FastAdjacencyScanner
+        if (adjacencyScanner == null)
+        {
+            adjacencyScanner = GetComponent<FastAdjacencyScanner>();
+        }
+
+        if (adjacencyScanner == null)
+        {
+            adjacencyScanner = gameObject.AddComponent<FastAdjacencyScanner>();
+            Debug.Log("Created FastAdjacencyScanner component");
+        }
+
+        // Configure the adjacency scanner
+        adjacencyScanner.provinceMap = mapTexture;
+
+        // Scan for adjacencies
+        var result = useParallelScanning ?
+            adjacencyScanner.ScanForAdjacenciesParallel() :
+            adjacencyScanner.ScanForAdjacencies();
+
+        if (result != null)
+        {
+            Debug.Log($"Adjacency scanning completed in {result.scanTime:F3}s! " +
+                     $"Found {result.provinceCount} provinces with {result.connectionCount} adjacencies");
+        }
+    }
+
+    [ContextMenu("Scan Adjacencies")]
+    public void ScanAdjacencies()
+    {
+        if (adjacencyScanner != null && mapTexture != null)
+        {
+            var result = useParallelScanning ?
+                adjacencyScanner.ScanForAdjacenciesParallel() :
+                adjacencyScanner.ScanForAdjacencies();
+
+            if (result != null)
+            {
+                Debug.Log($"Manual adjacency scan completed! " +
+                         $"Found {result.provinceCount} provinces with {result.connectionCount} adjacencies");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Cannot scan adjacencies: missing scanner or map texture");
+        }
+    }
+
+    [ContextMenu("Export Adjacencies")]
+    public void ExportAdjacencies()
+    {
+        if (adjacencyScanner != null)
+        {
+            adjacencyScanner.ExportAdjacencies();
+        }
+        else
+        {
+            Debug.LogWarning("Cannot export adjacencies: no scanner available");
+        }
     }
 
     void OnDestroy()

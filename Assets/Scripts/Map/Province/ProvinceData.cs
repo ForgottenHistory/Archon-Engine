@@ -12,4 +12,8 @@ public class ProvinceData
     public Bounds bounds;
     public string name;
     public int id;
+
+    // Additional properties for ProvinceDataService compatibility
+    public GameObject gameObject;
+    public ProvinceComponent component;
 }
