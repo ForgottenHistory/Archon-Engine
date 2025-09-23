@@ -17,8 +17,6 @@ public class SimpleBMPMapViewer : MonoBehaviour
 
     [Header("3D Province Settings")]
     public bool generate3DProvinces = true;
-    public float provinceHeight = 0.1f;
-    public Material provinceMaterial;
 
     private Texture2D mapTexture;
     private Material mapMaterial;
@@ -220,20 +218,7 @@ public class SimpleBMPMapViewer : MonoBehaviour
         // Configure the mesh generator
         provinceMeshGenerator.provinceMap = mapTexture;
         provinceMeshGenerator.mapPlane = mapPlane;
-        provinceMeshGenerator.provinceHeight = provinceHeight;
         provinceMeshGenerator.useProvinceMapColors = true;
-
-        // Set up materials if provided
-        if (provinceMaterial != null)
-        {
-            provinceMeshGenerator.provinceMaterial = provinceMaterial;
-        }
-
-        // Configure for optimal performance with large maps
-        provinceMeshGenerator.meshMethod = ProvinceMeshGenerator.MeshMethod.MergedRectangles;
-        provinceMeshGenerator.combineSmallProvinces = true;
-        provinceMeshGenerator.minPixelsForProvince = 10;
-        provinceMeshGenerator.generateBorders = false; // Disable borders for better performance
 
         // Generate the 3D provinces
         provinceMeshGenerator.GenerateProvinces();
