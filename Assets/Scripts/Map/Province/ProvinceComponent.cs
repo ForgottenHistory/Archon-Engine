@@ -1,4 +1,5 @@
 using UnityEngine;
+using MapModes;
 
 public class ProvinceComponent : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ProvinceComponent : MonoBehaviour
     private static ProvinceComponent lastHovered;
     private MeshRenderer meshRenderer;
     private Color originalColor;
+    private MapModeManager mapModeManager;
 
     void Start()
     {
@@ -19,6 +21,9 @@ public class ProvinceComponent : MonoBehaviour
         {
             originalColor = meshRenderer.material.color;
         }
+
+        // Find the map mode manager
+        mapModeManager = FindObjectOfType<MapModeManager>();
     }
 
     void OnMouseEnter()
@@ -28,10 +33,11 @@ public class ProvinceComponent : MonoBehaviour
             lastHovered = this;
             //Debug.Log($"Mouse entered province: {provinceName} (ID: {provinceId}, Pixels: {pixelCount})");
 
-            // Highlight on hover
+            // Highlight on hover - use current color, not original
             if (meshRenderer != null && meshRenderer.material != null)
             {
-                meshRenderer.material.color = originalColor * 1.2f; // Brighten
+                Color currentColor = GetCurrentMapModeColor();
+                meshRenderer.material.color = currentColor * 1.2f; // Brighten
             }
         }
     }
@@ -42,10 +48,11 @@ public class ProvinceComponent : MonoBehaviour
         {
             lastHovered = null;
 
-            // Restore original color
+            // Restore current map mode color, not original
             if (meshRenderer != null && meshRenderer.material != null)
             {
-                meshRenderer.material.color = originalColor;
+                Color currentColor = GetCurrentMapModeColor();
+                meshRenderer.material.color = currentColor;
             }
         }
     }
@@ -53,5 +60,23 @@ public class ProvinceComponent : MonoBehaviour
     void OnMouseDown()
     {
         Debug.Log($"Clicked province: {provinceName} (ID: {provinceId}, Province Color: {provinceColor}, Display Color: {displayColor})");
+    }
+
+    private Color GetCurrentMapModeColor()
+    {
+        // If we have a map mode manager and it's active, get color from current mode
+        if (mapModeManager != null && mapModeManager.CurrentMode != null)
+        {
+            return mapModeManager.CurrentMode.GetProvinceColor(provinceId);
+        }
+
+        // Fallback to original color if no map mode is active
+        return originalColor;
+    }
+
+    // Method to update the stored original color when map modes change
+    public void UpdateOriginalColor(Color newColor)
+    {
+        originalColor = newColor;
     }
 }

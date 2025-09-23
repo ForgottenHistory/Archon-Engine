@@ -16,6 +16,7 @@ public class MapController : MonoBehaviour
     [Header("Generated Components")]
     private MapLoader mapLoader;
     private MapInteractionManager interactionManager;
+    private MapModes.MapModeManager mapModeManager;
 
     public Texture2D MapTexture { get; private set; }
     public Material MapMaterial { get; private set; }
@@ -34,6 +35,10 @@ public class MapController : MonoBehaviour
         interactionManager = GetComponent<MapInteractionManager>();
         if (interactionManager == null)
             interactionManager = gameObject.AddComponent<MapInteractionManager>();
+
+        mapModeManager = GetComponent<MapModes.MapModeManager>();
+        if (mapModeManager == null)
+            mapModeManager = gameObject.AddComponent<MapModes.MapModeManager>();
     }
 
     public void Initialize(MapSettings settings)
@@ -90,6 +95,13 @@ public class MapController : MonoBehaviour
         if (settings.enableProvinceClickDetection)
         {
             SetupProvinceClickDetection();
+            yield return null;
+        }
+
+        // 7. Setup map modes if enabled
+        if (settings.enableMapModes)
+        {
+            SetupMapModes(settings);
             yield return null;
         }
 
@@ -228,6 +240,16 @@ public class MapController : MonoBehaviour
 
         adjacencyScanner.ConvertToIdAdjacencies(colorToIdMap);
         Debug.Log($"Converted adjacencies to ID format for {colorToIdMap.Count} provinces");
+    }
+
+    private void SetupMapModes(MapSettings settings)
+    {
+        if (mapModeManager != null)
+        {
+            mapModeManager.mapController = this;
+            mapModeManager.defaultMode = settings.defaultMapMode;
+            Debug.Log("Map modes initialized");
+        }
     }
 
     public void ScanAdjacencies(bool useParallel = true)

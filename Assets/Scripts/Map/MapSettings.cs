@@ -17,6 +17,10 @@ public class MapSettings
     [Header("Interaction Settings")]
     public bool enableProvinceClickDetection = true;
 
+    [Header("Map Mode Settings")]
+    public bool enableMapModes = true;
+    public MapModes.MapModeManager.MapModeType defaultMapMode = MapModes.MapModeManager.MapModeType.Default;
+
     public MapSettings()
     {
     }
