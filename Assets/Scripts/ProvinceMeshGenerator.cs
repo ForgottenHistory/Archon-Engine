@@ -391,7 +391,7 @@ public class ProvinceMeshGenerator : MonoBehaviour
             uvs.Add(new Vector2(1, 1));
             uvs.Add(new Vector2(0, 1));
             
-            // Create triangles
+            // Create triangles (counter-clockwise winding because Y is flipped)
             triangles.Add(baseIndex);
             triangles.Add(baseIndex + 2);
             triangles.Add(baseIndex + 1);
@@ -399,7 +399,7 @@ public class ProvinceMeshGenerator : MonoBehaviour
             triangles.Add(baseIndex + 3);
             triangles.Add(baseIndex + 2);
         }
-        
+
         Mesh mesh = new Mesh();
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
@@ -475,7 +475,7 @@ public class ProvinceMeshGenerator : MonoBehaviour
             uvs.Add(new Vector2(1, 1));
             uvs.Add(new Vector2(0, 1));
             
-            // Create triangles
+            // Create triangles (counter-clockwise winding because Y is flipped)
             triangles.Add(baseIndex);
             triangles.Add(baseIndex + 2);
             triangles.Add(baseIndex + 1);
@@ -483,9 +483,9 @@ public class ProvinceMeshGenerator : MonoBehaviour
             triangles.Add(baseIndex + 3);
             triangles.Add(baseIndex + 2);
         }
-        
+
         Mesh mesh = new Mesh();
-        
+
         // Use 32-bit index buffer if needed (for provinces with many vertices)
         if (vertices.Count > 65535)
         {
@@ -519,7 +519,7 @@ public class ProvinceMeshGenerator : MonoBehaviour
         vertices[2] = center + new Vector3(size.x/2, 0, size.z/2);
         vertices[3] = center + new Vector3(-size.x/2, 0, size.z/2);
         
-        // Create triangles
+        // Create triangles (counter-clockwise winding because Y is flipped)
         int[] triangles = new int[] { 0, 2, 1, 0, 3, 2 };
         
         // Create UVs
@@ -540,8 +540,14 @@ public class ProvinceMeshGenerator : MonoBehaviour
     
     Vector3 PixelToWorldPosition(Vector2Int pixel)
     {
-        float x = (pixel.x / (float)provinceMap.width - 0.5f) * mapWidth;
-        float z = (pixel.y / (float)provinceMap.height - 0.5f) * mapHeight;
+        // Apply same coordinate corrections as SimpleBMPMapViewer
+        // Flip X coordinate to match the texture correction
+        float correctedX = provinceMap.width - 1 - pixel.x;
+        // Flip Y coordinate to match the texture orientation (upside down fix)
+        float correctedY = provinceMap.height - 1 - pixel.y;
+
+        float x = (correctedX / (float)provinceMap.width - 0.5f) * mapWidth;
+        float z = (correctedY / (float)provinceMap.height - 0.5f) * mapHeight;
         return new Vector3(x, provinceHeight, z);
     }
     
