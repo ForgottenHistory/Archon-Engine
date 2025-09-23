@@ -18,6 +18,7 @@ public class MapController : MonoBehaviour
     private MapInteractionManager interactionManager;
     private MapModes.MapModeManager mapModeManager;
     private ProvinceDefinitionLoader definitionLoader;
+    private CountryDataLoader countryDataLoader;
 
     public Texture2D MapTexture { get; private set; }
     public Material MapMaterial { get; private set; }
@@ -45,6 +46,10 @@ public class MapController : MonoBehaviour
         definitionLoader = GetComponent<ProvinceDefinitionLoader>();
         if (definitionLoader == null)
             definitionLoader = gameObject.AddComponent<ProvinceDefinitionLoader>();
+
+        countryDataLoader = GetComponent<CountryDataLoader>();
+        if (countryDataLoader == null)
+            countryDataLoader = gameObject.AddComponent<CountryDataLoader>();
     }
 
     public void Initialize(MapSettings settings)

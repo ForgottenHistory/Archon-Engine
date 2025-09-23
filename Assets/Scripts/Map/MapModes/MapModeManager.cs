@@ -17,7 +17,8 @@ namespace MapModes
         {
             Default,
             Province,
-            Terrain
+            Terrain,
+            Country
         }
 
         private Dictionary<MapModeType, IMapMode> mapModes = new Dictionary<MapModeType, IMapMode>();
@@ -74,6 +75,7 @@ namespace MapModes
             RegisterMapMode(MapModeType.Default, new DefaultMapMode());
             RegisterMapMode(MapModeType.Province, new ProvinceMapMode());
             RegisterMapMode(MapModeType.Terrain, new TerrainMapMode());
+            RegisterMapMode(MapModeType.Country, new CountryMapMode());
         }
 
         public void RegisterMapMode(MapModeType type, IMapMode mode)
@@ -115,6 +117,8 @@ namespace MapModes
                 SetMapMode(MapModeType.Province);
             else if (Input.GetKeyDown(KeyCode.Alpha3))
                 SetMapMode(MapModeType.Terrain);
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+                SetMapMode(MapModeType.Country);
 
             if (Input.GetKeyDown(KeyCode.Tab))
             {
@@ -147,11 +151,12 @@ namespace MapModes
 
             style.fontSize = 12;
             style.fontStyle = FontStyle.Normal;
-            GUI.Label(new Rect(10, 40, 300, 100),
-                "Press 1-3 to switch modes:\n" +
+            GUI.Label(new Rect(10, 40, 300, 120),
+                "Press 1-4 to switch modes:\n" +
                 "1: Default (Original)\n" +
                 "2: Province (Identifier Colors)\n" +
                 "3: Terrain (Land/Sea)\n" +
+                "4: Country (Political)\n" +
                 "Tab: Cycle modes", style);
         }
     }
