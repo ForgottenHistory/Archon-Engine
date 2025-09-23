@@ -17,12 +17,14 @@ public class MapController : MonoBehaviour
     private MapLoader mapLoader;
     private MapInteractionManager interactionManager;
     private MapModes.MapModeManager mapModeManager;
+    private ProvinceDefinitionLoader definitionLoader;
 
     public Texture2D MapTexture { get; private set; }
     public Material MapMaterial { get; private set; }
     public Dictionary<Color, ProvinceData> AllProvinces => provinceMeshGenerator?.GetAllProvinces();
     public Dictionary<int, ProvinceComponent> ProvinceComponents { get; private set; } = new Dictionary<int, ProvinceComponent>();
     public Dictionary<Color, int> ColorToProvinceId { get; private set; } = new Dictionary<Color, int>();
+    public ProvinceDefinitionLoader DefinitionLoader => definitionLoader;
 
     public bool IsInitialized { get; private set; }
 
@@ -39,6 +41,10 @@ public class MapController : MonoBehaviour
         mapModeManager = GetComponent<MapModes.MapModeManager>();
         if (mapModeManager == null)
             mapModeManager = gameObject.AddComponent<MapModes.MapModeManager>();
+
+        definitionLoader = GetComponent<ProvinceDefinitionLoader>();
+        if (definitionLoader == null)
+            definitionLoader = gameObject.AddComponent<ProvinceDefinitionLoader>();
     }
 
     public void Initialize(MapSettings settings)
@@ -56,7 +62,14 @@ public class MapController : MonoBehaviour
     {
         Debug.Log("Starting map initialization sequence");
 
-        // 1. Load map texture
+        // 1. Load province definitions
+        if (!definitionLoader.LoadDefinition())
+        {
+            Debug.LogWarning("Failed to load province definitions. Provinces will use fallback IDs.");
+        }
+        yield return null;
+
+        // 2. Load map texture
         mapLoader.Initialize(this, settings);
         yield return StartCoroutine(mapLoader.LoadMapTexture());
 
@@ -69,36 +82,36 @@ public class MapController : MonoBehaviour
         MapTexture = mapLoader.MapTexture;
         MapMaterial = mapLoader.MapMaterial;
 
-        // 2. Setup camera
+        // 3. Setup camera
         SetupCamera(settings);
         yield return null;
 
-        // 3. Setup camera controller
+        // 4. Setup camera controller
         SetupCameraController();
         yield return null;
 
-        // 4. Generate 3D provinces if enabled
+        // 5. Generate 3D provinces if enabled
         if (settings.generate3DProvinces)
         {
             Setup3DProvinces(settings);
             yield return null;
         }
 
-        // 5. Scan adjacencies if enabled
+        // 6. Scan adjacencies if enabled
         if (settings.scanAdjacencies)
         {
             SetupAdjacencyScanning(settings);
             yield return null;
         }
 
-        // 6. Setup interaction if enabled
+        // 7. Setup interaction if enabled
         if (settings.enableProvinceClickDetection)
         {
             SetupProvinceClickDetection();
             yield return null;
         }
 
-        // 7. Setup map modes if enabled
+        // 8. Setup map modes if enabled
         if (settings.enableMapModes)
         {
             SetupMapModes(settings);

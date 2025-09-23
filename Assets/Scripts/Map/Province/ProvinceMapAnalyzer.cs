@@ -14,12 +14,13 @@ public class ProvinceMapAnalyzer
         int maxProvincesToGenerate,
         float mapWidth,
         float mapHeight,
-        float provinceHeight)
+        float provinceHeight,
+        ProvinceDefinitionLoader definitionLoader = null)
     {
         var provinces = new Dictionary<Color, ProvinceData>();
         int width = provinceMap.width;
         int height = provinceMap.height;
-        int provinceId = 1;
+        int fallbackProvinceId = 1;
 
         // Check if we have a political map for colors
         bool hasPoliticalMap = (politicalMap != null &&
@@ -65,12 +66,26 @@ public class ProvinceMapAnalyzer
                         displayColor = pixelColor;
                     }
 
+                    // Get province ID and name from definition if available
+                    int provinceId = fallbackProvinceId++;
+                    string provinceName = $"Province_{provinceId}";
+
+                    if (definitionLoader != null && definitionLoader.IsLoaded)
+                    {
+                        var provinceDef = definitionLoader.GetProvinceByColor(pixelColor);
+                        if (provinceDef != null)
+                        {
+                            provinceId = provinceDef.id;
+                            provinceName = provinceDef.name;
+                        }
+                    }
+
                     provinces[pixelColor] = new ProvinceData
                     {
                         color = pixelColor,
                         displayColor = displayColor,
-                        id = provinceId++,
-                        name = $"Province_{provinceId}",
+                        id = provinceId,
+                        name = provinceName,
                         pixelSet = new HashSet<Vector2Int>()
                     };
                 }

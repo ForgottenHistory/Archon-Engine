@@ -76,6 +76,9 @@ public class ProvinceMeshGenerator : MonoBehaviour
         // Calculate map dimensions
         CalculateMapDimensions();
         
+        // Find definition loader
+        ProvinceDefinitionLoader definitionLoader = FindObjectOfType<ProvinceDefinitionLoader>();
+
         // Analyze the bitmap
         provinces = ProvinceMapAnalyzer.AnalyzeProvinceMap(
             provinceMap,
@@ -87,7 +90,8 @@ public class ProvinceMeshGenerator : MonoBehaviour
             maxProvincesToGenerate,
             mapWidth,
             mapHeight,
-            provinceHeight);
+            provinceHeight,
+            definitionLoader);
         
         // Generate individual mesh for each province
         GenerateIndividualProvinceMeshes();
