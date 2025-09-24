@@ -39,8 +39,7 @@ Shader "GrandStrategy/ProvinceTerritory"
                 float4 positionOS : POSITION;
                 float2 uv : TEXCOORD0;
                 float3 normalOS : NORMAL;
-                float borderDistance : TEXCOORD1; // Custom vertex attribute for distance to border
-                float provinceID : TEXCOORD2; // For per-province variation
+                float2 provinceIDData : TEXCOORD2; // For per-province variation (x = normalized ID, y = unused)
             };
             
             struct Varyings
@@ -48,9 +47,8 @@ Shader "GrandStrategy/ProvinceTerritory"
                 float4 positionCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
                 float3 positionWS : TEXCOORD1;
-                float borderDistance : TEXCOORD2;
-                float provinceID : TEXCOORD3;
-                float3 normalWS : TEXCOORD4;
+                float provinceID : TEXCOORD2;
+                float3 normalWS : TEXCOORD3;
             };
             
             TEXTURE2D(_OverlayTexture);
@@ -83,8 +81,7 @@ Shader "GrandStrategy/ProvinceTerritory"
                 output.positionWS = positionInputs.positionWS;
                 
                 output.uv = input.uv;
-                output.borderDistance = input.borderDistance;
-                output.provinceID = input.provinceID;
+                output.provinceID = input.provinceIDData.x; // Extract normalized province ID from x component
                 
                 VertexNormalInputs normalInputs = GetVertexNormalInputs(input.normalOS);
                 output.normalWS = normalInputs.normalWS;
@@ -112,10 +109,6 @@ Shader "GrandStrategy/ProvinceTerritory"
                 float2 overlayUV = TRANSFORM_TEX(input.uv, _OverlayTexture) * 10.0;
                 float3 overlayColor = SAMPLE_TEXTURE2D(_OverlayTexture, sampler_OverlayTexture, overlayUV).rgb;
                 baseColor = lerp(baseColor, baseColor * overlayColor, _OverlayStrength);
-                
-                // Border darkening with smooth falloff
-                float borderShadow = smoothstep(0.0, _BorderFalloff, input.borderDistance);
-                baseColor *= lerp(1.0 - _BorderDarkening, 1.0, borderShadow);
                 
                 // Terrain height influence (darken based on elevation)
                 float terrainDarkening = 1.0 - (_TerrainHeight * 0.2);
