@@ -182,7 +182,21 @@ Based on reference implementation (3,708 files in 1.6 seconds on consumer PC):
 - [ ] Support river/lake detection
 - [ ] Implement climate zone parsing
 
-#### 3.5 Localization Data Extraction
+#### 3.5 PNG Parser (Day 10)
+- [ ] Implement PNG signature validation (PNGParser.cs)
+- [ ] Parse PNG chunk structure (IHDR, PLTE, IDAT, IEND)
+- [ ] Support PNG color types (grayscale, RGB, RGBA, indexed)
+- [ ] Implement DEFLATE decompression for IDAT chunks
+- [ ] Handle PNG filtering (None, Sub, Up, Average, Paeth)
+- [ ] Support 8-bit and 16-bit bit depths
+- [ ] Parse ancillary chunks (tEXt, tIME, gAMA)
+- [ ] Implement CRC validation for data integrity
+- [ ] Create RGB pixel access interface compatible with BMPParser
+- [ ] Add PNG-specific metadata extraction
+- [ ] Comprehensive test coverage (PNGParserTests.cs)
+- [ ] Unified interface for both BMP and PNG formats
+
+#### 3.6 Localization Data Extraction
 - [x] Direct YAML parser implemented (YAMLTokenizer.cs, YAMLParser.cs)
 - [x] Parses YAML format natively without conversion
 - [x] Test coverage: LocalizationParserTests.cs (4 tests passing)
