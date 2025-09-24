@@ -1,225 +1,282 @@
-# Graphics Enhancement Plan for Dominion Map System
-
-## Overview
-
-With the core map functionality working (province loading, country map mode, 1444 start date), the next phase focuses on making the map visually stunning and polished. This document outlines planned graphics enhancements to transform the functional map into a beautiful, immersive visualization.
-
-## Current State
-
-✅ **Completed Features:**
-- Province mesh generation from BMP files
-- Country map mode with accurate 1444 colors
-- Province click detection and highlighting
-- Terrain map mode (land/sea/lake distinction)
-- Map mode switching system
-- ParadoxParser integration for data loading
-
-## Enhancement Categories
-
-### 1. Province Border Rendering 🖼️
-
-**Priority: High** - Biggest visual impact
-
-#### Current Issues:
-- Map looks like colored blobs rather than political boundaries
-
-#### Planned Improvements:
-- **Anti-aliased province borders** using line rendering or shader effects
-- **Configurable border thickness** for different zoom levels
-- **Smart border colors** that contrast with province colors
-- **Border rendering modes:**
-  - Thin black lines (classic EU4 style)
-  - White outlines for dark maps
-  - Dynamic contrast-based coloring
-  - No borders for terrain maps (seamless)
-
-#### Technical Approach:
-- Generate border meshes by detecting province edge pixels
-- Use Unity LineRenderer or custom shader for smooth borders
-- Optional: Post-processing edge detection shader
+# Grand Strategy Map Visual Enhancement Guide
+## Achieving the Imperator Rome Aesthetic
 
 ---
 
-### 2. Terrain Integration 🏔️
+## 🎯 Priority 1: Core Visual Polish
+*These changes will have the most immediate impact on visual quality*
 
-**Priority: High** - Adds depth and realism
+### 1.1 Border System Overhaul
+**Goal:** Create smooth, hierarchical borders like Imperator Rome
 
-#### Available Data:
-- `heightmap.bmp` - Elevation data for mountains/hills
-- `terrain.bmp` - Terrain type information
-- `rivers.bmp` - River systems
-- Climate and tree coverage data
+#### Implementation Tasks:
+- [ ] **Implement anti-aliasing for province borders**
+  - Use texture filtering or MSAA
+  - Consider LINE_SMOOTH if using OpenGL lines
+  - Alternative: Use textured quads for borders instead of lines
 
-#### Planned Features:
-- **Heightmap visualization:**
-  - Subtle elevation shading on provinces
-  - Mountain/hill indicators
-  - Coastal vs inland distinction
-- **Terrain overlays:**
-  - Forest textures in wooded areas
-  - Desert patterns for arid regions
-  - Grassland textures for plains
-- **River rendering:**
-  - Blue lines following river.bmp data
-  - Animated flow effects (optional)
-  - River crossing points
+- [ ] **Create two-tier border system**
+  - Country borders: 3-4 pixel width, darker color (#1a1a1a)
+  - Province borders: 1-2 pixel width, semi-transparent (#333333, 70% opacity)
+  - Sea borders: Special treatment with coastal outline effect
 
-#### Technical Approach:
-- Blend terrain textures with political colors
-- Use secondary UV channels for terrain data
-- Custom shaders for height-based shading
+- [ ] **Add border gradient effect**
+  - Outer edge: Full opacity
+  - Inner edge: Fade to transparent
+  - Creates the "glow" effect seen in Imperator
 
----
+#### Visual Reference:
+```
+Country Border:  ████████ (thick, dark)
+Province Border: ──────── (thin, lighter)
+Coastal Border:  ～～～～～ (special shader)
+```
 
-### 3. Visual Polish & Effects ✨
+### 1.2 Color Management System
+**Goal:** Muted, sophisticated color palette with depth
 
-**Priority: Medium** - Quality of life improvements
+#### Implementation Tasks:
+- [ ] **Implement color desaturation post-process**
+  - Reduce saturation by 25-30%
+  - Formula: `finalColor = mix(grayscale(color), color, 0.7)`
 
-#### Mouse Interaction:
-- **Smooth province highlighting** with glow effects
-- **Selected province outline** for clicked provinces
-- **Hover tooltips** with fade-in animations
-- **Multi-province selection** for regions
+- [ ] **Add per-province color variation**
+  - Base country color + small random offset
+  - Variation range: ±5% in HSV space
+  - Ensures provinces of same country aren't perfectly uniform
 
-#### Lighting & Atmosphere:
-- **Directional lighting** to give 3D depth feeling
-- **Ambient occlusion** for province borders
-- **Color temperature** adjustments for different times/moods
-- **Fog of war** effects for unexplored regions (future feature)
+- [ ] **Create ambient occlusion at borders**
+  - Darken pixels near borders by 10-15%
+  - Gradient falloff over 3-5 pixels
+  - Creates natural depth between provinces
 
-#### Animation:
-- **Smooth map mode transitions** with color lerping
-- **Zoom animations** for better navigation
-- **Province ownership changes** with animation (for timeline features)
-
----
-
-### 4. Advanced Map Modes 📊
-
-**Priority: Medium** - Enhanced data visualization
-
-#### Development Maps:
-- **Base Tax visualization** - color intensity based on tax value
-- **Production maps** - showing economic output
-- **Manpower density** - military recruitment potential
-- **Development level** - combined economic indicator
-
-#### Cultural/Religious Maps:
-- **Culture groups** with distinct color families
-- **Religion maps** with appropriate symbolic colors
-- **Cultural diversity** showing mixed-culture provinces
-
-#### Economic Maps:
-- **Trade goods** with icons or color coding
-- **Trade routes** showing commercial connections
-- **Centers of Trade** with special highlighting
-
-#### Technical Implementation:
-- Extend IMapMode interface for data-driven coloring
-- Parse additional data files (base_tax, culture, religion, trade_goods)
-- Create color palettes for different data types
+#### Color Palette Guidelines:
+```
+Original Color → Imperator-style Color
+Bright Red (#FF0000) → Muted Red (#B54545)
+Bright Blue (#0000FF) → Deep Blue (#4A5F8C)
+Bright Green (#00FF00) → Forest Green (#5C7A5C)
+```
 
 ---
 
-### 5. User Interface & Navigation 🧭
+## 🎨 Priority 2: Enhanced Rendering
+*Improvements that add professional polish*
 
-**Priority: Medium** - Usability improvements
+### 2.1 Texture Overlay System
+**Goal:** Break up flat colors with subtle texture
 
-#### Navigation:
-- **Minimap** showing current view area
-- **Zoom controls** with smooth interpolation
-- **Pan boundaries** to prevent getting lost
-- **Bookmarked locations** for quick navigation
+#### Implementation Tasks:
+- [ ] **Create base parchment texture**
+  - 512x512 tileable texture
+  - Subtle paper/canvas grain
+  - Apply at 10-20% opacity over provinces
 
-#### Information Display:
-- **Province information panels** on click/hover
-- **Map mode legend** showing color meanings
-- **Statistics overlay** for current map mode
-- **Search functionality** to find specific provinces/countries
+- [ ] **Implement texture blending shader**
+  ```glsl
+  finalColor = mix(provinceColor, 
+                   provinceColor * textureColor, 
+                   0.15);
+  ```
 
-#### Settings & Customization:
-- **Visual settings panel:**
-  - Border thickness slider
-  - Color intensity adjustment
-  - Terrain overlay opacity
-  - Animation speed controls
-- **Map mode hotkeys** for power users
-- **Color accessibility** options for colorblind users
+- [ ] **Add noise-based variation**
+  - Perlin noise for subtle color shifts
+  - Prevents "plastic" look of flat colors
 
----
+### 2.2 Water Shader Enhancement
+**Goal:** Dynamic, attractive water areas
 
-## Implementation Priority
+#### Implementation Tasks:
+- [ ] **Implement graduated water depth**
+  - Coastal areas: Lighter blue (#6B8CAE)
+  - Deep water: Darker blue (#2C4A6B)
+  - Use distance from shore for gradient
 
-### Phase 1: Core Visual Quality
-1. **Province borders** - Most impactful visual improvement
-2. **Basic heightmap integration** - Terrain awareness
-3. **Improved mouse highlighting** - Better interaction feedback
+- [ ] **Add animated water effect**
+  - Subtle wave normal map
+  - Slow UV scrolling (0.01 units/second)
+  - Optional: Foam effect at coastlines
 
-### Phase 2: Advanced Terrain
-1. **Full terrain texture system** - Forests, deserts, etc.
-2. **River rendering** - Water features
-3. **Lighting and shading** - Atmospheric depth
+- [ ] **Create stylized wave patterns**
+  - Hand-drawn style wave lines
+  - Appears at certain zoom levels
+  - Matches Imperator's artistic style
 
-### Phase 3: Enhanced Map Modes
-1. **Development maps** - Economic visualization
-2. **Culture/Religion maps** - Social data
-3. **Trade and economic overlays** - Commercial information
+### 2.3 Province Selection Effects
+**Goal:** Clear, attractive selection feedback
 
-### Phase 4: Polish & UX
-1. **Minimap and navigation** - Usability
-2. **Information panels** - Detailed data display
-3. **Animation and transitions** - Smooth experience
+#### Implementation Tasks:
+- [ ] **Implement selection highlighting**
+  - Brighten selected province by 20%
+  - Add subtle animated glow pulse
+  - White border around selected province
 
----
-
-## Technical Considerations
-
-### Performance:
-- **LOD system** for borders at different zoom levels
-- **Texture atlasing** for terrain overlays
-- **Mesh optimization** for complex border geometry
-- **Culling systems** for off-screen provinces
-
-### Compatibility:
-- **Shader compatibility** across different Unity versions
-- **Platform support** (Windows/Mac/Linux)
-- **Graphics API** support (DirectX/OpenGL/Vulkan)
-
-### Modularity:
-- **Component-based design** for easy feature toggling
-- **Settings system** for user customization
-- **Performance profiling** to maintain 60+ FPS
+- [ ] **Add hover effects**
+  - Slight brightness increase (5-10%)
+  - Instant visual feedback
+  - Tooltip anchor point
 
 ---
 
-## Success Metrics
+## 🚀 Priority 3: Advanced Features
+*Features that complete the professional look*
 
-The graphics enhancement will be considered successful when:
+### 3.1 Terrain Integration
+**Goal:** Blend political and geographical data
 
-- **Visual Appeal:** Map looks polished and professional
-- **Readability:** Province boundaries and data are clear
-- **Performance:** Maintains smooth 60+ FPS operation
-- **Usability:** Navigation and interaction feel natural
-- **Accuracy:** Visual representation matches game data
+#### Implementation Tasks:
+- [ ] **Implement heightmap overlay**
+  - Load terrain heightmap
+  - Darken provinces based on elevation
+  - Mountain ranges: -20% brightness
+  - Hills: -10% brightness
+
+- [ ] **Add terrain type textures**
+  - Forest overlay for forest provinces
+  - Mountain symbols for mountain provinces
+  - Desert pattern for arid regions
+  - Blend at 30-40% opacity
+
+- [ ] **Create terrain shadows**
+  - Directional shadow based on heightmap
+  - Subtle effect (5-10% darkening)
+  - Northwest light source (standard for maps)
+
+### 3.2 Map Modes System
+**Goal:** Support multiple visualization modes
+
+#### Implementation Tasks:
+- [ ] **Implement map mode architecture**
+  - Political mode (default)
+  - Terrain mode
+  - Culture mode
+  - Religion mode
+  - Development/economy mode
+
+- [ ] **Create smooth transitions**
+  - Fade between modes over 0.3 seconds
+  - Cache mode data for instant switching
+  - Maintain selection across mode changes
+
+### 3.3 Level of Detail (LOD) System
+**Goal:** Maintain performance with large maps
+
+#### Implementation Tasks:
+- [ ] **Implement province mesh LOD**
+  - High detail: Full vertex count (close zoom)
+  - Medium detail: 50% vertices (medium zoom)
+  - Low detail: 25% vertices (far zoom)
+
+- [ ] **Dynamic border rendering**
+  - Hide province borders at far zoom
+  - Show only country borders
+  - Fade borders based on zoom level
+
+- [ ] **Texture resolution switching**
+  - Use mipmaps for province textures
+  - Reduce overlay quality at distance
 
 ---
 
-## Future Considerations
+## 📊 Performance Optimizations
 
-### Potential Advanced Features:
-- **3D map mode** with actual elevation
-- **Time-lapse visualization** showing border changes
-- **Weather effects** and seasonal changes
-- **Night/day cycles** with appropriate lighting
-- **Animated trade routes** showing commerce flow
-- **Battle visualization** for military campaigns
+### Optimization Checklist:
+- [ ] **Batch province rendering by country**
+  - Reduces draw calls significantly
+  - Group provinces sharing same base color
 
-### Integration Opportunities:
-- **Save game loading** to show current game state
-- **Mod support** for custom graphics
-- **Export functionality** for creating custom maps
-- **Screenshot tools** for sharing beautiful maps
+- [ ] **Implement frustum culling**
+  - Don't render provinces outside camera view
+  - Include margin for smooth panning
+
+- [ ] **Use texture atlasing**
+  - Combine overlays into single texture
+  - Reduce texture switches
+
+- [ ] **Cache border geometry**
+  - Generate once, reuse every frame
+  - Update only on territory changes
 
 ---
 
-*This plan serves as a roadmap for transforming the functional Dominion map into a visually stunning representation of the medieval world. Each enhancement builds upon the solid foundation of accurate data parsing and political visualization already achieved.*
+## 🎨 Shader Code Templates
+
+### Basic Province Shader
+```glsl
+// Vertex Shader
+varying vec2 vUV;
+varying float vBorderDistance;
+
+void main() {
+    vUV = uv;
+    vBorderDistance = borderDistance; // Calculated from province edge
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+
+// Fragment Shader
+uniform vec3 countryColor;
+uniform sampler2D overlayTexture;
+uniform float saturation;
+
+varying vec2 vUV;
+varying float vBorderDistance;
+
+void main() {
+    vec3 baseColor = countryColor;
+    
+    // Add texture overlay
+    vec3 textureColor = texture2D(overlayTexture, vUV * 10.0).rgb;
+    baseColor = mix(baseColor, baseColor * textureColor, 0.15);
+    
+    // Border darkening
+    float borderShadow = smoothstep(0.0, 5.0, vBorderDistance);
+    baseColor *= mix(0.85, 1.0, borderShadow);
+    
+    // Desaturate
+    vec3 grayscale = vec3(dot(baseColor, vec3(0.299, 0.587, 0.114)));
+    baseColor = mix(grayscale, baseColor, saturation);
+    
+    gl_FragColor = vec4(baseColor, 1.0);
+}
+```
+
+---
+
+## 📋 Testing Checklist
+
+### Visual Quality Tests:
+- [ ] Borders appear smooth at all zoom levels
+- [ ] Colors feel cohesive and muted
+- [ ] Water areas are clearly distinguished
+- [ ] Selected provinces are clearly visible
+- [ ] Performance maintains 60 FPS with full map visible
+
+### Comparison Metrics:
+- [ ] Screenshot comparison with Imperator Rome
+- [ ] Color palette similarity check
+- [ ] Border rendering quality assessment
+- [ ] Overall "feel" matches target aesthetic
+
+---
+
+## 🎯 Success Criteria
+
+Your map should exhibit these qualities when complete:
+1. **Professional appearance** - No jaggy edges or harsh colors
+2. **Visual hierarchy** - Clear distinction between country/province/terrain
+3. **Smooth interaction** - Responsive hover and selection
+4. **Performance** - Maintains target framerate
+5. **Moddability** - Easy to adjust colors, borders, and effects
+
+---
+
+## 📚 Additional Resources
+
+- Study Paradox's dev diaries on map rendering
+- Review Unity's built-in post-processing stack
+- Consider Unity's Shader Graph for visual shader creation
+- Look into TextMeshPro for map labels (future feature)
+
+---
+
+*Remember: Start with Priority 1 tasks for maximum impact. Each completed section brings you closer to that professional Imperator Rome aesthetic!*
