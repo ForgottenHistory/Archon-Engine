@@ -168,13 +168,17 @@ MonoBehaviour:
   provinceMap: {fileID: 0}
   politicalMap: {fileID: 0}
   mapPlane: {fileID: 1040298674}
+  parchmentTexture: {fileID: 2800000, guid: 9240a52f6f78d7a468d04c901fa10e57, type: 3}
+  noiseTexture: {fileID: 2800000, guid: 704984dc9ccf8c34695d71f931dcda98, type: 3}
   provinceHeight: 0.1
-  provinceMaterial: {fileID: 2100000, guid: 90f13b108174b5a4e89a494a7742d867, type: 2}
+  provinceMaterial: {fileID: 2100000, guid: 4f9758cd2b9bde7468671f84b4c0a026, type: 2}
   useProvinceMapColors: 1
   generateBorders: 1
-  borderWidth: 0.05
-  borderColor: {r: 0, g: 0, b: 0, a: 1}
-  borderMaterial: {fileID: 2100000, guid: 72eb18f13bf814e4ea9f60e04f21a4ad, type: 2}
+  provinceVariation: 0.05
+  overlayStrength: 0.15
+  saturation: 0.7
+  countryBorderMaterial: {fileID: 2100000, guid: 4a71c2e5a4862d2449a9a17f7800198e, type: 2}
+  provinceBorderMaterial: {fileID: 2100000, guid: cd7e700336d24704da3cc5d084e0991b, type: 2}
   meshMethod: 1
   combineSmallProvinces: 1
   minPixelsForProvince: 10
