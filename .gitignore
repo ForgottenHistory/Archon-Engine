@@ -92,3 +92,7 @@ Assets/Scripts/error.txt
 Assets/Scripts/error.txt.meta
 /Assets/Textures
 /Assets/Materials
+/Assets/Pictures
+/Assets/Scenes
+Assets/Pictures.meta
+Assets/Scenes/SampleScene.unity
