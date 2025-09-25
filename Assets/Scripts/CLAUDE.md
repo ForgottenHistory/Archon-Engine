@@ -3,7 +3,8 @@
 ## Project Overview
 Dominion is a grand strategy game that captures the political reality of ancient rulership - where every decision creates winners and losers among your subjects, and success comes from understanding and managing these internal dynamics rather than just optimizing abstract numbers. More is detailed in Docs folder.
 
-**Current Focus:** High-performance Unity-native parser for Paradox Interactive file formats (EU4, HOI4, CK3, etc.). Built with Unity Job System and Burst Compiler for maximum throughput on large game files. We are NOT remaking EU4, CK3, or any other specific game. We are doing our OWN game, with our own systems. Currently we are using EU 4 files for testing, to make sure our systems work. We will transition to our own later on.
+Built with Unity Job System and Burst Compiler for maximum throughput on large game files. We are NOT remaking EU4, CK3, or any other specific game. 
+We are doing our OWN game, with our own systems. Currently we are using EU 4 files for testing, to make sure our systems work. We will transition to our own later on.
 
 You, Claude, cannot run tests. I have to do that manually.
 
@@ -86,3 +87,88 @@ country = {
 - Avoid tight coupling. Create independent systems.
 
 **IMPORTANT**: Have good separation of concerns and smaller, focused files. I use AI to develop, so output and context length is important.
+
+## Development Workflow
+
+### Before Writing Code:
+1. **Check existing implementations** - Look for similar features/patterns already in codebase
+2. **Verify the approach** - Ask if unsure about implementation strategy
+3. **Consider performance** - This game needs to handle 10,000+ provinces efficiently
+4. **Plan for modularity** - Keep files under 500 lines, single responsibility
+
+### Code Quality Checklist:
+- [ ] Follows existing naming conventions
+- [ ] Uses appropriate Unity systems (Job System, Burst, etc.)
+- [ ] Handles edge cases and errors gracefully
+- [ ] Maintains separation of concerns
+- [ ] Compatible with URP rendering pipeline
+
+## Project Structure
+
+### Key Directories:
+```
+Assets/
+├── Scripts/           # Core game code
+│   ├── Parser/       # Paradox file format parser (Burst-optimized)
+│   ├── Map/          # Map rendering and province systems
+│   ├── UI/           # UI controllers and views
+│   └── Systems/      # Game systems (Interest Groups, Policies, etc.)
+├── Data/             # Game data files (Paradox format)
+│   ├── history/      # Historical start dates
+│   ├── common/       # Game definitions
+│   └── map/          # Map data and provinces
+├── Shaders/          # URP shaders for map rendering
+├── Docs/             # Game design and technical documentation
+└── Resources/        # Unity resources (textures, materials, etc.)
+```
+
+### Critical Files:
+- `CLAUDE.md` - This file, your development guide
+- `Assets/Docs/texture-based-map-guide.md` - Map rendering implementation plan
+- `Assets/Docs/game_design_document.md` - Core game vision (for context only)
+
+## Technical Requirements
+
+### Performance Targets:
+- 200+ FPS with 10,000 provinces visible
+- Single draw call for base map
+- Zero allocations during gameplay
+- Sub-1ms province selection
+
+### Unity Configuration:
+- **Render Pipeline**: URP (Universal Render Pipeline)
+- **Color Space**: Linear
+- **Scripting Backend**: IL2CPP
+- **Target Platform**: PC (Windows/Mac/Linux)
+
+### Code Patterns to Follow:
+```csharp
+// Burst-compatible structs
+[BurstCompile]
+public struct ProvinceData
+{
+    public int ID;
+    public float2 Position;
+    // Use blittable types only
+}
+
+// Event-driven communication
+public static event Action<ProvinceID> OnProvinceSelected;
+
+// Job System for heavy operations
+[BurstCompile]
+struct ProcessProvincesJob : IJobParallelFor { }
+```
+
+### Testing Requirements:
+- Manual testing only (you can't run automated tests)
+- Always verify compilation before claiming completion
+- Test with large datasets (thousands of provinces)
+- Check performance with Unity Profiler
+
+## Common Pitfalls to Avoid:
+- ❌ Don't create GameObjects for each province (use texture-based rendering)
+- ❌ Don't use texture filtering on province ID textures
+- ❌ Don't allocate during gameplay (use object pools)
+- ❌ Don't readback GPU data every frame
+- ❌ Don't forget CBUFFER blocks for SRP Batcher compatibility
