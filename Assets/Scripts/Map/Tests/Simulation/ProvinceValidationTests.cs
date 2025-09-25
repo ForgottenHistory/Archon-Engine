@@ -252,10 +252,11 @@ namespace Map.Tests.Simulation
 
             var result = ProvinceStateValidator.ValidateSimulation(simulation);
 
+
             bool hasUnownedCapitalError = false;
             foreach (var error in result.Errors)
             {
-                if (error.Message.Contains("capital") && error.Message.Contains("unowned"))
+                if (error.Message.ToLower().Contains("capital") && error.Message.ToLower().Contains("unowned"))
                 {
                     hasUnownedCapitalError = true;
                     break;

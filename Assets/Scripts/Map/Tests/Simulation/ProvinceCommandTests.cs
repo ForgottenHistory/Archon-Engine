@@ -373,8 +373,13 @@ namespace Map.Tests.Simulation
         [Test]
         public void Commands_RepeatedExecution_ShouldBeDeterministic()
         {
-            // Execute same command sequence on two identical simulations
+            // Create two identical simulations from scratch for true determinism testing
+            var simulation1 = new ProvinceSimulation(100);
             var simulation2 = new ProvinceSimulation(100);
+
+            // Set up identical initial states
+            simulation1.AddProvince(1, TerrainType.Grassland);
+            simulation1.AddProvince(2, TerrainType.Hills);
             simulation2.AddProvince(1, TerrainType.Grassland);
             simulation2.AddProvince(2, TerrainType.Hills);
 
@@ -388,21 +393,22 @@ namespace Map.Tests.Simulation
             // Execute on both simulations
             foreach (var command in commands)
             {
-                command.Execute(simulation);
+                command.Execute(simulation1);
                 command.Execute(simulation2);
             }
 
             // States should be identical
-            var state1 = simulation.GetProvinceState(1);
+            var state1 = simulation1.GetProvinceState(1);
             var state2 = simulation2.GetProvinceState(1);
 
             Assert.AreEqual(state1.ownerID, state2.ownerID);
             Assert.AreEqual(state1.development, state2.development);
             Assert.AreEqual(state1.flags, state2.flags);
 
-            // Checksums should match
-            Assert.AreEqual(simulation.CalculateStateChecksum(), simulation2.CalculateStateChecksum());
+            // Checksums should match for true determinism
+            Assert.AreEqual(simulation1.CalculateStateChecksum(), simulation2.CalculateStateChecksum());
 
+            simulation1.Dispose();
             simulation2.Dispose();
         }
 
