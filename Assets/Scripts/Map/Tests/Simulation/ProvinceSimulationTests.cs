@@ -384,7 +384,6 @@ namespace Map.Tests.Simulation
         {
             // Test with reasonable province count for testing
             const int testProvinces = 1000;
-            const int maxMemoryBytes = 100 * 1024; // 100KB limit
 
             var largeSimulation = new ProvinceSimulation(testProvinces);
 
