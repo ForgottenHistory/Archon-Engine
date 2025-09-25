@@ -128,9 +128,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 293189518}
-  - component: {fileID: 293189522}
-  - component: {fileID: 293189520}
-  - component: {fileID: 293189521}
   m_Layer: 0
   m_Name: Map Generator
   m_TagString: Untagged
@@ -153,74 +150,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &293189520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 293189517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0051b8b036092e3489ca86ca41cb9cad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  provinceMap: {fileID: 0}
-  politicalMap: {fileID: 0}
-  mapPlane: {fileID: 1040298674}
-  provinceHeight: 0.1
-  provinceMaterial: {fileID: 2100000, guid: 4f9758cd2b9bde7468671f84b4c0a026, type: 2}
-  useProvinceMapColors: 1
-  generateBorders: 1
-  borderWidth: 0.01
-  borderColor: {r: 0, g: 0, b: 0, a: 1}
-  borderMaterial: {fileID: 0}
-  meshMethod: 1
-  combineSmallProvinces: 1
-  minPixelsForProvince: 10
-  generateOnStart: 0
-  clearExistingProvinces: 1
-  showDebugInfo: 1
-  limitProvinceCount: 0
-  maxProvincesToGenerate: 1000
---- !u!114 &293189521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 293189517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41747afce9c3c3c4d94235918598b771, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  provinceMap: {fileID: 0}
-  scanOnStart: 0
-  ignoreDiagonals: 0
-  blackThreshold: 10
-  showDebugInfo: 1
---- !u!114 &293189522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 293189517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2542f9eb5630d27499a81b940780a0d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapSettings:
-    bmpFileName: provinces.bmp
-    mapScale: 10
-    generate3DProvinces: 1
-    scanAdjacencies: 1
-    useParallelScanning: 1
-    enableProvinceClickDetection: 1
-    enableMapModes: 1
-    defaultMapMode: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
