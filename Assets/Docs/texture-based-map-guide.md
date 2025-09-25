@@ -17,66 +17,66 @@ The entire map is rendered on a single quad mesh with all logic handled by URP s
 - [x] Create folder structure: Shaders/, ComputeShaders/, Data/, RenderFeatures/
 
 ### Task 1.2: Map Quad Setup
-- [ ] Create single GameObject called "MapRenderer"
-- [ ] Add MeshFilter and MeshRenderer components
-- [ ] Generate a two-triangle quad mesh covering map dimensions
-- [ ] Set quad pivot point to bottom-left corner
-- [ ] Ensure UV coordinates map 0-1 across entire quad
-- [ ] Disable shadow casting and receiving on MeshRenderer
-- [ ] Set MeshRenderer's Lighting > Cast Shadows to Off
-- [ ] Enable SRP Batcher compatibility by using single material
+- [x] Create single GameObject called "MapRenderer"
+- [x] Add MeshFilter and MeshRenderer components
+- [x] Generate a two-triangle quad mesh covering map dimensions
+- [x] Set quad pivot point to bottom-left corner
+- [x] Ensure UV coordinates map 0-1 across entire quad
+- [x] Disable shadow casting and receiving on MeshRenderer
+- [x] Set MeshRenderer's Lighting > Cast Shadows to Off
+- [x] Enable SRP Batcher compatibility by using single material
 
 ### Task 1.3: Texture Infrastructure
-- [ ] Create Texture2D for province IDs (R16G16 format, point filtering)
-- [ ] Create Texture2D for province owners (R16 format)
-- [ ] Create Texture2D for province colors (RGBA32)
-- [ ] Create RenderTexture for borders (R8 format)
-- [ ] Create RenderTexture for selection highlights
-- [ ] Set all map textures to Clamp mode (no wrapping)
-- [ ] Disable mipmaps on all map textures
-- [ ] Ensure textures are not compressed
+- [x] Create Texture2D for province IDs (R16G16 format, point filtering)
+- [x] Create Texture2D for province owners (R16 format)
+- [x] Create Texture2D for province colors (RGBA32)
+- [x] Create RenderTexture for borders (R8 format)
+- [x] Create RenderTexture for selection highlights
+- [x] Set all map textures to Clamp mode (no wrapping)
+- [x] Disable mipmaps on all map textures
+- [x] Ensure textures are not compressed
 
 ### Task 1.4: Province Data Structure
-- [ ] Create ProvinceData struct with ID, owner, color fields
-- [ ] Allocate array for 10,000 provinces
-- [ ] Create Color32 to Province ID lookup dictionary
-- [ ] Create Province ID to array index mapping
-- [ ] Implement fast hash function for color lookups
-- [ ] Store province center points for label placement
+- [x] Create ProvinceData struct with ID, owner, color fields
+- [x] Allocate array for 10,000 provinces
+- [x] Create Color32 to Province ID lookup dictionary
+- [x] Create Province ID to array index mapping
+- [x] Implement fast hash function for color lookups
+- [x] Store province center points for label placement
 
 ## Phase 2: Province Bitmap Processing
 
 ### Task 2.1: Bitmap Loading
-- [ ] Load provinces.bmp as raw Color32 array
-- [ ] Validate bitmap dimensions match expected size
-- [ ] Count unique colors (total provinces)
-- [ ] Verify province count is under 65,535 (16-bit limit)
-- [ ] Create error texture for invalid/missing province IDs
-- [ ] Handle edge case of ocean/wasteland provinces
+- [x] Load provinces.bmp as raw Color32 array
+- [x] Validate bitmap dimensions match expected size
+- [x] Count unique colors (total provinces)
+- [x] Verify province count is under 65,535 (16-bit limit)
+- [x] Create error texture for invalid/missing province IDs
+- [x] Handle edge case of ocean/wasteland provinces
 
 ### Task 2.2: Province ID Encoding
-- [ ] Convert each unique RGB color to sequential province ID
-- [ ] Pack province IDs into R16G16 texture format
-- [ ] Store ID in R channel (0-255) and G channel (256-65535)
-- [ ] Create reverse lookup table (ID to Color32)
-- [ ] Validate no ID collisions occurred
-- [ ] Reserve ID 0 for "no province" / ocean
+- [x] Convert each unique RGB color to sequential province ID
+- [x] Pack province IDs into R16G16 texture format
+- [x] Store ID in R channel (0-255) and G channel (256-65535)
+- [x] Create reverse lookup table (ID to Color32)
+- [x] Validate no ID collisions occurred
+- [x] Reserve ID 0 for "no province" / ocean
 
 ### Task 2.3: Province Neighbor Detection
-- [ ] Implement scanline neighbor detection (horizontal pass)
-- [ ] Implement vertical pass for neighbor detection
-- [ ] Store neighbor relationships in packed array
-- [ ] Remove duplicate neighbor pairs
-- [ ] Calculate province bounding boxes during scan
-- [ ] Flag coastal provinces (neighbors with ocean)
+- [x] Implement scanline neighbor detection (horizontal pass)
+- [x] Implement vertical pass for neighbor detection
+- [x] Store neighbor relationships in packed array
+- [x] Remove duplicate neighbor pairs
+- [x] Calculate province bounding boxes during scan
+- [x] Flag coastal provinces (neighbors with ocean)
 
 ### Task 2.4: Province Metadata Generation
-- [ ] Calculate province pixel count (size)
-- [ ] Find province center of mass
-- [ ] Determine if province has multiple disconnected parts
-- [ ] Generate province convex hull for labels
-- [ ] Store bounding box for frustum culling
-- [ ] Mark impassable provinces (mountains, lakes)
+- [x] Calculate province pixel count (size)
+- [x] Find province center of mass
+- [x] Determine if province has multiple disconnected parts
+- [x] Generate province convex hull for labels
+- [x] Store bounding box for frustum culling
+- [x] Mark impassable provinces (mountains, lakes)
 
 ## Phase 3: GPU Shader System (URP)
 
