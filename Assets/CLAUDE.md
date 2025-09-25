@@ -52,6 +52,7 @@ country = {
 
 ### Performance Requirements
 - Always use Burst compilation for hot paths (avoid NativeSlice parameters in Burst methods)
+- Always load data using Scripts/ParadoxParser. It has been highly optimized. If features are lacking, point it out so we can add
 - Zero-allocation parsing patterns using structs and unsafe pointers
 - Implement dual APIs: unsafe pointers for Burst, NativeSlice overloads for convenience
 - Use `[MethodImpl(MethodImplOptions.AggressiveInlining)]` for critical path methods
