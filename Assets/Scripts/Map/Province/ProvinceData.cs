@@ -13,7 +13,5 @@ public class ProvinceData
     public string name;
     public int id;
 
-    // Additional properties for ProvinceDataService compatibility
-    public GameObject gameObject;
-    public ProvinceComponent component;
+    // Removed 3D GameObject and ProvinceComponent references for texture-based rendering
 }

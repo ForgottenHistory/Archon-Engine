@@ -8,10 +8,6 @@ We are doing our OWN game, with our own systems. Currently we are using EU 4 fil
 
 You, Claude, cannot run tests. I have to do that manually.
 
-## Important files:
-- Data files are "Assets\Data" then follow a Paradox filepath format. history, common, map, etc.
-- Documents for game are in "Assets\Docs"
-
 ## Paradox Format Examples:
 ```
 # Basic key-value

@@ -4,28 +4,17 @@ using UnityEngine;
 namespace ProvinceSystem.Services
 {
     /// <summary>
-    /// Service for managing province data - updated to work with refactored ProvinceData
+    /// Service for managing province data - texture-based rendering system
     /// </summary>
     public class ProvinceDataService
     {
         private Dictionary<Color, ProvinceData> provinces = new Dictionary<Color, ProvinceData>();
-        private Dictionary<Color, GameObject> provinceGameObjects = new Dictionary<Color, GameObject>();
         private Dictionary<int, ProvinceData> provinceById = new Dictionary<int, ProvinceData>();
 
         public void RegisterProvince(ProvinceData province)
         {
             provinces[province.color] = province;
             provinceById[province.id] = province;
-        }
-
-        public void RegisterProvinceGameObject(Color color, GameObject obj)
-        {
-            provinceGameObjects[color] = obj;
-            if (provinces.ContainsKey(color))
-            {
-                provinces[color].gameObject = obj;
-                provinces[color].component = obj.GetComponent<ProvinceComponent>();
-            }
         }
 
         public ProvinceData GetProvinceByColor(Color color)
@@ -38,10 +27,7 @@ namespace ProvinceSystem.Services
             return provinceById.ContainsKey(id) ? provinceById[id] : null;
         }
 
-        public GameObject GetProvinceGameObject(Color color)
-        {
-            return provinceGameObjects.ContainsKey(color) ? provinceGameObjects[color] : null;
-        }
+        // GameObject methods removed - using texture-based rendering
 
         public Dictionary<Color, ProvinceData> GetAllProvinces()
         {
