@@ -1,437 +1,264 @@
-# High-Performance Texture-Based Map System Implementation Guide (URP)
+# Texture-Based Map System Implementation Guide (URP)
+## Dual-Layer Architecture: CPU Simulation + GPU Presentation
 
 ## System Overview
-Build a Paradox-style map renderer that handles 10,000+ provinces at 200+ FPS using GPU-based texture rendering in Universal Render Pipeline.
-The entire map is rendered on a single quad mesh with all logic handled by URP shaders.
+Build a texture-based map renderer following the **dual-layer architecture** from the master architecture document. This system separates deterministic simulation (CPU) from high-performance presentation (GPU), enabling 10,000+ provinces at 200+ FPS while maintaining multiplayer compatibility.
 
-## Phase 1: Foundation Setup
+**Key Principle**: Never process millions of pixels on CPU. The GPU handles all visual processing through shaders and compute shaders.
 
-### Task 1.1: URP Project Configuration
-- [x] Configure URP Asset: Assets > Create > Rendering > URP Asset (Forward Renderer)
-- [x] Enable SRP Batcher in URP Asset settings
-- [x] Set Rendering Path to Forward+ for better performance
-- [x] Disable unnecessary URP features (HDR, MSAA, Screen Space Shadows)
-- [x] Install Burst Compiler package
-- [x] Install Mathematics package
-- [x] Install Shader Graph package (optional, for prototyping)
-- [x] Create folder structure: Shaders/, ComputeShaders/, Data/, RenderFeatures/
+## Architecture Summary
 
-### Task 1.2: Map Quad Setup
-- [x] Create single GameObject called "MapRenderer"
-- [x] Add MeshFilter and MeshRenderer components
-- [x] Generate a two-triangle quad mesh covering map dimensions
-- [x] Set quad pivot point to bottom-left corner
-- [x] Ensure UV coordinates map 0-1 across entire quad
-- [x] Disable shadow casting and receiving on MeshRenderer
-- [x] Set MeshRenderer's Lighting > Cast Shadows to Off
-- [x] Enable SRP Batcher compatibility by using single material
+```
+Layer 1 (CPU): Simulation State
+- 8 bytes per province × 10,000 = 80KB
+- Fixed-size, deterministic, networkable
+- Hot data only (owner, controller, development, flags)
 
-### Task 1.3: Texture Infrastructure
-- [x] Create Texture2D for province IDs (R16G16 format, point filtering)
-- [x] Create Texture2D for province owners (R16 format)
-- [x] Create Texture2D for province colors (RGBA32)
-- [x] Create RenderTexture for borders (R8 format)
-- [x] Create RenderTexture for selection highlights
-- [x] Set all map textures to Clamp mode (no wrapping)
-- [x] Disable mipmaps on all map textures
-- [x] Ensure textures are not compressed
+Layer 2 (GPU): Presentation State
+- Province ID texture (46MB) - which pixel belongs to which province
+- State textures (3MB) - owner, controller, colors per province
+- Generated textures - borders, effects, highlights
+- All visual processing via shaders
+```
 
-### Task 1.4: Province Data Structure
-- [x] Create ProvinceData struct with ID, owner, color fields
-- [x] Allocate array for 10,000 provinces
-- [x] Create Color32 to Province ID lookup dictionary
-- [x] Create Province ID to array index mapping
-- [x] Implement fast hash function for color lookups
-- [x] Store province center points for label placement
+## Phase 1: Simulation Layer Foundation
 
-## Phase 2: Province Bitmap Processing
+### Task 1.1: Province Simulation State
+- [ ] Create fixed-size `ProvinceState` struct (8 bytes exactly)
+- [ ] Implement `ProvinceSimulation` class with `NativeArray<ProvinceState>`
+- [ ] Add state serialization/deserialization for networking
+- [ ] Create command pattern for deterministic state changes
+- [ ] Implement state validation and integrity checks
+- [ ] Add hot/cold data separation (hot=8 bytes, cold=on-demand)
 
-### Task 2.1: Bitmap Loading
-- [x] Load provinces.bmp as raw Color32 array
-- [x] Validate bitmap dimensions match expected size
-- [x] Count unique colors (total provinces)
-- [x] Verify province count is under 65,535 (16-bit limit)
-- [x] Create error texture for invalid/missing province IDs
-- [x] Handle edge case of ocean/wasteland provinces
-
-### Task 2.2: Province ID Encoding
-- [x] Convert each unique RGB color to sequential province ID
-- [x] Pack province IDs into R16G16 texture format
-- [x] Store ID in R channel (0-255) and G channel (256-65535)
-- [x] Create reverse lookup table (ID to Color32)
-- [x] Validate no ID collisions occurred
-- [x] Reserve ID 0 for "no province" / ocean
-
-### Task 2.3: Province Neighbor Detection
-- [x] Implement scanline neighbor detection (horizontal pass)
-- [x] Implement vertical pass for neighbor detection
-- [x] Store neighbor relationships in packed array
-- [x] Remove duplicate neighbor pairs
-- [x] Calculate province bounding boxes during scan
-- [x] Flag coastal provinces (neighbors with ocean)
-
-### Task 2.4: Province Metadata Generation
-- [x] Calculate province pixel count (size)
-- [x] Find province center of mass
-- [x] Determine if province has multiple disconnected parts
-- [x] Generate province convex hull for labels
-- [x] Store bounding box for frustum culling
-- [x] Mark impassable provinces (mountains, lakes)
-
-## Phase 3: GPU Shader System (URP)
-
-### Task 3.1: Main URP Map Shader
-- [ ] Create new Unlit URP Shader (Assets > Create > Shader > Universal Render Pipeline > Unlit Shader)
-- [ ] Convert to HLSLPROGRAM/ENDHLSL blocks
-- [ ] Include Core.hlsl: `#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"`
-- [ ] Use TEXTURE2D(_MainTex) and SAMPLER(sampler_MainTex) macros
-- [ ] Implement province ID decoding in fragment shader
-- [ ] Add province color lookup using SAMPLE_TEXTURE2D
-- [ ] Use sampler_PointClamp for pixel-perfect provinces
-- [ ] Add multi-compile pragmas for shader variants: `#pragma multi_compile _ _MAP_MODE_POLITICAL _MAP_MODE_TERRAIN`
-- [ ] Ensure SRP Batcher compatibility with CBUFFER blocks
-
-### Task 3.2: Border Generation Compute Shader
-- [ ] Create compute shader for border detection (works identically in URP)
-- [ ] Implement 4-way neighbor checking per pixel
-- [ ] Write border detection to R8 RenderTexture
-- [ ] Add border thickness parameter (1-5 pixels)
-- [ ] Implement country vs province border differentiation
-- [ ] Add diagonal checking for smoother borders
-- [ ] Use RWTexture2D for output in compute shader
-- [ ] Dispatch compute shader before main rendering
-
-### Task 3.3: Selection & Highlighting (URP)
-- [ ] Implement mouse position to UV conversion
-- [ ] Use AsyncGPUReadback for province ID at cursor
-- [ ] Add selection outline compute shader
-- [ ] Implement province hover highlighting with URP shader properties
-- [ ] Add multi-province selection support
-- [ ] Create animated selection effect using Time node in Shader Graph or _Time in HLSL
-
-### Task 3.4: Map Modes (URP Shader Variants)
-- [ ] Implement political map mode using shader_feature_local
-- [ ] Add terrain map mode shader variant
-- [ ] Create religion/culture map mode
-- [ ] Implement development/economy view
-- [ ] Add diplomatic map mode (relations)
-- [ ] Create fog of war using URP Render Feature
-- [ ] Use Material Property Blocks for per-province data
-
-## Phase 4: Performance Optimization
-
-### Task 4.1: Texture Optimization
-- [ ] Pack multiple data into single textures (owner + controller in RG)
-- [ ] Use texture arrays for temporal data (monthly changes)
-- [ ] Implement texture streaming for huge maps
-- [ ] Reduce province color texture to 256x1 (palette)
-- [ ] Use 16-bit indices where possible
-- [ ] Compress static data textures
-
-### Task 4.2: GPU Optimization (URP-Specific)
-- [ ] Batch all map rendering into single draw call
-- [ ] Leverage SRP Batcher by using CBUFFER blocks correctly
-- [ ] Use GPU instancing for map icons/units with URP instancing macros
-- [ ] Implement Z-order sorting on GPU
-- [ ] Configure URP Renderer Features for custom passes
-- [ ] Use shader_feature_local for reduced variant count
-- [ ] Optimize shader keywords with multi_compile_local
-- [ ] Remove unnecessary texture samples
-- [ ] Use URP's Forward+ rendering for better light culling
-
-### Task 4.3: Update Optimization
-- [ ] Implement dirty flag system for province changes
-- [ ] Update only changed texture regions
-- [ ] Use double buffering for smooth updates
-- [ ] Batch province updates per frame
-- [ ] Implement temporal coherence for borders
-- [ ] Add LOD system based on zoom level
-
-### Task 4.4: Memory Optimization
-- [ ] Use object pooling for temporary data
-- [ ] Implement province data paging for huge maps
-- [ ] Compress province history data
-- [ ] Use bit packing for boolean province flags
-- [ ] Stream province details on demand
-- [ ] Implement aggressive garbage collection strategy
-
-## Phase 5: Advanced URP Rendering Features
-
-### Task 5.1: Heightmap Integration
-- [ ] Load heightmap texture
-- [ ] Modify vertex shader for height displacement using URP macros
-- [ ] Adjust border shader for 3D terrain
-- [ ] Use URP's shadow mapping system
-- [ ] Add height-based province shading
-- [ ] Create water depth rendering with URP Water shader
-- [ ] Consider URP Terrain system integration for hybrid approach
-
-### Task 5.2: Visual Effects (URP)
-- [ ] Implement smooth zoom transitions
-- [ ] Add camera frustum culling for overlays
-- [ ] Create animated border effects using Shader Graph
-- [ ] Implement province grow/shrink animations
-- [ ] Add war front line animations with URP Particle System
-- [ ] Create fog of war using URP Render Features
-- [ ] Use Volume Overrides for post-processing effects
-- [ ] Implement custom ScriptableRenderPass for special effects
-
-### Task 5.3: Label Rendering
-- [ ] Implement GPU-based text rendering
-- [ ] Create label placement algorithm
-- [ ] Add label LOD based on zoom
-- [ ] Implement curved text for large provinces
-- [ ] Add icon rendering system
-- [ ] Create label occlusion system
-
-### Task 5.4: Overlay Systems
-- [ ] Implement trade route rendering
-- [ ] Add army movement paths
-- [ ] Create weather overlay system
-- [ ] Implement supply line visualization
-- [ ] Add diplomatic relation lines
-- [ ] Create battle location markers
-
-## Phase 6: Unity Integration
-
-### Task 6.1: Input System
-- [ ] Implement camera controller with smooth zoom
-- [ ] Add province selection via mouse (using CommandBuffer.RequestAsyncReadback)
-- [ ] Create box selection for multiple provinces
-- [ ] Implement keyboard shortcuts for map modes
-- [ ] Add touch input support for mobile
-- [ ] Create edge scrolling for camera
-- [ ] Use URP's Camera Stack for UI overlay cameras
-
-### Task 6.2: UI Integration
-- [ ] Create province tooltip system
-- [ ] Add province info panel
-- [ ] Implement minimap with GPU rendering
-- [ ] Create map mode selector UI
-- [ ] Add performance statistics overlay
-- [ ] Implement province search functionality
-
-### Task 6.3: Game Logic Integration
-- [ ] Create event system for province changes
-- [ ] Implement province ownership changes
-- [ ] Add province development modifications
-- [ ] Create save/load system for map state
-- [ ] Implement multiplayer synchronization
-- [ ] Add modding support for province data
-
-### Task 6.4: Platform Optimization
-- [ ] Implement quality settings (Low/Medium/High/Ultra)
-- [ ] Add resolution scaling for weak GPUs
-- [ ] Create mobile-specific optimizations
-- [ ] Implement console platform adjustments
-- [ ] Add DirectX/Vulkan/Metal specific paths
-- [ ] Create automated performance scaling
-
-## Phase 7: Testing & Validation
-
-### Task 7.1: Performance Testing
-- [ ] Verify 200+ FPS with all provinces visible
-- [ ] Test with 10,000 province changes per second
-- [ ] Validate memory usage stays under 100MB
-- [ ] Ensure no memory leaks during long sessions
-- [ ] Test zoom performance (1x to 100x)
-- [ ] Profile GPU usage (target: <5ms per frame)
-
-### Task 7.2: Correctness Testing
-- [ ] Validate all provinces are selectable
-- [ ] Verify no rendering artifacts at borders
-- [ ] Test province color accuracy
-- [ ] Ensure islands render correctly
-- [ ] Validate neighbor relationships
-- [ ] Test all map modes render correctly
-
-### Task 7.3: Stress Testing
-- [ ] Test with 20,000 provinces
-- [ ] Simulate 1000 simultaneous province changes
-- [ ] Test 8-hour continuous gameplay session
-- [ ] Validate with 4K and 8K resolutions
-- [ ] Test rapid map mode switching
-- [ ] Simulate maximum overlay density
-
-### Task 7.4: Compatibility Testing
-- [ ] Test on minimum spec hardware
-- [ ] Validate on all target platforms
-- [ ] Test with different GPU vendors
-- [ ] Verify with various driver versions
-- [ ] Test in WebGL builds
-- [ ] Validate on integrated graphics
-
-## Performance Targets (URP Optimized)
-
-### Minimum Requirements (60 FPS)
-- [ ] GTX 960 / RX 470 level GPU
-- [ ] 10,000 provinces rendered
-- [ ] 1920x1080 resolution
-- [ ] All borders visible
-- [ ] One overlay system active
-- [ ] URP Quality: Low preset
-
-### Recommended Requirements (144 FPS)
-- [ ] GTX 1070 / RX 580 level GPU
-- [ ] 10,000 provinces with all effects
-- [ ] 2560x1440 resolution
-- [ ] Multiple overlays active
-- [ ] Full animation systems
-- [ ] URP Quality: Medium preset with SRP Batcher
-
-### Ultra Requirements (200+ FPS)
-- [ ] RTX 3070 / RX 6700 level GPU
-- [ ] 20,000+ provinces
-- [ ] 4K resolution
-- [ ] All systems maximum quality
-- [ ] URP Forward+ with all features
-- [ ] Custom Render Features enabled
-
-## Critical Success Metrics
-- [ ] Single draw call for entire base map
-- [ ] Province selection in <1ms
-- [ ] Map mode changes in <16ms (one frame)
-- [ ] Memory usage under 100MB for map system
-- [ ] Zero dynamic allocations during gameplay
-- [ ] Pixel-perfect province borders
-- [ ] Support for 65,535 unique provinces
-
-## URP-Specific Shader Code Examples
-
-### Basic Province Map Shader (URP)
-```hlsl
-Shader "MapSystem/ProvinceMapURP"
-{
-    Properties
-    {
-        _ProvinceIDTex ("Province ID Texture", 2D) = "white" {}
-        _ProvinceColorTex ("Province Colors", 2D) = "white" {}
-        _BorderTex ("Border Texture", 2D) = "black" {}
-        _SelectedProvince ("Selected Province ID", Float) = 0
-    }
-
-    SubShader
-    {
-        Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" }
-
-        Pass
-        {
-            Name "ForwardLit"
-            Tags { "LightMode"="UniversalForward" }
-
-            HLSLPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-            #pragma multi_compile _ _MAP_MODE_POLITICAL _MAP_MODE_TERRAIN
-
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-
-            struct Attributes
-            {
-                float4 positionOS : POSITION;
-                float2 uv : TEXCOORD0;
-            };
-
-            struct Varyings
-            {
-                float4 positionCS : SV_POSITION;
-                float2 uv : TEXCOORD0;
-            };
-
-            TEXTURE2D(_ProvinceIDTex);
-            SAMPLER(sampler_PointClamp);
-            TEXTURE2D(_ProvinceColorTex);
-            TEXTURE2D(_BorderTex);
-
-            CBUFFER_START(UnityPerMaterial)
-                float _SelectedProvince;
-            CBUFFER_END
-
-            Varyings vert(Attributes input)
-            {
-                Varyings output;
-                output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
-                output.uv = input.uv;
-                return output;
-            }
-
-            half4 frag(Varyings input) : SV_Target
-            {
-                // Sample province ID using point sampling
-                float2 provinceIDRaw = SAMPLE_TEXTURE2D(_ProvinceIDTex, sampler_PointClamp, input.uv).rg;
-                uint provinceID = (uint)(provinceIDRaw.r * 255.0) + (uint)(provinceIDRaw.g * 255.0) * 256;
-
-                // Get province color from palette
-                float2 colorUV = float2(provinceID / 256.0, 0.5);
-                half4 provinceColor = SAMPLE_TEXTURE2D(_ProvinceColorTex, sampler_PointClamp, colorUV);
-
-                // Apply borders
-                half border = SAMPLE_TEXTURE2D(_BorderTex, sampler_PointClamp, input.uv).r;
-                provinceColor.rgb = lerp(provinceColor.rgb, half3(0,0,0), border);
-
-                // Highlight selected province
-                if(abs(provinceID - _SelectedProvince) < 0.5)
-                {
-                    provinceColor.rgb = lerp(provinceColor.rgb, half3(1,1,0), 0.3);
-                }
-
-                return provinceColor;
-            }
-            ENDHLSL
-        }
-    }
+```csharp
+// CRITICAL: This struct must be exactly 8 bytes for performance
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct ProvinceState {
+    public ushort ownerID;      // 2 bytes - who owns this province
+    public ushort controllerID; // 2 bytes - who controls it (different during occupation)
+    public byte development;    // 1 byte - 0-255 development level
+    public byte terrain;        // 1 byte - terrain type enum
+    public byte fortLevel;      // 1 byte - fortification level
+    public byte flags;          // 1 byte - 8 boolean flags (coastal, capital, etc.)
 }
 ```
 
-### Border Detection Compute Shader
+### Task 1.2: Bitmap to Simulation Conversion
+- [ ] Load provinces.bmp using existing optimized ParadoxParser
+- [ ] Extract unique province IDs (1-65534, reserve 0 for ocean)
+- [ ] Create ProvinceID→ArrayIndex mapping for O(1) lookups
+- [ ] Initialize ProvinceState array with default values
+- [ ] Validate province count fits in memory target (80KB for 10k provinces)
+- [ ] Store province pixel boundaries for GPU texture generation
+
+### Task 1.3: GPU Texture Infrastructure
+- [ ] Create province ID texture (R16G16, point filtering, no mipmaps)
+- [ ] Create province owner texture (R16, updated from simulation)
+- [ ] Create province color palette texture (256×1 RGBA32)
+- [ ] Create render textures for borders, selection, effects
+- [ ] Implement texture update system from simulation state
+- [ ] Add texture streaming for very large maps (>10k provinces)
+
+### Task 1.4: Command System (Multiplayer Foundation)
+- [ ] Create `IProvinceCommand` interface for all state changes
+- [ ] Implement command validation and execution
+- [ ] Add command serialization for networking
+- [ ] Create command buffer with rollback support
+- [ ] Implement deterministic random number generation
+- [ ] Add state checksum validation
+
+## Phase 2: GPU Presentation Layer
+
+### Task 2.1: Core Map Shader (URP)
+- [ ] Create URP Unlit shader for main map rendering
+- [ ] Sample province ID texture with point filtering
+- [ ] Use province ID to index into owner/color textures
+- [ ] Implement map mode switching (political, terrain, etc.)
+- [ ] Add SRP Batcher compatibility with CBUFFER blocks
+- [ ] Support shader variants for different map modes
+
 ```hlsl
-#pragma kernel DetectBorders
+// Core map shader logic
+float2 provinceID_encoded = tex2D(_ProvinceIDTexture, uv);
+uint provinceID = DecodeProvinceID(provinceID_encoded);
+uint ownerID = tex2D(_ProvinceOwnerTexture, GetOwnerUV(provinceID));
+float4 provinceColor = tex2D(_ProvinceColorPalette, GetColorUV(ownerID));
+```
 
-Texture2D<float2> ProvinceIDTexture;
-RWTexture2D<float> BorderOutput;
+### Task 2.2: GPU Compute Shaders
+- [ ] **Border Detection Compute Shader**: Process entire map in parallel to find province borders
+- [ ] **Selection Compute Shader**: Generate selection highlights
+- [ ] **Effect Generation Compute Shader**: War effects, trade routes, etc.
+- [ ] **LOD Compute Shader**: Generate lower resolution textures for distant zoom
+- [ ] Thread group optimization (8×8 or 16×16 depending on GPU)
+- [ ] GPU profiling and optimization
 
+```hlsl
+// Border detection kernel - processes 64 pixels in parallel
 [numthreads(8,8,1)]
-void DetectBorders(uint3 id : SV_DispatchThreadID)
-{
-    uint width, height;
-    ProvinceIDTexture.GetDimensions(width, height);
+void DetectBorders(uint3 id : SV_DispatchThreadID) {
+    uint currentProvince = DecodeProvinceID(ProvinceIDTexture[id.xy]);
+    uint rightProvince = DecodeProvinceID(ProvinceIDTexture[id.xy + int2(1,0)]);
+    uint bottomProvince = DecodeProvinceID(ProvinceIDTexture[id.xy + int2(0,1)]);
 
-    if(id.x >= width || id.y >= height)
-        return;
-
-    float2 currentID = ProvinceIDTexture[id.xy];
-    float border = 0;
-
-    // Check 4-way neighbors
-    if(id.x > 0 && any(ProvinceIDTexture[uint2(id.x-1, id.y)] != currentID))
-        border = 1;
-    if(id.x < width-1 && any(ProvinceIDTexture[uint2(id.x+1, id.y)] != currentID))
-        border = 1;
-    if(id.y > 0 && any(ProvinceIDTexture[uint2(id.x, id.y-1)] != currentID))
-        border = 1;
-    if(id.y < height-1 && any(ProvinceIDTexture[uint2(id.x, id.y+1)] != currentID))
-        border = 1;
-
-    BorderOutput[id.xy] = border;
+    bool isBorder = (currentProvince != rightProvince) || (currentProvince != bottomProvince);
+    BorderTexture[id.xy] = isBorder ? 1.0 : 0.0;
 }
 ```
 
-## Common Pitfalls to Avoid
-- Don't use texture filtering on province ID textures
-- Don't readback GPU data every frame
-- Don't update entire textures for small changes
-- Don't use province GameObjects
-- Don't generate geometry for borders
-- Don't use colliders for province selection
-- Don't store province data in textures larger than needed
-- Don't forget CBUFFER blocks for SRP Batcher compatibility
-- Don't use legacy CG/HLSL includes in URP shaders
+### Task 2.3: Optimized Input System
+- [ ] Mouse to province ID lookup using GPU readback
+- [ ] Async province selection with CommandBuffer.RequestAsyncReadback
+- [ ] Implement selection caching to avoid GPU readbacks
+- [ ] Add hover effects with minimal GPU cost
+- [ ] Multi-province selection support
+- [ ] Touch/mobile input support
 
-## Debugging Tools to Build
-- [ ] Province ID visualizer overlay (URP Render Feature)
-- [ ] Border generation preview
-- [ ] Performance profiler HUD
-- [ ] Texture memory inspector
-- [ ] Province neighbor graph visualizer
-- [ ] GPU timing breakdown display (Frame Debugger)
-- [ ] Province selection accuracy tester
+### Task 2.4: Dynamic Updates
+- [ ] Efficient texture updates when simulation state changes
+- [ ] Delta update system - only update changed provinces
+- [ ] Double buffering for smooth transitions
+- [ ] Animated state changes (ownership transfer, siege progress)
+- [ ] Batched updates per frame to avoid GPU stalls
+
+## Phase 3: Performance Optimization
+
+### Task 3.1: Memory Optimization
+- [ ] Implement hot/cold data separation
+- [ ] Province cold data paging system
+- [ ] Texture atlas optimization
+- [ ] GPU memory usage profiling
+- [ ] Garbage collection optimization
+- [ ] Native memory management best practices
+
+### Task 3.2: Rendering Optimization
+- [ ] Single draw call for entire map
+- [ ] SRP Batcher optimization
+- [ ] Frustum culling for overlay elements
+- [ ] Shader variant optimization
+- [ ] GPU instancing for units/markers
+- [ ] Forward+ rendering setup in URP
+
+### Task 3.3: Compute Shader Optimization
+- [ ] Thread group size optimization per GPU generation
+- [ ] Memory coalescing in compute shaders
+- [ ] Reduce compute shader dispatches
+- [ ] GPU occupancy optimization
+- [ ] Async compute shader execution
+- [ ] Cross-platform compute shader compatibility
+
+### Task 3.4: Scalability Testing
+- [ ] Performance testing with 1k, 5k, 10k, 20k provinces
+- [ ] Memory usage validation at scale
+- [ ] Frame time consistency testing
+- [ ] GPU memory bandwidth profiling
+- [ ] Mobile performance validation
+- [ ] Automated performance regression testing
+
+## Phase 4: Multiplayer Integration
+
+### Task 4.1: Deterministic Simulation
+- [ ] Fixed-point math for deterministic calculations
+- [ ] Deterministic random number generation
+- [ ] State synchronization validation
+- [ ] Rollback netcode foundation
+- [ ] Client prediction system
+- [ ] Server authority validation
+
+### Task 4.2: Network Optimization
+- [ ] Delta compression for state updates
+- [ ] Priority-based update system
+- [ ] Bandwidth usage optimization (<5KB/s target)
+- [ ] Client interpolation for smooth visuals
+- [ ] Network loss recovery
+- [ ] Anti-cheat integration points
+
+### Task 4.3: Multiplayer Testing
+- [ ] Desync detection and logging
+- [ ] Network simulation testing
+- [ ] Multi-client performance testing
+- [ ] Latency compensation testing
+- [ ] Reconnection handling
+- [ ] Save/load with multiplayer state
+
+## Phase 5: Advanced Features
+
+### Task 5.1: Visual Effects
+- [ ] Animated province transfers
+- [ ] War front visualization
+- [ ] Trade route rendering
+- [ ] Dynamic weather effects
+- [ ] Day/night cycles
+- [ ] Seasonal color changes
+
+### Task 5.2: UI Integration
+- [ ] Efficient province info panels
+- [ ] Tooltip system with async data loading
+- [ ] Minimap generation from textures
+- [ ] Zoom-dependent detail levels
+- [ ] Performance-aware UI updates
+- [ ] Mobile touch interface
+
+### Task 5.3: Modding Support
+- [ ] Custom province definitions
+- [ ] Shader customization system
+- [ ] Texture replacement support
+- [ ] Custom map modes
+- [ ] Performance-safe modding APIs
+- [ ] Mod validation system
+
+## Critical Performance Targets
+
+### Memory Usage
+- **Simulation State**: 80KB (10k provinces × 8 bytes)
+- **GPU Textures**: <60MB total
+- **Total System**: <100MB for entire map system
+
+### Performance Targets
+- **Single Player**: 200+ FPS with 10,000 provinces
+- **Multiplayer**: 144+ FPS with network synchronization
+- **Province Selection**: <1ms response time
+- **Map Updates**: <5ms for full province ownership change
+
+### Network Targets
+- **Bandwidth**: <5KB/s per client in 8-player game
+- **Latency**: <100ms for command acknowledgment
+- **Sync Check**: <1KB for full state validation
+
+## Implementation Notes
+
+### What NOT to Do
+- ❌ **Never process millions of pixels on CPU** - use GPU compute shaders
+- ❌ **Never use dynamic collections** in simulation layer - fixed-size only
+- ❌ **Never allocate during gameplay** - pre-allocate everything
+- ❌ **Never store history data** in hot path - use cold data system
+- ❌ **Never use GameObjects** for provinces - textures only
+
+### GPU Shader Requirements
+- **Shader Model 4.5+** for compute shader support
+- **Point filtering** on all province data textures
+- **No mipmaps** on gameplay-critical textures
+- **CBUFFER blocks** for SRP Batcher compatibility
+- **Multi-compile variants** for map modes
+
+### Testing Strategy
+- **Unit tests** for simulation layer determinism
+- **Performance tests** at target province counts
+- **Memory tests** with automated leak detection
+- **GPU tests** across different graphics cards
+- **Network tests** with simulated packet loss
+
+## Migration from Current Implementation
+
+The current CPU-heavy neighbor detection system should be completely replaced:
+
+```csharp
+// REMOVE: CPU neighbor detection
+ProvinceNeighborDetector.DetectNeighbors(loadResult); // 51 seconds on large maps
+
+// REPLACE WITH: GPU compute shader
+BorderDetectionCompute.Dispatch(threadGroupsX, threadGroupsY, 1); // <1ms
+```
+
+This new architecture will achieve the performance targets while maintaining the scalability and multiplayer requirements defined in the master architecture document.
