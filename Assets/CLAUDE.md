@@ -1,171 +1,209 @@
-# Dominion - Claude Documentation
+# Dominion - Claude Development Guide
 
 ## Project Overview
-Dominion is a grand strategy game that captures the political reality of ancient rulership - where every decision creates winners and losers among your subjects, and success comes from understanding and managing these internal dynamics rather than just optimizing abstract numbers. More is detailed in Docs folder.
+Dominion is a grand strategy game capturing ancient political realities - where every decision creates winners and losers among your subjects. Success comes from understanding internal dynamics, not just optimizing abstract numbers.
 
-Built with Unity Job System and Burst Compiler for maximum throughput on large game files. We are NOT remaking EU4, CK3, or any other specific game. 
-We are doing our OWN game, with our own systems. Currently we are using EU 4 files for testing, to make sure our systems work. We will transition to our own later on.
+**CRITICAL**: Built on **dual-layer architecture** with deterministic simulation (CPU) + high-performance presentation (GPU). This enables 10,000+ provinces at 200+ FPS with multiplayer compatibility.
 
-You, Claude, cannot run tests. I have to do that manually.
+You, Claude, cannot run tests. I run them manually.
 
-## Paradox Format Examples:
-```
-# Basic key-value
-culture = "german"
-population = 1000000
+## CORE ARCHITECTURE: DUAL-LAYER SYSTEM
 
-# Nested blocks
-technology = {
-    military = 5
-    diplomatic = 3
-    administrative = 4
+### **Layer 1: Simulation (CPU)**
+```csharp
+// EXACTLY 8 bytes - never change this size
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct ProvinceState {
+    public ushort ownerID;      // 2 bytes
+    public ushort controllerID; // 2 bytes
+    public byte development;    // 1 byte
+    public byte terrain;        // 1 byte
+    public byte fortLevel;      // 1 byte
+    public byte flags;          // 1 byte
 }
 
-# Lists and dates
-provinces = { 1 2 3 4 }
-start_date = 1444.11.11
-
-# Complex nested structures
-country = {
-    tag = GER
-    government = monarchy
-    technology_group = western
-    capital = 50
-
-    history = {
-        1066.1.1 = { owner = HRE }
-        1871.1.18 = {
-            government = german_empire
-            add_government_reform = prussian_monarchy
-        }
-    }
-}
+// 10,000 provinces × 8 bytes = 80KB total simulation state
 ```
 
-## Core Philosophy
-- **Performance First**: Burst compilation, SIMD optimization, zero-allocation parsing
-- **Generic Design**: Handles all Paradox formats, not game-specific implementations
-- **Unity Native**: Leverages Unity Job System, Native Collections, and modern C# features
-- **Robust Testing**: Comprehensive test coverage before advancing phases
+### **Layer 2: Presentation (GPU)**
+```csharp
+// GPU textures for rendering
+Texture2D provinceIDTexture;    // 46MB - which pixel = which province
+Texture2D provinceOwnerTexture; // 3MB - who owns each province
+Texture2D provinceColors;       // 1MB - visual colors
+RenderTexture borderTexture;    // 8MB - generated via compute shader
+```
 
-## Code Standards
+## ARCHITECTURE ENFORCEMENT
+
+### **NEVER DO THESE:**
+- ❌ **Process millions of pixels on CPU** - use GPU compute shaders always
+- ❌ **Dynamic collections in simulation** - fixed-size structs only
+- ❌ **GameObjects for provinces** - textures only
+- ❌ **Allocate during gameplay** - pre-allocate everything
+- ❌ **Store history in hot path** - use cold data separation
+- ❌ **Texture filtering on province IDs** - point filtering only
+- ❌ **CPU neighbor detection** - GPU compute shaders for borders
+
+### **ALWAYS DO THESE:**
+- ✅ **8-byte fixed structs** for simulation state
+- ✅ **GPU compute shaders** for all visual processing
+- ✅ **Single draw call** for entire map
+- ✅ **Deterministic operations** for multiplayer
+- ✅ **Hot/cold data separation** for performance
+- ✅ **Command pattern** for state changes
+
+## PERFORMANCE TARGETS (NON-NEGOTIABLE)
+
+### Memory Usage
+- **Simulation**: 80KB (10k provinces × 8 bytes)
+- **GPU Textures**: <60MB total
+- **System Total**: <100MB
+
+### Performance
+- **Single-Player**: 200+ FPS with 10,000 provinces
+- **Multiplayer**: 144+ FPS with network sync
+- **Province Selection**: <1ms response time
+- **Border Generation**: <1ms via compute shader
+
+### Network (Multiplayer)
+- **Bandwidth**: <5KB/s per client
+- **State Sync**: 80KB for full game state
+- **Command Size**: 8-16 bytes typical
+
+## CODE STANDARDS
 
 ### Performance Requirements
-- Always use Burst compilation for hot paths (avoid NativeSlice parameters in Burst methods)
-- Always load data using Scripts/ParadoxParser. It has been highly optimized. If features are lacking, point it out so we can add
-- Zero-allocation parsing patterns using structs and unsafe pointers
-- Implement dual APIs: unsafe pointers for Burst, NativeSlice overloads for convenience
-- Use `[MethodImpl(MethodImplOptions.AggressiveInlining)]` for critical path methods
+- **Burst compilation** for all hot paths
+- **Zero allocations** during gameplay
+- **Fixed-size data structures** only
+- **SIMD optimization** where possible
+- **Native Collections** over managed collections
 
-### Development Process
-1. **Phase-by-Phase Development**: Complete each phase fully before advancing
-2. **Test-Driven**: All features must have passing tests before phase completion
-3. **Incremental Testing**: Run tests after each significant change
-4. **Error Resolution**: Fix all compilation errors before proceeding
+### File Organization
+- **Single responsibility** per file
+- **Under 500 lines** per file
+- **Focused, modular** design
+- **Clear separation** of concerns
 
-### Code Structure
-- Struct-based result types with `Success` boolean and `BytesConsumed` tracking
-- Static utility classes with focused responsibilities
-- Comprehensive operator precedence and tokenization support
-- Event-driven architecture for complex parsing workflows
+### Unity Configuration
+- **URP** (Universal Render Pipeline)
+- **IL2CPP** scripting backend
+- **Linear color space**
+- **Burst Compiler** enabled
+- **Job System** for parallelism
 
-## Key Rules
-- NEVER remove Burst compilation entirely - optimize for compatibility instead
-- Always verify compilation success before claiming task completion
-- Maintain generic parser design - avoid game-specific hardcoding
-- Test all utility functions with edge cases and performance scenarios
-- Keep files modular and preferably under 500 lines
+## CRITICAL DATA FLOW
 
-## Code Standards
-- Single Responsibility: Each file has clear, focused purpose
-- Easy to Extend: Simple to add new features/settings
-- Type Safety: Proper validation and error handling
-- Consistent patterns throughout
-- Avoid tight coupling. Create independent systems.
+```
+Input → Command → Simulation State → GPU Textures → Render
+         ↓           ↓                    ↓
+      Network    Save/Load           Visual Effects
+```
 
-**IMPORTANT**: Have good separation of concerns and smaller, focused files. I use AI to develop, so output and context length is important.
+### Simulation → GPU Pipeline
+```csharp
+// 1. Update simulation (deterministic)
+provinceStates[id] = newState; // 8 bytes
 
-## Development Workflow
+// 2. Update GPU texture (presentation)
+ownerTexture.SetPixel(x, y, newOwnerColor);
+
+// 3. GPU compute shader processes borders
+borderComputeShader.Dispatch(threadGroups);
+
+// 4. Single draw call renders everything
+Graphics.DrawMesh(mapQuad, mapMaterial);
+```
+
+## TEXTURE-BASED MAP SYSTEM
+
+### Core Concept
+```
+Traditional: Province → GameObject → Mesh → Draw Call (10k draw calls)
+Our System:  Province → Texture Pixel → Shader → Single Draw Call
+```
+
+### Texture Formats
+- **Province IDs**: R16G16 (point filtering, no mipmaps)
+- **Province Owners**: R16 (updated from simulation)
+- **Colors**: RGBA32 palette texture
+- **Borders**: R8 (generated by compute shader)
+
+### Compute Shader Pattern
+```hlsl
+[numthreads(8,8,1)]
+void BorderDetection(uint3 id : SV_DispatchThreadID) {
+    uint currentProvince = DecodeProvinceID(ProvinceIDTexture[id.xy]);
+    uint rightProvince = DecodeProvinceID(ProvinceIDTexture[id.xy + int2(1,0)]);
+
+    bool isBorder = currentProvince != rightProvince;
+    BorderTexture[id.xy] = isBorder ? 1.0 : 0.0;
+}
+```
+
+## MULTIPLAYER ARCHITECTURE
+
+### Deterministic Simulation
+```csharp
+// All clients run identical simulation
+public struct ProvinceCommand {
+    public uint tick;           // When to execute
+    public ushort provinceID;   // Which province
+    public ushort newOwnerID;   // New state
+    public uint checksum;       // Validation
+}
+```
+
+### Network Optimization
+- **Delta compression** - only send changes
+- **Command batching** - multiple commands per packet
+- **Priority system** - important changes first
+- **Rollback support** - for lag compensation
+
+## DEVELOPMENT WORKFLOW
 
 ### Before Writing Code:
-1. **Check existing implementations** - Look for similar features/patterns already in codebase
-2. **Verify the approach** - Ask if unsure about implementation strategy
-3. **Consider performance** - This game needs to handle 10,000+ provinces efficiently
-4. **Plan for modularity** - Keep files under 500 lines, single responsibility
+1. **Check architecture compliance** - does this fit dual-layer?
+2. **Verify performance impact** - will this scale to 10k provinces?
+3. **Consider multiplayer** - is this deterministic?
+4. **Plan memory usage** - fixed-size or dynamic?
 
 ### Code Quality Checklist:
-- [ ] Follows existing naming conventions
-- [ ] Uses appropriate Unity systems (Job System, Burst, etc.)
-- [ ] Handles edge cases and errors gracefully
-- [ ] Maintains separation of concerns
-- [ ] Compatible with URP rendering pipeline
+- [ ] Uses 8-byte fixed structs for simulation
+- [ ] GPU operations for visual processing
+- [ ] Deterministic for multiplayer
+- [ ] No allocations during gameplay
+- [ ] Burst compilation compatible
+- [ ] Under 500 lines per file
 
-## Project Structure
+## TESTING STRATEGY
 
-### Key Directories:
-```
-Assets/
-├── Scripts/           # Core game code
-│   ├── Parser/       # Paradox file format parser (Burst-optimized)
-│   ├── Map/          # Map rendering and province systems
-│   ├── UI/           # UI controllers and views
-│   └── Systems/      # Game systems (Interest Groups, Policies, etc.)
-├── Data/             # Game data files (Paradox format)
-│   ├── history/      # Historical start dates
-│   ├── common/       # Game definitions
-│   └── map/          # Map data and provinces
-├── Shaders/          # URP shaders for map rendering
-├── Docs/             # Game design and technical documentation
-└── Resources/        # Unity resources (textures, materials, etc.)
-```
+### Unit Tests Focus
+- **Simulation determinism** - same input = same output
+- **Serialization integrity** - round-trip state correctly
+- **Command validation** - reject invalid commands
+- **Memory bounds** - never exceed 100MB target
 
-### Critical Files:
-- `CLAUDE.md` - This file, your development guide
-- `Assets/Docs/texture-based-map-guide.md` - Map rendering implementation plan
-- `Assets/Docs/game_design_document.md` - Core game vision (for context only)
+### Performance Tests
+- **Scale testing** - 1k, 5k, 10k, 20k provinces
+- **Frame time consistency** - no spikes
+- **Memory stability** - no leaks over time
+- **GPU utilization** - efficient compute shader usage
 
-## Technical Requirements
+### Integration Tests
+- **CPU→GPU pipeline** - simulation updates textures correctly
+- **Input system** - mouse clicks map to correct provinces
+- **Command system** - state changes propagate properly
 
-### Performance Targets:
-- 200+ FPS with 10,000 provinces visible
-- Single draw call for base map
-- Zero allocations during gameplay
-- Sub-1ms province selection
+## KEY REMINDERS
 
-### Unity Configuration:
-- **Render Pipeline**: URP (Universal Render Pipeline)
-- **Color Space**: Linear
-- **Scripting Backend**: IL2CPP
-- **Target Platform**: PC (Windows/Mac/Linux)
+1. **Always ask about architecture compliance** before implementing
+2. **Never suggest CPU processing** of millions of pixels
+3. **Always consider multiplayer implications** of design choices
+4. **Enforce the 8-byte struct limit** for simulation state
+5. **GPU compute shaders** are the solution for visual processing
+6. **Fixed-size data structures** are required for performance
+7. **Single draw call rendering** is the target architecture
 
-### Code Patterns to Follow:
-```csharp
-// Burst-compatible structs
-[BurstCompile]
-public struct ProvinceData
-{
-    public int ID;
-    public float2 Position;
-    // Use blittable types only
-}
-
-// Event-driven communication
-public static event Action<ProvinceID> OnProvinceSelected;
-
-// Job System for heavy operations
-[BurstCompile]
-struct ProcessProvincesJob : IJobParallelFor { }
-```
-
-### Testing Requirements:
-- Manual testing only (you can't run automated tests)
-- Always verify compilation before claiming completion
-- Test with large datasets (thousands of provinces)
-- Check performance with Unity Profiler
-
-## Common Pitfalls to Avoid:
-- ❌ Don't create GameObjects for each province (use texture-based rendering)
-- ❌ Don't use texture filtering on province ID textures
-- ❌ Don't allocate during gameplay (use object pools)
-- ❌ Don't readback GPU data every frame
-- ❌ Don't forget CBUFFER blocks for SRP Batcher compatibility
+The success of this project depends on strict adherence to the dual-layer architecture. Every code change must support both 10,000+ province performance AND multiplayer determinism.
