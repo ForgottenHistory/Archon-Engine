@@ -24,12 +24,12 @@ Layer 2 (GPU): Presentation State
 ## Phase 1: Simulation Layer Foundation
 
 ### Task 1.1: Province Simulation State
-- [ ] Create fixed-size `ProvinceState` struct (8 bytes exactly)
-- [ ] Implement `ProvinceSimulation` class with `NativeArray<ProvinceState>`
-- [ ] Add state serialization/deserialization for networking
-- [ ] Create command pattern for deterministic state changes
-- [ ] Implement state validation and integrity checks
-- [ ] Add hot/cold data separation (hot=8 bytes, cold=on-demand)
+- [x] Create fixed-size `ProvinceState` struct (8 bytes exactly)
+- [x] Implement `ProvinceSimulation` class with `NativeArray<ProvinceState>`
+- [x] Add state serialization/deserialization for networking
+- [x] Create command pattern for deterministic state changes
+- [x] Implement state validation and integrity checks
+- [x] Add hot/cold data separation (hot=8 bytes, cold=on-demand)
 
 ```csharp
 // CRITICAL: This struct must be exactly 8 bytes for performance
