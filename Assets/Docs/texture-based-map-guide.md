@@ -61,12 +61,12 @@ public struct ProvinceState {
 - [x] Add texture streaming for very large maps (>10k provinces)
 
 ### Task 1.4: Command System (Multiplayer Foundation)
-- [ ] Create `IProvinceCommand` interface for all state changes
-- [ ] Implement command validation and execution
-- [ ] Add command serialization for networking
-- [ ] Create command buffer with rollback support
-- [ ] Implement deterministic random number generation
-- [ ] Add state checksum validation
+- [x] Create `IProvinceCommand` interface for all state changes
+- [x] Implement command validation and execution
+- [x] Add command serialization for networking
+- [x] Create command buffer with rollback support
+- [x] Implement deterministic random number generation
+- [x] Add state checksum validation
 
 ## Phase 2: GPU Presentation Layer
 

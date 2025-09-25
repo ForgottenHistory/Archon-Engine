@@ -236,6 +236,25 @@ namespace Map.Simulation
         }
 
         /// <summary>
+        /// Get all province IDs in the simulation
+        /// </summary>
+        public ushort[] GetAllProvinceIDs()
+        {
+            if (!isInitialized)
+                throw new InvalidOperationException("Simulation not initialized");
+
+            var ids = new ushort[provinceCount];
+            int index = 0;
+            foreach (var kvp in idToIndex)
+            {
+                ids[index++] = kvp.Key;
+            }
+
+            System.Array.Sort(ids); // Ensure deterministic order
+            return ids;
+        }
+
+        /// <summary>
         /// Get provinces that have changed since last clear
         /// </summary>
         public IReadOnlyCollection<int> GetDirtyIndices()
@@ -282,6 +301,14 @@ namespace Map.Simulation
         public void SetColdData(ushort provinceID, ProvinceColdData data)
         {
             coldData[provinceID] = data;
+        }
+
+        /// <summary>
+        /// Get state checksum for command validation
+        /// </summary>
+        public uint GetStateChecksum()
+        {
+            return CalculateStateChecksum();
         }
 
         /// <summary>
