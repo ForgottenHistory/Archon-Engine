@@ -7,16 +7,14 @@ The entire map is rendered on a single quad mesh with all logic handled by URP s
 ## Phase 1: Foundation Setup
 
 ### Task 1.1: URP Project Configuration
-- [ ] Verify URP package is installed (Window > Package Manager)
-- [ ] Set project color space to Linear (Edit > Project Settings > Player)
-- [ ] Configure URP Asset: Assets > Create > Rendering > URP Asset (Forward Renderer)
-- [ ] Enable SRP Batcher in URP Asset settings
-- [ ] Set Rendering Path to Forward+ for better performance
-- [ ] Disable unnecessary URP features (HDR, MSAA, Screen Space Shadows)
-- [ ] Install Burst Compiler package
-- [ ] Install Mathematics package
-- [ ] Install Shader Graph package (optional, for prototyping)
-- [ ] Create folder structure: Maps/, Shaders/, ComputeShaders/, Data/, RenderFeatures/
+- [x] Configure URP Asset: Assets > Create > Rendering > URP Asset (Forward Renderer)
+- [x] Enable SRP Batcher in URP Asset settings
+- [x] Set Rendering Path to Forward+ for better performance
+- [x] Disable unnecessary URP features (HDR, MSAA, Screen Space Shadows)
+- [x] Install Burst Compiler package
+- [x] Install Mathematics package
+- [x] Install Shader Graph package (optional, for prototyping)
+- [x] Create folder structure: Shaders/, ComputeShaders/, Data/, RenderFeatures/
 
 ### Task 1.2: Map Quad Setup
 - [ ] Create single GameObject called "MapRenderer"
