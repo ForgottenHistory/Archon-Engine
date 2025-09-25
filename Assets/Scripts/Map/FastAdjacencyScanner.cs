@@ -324,6 +324,7 @@ namespace ProvinceSystem
         /// <summary>
         /// Build color to ID map from ProvinceDataService
         /// </summary>
+        /*
         public void BuildColorToIdMapFromDataService(ProvinceSystem.Services.ProvinceDataService dataService)
         {
             var colorToIdMap = new Dictionary<Color32, int>(new Color32Comparer());
@@ -337,6 +338,7 @@ namespace ProvinceSystem
             ConvertToIdAdjacencies(colorToIdMap);
             Debug.Log($"Built color->ID map with {colorToIdMap.Count} entries from ProvinceDataService");
         }
+        */
 
         /// <summary>
         /// Get neighbors for a specific province color

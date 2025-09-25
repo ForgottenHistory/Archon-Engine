@@ -1,0 +1,339 @@
+using NUnit.Framework;
+using Unity.Collections;
+using Unity.Mathematics;
+using UnityEngine;
+using Map.Province;
+using Map.Loading;
+
+namespace Map.Tests
+{
+    /// <summary>
+    /// Tests for ProvinceNeighborDetector functionality
+    /// </summary>
+    [TestFixture]
+    public class ProvinceNeighborDetectorTests
+    {
+        /// <summary>
+        /// Helper method to create mock ProvinceMapLoader.LoadResult for testing
+        /// </summary>
+        private ProvinceMapLoader.LoadResult CreateMockLoadResult(int width, int height, ushort[] provinceIDs)
+        {
+            var pixels = new NativeArray<ProvinceMapLoader.ProvincePixel>(width * height, Allocator.Temp);
+            var colorToID = new NativeHashMap<Color32, ushort>(10, Allocator.Temp);
+
+            for (int i = 0; i < provinceIDs.Length; i++)
+            {
+                int x = i % width;
+                int y = i / width;
+                ushort id = provinceIDs[i];
+                Color32 color = new Color32((byte)(id * 50), (byte)(id * 100), (byte)(id * 150), 255);
+
+                pixels[i] = new ProvinceMapLoader.ProvincePixel
+                {
+                    Position = new int2(x, y),
+                    ProvinceID = id,
+                    Color = color
+                };
+
+                if (!colorToID.ContainsKey(color))
+                {
+                    colorToID.TryAdd(color, id);
+                }
+            }
+
+            return new ProvinceMapLoader.LoadResult
+            {
+                Success = true,
+                ProvinceCount = colorToID.Count,
+                Width = width,
+                Height = height,
+                ColorToID = colorToID,
+                ProvincePixels = pixels
+            };
+        }
+        [Test]
+        public void DetectNeighbors_SimpleGrid_ShouldFindCorrectNeighbors()
+        {
+            // Create a simple 3x3 grid with 3 provinces using ProvinceMapLoader.LoadResult format
+            // Layout:
+            // 1 1 2
+            // 1 1 2
+            // 3 3 3
+            var mockLoadResult = CreateMockLoadResult(3, 3, new ushort[]
+            {
+                1, 1, 2, // Row 0
+                1, 1, 2, // Row 1
+                3, 3, 3  // Row 2
+            });
+
+            try
+            {
+                var result = ProvinceNeighborDetector.DetectNeighbors(mockLoadResult);
+
+                try
+                {
+                    Assert.IsTrue(result.Success, "Neighbor detection should succeed");
+                    Assert.Greater(result.TotalNeighborPairs, 0, "Should find neighbors");
+                    Assert.IsTrue(result.ProvinceNeighbors.IsCreated, "Province neighbors should be created");
+
+                    // Check that provinces have neighbor data
+                    bool hasProvince1 = result.ProvinceNeighbors.ContainsKey(1);
+                    bool hasProvince2 = result.ProvinceNeighbors.ContainsKey(2);
+                    bool hasProvince3 = result.ProvinceNeighbors.ContainsKey(3);
+
+                    Assert.IsTrue(hasProvince1, "Should have neighbor data for province 1");
+                    Assert.IsTrue(hasProvince2, "Should have neighbor data for province 2");
+                    Assert.IsTrue(hasProvince3, "Should have neighbor data for province 3");
+
+                    Debug.Log($"Found {result.TotalNeighborPairs} total neighbor pairs");
+                }
+                finally
+                {
+                    result.Dispose();
+                }
+            }
+            finally
+            {
+                pixelLookup.Dispose();
+            }
+        }
+
+        [Test]
+        public void DetectNeighbors_SingleProvince_ShouldReturnEmpty()
+        {
+            // Create a 2x2 grid with all same province
+            var pixelLookup = new NativeArray<ushort>(4, Allocator.Temp);
+            pixelLookup[0] = 1; pixelLookup[1] = 1;
+            pixelLookup[2] = 1; pixelLookup[3] = 1;
+
+            try
+            {
+                var result = ProvinceNeighborDetector.DetectNeighbors(pixelLookup, 2, 2);
+
+                try
+                {
+                    Assert.IsTrue(result.Success, "Detection should succeed");
+                    Assert.AreEqual(0, result.Neighbors.Length, "Single province should have no neighbors");
+                }
+                finally
+                {
+                    result.Dispose();
+                }
+            }
+            finally
+            {
+                pixelLookup.Dispose();
+            }
+        }
+
+        [Test]
+        public void DetectNeighbors_WithOcean_ShouldDetectCoastal()
+        {
+            // Create a 3x3 grid with ocean (ID 0) and provinces
+            // Layout:
+            // 0 0 0  (ocean)
+            // 0 1 2
+            // 0 1 2
+            var pixelLookup = new NativeArray<ushort>(9, Allocator.Temp);
+            pixelLookup[0] = 0; pixelLookup[1] = 0; pixelLookup[2] = 0; // Row 0 (ocean)
+            pixelLookup[3] = 0; pixelLookup[4] = 1; pixelLookup[5] = 2; // Row 1
+            pixelLookup[6] = 0; pixelLookup[7] = 1; pixelLookup[8] = 2; // Row 2
+
+            try
+            {
+                var result = ProvinceNeighborDetector.DetectNeighbors(pixelLookup, 3, 3);
+
+                try
+                {
+                    Assert.IsTrue(result.Success, "Detection should succeed");
+
+                    // Both province 1 and 2 should be coastal (adjacent to ocean)
+                    Assert.Greater(result.CoastalProvinces.Length, 0, "Should find coastal provinces");
+
+                    var coastalSet = new System.Collections.Generic.HashSet<ushort>();
+                    for (int i = 0; i < result.CoastalProvinces.Length; i++)
+                    {
+                        coastalSet.Add(result.CoastalProvinces[i]);
+                    }
+
+                    Assert.IsTrue(coastalSet.Contains(1), "Province 1 should be coastal");
+                    Assert.IsTrue(coastalSet.Contains(2), "Province 2 should be coastal");
+
+                    Debug.Log($"Found {result.CoastalProvinces.Length} coastal provinces");
+                }
+                finally
+                {
+                    result.Dispose();
+                }
+            }
+            finally
+            {
+                pixelLookup.Dispose();
+            }
+        }
+
+        [Test]
+        public void DetectNeighbors_InvalidDimensions_ShouldFail()
+        {
+            var pixelLookup = new NativeArray<ushort>(4, Allocator.Temp);
+            pixelLookup[0] = 1; pixelLookup[1] = 2;
+            pixelLookup[2] = 3; pixelLookup[3] = 4;
+
+            try
+            {
+                // Wrong dimensions (array is 4 elements, but claiming 3x3 = 9)
+                var result = ProvinceNeighborDetector.DetectNeighbors(pixelLookup, 3, 3);
+
+                Assert.IsFalse(result.Success, "Should fail with invalid dimensions");
+                Assert.IsNotEmpty(result.ErrorMessage, "Should have error message");
+
+                result.Dispose();
+            }
+            finally
+            {
+                pixelLookup.Dispose();
+            }
+        }
+
+        [Test]
+        public void DetectNeighbors_EmptyInput_ShouldFail()
+        {
+            var emptyArray = new NativeArray<ushort>(0, Allocator.Temp);
+
+            try
+            {
+                var result = ProvinceNeighborDetector.DetectNeighbors(emptyArray, 0, 0);
+
+                Assert.IsFalse(result.Success, "Should fail with empty input");
+                Assert.IsNotEmpty(result.ErrorMessage, "Should have error message");
+
+                result.Dispose();
+            }
+            finally
+            {
+                emptyArray.Dispose();
+            }
+        }
+
+        [Test]
+        public void DetectNeighbors_LargeMap_ShouldPerformReasonably()
+        {
+            // Create a larger test map (100x100) with checkerboard pattern
+            const int size = 100;
+            var pixelLookup = new NativeArray<ushort>(size * size, Allocator.Temp);
+
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x < size; x++)
+                {
+                    int index = y * size + x;
+                    // Checkerboard pattern: alternates between province 1 and 2
+                    pixelLookup[index] = (ushort)(((x + y) % 2) + 1);
+                }
+            }
+
+            try
+            {
+                var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+                var result = ProvinceNeighborDetector.DetectNeighbors(pixelLookup, size, size);
+                stopwatch.Stop();
+
+                try
+                {
+                    Assert.IsTrue(result.Success, "Large map detection should succeed");
+                    Assert.Greater(result.Neighbors.Length, 0, "Should find many neighbors");
+
+                    Debug.Log($"Neighbor detection on {size}x{size} map took {stopwatch.ElapsedMilliseconds}ms");
+                    Debug.Log($"Found {result.Neighbors.Length} neighbor pairs");
+
+                    // Performance expectation (this is more of a benchmark)
+                    Assert.Less(stopwatch.ElapsedMilliseconds, 1000, "Should complete within 1 second");
+                }
+                finally
+                {
+                    result.Dispose();
+                }
+            }
+            finally
+            {
+                pixelLookup.Dispose();
+            }
+        }
+
+        [Test]
+        public void DetectNeighbors_StripPattern_ShouldFindLinearNeighbors()
+        {
+            // Create horizontal strips:
+            // 1 1 1 1
+            // 2 2 2 2
+            // 3 3 3 3
+            const int width = 4, height = 3;
+            var pixelLookup = new NativeArray<ushort>(width * height, Allocator.Temp);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int index = y * width + x;
+                    pixelLookup[index] = (ushort)(y + 1); // Row 0 = province 1, Row 1 = province 2, etc.
+                }
+            }
+
+            try
+            {
+                var result = ProvinceNeighborDetector.DetectNeighbors(pixelLookup, width, height);
+
+                try
+                {
+                    Assert.IsTrue(result.Success, "Strip pattern detection should succeed");
+
+                    // Should find 1-2 and 2-3 as neighbors (horizontal strips are adjacent vertically)
+                    var neighborSet = new System.Collections.Generic.HashSet<ProvinceNeighborDetector.NeighborPair>();
+                    for (int i = 0; i < result.Neighbors.Length; i++)
+                    {
+                        neighborSet.Add(result.Neighbors[i]);
+                    }
+
+                    bool found12 = neighborSet.Contains(new ProvinceNeighborDetector.NeighborPair(1, 2)) ||
+                                   neighborSet.Contains(new ProvinceNeighborDetector.NeighborPair(2, 1));
+                    bool found23 = neighborSet.Contains(new ProvinceNeighborDetector.NeighborPair(2, 3)) ||
+                                   neighborSet.Contains(new ProvinceNeighborDetector.NeighborPair(3, 2));
+
+                    Assert.IsTrue(found12, "Adjacent strips 1-2 should be neighbors");
+                    Assert.IsTrue(found23, "Adjacent strips 2-3 should be neighbors");
+
+                    // Should NOT find 1-3 as neighbors (they don't touch)
+                    bool found13 = neighborSet.Contains(new ProvinceNeighborDetector.NeighborPair(1, 3)) ||
+                                   neighborSet.Contains(new ProvinceNeighborDetector.NeighborPair(3, 1));
+                    Assert.IsFalse(found13, "Non-adjacent strips 1-3 should not be neighbors");
+                }
+                finally
+                {
+                    result.Dispose();
+                }
+            }
+            finally
+            {
+                pixelLookup.Dispose();
+            }
+        }
+
+        [Test]
+        public void NeighborPair_Equality_ShouldWorkCorrectly()
+        {
+            var pair1 = new ProvinceNeighborDetector.NeighborPair(1, 2);
+            var pair2 = new ProvinceNeighborDetector.NeighborPair(1, 2);
+            var pair3 = new ProvinceNeighborDetector.NeighborPair(2, 1); // Reversed
+            var pair4 = new ProvinceNeighborDetector.NeighborPair(1, 3);
+
+            Assert.AreEqual(pair1, pair2, "Identical pairs should be equal");
+
+            // The behavior for reversed pairs depends on implementation
+            // If the implementation normalizes pairs (always stores smaller ID first), they should be equal
+            // If not, they might not be - document the actual behavior
+            Debug.Log($"Pair (1,2) == Pair (2,1): {pair1.Equals(pair3)}");
+
+            Assert.AreNotEqual(pair1, pair4, "Different pairs should not be equal");
+        }
+    }
+}

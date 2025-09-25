@@ -1,0 +1,19 @@
+{
+    "name": "MapAssembly",
+    "rootNamespace": "Map",
+    "references": [
+        "Unity.Collections",
+        "Unity.Mathematics",
+        "Unity.Burst",
+        "ParadoxParser"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
