@@ -1,0 +1,280 @@
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
+using Map.Rendering;
+
+namespace Map.Tests.Rendering
+{
+    /// <summary>
+    /// Tests for MapTextureManager - validates GPU texture infrastructure
+    /// Tests Task 1.3: GPU Texture Infrastructure functionality
+    /// </summary>
+    [TestFixture]
+    public class MapTextureManagerTests
+    {
+        private GameObject testGameObject;
+        private MapTextureManager textureManager;
+
+        [SetUp]
+        public void Setup()
+        {
+            // Suppress Unity's ShouldRunBehaviour assertion for tests
+            LogAssert.ignoreFailingMessages = true;
+
+            testGameObject = new GameObject("TestMapTextureManager");
+            textureManager = testGameObject.AddComponent<MapTextureManager>();
+
+            // Use small dimensions for testing
+            typeof(MapTextureManager).GetField("mapWidth", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                ?.SetValue(textureManager, 64);
+            typeof(MapTextureManager).GetField("mapHeight", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                ?.SetValue(textureManager, 64);
+
+            // Trigger Awake manually
+            textureManager.SendMessage("Awake");
+
+            LogAssert.ignoreFailingMessages = false;
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            if (testGameObject != null)
+                Object.DestroyImmediate(testGameObject);
+        }
+
+        [Test]
+        public void MapTextureManager_Initialization_ShouldCreateAllTextures()
+        {
+            Assert.IsNotNull(textureManager.ProvinceIDTexture, "Province ID texture should be created");
+            Assert.IsNotNull(textureManager.ProvinceOwnerTexture, "Province owner texture should be created");
+            Assert.IsNotNull(textureManager.ProvinceColorTexture, "Province color texture should be created");
+            Assert.IsNotNull(textureManager.ProvinceColorPalette, "Province color palette should be created");
+            Assert.IsNotNull(textureManager.BorderTexture, "Border render texture should be created");
+            Assert.IsNotNull(textureManager.HighlightTexture, "Highlight render texture should be created");
+        }
+
+        [Test]
+        public void ProvinceIDTexture_Format_ShouldBeRG16()
+        {
+            var texture = textureManager.ProvinceIDTexture;
+
+            Assert.AreEqual(TextureFormat.RG16, texture.format, "Province ID texture should use RG16 format");
+            Assert.AreEqual(FilterMode.Point, texture.filterMode, "Should use point filtering for exact province ID lookup");
+            Assert.AreEqual(TextureWrapMode.Clamp, texture.wrapMode, "Should use clamp wrap mode");
+            Assert.AreEqual(0, texture.anisoLevel, "Should disable anisotropic filtering");
+        }
+
+        [Test]
+        public void ProvinceOwnerTexture_Format_ShouldBeR16()
+        {
+            var texture = textureManager.ProvinceOwnerTexture;
+
+            Assert.AreEqual(TextureFormat.R16, texture.format, "Province owner texture should use R16 format");
+            Assert.AreEqual(FilterMode.Point, texture.filterMode, "Should use point filtering");
+        }
+
+        [Test]
+        public void ProvinceColorPalette_ShouldBe256x1RGBA32()
+        {
+            var palette = textureManager.ProvinceColorPalette;
+
+            Assert.AreEqual(256, palette.width, "Palette width should be 256");
+            Assert.AreEqual(1, palette.height, "Palette height should be 1");
+            Assert.AreEqual(TextureFormat.RGBA32, palette.format, "Palette should use RGBA32 format");
+            Assert.AreEqual(FilterMode.Point, palette.filterMode, "Palette should use point filtering for exact color lookup");
+            Assert.AreEqual(TextureWrapMode.Clamp, palette.wrapMode, "Palette should use clamp wrap mode");
+        }
+
+        [Test]
+        public void SetProvinceID_ValidCoordinates_ShouldUpdateTexture()
+        {
+            ushort testProvinceID = 1234;
+            int x = 32, y = 32;
+
+            textureManager.SetProvinceID(x, y, testProvinceID);
+            textureManager.ApplyTextureChanges();
+
+            ushort retrievedID = textureManager.GetProvinceID(x, y);
+            Assert.AreEqual(testProvinceID, retrievedID, "Should retrieve the same province ID that was set");
+        }
+
+        [Test]
+        public void SetProvinceID_InvalidCoordinates_ShouldNotCrash()
+        {
+            // Should not crash with out-of-bounds coordinates
+            Assert.DoesNotThrow(() => textureManager.SetProvinceID(-1, -1, 123));
+            Assert.DoesNotThrow(() => textureManager.SetProvinceID(1000, 1000, 123));
+        }
+
+        [Test]
+        public void GetProvinceID_InvalidCoordinates_ShouldReturnZero()
+        {
+            Assert.AreEqual(0, textureManager.GetProvinceID(-1, -1), "Should return 0 for invalid coordinates");
+            Assert.AreEqual(0, textureManager.GetProvinceID(1000, 1000), "Should return 0 for out-of-bounds coordinates");
+        }
+
+        [Test]
+        public void SetProvinceOwner_ValidCoordinates_ShouldUpdateOwnerTexture()
+        {
+            ushort ownerID = 42;
+            int x = 16, y = 16;
+
+            textureManager.SetProvinceOwner(x, y, ownerID);
+            textureManager.ApplyTextureChanges();
+
+            // Verify by getting the pixel color and checking the red channel
+            var color = textureManager.ProvinceOwnerTexture.GetPixel(x, y);
+            byte expectedR = (byte)(ownerID & 0xFF);
+            Assert.AreEqual(expectedR / 255f, color.r, 0.01f, "Red channel should contain owner ID");
+        }
+
+        [Test]
+        public void SetPaletteColor_ValidIndex_ShouldUpdatePalette()
+        {
+            byte paletteIndex = 100;
+            Color32 testColor = new Color32(255, 128, 64, 255);
+
+            textureManager.SetPaletteColor(paletteIndex, testColor);
+            textureManager.ApplyPaletteChanges();
+
+            var retrievedColor = textureManager.ProvinceColorPalette.GetPixel(paletteIndex, 0);
+            Assert.AreEqual(testColor.r / 255f, retrievedColor.r, 0.01f, "Red channel should match");
+            Assert.AreEqual(testColor.g / 255f, retrievedColor.g, 0.01f, "Green channel should match");
+            Assert.AreEqual(testColor.b / 255f, retrievedColor.b, 0.01f, "Blue channel should match");
+            Assert.AreEqual(testColor.a / 255f, retrievedColor.a, 0.01f, "Alpha channel should match");
+        }
+
+        [Test]
+        public void SetPaletteColors_ValidArray_ShouldUpdateFullPalette()
+        {
+            var testColors = new Color32[256];
+            for (int i = 0; i < 256; i++)
+            {
+                testColors[i] = new Color32((byte)i, (byte)(255 - i), 128, 255);
+            }
+
+            textureManager.SetPaletteColors(testColors);
+            textureManager.ApplyPaletteChanges();
+
+            // Verify a few sample colors
+            var color0 = textureManager.ProvinceColorPalette.GetPixel(0, 0);
+            var color255 = textureManager.ProvinceColorPalette.GetPixel(255, 0);
+
+            Assert.AreEqual(0f, color0.r, 0.01f, "First color red should be 0");
+            Assert.AreEqual(1f, color0.g, 0.01f, "First color green should be 255");
+
+            Assert.AreEqual(1f, color255.r, 0.01f, "Last color red should be 255");
+            Assert.AreEqual(0f, color255.g, 0.01f, "Last color green should be 0");
+        }
+
+        [Test]
+        public void SetPaletteColors_InvalidArraySize_ShouldLogError()
+        {
+            var invalidColors = new Color32[100]; // Wrong size
+
+            UnityEngine.TestTools.LogAssert.Expect(LogType.Error, "Palette colors array must be exactly 256 elements, got 100");
+
+            textureManager.SetPaletteColors(invalidColors);
+        }
+
+        [Test]
+        public void BindTexturesToMaterial_ValidMaterial_ShouldSetAllTextures()
+        {
+            var testMaterial = new Material(Shader.Find("Standard"));
+
+            textureManager.BindTexturesToMaterial(testMaterial);
+
+            // Check that textures were bound (they should not be null)
+            Assert.IsNotNull(testMaterial.GetTexture("_ProvinceIDTex"), "Province ID texture should be bound");
+            Assert.IsNotNull(testMaterial.GetTexture("_ProvinceOwnerTex"), "Province owner texture should be bound");
+            Assert.IsNotNull(testMaterial.GetTexture("_ProvinceColorTex"), "Province color texture should be bound");
+            Assert.IsNotNull(testMaterial.GetTexture("_ProvinceColorPalette"), "Color palette should be bound");
+            Assert.IsNotNull(testMaterial.GetTexture("_BorderTex"), "Border texture should be bound");
+            Assert.IsNotNull(testMaterial.GetTexture("_HighlightTex"), "Highlight texture should be bound");
+
+            Object.DestroyImmediate(testMaterial);
+        }
+
+        [Test]
+        public void BindTexturesToMaterial_NullMaterial_ShouldNotCrash()
+        {
+            Assert.DoesNotThrow(() => textureManager.BindTexturesToMaterial(null));
+        }
+
+        [Test]
+        public void ResizeTextures_NewDimensions_ShouldRecreateTextures()
+        {
+            var originalIDTexture = textureManager.ProvinceIDTexture;
+            int newWidth = 128, newHeight = 128;
+
+            textureManager.ResizeTextures(newWidth, newHeight);
+
+            Assert.AreEqual(newWidth, textureManager.MapWidth, "Map width should be updated");
+            Assert.AreEqual(newHeight, textureManager.MapHeight, "Map height should be updated");
+            Assert.AreNotSame(originalIDTexture, textureManager.ProvinceIDTexture, "Province ID texture should be recreated");
+            Assert.AreEqual(newWidth, textureManager.ProvinceIDTexture.width, "New texture should have correct width");
+            Assert.AreEqual(newHeight, textureManager.ProvinceIDTexture.height, "New texture should have correct height");
+        }
+
+        [Test]
+        public void ApplyTextureChanges_ShouldNotCrash()
+        {
+            // Set some values and apply changes
+            textureManager.SetProvinceID(10, 10, 500);
+            textureManager.SetProvinceOwner(10, 10, 100);
+            textureManager.SetPaletteColor(50, Color.red);
+
+            Assert.DoesNotThrow(() => textureManager.ApplyTextureChanges());
+            Assert.DoesNotThrow(() => textureManager.ApplyPaletteChanges());
+        }
+
+        [Test]
+        public void BorderTexture_ShouldBeRenderTextureR8()
+        {
+            var borderTexture = textureManager.BorderTexture;
+
+            Assert.IsInstanceOf<RenderTexture>(borderTexture, "Border should be a RenderTexture");
+            Assert.AreEqual(RenderTextureFormat.R8, borderTexture.format, "Border should use R8 format");
+            Assert.AreEqual(FilterMode.Point, borderTexture.filterMode, "Border should use point filtering");
+            Assert.AreEqual(TextureWrapMode.Clamp, borderTexture.wrapMode, "Border should use clamp wrap mode");
+            Assert.IsFalse(borderTexture.useMipMap, "Border should not use mipmaps");
+        }
+
+        [Test]
+        public void HighlightTexture_ShouldBeRenderTextureARGB32()
+        {
+            var highlightTexture = textureManager.HighlightTexture;
+
+            Assert.IsInstanceOf<RenderTexture>(highlightTexture, "Highlight should be a RenderTexture");
+            Assert.AreEqual(RenderTextureFormat.ARGB32, highlightTexture.format, "Highlight should use ARGB32 format");
+            Assert.AreEqual(FilterMode.Point, highlightTexture.filterMode, "Highlight should use point filtering");
+            Assert.IsFalse(highlightTexture.useMipMap, "Highlight should not use mipmaps");
+        }
+
+        [Test]
+        public void ProvinceIDPackingUnpacking_ShouldBeConsistent()
+        {
+            // Test various province IDs to ensure packing/unpacking works
+            ushort[] testIDs = { 0, 1, 255, 256, 1000, 32767, 65534 };
+
+            foreach (ushort testID in testIDs)
+            {
+                textureManager.SetProvinceID(32, 32, testID);
+                textureManager.ApplyTextureChanges();
+
+                ushort retrievedID = textureManager.GetProvinceID(32, 32);
+                Assert.AreEqual(testID, retrievedID, $"Province ID {testID} should pack and unpack correctly");
+            }
+        }
+
+        [Test]
+        public void MapDimensions_ShouldMatchTextureSize()
+        {
+            Assert.AreEqual(textureManager.MapWidth, textureManager.ProvinceIDTexture.width, "Map width should match texture width");
+            Assert.AreEqual(textureManager.MapHeight, textureManager.ProvinceIDTexture.height, "Map height should match texture height");
+            Assert.AreEqual(textureManager.MapWidth, textureManager.ProvinceOwnerTexture.width, "Owner texture width should match");
+            Assert.AreEqual(textureManager.MapHeight, textureManager.ProvinceOwnerTexture.height, "Owner texture height should match");
+        }
+    }
+}

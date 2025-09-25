@@ -19,7 +19,8 @@ namespace Map.Rendering
         // Core map textures
         private Texture2D provinceIDTexture;      // R16G16 format for province IDs
         private Texture2D provinceOwnerTexture;   // R16 format for province owners
-        private Texture2D provinceColorTexture;   // RGBA32 format for province colors
+        private Texture2D provinceColorTexture;   // RGBA32 format for province colors (legacy)
+        private Texture2D provinceColorPalette;   // 256×1 RGBA32 palette for efficient color lookup
 
         // Dynamic render textures
         private RenderTexture borderTexture;      // R8 format for borders
@@ -29,6 +30,7 @@ namespace Map.Rendering
         private static readonly int ProvinceIDTexID = Shader.PropertyToID("_ProvinceIDTex");
         private static readonly int ProvinceOwnerTexID = Shader.PropertyToID("_ProvinceOwnerTex");
         private static readonly int ProvinceColorTexID = Shader.PropertyToID("_ProvinceColorTex");
+        private static readonly int ProvinceColorPaletteID = Shader.PropertyToID("_ProvinceColorPalette");
         private static readonly int BorderTexID = Shader.PropertyToID("_BorderTex");
         private static readonly int HighlightTexID = Shader.PropertyToID("_HighlightTex");
 
@@ -38,6 +40,7 @@ namespace Map.Rendering
         public Texture2D ProvinceIDTexture => provinceIDTexture;
         public Texture2D ProvinceOwnerTexture => provinceOwnerTexture;
         public Texture2D ProvinceColorTexture => provinceColorTexture;
+        public Texture2D ProvinceColorPalette => provinceColorPalette;
         public RenderTexture BorderTexture => borderTexture;
         public RenderTexture HighlightTexture => highlightTexture;
 
@@ -54,6 +57,7 @@ namespace Map.Rendering
             CreateProvinceIDTexture();
             CreateProvinceOwnerTexture();
             CreateProvinceColorTexture();
+            CreateProvinceColorPalette();
             CreateBorderTexture();
             CreateHighlightTexture();
 
@@ -139,6 +143,60 @@ namespace Map.Rendering
             {
                 Debug.Log($"Created Province Color texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
+        }
+
+        /// <summary>
+        /// Create province color palette texture (256×1 RGBA32) for efficient color lookup
+        /// Task 1.3: Create province color palette texture (256×1 RGBA32)
+        /// </summary>
+        private void CreateProvinceColorPalette()
+        {
+            provinceColorPalette = new Texture2D(256, 1, TextureFormat.RGBA32, false);
+            provinceColorPalette.name = "ProvinceColorPalette";
+
+            // Configure for palette lookup (critical settings)
+            provinceColorPalette.filterMode = FilterMode.Point;     // No interpolation for exact color lookup
+            provinceColorPalette.wrapMode = TextureWrapMode.Clamp;  // Clamp to prevent wraparound
+            provinceColorPalette.anisoLevel = 0;                    // No anisotropic filtering
+
+            // Initialize with default colors
+            var colors = new Color32[256];
+
+            // Initialize with reasonable default colors for different country/province types
+            for (int i = 0; i < 256; i++)
+            {
+                colors[i] = GenerateDefaultPaletteColor(i);
+            }
+
+            provinceColorPalette.SetPixels32(colors);
+            provinceColorPalette.Apply(false);
+
+            if (logTextureCreation)
+            {
+                Debug.Log($"Created Province Color Palette: 256×1 RGBA32 format");
+            }
+        }
+
+        /// <summary>
+        /// Generate a default color for palette index
+        /// Creates visually distinct colors for different country/owner IDs
+        /// </summary>
+        private Color32 GenerateDefaultPaletteColor(int index)
+        {
+            if (index == 0) return new Color32(64, 64, 64, 255); // Dark gray for unowned
+
+            // Generate colors using HSV to ensure good visual separation
+            float hue = (index * 137.508f) % 360f; // Golden angle for good distribution
+            float saturation = 0.7f + (index % 3) * 0.1f; // Vary saturation slightly
+            float value = 0.8f + (index % 2) * 0.2f; // Vary brightness slightly
+
+            Color color = Color.HSVToRGB(hue / 360f, saturation, value);
+            return new Color32(
+                (byte)(color.r * 255),
+                (byte)(color.g * 255),
+                (byte)(color.b * 255),
+                255
+            );
         }
 
         /// <summary>
@@ -250,6 +308,32 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Update color in palette for specific owner/country ID
+        /// Task 1.3: Support for dynamic color palette updates
+        /// </summary>
+        /// <param name="paletteIndex">Palette index (0-255, typically owner/country ID)</param>
+        /// <param name="color">Color to assign</param>
+        public void SetPaletteColor(byte paletteIndex, Color32 color)
+        {
+            provinceColorPalette.SetPixel(paletteIndex, 0, color);
+        }
+
+        /// <summary>
+        /// Update multiple palette colors at once for efficiency
+        /// </summary>
+        /// <param name="colors">Array of 256 colors for the full palette</param>
+        public void SetPaletteColors(Color32[] colors)
+        {
+            if (colors.Length != 256)
+            {
+                Debug.LogError($"Palette colors array must be exactly 256 elements, got {colors.Length}");
+                return;
+            }
+
+            provinceColorPalette.SetPixels32(colors);
+        }
+
+        /// <summary>
         /// Apply all texture changes (call after batch updates)
         /// </summary>
         public void ApplyTextureChanges()
@@ -257,6 +341,15 @@ namespace Map.Rendering
             provinceIDTexture.Apply(false);
             provinceOwnerTexture.Apply(false);
             provinceColorTexture.Apply(false);
+            provinceColorPalette.Apply(false);
+        }
+
+        /// <summary>
+        /// Apply only palette changes (more efficient when only colors changed)
+        /// </summary>
+        public void ApplyPaletteChanges()
+        {
+            provinceColorPalette.Apply(false);
         }
 
         /// <summary>
@@ -270,6 +363,7 @@ namespace Map.Rendering
             material.SetTexture(ProvinceIDTexID, provinceIDTexture);
             material.SetTexture(ProvinceOwnerTexID, provinceOwnerTexture);
             material.SetTexture(ProvinceColorTexID, provinceColorTexture);
+            material.SetTexture(ProvinceColorPaletteID, provinceColorPalette);
             material.SetTexture(BorderTexID, borderTexture);
             material.SetTexture(HighlightTexID, highlightTexture);
         }
@@ -294,6 +388,7 @@ namespace Map.Rendering
             if (provinceIDTexture != null) DestroyImmediate(provinceIDTexture);
             if (provinceOwnerTexture != null) DestroyImmediate(provinceOwnerTexture);
             if (provinceColorTexture != null) DestroyImmediate(provinceColorTexture);
+            if (provinceColorPalette != null) DestroyImmediate(provinceColorPalette);
             if (borderTexture != null) borderTexture.Release();
             if (highlightTexture != null) highlightTexture.Release();
         }
@@ -313,6 +408,7 @@ namespace Map.Rendering
             totalMemory += pixelCount * 2; // Province ID (RG16)
             totalMemory += pixelCount * 2; // Province Owner (R16)
             totalMemory += pixelCount * 4; // Province Color (RGBA32)
+            totalMemory += 256 * 4;        // Color Palette (256×1 RGBA32)
             totalMemory += pixelCount * 1; // Border (R8)
             totalMemory += pixelCount * 4; // Highlight (ARGB32)
 

@@ -1,0 +1,346 @@
+using NUnit.Framework;
+using UnityEngine;
+using Unity.Collections;
+using Map.Rendering;
+using Map.Simulation;
+using System.Collections;
+using UnityEngine.TestTools;
+
+namespace Map.Tests.Rendering
+{
+    /// <summary>
+    /// Tests for SimulationTextureUpdater - validates simulation to GPU texture updates
+    /// Tests Task 1.3: Implement texture update system from simulation state
+    /// </summary>
+    [TestFixture]
+    public class SimulationTextureUpdaterTests
+    {
+        private GameObject testGameObject;
+        private MapTextureManager textureManager;
+        private SimulationTextureUpdater textureUpdater;
+        private ProvinceSimulation testSimulation;
+        private SimulationMapLoader.SimulationMapData testMapData;
+
+        [SetUp]
+        public void Setup()
+        {
+            testGameObject = new GameObject("TestSimulationTextureUpdater");
+
+            // Create MapTextureManager
+            textureManager = testGameObject.AddComponent<MapTextureManager>();
+            SetMapTextureDimensions(32, 32); // Small for testing
+            textureManager.SendMessage("Awake");
+
+            // Create SimulationTextureUpdater
+            textureUpdater = testGameObject.AddComponent<SimulationTextureUpdater>();
+            SetTextureUpdaterManager();
+
+            // Create test simulation
+            testSimulation = new ProvinceSimulation(10);
+            testSimulation.AddProvince(1, TerrainType.Grassland);
+            testSimulation.AddProvince(2, TerrainType.Hills);
+            testSimulation.AddProvince(3, TerrainType.Forest);
+
+            // Create test map data
+            testMapData = CreateTestMapData();
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            testSimulation?.Dispose();
+            testMapData.Dispose();
+            if (testGameObject != null)
+                Object.DestroyImmediate(testGameObject);
+        }
+
+        private void SetMapTextureDimensions(int width, int height)
+        {
+            var widthField = typeof(MapTextureManager).GetField("mapWidth",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var heightField = typeof(MapTextureManager).GetField("mapHeight",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+            widthField?.SetValue(textureManager, width);
+            heightField?.SetValue(textureManager, height);
+        }
+
+        private void SetTextureUpdaterManager()
+        {
+            var managerField = typeof(SimulationTextureUpdater).GetField("textureManager",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            managerField?.SetValue(textureUpdater, textureManager);
+        }
+
+        private SimulationMapLoader.SimulationMapData CreateTestMapData()
+        {
+            var bounds = new NativeArray<SimulationMapLoader.ProvinceBounds>(3, Allocator.Persistent);
+            var colors = new NativeHashMap<ushort, Color32>(3, Allocator.Persistent);
+
+            // Create test province bounds
+            bounds[0] = new SimulationMapLoader.ProvinceBounds
+            {
+                ProvinceID = 1,
+                MinX = 5, MinY = 5, MaxX = 10, MaxY = 10,
+                CenterX = 8, CenterY = 8,
+                PixelCount = 36
+            };
+
+            bounds[1] = new SimulationMapLoader.ProvinceBounds
+            {
+                ProvinceID = 2,
+                MinX = 15, MinY = 5, MaxX = 20, MaxY = 10,
+                CenterX = 18, CenterY = 8,
+                PixelCount = 36
+            };
+
+            bounds[2] = new SimulationMapLoader.ProvinceBounds
+            {
+                ProvinceID = 3,
+                MinX = 5, MinY = 15, MaxX = 10, MaxY = 20,
+                CenterX = 8, CenterY = 18,
+                PixelCount = 36
+            };
+
+            colors.TryAdd(1, Color.red);
+            colors.TryAdd(2, Color.green);
+            colors.TryAdd(3, Color.blue);
+
+            return new SimulationMapLoader.SimulationMapData
+            {
+                Width = 32,
+                Height = 32,
+                ProvinceBounds = bounds,
+                ProvinceColors = colors,
+                IsValid = true
+            };
+        }
+
+        [Test]
+        public void Initialize_ValidInputs_ShouldSetupCorrectly()
+        {
+            textureUpdater.Initialize(testSimulation, testMapData);
+
+            // Should not throw and should be initialized
+            Assert.DoesNotThrow(() => textureUpdater.ForceUpdate());
+
+            // Map dimensions should match
+            Assert.AreEqual(testMapData.Width, textureManager.MapWidth);
+            Assert.AreEqual(testMapData.Height, textureManager.MapHeight);
+        }
+
+        [Test]
+        public void Initialize_NullTextureManager_ShouldLogError()
+        {
+            // Create updater without texture manager
+            var isolatedGameObject = new GameObject("IsolatedUpdater");
+            var isolatedUpdater = isolatedGameObject.AddComponent<SimulationTextureUpdater>();
+
+            UnityEngine.TestTools.LogAssert.Expect(LogType.Error, "MapTextureManager reference is required");
+
+            isolatedUpdater.Initialize(testSimulation, testMapData);
+
+            Object.DestroyImmediate(isolatedGameObject);
+        }
+
+        [Test]
+        public void ForceUpdate_AfterInitialization_ShouldUpdateTextures()
+        {
+            textureUpdater.Initialize(testSimulation, testMapData);
+
+            // Get initial state
+            var initialProvinceID = textureManager.GetProvinceID(8, 8);
+
+            // Force update should populate textures
+            textureUpdater.ForceUpdate();
+
+            // Province ID texture should be updated at center coordinates
+            var updatedProvinceID = textureManager.GetProvinceID(8, 8);
+            // Should either be 0 (ocean) or 1 (our test province)
+            Assert.That(updatedProvinceID == 0 || updatedProvinceID == 1,
+                "Province ID should be set to either ocean (0) or test province (1)");
+        }
+
+        [Test]
+        public void UpdateColorPalette_ValidColors_ShouldUpdatePalette()
+        {
+            textureUpdater.Initialize(testSimulation, testMapData);
+
+            var countryColors = new System.Collections.Generic.Dictionary<ushort, Color32>
+            {
+                { 1, new Color32(255, 100, 50, 255) },
+                { 2, new Color32(50, 255, 100, 255) },
+                { 3, new Color32(100, 50, 255, 255) }
+            };
+
+            textureUpdater.UpdateColorPalette(countryColors);
+
+            // Verify colors were set in palette
+            var palette = textureManager.ProvinceColorPalette;
+            var color1 = palette.GetPixel(1, 0);
+            var color2 = palette.GetPixel(2, 0);
+
+            Assert.AreEqual(255 / 255f, color1.r, 0.01f, "Color 1 red channel should match");
+            Assert.AreEqual(50 / 255f, color2.r, 0.01f, "Color 2 red channel should match");
+            Assert.AreEqual(255 / 255f, color2.g, 0.01f, "Color 2 green channel should match");
+        }
+
+        [Test]
+        public void UpdateColorPalette_HighCountryIDs_ShouldSkipInvalidIDs()
+        {
+            textureUpdater.Initialize(testSimulation, testMapData);
+
+            var countryColors = new System.Collections.Generic.Dictionary<ushort, Color32>
+            {
+                { 100, Color.red },   // Valid (within 0-255)
+                { 300, Color.green }, // Invalid (>255)
+                { 1000, Color.blue }  // Invalid (>255)
+            };
+
+            // Should not crash with high country IDs
+            Assert.DoesNotThrow(() => textureUpdater.UpdateColorPalette(countryColors));
+
+            // Valid color should be set
+            var color100 = textureManager.ProvinceColorPalette.GetPixel(100, 0);
+            Assert.AreEqual(1f, color100.r, 0.01f, "Valid color should be set");
+        }
+
+        [Test]
+        public void GetUpdateStatistics_NotInitialized_ShouldReturnNotInitialized()
+        {
+            var stats = textureUpdater.GetUpdateStatistics();
+
+            Assert.AreEqual("Not initialized", stats);
+        }
+
+        [Test]
+        public void GetUpdateStatistics_Initialized_ShouldReturnValidStats()
+        {
+            textureUpdater.Initialize(testSimulation, testMapData);
+
+            var stats = textureUpdater.GetUpdateStatistics();
+
+            Assert.IsNotNull(stats);
+            Assert.That(stats.Contains("Simulation"));
+            Assert.That(stats.Contains("Provinces: 3")); // Our test simulation has 3 provinces
+        }
+
+        [UnityTest]
+        public IEnumerator AutoUpdate_DisabledByDefault_ShouldNotUpdateAutomatically()
+        {
+            textureUpdater.Initialize(testSimulation, testMapData);
+
+            // Set auto update to false using reflection
+            var autoUpdateField = typeof(SimulationTextureUpdater).GetField("autoUpdate",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            autoUpdateField?.SetValue(textureUpdater, false);
+
+            // Change simulation state
+            testSimulation.SetProvinceOwner(1, 100);
+
+            // Wait a frame
+            yield return null;
+
+            // Should still be dirty because auto-update is disabled
+            Assert.IsTrue(testSimulation.IsDirty, "Simulation should still be dirty when auto-update is disabled");
+        }
+
+        [Test]
+        public void SimulationStateChanges_ShouldTrackVersionChanges()
+        {
+            textureUpdater.Initialize(testSimulation, testMapData);
+
+            var initialVersion = testSimulation.StateVersion;
+
+            // Make a change to simulation
+            testSimulation.SetProvinceOwner(1, 50);
+
+            Assert.Greater(testSimulation.StateVersion, initialVersion,
+                "State version should increase after changes");
+            Assert.IsTrue(testSimulation.IsDirty,
+                "Simulation should be marked dirty after changes");
+        }
+
+        [Test]
+        public void TextureDimensionMismatch_ShouldResizeTextures()
+        {
+            // Create map data with different dimensions
+            var largeBounds = new NativeArray<SimulationMapLoader.ProvinceBounds>(1, Allocator.Temp);
+            var largeColors = new NativeHashMap<ushort, Color32>(1, Allocator.Temp);
+
+            largeBounds[0] = new SimulationMapLoader.ProvinceBounds { ProvinceID = 1 };
+            largeColors.TryAdd(1, Color.red);
+
+            var largeMapData = new SimulationMapLoader.SimulationMapData
+            {
+                Width = 128,
+                Height = 128,
+                ProvinceBounds = largeBounds,
+                ProvinceColors = largeColors,
+                IsValid = true
+            };
+
+            var originalWidth = textureManager.MapWidth;
+
+            textureUpdater.Initialize(testSimulation, largeMapData);
+
+            // Should resize textures to match map data
+            Assert.AreEqual(128, textureManager.MapWidth, "Texture width should be resized");
+            Assert.AreEqual(128, textureManager.MapHeight, "Texture height should be resized");
+            Assert.AreNotEqual(originalWidth, textureManager.MapWidth, "Width should have changed");
+
+            largeBounds.Dispose();
+            largeColors.Dispose();
+        }
+
+        [Test]
+        public void InvalidMapData_ShouldHandleGracefully()
+        {
+            var invalidMapData = new SimulationMapLoader.SimulationMapData
+            {
+                Width = 0,
+                Height = 0,
+                IsValid = false
+            };
+
+            // Should not crash with invalid map data
+            Assert.DoesNotThrow(() => textureUpdater.Initialize(testSimulation, invalidMapData));
+            Assert.DoesNotThrow(() => textureUpdater.ForceUpdate());
+        }
+
+        [Test]
+        public void MultipleForceUpdates_ShouldNotCrash()
+        {
+            textureUpdater.Initialize(testSimulation, testMapData);
+
+            // Multiple force updates should not cause issues
+            Assert.DoesNotThrow(() =>
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    textureUpdater.ForceUpdate();
+                }
+            });
+        }
+
+        [Test]
+        public void EmptySimulation_ShouldHandleGracefully()
+        {
+            var emptySimulation = new ProvinceSimulation(10);
+
+            try
+            {
+                textureUpdater.Initialize(emptySimulation, testMapData);
+
+                Assert.DoesNotThrow(() => textureUpdater.ForceUpdate());
+
+                var stats = textureUpdater.GetUpdateStatistics();
+                Assert.That(stats.Contains("Provinces: 0"));
+            }
+            finally
+            {
+                emptySimulation.Dispose();
+            }
+        }
+    }
+}

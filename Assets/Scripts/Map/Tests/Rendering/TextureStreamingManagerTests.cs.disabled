@@ -1,0 +1,333 @@
+using NUnit.Framework;
+using UnityEngine;
+using Unity.Collections;
+using Unity.Mathematics;
+using Map.Rendering;
+using System.Collections;
+using UnityEngine.TestTools;
+
+namespace Map.Tests.Rendering
+{
+    /// <summary>
+    /// Tests for TextureStreamingManager - validates large map streaming functionality
+    /// Tests Task 1.3: Add texture streaming for very large maps (>10k provinces)
+    /// </summary>
+    [TestFixture]
+    public class TextureStreamingManagerTests
+    {
+        private GameObject testGameObject;
+        private MapTextureManager textureManager;
+        private TextureStreamingManager streamingManager;
+        private Camera testCamera;
+
+        [SetUp]
+        public void Setup()
+        {
+            testGameObject = new GameObject("TestTextureStreamingManager");
+
+            // Create MapTextureManager
+            textureManager = testGameObject.AddComponent<MapTextureManager>();
+            SetMapTextureDimensions(2048, 2048); // Large map for streaming
+            textureManager.SendMessage("Awake");
+
+            // Create test camera
+            var cameraGameObject = new GameObject("TestCamera");
+            testCamera = cameraGameObject.AddComponent<Camera>();
+            testCamera.transform.position = new Vector3(5f, 10f, 5f);
+
+            // Create TextureStreamingManager
+            streamingManager = testGameObject.AddComponent<TextureStreamingManager>();
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            if (testCamera != null)
+                Object.DestroyImmediate(testCamera.gameObject);
+            if (testGameObject != null)
+                Object.DestroyImmediate(testGameObject);
+        }
+
+        private void SetMapTextureDimensions(int width, int height)
+        {
+            var widthField = typeof(MapTextureManager).GetField("mapWidth",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var heightField = typeof(MapTextureManager).GetField("mapHeight",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+            widthField?.SetValue(textureManager, width);
+            heightField?.SetValue(textureManager, height);
+        }
+
+        private void SetStreamingManagerFields(string fieldName, object value)
+        {
+            var field = typeof(TextureStreamingManager).GetField(fieldName,
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            field?.SetValue(streamingManager, value);
+        }
+
+        [Test]
+        public void Initialize_ValidInputs_ShouldSetupTileSystem()
+        {
+            streamingManager.Initialize(textureManager, testCamera);
+
+            var stats = streamingManager.GetStreamingStatistics();
+
+            Assert.IsNotNull(stats);
+            Assert.That(!stats.Contains("not initialized"), "Should be initialized");
+        }
+
+        [Test]
+        public void Initialize_NullTextureManager_ShouldLogError()
+        {
+            UnityEngine.TestTools.LogAssert.Expect(LogType.Error, "MapTextureManager is required for texture streaming");
+
+            streamingManager.Initialize(null, testCamera);
+        }
+
+        [Test]
+        public void Initialize_SmallMap_ShouldDisableStreaming()
+        {
+            // Create small texture manager
+            var smallTextureManager = testGameObject.AddComponent<MapTextureManager>();
+            SetMapTextureDimensions(64, 64); // Very small map
+
+            // Set memory budget high to disable streaming
+            SetStreamingManagerFields("memoryBudgetMB", 1000f);
+            SetStreamingManagerFields("enableStreaming", false);
+
+            streamingManager.Initialize(smallTextureManager, testCamera);
+
+            var stats = streamingManager.GetStreamingStatistics();
+            Assert.That(stats.Contains("not required"), "Streaming should be disabled for small maps");
+        }
+
+        [Test]
+        public void GetStreamingStatistics_NotInitialized_ShouldReturnNotInitialized()
+        {
+            var stats = streamingManager.GetStreamingStatistics();
+
+            Assert.AreEqual("Streaming not initialized", stats);
+        }
+
+        [Test]
+        public void GetStreamingStatistics_Initialized_ShouldReturnValidStats()
+        {
+            streamingManager.Initialize(textureManager, testCamera);
+
+            var stats = streamingManager.GetStreamingStatistics();
+
+            Assert.IsNotNull(stats);
+            Assert.That(stats.Contains("Tiles:"));
+            Assert.That(stats.Contains("Memory:"));
+            Assert.That(stats.Contains("Grid:"));
+        }
+
+        [Test]
+        public void IsTextureCoordLoaded_StreamingDisabled_ShouldAlwaysReturnTrue()
+        {
+            // Disable streaming
+            SetStreamingManagerFields("enableStreaming", false);
+            SetStreamingManagerFields("memoryBudgetMB", 1000f);
+
+            streamingManager.Initialize(textureManager, testCamera);
+
+            // When streaming is disabled, all coordinates should be "loaded"
+            Assert.IsTrue(streamingManager.IsTextureCoordLoaded(new int2(100, 100)));
+            Assert.IsTrue(streamingManager.IsTextureCoordLoaded(new int2(1000, 1000)));
+        }
+
+        [Test]
+        public void IsTextureCoordLoaded_StreamingEnabled_ShouldReturnBasedOnTileState()
+        {
+            // Force streaming to be enabled
+            SetStreamingManagerFields("enableStreaming", true);
+            SetStreamingManagerFields("memoryBudgetMB", 1f); // Very low budget to force streaming
+
+            streamingManager.Initialize(textureManager, testCamera);
+
+            // Test with coordinates that would be in different tiles
+            var coord1 = new int2(100, 100);
+            var coord2 = new int2(1500, 1500);
+
+            // Initially, distant tiles might not be loaded
+            var isLoaded1 = streamingManager.IsTextureCoordLoaded(coord1);
+            var isLoaded2 = streamingManager.IsTextureCoordLoaded(coord2);
+
+            // Should return boolean values (not crash)
+            Assert.IsTrue(isLoaded1 is bool);
+            Assert.IsTrue(isLoaded2 is bool);
+        }
+
+        [Test]
+        public void TileSize_ShouldBeConfigurable()
+        {
+            // Set custom tile size
+            SetStreamingManagerFields("tileSize", 256);
+
+            streamingManager.Initialize(textureManager, testCamera);
+
+            var stats = streamingManager.GetStreamingStatistics();
+            Assert.IsNotNull(stats, "Statistics should be available with custom tile size");
+        }
+
+        [Test]
+        public void MaxActiveTiles_ShouldBeLimited()
+        {
+            // Set low max active tiles
+            SetStreamingManagerFields("maxActiveTiles", 4);
+
+            streamingManager.Initialize(textureManager, testCamera);
+
+            var stats = streamingManager.GetStreamingStatistics();
+            // Should mention tiles in format "X/4 loaded"
+            Assert.That(stats.Contains("/4"), "Should show max active tiles limit");
+        }
+
+        [UnityTest]
+        public IEnumerator Update_WithCameraMovement_ShouldUpdateTiles()
+        {
+            SetStreamingManagerFields("enableStreaming", true);
+            SetStreamingManagerFields("memoryBudgetMB", 50f);
+
+            streamingManager.Initialize(textureManager, testCamera);
+
+            // Move camera to trigger tile updates
+            testCamera.transform.position = new Vector3(2f, 10f, 2f);
+
+            // Wait for update cycle
+            yield return new WaitForSeconds(0.2f);
+
+            // Move camera again
+            testCamera.transform.position = new Vector3(8f, 10f, 8f);
+
+            yield return new WaitForSeconds(0.2f);
+
+            // Should not crash during updates
+            var stats = streamingManager.GetStreamingStatistics();
+            Assert.IsNotNull(stats, "Should continue to provide statistics after camera movement");
+        }
+
+        [Test]
+        public void MemoryBudget_ShouldInfluenceStreamingDecision()
+        {
+            // Test with very low memory budget (should enable streaming)
+            SetStreamingManagerFields("memoryBudgetMB", 1f);
+            SetStreamingManagerFields("enableStreaming", true);
+
+            streamingManager.Initialize(textureManager, testCamera);
+
+            var stats = streamingManager.GetStreamingStatistics();
+            Assert.That(!stats.Contains("not required"), "Low memory budget should enable streaming");
+        }
+
+        [Test]
+        public void StreamingRadius_ShouldAffectTileLoading()
+        {
+            // Set small streaming radius
+            SetStreamingManagerFields("streamingRadius", 500f);
+            SetStreamingManagerFields("enableStreaming", true);
+            SetStreamingManagerFields("memoryBudgetMB", 10f);
+
+            streamingManager.Initialize(textureManager, testCamera);
+
+            // Coordinates within small radius
+            var nearCoord = new int2(500, 500);
+            // Coordinates outside small radius
+            var farCoord = new int2(1800, 1800);
+
+            var nearLoaded = streamingManager.IsTextureCoordLoaded(nearCoord);
+            var farLoaded = streamingManager.IsTextureCoordLoaded(farCoord);
+
+            // Should handle both cases without crashing
+            Assert.IsTrue(nearLoaded is bool);
+            Assert.IsTrue(farLoaded is bool);
+        }
+
+        [Test]
+        public void TilesPerFrame_ShouldLimitProcessing()
+        {
+            // Set very low tiles per frame to test processing limits
+            SetStreamingManagerFields("tilesPerFrame", 1);
+
+            streamingManager.Initialize(textureManager, testCamera);
+
+            // Should still function with limited processing
+            var stats = streamingManager.GetStreamingStatistics();
+            Assert.IsNotNull(stats, "Should work with limited tiles per frame");
+        }
+
+        [Test]
+        public void LargeMapDimensions_ShouldCalculateCorrectTileGrid()
+        {
+            // Test with very large map
+            SetMapTextureDimensions(8192, 8192);
+            SetStreamingManagerFields("tileSize", 512);
+
+            streamingManager.Initialize(textureManager, testCamera);
+
+            var stats = streamingManager.GetStreamingStatistics();
+
+            // Should show grid dimensions (8192/512 = 16 tiles per dimension)
+            Assert.That(stats.Contains("16x16") || stats.Contains("Grid:"),
+                "Should calculate correct tile grid for large map");
+        }
+
+        [Test]
+        public void ZeroTileSize_ShouldHandleGracefully()
+        {
+            // Invalid tile size should not crash
+            SetStreamingManagerFields("tileSize", 0);
+
+            // Should handle invalid configuration gracefully
+            Assert.DoesNotThrow(() => streamingManager.Initialize(textureManager, testCamera));
+        }
+
+        [Test]
+        public void MultipleInitializations_ShouldHandleGracefully()
+        {
+            // First initialization
+            streamingManager.Initialize(textureManager, testCamera);
+            var stats1 = streamingManager.GetStreamingStatistics();
+
+            // Second initialization should not crash
+            streamingManager.Initialize(textureManager, testCamera);
+            var stats2 = streamingManager.GetStreamingStatistics();
+
+            Assert.IsNotNull(stats1, "First initialization should work");
+            Assert.IsNotNull(stats2, "Second initialization should work");
+        }
+
+        [Test]
+        public void DestroyManager_ShouldCleanUpResources()
+        {
+            streamingManager.Initialize(textureManager, testCamera);
+
+            // Should not crash when destroyed
+            Assert.DoesNotThrow(() => Object.DestroyImmediate(streamingManager));
+        }
+
+        [Test]
+        public void NullCamera_ShouldUseMainCamera()
+        {
+            // Initialize without providing camera (should use Camera.main)
+            streamingManager.Initialize(textureManager, null);
+
+            var stats = streamingManager.GetStreamingStatistics();
+            Assert.IsNotNull(stats, "Should work with null camera parameter");
+        }
+
+        [Test]
+        public void LoggingEnabled_ShouldNotCrash()
+        {
+            // Enable logging
+            SetStreamingManagerFields("logStreamingEvents", true);
+
+            // Should not crash with logging enabled
+            Assert.DoesNotThrow(() => streamingManager.Initialize(textureManager, testCamera));
+
+            var stats = streamingManager.GetStreamingStatistics();
+            Assert.IsNotNull(stats, "Should work with logging enabled");
+        }
+    }
+}

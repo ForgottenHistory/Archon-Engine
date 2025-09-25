@@ -107,6 +107,14 @@ namespace Map.Simulation
         }
 
         /// <summary>
+        /// Check if a province exists in the simulation
+        /// </summary>
+        public bool HasProvince(ushort provinceID)
+        {
+            return isInitialized && idToIndex.ContainsKey(provinceID);
+        }
+
+        /// <summary>
         /// Get province state by ID (fast O(1) lookup)
         /// </summary>
         public ProvinceState GetProvinceState(ushort provinceID)

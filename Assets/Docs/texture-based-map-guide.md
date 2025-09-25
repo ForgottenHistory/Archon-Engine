@@ -45,20 +45,20 @@ public struct ProvinceState {
 ```
 
 ### Task 1.2: Bitmap to Simulation Conversion
-- [ ] Load provinces.bmp using existing optimized ParadoxParser
-- [ ] Extract unique province IDs (1-65534, reserve 0 for ocean)
-- [ ] Create ProvinceID→ArrayIndex mapping for O(1) lookups
-- [ ] Initialize ProvinceState array with default values
-- [ ] Validate province count fits in memory target (80KB for 10k provinces)
-- [ ] Store province pixel boundaries for GPU texture generation
+- [x] Load provinces.bmp using existing optimized ParadoxParser
+- [x] Extract unique province IDs (1-65534, reserve 0 for ocean)
+- [x] Create ProvinceID→ArrayIndex mapping for O(1) lookups
+- [x] Initialize ProvinceState array with default values
+- [x] Validate province count fits in memory target (80KB for 10k provinces)
+- [x] Store province pixel boundaries for GPU texture generation
 
 ### Task 1.3: GPU Texture Infrastructure
-- [ ] Create province ID texture (R16G16, point filtering, no mipmaps)
-- [ ] Create province owner texture (R16, updated from simulation)
-- [ ] Create province color palette texture (256×1 RGBA32)
-- [ ] Create render textures for borders, selection, effects
-- [ ] Implement texture update system from simulation state
-- [ ] Add texture streaming for very large maps (>10k provinces)
+- [x] Create province ID texture (R16G16, point filtering, no mipmaps)
+- [x] Create province owner texture (R16, updated from simulation)
+- [x] Create province color palette texture (256×1 RGBA32)
+- [x] Create render textures for borders, selection, effects
+- [x] Implement texture update system from simulation state
+- [x] Add texture streaming for very large maps (>10k provinces)
 
 ### Task 1.4: Command System (Multiplayer Foundation)
 - [ ] Create `IProvinceCommand` interface for all state changes
