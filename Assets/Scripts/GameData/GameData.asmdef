@@ -1,16 +1,13 @@
 {
-    "name": "MapAssembly",
-    "rootNamespace": "Map",
+    "name": "GameData",
+    "rootNamespace": "GameData",
     "references": [
         "Unity.Collections",
-        "Unity.Mathematics",
-        "Unity.Burst",
-        "ParadoxParser",
-        "GameData"
+        "ParadoxParser"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": true,
+    "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
