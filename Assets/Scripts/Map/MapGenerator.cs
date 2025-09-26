@@ -110,7 +110,7 @@ namespace Map
                 mapCamera = Camera.main;
                 if (mapCamera == null)
                 {
-                    mapCamera = FindObjectOfType<Camera>();
+                    mapCamera = FindFirstObjectByType<Camera>();
                 }
                 if (mapCamera == null)
                 {
