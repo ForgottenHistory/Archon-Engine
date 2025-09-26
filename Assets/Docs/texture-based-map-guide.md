@@ -45,12 +45,12 @@ public struct ProvinceState {
 ```
 
 ### Task 1.2: Bitmap to Simulation Conversion
-- [x] Load provinces.bmp using existing optimized ParadoxParser
-- [x] Extract unique province IDs (1-65534, reserve 0 for ocean)
-- [x] Create ProvinceID→ArrayIndex mapping for O(1) lookups
-- [x] Initialize ProvinceState array with default values
-- [x] Validate province count fits in memory target (80KB for 10k provinces)
-- [x] Store province pixel boundaries for GPU texture generation
+- [x] Load provinces.bmp using existing optimized ParadoxParser ✅ *MapGenerator complete*
+- [x] Extract unique province IDs (1-65534, reserve 0 for ocean) ✅ *3925 provinces loaded*
+- [x] Create ProvinceID→ArrayIndex mapping for O(1) lookups ✅ *ProvinceMapping working*
+- [x] Initialize ProvinceState array with default values ✅ *Owner/color data populated*
+- [x] Validate province count fits in memory target (80KB for 10k provinces) ✅ *Well under limits*
+- [x] Store province pixel boundaries for GPU texture generation ✅ *Pixel data tracked per province*
 
 ### Task 1.3: GPU Texture Infrastructure
 - [x] Create province ID texture (R16G16, point filtering, no mipmaps)
@@ -71,12 +71,12 @@ public struct ProvinceState {
 ## Phase 2: GPU Presentation Layer
 
 ### Task 2.1: Core Map Shader (URP)
-- [ ] Create URP Unlit shader for main map rendering
-- [ ] Sample province ID texture with point filtering
-- [ ] Use province ID to index into owner/color textures
-- [ ] Implement map mode switching (political, terrain, etc.)
-- [ ] Add SRP Batcher compatibility with CBUFFER blocks
-- [ ] Support shader variants for different map modes
+- [x] Create URP Unlit shader for main map rendering
+- [x] Sample province ID texture with point filtering
+- [x] Use province ID to index into owner/color textures
+- [x] Implement map mode switching (political, terrain, etc.)
+- [x] Add SRP Batcher compatibility with CBUFFER blocks
+- [x] Support shader variants for different map modes
 
 ```hlsl
 // Core map shader logic
