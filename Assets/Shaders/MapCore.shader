@@ -149,9 +149,12 @@ Shader "Dominion/MapCore"
             // Fragment shader
             float4 frag(Varyings input) : SV_Target
             {
+                // Fix flipped UV coordinates - flip only Y
+                float2 correctedUV = float2(input.uv.x, 1.0 - input.uv.y);
+
                 // DEBUG MODE: Show raw province IDs as colors
                 #if defined(MAP_MODE_DEBUG)
-                    float2 provinceID_raw = SAMPLE_TEXTURE2D(_ProvinceIDTexture, sampler_ProvinceIDTexture, input.uv).rg;
+                    float2 provinceID_raw = SAMPLE_TEXTURE2D(_ProvinceIDTexture, sampler_ProvinceIDTexture, correctedUV).rg;
                     uint debugID = DecodeProvinceID(provinceID_raw);
 
                     // Convert province ID to a visible color
@@ -168,12 +171,12 @@ Shader "Dominion/MapCore"
                 // DIRECT COLOR MODE: Just show the ProvinceColorTexture directly for debugging
                 // This should show the exact RGB colors from the provinces.bmp
                 #if defined(MAP_MODE_TERRAIN)
-                    float4 directColor = SAMPLE_TEXTURE2D(_ProvinceColorTexture, sampler_ProvinceColorTexture, input.uv);
+                    float4 directColor = SAMPLE_TEXTURE2D(_ProvinceColorTexture, sampler_ProvinceColorTexture, correctedUV);
                     return directColor;
                 #endif
 
                 // Sample province ID texture with point filtering (no interpolation)
-                float2 provinceID_encoded = SAMPLE_TEXTURE2D(_ProvinceIDTexture, sampler_ProvinceIDTexture, input.uv).rg;
+                float2 provinceID_encoded = SAMPLE_TEXTURE2D(_ProvinceIDTexture, sampler_ProvinceIDTexture, correctedUV).rg;
                 uint provinceID = DecodeProvinceID(provinceID_encoded);
 
                 // Handle ocean/invalid provinces (ID 0)
@@ -184,7 +187,7 @@ Shader "Dominion/MapCore"
 
                 // Sample owner information
                 float ownerData = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture,
-                    GetOwnerUV(provinceID, input.uv)).r;
+                    GetOwnerUV(provinceID, correctedUV)).r;
                 uint ownerID = (uint)(ownerData * 255.0 + 0.5);
 
                 // Base color determination based on map mode
@@ -206,7 +209,7 @@ Shader "Dominion/MapCore"
                 #elif defined(MAP_MODE_TERRAIN)
                     // Terrain mode: use terrain-based colors (would need terrain data)
                     // For now, sample from province color texture directly
-                    baseColor = SAMPLE_TEXTURE2D(_ProvinceColorTexture, sampler_ProvinceColorTexture, input.uv);
+                    baseColor = SAMPLE_TEXTURE2D(_ProvinceColorTexture, sampler_ProvinceColorTexture, correctedUV);
                 #elif defined(MAP_MODE_DEVELOPMENT)
                     // Development mode: would need development level data
                     // For now, use grayscale based on owner data
@@ -215,7 +218,7 @@ Shader "Dominion/MapCore"
                 #elif defined(MAP_MODE_CULTURE)
                     // Culture mode: would need culture data
                     // For now, use a different color scheme
-                    baseColor = SAMPLE_TEXTURE2D(_ProvinceColorTexture, sampler_ProvinceColorTexture, input.uv);
+                    baseColor = SAMPLE_TEXTURE2D(_ProvinceColorTexture, sampler_ProvinceColorTexture, correctedUV);
                     baseColor.rgb *= float3(1.2, 0.8, 1.0); // Tint for culture mode
                 #else
                     // Default to political mode
@@ -231,11 +234,11 @@ Shader "Dominion/MapCore"
                 #endif
 
                 // Apply borders
-                float borderStrength = SAMPLE_TEXTURE2D(_BorderTexture, sampler_BorderTexture, input.uv).r;
+                float borderStrength = SAMPLE_TEXTURE2D(_BorderTexture, sampler_BorderTexture, correctedUV).r;
                 baseColor.rgb = lerp(baseColor.rgb, float3(0, 0, 0), borderStrength * _BorderStrength);
 
                 // Apply highlights
-                float4 highlight = SAMPLE_TEXTURE2D(_HighlightTexture, sampler_HighlightTexture, input.uv);
+                float4 highlight = SAMPLE_TEXTURE2D(_HighlightTexture, sampler_HighlightTexture, correctedUV);
                 baseColor.rgb = lerp(baseColor.rgb, highlight.rgb, highlight.a * _HighlightStrength);
 
                 return baseColor;
