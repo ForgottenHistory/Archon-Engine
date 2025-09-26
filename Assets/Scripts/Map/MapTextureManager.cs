@@ -26,13 +26,13 @@ namespace Map.Rendering
         private RenderTexture borderTexture;      // R8 format for borders
         private RenderTexture highlightTexture;   // RGBA32 for selection highlights
 
-        // Texture property IDs for shader efficiency
-        private static readonly int ProvinceIDTexID = Shader.PropertyToID("_ProvinceIDTex");
-        private static readonly int ProvinceOwnerTexID = Shader.PropertyToID("_ProvinceOwnerTex");
-        private static readonly int ProvinceColorTexID = Shader.PropertyToID("_ProvinceColorTex");
+        // Texture property IDs for shader efficiency - MUST match shader property names exactly!
+        private static readonly int ProvinceIDTexID = Shader.PropertyToID("_ProvinceIDTexture");
+        private static readonly int ProvinceOwnerTexID = Shader.PropertyToID("_ProvinceOwnerTexture");
+        private static readonly int ProvinceColorTexID = Shader.PropertyToID("_ProvinceColorTexture");
         private static readonly int ProvinceColorPaletteID = Shader.PropertyToID("_ProvinceColorPalette");
-        private static readonly int BorderTexID = Shader.PropertyToID("_BorderTex");
-        private static readonly int HighlightTexID = Shader.PropertyToID("_HighlightTex");
+        private static readonly int BorderTexID = Shader.PropertyToID("_BorderTexture");
+        private static readonly int HighlightTexID = Shader.PropertyToID("_HighlightTexture");
 
         public int MapWidth => mapWidth;
         public int MapHeight => mapHeight;

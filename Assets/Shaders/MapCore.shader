@@ -47,7 +47,7 @@ Shader "Dominion/MapCore"
             #pragma fragment frag
 
             // Shader variants for different map modes
-            #pragma multi_compile_local _ MAP_MODE_POLITICAL MAP_MODE_TERRAIN MAP_MODE_DEVELOPMENT MAP_MODE_CULTURE
+            #pragma multi_compile_local _ MAP_MODE_POLITICAL MAP_MODE_TERRAIN MAP_MODE_DEVELOPMENT MAP_MODE_CULTURE MAP_MODE_DEBUG
 
             // URP includes
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -149,6 +149,29 @@ Shader "Dominion/MapCore"
             // Fragment shader
             float4 frag(Varyings input) : SV_Target
             {
+                // DEBUG MODE: Show raw province IDs as colors
+                #if defined(MAP_MODE_DEBUG)
+                    float2 provinceID_raw = SAMPLE_TEXTURE2D(_ProvinceIDTexture, sampler_ProvinceIDTexture, input.uv).rg;
+                    uint debugID = DecodeProvinceID(provinceID_raw);
+
+                    // Convert province ID to a visible color
+                    float r = (debugID % 256) / 255.0;
+                    float g = ((debugID / 256) % 256) / 255.0;
+                    float b = ((debugID / 65536) % 256) / 255.0;
+
+                    if (debugID == 0)
+                        return float4(0.1, 0.1, 0.1, 1.0); // Dark gray for ID 0
+                    else
+                        return float4(r, g, b, 1.0);
+                #endif
+
+                // DIRECT COLOR MODE: Just show the ProvinceColorTexture directly for debugging
+                // This should show the exact RGB colors from the provinces.bmp
+                #if defined(MAP_MODE_TERRAIN)
+                    float4 directColor = SAMPLE_TEXTURE2D(_ProvinceColorTexture, sampler_ProvinceColorTexture, input.uv);
+                    return directColor;
+                #endif
+
                 // Sample province ID texture with point filtering (no interpolation)
                 float2 provinceID_encoded = SAMPLE_TEXTURE2D(_ProvinceIDTexture, sampler_ProvinceIDTexture, input.uv).rg;
                 uint provinceID = DecodeProvinceID(provinceID_encoded);

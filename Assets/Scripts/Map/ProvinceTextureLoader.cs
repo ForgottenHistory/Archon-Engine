@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using Unity.Collections;
+using ParadoxParser.Bitmap;
 
 namespace Map.Rendering
 {
@@ -24,16 +26,45 @@ namespace Map.Rendering
                 return null;
             }
 
-            // Load the bitmap
+            // Load the bitmap using BMPParser
             byte[] fileData = File.ReadAllBytes(bitmapPath);
-            Texture2D tempTexture = new Texture2D(2, 2);
+            var nativeFileData = new NativeArray<byte>(fileData, Allocator.Temp);
 
-            if (!tempTexture.LoadImage(fileData))
+            var bmpHeader = BMPParser.ParseHeader(nativeFileData);
+            if (!bmpHeader.IsValid)
             {
-                Debug.LogError($"Failed to load bitmap: {bitmapPath}");
-                Object.DestroyImmediate(tempTexture);
+                Debug.LogError($"Invalid BMP file: {bitmapPath}");
+                nativeFileData.Dispose();
                 return null;
             }
+
+            var pixelData = BMPParser.GetPixelData(nativeFileData, bmpHeader);
+            if (!pixelData.Success)
+            {
+                Debug.LogError($"Failed to read BMP pixel data: {bitmapPath}");
+                nativeFileData.Dispose();
+                return null;
+            }
+
+            // Create Unity texture from BMP data
+            Texture2D tempTexture = new Texture2D(bmpHeader.Width, bmpHeader.Height, TextureFormat.RGB24, false);
+            var colors = new Color32[bmpHeader.Width * bmpHeader.Height];
+
+            for (int y = 0; y < bmpHeader.Height; y++)
+            {
+                for (int x = 0; x < bmpHeader.Width; x++)
+                {
+                    if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                    {
+                        colors[y * bmpHeader.Width + x] = new Color32(r, g, b, 255);
+                    }
+                }
+            }
+
+            tempTexture.SetPixels32(colors);
+            tempTexture.Apply();
+
+            nativeFileData.Dispose();
 
             // Validate dimensions
             if (tempTexture.width != textureManager.MapWidth || tempTexture.height != textureManager.MapHeight)
@@ -89,6 +120,17 @@ namespace Map.Rendering
 
             Debug.Log($"Found {colorToID.Count} unique provinces");
 
+            // Debug: Show some sample province IDs and colors
+            int sampleCount = 0;
+            foreach (var kvp in colorToID)
+            {
+                if (sampleCount < 5)
+                {
+                    Debug.Log($"Province ID {kvp.Value}: Color RGB({kvp.Key.r}, {kvp.Key.g}, {kvp.Key.b})");
+                    sampleCount++;
+                }
+            }
+
             // Second pass: populate textures
             for (int y = 0; y < height; y++)
             {
@@ -102,11 +144,22 @@ namespace Map.Rendering
                         // Set province ID in texture
                         textureManager.SetProvinceID(x, y, provinceID);
 
-                        // Set initial display color (same as identifier color for now)
+                        // ALWAYS set the display color to the actual RGB from the bitmap
+                        // This is what we'll see in terrain mode - the actual province colors
                         textureManager.SetProvinceColor(x, y, pixelColor);
 
-                        // No owner initially
-                        textureManager.SetProvinceOwner(x, y, 0);
+                        // For the palette, we can only fit 256 entries, so we'll use modulo
+                        // But this is only for political mode - terrain mode uses ProvinceColorTexture directly
+                        byte paletteIndex = (byte)(provinceID % 256);
+                        if (paletteIndex > 0) // Skip index 0 as it might be reserved
+                        {
+                            textureManager.SetPaletteColor(paletteIndex, pixelColor);
+                        }
+
+                        // For owner texture, we'll use a simplified owner ID that fits in the palette
+                        // But keep it non-zero so provinces show as "owned"
+                        ushort ownerForPalette = (ushort)((provinceID % 255) + 1); // 1-255 range
+                        textureManager.SetProvinceOwner(x, y, ownerForPalette);
 
                         // Update province pixel data
                         mapping.AddPixelToProvince(provinceID, x, y);
@@ -121,10 +174,24 @@ namespace Map.Rendering
                 }
             }
 
-            // Apply all texture changes
+            // Apply all texture changes including palette
             textureManager.ApplyTextureChanges();
+            textureManager.ApplyPaletteChanges();
 
             Debug.Log($"Bitmap processing complete: {mapping.ProvinceCount} provinces loaded");
+
+            // Debug: Sample some pixels to verify province IDs were written
+            Debug.Log("Sampling province IDs at various points:");
+            for (int testY = 100; testY < height && testY < 500; testY += 100)
+            {
+                for (int testX = 100; testX < width && testX < 500; testX += 100)
+                {
+                    ushort testID = textureManager.GetProvinceID(testX, testY);
+                    Color32 testColor = textureManager.ProvinceColorTexture.GetPixel(testX, testY);
+                    Debug.Log($"  Pixel ({testX}, {testY}): Province ID = {testID}, Color = RGB({testColor.r}, {testColor.g}, {testColor.b})");
+                    if (testID > 0) break; // Found a non-ocean province
+                }
+            }
             return mapping;
         }
 
