@@ -155,10 +155,19 @@ namespace Map
             // Generate initial borders
             if (borderDispatcher != null)
             {
+                // Clear borders first to ensure clean state
+                borderDispatcher.ClearBorders();
+
+                // Set the border mode
+                borderDispatcher.SetBorderMode(BorderComputeDispatcher.BorderMode.Country);
+
+                // Now generate borders
                 borderDispatcher.DetectBorders();
+
                 if (logLoadingProgress)
                 {
                     Debug.Log("MapGenerator: Generated province borders using GPU compute shader");
+                    Debug.Log("MapGenerator: Border mode set to Country");
                 }
             }
         }
@@ -298,7 +307,8 @@ namespace Map
             // We'll use terrain mode (1) temporarily to show the ProvinceColorTexture directly
             mapMaterial.SetInt("_MapMode", 1);
             mapMaterial.EnableKeyword("MAP_MODE_TERRAIN");
-            mapMaterial.SetFloat("_BorderStrength", 1.0f);  // Show borders now that we have compute shader
+            mapMaterial.SetFloat("_BorderStrength", 0.3f);  // Subtle border strength
+            mapMaterial.SetColor("_BorderColor", Color.black);  // Black borders
             mapMaterial.SetFloat("_HighlightStrength", 1.0f);
 
             if (logLoadingProgress)
@@ -406,6 +416,7 @@ namespace Map
                 mapMaterial.DisableKeyword("MAP_MODE_TERRAIN");
                 mapMaterial.DisableKeyword("MAP_MODE_DEVELOPMENT");
                 mapMaterial.DisableKeyword("MAP_MODE_CULTURE");
+                mapMaterial.DisableKeyword("MAP_MODE_BORDERS");
 
                 // Enable debug mode
                 mapMaterial.EnableKeyword("MAP_MODE_DEBUG");
@@ -413,6 +424,28 @@ namespace Map
 
                 Debug.Log("MapGenerator: Set to DEBUG mode - showing province IDs as colors");
             }
+        }
+
+        /// <summary>
+        /// Show border debug mode - displays just the border texture
+        /// </summary>
+        [ContextMenu("Show Border Debug Mode")]
+        public void ShowBorderDebugMode()
+        {
+            if (mapMaterial != null)
+            {
+                SetMapMode(10); // Border debug mode
+                Debug.Log("MapGenerator: Set to BORDER DEBUG mode - showing border texture only");
+            }
+        }
+
+        /// <summary>
+        /// Set border strength (0.0 = no borders, 1.0 = full borders)
+        /// </summary>
+        [ContextMenu("Set Border Strength")]
+        public void SetBorderStrength()
+        {
+            SetBorderStrength(0.3f); // Default to 30%
         }
 
         /// <summary>
@@ -440,6 +473,8 @@ namespace Map
                 mapMaterial.DisableKeyword("MAP_MODE_TERRAIN");
                 mapMaterial.DisableKeyword("MAP_MODE_DEVELOPMENT");
                 mapMaterial.DisableKeyword("MAP_MODE_CULTURE");
+                mapMaterial.DisableKeyword("MAP_MODE_DEBUG");
+                mapMaterial.DisableKeyword("MAP_MODE_BORDERS");
 
                 switch (mode)
                 {
@@ -447,6 +482,8 @@ namespace Map
                     case 1: mapMaterial.EnableKeyword("MAP_MODE_TERRAIN"); break;
                     case 2: mapMaterial.EnableKeyword("MAP_MODE_DEVELOPMENT"); break;
                     case 3: mapMaterial.EnableKeyword("MAP_MODE_CULTURE"); break;
+                    case 10: mapMaterial.EnableKeyword("MAP_MODE_BORDERS"); break;
+                    case 99: mapMaterial.EnableKeyword("MAP_MODE_DEBUG"); break;
                 }
 
                 if (logLoadingProgress)

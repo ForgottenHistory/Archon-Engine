@@ -15,6 +15,7 @@ Shader "Dominion/MapCore"
         // Map visualization settings
         [Enum(Political, 0, Terrain, 1, Development, 2, Culture, 3)] _MapMode ("Map Mode", Int) = 0
         _BorderStrength ("Border Strength", Range(0, 1)) = 1.0
+        _BorderColor ("Border Color", Color) = (0, 0, 0, 1)
         _HighlightStrength ("Highlight Strength", Range(0, 2)) = 1.0
 
         // Performance settings
@@ -37,9 +38,9 @@ Shader "Dominion/MapCore"
             Name "MapCore"
             Tags { "LightMode"="UniversalForward" }
 
-            // No depth writing needed for flat map
-            ZWrite Off
-            ZTest Always
+            // Proper depth testing for map rendering
+            ZWrite On
+            ZTest LEqual
             Cull Off
 
             HLSLPROGRAM
@@ -47,7 +48,7 @@ Shader "Dominion/MapCore"
             #pragma fragment frag
 
             // Shader variants for different map modes
-            #pragma multi_compile_local _ MAP_MODE_POLITICAL MAP_MODE_TERRAIN MAP_MODE_DEVELOPMENT MAP_MODE_CULTURE MAP_MODE_DEBUG
+            #pragma multi_compile_local _ MAP_MODE_POLITICAL MAP_MODE_TERRAIN MAP_MODE_DEVELOPMENT MAP_MODE_CULTURE MAP_MODE_DEBUG MAP_MODE_BORDERS
 
             // URP includes
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -65,6 +66,7 @@ Shader "Dominion/MapCore"
 
                 int _MapMode;
                 float _BorderStrength;
+                float4 _BorderColor;
                 float _HighlightStrength;
             CBUFFER_END
 
@@ -152,6 +154,12 @@ Shader "Dominion/MapCore"
                 // Fix flipped UV coordinates - flip only Y
                 float2 correctedUV = float2(input.uv.x, 1.0 - input.uv.y);
 
+                // BORDER DEBUG MODE: Show just the border texture
+                #if defined(MAP_MODE_BORDERS)
+                    float borderValue = SAMPLE_TEXTURE2D(_BorderTexture, sampler_BorderTexture, correctedUV).r;
+                    return float4(borderValue, borderValue, borderValue, 1.0);
+                #endif
+
                 // DEBUG MODE: Show raw province IDs as colors
                 #if defined(MAP_MODE_DEBUG)
                     float2 provinceID_raw = SAMPLE_TEXTURE2D(_ProvinceIDTexture, sampler_ProvinceIDTexture, correctedUV).rg;
@@ -168,10 +176,14 @@ Shader "Dominion/MapCore"
                         return float4(r, g, b, 1.0);
                 #endif
 
-                // DIRECT COLOR MODE: Just show the ProvinceColorTexture directly for debugging
-                // This should show the exact RGB colors from the provinces.bmp
+                // TERRAIN MODE: Show province colors from the bitmap with borders
                 #if defined(MAP_MODE_TERRAIN)
                     float4 directColor = SAMPLE_TEXTURE2D(_ProvinceColorTexture, sampler_ProvinceColorTexture, correctedUV);
+
+                    // Apply borders
+                    float terrainBorderStrength = SAMPLE_TEXTURE2D(_BorderTexture, sampler_BorderTexture, correctedUV).r;
+                    directColor.rgb = lerp(directColor.rgb, _BorderColor.rgb, terrainBorderStrength * _BorderStrength);
+
                     return directColor;
                 #endif
 
@@ -235,7 +247,7 @@ Shader "Dominion/MapCore"
 
                 // Apply borders
                 float borderStrength = SAMPLE_TEXTURE2D(_BorderTexture, sampler_BorderTexture, correctedUV).r;
-                baseColor.rgb = lerp(baseColor.rgb, float3(0, 0, 0), borderStrength * _BorderStrength);
+                baseColor.rgb = lerp(baseColor.rgb, _BorderColor.rgb, borderStrength * _BorderStrength);
 
                 // Apply highlights
                 float4 highlight = SAMPLE_TEXTURE2D(_HighlightTexture, sampler_HighlightTexture, correctedUV);
