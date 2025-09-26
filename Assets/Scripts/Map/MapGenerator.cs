@@ -24,6 +24,8 @@ namespace Map
         // Core components
         private MapTextureManager textureManager;
         private ProvinceMapping provinceMapping;
+        private BorderComputeDispatcher borderDispatcher;
+        private ParadoxStyleCameraController cameraController;
 
         // Map geometry
         private GameObject mapQuad;
@@ -85,6 +87,23 @@ namespace Map
                 }
             }
 
+            // Get or create BorderComputeDispatcher
+            borderDispatcher = GetComponent<BorderComputeDispatcher>();
+            if (borderDispatcher == null)
+            {
+                borderDispatcher = gameObject.AddComponent<BorderComputeDispatcher>();
+                if (logLoadingProgress)
+                {
+                    Debug.Log("MapGenerator: Created BorderComputeDispatcher component");
+                }
+            }
+
+            // Set texture manager reference
+            if (borderDispatcher != null)
+            {
+                borderDispatcher.SetTextureManager(textureManager);
+            }
+
             // Find or create camera
             if (mapCamera == null)
             {
@@ -131,6 +150,16 @@ namespace Map
             if (logLoadingProgress)
             {
                 Debug.Log($"MapGenerator: Successfully loaded {provinceMapping.ProvinceCount} provinces");
+            }
+
+            // Generate initial borders
+            if (borderDispatcher != null)
+            {
+                borderDispatcher.DetectBorders();
+                if (logLoadingProgress)
+                {
+                    Debug.Log("MapGenerator: Generated province borders using GPU compute shader");
+                }
             }
         }
 
@@ -269,7 +298,7 @@ namespace Map
             // We'll use terrain mode (1) temporarily to show the ProvinceColorTexture directly
             mapMaterial.SetInt("_MapMode", 1);
             mapMaterial.EnableKeyword("MAP_MODE_TERRAIN");
-            mapMaterial.SetFloat("_BorderStrength", 0.0f);  // No borders initially for clearer view
+            mapMaterial.SetFloat("_BorderStrength", 1.0f);  // Show borders now that we have compute shader
             mapMaterial.SetFloat("_HighlightStrength", 1.0f);
 
             if (logLoadingProgress)
@@ -285,26 +314,82 @@ namespace Map
         {
             if (mapCamera == null) return;
 
-            // Position camera to view the entire map
+            // Calculate map dimensions
             float aspectRatio = (float)textureManager.MapWidth / textureManager.MapHeight;
             float mapHeight = 10f;
             float mapWidth = mapHeight * aspectRatio;
 
-            // Position camera above the map center
-            mapCamera.transform.position = new Vector3(0, 0, -15f);
+            // Basic camera setup - position to look straight at the map (map plane at 0,0,0)
+            mapCamera.transform.position = new Vector3(0.0f, 0.0f, -1.0f);
             mapCamera.transform.rotation = Quaternion.identity;
-
-            // Set orthographic projection for top-down map view
             mapCamera.orthographic = true;
-            mapCamera.orthographicSize = mapHeight * 0.6f; // Slight padding around the map
-
-            // Clear settings for clean map display
+            mapCamera.orthographicSize = 8f; // Starting zoom
             mapCamera.clearFlags = CameraClearFlags.SolidColor;
-            mapCamera.backgroundColor = new Color(0.1f, 0.1f, 0.15f); // Dark blue background
+            mapCamera.backgroundColor = new Color(0.1f, 0.1f, 0.15f);
+
+            // Set up ParadoxStyleCameraController
+            cameraController = mapCamera.GetComponent<ParadoxStyleCameraController>();
+            if (cameraController == null)
+            {
+                cameraController = mapCamera.gameObject.AddComponent<ParadoxStyleCameraController>();
+            }
+
+            // Configure the camera controller with proper settings
+            cameraController.mapCamera = mapCamera;
+            cameraController.mapPlane = mapQuad;
+            cameraController.mapWorldWidth = mapWidth;
+            cameraController.mapWorldHeight = mapHeight;
+
+            // Initialize the controller
+            cameraController.Initialize();
 
             if (logLoadingProgress)
             {
-                Debug.Log($"MapGenerator: Camera configured for {mapWidth:F1} x {mapHeight:F1} map view");
+                Debug.Log($"MapGenerator: Camera controller configured. Zoom: {cameraController.minZoom}-{cameraController.maxZoom}");
+            }
+        }
+
+        /// <summary>
+        /// Generate province borders using GPU compute shader
+        /// </summary>
+        [ContextMenu("Generate Borders")]
+        public void GenerateBorders()
+        {
+            if (borderDispatcher != null)
+            {
+                borderDispatcher.DetectBorders();
+                Debug.Log("MapGenerator: Borders generated");
+            }
+            else
+            {
+                Debug.LogError("MapGenerator: BorderComputeDispatcher not found");
+            }
+        }
+
+        /// <summary>
+        /// Set border visibility
+        /// </summary>
+        public void SetBorderStrength(float strength)
+        {
+            if (mapMaterial != null)
+            {
+                mapMaterial.SetFloat("_BorderStrength", Mathf.Clamp01(strength));
+            }
+        }
+
+        /// <summary>
+        /// Toggle between border modes
+        /// </summary>
+        [ContextMenu("Toggle Border Mode")]
+        public void ToggleBorderMode()
+        {
+            if (borderDispatcher != null)
+            {
+                // Cycle through border modes
+                var currentMode = borderDispatcher.CurrentBorderMode;
+                var nextMode = (BorderComputeDispatcher.BorderMode)(((int)currentMode + 1) % 4);
+                borderDispatcher.SetBorderMode(nextMode);
+                Debug.Log($"MapGenerator: Border mode set to {nextMode}");
             }
         }
 
