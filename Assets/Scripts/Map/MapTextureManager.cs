@@ -210,6 +210,7 @@ namespace Map.Rendering
             borderTexture.wrapMode = TextureWrapMode.Clamp;
             borderTexture.useMipMap = false;
             borderTexture.autoGenerateMips = false;
+            borderTexture.enableRandomWrite = true;  // CRITICAL: Enable UAV for compute shader write access
             borderTexture.Create();
 
             // Clear to black (no borders)
@@ -234,6 +235,7 @@ namespace Map.Rendering
             highlightTexture.wrapMode = TextureWrapMode.Clamp;
             highlightTexture.useMipMap = false;
             highlightTexture.autoGenerateMips = false;
+            highlightTexture.enableRandomWrite = true;  // Enable UAV for potential compute shader use
             highlightTexture.Create();
 
             // Clear to transparent

@@ -1,0 +1,206 @@
+// Border Detection Compute Shader for Dominion Map System
+// Processes province ID texture to detect borders between provinces
+// Runs entirely on GPU for maximum performance with 10,000+ provinces
+
+#pragma kernel DetectBorders
+
+// Input textures
+Texture2D<float4> ProvinceIDTexture;
+SamplerState samplerProvinceIDTexture;
+
+// Output texture
+RWTexture2D<float> BorderTexture;
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+// Province ID decoding - must match the shader exactly
+uint DecodeProvinceID(float2 encoded)
+{
+    // Convert from float [0,1] back to uint16 values
+    uint r = (uint)(encoded.r * 255.0 + 0.5);
+    uint g = (uint)(encoded.g * 255.0 + 0.5);
+
+    // Reconstruct 16-bit province ID from RG channels
+    return (g << 8) | r;
+}
+
+// Thread group size - 8x8 = 64 threads per group
+// This is optimal for most modern GPUs
+[numthreads(8, 8, 1)]
+void DetectBorders(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Sample current pixel's province ID
+    float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
+    uint currentProvince = DecodeProvinceID(currentEncoded);
+
+    // Initialize border detection
+    bool isBorder = false;
+
+    // Check right neighbor (if not at edge)
+    if (id.x < MapWidth - 1)
+    {
+        float2 rightEncoded = ProvinceIDTexture[id.xy + int2(1, 0)].rg;
+        uint rightProvince = DecodeProvinceID(rightEncoded);
+
+        if (currentProvince != rightProvince)
+            isBorder = true;
+    }
+
+    // Check bottom neighbor (if not at edge)
+    if (id.y < MapHeight - 1)
+    {
+        float2 bottomEncoded = ProvinceIDTexture[id.xy + int2(0, 1)].rg;
+        uint bottomProvince = DecodeProvinceID(bottomEncoded);
+
+        if (currentProvince != bottomProvince)
+            isBorder = true;
+    }
+
+    // Check left neighbor (if not at edge) - for complete borders
+    if (id.x > 0)
+    {
+        float2 leftEncoded = ProvinceIDTexture[id.xy + int2(-1, 0)].rg;
+        uint leftProvince = DecodeProvinceID(leftEncoded);
+
+        if (currentProvince != leftProvince)
+            isBorder = true;
+    }
+
+    // Check top neighbor (if not at edge) - for complete borders
+    if (id.y > 0)
+    {
+        float2 topEncoded = ProvinceIDTexture[id.xy + int2(0, -1)].rg;
+        uint topProvince = DecodeProvinceID(topEncoded);
+
+        if (currentProvince != topProvince)
+            isBorder = true;
+    }
+
+    // Write result to border texture
+    // 1.0 = border pixel, 0.0 = interior pixel
+    BorderTexture[id.xy] = isBorder ? 1.0 : 0.0;
+}
+
+// Advanced border detection with configurable thickness
+#pragma kernel DetectBordersThick
+
+// Border thickness parameter
+uint BorderThickness;
+
+[numthreads(8, 8, 1)]
+void DetectBordersThick(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Sample current pixel's province ID
+    float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
+    uint currentProvince = DecodeProvinceID(currentEncoded);
+
+    // Check in a radius for different provinces
+    float borderStrength = 0.0;
+    int checkRadius = (int)BorderThickness;
+    int totalChecks = 0;
+
+    for (int dy = -checkRadius; dy <= checkRadius; dy++)
+    {
+        for (int dx = -checkRadius; dx <= checkRadius; dx++)
+        {
+            // Skip center pixel
+            if (dx == 0 && dy == 0)
+                continue;
+
+            // Calculate neighbor position
+            int2 neighborPos = id.xy + int2(dx, dy);
+
+            // Bounds check
+            if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+                neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+                continue;
+
+            // Sample neighbor province
+            float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+            uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+            // Check if different province
+            if (currentProvince != neighborProvince)
+            {
+                // Calculate distance-based falloff for smoother thick borders
+                float distance = length(float2(dx, dy));
+                float falloff = 1.0 - (distance / (float)(checkRadius + 1));
+                borderStrength = max(borderStrength, falloff);
+            }
+
+            totalChecks++;
+        }
+    }
+
+    // Write result to border texture with strength
+    BorderTexture[id.xy] = borderStrength;
+}
+
+// Country border detection - only shows borders between different owners
+#pragma kernel DetectCountryBorders
+
+Texture2D<float4> ProvinceOwnerTexture;
+
+[numthreads(8, 8, 1)]
+void DetectCountryBorders(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Sample current pixel's province and owner
+    float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
+    uint currentProvince = DecodeProvinceID(currentEncoded);
+
+    // Get owner ID (assuming R16 format, stored in red channel)
+    float currentOwnerData = ProvinceOwnerTexture[id.xy].r;
+    uint currentOwner = (uint)(currentOwnerData * 255.0 + 0.5);
+
+    // Initialize border detection
+    bool isBorder = false;
+
+    // Check all four neighbors
+    int2 offsets[4] = { int2(1,0), int2(-1,0), int2(0,1), int2(0,-1) };
+
+    for (int i = 0; i < 4; i++)
+    {
+        int2 neighborPos = id.xy + offsets[i];
+
+        // Bounds check
+        if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+            neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+            continue;
+
+        // Get neighbor province
+        float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+        uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+        // Different province?
+        if (currentProvince != neighborProvince)
+        {
+            // Get neighbor owner
+            float neighborOwnerData = ProvinceOwnerTexture[neighborPos].r;
+            uint neighborOwner = (uint)(neighborOwnerData * 255.0 + 0.5);
+
+            // Only mark as border if different owners
+            if (currentOwner != neighborOwner)
+            {
+                isBorder = true;
+                break;
+            }
+        }
+    }
+
+    // Write result to border texture
+    BorderTexture[id.xy] = isBorder ? 1.0 : 0.0;
+}
