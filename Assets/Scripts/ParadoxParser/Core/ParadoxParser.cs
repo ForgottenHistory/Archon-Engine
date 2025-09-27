@@ -93,14 +93,15 @@ namespace ParadoxParser.Core
             NativeSlice<Token> tokens,
             NativeList<ParsedKeyValue> keyValues,
             NativeList<ParsedKeyValue> childBlocks,
-            NativeSlice<byte> sourceData)
+            NativeSlice<byte> sourceData,
+            Allocator allocator = Allocator.TempJob)
         {
             var state = new ParserStateInfo();
             int tokenIndex = 0;
             int blockStackDepth = 0;
 
             // Stack for tracking nested blocks
-            var blockStack = new NativeArray<BlockInfo>(64, Allocator.Temp);
+            var blockStack = new NativeArray<BlockInfo>(64, allocator);
 
             try
             {
@@ -108,11 +109,32 @@ namespace ParadoxParser.Core
                 {
                     var token = tokens[tokenIndex];
 
+
+                    // Skip comments, whitespace, and newlines
+                    if (token.Type.ShouldSkip())
+                    {
+                        tokenIndex++;
+                        continue;
+                    }
+
                     // Update position tracking
                     UpdatePositionTracking(ref state, token);
 
                     // Process the token through state machine
                     var operation = ParserStateMachine.ProcessToken(token, state);
+
+                    // Debug: Show failure details around latest token range
+                    if (tokenIndex >= 260 && tokenIndex <= 290) // Capture failures at tokens 262, 284
+                    {
+                        string tokenContent = "N/A";
+                        if (token.StartPosition >= 0 && token.StartPosition < sourceData.Length && token.Length > 0)
+                        {
+                            var tokenData = sourceData.Slice(token.StartPosition, Math.Min(token.Length, 50)); // Max 50 chars
+                            tokenContent = System.Text.Encoding.UTF8.GetString(tokenData.ToArray());
+                            tokenContent = tokenContent.Replace('\n', '\\').Replace('\r', '\\').Replace('\t', '\\'); // Escape special chars
+                        }
+                        UnityEngine.Debug.Log($"Token {tokenIndex}: Type={token.Type}, Content='{tokenContent}', CurrentState={state.State}, Success={operation.Success}, NewState={operation.NewState.State}, TokensConsumed={operation.TokensConsumed}");
+                    }
 
                     if (!operation.Success)
                     {
@@ -134,10 +156,11 @@ namespace ParadoxParser.Core
                     tokenIndex += operation.TokensConsumed;
                 }
 
-                // Check for unclosed blocks
+                // Allow unclosed blocks for tolerant parsing of Paradox files
+                // Many Paradox files have missing closing braces
                 if (state.BlockDepth > 0)
                 {
-                    return ParseResult.Failed(ParserStateMachine.ParseErrorType.UnmatchedBrace, state.LineNumber, state.ColumnNumber, tokenIndex);
+                    UnityEngine.Debug.LogWarning($"File has {state.BlockDepth} unclosed blocks - parsing anyway");
                 }
 
                 return ParseResult.Successful(tokenIndex);
@@ -185,17 +208,8 @@ namespace ParadoxParser.Core
                 case ParserState.InQuotedString:
                     return HandleValueToken(tokens, tokenIndex, keyValues, sourceData, currentState);
 
-                case ParserState.InBlock:
-                    return HandleBlockStart(tokens, tokenIndex, keyValues, blockStack, ref blockStackDepth, false);
-
-                case ParserState.InList:
-                    return HandleBlockStart(tokens, tokenIndex, keyValues, blockStack, ref blockStackDepth, true);
-
-                case ParserState.ExpectingKey when currentState.BlockDepth < operation.NewState.BlockDepth:
-                    return HandleBlockEnd(keyValues, childBlocks, blockStack, ref blockStackDepth);
-
                 default:
-                    return operation; // No special handling needed
+                    return operation; // No special handling needed - state machine handles block transitions
             }
         }
 

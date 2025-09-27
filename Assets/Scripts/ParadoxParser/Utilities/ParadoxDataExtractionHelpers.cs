@@ -242,6 +242,7 @@ namespace ParadoxParser.Utilities
         /// </summary>
         public static class CommonKeyHashes
         {
+            // Province-related hashes
             public static readonly uint NAME_HASH;
             public static readonly uint COLOR_HASH;
             public static readonly uint CAPITAL_HASH;
@@ -251,6 +252,14 @@ namespace ParadoxParser.Utilities
             public static readonly uint CULTURE_HASH;
             public static readonly uint RELIGION_HASH;
             public static readonly uint HISTORY_HASH;
+
+            // Country-specific hashes
+            public static readonly uint GRAPHICAL_CULTURE_HASH;
+            public static readonly uint REVOLUTIONARY_COLORS_HASH;
+            public static readonly uint PREFERRED_RELIGION_HASH;
+            public static readonly uint HISTORICAL_IDEA_GROUPS_HASH;
+            public static readonly uint HISTORICAL_UNITS_HASH;
+            public static readonly uint MONARCH_NAMES_HASH;
 
             static CommonKeyHashes()
             {
@@ -264,6 +273,14 @@ namespace ParadoxParser.Utilities
                 CULTURE_HASH = ComputeStringHash("culture");
                 RELIGION_HASH = ComputeStringHash("religion");
                 HISTORY_HASH = ComputeStringHash("history");
+
+                // Country-specific hashes
+                GRAPHICAL_CULTURE_HASH = ComputeStringHash("graphical_culture");
+                REVOLUTIONARY_COLORS_HASH = ComputeStringHash("revolutionary_colors");
+                PREFERRED_RELIGION_HASH = ComputeStringHash("preferred_religion");
+                HISTORICAL_IDEA_GROUPS_HASH = ComputeStringHash("historical_idea_groups");
+                HISTORICAL_UNITS_HASH = ComputeStringHash("historical_units");
+                MONARCH_NAMES_HASH = ComputeStringHash("monarch_names");
             }
 
             private static uint ComputeStringHash(string key)

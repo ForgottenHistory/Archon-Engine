@@ -65,7 +65,7 @@ namespace ParadoxParser.Core
             UnexpectedEndOfFile = 8
         }
 
-        private const int MAX_BLOCK_DEPTH = 64; // Prevent stack overflow
+        private const int MAX_BLOCK_DEPTH = 256; // Prevent stack overflow - increased for very complex Paradox files
 
         /// <summary>
         /// Process a single token and return the new parser state
@@ -76,6 +76,7 @@ namespace ParadoxParser.Core
             // Check depth limits
             if (currentState.BlockDepth >= MAX_BLOCK_DEPTH)
             {
+                UnityEngine.Debug.LogWarning($"MaxDepthExceeded: BlockDepth={currentState.BlockDepth}, Limit={MAX_BLOCK_DEPTH}");
                 return ParseOperation.Failed(ParseErrorType.MaxDepthExceeded, currentState);
             }
 
@@ -131,6 +132,13 @@ namespace ParadoxParser.Core
             return token.Type switch
             {
                 TokenType.Equals => TransitionToExpectingValue(state),
+                TokenType.Identifier when state.IsInContainer => ParseOperation.Successful(state, 1), // List item in block
+                TokenType.Number when state.IsInContainer => ParseOperation.Successful(state, 1), // Numeric list item
+                TokenType.String when state.IsInContainer => ParseOperation.Successful(state, 1), // String list item
+                TokenType.Unknown when state.IsInContainer => ParseOperation.Successful(state, 1), // Handle unknown tokens as list items
+                TokenType.Dot when state.IsInContainer => ParseOperation.Successful(state, 1), // Handle dots as list items (e.g., decimal numbers)
+                TokenType.RightBrace when state.IsInContainer => TransitionToBlockEnd(state), // End of block/list
+                TokenType.EndOfFile => ParseOperation.Successful(state, 1), // Gracefully handle end of file
                 TokenType.Whitespace => ParseOperation.Successful(state, 1),
                 _ => ParseOperation.Failed(ParseErrorType.UnexpectedToken, state)
             };
@@ -146,6 +154,8 @@ namespace ParadoxParser.Core
                 TokenType.Identifier => TransitionToLiteral(state),
                 TokenType.Number => TransitionToNumber(state),
                 TokenType.Date => TransitionToDate(state),
+                TokenType.Boolean => TransitionToLiteral(state), // Handle boolean values (yes/no)
+                TokenType.Unknown => TransitionToLiteral(state), // Handle unknown tokens as literals
                 TokenType.Whitespace => ParseOperation.Successful(state, 1),
                 _ => ParseOperation.Failed(ParseErrorType.UnexpectedToken, state)
             };
@@ -157,8 +167,15 @@ namespace ParadoxParser.Core
             return token.Type switch
             {
                 TokenType.Identifier => TransitionToExpectingEquals(state),
+                TokenType.Equals => TransitionToExpectingValue(state), // Handle equals in blocks
+                TokenType.Number => ParseOperation.Successful(state, 1), // Handle numbers in blocks
+                TokenType.String => ParseOperation.Successful(state, 1), // Handle strings in blocks
+                TokenType.Boolean => ParseOperation.Successful(state, 1), // Handle booleans in blocks
+                TokenType.Date => ParseOperation.Successful(state, 1), // Handle dates in blocks
+                TokenType.Unknown => ParseOperation.Successful(state, 1), // Handle unknown tokens in blocks
                 TokenType.RightBrace => TransitionToBlockEnd(state),
                 TokenType.Hash => TransitionToComment(state),
+                TokenType.EndOfFile => ParseOperation.Successful(state, 1), // Gracefully handle unclosed blocks
                 TokenType.Whitespace or TokenType.Newline => ParseOperation.Successful(state, 1),
                 _ => ParseOperation.Failed(ParseErrorType.UnexpectedToken, state)
             };
@@ -171,7 +188,9 @@ namespace ParadoxParser.Core
             {
                 TokenType.Identifier or TokenType.Number => TransitionToLiteral(state),
                 TokenType.String => TransitionToQuotedString(state),
+                TokenType.Unknown => TransitionToLiteral(state), // Handle unknown tokens as literals in lists
                 TokenType.RightBrace => TransitionToBlockEnd(state),
+                TokenType.EndOfFile => ParseOperation.Successful(state, 1), // Gracefully handle unclosed lists
                 TokenType.Whitespace => ParseOperation.Successful(state, 1),
                 _ => ParseOperation.Failed(ParseErrorType.UnexpectedToken, state)
             };
@@ -189,6 +208,13 @@ namespace ParadoxParser.Core
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ParseOperation ProcessInLiteral(Token token, ParserStateInfo state)
         {
+            if (token.Type == TokenType.Identifier && !state.IsInList)
+            {
+                // New key-value pair detected
+                return TransitionToExpectingEquals(state);
+            }
+
+            // Default behavior: transition to appropriate state
             var newState = state;
             newState.State = state.IsInList ? ParserState.InList : ParserState.ExpectingEndOfStatement;
             return ParseOperation.Successful(newState, 1);
@@ -216,6 +242,8 @@ namespace ParadoxParser.Core
             return token.Type switch
             {
                 TokenType.Newline => TransitionToExpectingKey(state),
+                TokenType.Identifier => TransitionToExpectingEquals(state), // Handle next key-value pair
+                TokenType.Equals => TransitionToExpectingValue(state), // Handle direct equals (compound assignments)
                 TokenType.Hash => TransitionToComment(state),
                 TokenType.RightBrace when state.IsInContainer => TransitionToBlockEnd(state),
                 TokenType.Whitespace => ParseOperation.Successful(state, 1),
