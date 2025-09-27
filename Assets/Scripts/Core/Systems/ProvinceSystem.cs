@@ -3,7 +3,7 @@ using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using System.Runtime.InteropServices;
-using Map.Simulation;
+using Core.Data;
 using ParadoxParser.Jobs;
 
 namespace Core.Systems
@@ -192,7 +192,8 @@ namespace Core.Systems
                 }
                 else
                 {
-                    Debug.LogWarning($"Definition found for province {provinceId} but province not in map data");
+                    // Skip definitions for provinces not in map data (expected for larger definition files)
+                    // Uncomment for debugging: Debug.LogWarning($"Definition found for province {provinceId} but province not in map data");
                 }
             }
         }

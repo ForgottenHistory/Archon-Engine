@@ -1,12 +1,12 @@
 {
-    "name": "MapAssembly",
-    "rootNamespace": "Map",
+    "name": "Core",
+    "rootNamespace": "Core",
     "references": [
         "Unity.Collections",
         "Unity.Mathematics",
         "Unity.Burst",
+        "Unity.Jobs",
         "ParadoxParser",
-        "Core",
         "Utils"
     ],
     "includePlatforms": [],

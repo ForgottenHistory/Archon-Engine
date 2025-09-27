@@ -2,6 +2,7 @@ using NUnit.Framework;
 using Unity.Collections.LowLevel.Unsafe;
 using Map.Simulation;
 using System;
+using Core.Data;
 
 namespace Map.Tests.Simulation
 {

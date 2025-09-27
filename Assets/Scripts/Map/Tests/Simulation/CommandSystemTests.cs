@@ -1,7 +1,9 @@
 using NUnit.Framework;
 using Unity.Collections;
 using Map.Simulation;
-using Map.Simulation.Commands;
+using Core.Systems;
+using Core.Commands;
+using Core.Data;
 
 namespace Map.Tests.Simulation
 {

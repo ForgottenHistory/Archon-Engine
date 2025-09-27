@@ -3,6 +3,8 @@ using Unity.Collections;
 using Map.Simulation;
 using System.Collections.Generic;
 using System;
+using Core.Systems;
+using Core.Data;
 
 namespace Map.Tests.Simulation
 {

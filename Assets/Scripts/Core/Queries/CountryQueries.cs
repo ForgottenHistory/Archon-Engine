@@ -1,7 +1,7 @@
 using Unity.Collections;
 using UnityEngine;
 using Core.Systems;
-using GameData.Core;
+using Core.Data;
 
 namespace Core.Queries
 {

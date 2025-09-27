@@ -1,7 +1,7 @@
 using Unity.Collections;
 using Unity.Mathematics;
 using Core.Systems;
-using Map.Simulation;
+using Core.Data;
 
 namespace Core.Queries
 {

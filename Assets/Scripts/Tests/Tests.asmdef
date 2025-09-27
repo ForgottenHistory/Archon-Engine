@@ -1,15 +1,17 @@
 {
-    "name": "MapTestsAssembly",
-    "rootNamespace": "Map.Tests",
+    "name": "Tests",
+    "rootNamespace": "Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
+        "Core",
+        "ParadoxParser",
+        "Utils",
         "Unity.Collections",
         "Unity.Mathematics",
         "Unity.Burst",
-        "MapAssembly",
-        "ParadoxParser",
-        "Core"
+        "Unity.Jobs",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [
         "Editor"

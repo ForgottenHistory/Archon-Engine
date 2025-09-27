@@ -2,6 +2,8 @@ using NUnit.Framework;
 using Unity.Collections;
 using UnityEngine;
 using Map.Simulation;
+using Core.Systems;
+using Core.Data;
 
 namespace Map.Tests.Integration
 {

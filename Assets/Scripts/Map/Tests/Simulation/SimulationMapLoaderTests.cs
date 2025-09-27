@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using Map.Simulation;
 using ParadoxParser.Bitmap;
+using Core.Data;
 
 namespace Map.Tests.Simulation
 {

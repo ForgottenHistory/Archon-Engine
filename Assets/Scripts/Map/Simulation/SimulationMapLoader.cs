@@ -4,6 +4,8 @@ using Unity.Collections;
 using UnityEngine;
 using ParadoxParser.Bitmap;
 using Map.Province;
+using Core.Systems;
+using Core.Data;
 
 namespace Map.Simulation
 {

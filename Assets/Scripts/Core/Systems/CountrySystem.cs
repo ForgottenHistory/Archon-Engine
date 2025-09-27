@@ -2,8 +2,8 @@ using UnityEngine;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using System.Collections.Generic;
-using GameData.Core;
-using GameData.Loaders;
+using Core.Data;
+using Core.Loaders;
 
 namespace Core.Systems
 {
@@ -151,10 +151,10 @@ namespace Core.Systems
             var defaultHotData = new CountryHotData
             {
                 tagHash = 0, // No tag
-                color = Color.gray,
                 graphicalCultureId = 0,
                 flags = 0
             };
+            defaultHotData.SetColor(Color.gray);
 
             var defaultColdData = new CountryColdData
             {
@@ -193,7 +193,7 @@ namespace Core.Systems
             countryHotData[countryId] = hotData;
 
             // Set structure of arrays data
-            countryColors[countryId] = hotData.color;
+            countryColors[countryId] = hotData.Color;
             countryTagHashes[countryId] = tagHash;
             countryGraphicalCultures[countryId] = hotData.graphicalCultureId;
             countryFlags[countryId] = hotData.flags;
@@ -238,10 +238,10 @@ namespace Core.Systems
 
             var hotData = new CountryHotData
             {
-                color = defaultColor,
                 graphicalCultureId = graphicalCultureId,
                 flags = 0 // Will be set based on cold data properties
             };
+            hotData.SetColor(defaultColor);
 
             // Set flags based on cold data
             if (coldData.historicalIdeaGroups != null && coldData.historicalIdeaGroups.Count > 0)
@@ -444,7 +444,7 @@ namespace Core.Systems
 
             // Update hot data
             var hotData = countryHotData[countryId];
-            hotData.color = newColor;
+            hotData.SetColor(newColor);
             countryHotData[countryId] = hotData;
 
             // Emit color change event
