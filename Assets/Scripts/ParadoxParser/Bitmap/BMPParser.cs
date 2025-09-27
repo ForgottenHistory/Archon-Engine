@@ -132,9 +132,6 @@ namespace ParadoxParser.Bitmap
                         ColorsImportant = *(uint*)(dataPtr + 50)
                     };
 
-                // Debug logging to understand actual header values
-                UnityEngine.Debug.Log($"BMP Header Debug: Signature=0x{fileHeader.Signature:X4}, HeaderSize={infoHeader.HeaderSize}, Planes={infoHeader.Planes}, BitsPerPixel={infoHeader.BitsPerPixel}, Compression={infoHeader.Compression}");
-
                 return new BMPHeader
                 {
                     FileHeader = fileHeader,
