@@ -3,9 +3,6 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
-
-namespace ProvinceSystem.Utils
-{
     /// <summary>
     /// File-based logging system that captures all Debug.Log messages
     /// </summary>
@@ -500,4 +497,3 @@ namespace ProvinceSystem.Utils
                 FileLogger.Instance.LogSeparator(title);
         }
     }
-}
