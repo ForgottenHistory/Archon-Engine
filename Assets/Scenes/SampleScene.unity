@@ -163,10 +163,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6529d8fce436384ba39ca12ba085c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  provinceBitmapPath: Assets/Map/provinces.bmp
+  provinceBitmapPath: Assets/Data/map/provinces.bmp
+  resourcesProvinceBitmapPath: Data/map/provinces
   mapMaterial: {fileID: 2100000, guid: 92a3af584a724b34ebd451b5902f1a2c, type: 2}
-  autoSetupOnStart: 1
-  logProgress: 1
+  autoLoadOnStart: 1
+  logLoadingProgress: 1
+  mapCamera: {fileID: 330585545}
+  mapRenderer: {fileID: 1040298675}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,18 +324,18 @@ MonoBehaviour:
   mapWorldWidth: 100
   mapWorldHeight: 100
   mapCamera: {fileID: 330585545}
-  minZoom: 1
-  maxZoom: 45
-  zoomSpeed: 20
-  currentZoom: 15
+  minZoom: 0.1
+  maxZoom: 5
+  zoomSpeed: 1
+  currentZoom: 4
   dragSpeed: 1
-  edgeScrollSpeed: 150
+  edgeScrollSpeed: 50
   edgeScrollBorder: 50
-  arrowKeySpeed: 150
+  arrowKeySpeed: 50
   enableEdgeScroll: 1
   enableDragScroll: 1
   enableArrowKeys: 1
-  enableHorizontalWrapping: 1
+  enableHorizontalWrapping: 0
   clampVerticalMovement: 1
 --- !u!1 &410087039
 GameObject:
@@ -791,7 +794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &1040298675
 MeshRenderer:
   m_ObjectHideFlags: 0
