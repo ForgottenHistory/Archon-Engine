@@ -602,6 +602,9 @@ public class FervorMechanic : GameMechanic {
 ## Script Loading & Compilation
 
 ### Parser to Runtime Pipeline
+
+**Integration with [Unity Paradox Parser](unity_paradox_parser_guide.md)**: This system uses the high-performance Burst-compiled parser for the initial parsing phase.
+
 ```csharp
 public class ScriptLoader {
     private ParadoxParser parser;

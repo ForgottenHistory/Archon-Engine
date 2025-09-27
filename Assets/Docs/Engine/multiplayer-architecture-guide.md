@@ -392,6 +392,8 @@ public struct ProvinceNetworkData {
 }
 ```
 
+**Note**: This network-optimized memory layout aligns with the hot/cold data separation described in [Performance Architecture](performance-architecture-guide.md). The 8-byte ProvinceState struct represents the "hot data" that needs synchronization, while cold data remains local.
+
 ### Bandwidth Optimization
 
 ```csharp

@@ -415,6 +415,17 @@ Based on reference implementation (3,708 files in 1.6 seconds on consumer PC):
 - [ ] Test error accumulation
 - [ ] Validate performance degradation
 
+## Integration with Game Systems
+
+### Moddable Engine Integration
+
+This parser provides the foundation for the [Moddable Engine Architecture](moddable-engine-architecture.md). The parser's output (ParsedNode structures) feeds directly into the script compilation system that generates runtime bytecode for effects, conditions, and events.
+
+**Integration Flow:**
+1. Unity Paradox Parser processes .txt files → ParsedNode structures
+2. Moddable Engine compilers consume ParsedNode data → Runtime bytecode
+3. Game systems execute bytecode during gameplay
+
 ## Success Criteria
 
 ### Quality Metrics

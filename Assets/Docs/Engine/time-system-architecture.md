@@ -41,13 +41,15 @@ DAILY:
 ├── Army maintenance
 ├── Diplomatic relation ticks
 ├── War exhaustion
-└── Movement points recovery
+├── Movement points recovery
+└── AI Operational layer updates (see AI Architecture)
 
 WEEKLY:
 ├── Trade route recalculation
 ├── Market prices
 ├── Merchant competition
-└── Piracy spread
+├── Piracy spread
+└── AI Tactical layer updates (see AI Architecture)
 
 MONTHLY:
 ├── Tax collection
@@ -55,7 +57,8 @@ MONTHLY:
 ├── Tech/idea progress
 ├── Construction progress
 ├── Colonization growth
-└── Inflation
+├── Inflation
+└── AI Strategic layer planning (see AI Architecture)
 
 YEARLY:
 ├── Population growth
@@ -645,3 +648,9 @@ This time system architecture achieves:
 - **Zero performance degradation** in late game
 
 The key insight: Most game state is static most of the time. By only updating what actually changes, we can maintain blazing fast performance throughout the entire game lifecycle.
+
+## Related Architecture Documents
+
+- **[AI Architecture](ai-architecture.md)** - AI system buckets strategic/tactical/operational updates to align with Monthly/Weekly/Daily time frequencies
+- **[Performance Architecture](performance-architecture-guide.md)** - Memory pooling and cache optimization techniques
+- **[Master Architecture](master-architecture-document.md)** - Overall dual-layer architecture this time system supports

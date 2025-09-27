@@ -35,8 +35,10 @@ OPERATIONAL LAYER (Daily/Hourly)
 
 The key insight: Not all AI nations need to think at the same time. With 200 nations:
 - Each day, only ~7 nations do strategic planning (200/30)
-- Each hour, only ~8 nations do tactical updates (200/24)  
+- Each hour, only ~8 nations do tactical updates (200/24)
 - Only nations at war or in crisis do operational updates
+
+**Note**: This AI bucketing strategy integrates with the [Time System Architecture](time-system-architecture.md)'s update frequency hierarchy. AI strategic layer aligns with Monthly updates, tactical with Weekly/Daily updates, and operational with Hourly updates.
 
 ```csharp
 public class AIScheduler {

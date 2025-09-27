@@ -280,6 +280,9 @@ Texture2D provinceIDMap;                     // 5632 × 2048 × 4 bytes = 46MB
 // Cold Data - Loaded On Demand (Variable)
 Dictionary<int, ProvinceColdData> coldData;  // Paged to disk
 
+// NOTE: Hot data corresponds exactly to network-synchronized data
+// See [Multiplayer Architecture](multiplayer-architecture-guide.md) for network serialization
+
 // History - Compressed and Capped (10MB)
 HistoryDatabase historyDB;                   // Ring buffers + compression
 ```

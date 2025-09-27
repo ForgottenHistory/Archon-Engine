@@ -21,7 +21,7 @@ Dictionary<ushort, ushort[]> adjacency;  // ~200KB for 10k provinces
 **Storage**: R16G16 texture (province IDs)  
 **Example**: "Pixel at UV(0.45, 0.67) = Province 1234"  
 ```csharp
-Texture2D provinceIDTexture;  // 2048×2048 × 4 bytes = 16MB
+Texture2D provinceIDTexture;  // 5632×2048 × 4 bytes = 46MB
 ```
 
 ### 3. World Space (3D)
@@ -144,9 +144,9 @@ Cold Data (rarely accessed):
 - Total: ~440KB
 
 GPU Data:
-- Province ID texture: 16MB (2048×2048×4)
-- Province color texture: 16MB
-- Total: 32MB VRAM
+- Province ID texture: 46MB (5632×2048×4)
+- Province color texture: 46MB
+- Total: 92MB VRAM
 ```
 
 ### Access Patterns & Cache Performance
@@ -235,7 +235,7 @@ struct Province {
 ```csharp
 // BAD: GPU→CPU transfer is expensive
 void Update() {
-    Color32[] pixels = texture.GetPixels32();  // 16MB transfer!
+    Color32[] pixels = texture.GetPixels32();  // 46MB transfer!
 }
 ```
 
