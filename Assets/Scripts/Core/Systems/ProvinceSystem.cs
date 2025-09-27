@@ -172,6 +172,8 @@ namespace Core.Systems
 
             Debug.Log($"Applying definitions to {definitions.AllDefinitions.Length} provinces");
 
+            int updatedCount = 0;
+
             for (int i = 0; i < definitions.AllDefinitions.Length; i++)
             {
                 var definition = definitions.AllDefinitions[i];
@@ -188,14 +190,12 @@ namespace Core.Systems
                     if (terrainType != provinceTerrain[arrayIndex])
                     {
                         SetProvinceTerrain(provinceId, terrainType);
+                        updatedCount++;
                     }
                 }
-                else
-                {
-                    // Skip definitions for provinces not in map data (expected for larger definition files)
-                    // Uncomment for debugging: Debug.LogWarning($"Definition found for province {provinceId} but province not in map data");
-                }
             }
+
+            Debug.Log($"Province definitions applied: {updatedCount} terrain updates from {definitions.AllDefinitions.Length} definitions");
         }
 
         /// <summary>

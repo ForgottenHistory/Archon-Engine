@@ -37,6 +37,7 @@ namespace Core.Systems
         // Cold data management (lazy-loaded, cached)
         private Dictionary<byte, CountryColdData> coldDataCache;
         private Dictionary<byte, string> countryTags;        // Country ID -> 3-letter tag (e.g., "ENG")
+        private HashSet<string> usedTags;                    // Track used tags for duplicate detection
 
         // Performance tracking
         private int countryCount;
@@ -70,6 +71,7 @@ namespace Core.Systems
             // Cold data management
             coldDataCache = new Dictionary<byte, CountryColdData>(coldDataCacheSize);
             countryTags = new Dictionary<byte, string>(initialCapacity);
+            usedTags = new HashSet<string>(initialCapacity);
 
             isInitialized = true;
             Debug.Log($"CountrySystem initialized with capacity {initialCapacity}");
@@ -105,6 +107,7 @@ namespace Core.Systems
             activeCountryIds.Clear();
             coldDataCache.Clear();
             countryTags.Clear();
+            usedTags.Clear();
 
             // Add default "unowned" country at ID 0
             AddDefaultUnownedCountry();
@@ -181,10 +184,10 @@ namespace Core.Systems
             // Calculate tag hash
             ushort tagHash = CalculateTagHash(tag);
 
-            // Check for duplicate tag
-            if (tagHashToId.ContainsKey(tagHash) && countryId != 0)
+            // Check for duplicate tag using HashSet for O(1) lookup
+            if (usedTags.Contains(tag) && countryId != 0)
             {
-                Debug.LogWarning($"Country tag {tag} already exists, skipping");
+                // Skip duplicates silently - this is expected with overlapping country files
                 return;
             }
 
@@ -202,6 +205,7 @@ namespace Core.Systems
             tagHashToId[tagHash] = countryId;
             idToTagHash[countryId] = tagHash;
             countryTags[countryId] = tag;
+            usedTags.Add(tag);
 
             // Cache cold data if enabled
             if (enableColdDataCaching)
@@ -485,6 +489,7 @@ namespace Core.Systems
 
             coldDataCache?.Clear();
             countryTags?.Clear();
+            usedTags?.Clear();
 
             isInitialized = false;
             Debug.Log("CountrySystem disposed");

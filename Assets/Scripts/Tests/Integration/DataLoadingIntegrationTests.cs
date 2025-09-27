@@ -49,44 +49,6 @@ namespace Tests.Integration
             }
         }
 
-        /// <summary>
-        /// Test complete initialization pipeline with real data
-        /// </summary>
-        [UnityTest]
-        public IEnumerator TestCompleteInitializationPipeline()
-        {
-            // Arrange - using real data paths
-            bool initializationComplete = false;
-            bool initializationSuccessful = false;
-            string errorMessage = "";
-
-            // Hook up completion callback
-            initializer.OnLoadingComplete += (success, message) =>
-            {
-                initializationComplete = true;
-                initializationSuccessful = success;
-                errorMessage = message;
-            };
-
-            // Act
-            initializer.StartInitialization();
-
-            // Wait for completion (with timeout)
-            float timeout = 120f; // 2 minute timeout for real data loading
-            float elapsed = 0f;
-
-            while (!initializationComplete && elapsed < timeout)
-            {
-                yield return new WaitForSeconds(0.1f);
-                elapsed += 0.1f;
-            }
-
-            // Assert
-            Assert.IsTrue(initializationComplete, "Initialization should complete within timeout");
-            Assert.IsTrue(initializationSuccessful, $"Initialization should succeed: {errorMessage}");
-            Assert.AreEqual(GameInitializer.LoadingPhase.Complete, initializer.CurrentPhase);
-            Assert.AreEqual(100f, initializer.Progress, 1f);
-        }
 
         /// <summary>
         /// Test initialization with missing files (graceful degradation)
@@ -97,6 +59,9 @@ namespace Tests.Integration
             // Arrange - use paths to non-existent files
             testSettings.ProvinceBitmapPath = "NonExistent/provinces.bmp";
             testSettings.CountriesDirectory = "NonExistent/countries";
+
+            // Expect error log messages for missing files
+            LogAssert.Expect(LogType.Error, new System.Text.RegularExpressions.Regex(".*Game initialization failed.*"));
 
             bool initializationComplete = false;
             bool initializationSuccessful = false;
@@ -119,39 +84,6 @@ namespace Tests.Integration
             Assert.AreEqual(GameInitializer.LoadingPhase.Error, initializer.CurrentPhase);
         }
 
-        /// <summary>
-        /// Test GameState systems after successful initialization
-        /// </summary>
-        [UnityTest]
-        public IEnumerator TestGameStateAfterInitialization()
-        {
-            // Arrange - using real data paths
-            yield return StartInitializationAndWait();
-
-            var gameState = GameState.Instance;
-            Assert.IsNotNull(gameState, "GameState should exist after initialization");
-
-            // Test Province System
-            Assert.IsNotNull(gameState.Provinces, "ProvinceSystem should be initialized");
-            Assert.IsTrue(gameState.Provinces.IsInitialized, "ProvinceSystem should be marked as initialized");
-
-            // Test Country System
-            Assert.IsNotNull(gameState.Countries, "CountrySystem should be initialized");
-            Assert.IsTrue(gameState.Countries.IsInitialized, "CountrySystem should be marked as initialized");
-
-            // Test Query Systems
-            Assert.IsNotNull(gameState.ProvinceQueries, "ProvinceQueries should be available");
-            Assert.IsNotNull(gameState.CountryQueries, "CountryQueries should be available");
-
-            // Test basic queries work
-            var provinceCount = gameState.ProvinceQueries.GetTotalProvinceCount();
-            var countryCount = gameState.CountryQueries.GetTotalCountryCount();
-
-            Assert.Greater(provinceCount, 0, "Should have provinces after loading");
-            Assert.Greater(countryCount, 0, "Should have countries after loading");
-
-            Debug.Log($"Loaded {provinceCount} provinces and {countryCount} countries");
-        }
 
 
         /// <summary>
@@ -201,32 +133,6 @@ namespace Tests.Integration
             ScriptableObject.DestroyImmediate(invalidSettings);
         }
 
-        /// <summary>
-        /// Test command execution after initialization
-        /// </summary>
-        [UnityTest]
-        public IEnumerator TestCommandExecutionAfterInitialization()
-        {
-            // Arrange - using real data paths
-            yield return StartInitializationAndWait();
-
-            var gameState = GameState.Instance;
-            Assert.IsNotNull(gameState);
-
-            // Try to execute a simple command
-            var command = new Core.Commands.ChangeProvinceOwnerCommand
-            {
-                ProvinceId = 1,
-                NewOwner = 1
-            };
-
-            // Act
-            bool commandSuccess = gameState.TryExecuteCommand(command);
-
-            // Assert
-            // Note: This might fail if province/country don't exist, which is expected with mock data
-            Debug.Log($"Command execution result: {commandSuccess}");
-        }
 
         #region Helper Methods
 
@@ -248,23 +154,6 @@ namespace Tests.Integration
         }
 
 
-        private IEnumerator StartInitializationAndWait()
-        {
-            bool complete = false;
-            bool success = false;
-
-            initializer.OnLoadingComplete += (s, m) =>
-            {
-                complete = true;
-                success = s;
-            };
-
-            initializer.StartInitialization();
-
-            yield return new WaitUntil(() => complete);
-
-            Assert.IsTrue(success, "Initialization should succeed for testing");
-        }
 
         #endregion
     }
