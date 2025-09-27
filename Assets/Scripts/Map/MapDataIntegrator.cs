@@ -90,11 +90,10 @@ namespace Map.Integration
 
             Debug.Log("Initializing map data integration...");
 
-            // Load province bitmap using optimized ParadoxParser loader
+            // Load province bitmap using optimized ProvinceMapProcessor (via compatibility layer)
             var loadResult = ProvinceMapLoader.LoadProvinceMap(
                 provinceBitmapPath,
-                textureManager.MapWidth,
-                textureManager.MapHeight
+                textureManager
             );
 
             if (!loadResult.Success)

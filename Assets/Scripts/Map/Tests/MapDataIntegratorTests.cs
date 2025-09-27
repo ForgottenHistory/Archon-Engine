@@ -5,6 +5,7 @@ using UnityEngine;
 using Map.Loading;
 using Map.Province;
 using Map.Integration;
+using Map.Rendering;
 
 namespace Map.Tests
 {
@@ -15,6 +16,23 @@ namespace Map.Tests
     public class MapDataIntegratorTests
     {
         private const string TEST_DATA_PATH = "Assets/Data/map";
+        private MapTextureManager textureManager;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var gameObject = new GameObject("TestMapTextureManager");
+            textureManager = gameObject.AddComponent<MapTextureManager>();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (textureManager != null)
+            {
+                Object.DestroyImmediate(textureManager.gameObject);
+            }
+        }
 
         [Test]
         public void IntegratedMapLoading_ValidFiles_ShouldWorkTogether()
@@ -43,7 +61,7 @@ namespace Map.Tests
             }
 
             // Test the complete pipeline step by step
-            var loadResult = ProvinceMapLoader.LoadProvinceMap(pathToUse);
+            var loadResult = ProvinceMapLoader.LoadProvinceMap(pathToUse, textureManager);
 
             try
             {
@@ -106,7 +124,7 @@ namespace Map.Tests
         public void IntegratedMapLoading_InvalidFile_ShouldFailGracefully()
         {
             string invalidPath = "nonexistent/provinces.bmp";
-            var loadResult = ProvinceMapLoader.LoadProvinceMap(invalidPath);
+            var loadResult = ProvinceMapLoader.LoadProvinceMap(invalidPath, textureManager);
 
             Assert.IsFalse(loadResult.Success, "Should fail for invalid file");
             Assert.IsNotEmpty(loadResult.ErrorMessage, "Should have error message");
@@ -129,7 +147,7 @@ namespace Map.Tests
             }
 
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-            var result = ProvinceMapLoader.LoadProvinceMap(provincesPath);
+            var result = ProvinceMapLoader.LoadProvinceMap(provincesPath, textureManager);
             stopwatch.Stop();
 
             try
@@ -178,7 +196,7 @@ namespace Map.Tests
                 return;
             }
 
-            var result = ProvinceMapLoader.LoadProvinceMap(provincesPath);
+            var result = ProvinceMapLoader.LoadProvinceMap(provincesPath, textureManager);
 
             try
             {
@@ -237,7 +255,7 @@ namespace Map.Tests
             // Test multiple load/dispose cycles
             for (int cycle = 0; cycle < 3; cycle++)
             {
-                var result = ProvinceMapLoader.LoadProvinceMap(provincesPath);
+                var result = ProvinceMapLoader.LoadProvinceMap(provincesPath, textureManager);
 
                 Assert.DoesNotThrow(() => result.Dispose(), $"Disposal cycle {cycle} should not throw");
 
@@ -262,7 +280,7 @@ namespace Map.Tests
 
             // This test verifies that the integrator handles partial failures gracefully
             // For example, if bitmap loading succeeds but neighbor detection fails
-            var result = ProvinceMapLoader.LoadProvinceMap(provincesPath);
+            var result = ProvinceMapLoader.LoadProvinceMap(provincesPath, textureManager);
 
             try
             {
@@ -291,7 +309,7 @@ namespace Map.Tests
             string smallMapPath = Path.Combine(TEST_DATA_PATH, "small_test.bmp");
             if (File.Exists(smallMapPath))
             {
-                var smallResult = ProvinceMapLoader.LoadProvinceMap(smallMapPath);
+                var smallResult = ProvinceMapLoader.LoadProvinceMap(smallMapPath, textureManager);
                 try
                 {
                     Debug.Log($"Small map test: Success={smallResult.Success}, Provinces={smallResult.ProvinceCount}");
@@ -306,7 +324,7 @@ namespace Map.Tests
             string provincesPath = Path.Combine(TEST_DATA_PATH, "provinces.bmp");
             if (File.Exists(provincesPath))
             {
-                var result = ProvinceMapLoader.LoadProvinceMap(provincesPath);
+                var result = ProvinceMapLoader.LoadProvinceMap(provincesPath, textureManager);
                 try
                 {
                     if (result.Success)

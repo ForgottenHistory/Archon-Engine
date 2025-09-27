@@ -1,5 +1,8 @@
 using UnityEngine;
 using Map.Rendering;
+using ParadoxParser.Jobs;
+using ParadoxParser.Bitmap;
+using System.Threading.Tasks;
 
 namespace Map
 {
@@ -12,7 +15,8 @@ namespace Map
     {
         [Header("Map Settings")]
         [SerializeField] private string provinceBitmapPath = "Assets/Data/map/provinces.bmp";
-        [SerializeField] private string resourcesProvinceBitmapPath = "Data/map/provinces"; // For Resources.Load (without extension)
+        [SerializeField] private string definitionCsvPath = "Assets/Data/map/definition.csv";
+        [SerializeField] private bool useDefinitionFile = true;
         [SerializeField] private Material mapMaterial;
         [SerializeField] private bool autoLoadOnStart = true;
         [SerializeField] private bool logLoadingProgress = true;
@@ -26,6 +30,7 @@ namespace Map
         private ProvinceMapping provinceMapping;
         private BorderComputeDispatcher borderDispatcher;
         private ParadoxStyleCameraController cameraController;
+        private ProvinceMapProcessor provinceProcessor;
 
         // Map geometry
         private GameObject mapQuad;
@@ -34,11 +39,11 @@ namespace Map
         public ProvinceMapping ProvinceMapping => provinceMapping;
         public MapTextureManager TextureManager => textureManager;
 
-        void Start()
+        async void Start()
         {
             if (autoLoadOnStart)
             {
-                GenerateMap();
+                await GenerateMapAsync();
             }
         }
 
@@ -48,16 +53,25 @@ namespace Map
         [ContextMenu("Generate Map")]
         public void GenerateMap()
         {
+            // Wrapper for context menu - run async version
+            _ = GenerateMapAsync();
+        }
+
+        /// <summary>
+        /// Generate the complete map by loading province bitmap and setting up rendering (async)
+        /// </summary>
+        public async Task GenerateMapAsync()
+        {
             if (logLoadingProgress)
             {
-                Debug.Log("MapGenerator: Starting map generation...");
+                Debug.Log("MapGenerator: Starting map generation with JobifiedBMPLoader...");
             }
 
             // Initialize components
             InitializeComponents();
 
-            // Load province bitmap data
-            LoadProvinceData();
+            // Load province bitmap data using new Burst job system
+            await LoadProvinceDataAsync();
 
             // Set up map rendering
             SetupMapRendering();
@@ -104,6 +118,15 @@ namespace Map
                 borderDispatcher.SetTextureManager(textureManager);
             }
 
+            // Initialize ProvinceMapProcessor
+            provinceProcessor = new ProvinceMapProcessor();
+            provinceProcessor.OnProgressUpdate += OnProvinceProcessingProgress;
+
+            if (logLoadingProgress)
+            {
+                Debug.Log("MapGenerator: Created ProvinceMapProcessor for high-performance province map processing");
+            }
+
             // Find or create camera
             if (mapCamera == null)
             {
@@ -120,9 +143,9 @@ namespace Map
         }
 
         /// <summary>
-        /// Load province bitmap and populate texture data
+        /// Load province data using the new modular ProvinceMapProcessor
         /// </summary>
-        private void LoadProvinceData()
+        private async Task LoadProvinceDataAsync()
         {
             if (string.IsNullOrEmpty(provinceBitmapPath))
             {
@@ -130,45 +153,70 @@ namespace Map
                 return;
             }
 
-            // Use absolute path for loading
-            string fullPath = System.IO.Path.GetFullPath(provinceBitmapPath);
+            // Use absolute paths for loading
+            string bmpPath = System.IO.Path.GetFullPath(provinceBitmapPath);
+            string csvPath = useDefinitionFile && !string.IsNullOrEmpty(definitionCsvPath)
+                ? System.IO.Path.GetFullPath(definitionCsvPath)
+                : null;
 
             if (logLoadingProgress)
             {
-                Debug.Log($"MapGenerator: Loading province bitmap from: {fullPath}");
+                Debug.Log($"MapGenerator: Loading province map from: {bmpPath}");
+                if (csvPath != null)
+                {
+                    Debug.Log($"MapGenerator: Using definition file: {csvPath}");
+                }
             }
 
-            // Load province bitmap using existing ProvinceTextureLoader
-            provinceMapping = ProvinceTextureLoader.LoadProvinceBitmap(textureManager, fullPath);
-
-            if (provinceMapping == null)
+            try
             {
-                Debug.LogError("MapGenerator: Failed to load province bitmap");
-                return;
-            }
+                // Load province map using new modular system
+                var provinceResult = await provinceProcessor.LoadProvinceMapAsync(bmpPath, csvPath);
 
-            if (logLoadingProgress)
-            {
-                Debug.Log($"MapGenerator: Successfully loaded {provinceMapping.ProvinceCount} provinces");
-            }
+                if (!provinceResult.Success)
+                {
+                    Debug.LogError($"MapGenerator: Failed to load province map: {provinceResult.ErrorMessage}");
+                    return;
+                }
 
-            // Generate initial borders
-            if (borderDispatcher != null)
-            {
-                // Clear borders first to ensure clean state
-                borderDispatcher.ClearBorders();
+                // Convert result to legacy ProvinceMapping format and populate textures
+                provinceMapping = ConvertProvinceResultToMapping(provinceResult, textureManager);
 
-                // Set the border mode
-                borderDispatcher.SetBorderMode(BorderComputeDispatcher.BorderMode.Country);
-
-                // Now generate borders
-                borderDispatcher.DetectBorders();
+                if (provinceMapping == null)
+                {
+                    Debug.LogError("MapGenerator: Failed to convert province result to mapping");
+                    return;
+                }
 
                 if (logLoadingProgress)
                 {
-                    Debug.Log("MapGenerator: Generated province borders using GPU compute shader");
-                    Debug.Log("MapGenerator: Border mode set to Country");
+                    Debug.Log($"MapGenerator: Successfully loaded {provinceMapping.ProvinceCount} provinces");
+                    Debug.Log($"MapGenerator: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}");
+                    if (provinceResult.HasDefinitions)
+                    {
+                        Debug.Log($"MapGenerator: Loaded {provinceResult.Definitions.AllDefinitions.Length} province definitions");
+                    }
                 }
+
+                // Clean up province result
+                provinceResult.Dispose();
+
+                // Generate initial borders
+                if (borderDispatcher != null)
+                {
+                    borderDispatcher.ClearBorders();
+                    borderDispatcher.SetBorderMode(BorderComputeDispatcher.BorderMode.Country);
+                    borderDispatcher.DetectBorders();
+
+                    if (logLoadingProgress)
+                    {
+                        Debug.Log("MapGenerator: Generated province borders using GPU compute shader");
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"MapGenerator: Exception during province map loading: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -307,8 +355,8 @@ namespace Map
             // We'll use terrain mode (1) temporarily to show the ProvinceColorTexture directly
             mapMaterial.SetInt("_MapMode", 1);
             mapMaterial.EnableKeyword("MAP_MODE_TERRAIN");
-            mapMaterial.SetFloat("_BorderStrength", 0.3f);  // Subtle border strength
-            mapMaterial.SetColor("_BorderColor", Color.black);  // Black borders
+            mapMaterial.SetFloat("_BorderStrength", 0.8f);  // More visible border strength
+            mapMaterial.SetColor("_BorderColor", new Color(0.0f, 0.0f, 0.0f, 1.0f));  // Pure black borders
             mapMaterial.SetFloat("_HighlightStrength", 1.0f);
 
             if (logLoadingProgress)
@@ -520,8 +568,113 @@ namespace Map
             return textureManager.GetProvinceID(x, y);
         }
 
+        /// <summary>
+        /// Convert ProvinceMapProcessor result to legacy ProvinceMapping format
+        /// </summary>
+        private ProvinceMapping ConvertProvinceResultToMapping(ProvinceMapResult provinceResult, MapTextureManager textureManager)
+        {
+            if (!provinceResult.Success)
+                return null;
+
+            try
+            {
+                // Create legacy ProvinceMapping
+                var mapping = new ProvinceMapping();
+
+                // Build province mappings from color-to-ID mappings
+                var colorMappingEnumerator = provinceResult.ProvinceMappings.ColorToProvinceID.GetEnumerator();
+                while (colorMappingEnumerator.MoveNext())
+                {
+                    int rgb = colorMappingEnumerator.Current.Key;
+                    int provinceID = colorMappingEnumerator.Current.Value;
+
+                    // Convert packed RGB to Color32
+                    byte r = (byte)((rgb >> 16) & 0xFF);
+                    byte g = (byte)((rgb >> 8) & 0xFF);
+                    byte b = (byte)(rgb & 0xFF);
+                    var color = new UnityEngine.Color32(r, g, b, 255);
+
+                    mapping.AddProvince((ushort)provinceID, color);
+                }
+
+                // Populate texture manager with province data
+                PopulateTextureManagerFromProvinceResult(provinceResult, textureManager, mapping);
+
+                return mapping;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Failed to convert province result: {e.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Populate MapTextureManager textures from province processing result
+        /// </summary>
+        private void PopulateTextureManagerFromProvinceResult(ProvinceMapResult provinceResult, MapTextureManager textureManager, ProvinceMapping mapping)
+        {
+            var pixelData = provinceResult.BMPData.GetPixelData();
+            int width = provinceResult.BMPData.Width;
+            int height = provinceResult.BMPData.Height;
+
+            // Populate province ID and color textures from BMP data
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                    {
+                        // Create Color32 for province lookup
+                        var pixelColor = new Color32(r, g, b, 255);
+
+                        // Find province ID for this color using ProvinceMapping's public method
+                        ushort provinceID = mapping.GetProvinceByColor(pixelColor);
+
+                        if (provinceID > 0) // Valid province ID
+                        {
+                            // Set province ID in texture
+                            textureManager.SetProvinceID(x, y, provinceID);
+
+                            // Set province color for visual display
+                            textureManager.SetProvinceColor(x, y, pixelColor);
+
+                            // Add pixel to province mapping
+                            mapping.AddPixelToProvince(provinceID, x, y);
+                        }
+                    }
+                }
+            }
+
+            // Apply all texture changes
+            textureManager.ApplyTextureChanges();
+
+            if (logLoadingProgress)
+            {
+                Debug.Log($"MapGenerator: Populated texture manager with {width}x{height} province data");
+            }
+        }
+
+        /// <summary>
+        /// Progress callback for ProvinceMapProcessor
+        /// </summary>
+        private void OnProvinceProcessingProgress(ProvinceMapProcessor.ProcessingProgress progress)
+        {
+            if (logLoadingProgress)
+            {
+                Debug.Log($"MapGenerator Province Processing: {progress.ProgressPercentage:P1} - {progress.CurrentOperation}");
+            }
+        }
+
         void OnDestroy()
         {
+            // Clean up ProvinceMapProcessor
+            if (provinceProcessor != null)
+            {
+                provinceProcessor.OnProgressUpdate -= OnProvinceProcessingProgress;
+                provinceProcessor.Dispose();
+            }
+
             // Clean up created mesh
             if (mapMesh != null)
             {
