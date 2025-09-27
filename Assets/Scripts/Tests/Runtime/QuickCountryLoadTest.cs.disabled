@@ -17,7 +17,7 @@ namespace Tests.Runtime
         [SerializeField] private string countriesDirectory = "Assets/Data/common/countries";
 
         private JobifiedCountryLoader loader;
-        private CountryDataCollection loadedCountries;
+        private CountryDataLoadResult loadedCountries;
 
         void Awake()
         {
