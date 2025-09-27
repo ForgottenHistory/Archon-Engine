@@ -56,7 +56,7 @@ namespace GameData.Loaders
         /// <summary>
         /// Load all country files using Unity Job System
         /// </summary>
-        public CountryDataCollection LoadAllCountriesJob(string countriesDirectory = "Assets/Data/common/countries")
+        public CountryDataLoadResult LoadAllCountriesJob(string countriesDirectory = "Assets/Data/common/countries")
         {
             globalStopwatch.Restart();
             globalErrors.Clear();
@@ -69,8 +69,9 @@ namespace GameData.Loaders
                 var countryFiles = GetCountryFiles(countriesDirectory);
                 if (countryFiles.Length == 0)
                 {
-                    globalErrors.Add($"No country files found in directory: {countriesDirectory}");
-                    return null;
+                    var errorMsg = $"No country files found in directory: {countriesDirectory}";
+                    globalErrors.Add(errorMsg);
+                    return CountryDataLoadResult.CreateFailure(errorMsg);
                 }
 
                 DominionLogger.LogFormat("JobifiedCountryLoader: Found {0} country files", countryFiles.Length);
@@ -83,23 +84,43 @@ namespace GameData.Loaders
 
                 if (!memoryReq.IsMemoryReasonable)
                 {
-                    globalErrors.Add($"Memory requirements too high: {memoryReq.EstimatedTotalMemoryMB}MB");
-                    return null;
+                    var errorMsg = $"Memory requirements too high: {memoryReq.EstimatedTotalMemoryMB}MB";
+                    globalErrors.Add(errorMsg);
+                    return CountryDataLoadResult.CreateFailure(errorMsg);
                 }
 
                 // Process files using Job System
-                var result = ProcessCountryFilesWithJobs(countryFiles);
+                var countryCollection = ProcessCountryFilesWithJobs(countryFiles);
 
                 globalStopwatch.Stop();
-                LogFinalStatistics(result, countryFiles.Length);
+                LogFinalStatistics(countryCollection, countryFiles.Length);
 
-                return result;
+                // Create loading statistics
+                var stats = new LoadingStatistics
+                {
+                    LoadingTimeMs = globalStopwatch.ElapsedMilliseconds,
+                    FilesProcessed = countryFiles.Length,
+                    FilesSkipped = 0,
+                    ParseErrors = globalErrors.Count,
+                    MemoryUsedBytes = countryCollection?.GetMemoryUsage() ?? 0,
+                    Warnings = new List<string>(globalErrors)
+                };
+
+                if (countryCollection != null)
+                {
+                    return CountryDataLoadResult.CreateSuccess(countryCollection, stats);
+                }
+                else
+                {
+                    return CountryDataLoadResult.CreateFailure("Failed to process country files");
+                }
             }
             catch (System.Exception e)
             {
-                globalErrors.Add($"Critical error in JobifiedCountryLoader: {e.Message}");
+                var errorMsg = $"Critical error in JobifiedCountryLoader: {e.Message}";
+                globalErrors.Add(errorMsg);
                 DominionLogger.LogError($"JobifiedCountryLoader failed: {e.Message}\n{e.StackTrace}");
-                return null;
+                return CountryDataLoadResult.CreateFailure(errorMsg);
             }
         }
 

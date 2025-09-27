@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &293189518
 Transform:
   m_ObjectHideFlags: 0
@@ -164,7 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   provinceBitmapPath: Assets/Data/map/provinces.bmp
-  resourcesProvinceBitmapPath: Data/map/provinces
+  definitionCsvPath: Assets/Data/map/definition.csv
+  useDefinitionFile: 1
   mapMaterial: {fileID: 2100000, guid: 92a3af584a724b34ebd451b5902f1a2c, type: 2}
   autoLoadOnStart: 1
   logLoadingProgress: 1
@@ -1143,29 +1144,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1330338278}
-  - component: {fileID: 1330338277}
   m_Layer: 0
   m_Name: CountryTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1330338277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1330338276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 097ba678b97a3c14e8cf359473fef3c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoStartOnAwake: 1
-  maxFilesToTest: 10
-  countriesDirectory: Assets/Data/common/countries
+  m_IsActive: 0
 --- !u!4 &1330338278
 Transform:
   m_ObjectHideFlags: 0
