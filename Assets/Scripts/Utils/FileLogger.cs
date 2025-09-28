@@ -98,8 +98,8 @@ using UnityEngine;
                 WriteInfoHeader();
                 WriteWarningHeader();
 
-                // Subscribe to Unity's log message received event
-                Application.logMessageReceived += HandleLog;
+                // Disable Unity's log message received event - we use direct logging now
+                // Application.logMessageReceived += HandleLog;
 
                 isInitialized = true;
                 DominionLogger.Log($"FileLogger initialized. Main log: {logFilePath}");
