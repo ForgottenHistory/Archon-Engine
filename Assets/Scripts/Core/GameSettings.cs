@@ -13,18 +13,6 @@ namespace Core
         [Tooltip("Root data directory containing all game data")]
         public string DataDirectory = "Assets/Data";
 
-        [Tooltip("Path to the province bitmap file (provinces.bmp)")]
-        public string ProvinceBitmapPath = "Assets/Data/map/provinces.bmp";
-
-        [Tooltip("Path to the province definitions CSV file (optional)")]
-        public string ProvinceDefinitionsPath = "Assets/Data/map/definition.csv";
-
-        [Tooltip("Directory containing country definition files")]
-        public string CountriesDirectory = "Assets/Data/common/countries";
-
-        [Tooltip("Directory containing scenario files")]
-        public string ScenariosDirectory = "Assets/Data/history/countries";
-
         [Header("Loading Configuration")]
         [Tooltip("Enable parallel loading where possible")]
         public bool EnableParallelLoading = true;
@@ -87,44 +75,52 @@ namespace Core
         {
             var result = new ValidationResult();
 
-            // Check province bitmap (critical)
-            if (string.IsNullOrEmpty(ProvinceBitmapPath))
+            // Check data directory (critical)
+            if (string.IsNullOrEmpty(DataDirectory))
             {
-                result.AddError("Province bitmap path is required");
+                result.AddError("Data directory is required");
+                return result; // Can't check anything else without base directory
             }
-            else if (!System.IO.File.Exists(ProvinceBitmapPath))
+            else if (!System.IO.Directory.Exists(DataDirectory))
             {
-                result.AddError($"Province bitmap not found: {ProvinceBitmapPath}");
+                result.AddError($"Data directory not found: {DataDirectory}");
+                return result; // Can't check anything else without base directory
+            }
+
+            // Check province bitmap (critical)
+            var provinceBitmapPath = System.IO.Path.Combine(DataDirectory, "map", "provinces.bmp");
+            if (!System.IO.File.Exists(provinceBitmapPath))
+            {
+                result.AddError($"Province bitmap not found: {provinceBitmapPath}");
             }
 
             // Check countries directory (critical)
-            if (string.IsNullOrEmpty(CountriesDirectory))
+            var countriesDirectory = System.IO.Path.Combine(DataDirectory, "common", "countries");
+            if (!System.IO.Directory.Exists(countriesDirectory))
             {
-                result.AddError("Countries directory is required");
-            }
-            else if (!System.IO.Directory.Exists(CountriesDirectory))
-            {
-                result.AddError($"Countries directory not found: {CountriesDirectory}");
+                result.AddError($"Countries directory not found: {countriesDirectory}");
             }
             else
             {
-                var countryFiles = System.IO.Directory.GetFiles(CountriesDirectory, "*.txt");
+                var countryFiles = System.IO.Directory.GetFiles(countriesDirectory, "*.txt");
                 if (countryFiles.Length == 0)
                 {
-                    result.AddWarning($"No country files found in: {CountriesDirectory}");
+                    result.AddWarning($"No country files found in: {countriesDirectory}");
                 }
             }
 
             // Check province definitions (optional)
-            if (!string.IsNullOrEmpty(ProvinceDefinitionsPath) && !System.IO.File.Exists(ProvinceDefinitionsPath))
+            var provinceDefinitionsPath = System.IO.Path.Combine(DataDirectory, "map", "definition.csv");
+            if (!System.IO.File.Exists(provinceDefinitionsPath))
             {
-                result.AddWarning($"Province definitions file not found: {ProvinceDefinitionsPath}");
+                result.AddWarning($"Province definitions file not found: {provinceDefinitionsPath}");
             }
 
             // Check scenarios directory (optional)
-            if (!string.IsNullOrEmpty(ScenariosDirectory) && !System.IO.Directory.Exists(ScenariosDirectory))
+            var scenariosDirectory = System.IO.Path.Combine(DataDirectory, "history", "countries");
+            if (!System.IO.Directory.Exists(scenariosDirectory))
             {
-                result.AddWarning($"Scenarios directory not found: {ScenariosDirectory}");
+                result.AddWarning($"Scenarios directory not found: {scenariosDirectory}");
             }
 
             return result;
@@ -235,8 +231,7 @@ namespace Core
         public void LogConfiguration()
         {
             DominionLogger.Log($"GameSettings Configuration:");
-            DominionLogger.Log($"  Province BMP: {ProvinceBitmapPath}");
-            DominionLogger.Log($"  Countries Dir: {CountriesDirectory}");
+            DominionLogger.Log($"  Data Directory: {DataDirectory}");
             DominionLogger.Log($"  Expected Provinces: {ExpectedProvinceCount}");
             DominionLogger.Log($"  Expected Countries: {ExpectedCountryCount}");
             DominionLogger.Log($"  Target Loading Time: {TargetLoadingTime}s");

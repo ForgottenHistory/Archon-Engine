@@ -15,7 +15,6 @@ namespace Core
     {
         [Header("Core Systems")]
         [SerializeField] private bool initializeOnAwake = true;
-        [SerializeField] private bool enablePerformanceMonitoring = true;
 
         // System References - These own the actual data
         public Systems.ProvinceSystem Provinces { get; private set; }

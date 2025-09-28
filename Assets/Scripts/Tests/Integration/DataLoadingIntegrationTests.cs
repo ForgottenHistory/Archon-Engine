@@ -56,9 +56,8 @@ namespace Tests.Integration
         [UnityTest]
         public IEnumerator TestInitializationWithMissingFiles()
         {
-            // Arrange - use paths to non-existent files
-            testSettings.ProvinceBitmapPath = "NonExistent/provinces.bmp";
-            testSettings.CountriesDirectory = "NonExistent/countries";
+            // Arrange - use path to non-existent directory
+            testSettings.DataDirectory = "NonExistent";
 
             // Expect error log messages for missing files
             LogAssert.Expect(LogType.Error, new System.Text.RegularExpressions.Regex(".*Game initialization failed.*"));
@@ -121,8 +120,7 @@ namespace Tests.Integration
 
             // Test with invalid paths
             var invalidSettings = ScriptableObject.CreateInstance<GameSettings>();
-            invalidSettings.ProvinceBitmapPath = "";
-            invalidSettings.CountriesDirectory = "";
+            invalidSettings.DataDirectory = "";
 
             var invalidResult = invalidSettings.ValidatePaths();
             Assert.IsFalse(invalidResult.IsValid, "Should be invalid with empty paths");
@@ -140,11 +138,8 @@ namespace Tests.Integration
         {
             if (settings == null) settings = testSettings;
 
-            // Use real data paths for testing
-            settings.ProvinceBitmapPath = "Assets/Data/map/provinces.bmp";
-            settings.CountriesDirectory = "Assets/Data/common/countries";
-            settings.ProvinceDefinitionsPath = "Assets/Data/map/definition.csv";
-            settings.ScenariosDirectory = "Assets/Data/history/countries";
+            // Use real data directory for testing
+            settings.DataDirectory = "Assets/Data";
 
             // Set permissive settings for testing
             settings.UseGracefulDegradation = true;

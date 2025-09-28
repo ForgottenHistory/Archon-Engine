@@ -22,7 +22,6 @@ namespace Core.Systems
     {
         [Header("Configuration")]
         [SerializeField] private int initialCapacity = 10000;
-        [SerializeField] private bool enablePerformanceMonitoring = true;
 
         // Core simulation data - EXACTLY 8 bytes per province (dual-layer architecture)
         private NativeArray<ProvinceState> provinceStates;

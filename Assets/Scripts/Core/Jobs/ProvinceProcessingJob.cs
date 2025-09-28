@@ -99,24 +99,29 @@ namespace Core.Jobs
         /// </summary>
         private void ApplyDefaultValues(ref ProvinceInitialState state)
         {
-            // If no owner, mark as uncolonized
-            if (state.OwnerTag.ToString() == "---" || state.OwnerTag.Length == 0)
+            // Check if owner tag is empty or default
+            if (state.OwnerTag.Length == 0)
             {
-                state.OwnerTag = new FixedString64Bytes("---");
-                state.ControllerTag = new FixedString64Bytes("---");
+                // Set default values - use empty default() constructor which is Burst-compatible
+                state.OwnerTag = default;
+                state.ControllerTag = default;
             }
 
-            // Default trade good
-            if (state.TradeGood.ToString() == "unknown" || state.TradeGood.Length == 0)
+            // Check if trade good is empty
+            if (state.TradeGood.Length == 0)
             {
-                state.TradeGood = new FixedString64Bytes("grain");
+                state.TradeGood = default;
             }
 
-            // Default culture and religion for uncolonized
-            if (state.OwnerTag.ToString() == "---")
+            // Set default culture and religion for empty/uninitialized provinces
+            if (state.Culture.Length == 0)
             {
-                state.Culture = new FixedString64Bytes("unknown");
-                state.Religion = new FixedString64Bytes("unknown");
+                state.Culture = default;
+            }
+
+            if (state.Religion.Length == 0)
+            {
+                state.Religion = default;
             }
         }
     }

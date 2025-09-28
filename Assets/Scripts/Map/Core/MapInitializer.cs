@@ -130,8 +130,10 @@ namespace Map.Core
             // Tell the coordinator to handle map generation using GameSettings
             if (gameSettings != null)
             {
-                bool useDefinition = !string.IsNullOrEmpty(gameSettings.ProvinceDefinitionsPath);
-                coordinator.HandleSimulationReady(simulationData, gameSettings.ProvinceBitmapPath, gameSettings.ProvinceDefinitionsPath, useDefinition);
+                var provinceBitmapPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.bmp");
+                var provinceDefinitionsPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "definition.csv");
+                bool useDefinition = System.IO.File.Exists(provinceDefinitionsPath);
+                coordinator.HandleSimulationReady(simulationData, provinceBitmapPath, provinceDefinitionsPath, useDefinition);
             }
             else
             {

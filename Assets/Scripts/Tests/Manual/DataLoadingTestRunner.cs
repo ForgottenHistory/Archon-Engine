@@ -59,7 +59,7 @@ namespace Tests.Manual
         void CreateGameInitializer()
         {
             // Find existing or create new GameInitializer
-            gameInitializer = FindObjectOfType<GameInitializer>();
+            gameInitializer = FindFirstObjectByType<GameInitializer>();
 
             if (gameInitializer == null)
             {
@@ -109,8 +109,7 @@ namespace Tests.Manual
             if (testGameSettings != null)
             {
                 LogMessage($"Using GameSettings: {testGameSettings.name}");
-                LogMessage($"Province BMP: {testGameSettings.ProvinceBitmapPath}");
-                LogMessage($"Countries Dir: {testGameSettings.CountriesDirectory}");
+                LogMessage($"Data Directory: {testGameSettings.DataDirectory}");
 
                 // Validate paths
                 var validation = testGameSettings.ValidatePaths();

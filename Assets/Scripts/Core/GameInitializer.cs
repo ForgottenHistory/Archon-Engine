@@ -25,7 +25,6 @@ namespace Core
         [SerializeField] private bool enableDetailedLogging = true;
 
         [Header("Loading Progress")]
-        [SerializeField] private bool showLoadingUI = true;
         [SerializeField] private Canvas loadingCanvas;
 
         // Loading phases
@@ -383,7 +382,8 @@ namespace Core
             SetPhase(LoadingPhase.LoadingCountries, 35f, "Loading countries...");
 
             // Load country data
-            var countryResult = countryLoader.LoadAllCountriesJob(gameSettings.CountriesDirectory);
+            var countriesPath = System.IO.Path.Combine(gameSettings.DataDirectory, "common", "countries");
+            var countryResult = countryLoader.LoadAllCountriesJob(countriesPath);
 
             UpdateProgress(55f, "Initializing country system...");
             yield return null;
@@ -593,9 +593,10 @@ namespace Core
             ScenarioLoader.ScenarioLoadResult scenarioResult;
 
             // Try to load scenario file if specified
-            if (!string.IsNullOrEmpty(gameSettings.ScenariosDirectory))
+            var scenariosDirectory = System.IO.Path.Combine(gameSettings.DataDirectory, "history", "countries");
+            if (System.IO.Directory.Exists(scenariosDirectory))
             {
-                var scenarioPath = System.IO.Path.Combine(gameSettings.ScenariosDirectory, "default_1444.json");
+                var scenarioPath = System.IO.Path.Combine(scenariosDirectory, "default_1444.json");
 
                 UpdateProgress(62f, "Loading scenario file...");
                 yield return null;
@@ -702,9 +703,11 @@ namespace Core
                 UpdateProgress(adjustedProgress, progress.CurrentOperation);
             };
 
+            var provinceBitmapPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.bmp");
+            var provinceDefinitionsPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "definition.csv");
             return await provinceProcessor.LoadProvinceMapAsync(
-                gameSettings.ProvinceBitmapPath,
-                gameSettings.ProvinceDefinitionsPath
+                provinceBitmapPath,
+                provinceDefinitionsPath
             );
         }
 

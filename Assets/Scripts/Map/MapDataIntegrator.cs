@@ -43,10 +43,10 @@ namespace Map.Integration
 
             // Find dependencies if not assigned
             if (textureManager == null)
-                textureManager = FindObjectOfType<MapTextureManager>();
+                textureManager = FindFirstObjectByType<MapTextureManager>();
 
             if (mapRenderer == null)
-                mapRenderer = FindObjectOfType<MapRenderer>();
+                mapRenderer = FindFirstObjectByType<MapRenderer>();
         }
 
         void Start()
