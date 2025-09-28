@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &293189518
 Transform:
   m_ObjectHideFlags: 0
@@ -161,16 +161,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 293189517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6529d8fce436384ba39ca12ba085c91, type: 3}
+  m_Script: {fileID: 11500000, guid: 0898c0135dc873747a29ffaaaec881c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  provinceBitmapPath: Assets/Data/map/provinces.bmp
-  definitionCsvPath: Assets/Data/map/definition.csv
-  useDefinitionFile: 1
-  mapMaterial: {fileID: 2100000, guid: 92a3af584a724b34ebd451b5902f1a2c, type: 2}
-  logLoadingProgress: 1
+  logInitializationProgress: 1
   mapCamera: {fileID: 330585545}
-  mapRenderer: {fileID: 1040298675}
+  meshRenderer: {fileID: 1040298675}
+  gameSettings: {fileID: 0}
 --- !u!114 &293189520
 MonoBehaviour:
   m_ObjectHideFlags: 0

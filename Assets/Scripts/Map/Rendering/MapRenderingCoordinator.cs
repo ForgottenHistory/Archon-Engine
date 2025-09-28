@@ -1,0 +1,154 @@
+using UnityEngine;
+using Map.MapModes;
+using Utils;
+
+namespace Map.Rendering
+{
+    /// <summary>
+    /// Coordinates map rendering setup including material configuration and camera positioning
+    /// Extracted from MapGenerator to follow single responsibility principle
+    /// Works with existing MapRenderer component for mesh creation
+    /// </summary>
+    public class MapRenderingCoordinator : MonoBehaviour
+    {
+        [Header("Configuration")]
+        [SerializeField] private bool logRenderingProgress = true;
+
+        // Dependencies
+        private MapTextureManager textureManager;
+        private MapModeManager mapModeManager;
+        private Material mapMaterial;
+        private Camera mapCamera;
+        private MeshRenderer meshRenderer;
+
+        public Material MapMaterial => mapMaterial;
+
+        public void Initialize(MapTextureManager textures, MapModeManager modes, MeshRenderer renderer, Camera camera)
+        {
+            textureManager = textures;
+            mapModeManager = modes;
+            meshRenderer = renderer;
+            mapCamera = camera;
+        }
+
+        /// <summary>
+        /// Set up complete map rendering system
+        /// </summary>
+        public void SetupMapRendering()
+        {
+            if (logRenderingProgress)
+            {
+                DominionLogger.Log("MapRenderingCoordinator: Setting up map rendering system...");
+            }
+
+            // Set up material
+            SetupMaterial();
+
+            // Configure camera
+            SetupCamera();
+
+            if (logRenderingProgress)
+            {
+                DominionLogger.Log("MapRenderingCoordinator: Map rendering setup complete");
+            }
+        }
+
+        /// <summary>
+        /// Set up material with map textures
+        /// </summary>
+        private void SetupMaterial()
+        {
+            // Create material if not assigned
+            if (mapMaterial == null)
+            {
+                // Try to find the MapCore shader
+                Shader mapShader = Shader.Find("Dominion/MapCore");
+                if (mapShader != null)
+                {
+                    mapMaterial = new Material(mapShader);
+                    mapMaterial.name = "MapRenderingCoordinator_Material";
+                    if (logRenderingProgress)
+                    {
+                        DominionLogger.Log("MapRenderingCoordinator: Created material with MapCore shader");
+                    }
+                }
+                else
+                {
+                    DominionLogger.LogError("MapRenderingCoordinator: MapCore shader not found. Make sure the shader is in the project.");
+                    return;
+                }
+            }
+
+            // Bind textures to material
+            textureManager.BindTexturesToMaterial(mapMaterial);
+
+            // Set material to renderer
+            meshRenderer.material = mapMaterial;
+
+            // Initialize MapModeManager with texture manager and material
+            if (mapModeManager != null)
+            {
+                mapModeManager.Initialize(textureManager, mapMaterial);
+                if (logRenderingProgress)
+                {
+                    DominionLogger.Log("MapRenderingCoordinator: Initialized MapModeManager");
+                }
+            }
+
+            // Set initial map mode - delegate to MapModeManager
+            if (mapModeManager != null)
+            {
+                // Start with terrain mode (1) to show province colors
+                mapModeManager.SetMapMode(1);
+            }
+
+            // Set general material properties not handled by mapmodes
+            mapMaterial.SetFloat("_HighlightStrength", 1.0f);
+
+            if (logRenderingProgress)
+            {
+                DominionLogger.Log("MapRenderingCoordinator: Material setup complete with all map textures bound");
+            }
+        }
+
+        /// <summary>
+        /// Position and configure the camera to view the map
+        /// </summary>
+        private void SetupCamera()
+        {
+            if (mapCamera == null) return;
+
+            // Calculate map dimensions
+            float aspectRatio = (float)textureManager.MapWidth / textureManager.MapHeight;
+
+            // Set camera to orthographic for top-down map view
+            mapCamera.orthographic = true;
+
+            // Position camera above the map center
+            mapCamera.transform.position = new Vector3(0, 20, 0);
+            mapCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
+
+            // Set orthographic size to show the entire map with some padding
+            float mapHeight = 10.0f; // Same as quad height
+            mapCamera.orthographicSize = mapHeight * 0.6f; // Show with padding
+
+            // Set appropriate clipping planes
+            mapCamera.nearClipPlane = 0.1f;
+            mapCamera.farClipPlane = 100f;
+
+            if (logRenderingProgress)
+            {
+                DominionLogger.Log($"MapRenderingCoordinator: Camera positioned for {textureManager.MapWidth}x{textureManager.MapHeight} map");
+            }
+        }
+
+        void OnDestroy()
+        {
+            // Clean up created material
+            if (mapMaterial != null && mapMaterial.name == "MapRenderingCoordinator_Material")
+            {
+                DestroyImmediate(mapMaterial);
+            }
+        }
+    }
+}

@@ -1,9 +1,7 @@
 using UnityEngine;
 using Map.Rendering;
 using Core;
-using Core.Data;
 using Core.Queries;
-using Utils;
 
 namespace Map.MapModes
 {
@@ -64,7 +62,7 @@ namespace Map.MapModes
         /// <summary>
         /// Update the color palette with current country colors using query system
         /// </summary>
-        private void UpdateColorPalette(MapTextureManager textureManager, Core.Queries.CountryQueries countryQueries)
+        private void UpdateColorPalette(MapTextureManager textureManager, CountryQueries countryQueries)
         {
             var paletteColors = new Color32[256];
 

@@ -40,7 +40,7 @@ namespace Core.Jobs
             // Create hot data only (value type, burst-compatible)
             var hotData = new CountryHotData
             {
-                tagHash = ComputeTagHash(raw.tag.ToString()),
+                tagHash = ComputeTagHash(raw.tag),
                 graphicalCultureId = 0, // Will be resolved later during linking phase
                 flags = 0
             };
@@ -89,16 +89,17 @@ namespace Core.Jobs
 
         /// <summary>
         /// Compute a hash for the country tag (same algorithm as used elsewhere)
+        /// Burst-compatible version using FixedString64Bytes
         /// </summary>
-        private ushort ComputeTagHash(string tag)
+        private ushort ComputeTagHash(FixedString64Bytes tag)
         {
-            if (string.IsNullOrEmpty(tag))
+            if (tag.Length == 0)
                 return 0;
 
             uint hash = 2166136261u;
             for (int i = 0; i < tag.Length; i++)
             {
-                hash ^= (byte)tag[i];
+                hash ^= tag[i];
                 hash *= 16777619u;
             }
             return (ushort)(hash & 0xFFFF);

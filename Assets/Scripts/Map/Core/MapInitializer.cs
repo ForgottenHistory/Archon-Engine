@@ -1,0 +1,372 @@
+using UnityEngine;
+using Map.Rendering;
+using Map.MapModes;
+using Map.Loading;
+using Map.Interaction;
+using ParadoxParser.Jobs;
+using System.Threading.Tasks;
+using Core;
+using Utils;
+
+namespace Map.Core
+{
+    /// <summary>
+    /// Handles initialization of all map system components
+    /// Extracted from MapGenerator to follow single responsibility principle
+    /// Manages component creation, dependency injection, and initialization order
+    /// </summary>
+    public class MapInitializer : MonoBehaviour
+    {
+        [Header("Configuration")]
+        [SerializeField] private bool logInitializationProgress = true;
+
+        [Header("Component References")]
+        [SerializeField] private Camera mapCamera;
+        [SerializeField] private MeshRenderer meshRenderer;
+
+        [Header("Game Settings")]
+        [SerializeField] private GameSettings gameSettings;
+
+        // Initialized components (accessible via properties)
+        private MapTextureManager textureManager;
+        private BorderComputeDispatcher borderDispatcher;
+        private MapModeManager mapModeManager;
+        private ProvinceMapProcessor provinceProcessor;
+        private MapDataLoader dataLoader;
+        private MapRenderingCoordinator renderingCoordinator;
+        private ProvinceSelector provinceSelector;
+        private MapTexturePopulator texturePopulator;
+        private ParadoxStyleCameraController cameraController;
+
+        // Public accessors for initialized components
+        public MapTextureManager TextureManager => textureManager;
+        public BorderComputeDispatcher BorderDispatcher => borderDispatcher;
+        public MapModeManager MapModeManager => mapModeManager;
+        public ProvinceMapProcessor ProvinceProcessor => provinceProcessor;
+        public MapDataLoader DataLoader => dataLoader;
+        public MapRenderingCoordinator RenderingCoordinator => renderingCoordinator;
+        public ProvinceSelector ProvinceSelector => provinceSelector;
+        public MapTexturePopulator TexturePopulator => texturePopulator;
+        public Camera MapCamera => mapCamera;
+        public MeshRenderer MeshRenderer => meshRenderer;
+        public ParadoxStyleCameraController CameraController => cameraController;
+
+        /// <summary>
+        /// Subscribe to simulation events on startup
+        /// </summary>
+        void Start()
+        {
+            // Subscribe to simulation ready event
+            if (!TrySubscribeToEvents())
+            {
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: GameState not ready yet, will retry subscription...");
+                }
+                StartCoroutine(WaitForGameStateAndSubscribe());
+            }
+        }
+
+        /// <summary>
+        /// Try to subscribe to simulation events
+        /// </summary>
+        private bool TrySubscribeToEvents()
+        {
+            var gameState = FindFirstObjectByType<GameState>();
+            if (gameState?.EventBus != null)
+            {
+                gameState.EventBus.Subscribe<SimulationDataReadyEvent>(OnSimulationDataReady);
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Subscribed to SimulationDataReadyEvent");
+                }
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Wait for GameState to be ready and subscribe to events
+        /// </summary>
+        private System.Collections.IEnumerator WaitForGameStateAndSubscribe()
+        {
+            while (!TrySubscribeToEvents())
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+
+        /// <summary>
+        /// Handle simulation data ready - ONLY initialize components, then tell coordinator
+        /// </summary>
+        private void OnSimulationDataReady(SimulationDataReadyEvent simulationData)
+        {
+            if (logInitializationProgress)
+            {
+                DominionLogger.Log($"MapInitializer: Received simulation data with {simulationData.ProvinceCount} provinces - initializing components");
+            }
+
+            // ONLY initialize components
+            InitializeAllComponents();
+
+            // Get or create the coordinator
+            var coordinator = GetComponent<MapSystemCoordinator>();
+            if (coordinator == null)
+            {
+                coordinator = gameObject.AddComponent<MapSystemCoordinator>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created MapSystemCoordinator");
+                }
+            }
+
+            // Debug: Verify our references before passing to coordinator
+            if (logInitializationProgress)
+            {
+                DominionLogger.Log($"MapInitializer: Camera reference: {(mapCamera != null ? mapCamera.name : "null")}");
+                DominionLogger.Log($"MapInitializer: MeshRenderer reference: {(meshRenderer != null ? meshRenderer.name : "null")}");
+            }
+
+            // Tell the coordinator to handle map generation using GameSettings
+            if (gameSettings != null)
+            {
+                bool useDefinition = !string.IsNullOrEmpty(gameSettings.ProvinceDefinitionsPath);
+                coordinator.HandleSimulationReady(simulationData, gameSettings.ProvinceBitmapPath, gameSettings.ProvinceDefinitionsPath, useDefinition);
+            }
+            else
+            {
+                DominionLogger.LogError("MapInitializer: GameSettings not assigned - cannot proceed with map generation");
+            }
+        }
+
+        /// <summary>
+        /// Initialize all map system components in the correct order
+        /// </summary>
+        public void InitializeAllComponents()
+        {
+            if (logInitializationProgress)
+            {
+                DominionLogger.Log("MapInitializer: Starting map system component initialization...");
+            }
+
+            // Phase 1: Core texture and computation components
+            InitializeTextureManager();
+            InitializeBorderDispatcher();
+            InitializeMapModeManager();
+
+            // Phase 2: Processing components
+            InitializeProvinceProcessor();
+
+            // Phase 3: High-level components
+            InitializeDataLoader();
+            InitializeRenderingCoordinator();
+            InitializeProvinceSelector();
+            InitializeTexturePopulator();
+
+            // Phase 4: Camera setup
+            InitializeCamera();
+            InitializeCameraController();
+
+            if (logInitializationProgress)
+            {
+                DominionLogger.Log("MapInitializer: All map system components initialized successfully");
+            }
+        }
+
+        private void InitializeTextureManager()
+        {
+            textureManager = GetComponent<MapTextureManager>();
+            if (textureManager == null)
+            {
+                textureManager = gameObject.AddComponent<MapTextureManager>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created MapTextureManager component");
+                }
+            }
+        }
+
+        private void InitializeBorderDispatcher()
+        {
+            borderDispatcher = GetComponent<BorderComputeDispatcher>();
+            if (borderDispatcher == null)
+            {
+                borderDispatcher = gameObject.AddComponent<BorderComputeDispatcher>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created BorderComputeDispatcher component");
+                }
+            }
+
+            // Set texture manager reference
+            if (borderDispatcher != null && textureManager != null)
+            {
+                borderDispatcher.SetTextureManager(textureManager);
+            }
+        }
+
+        private void InitializeMapModeManager()
+        {
+            mapModeManager = GetComponent<MapModeManager>();
+            if (mapModeManager == null)
+            {
+                mapModeManager = gameObject.AddComponent<MapModeManager>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created MapModeManager component");
+                }
+            }
+        }
+
+        private void InitializeProvinceProcessor()
+        {
+            provinceProcessor = new ProvinceMapProcessor();
+            // Note: Progress callback should be set by the calling component
+
+            if (logInitializationProgress)
+            {
+                DominionLogger.Log("MapInitializer: Created ProvinceMapProcessor for high-performance province map processing");
+            }
+        }
+
+        private void InitializeDataLoader()
+        {
+            dataLoader = GetComponent<MapDataLoader>();
+            if (dataLoader == null)
+            {
+                dataLoader = gameObject.AddComponent<MapDataLoader>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created MapDataLoader component");
+                }
+            }
+
+            // Initialize MapDataLoader with dependencies
+            if (provinceProcessor != null && borderDispatcher != null && textureManager != null)
+            {
+                dataLoader.Initialize(provinceProcessor, borderDispatcher, textureManager);
+            }
+        }
+
+        private void InitializeRenderingCoordinator()
+        {
+            renderingCoordinator = GetComponent<MapRenderingCoordinator>();
+            if (renderingCoordinator == null)
+            {
+                renderingCoordinator = gameObject.AddComponent<MapRenderingCoordinator>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created MapRenderingCoordinator component");
+                }
+            }
+
+            // Initialize MapRenderingCoordinator with dependencies
+            if (textureManager != null && mapModeManager != null && meshRenderer != null && mapCamera != null)
+            {
+                renderingCoordinator.Initialize(textureManager, mapModeManager, meshRenderer, mapCamera);
+            }
+        }
+
+        private void InitializeProvinceSelector()
+        {
+            provinceSelector = GetComponent<ProvinceSelector>();
+            if (provinceSelector == null)
+            {
+                provinceSelector = gameObject.AddComponent<ProvinceSelector>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created ProvinceSelector component");
+                }
+            }
+        }
+
+        private void InitializeTexturePopulator()
+        {
+            texturePopulator = GetComponent<MapTexturePopulator>();
+            if (texturePopulator == null)
+            {
+                texturePopulator = gameObject.AddComponent<MapTexturePopulator>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created MapTexturePopulator component");
+                }
+            }
+        }
+
+        private void InitializeCamera()
+        {
+            // Find or create camera
+            if (mapCamera == null)
+            {
+                mapCamera = Camera.main;
+                if (mapCamera == null)
+                {
+                    mapCamera = FindFirstObjectByType<Camera>();
+                }
+                if (mapCamera == null)
+                {
+                    DominionLogger.LogError("MapInitializer: No camera found for map rendering");
+                }
+                else if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Found camera for map rendering");
+                }
+            }
+        }
+
+        private void InitializeCameraController()
+        {
+            cameraController = GetComponent<ParadoxStyleCameraController>();
+            if (cameraController == null)
+            {
+                cameraController = gameObject.AddComponent<ParadoxStyleCameraController>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created ParadoxStyleCameraController component");
+                }
+            }
+
+            // Set up camera controller references
+            if (cameraController != null)
+            {
+                cameraController.mapCamera = mapCamera;
+                cameraController.mapPlane = meshRenderer?.gameObject;
+
+                // Initialize the camera controller
+                cameraController.Initialize();
+
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Initialized ParadoxStyleCameraController");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set progress callback for ProvinceMapProcessor
+        /// </summary>
+        public void SetProvinceProcessingCallback(System.Action<ProvinceMapProcessor.ProcessingProgress> callback)
+        {
+            if (provinceProcessor != null)
+            {
+                provinceProcessor.OnProgressUpdate += callback;
+            }
+        }
+
+        /// <summary>
+        /// Initialize ProvinceSelector after rendering setup is complete
+        /// </summary>
+        public void InitializeProvinceSelectorWithMesh()
+        {
+            if (provinceSelector != null && textureManager != null && meshRenderer != null)
+            {
+                provinceSelector.Initialize(textureManager, meshRenderer.transform);
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Initialized ProvinceSelector for province interaction");
+                }
+            }
+        }
+
+    }
+}

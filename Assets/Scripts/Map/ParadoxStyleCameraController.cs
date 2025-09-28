@@ -12,10 +12,10 @@ namespace Map
     
     [Header("Camera Settings")]
     public Camera mapCamera;
-    public float minZoom = 10f;
-    public float maxZoom = 100f;
-    public float zoomSpeed = 10f;
-    public float currentZoom = 50f;
+    public float minZoom = 0.1f;
+    public float maxZoom = 5f;
+    public float zoomSpeed = 1f;
+    public float currentZoom = 4f;
     
     [Header("Scrolling Settings")]
     public float dragSpeed = 1f;
@@ -48,15 +48,22 @@ namespace Map
     public void Initialize()
     {
         if (isInitialized) return;
-        
+
         SetupCamera();
         CalculateMapDimensions();
-        
+
         if (enableHorizontalWrapping)
         {
             CreateGhostMaps();
         }
-        
+
+        // Sync currentZoom with actual camera orthographic size
+        if (mapCamera != null)
+        {
+            currentZoom = mapCamera.orthographicSize;
+            DominionLogger.Log($"ParadoxStyleCameraController: Synced currentZoom to {currentZoom}");
+        }
+
         isInitialized = true;
         DominionLogger.Log("ParadoxStyleCameraController initialized successfully");
     }
@@ -85,11 +92,11 @@ namespace Map
         {
             // Get the actual world size of your plane
             Vector3 planeScale = mapPlane.transform.localScale;
-            
+
             // Unity's default plane is 10x10 units
             actualMapWidth = planeScale.x * 10f;
             actualMapHeight = planeScale.z * 10f;
-            
+
             DominionLogger.Log($"Map dimensions: {actualMapWidth} x {actualMapHeight} world units");
         }
     }
@@ -108,7 +115,7 @@ namespace Map
         ghostMapLeft.transform.position = mapPlane.transform.position + new Vector3(-actualMapWidth, 0, 0);
         ghostMapLeft.transform.rotation = mapPlane.transform.rotation;
         ghostMapLeft.transform.localScale = mapPlane.transform.localScale;
-        
+
         ghostMapRight = Instantiate(mapPlane);
         ghostMapRight.name = "GhostMap_Right";
         ghostMapRight.transform.position = mapPlane.transform.position + new Vector3(actualMapWidth, 0, 0);
@@ -137,24 +144,17 @@ namespace Map
             {
                 ClampVerticalPosition();
             }
-
-            // IMPORTANT, positive Z values means we are BEHIND the map
-            transform.position = new Vector3(transform.position.x, transform.position.y, -1);
     }
     
     void HandleZoom()
     {
         float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
-        
+
         if (scrollDelta != 0)
         {
+            float oldZoom = currentZoom;
             currentZoom -= scrollDelta * zoomSpeed;
             currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
-            
-            if (mapCamera != null)
-            {
-                mapCamera.orthographicSize = currentZoom;
-            }
         }
     }
     
@@ -185,8 +185,8 @@ namespace Map
             
             Vector3 worldDelta = new Vector3(
                 -mouseDelta.x * screenToWorldRatio * mapCamera.aspect,
-                -mouseDelta.y * screenToWorldRatio,
-                0
+                0,
+                -mouseDelta.y * screenToWorldRatio
             );
             
             worldDelta *= dragSpeed;
@@ -215,18 +215,17 @@ namespace Map
         
         if (mousePos.y >= 0 && mousePos.y <= edgeScrollBorder)
         {
-            moveDirection.y = -1;
+            moveDirection.z = -1;
         }
         else if (mousePos.y <= Screen.height && mousePos.y >= Screen.height - edgeScrollBorder)
         {
-            moveDirection.y = 1;
+            moveDirection.z = 1;
         }
         
         // Apply movement
         if (moveDirection != Vector3.zero)
         {
-            float speedMultiplier = currentZoom / maxZoom; // Slower when zoomed in
-            mapCamera.transform.position += moveDirection.normalized * edgeScrollSpeed * speedMultiplier * Time.deltaTime;
+            mapCamera.transform.position += moveDirection.normalized * edgeScrollSpeed * Time.deltaTime;
         }
     }
 
@@ -248,18 +247,17 @@ namespace Map
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            moveDirection.y = -1;
+            moveDirection.z = -1;
         }
         else if (Input.GetKey(KeyCode.UpArrow))
         {
-            moveDirection.y = 1;
+            moveDirection.z = 1;
         }
 
         // Apply movement
         if (moveDirection != Vector3.zero)
         {
-            float speedMultiplier = currentZoom / maxZoom; // Slower when zoomed in
-            mapCamera.transform.position += moveDirection.normalized * arrowKeySpeed * speedMultiplier * Time.deltaTime;
+            mapCamera.transform.position += moveDirection.normalized * arrowKeySpeed * Time.deltaTime;
         }
     }
 
@@ -289,11 +287,11 @@ namespace Map
         float orthoHeight = mapCamera.orthographicSize;
 
         // Calculate boundaries - camera center can't go beyond map edges minus view distance
-        float maxY = (actualMapHeight / 2f) - orthoHeight;
-        float minY = -(actualMapHeight / 2f) + orthoHeight;
+        float maxZ = (actualMapHeight / 2f) - orthoHeight;
+        float minZ = -(actualMapHeight / 2f) + orthoHeight;
 
-        // Clamp the Y position
-        camPos.y = Mathf.Clamp(camPos.y, minY, maxY);
+        // Clamp the Z position
+        camPos.z = Mathf.Clamp(camPos.z, minZ, maxZ);
         mapCamera.transform.position = camPos;
     }
     
@@ -328,7 +326,7 @@ namespace Map
     {
         float height = mapCamera.orthographicSize * 2f;
         float width = height * mapCamera.aspect;
-        return new Bounds(mapCamera.transform.position, new Vector3(width, height, 0));
+        return new Bounds(mapCamera.transform.position, new Vector3(width, 0, height));
     }
 }
 }
