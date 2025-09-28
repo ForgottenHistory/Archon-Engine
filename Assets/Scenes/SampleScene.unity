@@ -167,7 +167,7 @@ MonoBehaviour:
   logInitializationProgress: 1
   mapCamera: {fileID: 330585545}
   meshRenderer: {fileID: 1040298675}
-  gameSettings: {fileID: 0}
+  gameSettings: {fileID: 11400000, guid: 3cbdba6da14150540afaaf57bac82552, type: 2}
 --- !u!114 &293189520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +183,6 @@ MonoBehaviour:
   gameSettings: {fileID: 11400000, guid: 3cbdba6da14150540afaaf57bac82552, type: 2}
   initializeOnStart: 1
   enableDetailedLogging: 1
-  showLoadingUI: 1
   loadingCanvas: {fileID: 1654802281}
 --- !u!1 &330585543
 GameObject:
@@ -1346,7 +1345,7 @@ MonoBehaviour:
   includeTimestamps: 1
   includeStackTrace: 0
   maxLogFileSize: 10485760
-  logFileName: dominion_log.txt
+  logFileName: dominion_log.log
   logInfo: 1
   logWarnings: 1
   logErrors: 1
