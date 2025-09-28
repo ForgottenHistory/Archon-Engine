@@ -61,13 +61,13 @@ namespace Map.Rendering
                 {
                     string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
                     borderDetectionCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    Debug.Log($"BorderComputeDispatcher: Found compute shader at {path}");
+                    DominionLogger.Log($"BorderComputeDispatcher: Found compute shader at {path}");
                 }
                 #endif
 
                 if (borderDetectionCompute == null)
                 {
-                    Debug.LogWarning("BorderComputeDispatcher: Border detection compute shader not assigned. Borders will not be generated.");
+                    DominionLogger.LogWarning("BorderComputeDispatcher: Border detection compute shader not assigned. Borders will not be generated.");
                     return;
                 }
             }
@@ -79,7 +79,7 @@ namespace Map.Rendering
 
             if (logPerformance)
             {
-                Debug.Log($"BorderComputeDispatcher: Initialized with kernels - " +
+                DominionLogger.Log($"BorderComputeDispatcher: Initialized with kernels - " +
                     $"Borders: {detectBordersKernel}, Thick: {detectBordersThickKernel}, Country: {detectCountryBordersKernel}");
             }
         }
@@ -100,7 +100,7 @@ namespace Map.Rendering
         {
             if (borderDetectionCompute == null)
             {
-                Debug.LogWarning("BorderComputeDispatcher: Compute shader not loaded. Skipping border detection.");
+                DominionLogger.LogWarning("BorderComputeDispatcher: Compute shader not loaded. Skipping border detection.");
                 return;
             }
 
@@ -109,7 +109,7 @@ namespace Map.Rendering
                 textureManager = GetComponent<MapTextureManager>();
                 if (textureManager == null)
                 {
-                    Debug.LogError("BorderComputeDispatcher: MapTextureManager not found!");
+                    DominionLogger.LogError("BorderComputeDispatcher: MapTextureManager not found!");
                     return;
                 }
             }
@@ -167,7 +167,7 @@ namespace Map.Rendering
             if (logPerformance)
             {
                 float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                Debug.Log($"BorderComputeDispatcher: Border detection completed in {elapsedMs:F2}ms " +
+                DominionLogger.Log($"BorderComputeDispatcher: Border detection completed in {elapsedMs:F2}ms " +
                     $"({textureManager.MapWidth}x{textureManager.MapHeight} pixels, {threadGroupsX}x{threadGroupsY} thread groups)");
             }
         }
@@ -185,7 +185,7 @@ namespace Map.Rendering
             GL.Clear(true, true, Color.white);
             RenderTexture.active = null;
 
-            Debug.Log("BorderComputeDispatcher: Filled border texture with white for debugging");
+            DominionLogger.Log("BorderComputeDispatcher: Filled border texture with white for debugging");
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Map.Rendering
 
             if (logPerformance)
             {
-                Debug.Log("BorderComputeDispatcher: Borders cleared");
+                DominionLogger.Log("BorderComputeDispatcher: Borders cleared");
             }
         }
 
@@ -298,12 +298,12 @@ namespace Map.Rendering
         {
             if (textureManager == null)
             {
-                Debug.LogError("Cannot benchmark without texture manager");
+                DominionLogger.LogError("Cannot benchmark without texture manager");
                 return;
             }
 
-            Debug.Log("=== Border Detection Benchmark ===");
-            Debug.Log($"Map Size: {textureManager.MapWidth}x{textureManager.MapHeight}");
+            DominionLogger.Log("=== Border Detection Benchmark ===");
+            DominionLogger.Log($"Map Size: {textureManager.MapWidth}x{textureManager.MapHeight}");
 
             // Test each mode
             var modes = new[] { BorderMode.Province, BorderMode.Country, BorderMode.Thick };
@@ -326,10 +326,10 @@ namespace Map.Rendering
                 }
 
                 float avgMs = (totalTime / iterations) * 1000f;
-                Debug.Log($"{mode} Mode: {avgMs:F2}ms average ({iterations} iterations)");
+                DominionLogger.Log($"{mode} Mode: {avgMs:F2}ms average ({iterations} iterations)");
             }
 
-            Debug.Log("=== Benchmark Complete ===");
+            DominionLogger.Log("=== Benchmark Complete ===");
         }
 #endif
     }

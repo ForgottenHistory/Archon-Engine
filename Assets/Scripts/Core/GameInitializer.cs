@@ -76,18 +76,18 @@ namespace Core
         {
             if (isLoading)
             {
-                Debug.LogWarning("Game initialization already in progress!");
+                DominionLogger.LogWarning("Game initialization already in progress!");
                 return;
             }
 
             if (gameSettings == null)
             {
-                Debug.LogError("GameSettings not assigned! Cannot initialize game.");
+                DominionLogger.LogError("GameSettings not assigned! Cannot initialize game.");
                 ReportError("Missing GameSettings configuration");
                 return;
             }
 
-            Debug.Log("Starting game initialization...");
+            DominionLogger.Log("Starting game initialization...");
             StartCoroutine(InitializeGameCoroutine());
         }
 
@@ -143,7 +143,7 @@ namespace Core
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Critical error creating initialization phase: {e.Message}");
+                DominionLogger.LogError($"Critical error creating initialization phase: {e.Message}");
                 Debug.LogException(e);
                 ReportError($"Phase creation failed: {e.Message}");
                 yield break;
@@ -167,7 +167,7 @@ namespace Core
             // Handle any errors that occurred
             if (hasError)
             {
-                Debug.LogError($"Error during initialization phase: {errorMessage}");
+                DominionLogger.LogError($"Error during initialization phase: {errorMessage}");
                 ReportError($"Phase failed: {errorMessage}");
             }
         }
@@ -201,7 +201,7 @@ namespace Core
             SetPhase(LoadingPhase.InitializingCore, 0f, "Initializing core systems...");
 
             // Find or create GameState
-            gameState = FindObjectOfType<GameState>();
+            gameState = FindFirstObjectByType<GameState>();
             if (gameState == null)
             {
                 var gameStateGO = new GameObject("GameState");
@@ -320,13 +320,13 @@ namespace Core
                 }
                 else
                 {
-                    Debug.LogWarning($"Scenario file not found: {scenarioPath}, using default");
+                    DominionLogger.LogWarning($"Scenario file not found: {scenarioPath}, using default");
                     scenarioResult = ScenarioLoader.CreateDefaultScenario();
                 }
             }
             else
             {
-                Debug.Log("No scenario directory specified, using default scenario");
+                DominionLogger.Log("No scenario directory specified, using default scenario");
                 scenarioResult = ScenarioLoader.CreateDefaultScenario();
             }
 
@@ -335,7 +335,7 @@ namespace Core
 
             if (!scenarioResult.Success)
             {
-                Debug.LogWarning($"Scenario loading failed: {scenarioResult.ErrorMessage}, using default");
+                DominionLogger.LogWarning($"Scenario loading failed: {scenarioResult.ErrorMessage}, using default");
                 scenarioResult = ScenarioLoader.CreateDefaultScenario();
             }
 
@@ -343,10 +343,10 @@ namespace Core
             var validationIssues = ScenarioLoader.ValidateScenario(scenarioResult.Data, gameState);
             if (validationIssues.Count > 0)
             {
-                Debug.LogWarning($"Scenario validation found {validationIssues.Count} issues");
+                DominionLogger.LogWarning($"Scenario validation found {validationIssues.Count} issues");
                 foreach (var issue in validationIssues)
                 {
-                    Debug.LogWarning($"  - {issue}");
+                    DominionLogger.LogWarning($"  - {issue}");
                 }
             }
 
@@ -357,7 +357,7 @@ namespace Core
             bool applySuccess = ScenarioLoader.ApplyScenario(scenarioResult.Data, gameState);
             if (!applySuccess)
             {
-                Debug.LogError("Failed to apply scenario");
+                DominionLogger.LogError("Failed to apply scenario");
                 ReportError("Scenario application failed");
                 yield break;
             }
@@ -432,7 +432,7 @@ namespace Core
             var provinceCount = gameState.ProvinceQueries.GetTotalProvinceCount();
             var countryCount = gameState.CountryQueries.GetTotalCountryCount();
 
-            Debug.Log($"Cache warm-up complete: {provinceCount} provinces, {countryCount} countries");
+            DominionLogger.Log($"Cache warm-up complete: {provinceCount} provinces, {countryCount} countries");
         }
 
         /// <summary>
@@ -445,24 +445,24 @@ namespace Core
             // Validate province system
             if (!gameState.Provinces.IsInitialized)
             {
-                Debug.LogError("ProvinceSystem not properly initialized!");
+                DominionLogger.LogError("ProvinceSystem not properly initialized!");
                 issues++;
             }
 
             // Validate country system
             if (!gameState.Countries.IsInitialized)
             {
-                Debug.LogError("CountrySystem not properly initialized!");
+                DominionLogger.LogError("CountrySystem not properly initialized!");
                 issues++;
             }
 
             if (issues > 0)
             {
-                Debug.LogWarning($"Data validation found {issues} issues");
+                DominionLogger.LogWarning($"Data validation found {issues} issues");
             }
             else
             {
-                Debug.Log("Data validation passed");
+                DominionLogger.Log("Data validation passed");
             }
         }
 
@@ -475,7 +475,7 @@ namespace Core
             currentProgress = 100f;
             currentStatus = "Game ready!";
 
-            Debug.Log($"Game initialization complete in {totalTime:F2} seconds");
+            DominionLogger.Log($"Game initialization complete in {totalTime:F2} seconds");
 
             // Hide loading UI
             if (loadingCanvas != null)
@@ -495,7 +495,7 @@ namespace Core
             currentPhase = LoadingPhase.Error;
             currentStatus = $"Error: {error}";
 
-            Debug.LogError($"Game initialization failed: {error}");
+            DominionLogger.LogError($"Game initialization failed: {error}");
 
             // Emit error event
             OnLoadingComplete?.Invoke(false, error);
@@ -512,7 +512,7 @@ namespace Core
 
             if (enableDetailedLogging)
             {
-                Debug.Log($"[{phase}] {status} ({progress:F1}%)");
+                DominionLogger.Log($"[{phase}] {status} ({progress:F1}%)");
             }
 
             OnLoadingProgress?.Invoke(phase, progress, status);
@@ -536,7 +536,7 @@ namespace Core
         {
             if (enableDetailedLogging)
             {
-                Debug.Log($"[{currentPhase}] Complete: {message}");
+                DominionLogger.Log($"[{currentPhase}] Complete: {message}");
             }
         }
 

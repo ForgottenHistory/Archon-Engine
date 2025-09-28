@@ -219,7 +219,7 @@ namespace Core.Commands
         {
             if (commandFactories.ContainsKey(commandType))
             {
-                Debug.LogWarning($"Command type {commandType} is already registered, overwriting");
+                DominionLogger.LogWarning($"Command type {commandType} is already registered, overwriting");
             }
             commandFactories[commandType] = factory;
         }

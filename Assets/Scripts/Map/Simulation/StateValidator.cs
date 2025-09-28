@@ -58,7 +58,7 @@ namespace Map.Simulation
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Failed to calculate state checksum: {ex}");
+                DominionLogger.LogError($"Failed to calculate state checksum: {ex}");
                 return StateChecksum.Invalid();
             }
         }

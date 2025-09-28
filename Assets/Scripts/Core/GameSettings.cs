@@ -231,15 +231,15 @@ namespace Core
         /// </summary>
         public void LogConfiguration()
         {
-            Debug.Log($"GameSettings Configuration:");
-            Debug.Log($"  Province BMP: {ProvinceBitmapPath}");
-            Debug.Log($"  Countries Dir: {CountriesDirectory}");
-            Debug.Log($"  Expected Provinces: {ExpectedProvinceCount}");
-            Debug.Log($"  Expected Countries: {ExpectedCountryCount}");
-            Debug.Log($"  Target Loading Time: {TargetLoadingTime}s");
-            Debug.Log($"  Target Memory: {TargetMaxMemoryMB}MB");
-            Debug.Log($"  Parallel Loading: {EnableParallelLoading}");
-            Debug.Log($"  Data Validation: {EnableDataValidation}");
+            DominionLogger.Log($"GameSettings Configuration:");
+            DominionLogger.Log($"  Province BMP: {ProvinceBitmapPath}");
+            DominionLogger.Log($"  Countries Dir: {CountriesDirectory}");
+            DominionLogger.Log($"  Expected Provinces: {ExpectedProvinceCount}");
+            DominionLogger.Log($"  Expected Countries: {ExpectedCountryCount}");
+            DominionLogger.Log($"  Target Loading Time: {TargetLoadingTime}s");
+            DominionLogger.Log($"  Target Memory: {TargetMaxMemoryMB}MB");
+            DominionLogger.Log($"  Parallel Loading: {EnableParallelLoading}");
+            DominionLogger.Log($"  Data Validation: {EnableDataValidation}");
         }
 
         #if UNITY_EDITOR
@@ -251,17 +251,17 @@ namespace Core
             // Basic validation in editor
             if (ExpectedProvinceCount < 1000)
             {
-                Debug.LogWarning("Expected province count seems low for a grand strategy game");
+                DominionLogger.LogWarning("Expected province count seems low for a grand strategy game");
             }
 
             if (TargetLoadingTime > 10.0f)
             {
-                Debug.LogWarning("Target loading time is quite high - consider optimization");
+                DominionLogger.LogWarning("Target loading time is quite high - consider optimization");
             }
 
             if (TargetMaxMemoryMB > 200)
             {
-                Debug.LogWarning("Target memory usage is high - monitor carefully");
+                DominionLogger.LogWarning("Target memory usage is high - monitor carefully");
             }
         }
         #endif

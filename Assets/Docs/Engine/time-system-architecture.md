@@ -489,7 +489,7 @@ public class UpdateMetrics {
     
     public void LogDaily() {
         foreach (var kvp in timings) {
-            Debug.Log($"{kvp.Key}: {kvp.Value.averageMs:F2}ms, {kvp.Value.entitiesUpdated} entities");
+            DominionLogger.Log($"{kvp.Key}: {kvp.Value.averageMs:F2}ms, {kvp.Value.entitiesUpdated} entities");
         }
     }
 }

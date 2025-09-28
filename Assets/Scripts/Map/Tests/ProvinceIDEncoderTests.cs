@@ -268,7 +268,7 @@ namespace Map.Tests
             ushort unpackedBeyond = ProvinceIDEncoder.UnpackProvinceID(packedBeyond);
 
             // The exact behavior here depends on implementation - document what happens
-            Debug.Log($"Province ID 65535 encodes to ({packedBeyond.r}, {packedBeyond.g}) and decodes to {unpackedBeyond}");
+            DominionLogger.Log($"Province ID 65535 encodes to ({packedBeyond.r}, {packedBeyond.g}) and decodes to {unpackedBeyond}");
         }
     }
 }

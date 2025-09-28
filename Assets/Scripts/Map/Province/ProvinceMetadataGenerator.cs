@@ -108,7 +108,7 @@ namespace Map.Province
                 return result;
             }
 
-            Debug.Log($"Generating metadata for {loadResult.ProvinceCount} provinces...");
+            DominionLogger.Log($"Generating metadata for {loadResult.ProvinceCount} provinces...");
 
             try
             {
@@ -557,19 +557,19 @@ namespace Map.Province
 
             avgCompactness /= totalProvinces;
 
-            Debug.Log($"Province Metadata Statistics:");
-            Debug.Log($"  Total Provinces: {totalProvinces}");
-            Debug.Log($"  Total Pixels: {totalPixels}");
-            Debug.Log($"  Average Province Size: {(float)totalPixels / totalProvinces:F1} pixels");
-            Debug.Log($"  Disconnected Provinces: {disconnectedProvinces} ({(float)disconnectedProvinces / totalProvinces * 100f:F1}%)");
-            Debug.Log($"  Coastal Provinces: {coastalProvinces} ({(float)coastalProvinces / totalProvinces * 100f:F1}%)");
-            Debug.Log($"  Compactness Range: {minCompactness:F3} - {maxCompactness:F3} (avg: {avgCompactness:F3})");
+            DominionLogger.Log($"Province Metadata Statistics:");
+            DominionLogger.Log($"  Total Provinces: {totalProvinces}");
+            DominionLogger.Log($"  Total Pixels: {totalPixels}");
+            DominionLogger.Log($"  Average Province Size: {(float)totalPixels / totalProvinces:F1} pixels");
+            DominionLogger.Log($"  Disconnected Provinces: {disconnectedProvinces} ({(float)disconnectedProvinces / totalProvinces * 100f:F1}%)");
+            DominionLogger.Log($"  Coastal Provinces: {coastalProvinces} ({(float)coastalProvinces / totalProvinces * 100f:F1}%)");
+            DominionLogger.Log($"  Compactness Range: {minCompactness:F3} - {maxCompactness:F3} (avg: {avgCompactness:F3})");
 
-            Debug.Log($"  Terrain Distribution:");
+            DominionLogger.Log($"  Terrain Distribution:");
             foreach (var terrainCount in terrainCounts)
             {
                 float percent = (float)terrainCount.Value / totalProvinces * 100f;
-                Debug.Log($"    {terrainCount.Key}: {terrainCount.Value} ({percent:F1}%)");
+                DominionLogger.Log($"    {terrainCount.Key}: {terrainCount.Value} ({percent:F1}%)");
             }
         }
 

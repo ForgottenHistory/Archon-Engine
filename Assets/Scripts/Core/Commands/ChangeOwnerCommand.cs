@@ -101,7 +101,7 @@ namespace Core.Commands
                     result.AffectedProvinces.Dispose();
 
                 // In a real implementation, log the exception
-                UnityEngine.Debug.LogError($"Command execution failed: {ex.Message}");
+                DominionLogger.LogError($"Command execution failed: {ex.Message}");
                 return result;
             }
         }

@@ -66,7 +66,7 @@ namespace Map.Rendering
 
             if (textureManager == null)
             {
-                Debug.LogError("MapTextureManager is required for texture streaming");
+                DominionLogger.LogError("MapTextureManager is required for texture streaming");
                 return;
             }
 
@@ -81,7 +81,7 @@ namespace Map.Rendering
             if (!streamingRequired)
             {
                 if (logStreamingEvents)
-                    Debug.Log($"Texture streaming disabled - map size {estimatedMemoryMB}MB is within budget");
+                    DominionLogger.Log($"Texture streaming disabled - map size {estimatedMemoryMB}MB is within budget");
                 return;
             }
 
@@ -90,7 +90,7 @@ namespace Map.Rendering
 
             if (logStreamingEvents)
             {
-                Debug.Log($"Texture streaming initialized - Map: {mapWidth}x{mapHeight}, " +
+                DominionLogger.Log($"Texture streaming initialized - Map: {mapWidth}x{mapHeight}, " +
                          $"Tiles: {tilesX}x{tilesY} ({totalTiles} total), " +
                          $"Estimated memory: {estimatedMemoryMB}MB");
             }
@@ -265,7 +265,7 @@ namespace Map.Rendering
 
             if (logStreamingEvents)
             {
-                Debug.Log($"Started loading tile ({tileCoord.x}, {tileCoord.y})");
+                DominionLogger.Log($"Started loading tile ({tileCoord.x}, {tileCoord.y})");
             }
         }
 
@@ -284,7 +284,7 @@ namespace Map.Rendering
 
                 if (logStreamingEvents)
                 {
-                    Debug.Log($"Unloaded tile ({tileCoord.x}, {tileCoord.y})");
+                    DominionLogger.Log($"Unloaded tile ({tileCoord.x}, {tileCoord.y})");
                 }
             }
         }
@@ -312,7 +312,7 @@ namespace Map.Rendering
 
                 if (logStreamingEvents)
                 {
-                    Debug.Log($"Completed loading tile ({tileCoord.x}, {tileCoord.y})");
+                    DominionLogger.Log($"Completed loading tile ({tileCoord.x}, {tileCoord.y})");
                 }
             }
         }
@@ -336,7 +336,7 @@ namespace Map.Rendering
             // For now, just log the tile bounds
             if (logStreamingEvents)
             {
-                Debug.Log($"Loading data for tile ({tileCoord.x}, {tileCoord.y}): " +
+                DominionLogger.Log($"Loading data for tile ({tileCoord.x}, {tileCoord.y}): " +
                          $"region ({startX}, {startY}) to ({endX}, {endY})");
             }
         }
@@ -464,7 +464,7 @@ namespace Map.Rendering
         [ContextMenu("Log Streaming Stats")]
         private void EditorLogStats()
         {
-            Debug.Log($"Texture Streaming Stats: {GetStreamingStatistics()}");
+            DominionLogger.Log($"Texture Streaming Stats: {GetStreamingStatistics()}");
         }
         #endif
     }

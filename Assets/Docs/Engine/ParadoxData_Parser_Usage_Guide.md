@@ -83,7 +83,7 @@ public static CountryDataCollection LoadAllCountries(string countriesDirectory)
     // Optional: Subscribe to progress updates
     loader.OnProgressUpdate += (progress) =>
     {
-        Debug.Log($"Loading: {progress.FilesProcessed}/{progress.TotalFiles} ({progress.ProgressPercentage:P1})");
+        DominionLogger.Log($"Loading: {progress.FilesProcessed}/{progress.TotalFiles} ({progress.ProgressPercentage:P1})");
     };
 
     try
@@ -91,12 +91,12 @@ public static CountryDataCollection LoadAllCountries(string countriesDirectory)
         // Synchronous Burst job execution - handles all parallelization internally
         var countries = loader.LoadAllCountriesJob(countriesDirectory);
 
-        Debug.Log($"Loaded {countries.Count} countries successfully");
+        DominionLogger.Log($"Loaded {countries.Count} countries successfully");
         return countries;
     }
     catch (System.Exception e)
     {
-        Debug.LogError($"Country loading failed: {e.Message}");
+        DominionLogger.LogError($"Country loading failed: {e.Message}");
         return null;
     }
     finally
@@ -270,7 +270,7 @@ public static IEnumerator LoadDataCoroutine(GameDataManager dataManager, System.
     }
     catch (System.Exception e)
     {
-        Debug.LogError($"Loading failed: {e.Message}");
+        DominionLogger.LogError($"Loading failed: {e.Message}");
     }
 
     onComplete?.Invoke(success);

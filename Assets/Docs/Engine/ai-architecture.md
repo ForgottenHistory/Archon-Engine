@@ -713,13 +713,13 @@ public class AIDebugger {
     public void DrawAIDebug(NationAI ai) {
         // Show current goals
         foreach (var goal in ai.goals) {
-            Debug.Log($"Goal: {goal.type} Target: {goal.targetId} Score: {goal.desireScore}");
+            DominionLogger.Log($"Goal: {goal.type} Target: {goal.targetId} Score: {goal.desireScore}");
         }
         
         // Show decision process
-        Debug.Log($"Decision points remaining: {ai.decisionPoints}");
-        Debug.Log($"Treasury: {GetTreasury(ai.nation)}");
-        Debug.Log($"Current action: {ai.currentAction}");
+        DominionLogger.Log($"Decision points remaining: {ai.decisionPoints}");
+        DominionLogger.Log($"Treasury: {GetTreasury(ai.nation)}");
+        DominionLogger.Log($"Current action: {ai.currentAction}");
         
         // Visualize on map
         HighlightTargetProvinces(ai);

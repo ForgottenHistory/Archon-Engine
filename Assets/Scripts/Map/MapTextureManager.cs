@@ -63,7 +63,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                Debug.Log($"MapTextureManager initialized with {mapWidth}x{mapHeight} textures");
+                DominionLogger.Log($"MapTextureManager initialized with {mapWidth}x{mapHeight} textures");
             }
         }
 
@@ -89,7 +89,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                Debug.Log($"Created Province ID texture: {mapWidth}x{mapHeight} RG16 format");
+                DominionLogger.Log($"Created Province ID texture: {mapWidth}x{mapHeight} RG16 format");
             }
         }
 
@@ -115,7 +115,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                Debug.Log($"Created Province Owner texture: {mapWidth}x{mapHeight} R16 format");
+                DominionLogger.Log($"Created Province Owner texture: {mapWidth}x{mapHeight} R16 format");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                Debug.Log($"Created Province Color texture: {mapWidth}x{mapHeight} RGBA32 format");
+                DominionLogger.Log($"Created Province Color texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                Debug.Log($"Created Province Color Palette: 256×1 RGBA32 format");
+                DominionLogger.Log($"Created Province Color Palette: 256×1 RGBA32 format");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                Debug.Log($"Created Border RenderTexture: {mapWidth}x{mapHeight} R8 format");
+                DominionLogger.Log($"Created Border RenderTexture: {mapWidth}x{mapHeight} R8 format");
             }
         }
 
@@ -245,7 +245,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                Debug.Log($"Created Highlight RenderTexture: {mapWidth}x{mapHeight} ARGB32 format");
+                DominionLogger.Log($"Created Highlight RenderTexture: {mapWidth}x{mapHeight} ARGB32 format");
             }
         }
 
@@ -328,7 +328,7 @@ namespace Map.Rendering
         {
             if (colors.Length != 256)
             {
-                Debug.LogError($"Palette colors array must be exactly 256 elements, got {colors.Length}");
+                DominionLogger.LogError($"Palette colors array must be exactly 256 elements, got {colors.Length}");
                 return;
             }
 
@@ -414,7 +414,7 @@ namespace Map.Rendering
             totalMemory += pixelCount * 1; // Border (R8)
             totalMemory += pixelCount * 4; // Highlight (ARGB32)
 
-            Debug.Log($"Map texture memory usage: {totalMemory / 1024f / 1024f:F2} MB");
+            DominionLogger.Log($"Map texture memory usage: {totalMemory / 1024f / 1024f:F2} MB");
         }
 #endif
     }

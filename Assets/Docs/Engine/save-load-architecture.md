@@ -502,7 +502,7 @@ public class TimeTravelDebugger {
         var snapshot = history.GetRelative(direction);
         if (snapshot != null) {
             GameState.RestoreFromSnapshot(snapshot);
-            Debug.Log($"Time traveled to {TimeManager.CurrentDate}");
+            DominionLogger.Log($"Time traveled to {TimeManager.CurrentDate}");
         }
     }
     #endif
@@ -694,16 +694,16 @@ public class SaveRecovery {
             return LoadNormal(filename);
         }
         catch (ChecksumMismatchException) {
-            Debug.LogWarning("Checksum mismatch, attempting recovery");
+            DominionLogger.LogWarning("Checksum mismatch, attempting recovery");
             return LoadWithRecovery(filename);
         }
         catch (Exception e) {
-            Debug.LogError($"Save corrupted: {e.Message}");
+            DominionLogger.LogError($"Save corrupted: {e.Message}");
             
             // Try to load autosaves
             foreach (var autosave in GetAutosaves()) {
                 try {
-                    Debug.Log($"Attempting to load {autosave}");
+                    DominionLogger.Log($"Attempting to load {autosave}");
                     return LoadNormal(autosave);
                 }
                 catch { continue; }

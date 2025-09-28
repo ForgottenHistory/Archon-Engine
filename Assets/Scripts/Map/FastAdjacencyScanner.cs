@@ -55,7 +55,7 @@ namespace ProvinceSystem
         {
             if (provinceMap == null)
             {
-                Debug.LogError("No province map assigned!");
+                DominionLogger.LogError("No province map assigned!");
                 return null;
             }
 
@@ -146,7 +146,7 @@ namespace ProvinceSystem
 
             if (showDebugInfo)
             {
-                Debug.Log($"Adjacency scan complete in {lastScanTime:F3} seconds\n" +
+                DominionLogger.Log($"Adjacency scan complete in {lastScanTime:F3} seconds\n" +
                          $"Found {result.provinceCount} provinces with {result.connectionCount} connections");
             }
 
@@ -161,7 +161,7 @@ namespace ProvinceSystem
         {
             if (provinceMap == null)
             {
-                Debug.LogError("No province map assigned!");
+                DominionLogger.LogError("No province map assigned!");
                 return null;
             }
 
@@ -175,8 +175,8 @@ namespace ProvinceSystem
             // (13350 provinces * avg 6 neighbors / 2 for bidirectional = ~40k, but let's use 100k for safety)
             int estimatedAdjacencies = 100000;
 
-            Debug.Log($"Scanning {width}x{height} bitmap for province adjacencies...");
-            Debug.Log($"Allocating hash set with capacity for {estimatedAdjacencies} adjacency pairs");
+            DominionLogger.Log($"Scanning {width}x{height} bitmap for province adjacencies...");
+            DominionLogger.Log($"Allocating hash set with capacity for {estimatedAdjacencies} adjacency pairs");
 
             // Use native collections for job
             var nativePixels = new NativeArray<Color32>(pixels, Allocator.TempJob);
@@ -239,12 +239,12 @@ namespace ProvinceSystem
 
             if (showDebugInfo)
             {
-                Debug.Log($"Parallel adjacency scan complete in {lastScanTime:F3} seconds\n" +
+                DominionLogger.Log($"Parallel adjacency scan complete in {lastScanTime:F3} seconds\n" +
                         $"Found {result.provinceCount} provinces with {result.connectionCount} unique adjacency pairs");
 
                 if (pairCount > estimatedAdjacencies * 0.8f)
                 {
-                    Debug.LogWarning($"Adjacency pairs ({pairCount}) approaching capacity ({estimatedAdjacencies}). " +
+                    DominionLogger.LogWarning($"Adjacency pairs ({pairCount}) approaching capacity ({estimatedAdjacencies}). " +
                                 "Consider increasing estimatedAdjacencies for safety.");
                 }
             }
@@ -318,7 +318,7 @@ namespace ProvinceSystem
                 }
             }
 
-            Debug.Log($"Converted {idAdjacencies.Count} color adjacencies to ID adjacencies");
+            DominionLogger.Log($"Converted {idAdjacencies.Count} color adjacencies to ID adjacencies");
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace ProvinceSystem
             }
 
             ConvertToIdAdjacencies(colorToIdMap);
-            Debug.Log($"Built color->ID map with {colorToIdMap.Count} entries from ProvinceDataService");
+            DominionLogger.Log($"Built color->ID map with {colorToIdMap.Count} entries from ProvinceDataService");
         }
         */
 
@@ -372,7 +372,7 @@ namespace ProvinceSystem
         {
             if (idAdjacencies == null || idAdjacencies.Count == 0)
             {
-                Debug.LogWarning("No ID adjacencies to export! Convert color adjacencies first.");
+                DominionLogger.LogWarning("No ID adjacencies to export! Convert color adjacencies first.");
                 return;
             }
 
@@ -400,7 +400,7 @@ namespace ProvinceSystem
 
             string path = "Assets/adjacencies.csv";
             System.IO.File.WriteAllText(path, sb.ToString());
-            Debug.Log($"Exported adjacencies to: {path}");
+            DominionLogger.Log($"Exported adjacencies to: {path}");
 
 #if UNITY_EDITOR
             UnityEditor.AssetDatabase.Refresh();

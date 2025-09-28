@@ -64,7 +64,7 @@ namespace Map
         {
             if (logLoadingProgress)
             {
-                Debug.Log("MapGenerator: Starting map generation with JobifiedBMPLoader...");
+                DominionLogger.Log("MapGenerator: Starting map generation with JobifiedBMPLoader...");
             }
 
             // Initialize components
@@ -81,7 +81,7 @@ namespace Map
 
             if (logLoadingProgress)
             {
-                Debug.Log($"MapGenerator: Map generation complete. Loaded {provinceMapping?.ProvinceCount ?? 0} provinces.");
+                DominionLogger.Log($"MapGenerator: Map generation complete. Loaded {provinceMapping?.ProvinceCount ?? 0} provinces.");
             }
         }
 
@@ -97,7 +97,7 @@ namespace Map
                 textureManager = gameObject.AddComponent<MapTextureManager>();
                 if (logLoadingProgress)
                 {
-                    Debug.Log("MapGenerator: Created MapTextureManager component");
+                    DominionLogger.Log("MapGenerator: Created MapTextureManager component");
                 }
             }
 
@@ -108,7 +108,7 @@ namespace Map
                 borderDispatcher = gameObject.AddComponent<BorderComputeDispatcher>();
                 if (logLoadingProgress)
                 {
-                    Debug.Log("MapGenerator: Created BorderComputeDispatcher component");
+                    DominionLogger.Log("MapGenerator: Created BorderComputeDispatcher component");
                 }
             }
 
@@ -124,7 +124,7 @@ namespace Map
 
             if (logLoadingProgress)
             {
-                Debug.Log("MapGenerator: Created ProvinceMapProcessor for high-performance province map processing");
+                DominionLogger.Log("MapGenerator: Created ProvinceMapProcessor for high-performance province map processing");
             }
 
             // Find or create camera
@@ -137,7 +137,7 @@ namespace Map
                 }
                 if (mapCamera == null)
                 {
-                    Debug.LogError("MapGenerator: No camera found for map rendering");
+                    DominionLogger.LogError("MapGenerator: No camera found for map rendering");
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace Map
         {
             if (string.IsNullOrEmpty(provinceBitmapPath))
             {
-                Debug.LogError("MapGenerator: Province bitmap path not set");
+                DominionLogger.LogError("MapGenerator: Province bitmap path not set");
                 return;
             }
 
@@ -161,10 +161,10 @@ namespace Map
 
             if (logLoadingProgress)
             {
-                Debug.Log($"MapGenerator: Loading province map from: {bmpPath}");
+                DominionLogger.Log($"MapGenerator: Loading province map from: {bmpPath}");
                 if (csvPath != null)
                 {
-                    Debug.Log($"MapGenerator: Using definition file: {csvPath}");
+                    DominionLogger.Log($"MapGenerator: Using definition file: {csvPath}");
                 }
             }
 
@@ -175,7 +175,7 @@ namespace Map
 
                 if (!provinceResult.Success)
                 {
-                    Debug.LogError($"MapGenerator: Failed to load province map: {provinceResult.ErrorMessage}");
+                    DominionLogger.LogError($"MapGenerator: Failed to load province map: {provinceResult.ErrorMessage}");
                     return;
                 }
 
@@ -184,17 +184,17 @@ namespace Map
 
                 if (provinceMapping == null)
                 {
-                    Debug.LogError("MapGenerator: Failed to convert province result to mapping");
+                    DominionLogger.LogError("MapGenerator: Failed to convert province result to mapping");
                     return;
                 }
 
                 if (logLoadingProgress)
                 {
-                    Debug.Log($"MapGenerator: Successfully loaded {provinceMapping.ProvinceCount} provinces");
-                    Debug.Log($"MapGenerator: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}");
+                    DominionLogger.Log($"MapGenerator: Successfully loaded {provinceMapping.ProvinceCount} provinces");
+                    DominionLogger.Log($"MapGenerator: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}");
                     if (provinceResult.HasDefinitions)
                     {
-                        Debug.Log($"MapGenerator: Loaded {provinceResult.Definitions.AllDefinitions.Length} province definitions");
+                        DominionLogger.Log($"MapGenerator: Loaded {provinceResult.Definitions.AllDefinitions.Length} province definitions");
                     }
                 }
 
@@ -210,13 +210,13 @@ namespace Map
 
                     if (logLoadingProgress)
                     {
-                        Debug.Log("MapGenerator: Generated province borders using GPU compute shader");
+                        DominionLogger.Log("MapGenerator: Generated province borders using GPU compute shader");
                     }
                 }
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"MapGenerator: Exception during province map loading: {e.Message}\n{e.StackTrace}");
+                DominionLogger.LogError($"MapGenerator: Exception during province map loading: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -301,7 +301,7 @@ namespace Map
 
             if (logLoadingProgress)
             {
-                Debug.Log($"MapGenerator: Created map quad {quadWidth:F1} x {quadHeight:F1} units");
+                DominionLogger.Log($"MapGenerator: Created map quad {quadWidth:F1} x {quadHeight:F1} units");
             }
         }
 
@@ -321,12 +321,12 @@ namespace Map
                     mapMaterial.name = "MapGenerator_Material";
                     if (logLoadingProgress)
                     {
-                        Debug.Log("MapGenerator: Created material with MapCore shader");
+                        DominionLogger.Log("MapGenerator: Created material with MapCore shader");
                     }
                 }
                 else
                 {
-                    Debug.LogError("MapGenerator: MapCore shader not found. Make sure the shader is in the project.");
+                    DominionLogger.LogError("MapGenerator: MapCore shader not found. Make sure the shader is in the project.");
                     return;
                 }
             }
@@ -340,15 +340,15 @@ namespace Map
             // Debug: Verify textures are bound
             if (logLoadingProgress)
             {
-                Debug.Log($"Texture Debug Info:");
-                Debug.Log($"  ProvinceIDTexture: {(textureManager.ProvinceIDTexture != null ? "Valid" : "NULL")}");
-                Debug.Log($"  ProvinceColorTexture: {(textureManager.ProvinceColorTexture != null ? "Valid" : "NULL")}");
-                Debug.Log($"  ProvinceOwnerTexture: {(textureManager.ProvinceOwnerTexture != null ? "Valid" : "NULL")}");
-                Debug.Log($"  Material has textures: {(mapMaterial.GetTexture("_ProvinceColorTexture") != null ? "Yes" : "No")}");
+                DominionLogger.Log($"Texture Debug Info:");
+                DominionLogger.Log($"  ProvinceIDTexture: {(textureManager.ProvinceIDTexture != null ? "Valid" : "NULL")}");
+                DominionLogger.Log($"  ProvinceColorTexture: {(textureManager.ProvinceColorTexture != null ? "Valid" : "NULL")}");
+                DominionLogger.Log($"  ProvinceOwnerTexture: {(textureManager.ProvinceOwnerTexture != null ? "Valid" : "NULL")}");
+                DominionLogger.Log($"  Material has textures: {(mapMaterial.GetTexture("_ProvinceColorTexture") != null ? "Yes" : "No")}");
 
                 // Sample a pixel from the color texture to verify it has data
                 var testColor = textureManager.ProvinceColorTexture.GetPixel(100, 100);
-                Debug.Log($"  Sample color at (100,100): RGB({testColor.r * 255}, {testColor.g * 255}, {testColor.b * 255})");
+                DominionLogger.Log($"  Sample color at (100,100): RGB({testColor.r * 255}, {testColor.g * 255}, {testColor.b * 255})");
             }
 
             // Set initial map mode to show raw province colors directly
@@ -361,7 +361,7 @@ namespace Map
 
             if (logLoadingProgress)
             {
-                Debug.Log("MapGenerator: Material setup complete with all map textures bound");
+                DominionLogger.Log("MapGenerator: Material setup complete with all map textures bound");
             }
         }
 
@@ -403,7 +403,7 @@ namespace Map
 
             if (logLoadingProgress)
             {
-                Debug.Log($"MapGenerator: Camera controller configured. Zoom: {cameraController.minZoom}-{cameraController.maxZoom}");
+                DominionLogger.Log($"MapGenerator: Camera controller configured. Zoom: {cameraController.minZoom}-{cameraController.maxZoom}");
             }
         }
 
@@ -416,11 +416,11 @@ namespace Map
             if (borderDispatcher != null)
             {
                 borderDispatcher.DetectBorders();
-                Debug.Log("MapGenerator: Borders generated");
+                DominionLogger.Log("MapGenerator: Borders generated");
             }
             else
             {
-                Debug.LogError("MapGenerator: BorderComputeDispatcher not found");
+                DominionLogger.LogError("MapGenerator: BorderComputeDispatcher not found");
             }
         }
 
@@ -447,7 +447,7 @@ namespace Map
                 var currentMode = borderDispatcher.CurrentBorderMode;
                 var nextMode = (BorderComputeDispatcher.BorderMode)(((int)currentMode + 1) % 4);
                 borderDispatcher.SetBorderMode(nextMode);
-                Debug.Log($"MapGenerator: Border mode set to {nextMode}");
+                DominionLogger.Log($"MapGenerator: Border mode set to {nextMode}");
             }
         }
 
@@ -470,7 +470,7 @@ namespace Map
                 mapMaterial.EnableKeyword("MAP_MODE_DEBUG");
                 mapMaterial.SetInt("_MapMode", 99); // Use a special value for debug
 
-                Debug.Log("MapGenerator: Set to DEBUG mode - showing province IDs as colors");
+                DominionLogger.Log("MapGenerator: Set to DEBUG mode - showing province IDs as colors");
             }
         }
 
@@ -483,7 +483,7 @@ namespace Map
             if (mapMaterial != null)
             {
                 SetMapMode(10); // Border debug mode
-                Debug.Log("MapGenerator: Set to BORDER DEBUG mode - showing border texture only");
+                DominionLogger.Log("MapGenerator: Set to BORDER DEBUG mode - showing border texture only");
             }
         }
 
@@ -503,7 +503,7 @@ namespace Map
         public void SetTerrainMode()
         {
             SetMapMode(1);
-            Debug.Log("MapGenerator: Set to TERRAIN mode - showing raw province colors");
+            DominionLogger.Log("MapGenerator: Set to TERRAIN mode - showing raw province colors");
         }
 
         /// <summary>
@@ -536,7 +536,7 @@ namespace Map
 
                 if (logLoadingProgress)
                 {
-                    Debug.Log($"MapGenerator: Changed to map mode {mode}");
+                    DominionLogger.Log($"MapGenerator: Changed to map mode {mode}");
                 }
             }
         }
@@ -604,7 +604,7 @@ namespace Map
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Failed to convert province result: {e.Message}");
+                DominionLogger.LogError($"Failed to convert province result: {e.Message}");
                 return null;
             }
         }
@@ -651,7 +651,7 @@ namespace Map
 
             if (logLoadingProgress)
             {
-                Debug.Log($"MapGenerator: Populated texture manager with {width}x{height} province data");
+                DominionLogger.Log($"MapGenerator: Populated texture manager with {width}x{height} province data");
             }
         }
 
@@ -662,7 +662,7 @@ namespace Map
         {
             if (logLoadingProgress)
             {
-                Debug.Log($"MapGenerator Province Processing: {progress.ProgressPercentage:P1} - {progress.CurrentOperation}");
+                DominionLogger.Log($"MapGenerator Province Processing: {progress.ProgressPercentage:P1} - {progress.CurrentOperation}");
             }
         }
 
@@ -694,13 +694,13 @@ namespace Map
         {
             if (provinceMapping != null)
             {
-                Debug.Log($"Map Info: {provinceMapping.ProvinceCount} provinces loaded");
-                Debug.Log($"Texture Size: {textureManager.MapWidth} x {textureManager.MapHeight}");
-                Debug.Log($"Province Bitmap Path: {provinceBitmapPath}");
+                DominionLogger.Log($"Map Info: {provinceMapping.ProvinceCount} provinces loaded");
+                DominionLogger.Log($"Texture Size: {textureManager.MapWidth} x {textureManager.MapHeight}");
+                DominionLogger.Log($"Province Bitmap Path: {provinceBitmapPath}");
             }
             else
             {
-                Debug.Log("Map Info: No map data loaded");
+                DominionLogger.Log("Map Info: No map data loaded");
             }
         }
 #endif

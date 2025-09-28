@@ -74,7 +74,7 @@ namespace Core.Systems
             usedTags = new HashSet<string>(initialCapacity);
 
             isInitialized = true;
-            Debug.Log($"CountrySystem initialized with capacity {initialCapacity}");
+            DominionLogger.Log($"CountrySystem initialized with capacity {initialCapacity}");
 
             // Validate CountryHotData size
             ValidateCountryHotDataSize();
@@ -87,18 +87,18 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                Debug.LogError("CountrySystem not initialized - call Initialize() first");
+                DominionLogger.LogError("CountrySystem not initialized - call Initialize() first");
                 return;
             }
 
             if (!countryDataResult.Success)
             {
-                Debug.LogError($"Cannot initialize from failed country data: {countryDataResult.ErrorMessage}");
+                DominionLogger.LogError($"Cannot initialize from failed country data: {countryDataResult.ErrorMessage}");
                 return;
             }
 
             var countryData = countryDataResult.Countries;
-            Debug.Log($"Initializing {countryData.Count} countries from data");
+            DominionLogger.Log($"Initializing {countryData.Count} countries from data");
 
             // Clear existing data
             countryCount = 0;
@@ -132,12 +132,12 @@ namespace Core.Systems
 
                 if (nextCountryId >= initialCapacity)
                 {
-                    Debug.LogWarning($"Country capacity exceeded: {nextCountryId}/{initialCapacity}");
+                    DominionLogger.LogWarning($"Country capacity exceeded: {nextCountryId}/{initialCapacity}");
                     break;
                 }
             }
 
-            Debug.Log($"CountrySystem initialized with {countryCount} countries");
+            DominionLogger.Log($"CountrySystem initialized with {countryCount} countries");
 
             // Emit initialization complete event
             eventBus?.Emit(new CountrySystemInitializedEvent
@@ -177,7 +177,7 @@ namespace Core.Systems
         {
             if (countryId >= countryHotData.Length)
             {
-                Debug.LogError($"Country ID {countryId} exceeds capacity {countryHotData.Length}");
+                DominionLogger.LogError($"Country ID {countryId} exceeds capacity {countryHotData.Length}");
                 return;
             }
 
@@ -383,7 +383,7 @@ namespace Core.Systems
 
             // If not cached and caching is disabled, we need to load it
             // For now, return null - in full implementation, this would trigger loading
-            Debug.LogWarning($"Cold data for country {countryId} not cached and lazy loading not implemented");
+            DominionLogger.LogWarning($"Cold data for country {countryId} not cached and lazy loading not implemented");
             return null;
         }
 
@@ -468,11 +468,11 @@ namespace Core.Systems
             int actualSize = UnsafeUtility.SizeOf<CountryHotData>();
             if (actualSize != 8)
             {
-                Debug.LogError($"CountryHotData size validation failed: expected 8 bytes, got {actualSize} bytes");
+                DominionLogger.LogError($"CountryHotData size validation failed: expected 8 bytes, got {actualSize} bytes");
             }
             else
             {
-                Debug.Log("CountryHotData size validation passed: 8 bytes");
+                DominionLogger.Log("CountryHotData size validation passed: 8 bytes");
             }
         }
 
@@ -492,7 +492,7 @@ namespace Core.Systems
             usedTags?.Clear();
 
             isInitialized = false;
-            Debug.Log("CountrySystem disposed");
+            DominionLogger.Log("CountrySystem disposed");
         }
 
         void OnDestroy()

@@ -41,7 +41,7 @@ namespace Core
             eventPools = new Dictionary<Type, Queue<IGameEvent>>();
 
             IsActive = true;
-            Debug.Log("EventBus initialized");
+            DominionLogger.Log("EventBus initialized");
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Core
             #if UNITY_EDITOR
             if (eventsProcessedThisFrame > 100)
             {
-                Debug.LogWarning($"EventBus processed {eventsProcessedThisFrame} events this frame - potential performance issue");
+                DominionLogger.LogWarning($"EventBus processed {eventsProcessedThisFrame} events this frame - potential performance issue");
             }
             #endif
         }
@@ -203,7 +203,7 @@ namespace Core
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"Error processing event {eventType.Name}: {e.Message}");
+                    DominionLogger.LogError($"Error processing event {eventType.Name}: {e.Message}");
 
                     // Remove broken listeners
                     eventListeners.RemoveAt(i);
@@ -226,14 +226,14 @@ namespace Core
                 pool.Clear();
             }
 
-            Debug.Log("EventBus cleared");
+            DominionLogger.Log("EventBus cleared");
         }
 
         public void Dispose()
         {
             IsActive = false;
             Clear();
-            Debug.Log("EventBus disposed");
+            DominionLogger.Log("EventBus disposed");
         }
 
         #if UNITY_EDITOR
@@ -242,7 +242,7 @@ namespace Core
         /// </summary>
         public void LogDebugInfo()
         {
-            Debug.Log($"EventBus Status:\n" +
+            DominionLogger.Log($"EventBus Status:\n" +
                       $"- Active: {IsActive}\n" +
                       $"- Events in queue: {eventQueue.Count}\n" +
                       $"- Event types registered: {listeners.Count}\n" +

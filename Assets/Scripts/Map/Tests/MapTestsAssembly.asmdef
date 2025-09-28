@@ -9,7 +9,8 @@
         "Unity.Burst",
         "MapAssembly",
         "ParadoxParser",
-        "Core"
+        "Core",
+        "Utils"
     ],
     "includePlatforms": [
         "Editor"

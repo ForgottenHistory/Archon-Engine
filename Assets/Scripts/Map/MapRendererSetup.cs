@@ -39,7 +39,7 @@ namespace Map.Setup
             // Set layer to Default (can be changed later if needed)
             mapRendererObject.layer = 0;
 
-            Debug.Log($"MapRenderer created with size {mapSize} at position {mapRendererObject.transform.position}");
+            DominionLogger.Log($"MapRenderer created with size {mapSize} at position {mapRendererObject.transform.position}");
 
             return mapRendererObject;
         }
@@ -53,43 +53,43 @@ namespace Map.Setup
         {
             if (gameObject == null)
             {
-                Debug.LogError("MapRenderer GameObject is null");
+                DominionLogger.LogError("MapRenderer GameObject is null");
                 return false;
             }
 
             MapRenderer mapRenderer = gameObject.GetComponent<MapRenderer>();
             if (mapRenderer == null)
             {
-                Debug.LogError("GameObject missing MapRenderer component");
+                DominionLogger.LogError("GameObject missing MapRenderer component");
                 return false;
             }
 
             MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
             if (meshFilter == null || meshFilter.mesh == null)
             {
-                Debug.LogError("MapRenderer missing MeshFilter or mesh");
+                DominionLogger.LogError("MapRenderer missing MeshFilter or mesh");
                 return false;
             }
 
             MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
             if (meshRenderer == null)
             {
-                Debug.LogError("MapRenderer missing MeshRenderer component");
+                DominionLogger.LogError("MapRenderer missing MeshRenderer component");
                 return false;
             }
 
             // Validate URP settings
             if (meshRenderer.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.Off)
             {
-                Debug.LogWarning("MapRenderer should have shadow casting disabled for performance");
+                DominionLogger.LogWarning("MapRenderer should have shadow casting disabled for performance");
             }
 
             if (meshRenderer.receiveShadows)
             {
-                Debug.LogWarning("MapRenderer should have receive shadows disabled for performance");
+                DominionLogger.LogWarning("MapRenderer should have receive shadows disabled for performance");
             }
 
-            Debug.Log("MapRenderer validation passed");
+            DominionLogger.Log("MapRenderer validation passed");
             return true;
         }
 

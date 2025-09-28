@@ -37,7 +37,7 @@ namespace Map.Rendering
         {
             if (textureManager == null)
             {
-                Debug.LogError("MapTextureManager reference is required");
+                DominionLogger.LogError("MapTextureManager reference is required");
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace Map.Rendering
             if (textureManager.MapWidth != mapData.Width || textureManager.MapHeight != mapData.Height)
             {
                 textureManager.ResizeTextures(mapData.Width, mapData.Height);
-                Debug.Log($"Resized textures to match map: {mapData.Width}x{mapData.Height}");
+                DominionLogger.Log($"Resized textures to match map: {mapData.Width}x{mapData.Height}");
             }
 
             // Perform initial full update
@@ -59,7 +59,7 @@ namespace Map.Rendering
 
             if (logUpdates)
             {
-                Debug.Log($"SimulationTextureUpdater initialized with {simulation.ProvinceCount} provinces");
+                DominionLogger.Log($"SimulationTextureUpdater initialized with {simulation.ProvinceCount} provinces");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Map.Rendering
         private void PerformFullTextureUpdate()
         {
             if (logUpdates)
-                Debug.Log("Performing full texture update");
+                DominionLogger.Log("Performing full texture update");
 
             var startTime = Time.realtimeSinceStartup;
 
@@ -135,7 +135,7 @@ namespace Map.Rendering
 
             var updateTime = (Time.realtimeSinceStartup - startTime) * 1000f;
             if (logUpdates)
-                Debug.Log($"Full texture update completed in {updateTime:F2}ms");
+                DominionLogger.Log($"Full texture update completed in {updateTime:F2}ms");
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Map.Rendering
         private void PerformIncrementalUpdate()
         {
             if (logUpdates)
-                Debug.Log("Performing incremental texture update");
+                DominionLogger.Log("Performing incremental texture update");
 
             var startTime = Time.realtimeSinceStartup;
             var dirtyIndices = currentSimulation.GetDirtyIndices();
@@ -160,7 +160,7 @@ namespace Map.Rendering
 
             var updateTime = (Time.realtimeSinceStartup - startTime) * 1000f;
             if (logUpdates)
-                Debug.Log($"Incremental update of {dirtyIndices.Count} provinces completed in {updateTime:F2}ms");
+                DominionLogger.Log($"Incremental update of {dirtyIndices.Count} provinces completed in {updateTime:F2}ms");
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Map.Rendering
         [ContextMenu("Log Statistics")]
         private void EditorLogStatistics()
         {
-            Debug.Log($"SimulationTextureUpdater Stats: {GetUpdateStatistics()}");
+            DominionLogger.Log($"SimulationTextureUpdater Stats: {GetUpdateStatistics()}");
         }
         #endif
     }

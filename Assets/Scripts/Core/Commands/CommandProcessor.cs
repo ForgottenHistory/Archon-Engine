@@ -126,7 +126,7 @@ namespace Core.Commands
                 else
                 {
                     // Command is too late - reject it
-                    Debug.LogWarning($"Rejecting late command: {command} (current tick: {currentTick})");
+                    DominionLogger.LogWarning($"Rejecting late command: {command} (current tick: {currentTick})");
                     command.Dispose();
                     result.CommandsRejected++;
                 }
@@ -191,7 +191,7 @@ namespace Core.Commands
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError($"Command execution failed: {ex}");
+                    DominionLogger.LogError($"Command execution failed: {ex}");
                     result.CommandsRejected++;
                     commandsRejected++;
                 }
@@ -214,7 +214,7 @@ namespace Core.Commands
             var validationResult = command.Validate(simulation);
             if (!validationResult.IsValid)
             {
-                Debug.LogWarning($"Command validation failed at execution time: {validationResult.ErrorMessage}");
+                DominionLogger.LogWarning($"Command validation failed at execution time: {validationResult.ErrorMessage}");
                 return new CommandExecutionResult { Success = false };
             }
 

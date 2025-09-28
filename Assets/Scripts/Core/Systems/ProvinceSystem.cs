@@ -67,7 +67,7 @@ namespace Core.Systems
             activeProvinceIds = new NativeList<ushort>(initialCapacity, Allocator.Persistent);
 
             isInitialized = true;
-            Debug.Log($"ProvinceSystem initialized with capacity {initialCapacity}");
+            DominionLogger.Log($"ProvinceSystem initialized with capacity {initialCapacity}");
 
             // Validate ProvinceState is exactly 8 bytes
             ValidateProvinceStateSize();
@@ -80,17 +80,17 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                Debug.LogError("ProvinceSystem not initialized - call Initialize() first");
+                DominionLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
                 return;
             }
 
             if (!mapResult.Success)
             {
-                Debug.LogError($"Cannot initialize from failed map result: {mapResult.ErrorMessage}");
+                DominionLogger.LogError($"Cannot initialize from failed map result: {mapResult.ErrorMessage}");
                 return;
             }
 
-            Debug.Log($"Initializing {mapResult.ProvinceMappings.ColorToProvinceID.Count} provinces from map data");
+            DominionLogger.Log($"Initializing {mapResult.ProvinceMappings.ColorToProvinceID.Count} provinces from bitmap data (unique colors found)");
 
             // Clear existing data
             provinceCount = 0;
@@ -111,10 +111,15 @@ namespace Core.Systems
             // Apply province definitions if available
             if (mapResult.HasDefinitions)
             {
+                DominionLogger.Log($"Applying province definitions from definition.csv ({mapResult.Definitions.AllDefinitions.Length} definitions available)");
                 ApplyProvinceDefinitions(mapResult.Definitions);
             }
+            else
+            {
+                DominionLogger.Log("No province definitions available - provinces will use color-based terrain detection");
+            }
 
-            Debug.Log($"ProvinceSystem initialized with {provinceCount} provinces");
+            DominionLogger.Log($"ProvinceSystem initialized with {provinceCount} provinces (bitmap data + definitions applied)");
 
             // Emit initialization complete event
             eventBus?.Emit(new ProvinceSystemInitializedEvent
@@ -131,14 +136,14 @@ namespace Core.Systems
         {
             if (provinceCount >= provinceStates.Length)
             {
-                Debug.LogError($"Province capacity exceeded: {provinceCount}/{provinceStates.Length}");
+                DominionLogger.LogError($"Province capacity exceeded: {provinceCount}/{provinceStates.Length}");
                 return;
             }
 
             // Check for duplicate province ID
             if (idToIndex.ContainsKey(provinceId))
             {
-                Debug.LogWarning($"Province {provinceId} already exists, skipping");
+                DominionLogger.LogWarning($"Province {provinceId} already exists, skipping");
                 return;
             }
 
@@ -170,7 +175,7 @@ namespace Core.Systems
             if (!definitions.Success)
                 return;
 
-            Debug.Log($"Applying definitions to {definitions.AllDefinitions.Length} provinces");
+            DominionLogger.Log($"Applying definitions to {definitions.AllDefinitions.Length} provinces");
 
             int updatedCount = 0;
 
@@ -195,7 +200,7 @@ namespace Core.Systems
                 }
             }
 
-            Debug.Log($"Province definitions applied: {updatedCount} terrain updates from {definitions.AllDefinitions.Length} definitions");
+            DominionLogger.Log($"Province definitions applied: {updatedCount} terrain updates from {definitions.AllDefinitions.Length} definitions");
         }
 
         /// <summary>
@@ -216,7 +221,7 @@ namespace Core.Systems
         {
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
             {
-                Debug.LogWarning($"Cannot set owner for invalid province {provinceId}");
+                DominionLogger.LogWarning($"Cannot set owner for invalid province {provinceId}");
                 return;
             }
 
@@ -401,11 +406,11 @@ namespace Core.Systems
             int actualSize = UnsafeUtility.SizeOf<ProvinceState>();
             if (actualSize != 8)
             {
-                Debug.LogError($"ProvinceState size validation failed: expected 8 bytes, got {actualSize} bytes");
+                DominionLogger.LogError($"ProvinceState size validation failed: expected 8 bytes, got {actualSize} bytes");
             }
             else
             {
-                Debug.Log("ProvinceState size validation passed: 8 bytes");
+                DominionLogger.Log("ProvinceState size validation passed: 8 bytes");
             }
         }
 
@@ -421,7 +426,7 @@ namespace Core.Systems
             if (activeProvinceIds.IsCreated) activeProvinceIds.Dispose();
 
             isInitialized = false;
-            Debug.Log("ProvinceSystem disposed");
+            DominionLogger.Log("ProvinceSystem disposed");
         }
 
         void OnDestroy()

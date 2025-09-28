@@ -44,7 +44,7 @@ namespace Core
             // Singleton pattern
             if (Instance != null && Instance != this)
             {
-                Debug.LogError("Multiple GameState instances detected! Destroying duplicate.");
+                DominionLogger.LogError("Multiple GameState instances detected! Destroying duplicate.");
                 Destroy(gameObject);
                 return;
             }
@@ -63,11 +63,11 @@ namespace Core
         {
             if (IsInitialized)
             {
-                Debug.LogWarning("GameState already initialized");
+                DominionLogger.LogWarning("GameState already initialized");
                 return;
             }
 
-            Debug.Log("Initializing GameState systems...");
+            DominionLogger.Log("Initializing GameState systems...");
 
             // 1. Core infrastructure first
             EventBus = new EventBus();
@@ -87,7 +87,7 @@ namespace Core
             Time.Initialize(EventBus);
 
             IsInitialized = true;
-            Debug.Log("GameState initialization complete");
+            DominionLogger.Log("GameState initialization complete");
 
             // Emit initialization complete event
             EventBus.Emit(new GameStateInitializedEvent());
@@ -101,14 +101,14 @@ namespace Core
         {
             if (!IsInitialized)
             {
-                Debug.LogError("Cannot execute command - GameState not initialized");
+                DominionLogger.LogError("Cannot execute command - GameState not initialized");
                 return false;
             }
 
             // Validate command
             if (!command.Validate(this))
             {
-                Debug.LogWarning($"Command validation failed: {command.GetType().Name}");
+                DominionLogger.LogWarning($"Command validation failed: {command.GetType().Name}");
                 return false;
             }
 
@@ -124,7 +124,7 @@ namespace Core
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Command execution failed: {command.GetType().Name} - {e.Message}");
+                DominionLogger.LogError($"Command execution failed: {command.GetType().Name} - {e.Message}");
                 EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), Success = false, Error = e.Message });
                 return false;
             }

@@ -269,15 +269,15 @@ public class AllocationTracker {
     }
     
     public void LogAllocationReport() {
-        Debug.Log("=== Allocation Report ===");
+        DominionLogger.Log("=== Allocation Report ===");
         
         foreach (var kvp in allocations.OrderByDescending(x => x.Value.currentlyAllocated)) {
             var stats = kvp.Value;
-            Debug.Log($"{kvp.Key}:");
-            Debug.Log($"  Currently Allocated: {FormatBytes(stats.currentlyAllocated)}");
-            Debug.Log($"  Total Allocated: {FormatBytes(stats.totalAllocated)}");
-            Debug.Log($"  Allocation Count: {stats.allocationCount}");
-            Debug.Log($"  Largest: {FormatBytes(stats.largestAllocation)}");
+            DominionLogger.Log($"{kvp.Key}:");
+            DominionLogger.Log($"  Currently Allocated: {FormatBytes(stats.currentlyAllocated)}");
+            DominionLogger.Log($"  Total Allocated: {FormatBytes(stats.totalAllocated)}");
+            DominionLogger.Log($"  Allocation Count: {stats.allocationCount}");
+            DominionLogger.Log($"  Largest: {FormatBytes(stats.largestAllocation)}");
         }
     }
 }
@@ -394,18 +394,18 @@ public class CacheMonitor {
     }
     
     public void GenerateCacheReport() {
-        Debug.Log("=== Cache Performance ===");
+        DominionLogger.Log("=== Cache Performance ===");
         
         foreach (var cache in caches.Values.OrderBy(x => x.hitRate)) {
-            Debug.Log($"{cache.name}:");
-            Debug.Log($"  Hit Rate: {cache.hitRate:P2}");
-            Debug.Log($"  Hits: {cache.hits:N0}, Misses: {cache.misses:N0}");
-            Debug.Log($"  Memory: {FormatBytes(cache.memoryUsage)}");
-            Debug.Log($"  Items: {cache.itemCount:N0}");
-            Debug.Log($"  Evictions: {cache.evictions:N0}");
+            DominionLogger.Log($"{cache.name}:");
+            DominionLogger.Log($"  Hit Rate: {cache.hitRate:P2}");
+            DominionLogger.Log($"  Hits: {cache.hits:N0}, Misses: {cache.misses:N0}");
+            DominionLogger.Log($"  Memory: {FormatBytes(cache.memoryUsage)}");
+            DominionLogger.Log($"  Items: {cache.itemCount:N0}");
+            DominionLogger.Log($"  Evictions: {cache.evictions:N0}");
             
             if (cache.hitRate < 0.8f) {
-                Debug.LogWarning($"  ⚠ Low hit rate! Consider increasing cache size");
+                DominionLogger.LogWarning($"  ⚠ Low hit rate! Consider increasing cache size");
             }
         }
     }
@@ -569,7 +569,7 @@ public class DegradationDetector {
             report.AppendLine("  Suggested fix: Create checkpoint and clear old commands");
         }
         
-        Debug.Log(report.ToString());
+        DominionLogger.Log(report.ToString());
     }
 }
 ```

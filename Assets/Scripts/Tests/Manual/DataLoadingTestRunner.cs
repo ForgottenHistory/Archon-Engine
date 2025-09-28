@@ -273,7 +273,7 @@ namespace Tests.Manual
             if (statusText != null)
                 statusText.text = status;
 
-            Debug.Log($"[DataLoadingTest] {status}");
+            DominionLogger.Log($"[DataLoadingTest] {status}");
         }
 
         void UpdateResults(string results)
@@ -344,7 +344,7 @@ namespace Tests.Manual
             var testRunner = new GameObject("DataLoadingTestRunner");
             testRunner.AddComponent<DataLoadingTestRunner>();
 
-            Debug.Log("Created Data Loading Test Scene");
+            DominionLogger.Log("Created Data Loading Test Scene");
         }
         #endif
     }

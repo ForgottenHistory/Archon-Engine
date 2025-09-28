@@ -196,17 +196,17 @@ namespace Core.Loaders
         {
             if (scenario == null)
             {
-                Debug.LogError("Cannot apply null scenario");
+                DominionLogger.LogError("Cannot apply null scenario");
                 return false;
             }
 
             if (gameState == null)
             {
-                Debug.LogError("Cannot apply scenario to null game state");
+                DominionLogger.LogError("Cannot apply scenario to null game state");
                 return false;
             }
 
-            Debug.Log($"Applying scenario: {scenario.Name}");
+            DominionLogger.Log($"Applying scenario: {scenario.Name}");
 
             try
             {
@@ -219,12 +219,12 @@ namespace Core.Loaders
                 // Apply diplomatic relations
                 ApplyDiplomaticRelations(scenario.DiplomaticRelations, gameState);
 
-                Debug.Log($"Scenario '{scenario.Name}' applied successfully");
+                DominionLogger.Log($"Scenario '{scenario.Name}' applied successfully");
                 return true;
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Failed to apply scenario: {e.Message}");
+                DominionLogger.LogError($"Failed to apply scenario: {e.Message}");
                 return false;
             }
         }
@@ -241,7 +241,7 @@ namespace Core.Loaders
                 // Validate province exists
                 if (!gameState.ProvinceQueries.Exists(setup.ProvinceId))
                 {
-                    Debug.LogWarning($"Scenario references non-existent province: {setup.ProvinceId}");
+                    DominionLogger.LogWarning($"Scenario references non-existent province: {setup.ProvinceId}");
                     continue;
                 }
 
@@ -262,7 +262,7 @@ namespace Core.Loaders
                 // TODO: Set terrain, religion, culture when those systems exist
             }
 
-            Debug.Log($"Applied {setups.Count} province setups");
+            DominionLogger.Log($"Applied {setups.Count} province setups");
         }
 
         /// <summary>
@@ -277,15 +277,15 @@ namespace Core.Loaders
                 // Validate country exists
                 if (!gameState.CountryQueries.Exists((byte)setup.CountryId))
                 {
-                    Debug.LogWarning($"Scenario references non-existent country: {setup.CountryId} ({setup.Tag})");
+                    DominionLogger.LogWarning($"Scenario references non-existent country: {setup.CountryId} ({setup.Tag})");
                     continue;
                 }
 
                 // TODO: Set treasury, technology, government when those systems exist
-                Debug.Log($"Country setup for {setup.Tag}: Treasury={setup.Treasury}, Capital={setup.Capital}");
+                DominionLogger.Log($"Country setup for {setup.Tag}: Treasury={setup.Treasury}, Capital={setup.Capital}");
             }
 
-            Debug.Log($"Applied {setups.Count} country setups");
+            DominionLogger.Log($"Applied {setups.Count} country setups");
         }
 
         /// <summary>
@@ -298,10 +298,10 @@ namespace Core.Loaders
             foreach (var relation in relations)
             {
                 // TODO: Apply diplomatic relations when diplomacy system exists
-                Debug.Log($"Diplomatic relation: {relation.Country1} {relation.Type} {relation.Country2} ({relation.Value})");
+                DominionLogger.Log($"Diplomatic relation: {relation.Country1} {relation.Type} {relation.Country2} ({relation.Value})");
             }
 
-            Debug.Log($"Applied {relations.Count} diplomatic relations");
+            DominionLogger.Log($"Applied {relations.Count} diplomatic relations");
         }
 
         /// <summary>

@@ -117,7 +117,7 @@ namespace Map.Province
             // Don't count ocean (ID 0) as a province
             result.ProvinceCount = reserveOceanID ? result.ColorToID.Count - 1 : result.ColorToID.Count;
 
-            Debug.Log($"Province ID encoding complete: {result.ProvinceCount} provinces encoded");
+            DominionLogger.Log($"Province ID encoding complete: {result.ProvinceCount} provinces encoded");
             return result;
         }
 
@@ -177,13 +177,13 @@ namespace Map.Province
             {
                 if (!idToColor.ContainsKey(kvp.Value))
                 {
-                    Debug.LogError($"Missing reverse mapping for color {kvp.Key} -> ID {kvp.Value}");
+                    DominionLogger.LogError($"Missing reverse mapping for color {kvp.Key} -> ID {kvp.Value}");
                     return false;
                 }
 
                 if (!idToColor[kvp.Value].Equals(kvp.Key))
                 {
-                    Debug.LogError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {idToColor[kvp.Value]}");
+                    DominionLogger.LogError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {idToColor[kvp.Value]}");
                     return false;
                 }
             }
@@ -193,13 +193,13 @@ namespace Map.Province
             {
                 if (!colorToID.ContainsKey(kvp.Value))
                 {
-                    Debug.LogError($"Missing forward mapping for ID {kvp.Key} -> color {kvp.Value}");
+                    DominionLogger.LogError($"Missing forward mapping for ID {kvp.Key} -> color {kvp.Value}");
                     return false;
                 }
 
                 if (colorToID[kvp.Value] != kvp.Key)
                 {
-                    Debug.LogError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {colorToID[kvp.Value]}");
+                    DominionLogger.LogError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {colorToID[kvp.Value]}");
                     return false;
                 }
             }
@@ -280,7 +280,7 @@ namespace Map.Province
         {
             if (idToColor.Count == 0)
             {
-                Debug.Log("No province IDs to analyze");
+                DominionLogger.Log("No province IDs to analyze");
                 return;
             }
 
@@ -294,26 +294,26 @@ namespace Map.Province
                 maxID = math.max(maxID, kvp.Key);
             }
 
-            Debug.Log($"Province ID Distribution Analysis:");
-            Debug.Log($"  Total Provinces: {totalIDs}");
-            Debug.Log($"  ID Range: {minID} to {maxID}");
-            Debug.Log($"  ID Span: {maxID - minID + 1}");
-            Debug.Log($"  Efficiency: {(float)totalIDs / (maxID - minID + 1) * 100f:F1}%");
+            DominionLogger.Log($"Province ID Distribution Analysis:");
+            DominionLogger.Log($"  Total Provinces: {totalIDs}");
+            DominionLogger.Log($"  ID Range: {minID} to {maxID}");
+            DominionLogger.Log($"  ID Span: {maxID - minID + 1}");
+            DominionLogger.Log($"  Efficiency: {(float)totalIDs / (maxID - minID + 1) * 100f:F1}%");
 
             // Check for ID 0 (ocean)
             if (idToColor.ContainsKey(0))
             {
-                Debug.Log($"  Ocean Color: {idToColor[0]}");
+                DominionLogger.Log($"  Ocean Color: {idToColor[0]}");
             }
 
             // Sample some province colors
             int sampleCount = math.min(5, totalIDs);
-            Debug.Log($"  Sample Province Colors:");
+            DominionLogger.Log($"  Sample Province Colors:");
             int samples = 0;
             foreach (var kvp in idToColor)
             {
                 if (samples >= sampleCount) break;
-                Debug.Log($"    ID {kvp.Key}: {kvp.Value}");
+                DominionLogger.Log($"    ID {kvp.Key}: {kvp.Value}");
                 samples++;
             }
         }

@@ -89,9 +89,9 @@ namespace Map.Simulation
 
             bool useDefinitionCsv = !string.IsNullOrEmpty(definitionCsvPath) && File.Exists(definitionCsvPath);
 
-            Debug.Log($"Loading simulation from bitmap: {bmpFilePath}");
+            DominionLogger.Log($"Loading simulation from bitmap: {bmpFilePath}");
             if (useDefinitionCsv)
-                Debug.Log($"Using definition CSV: {definitionCsvPath}");
+                DominionLogger.Log($"Using definition CSV: {definitionCsvPath}");
 
             try
             {
@@ -122,7 +122,7 @@ namespace Map.Simulation
             catch (Exception e)
             {
                 result.ErrorMessage = $"Failed to load bitmap: {e.Message}";
-                Debug.LogError($"SimulationMapLoader error: {e}");
+                DominionLogger.LogError($"SimulationMapLoader error: {e}");
             }
 
             return result;
@@ -170,8 +170,8 @@ namespace Map.Simulation
                 result.Success = true;
                 uniqueProvinces.Dispose();
 
-                Debug.Log($"Simulation loaded with {result.Simulation.ProvinceCount} provinces");
-                Debug.Log($"Memory usage: {result.Simulation.GetMemoryUsage().totalBytes / 1024f:F1} KB");
+                DominionLogger.Log($"Simulation loaded with {result.Simulation.ProvinceCount} provinces");
+                DominionLogger.Log($"Memory usage: {result.Simulation.GetMemoryUsage().totalBytes / 1024f:F1} KB");
             }
             finally
             {
@@ -222,7 +222,7 @@ namespace Map.Simulation
                     result.MapData = CreateMapDataFromPixelData(pixelData, colorMapping);
                     result.Success = true;
 
-                    Debug.Log($"Simulation loaded with {result.Simulation.ProvinceCount} provinces (no CSV)");
+                    DominionLogger.Log($"Simulation loaded with {result.Simulation.ProvinceCount} provinces (no CSV)");
                 }
                 finally
                 {
@@ -298,7 +298,7 @@ namespace Map.Simulation
                 return false;
             }
 
-            Debug.Log($"Province count validation passed: {provinceCount} provinces, {hotMemoryBytes / 1024f:F1}KB hot memory");
+            DominionLogger.Log($"Province count validation passed: {provinceCount} provinces, {hotMemoryBytes / 1024f:F1}KB hot memory");
             return true;
         }
 
@@ -332,7 +332,7 @@ namespace Map.Simulation
                 simulation.AddProvince((ushort)id, terrain);
             }
 
-            Debug.Log($"Created simulation with {simulation.ProvinceCount} provinces, capacity {capacity}");
+            DominionLogger.Log($"Created simulation with {simulation.ProvinceCount} provinces, capacity {capacity}");
             return simulation;
         }
 
@@ -404,7 +404,7 @@ namespace Map.Simulation
                 }
                 else
                 {
-                    Debug.LogWarning($"Invalid stats for province {provinceID}");
+                    DominionLogger.LogWarning($"Invalid stats for province {provinceID}");
                 }
             }
 

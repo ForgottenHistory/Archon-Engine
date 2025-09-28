@@ -59,7 +59,7 @@ namespace Core.Systems
             lastTickTime = Time.time;
             isInitialized = true;
 
-            Debug.Log($"TimeManager initialized - Starting date: {currentGameTime}");
+            DominionLogger.Log($"TimeManager initialized - Starting date: {currentGameTime}");
 
             if (autoStart && !isPaused)
             {
@@ -144,7 +144,7 @@ namespace Core.Systems
                 lastTickTime = Time.time; // Reset to avoid time jump
                 OnPauseStateChanged?.Invoke(false);
                 eventBus?.Emit(new TimeStateChangedEvent { IsPaused = false, TimeScale = timeScale });
-                Debug.Log("Time progression started");
+                DominionLogger.Log("Time progression started");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Core.Systems
                 isPaused = true;
                 OnPauseStateChanged?.Invoke(true);
                 eventBus?.Emit(new TimeStateChangedEvent { IsPaused = true, TimeScale = timeScale });
-                Debug.Log("Time progression paused");
+                DominionLogger.Log("Time progression paused");
             }
         }
 
@@ -180,7 +180,7 @@ namespace Core.Systems
         {
             if (newTimeScale < 0)
             {
-                Debug.LogWarning("Time scale cannot be negative");
+                DominionLogger.LogWarning("Time scale cannot be negative");
                 return;
             }
 
@@ -190,7 +190,7 @@ namespace Core.Systems
             OnTimeScaleChanged?.Invoke(timeScale);
             eventBus?.Emit(new TimeStateChangedEvent { IsPaused = isPaused, TimeScale = timeScale });
 
-            Debug.Log($"Time scale changed from {oldTimeScale:F2} to {timeScale:F2}");
+            DominionLogger.Log($"Time scale changed from {oldTimeScale:F2} to {timeScale:F2}");
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Core.Systems
             lastTickTime = Time.time;
 
             eventBus?.Emit(new TimeChangedEvent { GameTime = currentGameTime });
-            Debug.Log($"Game time set to: {currentGameTime}");
+            DominionLogger.Log($"Game time set to: {currentGameTime}");
         }
 
         /// <summary>

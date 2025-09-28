@@ -102,7 +102,7 @@ namespace Tests.Runtime
 
             if (enableDetailedLogging)
             {
-                UnityEngine.Debug.Log("CountryLoadingTest: " + status);
+                DominionLogger.Log("CountryLoadingTest: " + status);
             }
         }
 
@@ -481,7 +481,7 @@ namespace Tests.Runtime
             bool timePerCountryMet = avgTimePerCountry < 5.0;
             performanceLog.AppendLine("Time/Country (<5ms): " + (timePerCountryMet ? "✓ PASS" : "✗ FAIL") + " - " + avgTimePerCountry.ToString("F2") + "ms");
 
-            UnityEngine.Debug.Log(performanceLog.ToString());
+            DominionLogger.Log(performanceLog.ToString());
 
             // Overall result
             bool allTargetsMet = timeTargetMet && memoryTargetMet && errorTargetMet && timePerCountryMet;
@@ -526,13 +526,13 @@ namespace Tests.Runtime
                 switch (logType)
                 {
                     case LogType.Error:
-                        UnityEngine.Debug.LogError(logEntry);
+                        DominionLogger.LogError(logEntry);
                         break;
                     case LogType.Warning:
-                        UnityEngine.Debug.LogWarning(logEntry);
+                        DominionLogger.LogWarning(logEntry);
                         break;
                     default:
-                        UnityEngine.Debug.Log(logEntry);
+                        DominionLogger.Log(logEntry);
                         break;
                 }
             }
