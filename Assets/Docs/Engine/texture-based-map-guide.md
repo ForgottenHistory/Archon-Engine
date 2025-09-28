@@ -87,7 +87,7 @@ float4 provinceColor = tex2D(_ProvinceColorPalette, GetColorUV(ownerID));
 ```
 
 ### Task 2.2: GPU Compute Shaders
-- [ ] **Border Detection Compute Shader**: Process entire map in parallel to find province borders
+- [x] **Border Detection Compute Shader**: Process entire map in parallel to find province borders
 - [ ] **Selection Compute Shader**: Generate selection highlights
 - [ ] **Effect Generation Compute Shader**: War effects, trade routes, etc.
 - [ ] **LOD Compute Shader**: Generate lower resolution textures for distant zoom
