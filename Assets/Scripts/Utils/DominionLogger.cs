@@ -2,29 +2,41 @@ using UnityEngine;
 
 /// <summary>
 /// Static helper class for easy logging throughout the Dominion project
-/// Provides a unified logging interface with optional file logging support
+/// Provides a unified logging interface with direct file logging
 /// </summary>
 public static class DominionLogger
 {
+    private static bool logToConsole = true;
+    private static bool logToFile = true;
+
     public static void Log(string message)
     {
-        Debug.Log(message);
+        // Direct approach - call both systems explicitly
+        if (logToConsole) Debug.Log(message);
+        if (logToFile) FileLogger.Instance.WriteLogDirect(message, LogType.Log);
     }
 
     public static void LogWarning(string message)
     {
-        Debug.LogWarning(message);
+        if (logToConsole) Debug.LogWarning(message);
+        if (logToFile) FileLogger.Instance.WriteLogDirect(message, LogType.Warning);
     }
 
     public static void LogError(string message)
     {
-        Debug.LogError(message);
+        if (logToConsole) Debug.LogError(message);
+        if (logToFile) FileLogger.Instance.WriteLogDirect(message, LogType.Error);
     }
 
     public static void LogFormat(string format, params object[] args)
     {
-        Debug.LogFormat(format, args);
+        string formattedMessage = string.Format(format, args);
+        Log(formattedMessage);
     }
+
+    // Configuration methods
+    public static void SetConsoleLogging(bool enabled) => logToConsole = enabled;
+    public static void SetFileLogging(bool enabled) => logToFile = enabled;
 
     public static void LogSection(string sectionName)
     {

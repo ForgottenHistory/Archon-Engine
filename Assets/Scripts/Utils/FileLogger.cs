@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
     /// <summary>
-    /// File-based logging system that captures all Debug.Log messages
+    /// File-based logging system that captures all DominionLogger.Log messages
     /// </summary>
     public class FileLogger : MonoBehaviour
     {
@@ -25,7 +25,7 @@ using UnityEngine;
 
         [Header("Settings")]
         public bool enableFileLogging = true;
-        public bool includeTimestamps = true;
+        public bool includeTimestamps = true;  // Always include timestamps for better debugging
         public bool includeStackTrace = false;
         public int maxLogFileSize = 10485760; // 10MB
         public string logFileName = "dominion_log.txt";
@@ -102,11 +102,11 @@ using UnityEngine;
                 Application.logMessageReceived += HandleLog;
 
                 isInitialized = true;
-                Debug.Log($"FileLogger initialized. Main log: {logFilePath}");
+                DominionLogger.Log($"FileLogger initialized. Main log: {logFilePath}");
             }
             catch (Exception e)
             {
-                Debug.LogError($"Failed to initialize FileLogger: {e.Message}");
+                DominionLogger.LogError($"Failed to initialize FileLogger: {e.Message}");
             }
         }
 
@@ -169,10 +169,8 @@ using UnityEngine;
             // Format log entry
             StringBuilder sb = new StringBuilder();
 
-            if (includeTimestamps)
-            {
-                sb.Append($"[{DateTime.Now:HH:mm:ss.fff}] ");
-            }
+            // Always include timestamps for better debugging
+            sb.Append($"[{DateTime.Now:HH:mm:ss.fff}] ");
 
             sb.Append($"[{type}] ");
             sb.Append(logString);
@@ -288,7 +286,7 @@ using UnityEngine;
             }
             catch (Exception e)
             {
-                // Can't use Debug.LogError here as it would create infinite loop
+                // Can't use DominionLogger.LogError here as it would create infinite loop
                 Console.WriteLine($"Failed to write to log file: {e.Message}");
             }
         }
@@ -358,21 +356,38 @@ using UnityEngine;
             }
         }
 
+        /// <summary>
+        /// Direct logging method that bypasses Unity's logging system
+        /// </summary>
+        public void WriteLogDirect(string message, LogType logType = LogType.Log)
+        {
+            if (!enableFileLogging || !isInitialized) return;
+
+            // Format log entry with timestamp
+            string timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
+            string logEntry = $"[{timestamp}] [{logType}] {message}";
+
+            // Write to appropriate files
+            WriteToFile(logEntry);
+            if (logType == LogType.Log && logInfo) WriteToInfoFile(logEntry);
+            if (logType == LogType.Warning && logWarnings) WriteToWarningFile(logEntry);
+        }
+
         public void LogSeparator(string title = null)
         {
             if (string.IsNullOrEmpty(title))
             {
-                Debug.Log("----------------------------------------");
+                WriteLogDirect("----------------------------------------");
             }
             else
             {
-                Debug.Log($"---------- {title} ----------");
+                WriteLogDirect($"---------- {title} ----------");
             }
         }
 
         public void LogSection(string sectionName)
         {
-            Debug.Log($"\n========== {sectionName} ==========\n");
+            WriteLogDirect($"\n========== {sectionName} ==========\n");
         }
 
         public string GetLogFilePath()
