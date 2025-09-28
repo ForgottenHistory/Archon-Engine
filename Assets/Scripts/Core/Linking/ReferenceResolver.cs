@@ -24,7 +24,7 @@ namespace Core.Linking
         public ReferenceResolver(GameRegistries registries)
         {
             this.registries = registries ?? throw new ArgumentNullException(nameof(registries));
-            DominionLogger.Log("ReferenceResolver initialized");
+            DominionLogger.LogDataLinking("ReferenceResolver initialized");
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Core.Linking
             provinceData.BaseManpower = rawData.BaseManpower;
             provinceData.CenterOfTrade = rawData.CenterOfTrade;
 
-            DominionLogger.Log($"Resolved references for {context}: Owner={provinceData.OwnerId}, Culture={provinceData.CultureId}, Religion={provinceData.ReligionId}");
+            DominionLogger.LogDataLinking($"Resolved references for {context}: Owner={provinceData.OwnerId}, Culture={provinceData.CultureId}, Religion={provinceData.ReligionId}");
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Core.Linking
                 }
             }
 
-            DominionLogger.Log($"Resolved references for {context}: Culture={countryData.PrimaryCultureId}, Religion={countryData.ReligionId}");
+            DominionLogger.LogDataLinking($"Resolved references for {context}: Culture={countryData.PrimaryCultureId}, Religion={countryData.ReligionId}");
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Core.Linking
         /// </summary>
         public void ResolveDeferredReferences()
         {
-            DominionLogger.Log($"ReferenceResolver: Executing {deferredResolutions.Count} deferred resolutions");
+            DominionLogger.LogDataLinking($"ReferenceResolver: Executing {deferredResolutions.Count} deferred resolutions");
 
             foreach (var resolution in deferredResolutions)
             {
@@ -219,7 +219,7 @@ namespace Core.Linking
             }
 
             deferredResolutions.Clear();
-            DominionLogger.Log("ReferenceResolver: Deferred resolutions complete");
+            DominionLogger.LogDataLinking("ReferenceResolver: Deferred resolutions complete");
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Core.Linking
         private void AddWarning(string message)
         {
             warnings.Add(message);
-            DominionLogger.LogWarning($"Reference Resolution Warning: {message}");
+            DominionLogger.LogDataLinkingWarning($"Reference Resolution Warning: {message}");
         }
 
         /// <summary>

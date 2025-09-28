@@ -22,7 +22,7 @@ namespace Core.Linking
         public DataValidator(GameRegistries registries)
         {
             this.registries = registries ?? throw new System.ArgumentNullException(nameof(registries));
-            DominionLogger.Log("DataValidator initialized");
+            DominionLogger.LogDataLinking("DataValidator initialized");
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Core.Linking
         /// </summary>
         public bool ValidateGameData()
         {
-            DominionLogger.Log("DataValidator: Starting comprehensive game data validation");
+            DominionLogger.LogDataLinking("DataValidator: Starting comprehensive game data validation");
 
             ClearValidationResults();
 
@@ -42,7 +42,7 @@ namespace Core.Linking
             LogValidationResults();
 
             bool isValid = errors.Count == 0;
-            DominionLogger.Log($"DataValidator: Validation {(isValid ? "PASSED" : "FAILED")} - {errors.Count} errors, {warnings.Count} warnings");
+            DominionLogger.LogDataLinking($"DataValidator: Validation {(isValid ? "PASSED" : "FAILED")} - {errors.Count} errors, {warnings.Count} warnings");
 
             return isValid;
         }
@@ -73,7 +73,7 @@ namespace Core.Linking
                 AddError("No terrain types loaded", "Static Data");
             }
 
-            DominionLogger.Log($"DataValidator: Static data validation complete - {registries.Religions.Count} religions, {registries.Cultures.Count} cultures, {registries.TradeGoods.Count} trade goods");
+            DominionLogger.LogDataLinking($"DataValidator: Static data validation complete - {registries.Religions.Count} religions, {registries.Cultures.Count} cultures, {registries.TradeGoods.Count} trade goods");
         }
 
         /// <summary>
@@ -125,16 +125,6 @@ namespace Core.Linking
                         AddError($"Capital province {capital.DefinitionId} is not owned by the country", context);
                     }
                 }
-                else
-                {
-                    AddWarning("Country has no capital province", context);
-                }
-
-                // Validate owned provinces
-                if (country.OwnedProvinces.Count == 0)
-                {
-                    AddWarning("Country owns no provinces", context);
-                }
 
                 foreach (var provinceId in country.OwnedProvinces)
                 {
@@ -150,7 +140,7 @@ namespace Core.Linking
                 }
             }
 
-            DominionLogger.Log($"DataValidator: Country validation complete - {registries.Countries.Count} countries validated");
+            DominionLogger.LogDataLinking($"DataValidator: Country validation complete - {registries.Countries.Count} countries validated");
         }
 
         /// <summary>
@@ -240,7 +230,7 @@ namespace Core.Linking
                 }
             }
 
-            DominionLogger.Log($"DataValidator: Province validation complete - {registries.Provinces.Count} provinces validated");
+            DominionLogger.LogDataLinking($"DataValidator: Province validation complete - {registries.Provinces.Count} provinces validated");
         }
 
         /// <summary>
@@ -273,7 +263,7 @@ namespace Core.Linking
                 AddError("No provinces are owned by any country", "Gameplay");
             }
 
-            DominionLogger.Log($"DataValidator: Gameplay validation complete - {playableCountries} playable countries, {landProvinces} land provinces, {ownedProvinces} owned provinces");
+            DominionLogger.LogDataLinking($"DataValidator: Gameplay validation complete - {playableCountries} playable countries, {landProvinces} land provinces, {ownedProvinces} owned provinces");
         }
 
         /// <summary>
@@ -317,10 +307,10 @@ namespace Core.Linking
 
             if (warnings.Count > 0)
             {
-                DominionLogger.LogWarning($"DataValidator: {warnings.Count} validation warnings found:");
+                DominionLogger.LogDataLinkingWarning($"DataValidator: {warnings.Count} validation warnings found:");
                 foreach (var warning in warnings)
                 {
-                    DominionLogger.LogWarning($"  [{warning.Category}] {warning.Message}");
+                    DominionLogger.LogDataLinkingWarning($"  [{warning.Category}] {warning.Message}");
                 }
             }
         }

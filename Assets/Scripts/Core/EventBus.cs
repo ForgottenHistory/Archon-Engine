@@ -242,7 +242,7 @@ namespace Core
         /// </summary>
         public void LogDebugInfo()
         {
-            DominionLogger.Log($"EventBus Status:\n" +
+            DominionLogger.LogDataLinking($"EventBus Status:\n" +
                       $"- Active: {IsActive}\n" +
                       $"- Events in queue: {eventQueue.Count}\n" +
                       $"- Event types registered: {listeners.Count}\n" +

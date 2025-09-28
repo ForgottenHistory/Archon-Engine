@@ -20,7 +20,7 @@ namespace Core.Linking
         public CrossReferenceBuilder(GameRegistries registries)
         {
             this.registries = registries ?? throw new System.ArgumentNullException(nameof(registries));
-            DominionLogger.Log("CrossReferenceBuilder initialized");
+            DominionLogger.LogDataLinking("CrossReferenceBuilder initialized");
         }
 
         /// <summary>
@@ -28,14 +28,14 @@ namespace Core.Linking
         /// </summary>
         public void BuildAllCrossReferences()
         {
-            DominionLogger.Log("CrossReferenceBuilder: Building all cross-references");
+            DominionLogger.LogDataLinking("CrossReferenceBuilder: Building all cross-references");
 
             BuildCountryProvinceReferences();
             BuildCultureGroupReferences();
             BuildProvinceNeighborReferences();
             ValidateCrossReferences();
 
-            DominionLogger.Log("CrossReferenceBuilder: All cross-references built successfully");
+            DominionLogger.LogDataLinking("CrossReferenceBuilder: All cross-references built successfully");
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Core.Linking
         /// </summary>
         public void BuildCountryProvinceReferences()
         {
-            DominionLogger.Log("CrossReferenceBuilder: Building country-province references");
+            DominionLogger.LogDataLinking("CrossReferenceBuilder: Building country-province references");
 
             // Clear existing references
             foreach (var country in registries.Countries.GetAll())
@@ -70,7 +70,7 @@ namespace Core.Linking
                     }
                     else
                     {
-                        DominionLogger.LogWarning($"Province {province.DefinitionId} has invalid owner ID {province.OwnerId}");
+                        DominionLogger.LogDataLinkingWarning($"Province {province.DefinitionId} has invalid owner ID {province.OwnerId}");
                     }
                 }
 
@@ -85,12 +85,12 @@ namespace Core.Linking
                     }
                     else
                     {
-                        DominionLogger.LogWarning($"Province {province.DefinitionId} has invalid controller ID {province.ControllerId}");
+                        DominionLogger.LogDataLinkingWarning($"Province {province.DefinitionId} has invalid controller ID {province.ControllerId}");
                     }
                 }
             }
 
-            DominionLogger.Log($"CrossReferenceBuilder: Built {ownedCount} ownership and {controlledCount} control relationships");
+            DominionLogger.LogDataLinking($"CrossReferenceBuilder: Built {ownedCount} ownership and {controlledCount} control relationships");
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Core.Linking
         /// </summary>
         public void BuildCultureGroupReferences()
         {
-            DominionLogger.Log("CrossReferenceBuilder: Building culture group references");
+            DominionLogger.LogDataLinking("CrossReferenceBuilder: Building culture group references");
 
             // TODO: Implement when culture groups are added
             // This would group cultures by their culture groups for efficient queries
@@ -127,7 +127,7 @@ namespace Core.Linking
                 }
             }
 
-            DominionLogger.Log($"CrossReferenceBuilder: Grouped {registries.Cultures.Count} cultures into {culturesByGroup.Count} culture groups");
+            DominionLogger.LogDataLinking($"CrossReferenceBuilder: Grouped {registries.Cultures.Count} cultures into {culturesByGroup.Count} culture groups");
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Core.Linking
         /// </summary>
         public void BuildProvinceNeighborReferences()
         {
-            DominionLogger.Log("CrossReferenceBuilder: Building province neighbor references");
+            DominionLogger.LogDataLinking("CrossReferenceBuilder: Building province neighbor references");
 
             // TODO: Implement when adjacency data is available
             // This would analyze the province bitmap to determine neighboring provinces
@@ -150,7 +150,7 @@ namespace Core.Linking
                 // 3. Build the bidirectional neighbor relationships
             }
 
-            DominionLogger.Log("CrossReferenceBuilder: Province neighbor references initialized (bitmap analysis pending)");
+            DominionLogger.LogDataLinking("CrossReferenceBuilder: Province neighbor references initialized (bitmap analysis pending)");
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Core.Linking
         /// </summary>
         public void ValidateCrossReferences()
         {
-            DominionLogger.Log("CrossReferenceBuilder: Validating cross-references");
+            DominionLogger.LogDataLinking("CrossReferenceBuilder: Validating cross-references");
 
             int validationErrors = 0;
             int validationWarnings = 0;
@@ -208,13 +208,13 @@ namespace Core.Linking
                     var capital = registries.Provinces.GetByRuntime(country.CapitalProvinceId);
                     if (capital == null)
                     {
-                        DominionLogger.LogWarning($"Country {country.Tag} has invalid capital province {country.CapitalProvinceId}");
+                        DominionLogger.LogDataLinkingWarning($"Country {country.Tag} has invalid capital province {country.CapitalProvinceId}");
                         country.CapitalProvinceId = 0;
                         validationWarnings++;
                     }
                     else if (capital.OwnerId != country.Id)
                     {
-                        DominionLogger.LogWarning($"Country {country.Tag} capital {capital.DefinitionId} is not owned by the country (owner: {capital.OwnerId})");
+                        DominionLogger.LogDataLinkingWarning($"Country {country.Tag} capital {capital.DefinitionId} is not owned by the country (owner: {capital.OwnerId})");
                         validationWarnings++;
                     }
                 }
@@ -222,11 +222,11 @@ namespace Core.Linking
 
             if (validationErrors > 0 || validationWarnings > 0)
             {
-                DominionLogger.LogWarning($"CrossReferenceBuilder: Validation completed with {validationErrors} errors and {validationWarnings} warnings");
+                DominionLogger.LogDataLinkingWarning($"CrossReferenceBuilder: Validation completed with {validationErrors} errors and {validationWarnings} warnings");
             }
             else
             {
-                DominionLogger.Log("CrossReferenceBuilder: Validation passed - all cross-references are consistent");
+                DominionLogger.LogDataLinking("CrossReferenceBuilder: Validation passed - all cross-references are consistent");
             }
         }
 

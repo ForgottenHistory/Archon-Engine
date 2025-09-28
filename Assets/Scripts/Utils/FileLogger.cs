@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
     /// <summary>
     /// File-based logging system that captures all DominionLogger.Log messages
@@ -31,7 +32,7 @@ using UnityEngine;
         public bool includeTimestamps = true;  // Always include timestamps for better debugging
         public bool includeStackTrace = false;
         public int maxLogFileSize = 10485760; // 10MB
-        public string logFileName = "dominion_log.txt";
+        public string logFileName = "dominion_log.log";
 
         [Header("Log Filters")]
         public bool logInfo = true;
@@ -44,14 +45,12 @@ using UnityEngine;
         public float flushInterval = 1f; // Flush to disk every second
 
         private string logFilePath;
-        private string infoLogFilePath;
-        private string warningLogFilePath;
         private StreamWriter logWriter;
-        private StreamWriter infoLogWriter;
-        private StreamWriter warningLogWriter;
         private Queue<string> pendingLogs = new Queue<string>();
-        private Queue<string> pendingInfoLogs = new Queue<string>();
-        private Queue<string> pendingWarningLogs = new Queue<string>();
+
+        // System-based logging
+        private Dictionary<string, StreamWriter> systemLogWriters = new Dictionary<string, StreamWriter>();
+        private Dictionary<string, Queue<string>> systemPendingLogs = new Dictionary<string, Queue<string>>();
         private object logLock = new object();
         private float lastFlushTime;
         private bool isInitialized = false;
@@ -82,24 +81,14 @@ using UnityEngine;
 
             // Setup log file paths (overwrite existing for testing)
             logFilePath = Path.Combine(logsDir, logFileName);
-            infoLogFilePath = Path.Combine(logsDir, "dominion_info.txt");
-            warningLogFilePath = Path.Combine(logsDir, "dominion_warnings.txt");
 
-            // Create or open log files (overwrite existing)
+            // Create or open main log file (overwrite existing)
             try
             {
                 logWriter = new StreamWriter(logFilePath, false, Encoding.UTF8); // false = overwrite
                 logWriter.AutoFlush = !useAsyncWrite;
 
-                infoLogWriter = new StreamWriter(infoLogFilePath, false, Encoding.UTF8);
-                infoLogWriter.AutoFlush = !useAsyncWrite;
-
-                warningLogWriter = new StreamWriter(warningLogFilePath, false, Encoding.UTF8);
-                warningLogWriter.AutoFlush = !useAsyncWrite;
-
                 WriteHeader();
-                WriteInfoHeader();
-                WriteWarningHeader();
 
                 // Disable Unity's log message received event - we use direct logging now
                 // Application.logMessageReceived += HandleLog;
@@ -125,92 +114,92 @@ using UnityEngine;
             logWriter.WriteLine();
         }
 
-        void WriteInfoHeader()
+        /// <summary>
+        /// Initialize a system-specific log file
+        /// </summary>
+        private void InitializeSystemLog(string systemName)
         {
-            infoLogWriter.WriteLine("========================================");
-            infoLogWriter.WriteLine($"Dominion Info Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-            infoLogWriter.WriteLine($"Info messages only");
-            infoLogWriter.WriteLine("========================================");
-            infoLogWriter.WriteLine();
+            if (systemLogWriters.ContainsKey(systemName)) return;
+
+            string systemLogPath = Path.Combine(Path.GetDirectoryName(logFilePath), $"{systemName}.log");
+
+            try
+            {
+                var writer = new StreamWriter(systemLogPath, false, Encoding.UTF8); // false = overwrite
+                writer.AutoFlush = !useAsyncWrite;
+
+                // Write system-specific header
+                writer.WriteLine("========================================");
+                writer.WriteLine($"Dominion {systemName} Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                writer.WriteLine($"System-specific logging for {systemName}");
+                writer.WriteLine("========================================");
+                writer.WriteLine();
+
+                systemLogWriters[systemName] = writer;
+                systemPendingLogs[systemName] = new Queue<string>();
+
+                Debug.Log($"Initialized system log for {systemName}: {systemLogPath}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to initialize system log for {systemName}: {e.Message}");
+            }
         }
 
-        void WriteWarningHeader()
-        {
-            warningLogWriter.WriteLine("========================================");
-            warningLogWriter.WriteLine($"Dominion Warnings Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
-            warningLogWriter.WriteLine($"Warnings and errors only");
-            warningLogWriter.WriteLine("========================================");
-            warningLogWriter.WriteLine();
-        }
-
-        void HandleLog(string logString, string stackTrace, LogType type)
+        /// <summary>
+        /// Log a message to both main log and system-specific log
+        /// </summary>
+        public void WriteSystemLog(string message, string systemName = null, LogType logType = LogType.Log)
         {
             if (!enableFileLogging || !isInitialized) return;
 
             // Filter based on log type
-            bool shouldLog = false;
-            switch (type)
+            bool shouldLog = logType switch
             {
-                case LogType.Log:
-                    shouldLog = logInfo;
-                    break;
-                case LogType.Warning:
-                    shouldLog = logWarnings;
-                    break;
-                case LogType.Error:
-                    shouldLog = logErrors;
-                    break;
-                case LogType.Exception:
-                    shouldLog = logExceptions;
-                    break;
-                case LogType.Assert:
-                    shouldLog = logErrors;
-                    break;
-            }
+                LogType.Log => logInfo,
+                LogType.Warning => logWarnings,
+                LogType.Error => logErrors,
+                LogType.Exception => logExceptions,
+                LogType.Assert => logErrors,
+                _ => true
+            };
 
             if (!shouldLog) return;
 
             // Format log entry
-            StringBuilder sb = new StringBuilder();
-
-            // Always include timestamps for better debugging
-            sb.Append($"[{DateTime.Now:HH:mm:ss.fff}] ");
-
-            sb.Append($"[{type}] ");
-            sb.Append(logString);
-
-            if (includeStackTrace && !string.IsNullOrEmpty(stackTrace) &&
-                (type == LogType.Error || type == LogType.Exception))
-            {
-                sb.AppendLine();
-                sb.Append("Stack Trace:");
-                sb.AppendLine();
-                sb.Append(stackTrace);
-            }
-
-            string logEntry = sb.ToString();
+            string timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
+            string logEntry = $"[{timestamp}] [{logType}] {message}";
 
             if (useAsyncWrite)
             {
                 lock (logLock)
                 {
-                    pendingLogs.Enqueue(logEntry);
-
-                    // Add to specific log queues
-                    if (type == LogType.Log)
+                    // Only add to main log if no system is specified
+                    if (string.IsNullOrEmpty(systemName))
                     {
-                        pendingInfoLogs.Enqueue(logEntry);
+                        pendingLogs.Enqueue(logEntry);
                     }
-                    else if (type == LogType.Warning || type == LogType.Error || type == LogType.Exception || type == LogType.Assert)
+                    else
                     {
-                        pendingWarningLogs.Enqueue(logEntry);
+                        // Add to system-specific log only
+                        if (!systemPendingLogs.ContainsKey(systemName))
+                        {
+                            InitializeSystemLog(systemName);
+                        }
+                        systemPendingLogs[systemName].Enqueue(logEntry);
                     }
                 }
             }
             else
             {
-                WriteToFile(logEntry);
-                WriteToSpecificFile(logEntry, type);
+                if (string.IsNullOrEmpty(systemName))
+                {
+                    WriteToFile(logEntry);
+                }
+                else
+                {
+                    WriteToSystemFile(logEntry, systemName);
+                }
             }
         }
 
@@ -228,25 +217,32 @@ using UnityEngine;
 
         void FlushPendingLogs()
         {
-            if (pendingLogs.Count == 0 && pendingInfoLogs.Count == 0 && pendingWarningLogs.Count == 0) return;
+            if (pendingLogs.Count == 0 && systemPendingLogs.Values.All(q => q.Count == 0)) return;
 
             List<string> logsToWrite = new List<string>();
-            List<string> infoLogsToWrite = new List<string>();
-            List<string> warningLogsToWrite = new List<string>();
+            Dictionary<string, List<string>> systemLogsToWrite = new Dictionary<string, List<string>>();
 
             lock (logLock)
             {
+                // Collect main logs
                 while (pendingLogs.Count > 0)
                 {
                     logsToWrite.Add(pendingLogs.Dequeue());
                 }
-                while (pendingInfoLogs.Count > 0)
+
+                // Collect system logs
+                foreach (var kvp in systemPendingLogs)
                 {
-                    infoLogsToWrite.Add(pendingInfoLogs.Dequeue());
-                }
-                while (pendingWarningLogs.Count > 0)
-                {
-                    warningLogsToWrite.Add(pendingWarningLogs.Dequeue());
+                    string systemName = kvp.Key;
+                    var logs = new List<string>();
+                    while (kvp.Value.Count > 0)
+                    {
+                        logs.Add(kvp.Value.Dequeue());
+                    }
+                    if (logs.Count > 0)
+                    {
+                        systemLogsToWrite[systemName] = logs;
+                    }
                 }
             }
 
@@ -256,22 +252,22 @@ using UnityEngine;
                 WriteToFile(log);
             }
 
-            // Write to info log
-            foreach (string log in infoLogsToWrite)
+            // Write to system logs
+            foreach (var kvp in systemLogsToWrite)
             {
-                WriteToInfoFile(log);
-            }
-
-            // Write to warning log
-            foreach (string log in warningLogsToWrite)
-            {
-                WriteToWarningFile(log);
+                string systemName = kvp.Key;
+                foreach (string log in kvp.Value)
+                {
+                    WriteToSystemFile(log, systemName);
+                }
             }
 
             // Flush all writers
             if (logWriter != null) logWriter.Flush();
-            if (infoLogWriter != null) infoLogWriter.Flush();
-            if (warningLogWriter != null) warningLogWriter.Flush();
+            foreach (var writer in systemLogWriters.Values)
+            {
+                writer?.Flush();
+            }
         }
 
         void WriteToFile(string logEntry)
@@ -295,43 +291,23 @@ using UnityEngine;
             }
         }
 
-        void WriteToInfoFile(string logEntry)
+        void WriteToSystemFile(string logEntry, string systemName)
         {
-            if (infoLogWriter == null) return;
+            if (!systemLogWriters.ContainsKey(systemName))
+            {
+                InitializeSystemLog(systemName);
+            }
+
+            var writer = systemLogWriters[systemName];
+            if (writer == null) return;
 
             try
             {
-                infoLogWriter.WriteLine(logEntry);
+                writer.WriteLine(logEntry);
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Failed to write to info log file: {e.Message}");
-            }
-        }
-
-        void WriteToWarningFile(string logEntry)
-        {
-            if (warningLogWriter == null) return;
-
-            try
-            {
-                warningLogWriter.WriteLine(logEntry);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Failed to write to warning log file: {e.Message}");
-            }
-        }
-
-        void WriteToSpecificFile(string logEntry, LogType type)
-        {
-            if (type == LogType.Log)
-            {
-                WriteToInfoFile(logEntry);
-            }
-            else if (type == LogType.Warning || type == LogType.Error || type == LogType.Exception || type == LogType.Assert)
-            {
-                WriteToWarningFile(logEntry);
+                Console.WriteLine($"Failed to write to {systemName} log file: {e.Message}");
             }
         }
 
@@ -342,7 +318,7 @@ using UnityEngine;
                 logWriter.Close();
 
                 // Archive current log
-                string archivePath = logFilePath.Replace(".txt", "_archived.txt");
+                string archivePath = logFilePath.Replace(".log", "_archived.log");
                 if (File.Exists(archivePath))
                 {
                     File.Delete(archivePath);
@@ -363,18 +339,9 @@ using UnityEngine;
         /// <summary>
         /// Direct logging method that bypasses Unity's logging system
         /// </summary>
-        public void WriteLogDirect(string message, LogType logType = LogType.Log)
+        public void WriteLogDirect(string message, string systemName = null, LogType logType = LogType.Log)
         {
-            if (!enableFileLogging || !isInitialized) return;
-
-            // Format log entry with timestamp
-            string timestamp = DateTime.Now.ToString("HH:mm:ss.fff");
-            string logEntry = $"[{timestamp}] [{logType}] {message}";
-
-            // Write to appropriate files
-            WriteToFile(logEntry);
-            if (logType == LogType.Log && logInfo) WriteToInfoFile(logEntry);
-            if (logType == LogType.Warning && logWarnings) WriteToWarningFile(logEntry);
+            WriteSystemLog(message, systemName, logType);
         }
 
         public void LogSeparator(string title = null)
@@ -430,29 +397,30 @@ using UnityEngine;
         {
             if (instance == this)
             {
-                Application.logMessageReceived -= HandleLog;
                 FlushPendingLogs();
 
                 try
                 {
+                    // Close main log
                     if (logWriter != null)
                     {
                         logWriter.WriteLine("\n========== Session Ended ==========");
                         logWriter.Close();
                         logWriter = null;
                     }
-                    if (infoLogWriter != null)
+
+                    // Close all system logs
+                    foreach (var kvp in systemLogWriters)
                     {
-                        infoLogWriter.WriteLine("\n========== Session Ended ==========");
-                        infoLogWriter.Close();
-                        infoLogWriter = null;
+                        var writer = kvp.Value;
+                        if (writer != null)
+                        {
+                            writer.WriteLine("\n========== Session Ended ==========");
+                            writer.Close();
+                        }
                     }
-                    if (warningLogWriter != null)
-                    {
-                        warningLogWriter.WriteLine("\n========== Session Ended ==========");
-                        warningLogWriter.Close();
-                        warningLogWriter = null;
-                    }
+                    systemLogWriters.Clear();
+                    systemPendingLogs.Clear();
                 }
                 catch (Exception e)
                 {

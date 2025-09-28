@@ -463,12 +463,12 @@ namespace Core
 
                         if (registeredCount <= 5) // Log first few for debugging
                         {
-                            DominionLogger.Log($"Registered country '{tag}' with ID {countryId}");
+                            DominionLogger.LogDataLinking($"Registered country '{tag}' with ID {countryId}");
                         }
                     }
                     catch (System.Exception e)
                     {
-                        DominionLogger.LogError($"Failed to register country {tag} (ID: {countryId}): {e.Message}");
+                        DominionLogger.LogDataLinkingError($"Failed to register country {tag} (ID: {countryId}): {e.Message}");
                     }
                 }
             }

@@ -29,7 +29,7 @@ namespace Core.Registries
             Countries = new CountryRegistry(this);
             Provinces = new ProvinceRegistry();
 
-            DominionLogger.Log("GameRegistries initialized with all entity registries");
+            DominionLogger.LogDataLinking("GameRegistries initialized with all entity registries");
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Core.Registries
             }
 
             // Countries and provinces can be empty initially
-            DominionLogger.Log($"GameRegistries validation: {(isValid ? "PASSED" : "FAILED")}");
+            DominionLogger.LogDataLinking($"GameRegistries validation: {(isValid ? "PASSED" : "FAILED")}");
             return isValid;
         }
     }
