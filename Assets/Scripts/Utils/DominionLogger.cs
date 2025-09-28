@@ -13,19 +13,31 @@ public static class DominionLogger
     {
         // Direct approach - call both systems explicitly
         if (logToConsole) Debug.Log(message);
-        if (logToFile) FileLogger.Instance.WriteLogDirect(message, LogType.Log);
+        if (logToFile && !FileLogger.IsQuitting)
+        {
+            var logger = FileLogger.Instance;
+            if (logger != null) logger.WriteLogDirect(message, LogType.Log);
+        }
     }
 
     public static void LogWarning(string message)
     {
         if (logToConsole) Debug.LogWarning(message);
-        if (logToFile) FileLogger.Instance.WriteLogDirect(message, LogType.Warning);
+        if (logToFile && !FileLogger.IsQuitting)
+        {
+            var logger = FileLogger.Instance;
+            if (logger != null) logger.WriteLogDirect(message, LogType.Warning);
+        }
     }
 
     public static void LogError(string message)
     {
         if (logToConsole) Debug.LogError(message);
-        if (logToFile) FileLogger.Instance.WriteLogDirect(message, LogType.Error);
+        if (logToFile && !FileLogger.IsQuitting)
+        {
+            var logger = FileLogger.Instance;
+            if (logger != null) logger.WriteLogDirect(message, LogType.Error);
+        }
     }
 
     public static void LogFormat(string format, params object[] args)

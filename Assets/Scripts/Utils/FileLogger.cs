@@ -9,11 +9,14 @@ using UnityEngine;
     public class FileLogger : MonoBehaviour
     {
         private static FileLogger instance;
+        private static bool isQuitting = false;
+
+        public static bool IsQuitting => isQuitting;
         public static FileLogger Instance
         {
             get
             {
-                if (instance == null)
+                if (instance == null && !isQuitting)
                 {
                     GameObject go = new GameObject("FileLogger");
                     instance = go.AddComponent<FileLogger>();
@@ -82,7 +85,7 @@ using UnityEngine;
             infoLogFilePath = Path.Combine(logsDir, "dominion_info.txt");
             warningLogFilePath = Path.Combine(logsDir, "dominion_warnings.txt");
 
-            // Create or open log files
+            // Create or open log files (overwrite existing)
             try
             {
                 logWriter = new StreamWriter(logFilePath, false, Encoding.UTF8); // false = overwrite
@@ -102,7 +105,8 @@ using UnityEngine;
                 // Application.logMessageReceived += HandleLog;
 
                 isInitialized = true;
-                DominionLogger.Log($"FileLogger initialized. Main log: {logFilePath}");
+                // Use Unity's Debug.Log directly to avoid infinite recursion during initialization
+                Debug.Log($"FileLogger initialized. Main log: {logFilePath}");
             }
             catch (Exception e)
             {
@@ -429,21 +433,35 @@ using UnityEngine;
                 Application.logMessageReceived -= HandleLog;
                 FlushPendingLogs();
 
-                if (logWriter != null)
+                try
                 {
-                    logWriter.WriteLine("\n========== Session Ended ==========");
-                    logWriter.Close();
+                    if (logWriter != null)
+                    {
+                        logWriter.WriteLine("\n========== Session Ended ==========");
+                        logWriter.Close();
+                        logWriter = null;
+                    }
+                    if (infoLogWriter != null)
+                    {
+                        infoLogWriter.WriteLine("\n========== Session Ended ==========");
+                        infoLogWriter.Close();
+                        infoLogWriter = null;
+                    }
+                    if (warningLogWriter != null)
+                    {
+                        warningLogWriter.WriteLine("\n========== Session Ended ==========");
+                        warningLogWriter.Close();
+                        warningLogWriter = null;
+                    }
                 }
-                if (infoLogWriter != null)
+                catch (Exception e)
                 {
-                    infoLogWriter.WriteLine("\n========== Session Ended ==========");
-                    infoLogWriter.Close();
+                    // Ignore cleanup errors during shutdown
+                    Console.WriteLine($"FileLogger cleanup warning: {e.Message}");
                 }
-                if (warningLogWriter != null)
-                {
-                    warningLogWriter.WriteLine("\n========== Session Ended ==========");
-                    warningLogWriter.Close();
-                }
+
+                instance = null;
+                isInitialized = false;
             }
         }
 
@@ -465,6 +483,7 @@ using UnityEngine;
 
         void OnApplicationQuit()
         {
+            isQuitting = true;
             FlushPendingLogs();
 
             if (logWriter != null)
