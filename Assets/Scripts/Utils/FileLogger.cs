@@ -16,7 +16,7 @@ using UnityEngine;
         {
             get
             {
-                if (instance == null && !isQuitting)
+                if (instance == null && !isQuitting && Application.isPlaying)
                 {
                     GameObject go = new GameObject("FileLogger");
                     instance = go.AddComponent<FileLogger>();

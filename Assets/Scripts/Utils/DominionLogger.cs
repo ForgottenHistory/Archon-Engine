@@ -13,7 +13,7 @@ public static class DominionLogger
     {
         // Direct approach - call both systems explicitly
         if (logToConsole) Debug.Log(message);
-        if (logToFile && !FileLogger.IsQuitting)
+        if (logToFile && !FileLogger.IsQuitting && Application.isPlaying)
         {
             var logger = FileLogger.Instance;
             if (logger != null) logger.WriteLogDirect(message, LogType.Log);
@@ -23,7 +23,7 @@ public static class DominionLogger
     public static void LogWarning(string message)
     {
         if (logToConsole) Debug.LogWarning(message);
-        if (logToFile && !FileLogger.IsQuitting)
+        if (logToFile && !FileLogger.IsQuitting && Application.isPlaying)
         {
             var logger = FileLogger.Instance;
             if (logger != null) logger.WriteLogDirect(message, LogType.Warning);
@@ -33,7 +33,7 @@ public static class DominionLogger
     public static void LogError(string message)
     {
         if (logToConsole) Debug.LogError(message);
-        if (logToFile && !FileLogger.IsQuitting)
+        if (logToFile && !FileLogger.IsQuitting && Application.isPlaying)
         {
             var logger = FileLogger.Instance;
             if (logger != null) logger.WriteLogDirect(message, LogType.Error);
