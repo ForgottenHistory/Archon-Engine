@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 using Core.Systems;
 using Core.Loaders;
 using ParadoxParser.Jobs;
-using Core.Loaders;
 using Core.Data;
+using Core.Registries;
+using Core.Linking;
 
 namespace Core
 {
@@ -30,8 +33,10 @@ namespace Core
         {
             NotStarted,
             InitializingCore,
+            LoadingStaticData,    // NEW: Load religions, cultures, trade goods
             LoadingProvinces,
             LoadingCountries,
+            LinkingReferences,    // NEW: Resolve string references to IDs
             LoadingScenario,
             InitializingSystems,
             WarmingCaches,
@@ -53,6 +58,13 @@ namespace Core
         private GameState gameState;
         private ProvinceMapProcessor provinceProcessor;
         private JobifiedCountryLoader countryLoader;
+
+        // Data linking systems
+        private GameRegistries gameRegistries;
+        private ProvinceInitialStateLoadResult provinceInitialStates;
+        private ReferenceResolver referenceResolver;
+        private CrossReferenceBuilder crossReferenceBuilder;
+        private DataValidator dataValidator;
 
         // Properties
         public LoadingPhase CurrentPhase => currentPhase;
@@ -99,27 +111,35 @@ namespace Core
             isLoading = true;
             var startTime = Time.realtimeSinceStartup;
 
-            // Phase 1: Initialize Core Systems (0-10%)
+            // Phase 1: Initialize Core Systems (0-5%)
             yield return StartCoroutine(SafeExecutePhase(() => InitializeCoreSystemsPhase()));
             if (currentPhase == LoadingPhase.Error) yield break;
 
-            // Phase 2: Load Province Data (10-40%)
+            // Phase 2: Load Static Data (5-15%) - NEW: Religions, cultures, trade goods
+            yield return StartCoroutine(SafeExecutePhase(() => LoadStaticDataPhase()));
+            if (currentPhase == LoadingPhase.Error) yield break;
+
+            // Phase 3: Load Province Data (15-35%)
             yield return StartCoroutine(SafeExecutePhase(() => LoadProvinceDataPhase()));
             if (currentPhase == LoadingPhase.Error) yield break;
 
-            // Phase 3: Load Country Data (40-60%)
+            // Phase 4: Load Country Data (35-50%)
             yield return StartCoroutine(SafeExecutePhase(() => LoadCountryDataPhase()));
             if (currentPhase == LoadingPhase.Error) yield break;
 
-            // Phase 4: Load Scenario Data (60-75%)
+            // Phase 5: Link References (50-65%) - NEW: Convert strings to IDs
+            yield return StartCoroutine(SafeExecutePhase(() => LinkingReferencesPhase()));
+            if (currentPhase == LoadingPhase.Error) yield break;
+
+            // Phase 6: Load Scenario Data (65-75%)
             yield return StartCoroutine(SafeExecutePhase(() => LoadScenarioDataPhase()));
             if (currentPhase == LoadingPhase.Error) yield break;
 
-            // Phase 5: Initialize Derived Systems (75-90%)
+            // Phase 7: Initialize Derived Systems (75-85%)
             yield return StartCoroutine(SafeExecutePhase(() => InitializeSystemsPhase()));
             if (currentPhase == LoadingPhase.Error) yield break;
 
-            // Phase 6: Warm Caches (90-100%)
+            // Phase 8: Warm Caches (85-100%)
             yield return StartCoroutine(SafeExecutePhase(() => WarmCachesPhase()));
             if (currentPhase == LoadingPhase.Error) yield break;
 
@@ -208,13 +228,22 @@ namespace Core
                 gameState = gameStateGO.AddComponent<GameState>();
             }
 
-            UpdateProgress(2f, "Creating event system...");
+            UpdateProgress(1f, "Creating event system...");
             yield return null;
 
             // Initialize GameState (this creates EventBus, TimeManager, etc.)
             gameState.InitializeSystems();
 
-            UpdateProgress(5f, "Creating data loaders...");
+            UpdateProgress(2f, "Initializing data linking systems...");
+            yield return null;
+
+            // Initialize data linking systems
+            gameRegistries = new GameRegistries();
+            referenceResolver = new ReferenceResolver(gameRegistries);
+            crossReferenceBuilder = new CrossReferenceBuilder(gameRegistries);
+            dataValidator = new DataValidator(gameRegistries);
+
+            UpdateProgress(3f, "Creating data loaders...");
             yield return null;
 
             // Create loaders
@@ -227,11 +256,68 @@ namespace Core
         }
 
         /// <summary>
-        /// Phase 2: Load province data from BMP and definitions
+        /// Phase 2: Load static data (religions, cultures, trade goods, terrains)
+        /// </summary>
+        private IEnumerator LoadStaticDataPhase()
+        {
+            SetPhase(LoadingPhase.LoadingStaticData, 5f, "Loading static data...");
+
+            UpdateProgress(6f, "Loading religions...");
+            yield return null;
+
+            // Load religions
+            ReligionLoader.LoadReligions(gameRegistries.Religions, gameSettings.DataDirectory);
+
+            UpdateProgress(8f, "Loading cultures...");
+            yield return null;
+
+            // Load cultures
+            CultureLoader.LoadCultures(gameRegistries.Cultures, gameSettings.DataDirectory);
+
+            UpdateProgress(10f, "Loading trade goods...");
+            yield return null;
+
+            // Load trade goods
+            TradeGoodLoader.LoadTradeGoods(gameRegistries.TradeGoods, gameSettings.DataDirectory);
+
+            UpdateProgress(12f, "Loading terrain types...");
+            yield return null;
+
+            // Load terrain types
+            TerrainLoader.LoadTerrains(gameRegistries.Terrains, gameSettings.DataDirectory);
+
+            UpdateProgress(14f, "Validating static data...");
+            yield return null;
+
+            // Validate that static data loaded successfully
+            if (!gameRegistries.ValidateRegistries())
+            {
+                ReportError("Static data validation failed - some required data could not be loaded");
+                yield break;
+            }
+
+            UpdateProgress(15f, "Static data ready");
+
+            // Emit static data ready event
+            gameState.EventBus.Emit(new StaticDataReadyEvent
+            {
+                ReligionCount = gameRegistries.Religions.Count,
+                CultureCount = gameRegistries.Cultures.Count,
+                TradeGoodCount = gameRegistries.TradeGoods.Count,
+                TerrainCount = gameRegistries.Terrains.Count,
+                TimeStamp = Time.time
+            });
+            gameState.EventBus.ProcessEvents();
+
+            LogPhaseComplete($"Static data loaded: {gameRegistries.Religions.Count} religions, {gameRegistries.Cultures.Count} cultures, {gameRegistries.TradeGoods.Count} trade goods");
+        }
+
+        /// <summary>
+        /// Phase 3: Load province data from BMP and definitions
         /// </summary>
         private IEnumerator LoadProvinceDataPhase()
         {
-            SetPhase(LoadingPhase.LoadingProvinces, 10f, "Loading province map...");
+            SetPhase(LoadingPhase.LoadingProvinces, 15f, "Loading province map...");
 
             // Start province loading
             var provinceTask = LoadProvinceDataAsync();
@@ -264,11 +350,17 @@ namespace Core
             UpdateProgress(35f, "Loading province initial states...");
             yield return null;
 
-            // Load province initial states using Burst jobs
-            gameState.Provinces.LoadProvinceInitialStates(gameSettings.DataDirectory);
+            // Load province initial states for reference linking (don't apply yet)
+            provinceInitialStates = gameState.Provinces.LoadProvinceInitialStatesForLinking(gameSettings.DataDirectory);
+
+            if (!provinceInitialStates.Success)
+            {
+                ReportError($"Province loading failed: {provinceInitialStates.ErrorMessage}");
+                yield break;
+            }
 
             UpdateProgress(40f, "Province data loaded");
-            LogPhaseComplete($"Loaded {gameState.Provinces.ProvinceCount} provinces with history data");
+            LogPhaseComplete($"Loaded {provinceInitialStates.LoadedCount} provinces with history data (ready for reference linking)");
 
             // Emit province data ready event
             gameState.EventBus.Emit(new ProvinceDataReadyEvent
@@ -288,7 +380,7 @@ namespace Core
         /// </summary>
         private IEnumerator LoadCountryDataPhase()
         {
-            SetPhase(LoadingPhase.LoadingCountries, 40f, "Loading countries...");
+            SetPhase(LoadingPhase.LoadingCountries, 35f, "Loading countries...");
 
             // Load country data
             var countryResult = countryLoader.LoadAllCountriesJob(gameSettings.CountriesDirectory);
@@ -321,11 +413,182 @@ namespace Core
         }
 
         /// <summary>
-        /// Phase 4: Load scenario data
+        /// Phase 5: Link all string references to numeric IDs
+        /// </summary>
+        private IEnumerator LinkingReferencesPhase()
+        {
+            SetPhase(LoadingPhase.LinkingReferences, 50f, "Linking data references...");
+
+            UpdateProgress(52f, "Registering countries...");
+            yield return null;
+
+            // Load real country tags using ManifestLoader pattern
+            var countryTagResult = CountryTagLoader.LoadCountryTags(gameSettings.DataDirectory);
+
+            if (!countryTagResult.Success)
+            {
+                DominionLogger.LogError($"Failed to load country tags: {countryTagResult.ErrorMessage}");
+                // Continue with limited functionality
+            }
+
+            // Register countries using real tags from 00_countries.txt
+            var countryIds = gameState.Countries.GetAllCountryIds();
+            DominionLogger.Log($"Country registration: Found {countryIds.Length} countries to register with {countryTagResult.CountryTags.Count} available tags");
+
+            var tagToIdMapping = new Dictionary<string, ushort>();
+            var registeredCount = 0;
+
+            // Create mapping from filenames to country IDs (this is approximate for now)
+            for (int i = 0; i < countryIds.Length && registeredCount < countryTagResult.CountryTags.Count; i++)
+            {
+                var countryId = countryIds[i];
+
+                // Find a country tag for this ID (we'll improve this mapping later)
+                // For now, assign tags in order - this will be fixed when we have proper file→ID mapping
+                var availableTags = new List<string>(countryTagResult.CountryTags.Keys);
+                if (registeredCount < availableTags.Count)
+                {
+                    var tag = availableTags[registeredCount];
+                    var countryData = new Core.Registries.CountryData
+                    {
+                        Id = countryId,
+                        Tag = tag
+                    };
+
+                    try
+                    {
+                        gameRegistries.Countries.Register(tag, countryData);
+                        tagToIdMapping[tag] = countryId;
+                        registeredCount++;
+
+                        if (registeredCount <= 5) // Log first few for debugging
+                        {
+                            DominionLogger.Log($"Registered country '{tag}' with ID {countryId}");
+                        }
+                    }
+                    catch (System.Exception e)
+                    {
+                        DominionLogger.LogError($"Failed to register country {tag} (ID: {countryId}): {e.Message}");
+                    }
+                }
+            }
+
+            DominionLogger.Log($"Country registration complete: {gameRegistries.Countries.Count} countries registered with real tags");
+
+            UpdateProgress(55f, "Processing province data with real references...");
+            yield return null;
+
+            // Process all loaded province initial states with string references
+            DominionLogger.Log($"Province processing: Found {provinceInitialStates.LoadedCount} provinces with string references");
+
+            for (int i = 0; i < provinceInitialStates.InitialStates.Length; i++)
+            {
+                var initialState = provinceInitialStates.InitialStates[i];
+
+                // Skip provinces with invalid IDs (0 or negative)
+                if (initialState.ProvinceID <= 0)
+                    continue;
+
+                // Create ProvinceData with real loaded data
+                var provinceData = new Core.Registries.ProvinceData
+                {
+                    RuntimeId = (ushort)initialState.ProvinceID,
+                    DefinitionId = initialState.ProvinceID,
+                    Name = $"Province {initialState.ProvinceID}",
+                    Development = initialState.Development,
+                    // Fix terrain: if province has development, it's land (terrain = 1), otherwise ocean (terrain = 0)
+                    Terrain = (byte)(initialState.Development > 0 ? 1 : 0),
+                    Flags = initialState.Flags,
+                    BaseTax = initialState.BaseTax,
+                    BaseProduction = initialState.BaseProduction,
+                    BaseManpower = initialState.BaseManpower,
+                    CenterOfTrade = initialState.CenterOfTrade
+                };
+
+                try
+                {
+                    gameRegistries.Provinces.Register(initialState.ProvinceID, provinceData);
+                }
+                catch (System.Exception e)
+                {
+                    DominionLogger.LogWarning($"Failed to register province {initialState.ProvinceID}: {e.Message}");
+                }
+            }
+
+            DominionLogger.Log($"Province registration complete: {gameRegistries.Provinces.Count} provinces registered with real data");
+
+            UpdateProgress(58f, "Resolving province references...");
+            yield return null;
+
+            // Resolve string references in province data
+            for (int i = 0; i < provinceInitialStates.InitialStates.Length; i++)
+            {
+                var initialState = provinceInitialStates.InitialStates[i];
+
+                // Skip provinces with invalid IDs
+                if (initialState.ProvinceID <= 0)
+                    continue;
+
+                var provinceData = gameRegistries.Provinces.GetByDefinition(initialState.ProvinceID);
+                if (provinceData != null)
+                {
+                    referenceResolver.ResolveProvinceReferences(initialState, provinceData);
+                }
+            }
+
+            UpdateProgress(60f, "Resolving country references...");
+            yield return null;
+
+            // Resolve references for all countries
+            // TODO: This will be implemented when country data contains string references
+
+            UpdateProgress(60f, "Applying resolved province data...");
+            yield return null;
+
+            // Apply the resolved province data to the hot ProvinceSystem
+            gameState.Provinces.ApplyResolvedInitialStates(provinceInitialStates.InitialStates);
+
+            UpdateProgress(62f, "Building cross-references...");
+            yield return null;
+
+            // Build bidirectional references
+            crossReferenceBuilder.BuildAllCrossReferences();
+
+            UpdateProgress(64f, "Validating data integrity...");
+            yield return null;
+
+            // Validate all references
+            if (!dataValidator.ValidateGameData())
+            {
+                ReportError("Data validation failed after linking references");
+                yield break;
+            }
+
+            UpdateProgress(65f, "Reference linking complete");
+
+            // Emit references linked event
+            gameState.EventBus.Emit(new ReferencesLinkedEvent
+            {
+                CountriesLinked = gameRegistries.Countries.Count,
+                ProvincesLinked = gameRegistries.Provinces.Count,
+                ValidationErrors = dataValidator.GetErrors().Count,
+                ValidationWarnings = dataValidator.GetWarnings().Count,
+                TimeStamp = Time.time
+            });
+            gameState.EventBus.ProcessEvents();
+
+            LogPhaseComplete($"Linked references: {gameRegistries.Countries.Count} countries, {gameRegistries.Provinces.Count} provinces");
+
+            // Clean up
+            provinceInitialStates.Dispose();
+        }
+
+        /// <summary>
+        /// Phase 6: Load scenario data
         /// </summary>
         private IEnumerator LoadScenarioDataPhase()
         {
-            SetPhase(LoadingPhase.LoadingScenario, 60f, "Loading scenario...");
+            SetPhase(LoadingPhase.LoadingScenario, 65f, "Loading scenario...");
 
             ScenarioLoader.ScenarioLoadResult scenarioResult;
 
@@ -623,6 +886,31 @@ namespace Core
     {
         public int CountryCount;
         public bool HasScenarioData;
+        public float TimeStamp { get; set; }
+    }
+
+    /// <summary>
+    /// Emitted when static data (religions, cultures, trade goods) is loaded
+    /// </summary>
+    public struct StaticDataReadyEvent : IGameEvent
+    {
+        public int ReligionCount;
+        public int CultureCount;
+        public int TradeGoodCount;
+        public int TerrainCount;
+        public float TimeStamp { get; set; }
+    }
+
+    /// <summary>
+    /// Emitted when all string references have been resolved to numeric IDs
+    /// Indicates the data linking phase is complete
+    /// </summary>
+    public struct ReferencesLinkedEvent : IGameEvent
+    {
+        public int CountriesLinked;
+        public int ProvincesLinked;
+        public int ValidationErrors;
+        public int ValidationWarnings;
         public float TimeStamp { get; set; }
     }
 }

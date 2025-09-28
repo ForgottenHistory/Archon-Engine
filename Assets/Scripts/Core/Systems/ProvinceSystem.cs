@@ -413,6 +413,48 @@ namespace Core.Systems
         }
 
         /// <summary>
+        /// Load province initial states but return them for reference resolution before applying
+        /// Used by data linking architecture to resolve string references to IDs
+        /// </summary>
+        public ProvinceInitialStateLoadResult LoadProvinceInitialStatesForLinking(string dataDirectory)
+        {
+            if (!isInitialized)
+            {
+                DominionLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
+                return ProvinceInitialStateLoadResult.Failed("ProvinceSystem not initialized");
+            }
+
+            DominionLogger.Log($"Loading province initial states for reference linking from {dataDirectory}");
+
+            var result = BurstProvinceHistoryLoader.LoadProvinceInitialStates(dataDirectory);
+
+            if (!result.Success)
+            {
+                DominionLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}");
+                return result;
+            }
+
+            DominionLogger.Log($"Province initial states loaded for linking: {result.LoadedCount} successful, {result.FailedCount} failed");
+
+            // Return the raw data WITHOUT applying it - caller will resolve references first
+            return result;
+        }
+
+        /// <summary>
+        /// Apply resolved initial states to hot province data after reference resolution
+        /// </summary>
+        public void ApplyResolvedInitialStates(NativeArray<ProvinceInitialState> initialStates)
+        {
+            ApplyInitialStates(initialStates);
+
+            eventBus?.Emit(new ProvinceInitialStatesLoadedEvent
+            {
+                LoadedCount = initialStates.Length,
+                FailedCount = 0 // Already filtered during resolution
+            });
+        }
+
+        /// <summary>
         /// Apply initial states to hot province data
         /// Only touches hot data needed for simulation
         /// </summary>

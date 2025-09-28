@@ -50,66 +50,39 @@ namespace Core.Loaders
         }
 
         /// <summary>
-        /// Load all country files using Unity Job System
+        /// Load all country files using hybrid JSON5 + Burst architecture
         /// </summary>
-        public CountryDataLoadResult LoadAllCountriesJob(string countriesDirectory = "Assets/Data/common/countries")
+        public CountryDataLoadResult LoadAllCountriesJob(string countriesDirectory = "Assets/Data")
         {
             globalStopwatch.Restart();
             globalErrors.Clear();
 
-            ReportProgress("Initializing Job System country loader...");
+            ReportProgress("Initializing hybrid JSON5 + Burst country loader...");
 
             try
             {
-                // Get all country files
-                var countryFiles = GetCountryFiles(countriesDirectory);
-                if (countryFiles.Length == 0)
-                {
-                    var errorMsg = $"No country files found in directory: {countriesDirectory}";
-                    globalErrors.Add(errorMsg);
-                    return CountryDataLoadResult.CreateFailure(errorMsg);
-                }
-
-                DominionLogger.LogFormat("JobifiedCountryLoader: Found {0} country files", countryFiles.Length);
-
-                // Calculate memory requirements
-                var memoryReq = BatchParseJobHelpers.CalculateMemoryRequirements(
-                    countryFiles, ESTIMATED_KV_PER_FILE, ESTIMATED_BLOCKS_PER_FILE);
-
-                DominionLogger.LogFormat("Memory requirements: {0}", memoryReq);
-
-                if (!memoryReq.IsMemoryReasonable)
-                {
-                    var errorMsg = $"Memory requirements too high: {memoryReq.EstimatedTotalMemoryMB}MB";
-                    globalErrors.Add(errorMsg);
-                    return CountryDataLoadResult.CreateFailure(errorMsg);
-                }
-
-                // Process files using Job System
-                var countryCollection = ProcessCountryFilesWithJobs(countryFiles);
+                // Use the new hybrid JSON5 + Burst loader
+                var result = BurstCountryLoader.LoadAllCountries(countriesDirectory);
 
                 globalStopwatch.Stop();
-                LogFinalStatistics(countryCollection, countryFiles.Length);
 
-                // Create loading statistics
-                var stats = new LoadingStatistics
+                // Update the result with timing information
+                if (result.Success && result.Statistics != null)
                 {
-                    LoadingTimeMs = globalStopwatch.ElapsedMilliseconds,
-                    FilesProcessed = countryFiles.Length,
-                    FilesSkipped = 0,
-                    ParseErrors = globalErrors.Count,
-                    MemoryUsedBytes = countryCollection?.GetMemoryUsage() ?? 0,
-                    Warnings = new List<string>(globalErrors)
-                };
+                    var updatedStats = new LoadingStatistics
+                    {
+                        LoadingTimeMs = globalStopwatch.ElapsedMilliseconds,
+                        FilesProcessed = result.Statistics.FilesProcessed,
+                        FilesSkipped = result.Statistics.FilesSkipped,
+                        ParseErrors = result.Statistics.ParseErrors,
+                        MemoryUsedBytes = result.Statistics.MemoryUsedBytes,
+                        Warnings = result.Statistics.Warnings
+                    };
 
-                if (countryCollection != null)
-                {
-                    return CountryDataLoadResult.CreateSuccess(countryCollection, stats);
+                    return CountryDataLoadResult.CreateSuccess(result.Countries, updatedStats);
                 }
-                else
-                {
-                    return CountryDataLoadResult.CreateFailure("Failed to process country files");
-                }
+
+                return result;
             }
             catch (System.Exception e)
             {
