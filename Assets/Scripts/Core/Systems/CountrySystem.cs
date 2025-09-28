@@ -16,7 +16,7 @@ namespace Core.Systems
     public class CountrySystem : MonoBehaviour, System.IDisposable
     {
         [Header("Configuration")]
-        [SerializeField] private int initialCapacity = 256;  // Max countries supported
+        [SerializeField] private int initialCapacity = 1000;  // Max countries supported
         [SerializeField] private bool enableColdDataCaching = true;
         [SerializeField] private int coldDataCacheSize = 64;
 
@@ -30,13 +30,13 @@ namespace Core.Systems
         private NativeArray<byte> countryFlags;              // Least accessed hot data
 
         // Country ID management
-        private NativeHashMap<ushort, byte> tagHashToId;     // Tag hash -> Country ID lookup
-        private NativeHashMap<byte, ushort> idToTagHash;     // Country ID -> Tag hash lookup
-        private NativeList<byte> activeCountryIds;           // List of valid country IDs
+        private NativeHashMap<ushort, ushort> tagHashToId;     // Tag hash -> Country ID lookup
+        private NativeHashMap<ushort, ushort> idToTagHash;     // Country ID -> Tag hash lookup
+        private NativeList<ushort> activeCountryIds;           // List of valid country IDs
 
         // Cold data management (lazy-loaded, cached)
-        private Dictionary<byte, CountryColdData> coldDataCache;
-        private Dictionary<byte, string> countryTags;        // Country ID -> 3-letter tag (e.g., "ENG")
+        private Dictionary<ushort, CountryColdData> coldDataCache;
+        private Dictionary<ushort, string> countryTags;        // Country ID -> 3-letter tag (e.g., "ENG")
         private HashSet<string> usedTags;                    // Track used tags for duplicate detection
 
         // Performance tracking
@@ -64,13 +64,13 @@ namespace Core.Systems
             countryFlags = new NativeArray<byte>(initialCapacity, Allocator.Persistent);
 
             // ID management
-            tagHashToId = new NativeHashMap<ushort, byte>(initialCapacity, Allocator.Persistent);
-            idToTagHash = new NativeHashMap<byte, ushort>(initialCapacity, Allocator.Persistent);
-            activeCountryIds = new NativeList<byte>(initialCapacity, Allocator.Persistent);
+            tagHashToId = new NativeHashMap<ushort, ushort>(initialCapacity, Allocator.Persistent);
+            idToTagHash = new NativeHashMap<ushort, ushort>(initialCapacity, Allocator.Persistent);
+            activeCountryIds = new NativeList<ushort>(initialCapacity, Allocator.Persistent);
 
             // Cold data management
-            coldDataCache = new Dictionary<byte, CountryColdData>(coldDataCacheSize);
-            countryTags = new Dictionary<byte, string>(initialCapacity);
+            coldDataCache = new Dictionary<ushort, CountryColdData>(coldDataCacheSize);
+            countryTags = new Dictionary<ushort, string>(initialCapacity);
             usedTags = new HashSet<string>(initialCapacity);
 
             isInitialized = true;
@@ -113,7 +113,7 @@ namespace Core.Systems
             AddDefaultUnownedCountry();
 
             // Process each country from the loaded data
-            byte nextCountryId = 1; // Start from 1 (0 is reserved for unowned)
+            ushort nextCountryId = 1; // Start from 1 (0 is reserved for unowned)
 
             for (int i = 0; i < countryData.Count; i++)
             {
@@ -173,7 +173,7 @@ namespace Core.Systems
         /// <summary>
         /// Add a new country to the system
         /// </summary>
-        private void AddCountry(byte countryId, string tag, CountryHotData hotData, CountryColdData coldData)
+        private void AddCountry(ushort countryId, string tag, CountryHotData hotData, CountryColdData coldData)
         {
             if (countryId >= countryHotData.Length)
             {
@@ -330,7 +330,7 @@ namespace Core.Systems
         /// <summary>
         /// Get country color - most common query (must be ultra-fast)
         /// </summary>
-        public Color32 GetCountryColor(byte countryId)
+        public Color32 GetCountryColor(ushort countryId)
         {
             if (countryId >= countryCount)
                 return Color.gray;
@@ -341,7 +341,7 @@ namespace Core.Systems
         /// <summary>
         /// Get country tag (3-letter code)
         /// </summary>
-        public string GetCountryTag(byte countryId)
+        public string GetCountryTag(ushort countryId)
         {
             if (countryTags.TryGetValue(countryId, out string tag))
                 return tag;
@@ -352,10 +352,10 @@ namespace Core.Systems
         /// <summary>
         /// Get country ID from tag
         /// </summary>
-        public byte GetCountryIdFromTag(string tag)
+        public ushort GetCountryIdFromTag(string tag)
         {
             ushort tagHash = CalculateTagHash(tag);
-            if (tagHashToId.TryGetValue(tagHash, out byte countryId))
+            if (tagHashToId.TryGetValue(tagHash, out ushort countryId))
                 return countryId;
 
             return 0; // Unowned
@@ -364,7 +364,7 @@ namespace Core.Systems
         /// <summary>
         /// Get country hot data (8-byte struct)
         /// </summary>
-        public CountryHotData GetCountryHotData(byte countryId)
+        public CountryHotData GetCountryHotData(ushort countryId)
         {
             if (countryId >= countryCount)
                 return new CountryHotData();
@@ -375,7 +375,7 @@ namespace Core.Systems
         /// <summary>
         /// Get country cold data (lazy-loaded)
         /// </summary>
-        public CountryColdData GetCountryColdData(byte countryId)
+        public CountryColdData GetCountryColdData(ushort countryId)
         {
             // Check cache first
             if (coldDataCache.TryGetValue(countryId, out CountryColdData cachedData))
@@ -390,7 +390,7 @@ namespace Core.Systems
         /// <summary>
         /// Get graphical culture ID for a country
         /// </summary>
-        public byte GetCountryGraphicalCulture(byte countryId)
+        public byte GetCountryGraphicalCulture(ushort countryId)
         {
             if (countryId >= countryCount)
                 return 0;
@@ -401,7 +401,7 @@ namespace Core.Systems
         /// <summary>
         /// Check if country has specific flag
         /// </summary>
-        public bool HasCountryFlag(byte countryId, byte flag)
+        public bool HasCountryFlag(ushort countryId, byte flag)
         {
             if (countryId >= countryCount)
                 return false;
@@ -412,12 +412,12 @@ namespace Core.Systems
         /// <summary>
         /// Get all active country IDs
         /// </summary>
-        public NativeArray<byte> GetAllCountryIds(Allocator allocator = Allocator.TempJob)
+        public NativeArray<ushort> GetAllCountryIds(Allocator allocator = Allocator.TempJob)
         {
-            var result = new NativeArray<byte>(countryCount, allocator);
+            var result = new NativeArray<ushort>(countryCount, allocator);
             for (int i = 0; i < countryCount; i++)
             {
-                result[i] = (byte)i;
+                result[i] = (ushort)i;
             }
             return result;
         }
@@ -425,7 +425,7 @@ namespace Core.Systems
         /// <summary>
         /// Check if country exists
         /// </summary>
-        public bool HasCountry(byte countryId)
+        public bool HasCountry(ushort countryId)
         {
             return countryId < countryCount;
         }
@@ -433,7 +433,7 @@ namespace Core.Systems
         /// <summary>
         /// Set country color (for dynamic changes)
         /// </summary>
-        public void SetCountryColor(byte countryId, Color32 newColor)
+        public void SetCountryColor(ushort countryId, Color32 newColor)
         {
             if (countryId >= countryCount)
                 return;
@@ -527,7 +527,7 @@ namespace Core.Systems
 
     public struct CountryColorChangedEvent : IGameEvent
     {
-        public byte CountryId;
+        public ushort CountryId;
         public Color32 OldColor;
         public Color32 NewColor;
         public float TimeStamp { get; set; }

@@ -219,7 +219,7 @@ namespace Core.Queries
         public UnityEngine.Color32 GetProvinceOwnerColor(ushort provinceId)
         {
             ushort ownerId = GetOwner(provinceId);
-            return countrySystem.GetCountryColor((byte)ownerId);
+            return countrySystem.GetCountryColor(ownerId);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Core.Queries
         public string GetProvinceOwnerTag(ushort provinceId)
         {
             ushort ownerId = GetOwner(provinceId);
-            return countrySystem.GetCountryTag((byte)ownerId);
+            return countrySystem.GetCountryTag(ownerId);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Core.Queries
         public NativeArray<ushort> GetProvincesByOwnerTag(string tagPattern, Allocator allocator = Allocator.TempJob)
         {
             var allCountries = countrySystem.GetAllCountryIds(Allocator.Temp);
-            var matchingCountries = new NativeList<byte>(allCountries.Length / 10, Allocator.Temp);
+            var matchingCountries = new NativeList<ushort>(allCountries.Length / 10, Allocator.Temp);
 
             // Find countries with matching tags
             for (int i = 0; i < allCountries.Length; i++)

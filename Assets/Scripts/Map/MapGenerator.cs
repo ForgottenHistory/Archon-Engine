@@ -3,22 +3,23 @@ using Map.Rendering;
 using ParadoxParser.Jobs;
 using ParadoxParser.Bitmap;
 using System.Threading.Tasks;
+using Core;
 
 namespace Map
 {
     /// <summary>
-    /// MapGenerator orchestrates the loading and rendering of the texture-based map system.
-    /// Creates a simple map display by loading provinces.bmp and rendering it with the MapCore shader.
-    /// Follows the dual-layer architecture: loads simulation data and creates GPU presentation layer.
+    /// MapGenerator orchestrates the rendering of the texture-based map system.
+    /// Creates visual presentation layer from simulation data loaded by Core systems.
+    /// Follows the dual-layer architecture: listens for simulation data, creates GPU presentation layer.
+    /// Event-driven to avoid circular dependencies between Core (simulation) and Map (presentation).
     /// </summary>
-    public class MapGenerator : MonoBehaviour
+    public class MapGenerator : MonoBehaviour, IEventListener<SimulationDataReadyEvent>
     {
         [Header("Map Settings")]
         [SerializeField] private string provinceBitmapPath = "Assets/Data/map/provinces.bmp";
         [SerializeField] private string definitionCsvPath = "Assets/Data/map/definition.csv";
         [SerializeField] private bool useDefinitionFile = true;
         [SerializeField] private Material mapMaterial;
-        [SerializeField] private bool autoLoadOnStart = true;
         [SerializeField] private bool logLoadingProgress = true;
 
         [Header("Rendering")]
@@ -39,11 +40,78 @@ namespace Map
         public ProvinceMapping ProvinceMapping => provinceMapping;
         public MapTextureManager TextureManager => textureManager;
 
-        async void Start()
+        void Start()
         {
-            if (autoLoadOnStart)
+            // Try to subscribe to events, but handle case where GameState isn't ready yet
+            if (!TrySubscribeToEvents())
             {
-                await GenerateMapAsync();
+                if (logLoadingProgress)
+                {
+                    DominionLogger.Log("MapGenerator: GameState not ready yet, will retry subscription...");
+                }
+
+                // Start a coroutine to retry subscription
+                StartCoroutine(WaitForGameStateAndSubscribe());
+            }
+        }
+
+        private bool TrySubscribeToEvents()
+        {
+            var gameState = FindFirstObjectByType<GameState>();
+            if (gameState != null && gameState.EventBus != null)
+            {
+                gameState.EventBus.Subscribe<SimulationDataReadyEvent>(this);
+
+                if (logLoadingProgress)
+                {
+                    DominionLogger.Log("MapGenerator: Subscribed to SimulationDataReadyEvent - waiting for simulation data...");
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private System.Collections.IEnumerator WaitForGameStateAndSubscribe()
+        {
+            // Wait up to 10 seconds for GameState to be created
+            float timeout = 10f;
+            float elapsed = 0f;
+
+            while (elapsed < timeout)
+            {
+                if (TrySubscribeToEvents())
+                {
+                    yield break; // Successfully subscribed
+                }
+
+                yield return new WaitForSeconds(0.1f); // Check every 100ms
+                elapsed += 0.1f;
+            }
+
+            // If we get here, GameState was never found
+            DominionLogger.LogError("MapGenerator: Timeout waiting for GameState - check scene setup");
+        }
+
+        /// <summary>
+        /// Event handler for when simulation data is ready
+        /// This decouples presentation layer from simulation layer
+        /// </summary>
+        public void OnEvent(SimulationDataReadyEvent eventData)
+        {
+            DominionLogger.Log($"MapGenerator: Received SimulationDataReadyEvent - {eventData.ProvinceCount} provinces, {eventData.CountryCount} countries ready");
+
+            // Start map generation now that simulation data is available
+            _ = GenerateMapFromSimulationDataAsync(eventData);
+        }
+
+        /// <summary>
+        /// Implementation of IEventListener.OnEvent for non-generic interface
+        /// </summary>
+        public void OnEvent(IGameEvent gameEvent)
+        {
+            if (gameEvent is SimulationDataReadyEvent simulationEvent)
+            {
+                OnEvent(simulationEvent);
             }
         }
 
@@ -59,12 +127,13 @@ namespace Map
 
         /// <summary>
         /// Generate the complete map by loading province bitmap and setting up rendering (async)
+        /// Legacy method - use GenerateMapFromSimulationDataAsync instead
         /// </summary>
         public async Task GenerateMapAsync()
         {
             if (logLoadingProgress)
             {
-                DominionLogger.Log("MapGenerator: Starting map generation with JobifiedBMPLoader...");
+                DominionLogger.Log("MapGenerator: Starting legacy map generation with JobifiedBMPLoader...");
             }
 
             // Initialize components
@@ -82,6 +151,35 @@ namespace Map
             if (logLoadingProgress)
             {
                 DominionLogger.Log($"MapGenerator: Map generation complete. Loaded {provinceMapping?.ProvinceCount ?? 0} provinces.");
+            }
+        }
+
+        /// <summary>
+        /// Generate the map presentation layer from already-loaded simulation data
+        /// This is the preferred method that follows dual-layer architecture
+        /// </summary>
+        public async Task GenerateMapFromSimulationDataAsync(SimulationDataReadyEvent simulationData)
+        {
+            if (logLoadingProgress)
+            {
+                DominionLogger.Log($"MapGenerator: Starting event-driven map generation from simulation data...");
+            }
+
+            // Initialize components
+            InitializeComponents();
+
+            // Get province data from Core systems instead of loading files
+            await LoadProvinceDataFromSimulationAsync(simulationData);
+
+            // Set up map rendering
+            SetupMapRendering();
+
+            // Configure camera
+            SetupCamera();
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.Log($"MapGenerator: Event-driven map generation complete. Rendering {simulationData.ProvinceCount} provinces.");
             }
         }
 
@@ -143,7 +241,93 @@ namespace Map
         }
 
         /// <summary>
+        /// Load province data from already-loaded Core simulation systems
+        /// This method follows the dual-layer architecture by getting data from simulation layer
+        /// </summary>
+        private async Task LoadProvinceDataFromSimulationAsync(SimulationDataReadyEvent simulationData)
+        {
+            if (logLoadingProgress)
+            {
+                DominionLogger.Log("MapGenerator: Getting province data from Core simulation systems...");
+            }
+
+            // Get GameState to access simulation data
+            var gameState = FindFirstObjectByType<GameState>();
+            if (gameState == null)
+            {
+                DominionLogger.LogError("MapGenerator: Could not find GameState to access simulation data");
+                return;
+            }
+
+            try
+            {
+                // We still need to load the bitmap for visual rendering, but now we get the
+                // simulation data from Core systems rather than parsing it ourselves
+                if (string.IsNullOrEmpty(provinceBitmapPath))
+                {
+                    DominionLogger.LogError("MapGenerator: Province bitmap path not set");
+                    return;
+                }
+
+                // Use absolute paths for loading
+                string bmpPath = System.IO.Path.GetFullPath(provinceBitmapPath);
+                string csvPath = useDefinitionFile && !string.IsNullOrEmpty(definitionCsvPath)
+                    ? System.IO.Path.GetFullPath(definitionCsvPath)
+                    : null;
+
+                if (logLoadingProgress)
+                {
+                    DominionLogger.Log($"MapGenerator: Loading province bitmap for rendering: {bmpPath}");
+                }
+
+                // Load province map for visual data only (Core already has the simulation data)
+                var provinceResult = await provinceProcessor.LoadProvinceMapAsync(bmpPath, csvPath);
+
+                if (!provinceResult.Success)
+                {
+                    DominionLogger.LogError($"MapGenerator: Failed to load province bitmap: {provinceResult.ErrorMessage}");
+                    return;
+                }
+
+                // Convert result and populate textures using Core simulation data
+                provinceMapping = ConvertProvinceResultWithSimulationData(provinceResult, textureManager, gameState);
+
+                if (provinceMapping == null)
+                {
+                    DominionLogger.LogError("MapGenerator: Failed to convert province result with simulation data");
+                    return;
+                }
+
+                if (logLoadingProgress)
+                {
+                    DominionLogger.Log($"MapGenerator: Successfully integrated {simulationData.ProvinceCount} provinces from simulation with {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height} bitmap");
+                }
+
+                // Clean up province result
+                provinceResult.Dispose();
+
+                // Generate initial borders
+                if (borderDispatcher != null)
+                {
+                    borderDispatcher.ClearBorders();
+                    borderDispatcher.SetBorderMode(BorderComputeDispatcher.BorderMode.Country);
+                    borderDispatcher.DetectBorders();
+
+                    if (logLoadingProgress)
+                    {
+                        DominionLogger.Log("MapGenerator: Generated province borders using GPU compute shader");
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                DominionLogger.LogError($"MapGenerator: Exception during simulation-driven map loading: {e.Message}\n{e.StackTrace}");
+            }
+        }
+
+        /// <summary>
         /// Load province data using the new modular ProvinceMapProcessor
+        /// Legacy method for standalone operation
         /// </summary>
         private async Task LoadProvinceDataAsync()
         {
@@ -190,7 +374,7 @@ namespace Map
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.Log($"MapGenerator: Successfully loaded {provinceMapping.ProvinceCount} provinces");
+                    DominionLogger.Log($"MapGenerator: Successfully processed {provinceMapping.ProvinceCount} unique province colors from bitmap");
                     DominionLogger.Log($"MapGenerator: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}");
                     if (provinceResult.HasDefinitions)
                     {
@@ -569,7 +753,68 @@ namespace Map
         }
 
         /// <summary>
+        /// Convert ProvinceMapProcessor result using data from Core simulation systems
+        /// This method integrates bitmap data with simulation layer data
+        /// </summary>
+        private ProvinceMapping ConvertProvinceResultWithSimulationData(ProvinceMapResult provinceResult, MapTextureManager textureManager, GameState gameState)
+        {
+            if (!provinceResult.Success)
+                return null;
+
+            try
+            {
+                // Create legacy ProvinceMapping
+                var mapping = new ProvinceMapping();
+
+                // Get province data from Core simulation systems
+                var provinceQueries = gameState.ProvinceQueries;
+                var countryQueries = gameState.CountryQueries;
+
+                if (logLoadingProgress)
+                {
+                    DominionLogger.Log($"MapGenerator: Integrating bitmap data with {gameState.Provinces.ProvinceCount} provinces from simulation layer");
+                }
+
+                // Build province mappings from simulation data instead of bitmap analysis
+                // We use the bitmap for visual data but get province info from Core
+                var colorMappingEnumerator = provinceResult.ProvinceMappings.ColorToProvinceID.GetEnumerator();
+                while (colorMappingEnumerator.MoveNext())
+                {
+                    int rgb = colorMappingEnumerator.Current.Key;
+                    int bitmapProvinceID = colorMappingEnumerator.Current.Value;
+
+                    // Convert packed RGB to Color32
+                    byte r = (byte)((rgb >> 16) & 0xFF);
+                    byte g = (byte)((rgb >> 8) & 0xFF);
+                    byte b = (byte)(rgb & 0xFF);
+                    var color = new UnityEngine.Color32(r, g, b, 255);
+
+                    // Verify this province exists in simulation layer
+                    if (provinceQueries.Exists((ushort)bitmapProvinceID))
+                    {
+                        mapping.AddProvince((ushort)bitmapProvinceID, color);
+                    }
+                    else if (logLoadingProgress)
+                    {
+                        DominionLogger.LogWarning($"MapGenerator: Province {bitmapProvinceID} found in bitmap but not in simulation data");
+                    }
+                }
+
+                // Populate texture manager with integrated data
+                PopulateTextureManagerWithSimulationData(provinceResult, textureManager, mapping, gameState);
+
+                return mapping;
+            }
+            catch (System.Exception e)
+            {
+                DominionLogger.LogError($"Failed to convert province result with simulation data: {e.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Convert ProvinceMapProcessor result to legacy ProvinceMapping format
+        /// Legacy method for standalone operation
         /// </summary>
         private ProvinceMapping ConvertProvinceResultToMapping(ProvinceMapResult provinceResult, MapTextureManager textureManager)
         {
@@ -610,7 +855,64 @@ namespace Map
         }
 
         /// <summary>
+        /// Populate MapTextureManager textures using data from Core simulation systems
+        /// This method integrates bitmap visual data with simulation layer province/country data
+        /// </summary>
+        private void PopulateTextureManagerWithSimulationData(ProvinceMapResult provinceResult, MapTextureManager textureManager, ProvinceMapping mapping, GameState gameState)
+        {
+            var pixelData = provinceResult.BMPData.GetPixelData();
+            int width = provinceResult.BMPData.Width;
+            int height = provinceResult.BMPData.Height;
+
+            // Get query interfaces for simulation data
+            var provinceQueries = gameState.ProvinceQueries;
+            var countryQueries = gameState.CountryQueries;
+
+            // Populate province ID, color, and owner textures from bitmap + simulation data
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                    {
+                        // Create Color32 for province lookup
+                        var pixelColor = new Color32(r, g, b, 255);
+
+                        // Find province ID for this color using ProvinceMapping
+                        ushort provinceID = mapping.GetProvinceByColor(pixelColor);
+
+                        if (provinceID > 0 && provinceQueries.Exists(provinceID))
+                        {
+                            // Set province ID in texture
+                            textureManager.SetProvinceID(x, y, provinceID);
+
+                            // Set province color for visual display (from bitmap)
+                            textureManager.SetProvinceColor(x, y, pixelColor);
+
+                            // Get owner from simulation data and set owner texture
+                            ushort ownerID = provinceQueries.GetOwner(provinceID);
+                            // SetProvinceOwner expects the country ID, not the color
+                            textureManager.SetProvinceOwner(x, y, ownerID);
+
+                            // Add pixel to province mapping
+                            mapping.AddPixelToProvince(provinceID, x, y);
+                        }
+                    }
+                }
+            }
+
+            // Apply all texture changes
+            textureManager.ApplyTextureChanges();
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.Log($"MapGenerator: Populated texture manager with {width}x{height} province data from simulation layer");
+            }
+        }
+
+        /// <summary>
         /// Populate MapTextureManager textures from province processing result
+        /// Legacy method for standalone operation
         /// </summary>
         private void PopulateTextureManagerFromProvinceResult(ProvinceMapResult provinceResult, MapTextureManager textureManager, ProvinceMapping mapping)
         {
@@ -668,6 +970,13 @@ namespace Map
 
         void OnDestroy()
         {
+            // Unsubscribe from events
+            var gameState = FindFirstObjectByType<GameState>();
+            if (gameState != null && gameState.EventBus != null)
+            {
+                gameState.EventBus.Unsubscribe<SimulationDataReadyEvent>(this);
+            }
+
             // Clean up ProvinceMapProcessor
             if (provinceProcessor != null)
             {

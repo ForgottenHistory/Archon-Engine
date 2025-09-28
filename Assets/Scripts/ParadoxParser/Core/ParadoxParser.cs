@@ -133,7 +133,7 @@ namespace ParadoxParser.Core
                             tokenContent = System.Text.Encoding.UTF8.GetString(tokenData.ToArray());
                             tokenContent = tokenContent.Replace('\n', '\\').Replace('\r', '\\').Replace('\t', '\\'); // Escape special chars
                         }
-                        UnityEngine.Debug.Log($"Token {tokenIndex}: Type={token.Type}, Content='{tokenContent}', CurrentState={state.State}, Success={operation.Success}, NewState={operation.NewState.State}, TokensConsumed={operation.TokensConsumed}");
+                        //UnityEngine.Debug.Log($"Token {tokenIndex}: Type={token.Type}, Content='{tokenContent}', CurrentState={state.State}, Success={operation.Success}, NewState={operation.NewState.State}, TokensConsumed={operation.TokensConsumed}");
                     }
 
                     if (!operation.Success)
@@ -160,7 +160,7 @@ namespace ParadoxParser.Core
                 // Many Paradox files have missing closing braces
                 if (state.BlockDepth > 0)
                 {
-                    UnityEngine.Debug.LogWarning($"File has {state.BlockDepth} unclosed blocks - parsing anyway");
+                    //UnityEngine.Debug.LogWarning($"File has {state.BlockDepth} unclosed blocks - parsing anyway");
                 }
 
                 return ParseResult.Successful(tokenIndex);

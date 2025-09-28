@@ -10,6 +10,9 @@ namespace Core
     public class GameSettings : ScriptableObject
     {
         [Header("Data File Paths")]
+        [Tooltip("Root data directory containing all game data")]
+        public string DataDirectory = "Assets/Data";
+
         [Tooltip("Path to the province bitmap file (provinces.bmp)")]
         public string ProvinceBitmapPath = "Assets/Data/map/provinces.bmp";
 

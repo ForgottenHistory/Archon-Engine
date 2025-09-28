@@ -16,7 +16,7 @@ namespace Core.Queries
         private readonly Systems.ProvinceSystem provinceSystem;
 
         // Cache for expensive calculations
-        private readonly System.Collections.Generic.Dictionary<byte, CachedCountryData> cachedData;
+        private readonly System.Collections.Generic.Dictionary<ushort, CachedCountryData> cachedData;
         private float lastCacheUpdateTime;
         private const float CACHE_LIFETIME = 1.0f; // 1 second cache lifetime
 
@@ -24,7 +24,7 @@ namespace Core.Queries
         {
             this.countrySystem = countrySystem;
             this.provinceSystem = provinceSystem;
-            this.cachedData = new System.Collections.Generic.Dictionary<byte, CachedCountryData>();
+            this.cachedData = new System.Collections.Generic.Dictionary<ushort, CachedCountryData>();
         }
 
         #region Basic Queries (Ultra-fast, direct access)
@@ -33,7 +33,7 @@ namespace Core.Queries
         /// Get country color - most common query (must be ultra-fast)
         /// Performance target: <0.001ms
         /// </summary>
-        public Color32 GetColor(byte countryId)
+        public Color32 GetColor(ushort countryId)
         {
             return countrySystem.GetCountryColor(countryId);
         }
@@ -42,7 +42,7 @@ namespace Core.Queries
         /// Get country tag (3-letter code like "ENG", "FRA")
         /// Performance target: <0.001ms
         /// </summary>
-        public string GetTag(byte countryId)
+        public string GetTag(ushort countryId)
         {
             return countrySystem.GetCountryTag(countryId);
         }
@@ -51,7 +51,7 @@ namespace Core.Queries
         /// Get country ID from tag
         /// Performance target: <0.001ms
         /// </summary>
-        public byte GetIdFromTag(string tag)
+        public ushort GetIdFromTag(string tag)
         {
             return countrySystem.GetCountryIdFromTag(tag);
         }
@@ -60,7 +60,7 @@ namespace Core.Queries
         /// Get graphical culture ID for unit graphics
         /// Performance target: <0.001ms
         /// </summary>
-        public byte GetGraphicalCulture(byte countryId)
+        public byte GetGraphicalCulture(ushort countryId)
         {
             return countrySystem.GetCountryGraphicalCulture(countryId);
         }
@@ -69,7 +69,7 @@ namespace Core.Queries
         /// Get complete country hot data (8-byte struct)
         /// Performance target: <0.001ms
         /// </summary>
-        public CountryHotData GetHotData(byte countryId)
+        public CountryHotData GetHotData(ushort countryId)
         {
             return countrySystem.GetCountryHotData(countryId);
         }
@@ -78,7 +78,7 @@ namespace Core.Queries
         /// Get country cold data (detailed information, lazy-loaded)
         /// Performance target: <0.1ms if cached, variable if loading
         /// </summary>
-        public CountryColdData GetColdData(byte countryId)
+        public CountryColdData GetColdData(ushort countryId)
         {
             return countrySystem.GetCountryColdData(countryId);
         }
@@ -87,7 +87,7 @@ namespace Core.Queries
         /// Check if country exists
         /// Performance target: <0.001ms
         /// </summary>
-        public bool Exists(byte countryId)
+        public bool Exists(ushort countryId)
         {
             return countrySystem.HasCountry(countryId);
         }
@@ -96,7 +96,7 @@ namespace Core.Queries
         /// Check if country has specific flag/feature
         /// Performance target: <0.001ms
         /// </summary>
-        public bool HasFlag(byte countryId, byte flag)
+        public bool HasFlag(ushort countryId, byte flag)
         {
             return countrySystem.HasCountryFlag(countryId, flag);
         }
@@ -109,7 +109,7 @@ namespace Core.Queries
         /// Check if country has historical ideas
         /// Performance target: <0.001ms
         /// </summary>
-        public bool HasHistoricalIdeas(byte countryId)
+        public bool HasHistoricalIdeas(ushort countryId)
         {
             return HasFlag(countryId, CountryHotData.FLAG_HAS_HISTORICAL_IDEAS);
         }
@@ -118,7 +118,7 @@ namespace Core.Queries
         /// Check if country has historical units
         /// Performance target: <0.001ms
         /// </summary>
-        public bool HasHistoricalUnits(byte countryId)
+        public bool HasHistoricalUnits(ushort countryId)
         {
             return HasFlag(countryId, CountryHotData.FLAG_HAS_HISTORICAL_UNITS);
         }
@@ -127,7 +127,7 @@ namespace Core.Queries
         /// Check if country has monarch names defined
         /// Performance target: <0.001ms
         /// </summary>
-        public bool HasMonarchNames(byte countryId)
+        public bool HasMonarchNames(ushort countryId)
         {
             return HasFlag(countryId, CountryHotData.FLAG_HAS_MONARCH_NAMES);
         }
@@ -136,7 +136,7 @@ namespace Core.Queries
         /// Check if country has revolutionary colors
         /// Performance target: <0.001ms
         /// </summary>
-        public bool HasRevolutionaryColors(byte countryId)
+        public bool HasRevolutionaryColors(ushort countryId)
         {
             return HasFlag(countryId, CountryHotData.FLAG_HAS_REVOLUTIONARY_COLORS);
         }
@@ -145,7 +145,7 @@ namespace Core.Queries
         /// Check if country has preferred religion
         /// Performance target: <0.001ms
         /// </summary>
-        public bool HasPreferredReligion(byte countryId)
+        public bool HasPreferredReligion(ushort countryId)
         {
             return HasFlag(countryId, CountryHotData.FLAG_HAS_PREFERRED_RELIGION);
         }
@@ -158,7 +158,7 @@ namespace Core.Queries
         /// Get total development of all provinces owned by this country
         /// Performance target: <0.01ms if cached, <5ms if calculating
         /// </summary>
-        public int GetTotalDevelopment(byte countryId)
+        public int GetTotalDevelopment(ushort countryId)
         {
             var cached = GetCachedData(countryId);
             if (cached.IsValid && Time.time - cached.CalculationTime < CACHE_LIFETIME)
@@ -187,7 +187,7 @@ namespace Core.Queries
         /// Get number of provinces owned by this country
         /// Performance target: <0.01ms if cached, <5ms if calculating
         /// </summary>
-        public int GetProvinceCount(byte countryId)
+        public int GetProvinceCount(ushort countryId)
         {
             var cached = GetCachedData(countryId);
             if (cached.IsValid && Time.time - cached.CalculationTime < CACHE_LIFETIME)
@@ -211,7 +211,7 @@ namespace Core.Queries
         /// Returns native array that must be disposed by caller
         /// Performance target: <5ms for 10k provinces
         /// </summary>
-        public NativeArray<ushort> GetProvinces(byte countryId, Allocator allocator = Allocator.TempJob)
+        public NativeArray<ushort> GetProvinces(ushort countryId, Allocator allocator = Allocator.TempJob)
         {
             return provinceSystem.GetCountryProvinces(countryId, allocator);
         }
@@ -220,7 +220,7 @@ namespace Core.Queries
         /// Get average development of provinces owned by this country
         /// Performance target: <0.01ms if cached, <5ms if calculating
         /// </summary>
-        public float GetAverageDevelopment(byte countryId)
+        public float GetAverageDevelopment(ushort countryId)
         {
             int totalDev = GetTotalDevelopment(countryId);
             int provinceCount = GetProvinceCount(countryId);
@@ -232,7 +232,7 @@ namespace Core.Queries
         /// Get total land area (non-ocean provinces) owned by this country
         /// Performance target: <0.01ms if cached, <5ms if calculating
         /// </summary>
-        public int GetLandProvinceCount(byte countryId)
+        public int GetLandProvinceCount(ushort countryId)
         {
             var cached = GetCachedData(countryId);
             if (cached.IsValid && Time.time - cached.CalculationTime < CACHE_LIFETIME)
@@ -268,7 +268,7 @@ namespace Core.Queries
         /// Check if two countries share any border provinces
         /// Performance target: <10ms for large countries
         /// </summary>
-        public bool SharesBorder(byte countryId1, byte countryId2)
+        public bool SharesBorder(ushort countryId1, ushort countryId2)
         {
             if (countryId1 == countryId2)
                 return false;
@@ -294,7 +294,7 @@ namespace Core.Queries
         /// Returns: -1 if country1 < country2, 0 if equal, 1 if country1 > country2
         /// Performance target: <0.1ms
         /// </summary>
-        public int CompareDevelopment(byte countryId1, byte countryId2)
+        public int CompareDevelopment(ushort countryId1, ushort countryId2)
         {
             int dev1 = GetTotalDevelopment(countryId1);
             int dev2 = GetTotalDevelopment(countryId2);
@@ -306,7 +306,7 @@ namespace Core.Queries
         /// Compare two countries by province count
         /// Performance target: <0.1ms
         /// </summary>
-        public int CompareProvinceCount(byte countryId1, byte countryId2)
+        public int CompareProvinceCount(ushort countryId1, ushort countryId2)
         {
             int count1 = GetProvinceCount(countryId1);
             int count2 = GetProvinceCount(countryId2);
@@ -323,7 +323,7 @@ namespace Core.Queries
         /// Returns native array that must be disposed by caller
         /// Performance target: <1ms
         /// </summary>
-        public NativeArray<byte> GetAllCountryIds(Allocator allocator = Allocator.TempJob)
+        public NativeArray<ushort> GetAllCountryIds(Allocator allocator = Allocator.TempJob)
         {
             return countrySystem.GetAllCountryIds(allocator);
         }
@@ -342,10 +342,10 @@ namespace Core.Queries
         /// Returns array of country IDs sorted by development (highest first)
         /// Performance target: <50ms for 256 countries
         /// </summary>
-        public byte[] GetCountriesByDevelopment(bool ascending = false)
+        public ushort[] GetCountriesByDevelopment(bool ascending = false)
         {
             var allCountries = GetAllCountryIds(Allocator.Temp);
-            var countryList = new System.Collections.Generic.List<(byte id, int development)>();
+            var countryList = new System.Collections.Generic.List<(ushort id, int development)>();
 
             for (int i = 0; i < allCountries.Length; i++)
             {
@@ -367,7 +367,7 @@ namespace Core.Queries
             }
 
             // Extract IDs
-            var result = new byte[countryList.Count];
+            var result = new ushort[countryList.Count];
             for (int i = 0; i < countryList.Count; i++)
             {
                 result[i] = countryList[i].id;
@@ -431,7 +431,7 @@ namespace Core.Queries
 
         #region Cache Management
 
-        private CachedCountryData GetCachedData(byte countryId)
+        private CachedCountryData GetCachedData(ushort countryId)
         {
             if (cachedData.TryGetValue(countryId, out var cached))
                 return cached;
@@ -439,7 +439,7 @@ namespace Core.Queries
             return new CachedCountryData(); // Invalid by default
         }
 
-        private void UpdateCachedData(byte countryId, int? totalDevelopment = null,
+        private void UpdateCachedData(ushort countryId, int? totalDevelopment = null,
                                      int? provinceCount = null, int? landProvinceCount = null)
         {
             var cached = GetCachedData(countryId);
@@ -461,7 +461,7 @@ namespace Core.Queries
         /// <summary>
         /// Clear cache for a specific country (call when country data changes)
         /// </summary>
-        public void InvalidateCache(byte countryId)
+        public void InvalidateCache(ushort countryId)
         {
             cachedData.Remove(countryId);
         }
@@ -501,8 +501,8 @@ namespace Core.Queries
         public float AverageProvincesPerCountry;
         public float AverageDevelopmentPerCountry;
         public int LargestCountryProvinces;
-        public byte LargestCountryId;
+        public ushort LargestCountryId;
         public int MostDevelopedCountryDevelopment;
-        public byte MostDevelopedCountryId;
+        public ushort MostDevelopedCountryId;
     }
 }

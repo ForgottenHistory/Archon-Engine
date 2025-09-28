@@ -141,7 +141,7 @@ namespace Core
         /// <summary>
         /// Get basic country information - most common query
         /// </summary>
-        public Color32 GetCountryColor(byte countryId)
+        public Color32 GetCountryColor(ushort countryId)
         {
             return CountryQueries.GetColor(countryId);
         }
@@ -149,7 +149,7 @@ namespace Core
         /// <summary>
         /// Complex cross-system query - get all provinces owned by a country
         /// </summary>
-        public NativeArray<ushort> GetCountryProvinces(byte countryId)
+        public NativeArray<ushort> GetCountryProvinces(ushort countryId)
         {
             return ProvinceQueries.GetCountryProvinces(countryId);
         }
@@ -157,7 +157,7 @@ namespace Core
         /// <summary>
         /// Complex cross-system query - get total development of a country
         /// </summary>
-        public float GetCountryTotalDevelopment(byte countryId)
+        public float GetCountryTotalDevelopment(ushort countryId)
         {
             return CountryQueries.GetTotalDevelopment(countryId);
         }

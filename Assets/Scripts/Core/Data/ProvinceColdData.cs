@@ -234,39 +234,7 @@ namespace Core.Data
         }
     }
 
-    /// <summary>
-    /// Historical event for province history tracking
-    /// </summary>
-    public struct HistoricalEvent
-    {
-        public uint Tick;           // Game tick when event occurred
-        public EventType Type;      // Type of event
-        public ushort ActorID;      // Country/entity that caused the event
-        public int Value;           // Numeric value associated with event
-
-        public HistoricalEvent(uint tick, EventType type, ushort actorID, int value = 0)
-        {
-            Tick = tick;
-            Type = type;
-            ActorID = actorID;
-            Value = value;
-        }
-    }
-
-    /// <summary>
-    /// Types of historical events
-    /// </summary>
-    public enum EventType : byte
-    {
-        OwnershipChange,    // Province changed owner
-        DevelopmentIncrease, // Development improved
-        DevelopmentDecrease, // Development declined
-        BuildingConstructed, // New building built
-        BuildingDestroyed,  // Building destroyed
-        SiegeStarted,       // Siege began
-        SiegeEnded,         // Siege concluded
-        BattleFought        // Battle occurred
-    }
+    // HistoricalEvent and HistoryEventType are now defined in ProvinceHistoryDatabase.cs
 
     /// <summary>
     /// Building types that can be constructed in provinces

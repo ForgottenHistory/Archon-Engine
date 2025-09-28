@@ -3,8 +3,12 @@ using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using System.Runtime.InteropServices;
+using System;
+using System.Collections.Generic;
 using Core.Data;
+using Core.Loaders;
 using ParadoxParser.Jobs;
+using Utils;
 
 namespace Core.Systems
 {
@@ -39,6 +43,9 @@ namespace Core.Systems
         private bool isInitialized;
         private EventBus eventBus;
 
+        // Cold data: Historical events and detailed province information
+        private ProvinceHistoryDatabase historyDatabase;
+
         // Constants
         private const byte OCEAN_TERRAIN = 0;
         private const ushort UNOWNED_COUNTRY = 0;
@@ -65,6 +72,8 @@ namespace Core.Systems
 
             idToIndex = new NativeHashMap<ushort, int>(initialCapacity, Allocator.Persistent);
             activeProvinceIds = new NativeList<ushort>(initialCapacity, Allocator.Persistent);
+
+            historyDatabase = new ProvinceHistoryDatabase();
 
             isInitialized = true;
             DominionLogger.Log($"ProvinceSystem initialized with capacity {initialCapacity}");
@@ -369,6 +378,133 @@ namespace Core.Systems
         }
 
         /// <summary>
+        /// Load province initial states using Burst-compiled parallel jobs
+        /// Architecture-compliant: hot/cold separation, bounded data, parallel processing
+        /// </summary>
+        public void LoadProvinceInitialStates(string dataDirectory)
+        {
+            if (!isInitialized)
+            {
+                DominionLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
+                return;
+            }
+
+            DominionLogger.Log($"Loading province initial states from {dataDirectory} using Burst jobs");
+
+            var result = BurstProvinceHistoryLoader.LoadProvinceInitialStates(dataDirectory);
+
+            if (!result.Success)
+            {
+                DominionLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}");
+                return;
+            }
+
+            DominionLogger.Log($"Province initial states loaded: {result.LoadedCount} successful, {result.FailedCount} failed");
+
+            ApplyInitialStates(result.InitialStates);
+
+            result.Dispose();
+
+            eventBus?.Emit(new ProvinceInitialStatesLoadedEvent
+            {
+                LoadedCount = result.LoadedCount,
+                FailedCount = result.FailedCount
+            });
+        }
+
+        /// <summary>
+        /// Apply initial states to hot province data
+        /// Only touches hot data needed for simulation
+        /// </summary>
+        private void ApplyInitialStates(NativeArray<ProvinceInitialState> initialStates)
+        {
+            int appliedCount = 0;
+
+            for (int i = 0; i < initialStates.Length; i++)
+            {
+                var initialState = initialStates[i];
+                if (!initialState.IsValid)
+                    continue;
+
+                var provinceId = (ushort)initialState.ProvinceID;
+
+                if (!HasProvince(provinceId))
+                {
+                    DominionLogger.LogWarning($"Province {initialState.ProvinceID} has initial state but doesn't exist in map data");
+                    continue;
+                }
+
+                ApplyInitialStateToProvince(provinceId, initialState);
+                appliedCount++;
+            }
+
+            DominionLogger.Log($"Applied initial state to {appliedCount} provinces");
+        }
+
+        /// <summary>
+        /// Apply initial state to hot province data only
+        /// </summary>
+        private void ApplyInitialStateToProvince(ushort provinceId, ProvinceInitialState initialState)
+        {
+            if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
+                return;
+
+            // Convert to hot ProvinceState
+            var state = initialState.ToProvinceState();
+
+            // Update hot data arrays
+            provinceStates[arrayIndex] = state;
+            provinceOwners[arrayIndex] = state.ownerID;
+            provinceControllers[arrayIndex] = state.controllerID;
+            provinceDevelopment[arrayIndex] = state.development;
+            provinceTerrain[arrayIndex] = state.terrain;
+            provinceFlags[arrayIndex] = state.flags;
+
+            // Add initial ownership event to cold data (history database)
+            if (initialState.OwnerID != UNOWNED_COUNTRY)
+            {
+                var ownershipEvent = HistoricalEvent.CreateOwnershipChange(
+                    new DateTime(1444, 11, 11), // EU4 start date
+                    UNOWNED_COUNTRY,
+                    initialState.OwnerID
+                );
+                historyDatabase.AddEvent(initialState.ProvinceID, ownershipEvent);
+            }
+        }
+
+        /// <summary>
+        /// Get recent historical events for province (cold data access)
+        /// </summary>
+        public List<HistoricalEvent> GetRecentHistory(ushort provinceId, int maxEvents = 10)
+        {
+            return historyDatabase.GetRecentEvents(provinceId, maxEvents);
+        }
+
+        /// <summary>
+        /// Get compressed historical summary for province (cold data access)
+        /// </summary>
+        public ProvinceHistorySummary GetHistorySummary(ushort provinceId)
+        {
+            return historyDatabase.GetHistorySummary(provinceId);
+        }
+
+        /// <summary>
+        /// Add historical event (for ongoing simulation)
+        /// </summary>
+        public void AddHistoricalEvent(ushort provinceId, HistoricalEvent evt)
+        {
+            historyDatabase.AddEvent(provinceId, evt);
+        }
+
+        /// <summary>
+        /// Get history database statistics
+        /// </summary>
+        public HistoryDatabaseStats GetHistoryStats()
+        {
+            return historyDatabase.GetStats();
+        }
+
+        /// <summary>
         /// Determine terrain type from RGB color (basic heuristic)
         /// </summary>
         private byte DetermineTerrainFromColor(int packedRGB)
@@ -425,6 +561,8 @@ namespace Core.Systems
             if (idToIndex.IsCreated) idToIndex.Dispose();
             if (activeProvinceIds.IsCreated) activeProvinceIds.Dispose();
 
+            historyDatabase?.Dispose();
+
             isInitialized = false;
             DominionLogger.Log("ProvinceSystem disposed");
         }
@@ -473,6 +611,13 @@ namespace Core.Systems
         public ushort ProvinceId;
         public byte OldDevelopment;
         public byte NewDevelopment;
+        public float TimeStamp { get; set; }
+    }
+
+    public struct ProvinceInitialStatesLoadedEvent : IGameEvent
+    {
+        public int LoadedCount;
+        public int FailedCount;
         public float TimeStamp { get; set; }
     }
 }

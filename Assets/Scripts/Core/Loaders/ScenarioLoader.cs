@@ -275,7 +275,7 @@ namespace Core.Loaders
             foreach (var setup in setups)
             {
                 // Validate country exists
-                if (!gameState.CountryQueries.Exists((byte)setup.CountryId))
+                if (!gameState.CountryQueries.Exists(setup.CountryId))
                 {
                     DominionLogger.LogWarning($"Scenario references non-existent country: {setup.CountryId} ({setup.Tag})");
                     continue;
@@ -327,7 +327,7 @@ namespace Core.Loaders
                         issues.Add($"Province {setup.ProvinceId} does not exist");
                     }
 
-                    if (setup.Owner != 0 && !gameState.CountryQueries.Exists((byte)setup.Owner))
+                    if (setup.Owner != 0 && !gameState.CountryQueries.Exists(setup.Owner))
                     {
                         issues.Add($"Owner country {setup.Owner} does not exist for province {setup.ProvinceId}");
                     }
@@ -339,7 +339,7 @@ namespace Core.Loaders
             {
                 foreach (var setup in scenario.CountrySetups)
                 {
-                    if (!gameState.CountryQueries.Exists((byte)setup.CountryId))
+                    if (!gameState.CountryQueries.Exists(setup.CountryId))
                     {
                         issues.Add($"Country {setup.CountryId} ({setup.Tag}) does not exist");
                     }

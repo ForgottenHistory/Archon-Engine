@@ -255,14 +255,29 @@ namespace Core
                 yield break;
             }
 
-            UpdateProgress(35f, "Initializing province system...");
+            UpdateProgress(32f, "Initializing province system...");
             yield return null;
 
             // Initialize ProvinceSystem with loaded data
             gameState.Provinces.InitializeFromMapData(mapResult);
 
+            UpdateProgress(35f, "Loading province initial states...");
+            yield return null;
+
+            // Load province initial states using Burst jobs
+            gameState.Provinces.LoadProvinceInitialStates(gameSettings.DataDirectory);
+
             UpdateProgress(40f, "Province data loaded");
-            LogPhaseComplete($"Loaded {gameState.Provinces.ProvinceCount} provinces");
+            LogPhaseComplete($"Loaded {gameState.Provinces.ProvinceCount} provinces with history data");
+
+            // Emit province data ready event
+            gameState.EventBus.Emit(new ProvinceDataReadyEvent
+            {
+                ProvinceCount = gameState.Provinces.ProvinceCount,
+                HasDefinitions = mapResult.HasDefinitions,
+                HasInitialStates = true, // We loaded initial states
+                TimeStamp = Time.time
+            });
 
             // Clean up
             mapResult.Dispose();
@@ -292,6 +307,14 @@ namespace Core
 
             UpdateProgress(60f, "Country data loaded");
             LogPhaseComplete($"Loaded {gameState.Countries.CountryCount} countries");
+
+            // Emit country data ready event
+            gameState.EventBus.Emit(new CountryDataReadyEvent
+            {
+                CountryCount = gameState.Countries.CountryCount,
+                HasScenarioData = false, // Will be set to true after scenario loading
+                TimeStamp = Time.time
+            });
 
             // Clean up
             countryResult.Dispose();
@@ -477,6 +500,21 @@ namespace Core
 
             DominionLogger.Log($"Game initialization complete in {totalTime:F2} seconds");
 
+            // Emit the main simulation data ready event for presentation layer
+            var simulationEvent = new SimulationDataReadyEvent
+            {
+                ProvinceCount = gameState.Provinces.ProvinceCount,
+                CountryCount = gameState.Countries.CountryCount,
+                LoadingTimeSeconds = totalTime,
+                TimeStamp = Time.time
+            };
+
+            DominionLogger.Log($"Emitting SimulationDataReadyEvent: {simulationEvent.ProvinceCount} provinces, {simulationEvent.CountryCount} countries");
+            gameState.EventBus.Emit(simulationEvent);
+
+            // Process events immediately to ensure MapGenerator receives the event
+            gameState.EventBus.ProcessEvents();
+
             // Hide loading UI
             if (loadingCanvas != null)
             {
@@ -546,5 +584,45 @@ namespace Core
             provinceProcessor = null;
             countryLoader = null;
         }
+    }
+
+    // ===========================
+    // SIMULATION EVENTS
+    // Events that decouple simulation from presentation layer
+    // ===========================
+
+    /// <summary>
+    /// Emitted when all simulation data is loaded and ready for presentation
+    /// Allows presentation layer (MapGenerator, UI) to initialize without creating dependencies
+    /// </summary>
+    public struct SimulationDataReadyEvent : IGameEvent
+    {
+        public int ProvinceCount;
+        public int CountryCount;
+        public float LoadingTimeSeconds;
+        public float TimeStamp { get; set; }
+    }
+
+    /// <summary>
+    /// Emitted when province data is fully loaded and ready
+    /// Includes province map, definitions, and initial state data
+    /// </summary>
+    public struct ProvinceDataReadyEvent : IGameEvent
+    {
+        public int ProvinceCount;
+        public bool HasDefinitions;
+        public bool HasInitialStates;
+        public float TimeStamp { get; set; }
+    }
+
+    /// <summary>
+    /// Emitted when country data is fully loaded and ready
+    /// Includes all country files and country system initialization
+    /// </summary>
+    public struct CountryDataReadyEvent : IGameEvent
+    {
+        public int CountryCount;
+        public bool HasScenarioData;
+        public float TimeStamp { get; set; }
     }
 }
