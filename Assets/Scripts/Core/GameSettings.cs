@@ -251,21 +251,7 @@ namespace Core
         /// </summary>
         void OnValidate()
         {
-            // Basic validation in editor
-            if (ExpectedProvinceCount < 1000)
-            {
-                DominionLogger.LogWarning("Expected province count seems low for a grand strategy game");
-            }
-
-            if (TargetLoadingTime > 10.0f)
-            {
-                DominionLogger.LogWarning("Target loading time is quite high - consider optimization");
-            }
-
-            if (TargetMaxMemoryMB > 200)
-            {
-                DominionLogger.LogWarning("Target memory usage is high - monitor carefully");
-            }
+            // To be implemented
         }
         #endif
     }
