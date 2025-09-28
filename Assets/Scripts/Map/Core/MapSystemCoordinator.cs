@@ -31,7 +31,6 @@ namespace Map.Core
         private MapRenderingCoordinator renderingCoordinator;
         private ProvinceSelector provinceSelector;
         private MapTexturePopulator texturePopulator;
-        private MapDebugger mapDebugger;
 
         // Only expose what MapGenerator actually needs
         public ProvinceMapping ProvinceMapping { get; private set; }
@@ -204,7 +203,6 @@ namespace Map.Core
             renderingCoordinator = GetOrCreateComponent<MapRenderingCoordinator>();
             provinceSelector = GetOrCreateComponent<ProvinceSelector>();
             texturePopulator = GetOrCreateComponent<MapTexturePopulator>();
-            mapDebugger = GetOrCreateComponent<MapDebugger>();
 
             // Non-component objects
             provinceProcessor = new ProvinceMapProcessor();
@@ -216,10 +214,6 @@ namespace Map.Core
             borderDispatcher?.SetTextureManager(textureManager);
             dataLoader?.Initialize(provinceProcessor, borderDispatcher, textureManager);
             renderingCoordinator?.Initialize(textureManager, mapModeManager, meshRenderer, mapCamera);
-
-            // Setup debug component
-            mapDebugger?.Initialize(borderDispatcher, mapModeManager, textureManager,
-                renderingCoordinator?.MapMaterial, string.Empty);
         }
 
         private T GetOrCreateComponent<T>() where T : Component

@@ -57,11 +57,10 @@ namespace Map
             CreateGhostMaps();
         }
 
-        // Sync currentZoom with actual camera orthographic size
+        // Apply inspector currentZoom value to the camera
         if (mapCamera != null)
         {
-            currentZoom = mapCamera.orthographicSize;
-            DominionLogger.Log($"ParadoxStyleCameraController: Synced currentZoom to {currentZoom}");
+            mapCamera.orthographicSize = currentZoom;
         }
 
         isInitialized = true;
@@ -155,6 +154,12 @@ namespace Map
             float oldZoom = currentZoom;
             currentZoom -= scrollDelta * zoomSpeed;
             currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+
+            // Apply the zoom to the camera
+            if (mapCamera != null)
+            {
+                mapCamera.orthographicSize = currentZoom;
+            }
         }
     }
     

@@ -272,7 +272,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: 0, y: 20, z: -10}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -339,13 +339,13 @@ MonoBehaviour:
   mapWorldHeight: 100
   mapCamera: {fileID: 330585545}
   minZoom: 0.1
-  maxZoom: 5
-  zoomSpeed: 1
-  currentZoom: 4
-  dragSpeed: 1
-  edgeScrollSpeed: 50
-  edgeScrollBorder: 50
-  arrowKeySpeed: 50
+  maxZoom: 47
+  zoomSpeed: 7
+  currentZoom: 46
+  dragSpeed: 25
+  edgeScrollSpeed: 25
+  edgeScrollBorder: 25
+  arrowKeySpeed: 25
   enableEdgeScroll: 1
   enableDragScroll: 1
   enableArrowKeys: 1

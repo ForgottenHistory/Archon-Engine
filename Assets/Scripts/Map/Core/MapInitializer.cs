@@ -3,6 +3,7 @@ using Map.Rendering;
 using Map.MapModes;
 using Map.Loading;
 using Map.Interaction;
+using Map.Debug;
 using ParadoxParser.Jobs;
 using System.Threading.Tasks;
 using Core;
@@ -37,6 +38,7 @@ namespace Map.Core
         private ProvinceSelector provinceSelector;
         private MapTexturePopulator texturePopulator;
         private ParadoxStyleCameraController cameraController;
+        private MapModeDebugUI debugUI;
 
         // Public accessors for initialized components
         public MapTextureManager TextureManager => textureManager;
@@ -50,6 +52,7 @@ namespace Map.Core
         public Camera MapCamera => mapCamera;
         public MeshRenderer MeshRenderer => meshRenderer;
         public ParadoxStyleCameraController CameraController => cameraController;
+        public MapModeDebugUI DebugUI => debugUI;
 
         /// <summary>
         /// Subscribe to simulation events on startup
@@ -168,6 +171,9 @@ namespace Map.Core
             // Phase 4: Camera setup
             InitializeCamera();
             InitializeCameraController();
+
+            // Phase 5: Debug components (only in development builds)
+            InitializeDebugUI();
 
             if (logInitializationProgress)
             {
@@ -318,19 +324,18 @@ namespace Map.Core
 
         private void InitializeCameraController()
         {
+            // First check on this GameObject
             cameraController = GetComponent<ParadoxStyleCameraController>();
+
+            // If not found, search the scene
             if (cameraController == null)
             {
-                cameraController = gameObject.AddComponent<ParadoxStyleCameraController>();
-                if (logInitializationProgress)
-                {
-                    DominionLogger.Log("MapInitializer: Created ParadoxStyleCameraController component");
-                }
+                cameraController = FindFirstObjectByType<ParadoxStyleCameraController>();
             }
 
-            // Set up camera controller references
             if (cameraController != null)
             {
+                // Set up camera controller references
                 cameraController.mapCamera = mapCamera;
                 cameraController.mapPlane = meshRenderer?.gameObject;
 
@@ -339,9 +344,38 @@ namespace Map.Core
 
                 if (logInitializationProgress)
                 {
-                    DominionLogger.Log("MapInitializer: Initialized ParadoxStyleCameraController");
+                    DominionLogger.Log($"MapInitializer: Initialized ParadoxStyleCameraController on {cameraController.gameObject.name}");
                 }
             }
+            else if (logInitializationProgress)
+            {
+                DominionLogger.Log("MapInitializer: No ParadoxStyleCameraController found in scene - camera control disabled");
+            }
+        }
+
+        private void InitializeDebugUI()
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            debugUI = GetComponent<MapModeDebugUI>();
+            if (debugUI == null)
+            {
+                debugUI = gameObject.AddComponent<MapModeDebugUI>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created MapModeDebugUI component");
+                }
+            }
+
+            // Set the MapModeManager reference after both components are initialized
+            if (debugUI != null && mapModeManager != null)
+            {
+                debugUI.SetMapModeManager(mapModeManager);
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Connected MapModeDebugUI to MapModeManager");
+                }
+            }
+#endif
         }
 
         /// <summary>
