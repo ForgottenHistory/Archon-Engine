@@ -39,8 +39,8 @@ float2 GetOwnerUV(uint provinceID, float2 baseUV)
 float2 GetColorUV(uint ownerID)
 {
     // Map owner ID to palette texture coordinate
-    // Palette is 256x1, so X = ownerID/256, Y = 0.5
-    return float2(ownerID / 256.0, 0.5);
+    // Palette is 1024x1, so X = ownerID/1024, Y = 0.5
+    return float2(ownerID / 1024.0, 0.5);
 }
 
 // Sample province ID with corrected UV coordinates
@@ -60,9 +60,14 @@ uint SampleOwnerID(float2 uv)
     // Fix flipped UV coordinates
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
 
-    // Sample owner texture
-    float ownerData = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture, correctedUV).r;
-    return (uint)(ownerData * 255.0 + 0.5);
+    // Sample owner texture - decode 16-bit owner ID from RG channels
+    float2 ownerData = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture, correctedUV).rg;
+
+    // Decode 16-bit owner ID: R = low byte, G = high byte
+    uint lowByte = (uint)(ownerData.r * 255.0 + 0.5);
+    uint highByte = (uint)(ownerData.g * 255.0 + 0.5);
+
+    return lowByte | (highByte << 8);
 }
 
 // Apply borders to base color

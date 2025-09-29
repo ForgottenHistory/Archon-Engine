@@ -20,6 +20,15 @@ namespace Map.MapModes
 
         private List<UpdateRequest> updateRequests = new List<UpdateRequest>();
         private float currentTime;
+        private IMapModeHandler activeHandler;
+
+        /// <summary>
+        /// Set the currently active handler (only this handler will receive updates)
+        /// </summary>
+        public void SetActiveHandler(IMapModeHandler handler)
+        {
+            activeHandler = handler;
+        }
 
         /// <summary>
         /// Register a handler for scheduled updates
@@ -41,22 +50,27 @@ namespace Map.MapModes
         }
 
         /// <summary>
-        /// Update all scheduled handlers
+        /// Update only the currently active handler (architecture compliance)
         /// </summary>
         public void Update()
         {
+            if (activeHandler == null) return;
+
             currentTime = Time.time;
 
+            // Only update the currently active handler
             for (int i = 0; i < updateRequests.Count; i++)
             {
                 var request = updateRequests[i];
 
-                if (ShouldUpdate(request))
+                // Only process if this is the active handler
+                if (request.handler == activeHandler && ShouldUpdate(request))
                 {
                     request.updateAction(request.handler);
                     request.lastUpdate = currentTime;
                     request.nextUpdate = currentTime + GetUpdateInterval(request.frequency);
                     updateRequests[i] = request;
+                    break; // Only one active handler, so we can break early
                 }
             }
         }
@@ -81,7 +95,7 @@ namespace Map.MapModes
                 UpdateFrequency.Monthly => 10f,   // Update monthly data every 10 seconds
                 UpdateFrequency.Weekly => 5f,     // Update weekly data every 5 seconds
                 UpdateFrequency.Daily => 2f,      // Update daily data every 2 seconds
-                UpdateFrequency.PerConquest => 0f, // Event-driven (immediate)
+                UpdateFrequency.PerConquest => float.MaxValue, // Event-driven only (no automatic updates)
                 UpdateFrequency.RealTime => 0.5f,  // Real-time data every 0.5 seconds
                 _ => 5f
             };

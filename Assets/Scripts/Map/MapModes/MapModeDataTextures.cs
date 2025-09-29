@@ -97,7 +97,7 @@ namespace Map.MapModes
         /// </summary>
         private void CreateColorPalettes()
         {
-            CountryColorPalette = CreatePaletteTexture("CountryColors", 256);
+            CountryColorPalette = CreatePaletteTexture("CountryColors", 1024);
             CultureColorPalette = CreatePaletteTexture("CultureColors", 256);
             ReligionColorPalette = CreatePaletteTexture("ReligionColors", 256);
             TerrainColorPalette = CreatePaletteTexture("TerrainColors", 32);
@@ -162,8 +162,8 @@ namespace Map.MapModes
 
         private void InitializeCountryPalette()
         {
-            var colors = new Color32[256];
-            for (int i = 0; i < 256; i++)
+            var colors = new Color32[1024];
+            for (int i = 0; i < 1024; i++)
             {
                 colors[i] = GenerateCountryColor(i);
             }

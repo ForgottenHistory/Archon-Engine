@@ -173,6 +173,9 @@ namespace Map.MapModes
             currentMode = mode;
             currentHandler = newHandler;
 
+            // Set the active handler in the scheduler (architecture compliance)
+            updateScheduler?.SetActiveHandler(currentHandler);
+
             currentHandler.OnActivate(mapMaterial, dataTextures);
 
             if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
