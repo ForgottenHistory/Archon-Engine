@@ -85,21 +85,17 @@ namespace Map.Rendering
             // Set material to renderer
             meshRenderer.material = mapMaterial;
 
-            // Initialize MapModeManager with texture manager and material
-            if (mapModeManager != null)
+            // MapModeManager initializes itself in Start()
+            if (logRenderingProgress && mapModeManager != null)
             {
-                mapModeManager.Initialize(textureManager, mapMaterial);
-                if (logRenderingProgress)
-                {
-                    DominionLogger.Log("MapRenderingCoordinator: Initialized MapModeManager");
-                }
+                DominionLogger.Log("MapRenderingCoordinator: MapModeManager will initialize itself");
             }
 
             // Set initial map mode - delegate to MapModeManager
             if (mapModeManager != null)
             {
-                // Start with terrain mode (1) to show province colors
-                mapModeManager.SetMapMode(1);
+                // Start with political mode to show province ownership
+                mapModeManager.SetMapMode(Map.MapModes.MapMode.Political);
             }
 
             // Set general material properties not handled by mapmodes

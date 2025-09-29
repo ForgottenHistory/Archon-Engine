@@ -1,14 +1,13 @@
 using UnityEngine;
 using Map.MapModes;
-using Utils;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 
 namespace Map.Debug
 {
     /// <summary>
-    /// Debug UI for testing MapMode switching
-    /// Provides runtime buttons to switch between different map display modes
+    /// Debug UI for testing the new MapMode handler system
+    /// Provides runtime controls for switching between map modes and testing functionality
+    /// Updated for the new handler-based architecture
     /// </summary>
     public class MapModeDebugUI : MonoBehaviour
     {
@@ -18,11 +17,12 @@ namespace Map.Debug
         [Header("Debug UI Settings")]
         [SerializeField] private bool showDebugUI = true;
         [SerializeField] private Vector2 uiPosition = new Vector2(220, 10);
-        [SerializeField] private Vector2 uiSize = new Vector2(250, 300);
+        [SerializeField] private Vector2 uiSize = new Vector2(280, 400);
 
         // UI state
-        private Dictionary<int, string> availableMapModes;
+        private MapMode[] availableModes;
         private Vector2 scrollPosition;
+        private bool showAdvanced = false;
 
         void Start()
         {
@@ -36,22 +36,23 @@ namespace Map.Debug
                 }
             }
 
-            RefreshAvailableMapModes();
+            RefreshAvailableModes();
         }
 
-        void RefreshAvailableMapModes()
+        void RefreshAvailableModes()
         {
-            if (mapModeManager != null)
+            if (mapModeManager != null && mapModeManager.IsInitialized)
             {
-                availableMapModes = mapModeManager.GetAvailableMapModes();
-                DominionLogger.Log($"MapModeDebugUI: Found {availableMapModes.Count} available map modes");
+                // Get all available map modes from the enum
+                availableModes = (MapMode[])Enum.GetValues(typeof(MapMode));
+                DominionLogger.Log($"MapModeDebugUI: Found {availableModes.Length} map mode types");
             }
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         void OnGUI()
         {
-            if (!showDebugUI || mapModeManager == null || availableMapModes == null)
+            if (!showDebugUI || mapModeManager == null || !mapModeManager.IsInitialized)
                 return;
 
             // Create UI area
@@ -60,101 +61,92 @@ namespace Map.Debug
             // Title
             GUILayout.Label("Map Mode Debug Controls", GUI.skin.box);
 
-            // Current mode info
-            if (mapModeManager.CurrentMapMode != null)
-            {
-                GUILayout.Label($"Current: {mapModeManager.CurrentMapMode.Name} (ID: {mapModeManager.CurrentMapModeID})");
-            }
-            else
-            {
-                GUILayout.Label("Current: None");
-            }
+            // System status
+            GUILayout.Label($"System: {(mapModeManager.IsInitialized ? "Ready" : "Initializing...")}");
+            GUILayout.Label($"Current: {mapModeManager.CurrentMode}");
 
             GUILayout.Space(5);
 
-            // Scrollable area for map mode buttons
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-
-            // Sort map modes by ID for consistent ordering
-            var sortedModes = availableMapModes.OrderBy(kvp => kvp.Key).ToList();
-
-            foreach (var mapMode in sortedModes)
-            {
-                int modeID = mapMode.Key;
-                string modeName = mapMode.Value;
-
-                // Highlight current mode
-                bool isCurrent = mapModeManager.CurrentMapModeID == modeID;
-
-                // Set button color for current mode
-                Color originalColor = GUI.backgroundColor;
-                if (isCurrent)
-                {
-                    GUI.backgroundColor = Color.green;
-                }
-
-                // Map mode button
-                if (GUILayout.Button($"{modeName} ({modeID})"))
-                {
-                    SwitchToMapMode(modeID, modeName);
-                }
-
-                // Restore original color
-                GUI.backgroundColor = originalColor;
-            }
-
-            GUILayout.EndScrollView();
-
-            GUILayout.Space(10);
-
-            // Quick action buttons
-            GUILayout.Label("Quick Actions:", GUI.skin.box);
+            // Quick mode switches
+            GUILayout.Label("Quick Switch:", GUI.skin.box);
 
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Political"))
             {
-                SwitchToMapMode(0, "Political");
+                SwitchToMapMode(MapMode.Political);
             }
-            if (GUILayout.Button("Terrain"))
+            if (GUILayout.Button("Development"))
             {
-                SwitchToMapMode(1, "Terrain");
+                SwitchToMapMode(MapMode.Development);
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Development"))
+            if (GUILayout.Button("Terrain"))
             {
-                SwitchToMapMode(2, "Development");
+                SwitchToMapMode(MapMode.Terrain);
             }
             if (GUILayout.Button("Culture"))
             {
-                SwitchToMapMode(3, "Culture");
+                SwitchToMapMode(MapMode.Culture);
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Country"))
-            {
-                SwitchToMapMode(4, "Country");
-            }
-            if (GUILayout.Button("Debug"))
-            {
-                SwitchToMapMode(99, "Debug");
-            }
-            GUILayout.EndHorizontal();
+            GUILayout.Space(10);
 
-            GUILayout.Space(5);
+            // Advanced controls
+            showAdvanced = GUILayout.Toggle(showAdvanced, "Show Advanced Controls");
 
-            // Utility buttons
-            if (GUILayout.Button("Refresh Map Modes"))
+            if (showAdvanced)
             {
-                RefreshAvailableMapModes();
-            }
+                GUILayout.Label("All Modes:", GUI.skin.box);
 
-            if (GUILayout.Button("Force Refresh Current"))
-            {
-                mapModeManager.RefreshCurrentMapMode();
-                DominionLogger.Log("MapModeDebugUI: Forced refresh of current map mode");
+                scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Height(150));
+
+                if (availableModes != null)
+                {
+                    foreach (var mode in availableModes)
+                    {
+                        bool isCurrent = mapModeManager.CurrentMode == mode;
+
+                        // Highlight current mode
+                        Color originalColor = GUI.backgroundColor;
+                        if (isCurrent)
+                        {
+                            GUI.backgroundColor = Color.green;
+                        }
+
+                        if (GUILayout.Button($"{mode} ({(int)mode})"))
+                        {
+                            SwitchToMapMode(mode);
+                        }
+
+                        GUI.backgroundColor = originalColor;
+                    }
+                }
+
+                GUILayout.EndScrollView();
+
+                GUILayout.Space(5);
+
+                // Debug actions
+                GUILayout.Label("Debug Actions:", GUI.skin.box);
+
+                if (GUILayout.Button("Force Texture Update"))
+                {
+                    DominionLogger.Log("MapModeDebugUI: Forced texture update");
+                }
+
+                if (GUILayout.Button("Get Tooltip (Province 1)"))
+                {
+                    var tooltip = mapModeManager.GetProvinceTooltip(1);
+                    DominionLogger.Log($"Province 1 Tooltip: {tooltip}");
+                }
+
+                if (GUILayout.Button("Refresh Available Modes"))
+                {
+                    RefreshAvailableModes();
+                }
             }
 
             GUILayout.EndArea();
@@ -162,17 +154,18 @@ namespace Map.Debug
 #endif
 
         /// <summary>
-        /// Switch to a specific map mode with logging
+        /// Switch to a specific map mode using the new enum-based system
         /// </summary>
-        private void SwitchToMapMode(int modeID, string modeName)
+        private void SwitchToMapMode(MapMode mode)
         {
-            if (mapModeManager.SetMapMode(modeID))
+            if (mapModeManager != null && mapModeManager.IsInitialized)
             {
-                DominionLogger.Log($"MapModeDebugUI: Switched to {modeName} (ID: {modeID})");
+                mapModeManager.SetMapMode(mode);
+                DominionLogger.Log($"MapModeDebugUI: Switched to {mode} mode");
             }
             else
             {
-                DominionLogger.LogError($"MapModeDebugUI: Failed to switch to {modeName} (ID: {modeID})");
+                DominionLogger.LogError($"MapModeDebugUI: Cannot switch to {mode} - manager not ready");
             }
         }
 
@@ -182,8 +175,17 @@ namespace Map.Debug
         public void SetMapModeManager(MapModeManager manager)
         {
             mapModeManager = manager;
-            RefreshAvailableMapModes();
+            RefreshAvailableModes();
             DominionLogger.Log("MapModeDebugUI: MapModeManager assigned");
+        }
+
+        void Update()
+        {
+            // Auto-refresh when manager becomes available
+            if (mapModeManager != null && mapModeManager.IsInitialized && availableModes == null)
+            {
+                RefreshAvailableModes();
+            }
         }
     }
 }

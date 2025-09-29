@@ -4,6 +4,7 @@ using Map.MapModes;
 using Map.Loading;
 using Map.Interaction;
 using Map.Debug;
+using Map.Simulation;
 using ParadoxParser.Jobs;
 using Core;
 using Utils;
@@ -31,6 +32,7 @@ namespace Map.Core
         private MapRenderingCoordinator renderingCoordinator;
         private ProvinceSelector provinceSelector;
         private MapTexturePopulator texturePopulator;
+        private TextureUpdateBridge textureUpdateBridge;
 
         // Only expose what MapGenerator actually needs
         public ProvinceMapping ProvinceMapping { get; private set; }
@@ -83,6 +85,9 @@ namespace Map.Core
                 renderingCoordinator.SetupMapRendering();
                 provinceSelector.Initialize(textureManager, meshRenderer.transform);
 
+                // Initialize map mode system after rendering is ready
+                mapModeManager?.Initialize();
+
                 return true;
             }
             catch (System.Exception e)
@@ -117,6 +122,24 @@ namespace Map.Core
                 renderingCoordinator.SetupMapRendering();
                 provinceSelector.Initialize(textureManager, meshRenderer.transform);
 
+                // Initialize map mode system after rendering is ready
+                mapModeManager?.Initialize();
+
+                // Initialize TextureUpdateBridge for runtime texture updates
+                if (textureUpdateBridge != null && gameState != null)
+                {
+                    textureUpdateBridge.Initialize(gameState, textureManager, texturePopulator, ProvinceMapping);
+
+                    if (logSystemProgress)
+                    {
+                        DominionLogger.Log("MapSystemCoordinator: Initialized TextureUpdateBridge for runtime updates");
+                    }
+                }
+                else if (logSystemProgress)
+                {
+                    DominionLogger.LogWarning("MapSystemCoordinator: TextureUpdateBridge not available - runtime texture updates disabled");
+                }
+
                 return true;
             }
             catch (System.Exception e)
@@ -139,7 +162,7 @@ namespace Map.Core
         /// </summary>
         public void SetMapMode(int modeId)
         {
-            mapModeManager?.SetMapMode(modeId);
+            mapModeManager?.SetMapMode((Map.MapModes.MapMode)modeId);
         }
 
         /// <summary>
@@ -169,6 +192,7 @@ namespace Map.Core
             renderingCoordinator = initializer.RenderingCoordinator;
             provinceSelector = initializer.ProvinceSelector;
             texturePopulator = initializer.TexturePopulator;
+            textureUpdateBridge = initializer.TextureUpdateBridge;
             mapCamera = initializer.MapCamera;
             meshRenderer = initializer.MeshRenderer;
 

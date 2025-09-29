@@ -37,6 +37,7 @@ namespace Map.Core
         private MapRenderingCoordinator renderingCoordinator;
         private ProvinceSelector provinceSelector;
         private MapTexturePopulator texturePopulator;
+        private TextureUpdateBridge textureUpdateBridge;
         private ParadoxStyleCameraController cameraController;
         private MapModeDebugUI debugUI;
 
@@ -49,6 +50,7 @@ namespace Map.Core
         public MapRenderingCoordinator RenderingCoordinator => renderingCoordinator;
         public ProvinceSelector ProvinceSelector => provinceSelector;
         public MapTexturePopulator TexturePopulator => texturePopulator;
+        public TextureUpdateBridge TextureUpdateBridge => textureUpdateBridge;
         public Camera MapCamera => mapCamera;
         public MeshRenderer MeshRenderer => meshRenderer;
         public ParadoxStyleCameraController CameraController => cameraController;
@@ -167,6 +169,7 @@ namespace Map.Core
             InitializeRenderingCoordinator();
             InitializeProvinceSelector();
             InitializeTexturePopulator();
+            InitializeTextureUpdateBridge();
 
             // Phase 4: Camera setup
             InitializeCamera();
@@ -350,6 +353,19 @@ namespace Map.Core
             else if (logInitializationProgress)
             {
                 DominionLogger.Log("MapInitializer: No ParadoxStyleCameraController found in scene - camera control disabled");
+            }
+        }
+
+        private void InitializeTextureUpdateBridge()
+        {
+            textureUpdateBridge = GetComponent<TextureUpdateBridge>();
+            if (textureUpdateBridge == null)
+            {
+                textureUpdateBridge = gameObject.AddComponent<TextureUpdateBridge>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created TextureUpdateBridge component");
+                }
             }
         }
 

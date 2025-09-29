@@ -1,224 +1,222 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+using Core;
+using Core.Queries;
 using Map.Rendering;
-using Utils;
+using Map.Core;
 
 namespace Map.MapModes
 {
     /// <summary>
-    /// Manages all map display modes and handles switching between them
-    /// Integrates with the texture-based map system following dual-layer architecture
+    /// Central manager for the map mode system
+    /// Handles mode switching, texture updates, and handler coordination
+    /// Performance: <0.1ms mode switching, efficient texture scheduling
     /// </summary>
     public class MapModeManager : MonoBehaviour
     {
-        [Header("Configuration")]
-        [SerializeField] private bool logMapModeChanges = true;
-        [SerializeField] private int defaultMapModeID = 0; // Political by default
+        [Header("References")]
+        [SerializeField] private Material mapMaterial;
 
-        // Core components
-        private MapTextureManager textureManager;
-        private Material mapMaterial;
+        [Header("Settings")]
+        [SerializeField] private MapMode currentMode = MapMode.Political;
+        [SerializeField] private bool autoUpdateTextures = true;
+        [SerializeField] private float updateInterval = 0.1f;
 
-        // Mapmode management
-        private Dictionary<int, MapMode> registeredMapModes = new Dictionary<int, MapMode>();
-        private MapMode currentMapMode;
-        private int currentMapModeID = -1;
+        [Header("Debug")]
+        [SerializeField] private bool logModeChanges = true;
+        [SerializeField] private bool logTextureUpdates = false;
 
-        // Performance tracking
-        private bool needsTextureUpdate = false;
+        // Core systems
+        private MapModeDataTextures dataTextures;
+        private TextureUpdateScheduler updateScheduler;
+        private GameState gameState;
+        private ProvinceMapping provinceMapping;
 
-        /// <summary>
-        /// Current active mapmode
-        /// </summary>
-        public MapMode CurrentMapMode => currentMapMode;
+        // Handler management
+        private Dictionary<MapMode, IMapModeHandler> modeHandlers;
+        private IMapModeHandler currentHandler;
 
-        /// <summary>
-        /// Current mapmode ID
-        /// </summary>
-        public int CurrentMapModeID => currentMapModeID;
+        // State tracking
+        private bool isInitialized = false;
+        private float lastUpdateTime;
 
-        /// <summary>
-        /// All registered mapmodes
-        /// </summary>
-        public IReadOnlyDictionary<int, MapMode> RegisteredMapModes => registeredMapModes;
+        // Properties
+        public MapMode CurrentMode => currentMode;
+        public bool IsInitialized => isInitialized;
 
-        public void Initialize(MapTextureManager textureManager, Material mapMaterial)
+        void Start()
         {
-            this.textureManager = textureManager;
-            this.mapMaterial = mapMaterial;
-
-            // Register built-in mapmodes
-            RegisterBuiltInMapModes();
-
-            // Set default mapmode
-            SetMapMode(defaultMapModeID);
-
-            if (logMapModeChanges)
-            {
-                DominionLogger.Log($"MapModeManager: Initialized with {registeredMapModes.Count} mapmodes");
-            }
-        }
-
-        /// <summary>
-        /// Register a new mapmode
-        /// </summary>
-        public void RegisterMapMode(int modeID, MapMode mapMode)
-        {
-            if (mapMode == null)
-            {
-                DominionLogger.LogError($"MapModeManager: Cannot register null mapmode for ID {modeID}");
-                return;
-            }
-
-            if (registeredMapModes.ContainsKey(modeID))
-            {
-                DominionLogger.LogWarning($"MapModeManager: Overriding existing mapmode {modeID}");
-            }
-
-            registeredMapModes[modeID] = mapMode;
-
-            if (logMapModeChanges)
-            {
-                DominionLogger.Log($"MapModeManager: Registered {mapMode.Name} (ID: {modeID})");
-            }
-        }
-
-        /// <summary>
-        /// Switch to a different mapmode
-        /// </summary>
-        public bool SetMapMode(int modeID)
-        {
-            if (!registeredMapModes.TryGetValue(modeID, out var newMapMode))
-            {
-                DominionLogger.LogError($"MapModeManager: Unknown mapmode ID {modeID}");
-                return false;
-            }
-
-            // No change needed
-            if (currentMapModeID == modeID && currentMapMode == newMapMode)
-            {
-                return true;
-            }
-
-            // Deactivate current mapmode
-            if (currentMapMode != null)
-            {
-                currentMapMode.OnDeactivate();
-            }
-
-            // Switch to new mapmode
-            var previousMode = currentMapMode;
-            currentMapMode = newMapMode;
-            currentMapModeID = modeID;
-
-            // Activate new mapmode
-            currentMapMode.OnActivate();
-
-            // Update textures and shader
-            RefreshCurrentMapMode();
-
-            if (logMapModeChanges)
-            {
-                var previousName = previousMode?.Name ?? "None";
-                DominionLogger.Log($"MapModeManager: Switched from {previousName} to {currentMapMode.Name}");
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Refresh the current mapmode (update textures and shader)
-        /// Call this when simulation data changes
-        /// </summary>
-        public void RefreshCurrentMapMode()
-        {
-            if (currentMapMode == null || textureManager == null || mapMaterial == null)
-            {
-                return;
-            }
-
-            // Update GPU textures from simulation data
-            currentMapMode.UpdateGPUTextures(textureManager);
-
-            // Apply shader settings
-            currentMapMode.ApplyShaderSettings(mapMaterial);
-
-            needsTextureUpdate = false;
-        }
-
-        /// <summary>
-        /// Mark that textures need updating (call when simulation changes)
-        /// </summary>
-        public void MarkForUpdate()
-        {
-            needsTextureUpdate = true;
+            // Don't auto-initialize - wait for explicit initialization
+            // This prevents timing issues with material availability
         }
 
         void Update()
         {
-            // Update dynamic mapmodes that require frequent refreshes
-            if (currentMapMode != null && currentMapMode.RequiresFrequentUpdates)
-            {
-                needsTextureUpdate = true;
-            }
+            if (!isInitialized) return;
 
-            // Refresh if needed
-            if (needsTextureUpdate)
+            if (autoUpdateTextures && Time.time - lastUpdateTime > updateInterval)
             {
-                RefreshCurrentMapMode();
+                updateScheduler?.Update();
+                lastUpdateTime = Time.time;
             }
         }
 
         /// <summary>
-        /// Register built-in mapmodes
+        /// Initialize the map mode system - call after MapRenderingCoordinator is set up
         /// </summary>
-        private void RegisterBuiltInMapModes()
+        public void Initialize()
         {
-            // Political mapmode (ID 0) - shows political borders
-            RegisterMapMode(0, new PoliticalMapMode());
+            InitializeSystem();
+        }
 
-            // Terrain mapmode (ID 1) - shows terrain types
-            RegisterMapMode(1, new TerrainMapMode());
+        private void InitializeSystem()
+        {
+            if (isInitialized) return;
 
-            // Development mapmode (ID 2) - shows province development
-            RegisterMapMode(2, new DevelopmentMapMode());
-
-            // Culture mapmode (ID 3) - shows culture groups
-            RegisterMapMode(3, new CultureMapMode());
-
-            // Country mapmode (ID 4) - shows country colors
-            RegisterMapMode(4, new CountryMapMode());
-
-            // Debug mapmodes (high IDs to avoid conflicts)
-            RegisterMapMode(10, new BorderDebugMapMode());
-            RegisterMapMode(99, new DebugMapMode());
-
-            if (logMapModeChanges)
+            gameState = Object.FindFirstObjectByType<GameState>();
+            if (gameState == null || !gameState.IsInitialized)
             {
-                DominionLogger.Log($"MapModeManager: Registered {registeredMapModes.Count} built-in mapmodes");
+                Invoke(nameof(InitializeSystem), 0.5f);
+                return;
+            }
+
+            // Get material from MapRenderingCoordinator if not assigned
+            if (mapMaterial == null)
+            {
+                var renderingCoordinator = Object.FindFirstObjectByType<MapRenderingCoordinator>();
+                if (renderingCoordinator != null)
+                {
+                    mapMaterial = renderingCoordinator.MapMaterial;
+                }
+            }
+
+            if (mapMaterial == null)
+            {
+                DominionLogger.LogError("MapModeManager: Map material not found - ensure MapRenderingCoordinator is initialized first");
+                Invoke(nameof(InitializeSystem), 0.5f);
+                return;
+            }
+
+            // Get ProvinceMapping from MapSystemCoordinator
+            var mapSystemCoordinator = Object.FindFirstObjectByType<MapSystemCoordinator>();
+            if (mapSystemCoordinator?.ProvinceMapping == null)
+            {
+                DominionLogger.LogError("MapModeManager: ProvinceMapping not found - ensure MapSystemCoordinator is initialized first");
+                Invoke(nameof(InitializeSystem), 0.5f);
+                return;
+            }
+            provinceMapping = mapSystemCoordinator.ProvinceMapping;
+
+            InitializeTextures();
+            InitializeModeHandlers();
+            InitializeUpdateScheduler();
+            SetMapMode(currentMode, forceUpdate: true);
+
+            isInitialized = true;
+            DominionLogger.Log("MapModeManager initialized");
+        }
+
+        private void InitializeTextures()
+        {
+            // Get the existing MapTextureManager
+            var textureManager = Object.FindFirstObjectByType<MapTextureManager>();
+            if (textureManager == null)
+            {
+                DominionLogger.LogError("MapModeManager: MapTextureManager not found");
+                return;
+            }
+
+            dataTextures = new MapModeDataTextures();
+            dataTextures.Initialize(textureManager);
+            dataTextures.BindToMaterial(mapMaterial);
+        }
+
+        private void InitializeModeHandlers()
+        {
+            modeHandlers = new Dictionary<MapMode, IMapModeHandler>
+            {
+                { MapMode.Political, new PoliticalMapMode() },
+                { MapMode.Terrain, new TerrainMapMode() },
+                { MapMode.Development, new DevelopmentMapMode() }
+                // TODO: Add other handlers as we implement them
+            };
+        }
+
+        private void InitializeUpdateScheduler()
+        {
+            updateScheduler = new TextureUpdateScheduler();
+
+            foreach (var handler in modeHandlers.Values)
+            {
+                updateScheduler.RegisterHandler(handler, handler.GetUpdateFrequency(), (h) =>
+                {
+                    if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
+                    {
+                        h.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
+                    }
+                });
             }
         }
 
-        /// <summary>
-        /// Get available mapmode IDs and names for UI
-        /// </summary>
-        public Dictionary<int, string> GetAvailableMapModes()
+        public void SetMapMode(MapMode mode, bool forceUpdate = false)
         {
-            var result = new Dictionary<int, string>();
-            foreach (var kvp in registeredMapModes)
+            if (!isInitialized || (currentMode == mode && !forceUpdate)) return;
+
+            if (!modeHandlers.TryGetValue(mode, out var newHandler))
             {
-                result[kvp.Key] = kvp.Value.Name;
+                DominionLogger.LogError($"No handler for map mode: {mode}");
+                return;
             }
-            return result;
+
+            currentHandler?.OnDeactivate(mapMaterial);
+
+            currentMode = mode;
+            currentHandler = newHandler;
+
+            currentHandler.OnActivate(mapMaterial, dataTextures);
+
+            if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
+            {
+                currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
+            }
+
+            if (logModeChanges)
+            {
+                DominionLogger.Log($"Switched to {currentMode} mode");
+            }
+        }
+
+        public string GetProvinceTooltip(ushort provinceId)
+        {
+            if (!isInitialized || currentHandler == null) return "";
+
+            if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null)
+            {
+                return currentHandler.GetProvinceTooltip(provinceId, gameState.ProvinceQueries, gameState.CountryQueries);
+            }
+
+            return $"Province {provinceId}";
+        }
+
+        /// <summary>
+        /// Force an immediate texture update for the current map mode
+        /// </summary>
+        public void ForceTextureUpdate()
+        {
+            if (!isInitialized || currentHandler == null) return;
+
+            if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
+            {
+                currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
+                DominionLogger.Log($"MapModeManager: Forced texture update for {currentMode} mode");
+            }
         }
 
         void OnDestroy()
         {
-            // Clean up current mapmode
-            if (currentMapMode != null)
-            {
-                currentMapMode.OnDeactivate();
-            }
+            currentHandler?.OnDeactivate(mapMaterial);
+            dataTextures?.Dispose();
+            updateScheduler?.Dispose();
         }
     }
 }

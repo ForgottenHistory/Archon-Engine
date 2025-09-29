@@ -20,6 +20,7 @@ namespace Map.Rendering
         private Texture2D provinceIDTexture;      // R16G16 format for province IDs
         private Texture2D provinceOwnerTexture;   // R16 format for province owners
         private Texture2D provinceColorTexture;   // RGBA32 format for province colors (legacy)
+        private Texture2D provinceDevelopmentTexture; // RGBA32 format for development visualization
         private Texture2D provinceColorPalette;   // 256×1 RGBA32 palette for efficient color lookup
 
         // Dynamic render textures
@@ -30,6 +31,7 @@ namespace Map.Rendering
         private static readonly int ProvinceIDTexID = Shader.PropertyToID("_ProvinceIDTexture");
         private static readonly int ProvinceOwnerTexID = Shader.PropertyToID("_ProvinceOwnerTexture");
         private static readonly int ProvinceColorTexID = Shader.PropertyToID("_ProvinceColorTexture");
+        private static readonly int ProvinceDevelopmentTexID = Shader.PropertyToID("_ProvinceDevelopmentTexture");
         private static readonly int ProvinceColorPaletteID = Shader.PropertyToID("_ProvinceColorPalette");
         private static readonly int BorderTexID = Shader.PropertyToID("_BorderTexture");
         private static readonly int HighlightTexID = Shader.PropertyToID("_HighlightTexture");
@@ -40,6 +42,7 @@ namespace Map.Rendering
         public Texture2D ProvinceIDTexture => provinceIDTexture;
         public Texture2D ProvinceOwnerTexture => provinceOwnerTexture;
         public Texture2D ProvinceColorTexture => provinceColorTexture;
+        public Texture2D ProvinceDevelopmentTexture => provinceDevelopmentTexture;
         public Texture2D ProvinceColorPalette => provinceColorPalette;
         public RenderTexture BorderTexture => borderTexture;
         public RenderTexture HighlightTexture => highlightTexture;
@@ -57,6 +60,7 @@ namespace Map.Rendering
             CreateProvinceIDTexture();
             CreateProvinceOwnerTexture();
             CreateProvinceColorTexture();
+            CreateProvinceDevelopmentTexture();
             CreateProvinceColorPalette();
             CreateBorderTexture();
             CreateHighlightTexture();
@@ -142,6 +146,33 @@ namespace Map.Rendering
             if (logTextureCreation)
             {
                 DominionLogger.Log($"Created Province Color texture: {mapWidth}x{mapHeight} RGBA32 format");
+            }
+        }
+
+        /// <summary>
+        /// Create province development texture in RGBA32 format for development visualization
+        /// </summary>
+        private void CreateProvinceDevelopmentTexture()
+        {
+            provinceDevelopmentTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false);
+            provinceDevelopmentTexture.name = "ProvinceDevelopment_Texture";
+
+            ConfigureMapTexture(provinceDevelopmentTexture);
+
+            // Initialize with ocean color (development mode default)
+            var pixels = new Color32[mapWidth * mapHeight];
+            Color32 oceanColor = new Color32(25, 25, 112, 255); // Dark blue for ocean
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                pixels[i] = oceanColor;
+            }
+
+            provinceDevelopmentTexture.SetPixels32(pixels);
+            provinceDevelopmentTexture.Apply(false);
+
+            if (logTextureCreation)
+            {
+                DominionLogger.Log($"Created Province Development texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
         }
 
@@ -300,6 +331,19 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Update province development color at specific coordinates
+        /// </summary>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
+        /// <param name="developmentColor">RGBA32 development color</param>
+        public void SetProvinceDevelopment(int x, int y, Color32 developmentColor)
+        {
+            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return;
+
+            provinceDevelopmentTexture.SetPixel(x, y, developmentColor);
+        }
+
+        /// <summary>
         /// Update province display color at specific coordinates
         /// </summary>
         public void SetProvinceColor(int x, int y, Color32 color)
@@ -343,6 +387,7 @@ namespace Map.Rendering
             provinceIDTexture.Apply(false);
             provinceOwnerTexture.Apply(false);
             provinceColorTexture.Apply(false);
+            provinceDevelopmentTexture.Apply(false);
             provinceColorPalette.Apply(false);
         }
 
@@ -365,6 +410,7 @@ namespace Map.Rendering
             material.SetTexture(ProvinceIDTexID, provinceIDTexture);
             material.SetTexture(ProvinceOwnerTexID, provinceOwnerTexture);
             material.SetTexture(ProvinceColorTexID, provinceColorTexture);
+            material.SetTexture(ProvinceDevelopmentTexID, provinceDevelopmentTexture);
             material.SetTexture(ProvinceColorPaletteID, provinceColorPalette);
             material.SetTexture(BorderTexID, borderTexture);
             material.SetTexture(HighlightTexID, highlightTexture);
