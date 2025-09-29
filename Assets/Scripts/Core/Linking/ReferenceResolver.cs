@@ -30,7 +30,7 @@ namespace Core.Linking
         /// <summary>
         /// Resolve all string references in province data to numeric IDs
         /// </summary>
-        public void ResolveProvinceReferences(ProvinceInitialState rawData, ProvinceData provinceData)
+        public void ResolveProvinceReferences(ref ProvinceInitialState rawData, ProvinceData provinceData)
         {
             var context = $"Province {rawData.ProvinceID}";
 
@@ -52,6 +52,10 @@ namespace Core.Linking
             provinceData.BaseProduction = rawData.BaseProduction;
             provinceData.BaseManpower = rawData.BaseManpower;
             provinceData.CenterOfTrade = rawData.CenterOfTrade;
+
+            // CRITICAL FIX: Copy linked IDs back to ProvinceInitialState for simulation layer
+            rawData.OwnerID = (ushort)provinceData.OwnerId;
+            rawData.ControllerID = (ushort)provinceData.ControllerId;
 
             DominionLogger.LogDataLinking($"Resolved references for {context}: Owner={provinceData.OwnerId}, Culture={provinceData.CultureId}, Religion={provinceData.ReligionId}");
         }

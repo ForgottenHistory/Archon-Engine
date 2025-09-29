@@ -532,7 +532,10 @@ namespace Core
                 var provinceData = gameRegistries.Provinces.GetByDefinition(initialState.ProvinceID);
                 if (provinceData != null)
                 {
-                    referenceResolver.ResolveProvinceReferences(initialState, provinceData);
+                    referenceResolver.ResolveProvinceReferences(ref initialState, provinceData);
+
+                    // CRITICAL: Save the updated initialState back to the array
+                    provinceInitialStates.InitialStates[i] = initialState;
                 }
             }
 
