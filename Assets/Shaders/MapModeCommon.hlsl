@@ -88,7 +88,51 @@ float4 ApplyHighlights(float4 baseColor, float2 uv)
     return baseColor;
 }
 
-// Ocean color constant
+// Sample terrain type for a given province
+// NOTE: Since _ProvinceTerrainTexture now contains colors, we determine type from color
+uint SampleTerrainType(float2 uv)
+{
+    // Fix flipped UV coordinates
+    float2 correctedUV = float2(uv.x, 1.0 - uv.y);
+
+    // Sample terrain color and determine type from it
+    float4 terrainColor = SAMPLE_TEXTURE2D(_ProvinceTerrainTexture, sampler_ProvinceTerrainTexture, correctedUV);
+
+    // Simple heuristic: if color is very blue, it's water (type 0), else land (type 1)
+    // This is a quick fix - could be improved with better color classification
+    if (terrainColor.b > 0.6 && terrainColor.b > terrainColor.r && terrainColor.b > terrainColor.g)
+    {
+        return 0; // Water
+    }
+    else
+    {
+        return 1; // Land
+    }
+}
+
+// Sample terrain color from terrain palette
+float4 SampleTerrainColor(uint terrainType)
+{
+    // Map terrain type to palette texture coordinate
+    // Terrain palette is 32x1, so X = terrainType/32, Y = 0.5
+    float2 terrainUV = float2(terrainType / 32.0, 0.5);
+    return SAMPLE_TEXTURE2D(_TerrainColorPalette, sampler_TerrainColorPalette, terrainUV);
+}
+
+// Sample terrain color directly from terrain.bmp texture at given UV
+float4 SampleTerrainColorDirect(float2 uv)
+{
+    // Fix flipped UV coordinates
+    float2 correctedUV = float2(uv.x, 1.0 - uv.y);
+
+    // Sample terrain color directly from terrain bitmap texture
+    return SAMPLE_TEXTURE2D(_ProvinceTerrainTexture, sampler_ProvinceTerrainTexture, correctedUV);
+}
+
+// Ocean color constant (for invalid areas)
 #define OCEAN_COLOR float4(0.2, 0.4, 0.8, 1.0)
+
+// Unowned land color constant
+#define UNOWNED_LAND_COLOR float4(0.8, 0.7, 0.5, 1.0) // Beige/tan
 
 #endif // MAPMODE_COMMON_INCLUDED

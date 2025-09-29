@@ -285,6 +285,12 @@ namespace Core
             // Load terrain types
             TerrainLoader.LoadTerrains(gameRegistries.Terrains, gameSettings.DataDirectory);
 
+            UpdateProgress(13f, "Loading water province definitions...");
+            yield return null;
+
+            // Load water province definitions from default.json5 and terrain.json5
+            WaterProvinceLoader.LoadWaterProvinceData(gameSettings.DataDirectory);
+
             UpdateProgress(14f, "Validating static data...");
             yield return null;
 

@@ -39,7 +39,7 @@ namespace Map.MapModes
         {
             if (dataTextures?.ProvinceOwnerTexture == null)
             {
-                DominionLogger.LogError("PoliticalMapMode: Owner texture not available");
+                //DominionLogger.LogError("PoliticalMapMode: Owner texture not available");
                 return;
             }
 

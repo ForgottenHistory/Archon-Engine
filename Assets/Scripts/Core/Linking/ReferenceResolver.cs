@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Core.Data;
 using Core.Data.Ids;
+using Core.Loaders;
 using Core.Registries;
 using Utils;
 using CountryData = Core.Registries.CountryData;
@@ -46,7 +47,10 @@ namespace Core.Linking
             // Copy other data
             provinceData.Name = $"Province {rawData.ProvinceID}"; // TODO: Load actual names
             provinceData.Development = rawData.Development;
-            provinceData.Terrain = rawData.Terrain;
+
+            // Resolve terrain type using water province definitions (Phase 3: Linking)
+            provinceData.Terrain = WaterProvinceLoader.GetTerrainTypeForProvince(rawData.ProvinceID);
+
             provinceData.Flags = rawData.Flags;
             provinceData.BaseTax = rawData.BaseTax;
             provinceData.BaseProduction = rawData.BaseProduction;
@@ -56,6 +60,7 @@ namespace Core.Linking
             // CRITICAL FIX: Copy linked IDs back to ProvinceInitialState for simulation layer
             rawData.OwnerID = (ushort)provinceData.OwnerId;
             rawData.ControllerID = (ushort)provinceData.ControllerId;
+            rawData.Terrain = provinceData.Terrain;
 
             DominionLogger.LogDataLinking($"Resolved references for {context}: Owner={provinceData.OwnerId}, Culture={provinceData.CultureId}, Religion={provinceData.ReligionId}");
         }

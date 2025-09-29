@@ -21,6 +21,7 @@ namespace Map.Rendering
         private Texture2D provinceOwnerTexture;   // R16 format for province owners
         private Texture2D provinceColorTexture;   // RGBA32 format for province colors (legacy)
         private Texture2D provinceDevelopmentTexture; // RGBA32 format for development visualization
+        private Texture2D provinceTerrainTexture; // RGBA32 format for terrain colors from terrain.bmp
         private Texture2D provinceColorPalette;   // 256×1 RGBA32 palette for efficient color lookup
 
         // Dynamic render textures
@@ -32,6 +33,7 @@ namespace Map.Rendering
         private static readonly int ProvinceOwnerTexID = Shader.PropertyToID("_ProvinceOwnerTexture");
         private static readonly int ProvinceColorTexID = Shader.PropertyToID("_ProvinceColorTexture");
         private static readonly int ProvinceDevelopmentTexID = Shader.PropertyToID("_ProvinceDevelopmentTexture");
+        private static readonly int ProvinceTerrainTexID = Shader.PropertyToID("_ProvinceTerrainTexture");
         private static readonly int ProvinceColorPaletteID = Shader.PropertyToID("_ProvinceColorPalette");
         private static readonly int BorderTexID = Shader.PropertyToID("_BorderTexture");
         private static readonly int HighlightTexID = Shader.PropertyToID("_HighlightTexture");
@@ -43,6 +45,7 @@ namespace Map.Rendering
         public Texture2D ProvinceOwnerTexture => provinceOwnerTexture;
         public Texture2D ProvinceColorTexture => provinceColorTexture;
         public Texture2D ProvinceDevelopmentTexture => provinceDevelopmentTexture;
+        public Texture2D ProvinceTerrainTexture => provinceTerrainTexture;
         public Texture2D ProvinceColorPalette => provinceColorPalette;
         public RenderTexture BorderTexture => borderTexture;
         public RenderTexture HighlightTexture => highlightTexture;
@@ -61,6 +64,7 @@ namespace Map.Rendering
             CreateProvinceOwnerTexture();
             CreateProvinceColorTexture();
             CreateProvinceDevelopmentTexture();
+            CreateProvinceTerrainTexture();
             CreateProvinceColorPalette();
             CreateBorderTexture();
             CreateHighlightTexture();
@@ -173,6 +177,34 @@ namespace Map.Rendering
             if (logTextureCreation)
             {
                 DominionLogger.Log($"Created Province Development texture: {mapWidth}x{mapHeight} RGBA32 format");
+            }
+        }
+
+        /// <summary>
+        /// Create province terrain texture in RGBA32 format for terrain colors from terrain.bmp
+        /// </summary>
+        private void CreateProvinceTerrainTexture()
+        {
+            provinceTerrainTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false);
+            provinceTerrainTexture.name = "ProvinceTerrain_Texture";
+
+            // DEBUG: Try default Unity texture settings instead of ConfigureMapTexture
+            // ConfigureMapTexture(provinceTerrainTexture);
+
+            // Initialize with default land color (brown/tan for land)
+            var pixels = new Color32[mapWidth * mapHeight];
+            Color32 landColor = new Color32(139, 125, 107, 255); // Brown/tan for land
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                pixels[i] = landColor;
+            }
+
+            provinceTerrainTexture.SetPixels32(pixels);
+            provinceTerrainTexture.Apply(false);
+
+            if (logTextureCreation)
+            {
+                DominionLogger.Log($"Created Province Terrain texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
         }
 
@@ -388,6 +420,7 @@ namespace Map.Rendering
             provinceOwnerTexture.Apply(false);
             provinceColorTexture.Apply(false);
             provinceDevelopmentTexture.Apply(false);
+            provinceTerrainTexture.Apply(false);
             provinceColorPalette.Apply(false);
         }
 
@@ -411,9 +444,31 @@ namespace Map.Rendering
             material.SetTexture(ProvinceOwnerTexID, provinceOwnerTexture);
             material.SetTexture(ProvinceColorTexID, provinceColorTexture);
             material.SetTexture(ProvinceDevelopmentTexID, provinceDevelopmentTexture);
+            material.SetTexture(ProvinceTerrainTexID, provinceTerrainTexture);
+
+            // DEBUG: Verify the texture was actually set
+            var retrievedTexture = material.GetTexture(ProvinceTerrainTexID);
+            if (retrievedTexture == provinceTerrainTexture)
+            {
+                DominionLogger.Log($"MapTextureManager: Successfully verified terrain texture binding - instances match");
+            }
+            else
+            {
+                DominionLogger.LogError($"MapTextureManager: Terrain texture binding FAILED - set {provinceTerrainTexture?.GetInstanceID()}, got {retrievedTexture?.GetInstanceID()}");
+            }
             material.SetTexture(ProvinceColorPaletteID, provinceColorPalette);
             material.SetTexture(BorderTexID, borderTexture);
             material.SetTexture(HighlightTexID, highlightTexture);
+
+            // Debug: Verify terrain texture binding
+            if (provinceTerrainTexture != null)
+            {
+                DominionLogger.Log($"MapTextureManager: Bound terrain texture instance {provinceTerrainTexture.GetInstanceID()} ({provinceTerrainTexture.name}) size {provinceTerrainTexture.width}x{provinceTerrainTexture.height} to material");
+            }
+            else
+            {
+                DominionLogger.LogWarning("MapTextureManager: Terrain texture is null when binding to material!");
+            }
         }
 
         /// <summary>

@@ -79,11 +79,12 @@ namespace Map.Rendering
                 }
             }
 
-            // Bind textures to material
-            textureManager.BindTexturesToMaterial(mapMaterial);
-
-            // Set material to renderer
+            // Set material to renderer FIRST (this creates a material instance)
             meshRenderer.material = mapMaterial;
+
+            // Now bind textures to the ACTUAL runtime material instance
+            Material runtimeMaterial = meshRenderer.material;
+            textureManager.BindTexturesToMaterial(runtimeMaterial);
 
             // MapModeManager initializes itself in Start()
             if (logRenderingProgress && mapModeManager != null)

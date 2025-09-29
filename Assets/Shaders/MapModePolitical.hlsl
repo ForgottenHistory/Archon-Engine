@@ -21,8 +21,23 @@ float4 RenderPolitical(uint provinceID, float2 uv)
     // Handle unowned provinces
     if (ownerID == 0)
     {
-        // Unowned province - use neutral gray
-        return float4(0.7, 0.7, 0.7, 1.0);
+        // Sample terrain color directly from terrain.bmp texture
+        float4 terrainColor = SampleTerrainColorDirect(uv);
+
+        // DEBUG: Test if we're getting our specific ocean color [0,100,200] = [0, 0.39, 0.78]
+        if (abs(terrainColor.r - 0.0) < 0.1 && abs(terrainColor.g - 0.39) < 0.1 && abs(terrainColor.b - 0.78) < 0.1)
+        {
+            return float4(0.0, 1.0, 1.0, 1.0); // Cyan = Found our ocean color!
+        }
+
+        // If we get exactly white (1,1,1), that's the default texture
+        if (terrainColor.r > 0.99 && terrainColor.g > 0.99 && terrainColor.b > 0.99)
+        {
+            return float4(1.0, 0.0, 1.0, 1.0); // Magenta = Default white texture
+        }
+
+        // Show actual sampled values (scaled down to see them)
+        return float4(terrainColor.r, terrainColor.g, terrainColor.b, 1.0);
     }
 
     // Sample country color from palette
