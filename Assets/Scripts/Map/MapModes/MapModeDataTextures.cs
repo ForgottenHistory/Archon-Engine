@@ -20,7 +20,7 @@ namespace Map.MapModes
         public Texture2D ProvinceColorTexture { get; private set; }   // RGBA32: Province colors from bitmap
 
         // Mode-specific data textures (created on demand)
-        public Texture2D ProvinceOwnerTexture { get; private set; }    // R16: Owner nation ID
+        public RenderTexture ProvinceOwnerTexture { get; private set; }    // RG16: Owner nation ID (UAV for compute shader)
         public Texture2D ProvinceTerrainTexture { get; private set; }  // R8: Terrain type ID
         public Texture2D ProvinceDevelopmentTexture { get; private set; } // R8: Development level (0-255)
         public Texture2D ProvinceCultureTexture { get; private set; }  // R16: Culture ID
@@ -47,7 +47,7 @@ namespace Map.MapModes
         private static readonly int ProvinceDevelopmentTexID = Shader.PropertyToID("_ProvinceDevelopmentTexture");
         private static readonly int ProvinceCultureTexID = Shader.PropertyToID("_ProvinceCultureTexture");
         private static readonly int ProvinceReligionTexID = Shader.PropertyToID("_ProvinceReligionTexture");
-        private static readonly int CountryColorPaletteID = Shader.PropertyToID("_ProvinceColorPalette");
+        private static readonly int CountryColorPaletteID = Shader.PropertyToID("_CountryColorPalette");
         private static readonly int CultureColorPaletteID = Shader.PropertyToID("_CultureColorPalette");
         private static readonly int ReligionColorPaletteID = Shader.PropertyToID("_ReligionColorPalette");
         private static readonly int TerrainColorPaletteID = Shader.PropertyToID("_TerrainColorPalette");
@@ -359,10 +359,12 @@ namespace Map.MapModes
             if (!isInitialized) return;
 
             // Destroy textures
-            if (ProvinceIDTexture != null) Object.DestroyImmediate(ProvinceIDTexture);
-            if (ProvinceOwnerTexture != null) Object.DestroyImmediate(ProvinceOwnerTexture);
-            if (ProvinceTerrainTexture != null) Object.DestroyImmediate(ProvinceTerrainTexture);
-            if (ProvinceDevelopmentTexture != null) Object.DestroyImmediate(ProvinceDevelopmentTexture);
+            // NOTE: ProvinceIDTexture, ProvinceOwnerTexture, ProvinceTerrainTexture, and ProvinceDevelopmentTexture
+            // are owned by MapTextureManager - do NOT destroy them here
+            // if (ProvinceIDTexture != null) Object.DestroyImmediate(ProvinceIDTexture);
+            // if (ProvinceOwnerTexture != null) Object.DestroyImmediate(ProvinceOwnerTexture);
+            // if (ProvinceTerrainTexture != null) Object.DestroyImmediate(ProvinceTerrainTexture);
+            // if (ProvinceDevelopmentTexture != null) Object.DestroyImmediate(ProvinceDevelopmentTexture);
             if (ProvinceCultureTexture != null) Object.DestroyImmediate(ProvinceCultureTexture);
             if (ProvinceReligionTexture != null) Object.DestroyImmediate(ProvinceReligionTexture);
             if (ProvinceTradeValueTexture != null) Object.DestroyImmediate(ProvinceTradeValueTexture);

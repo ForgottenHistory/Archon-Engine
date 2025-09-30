@@ -28,7 +28,7 @@ float4 RenderPolitical(uint provinceID, float2 uv)
 
     // Sample country color from palette
     float2 colorUV = GetColorUV(ownerID);
-    float4 countryColor = SAMPLE_TEXTURE2D(_ProvinceColorPalette, sampler_ProvinceColorPalette, colorUV);
+    float4 countryColor = SAMPLE_TEXTURE2D(_CountryColorPalette, sampler_CountryColorPalette, colorUV);
 
     // Ensure we have a valid color (not black/transparent)
     if (countryColor.r == 0.0 && countryColor.g == 0.0 && countryColor.b == 0.0)

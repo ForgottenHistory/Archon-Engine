@@ -6,13 +6,13 @@
 #pragma kernel PopulateOwners
 
 // Input textures
-Texture2D<float4> ProvinceIDTexture;  // R16G16 format - which province at each pixel
+Texture2D<float2> ProvinceIDTexture;  // RG16 format - which province at each pixel (2 channels)
 
 // Input buffers
 StructuredBuffer<uint> ProvinceOwnerBuffer;  // Owner ID per province (indexed by province ID)
 
 // Output texture
-RWTexture2D<float4> ProvinceOwnerTexture;  // R16 format - owner ID at each pixel
+RWTexture2D<float2> ProvinceOwnerTexture;  // RG16 format - owner ID at each pixel (R=low byte, G=high byte)
 
 // Map dimensions
 uint MapWidth;
@@ -29,15 +29,15 @@ uint DecodeProvinceID(float2 encoded)
     return (g << 8) | r;
 }
 
-// Encode owner ID to R16 format (stored in red channel)
-float4 EncodeOwnerID(uint ownerID)
+// Encode owner ID to RG16 format
+float2 EncodeOwnerID(uint ownerID)
 {
-    // Encode as R16: Store full 16-bit value in RG channels
-    uint r = ownerID & 0xFF;        // Low byte
-    uint g = (ownerID >> 8) & 0xFF; // High byte
+    // Encode as RG16: Store full 16-bit value in RG channels
+    uint r = ownerID & 0xFF;        // Low byte (R channel)
+    uint g = (ownerID >> 8) & 0xFF; // High byte (G channel)
 
-    // Return as normalized float4 (R16 uses only red channel, but we store both bytes)
-    return float4(r / 255.0, g / 255.0, 0, 1);
+    // Return as normalized float2 for RG16 format
+    return float2(r / 255.0, g / 255.0);
 }
 
 // Thread group size - 8x8 = 64 threads per group
@@ -50,7 +50,7 @@ void PopulateOwners(uint3 id : SV_DispatchThreadID)
         return;
 
     // Sample province ID at this pixel
-    float2 provinceEncoded = ProvinceIDTexture[id.xy].rg;
+    float2 provinceEncoded = ProvinceIDTexture[id.xy];  // Returns float2 directly from RG16 texture
     uint provinceID = DecodeProvinceID(provinceEncoded);
 
     // Look up owner ID from buffer
@@ -64,5 +64,6 @@ void PopulateOwners(uint3 id : SV_DispatchThreadID)
     }
 
     // Encode and write owner ID to texture
+    // Write directly to id.xy (no Y-flip) - fragment shader handles coordinate conversion with (1.0 - uv.y)
     ProvinceOwnerTexture[id.xy] = EncodeOwnerID(ownerID);
 }

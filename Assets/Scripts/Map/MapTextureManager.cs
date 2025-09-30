@@ -18,7 +18,7 @@ namespace Map.Rendering
 
         // Core map textures
         private Texture2D provinceIDTexture;      // R16G16 format for province IDs
-        private Texture2D provinceOwnerTexture;   // R16 format for province owners
+        private RenderTexture provinceOwnerTexture;   // RG16 format for province owners (needs UAV for compute shader writes)
         private Texture2D provinceColorTexture;   // RGBA32 format for province colors (legacy)
         private Texture2D provinceDevelopmentTexture; // RGBA32 format for development visualization
         private Texture2D provinceTerrainTexture; // RGBA32 format for terrain colors from terrain.bmp
@@ -27,6 +27,10 @@ namespace Map.Rendering
         // Dynamic render textures
         private RenderTexture borderTexture;      // R8 format for borders
         private RenderTexture highlightTexture;   // RGBA32 for selection highlights
+
+        // Temporary textures for CPU->GPU updates
+        private Texture2D tempOwnerTexture;       // Temporary texture for batching owner updates before copying to RenderTexture
+        private bool ownerDataDirty = false;      // Flag indicating owner texture needs to be copied to GPU
 
         // Texture property IDs for shader efficiency - MUST match shader property names exactly!
         private static readonly int ProvinceIDTexID = Shader.PropertyToID("_ProvinceIDTexture");
@@ -42,7 +46,7 @@ namespace Map.Rendering
         public int MapHeight => mapHeight;
 
         public Texture2D ProvinceIDTexture => provinceIDTexture;
-        public Texture2D ProvinceOwnerTexture => provinceOwnerTexture;
+        public RenderTexture ProvinceOwnerTexture => provinceOwnerTexture;
         public Texture2D ProvinceColorTexture => provinceColorTexture;
         public Texture2D ProvinceDevelopmentTexture => provinceDevelopmentTexture;
         public Texture2D ProvinceTerrainTexture => provinceTerrainTexture;
@@ -102,28 +106,29 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Create province owner texture in R16 format for country IDs
+        /// Create province owner render texture in RG16 format for 16-bit country IDs
+        /// Uses RenderTexture (not Texture2D) to allow compute shader writes
+        /// Uses two 8-bit channels (R and G) to encode owner ID 0-65535
         /// </summary>
         private void CreateProvinceOwnerTexture()
         {
-            provinceOwnerTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.R16, false);
-            provinceOwnerTexture.name = "ProvinceOwner_Texture";
+            provinceOwnerTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.RG16);
+            provinceOwnerTexture.name = "ProvinceOwner_RenderTexture";
+            provinceOwnerTexture.filterMode = FilterMode.Point;
+            provinceOwnerTexture.wrapMode = TextureWrapMode.Clamp;
+            provinceOwnerTexture.useMipMap = false;
+            provinceOwnerTexture.autoGenerateMips = false;
+            provinceOwnerTexture.enableRandomWrite = true;  // CRITICAL: Enable UAV for compute shader write access
+            provinceOwnerTexture.Create();
 
-            ConfigureMapTexture(provinceOwnerTexture);
-
-            // Initialize with zero (no owner)
-            var pixels = new Color32[mapWidth * mapHeight];
-            for (int i = 0; i < pixels.Length; i++)
-            {
-                pixels[i] = new Color32(0, 0, 0, 255); // Owner ID 0 = unowned
-            }
-
-            provinceOwnerTexture.SetPixels32(pixels);
-            provinceOwnerTexture.Apply(false);
+            // Clear to black (no owner)
+            RenderTexture.active = provinceOwnerTexture;
+            GL.Clear(true, true, Color.black);
+            RenderTexture.active = null;
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"Created Province Owner texture: {mapWidth}x{mapHeight} R16 format");
+                DominionLogger.Log($"Created Province Owner RenderTexture: {mapWidth}x{mapHeight} RG16 format with UAV support");
             }
         }
 
@@ -353,13 +358,28 @@ namespace Map.Rendering
 
         /// <summary>
         /// Update province owner at specific coordinates
+        /// DEPRECATED: Owner texture is now a RenderTexture written by compute shader (OwnerTextureDispatcher)
+        /// CPU writes to RenderTexture are not supported - use compute shader for all owner updates
         /// </summary>
         public void SetProvinceOwner(int x, int y, ushort ownerID)
         {
-            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return;
+            if (provinceOwnerTexture == null) return;
 
-            byte r = (byte)(ownerID & 0xFF);
-            provinceOwnerTexture.SetPixel(x, y, new Color32(r, 0, 0, 255));
+            // Encode owner ID into RG channels (0-65535 range)
+            byte r = (byte)(ownerID & 0xFF);          // Low 8 bits
+            byte g = (byte)((ownerID >> 8) & 0xFF);   // High 8 bits
+
+            // Write to RenderTexture using Graphics.CopyTexture workaround
+            // RenderTextures can't use SetPixel, so we use a temporary Texture2D
+            if (tempOwnerTexture == null || tempOwnerTexture.width != mapWidth || tempOwnerTexture.height != mapHeight)
+            {
+                tempOwnerTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.RG16, false);
+                tempOwnerTexture.filterMode = FilterMode.Point;
+                tempOwnerTexture.wrapMode = TextureWrapMode.Clamp;
+            }
+
+            tempOwnerTexture.SetPixel(x, y, new Color32(r, g, 0, 255));
+            ownerDataDirty = true;
         }
 
         /// <summary>
@@ -413,15 +433,53 @@ namespace Map.Rendering
 
         /// <summary>
         /// Apply all texture changes (call after batch updates)
+        /// Note: provinceOwnerTexture is RenderTexture (no Apply needed - updated via compute shader)
         /// </summary>
         public void ApplyTextureChanges()
         {
             provinceIDTexture.Apply(false);
-            provinceOwnerTexture.Apply(false);
+            // provinceOwnerTexture.Apply(false); // RenderTexture - no Apply() method needed
             provinceColorTexture.Apply(false);
             provinceDevelopmentTexture.Apply(false);
             provinceTerrainTexture.Apply(false);
             provinceColorPalette.Apply(false);
+
+            // Owner texture populated by GPU compute shader only (architecture compliance)
+            // NO CPU path - removed ApplyOwnerTextureChanges() call
+        }
+
+        /// <summary>
+        /// Apply owner texture changes by copying tempOwnerTexture to provinceOwnerTexture RenderTexture
+        /// NOTE: This is CPU path legacy code - should be replaced with GPU-only path
+        /// </summary>
+        public void ApplyOwnerTextureChanges()
+        {
+            if (!ownerDataDirty || tempOwnerTexture == null) return;
+
+            // Apply changes to temp texture first
+            tempOwnerTexture.Apply(false);
+
+            // Use a custom blit material to preserve RG16 data correctly
+            // Graphics.Blit without material uses default shader that might corrupt data
+            Material blitMaterial = new Material(Shader.Find("Hidden/BlitCopy"));
+            if (blitMaterial == null || blitMaterial.shader == null)
+            {
+                // Fallback: try standard Blit (might corrupt RG16 data)
+                DominionLogger.LogWarning("MapTextureManager: BlitCopy shader not found, using standard Blit (might corrupt RG16 data)");
+                Graphics.Blit(tempOwnerTexture, provinceOwnerTexture);
+            }
+            else
+            {
+                Graphics.Blit(tempOwnerTexture, provinceOwnerTexture, blitMaterial);
+                Object.DestroyImmediate(blitMaterial);
+            }
+
+            ownerDataDirty = false;
+
+            if (logTextureCreation)
+            {
+                DominionLogger.Log("MapTextureManager: Copied owner texture updates to GPU RenderTexture via Blit");
+            }
         }
 
         /// <summary>
@@ -489,11 +547,12 @@ namespace Map.Rendering
         private void ReleaseTextures()
         {
             if (provinceIDTexture != null) DestroyImmediate(provinceIDTexture);
-            if (provinceOwnerTexture != null) DestroyImmediate(provinceOwnerTexture);
+            if (provinceOwnerTexture != null) provinceOwnerTexture.Release();  // RenderTexture uses Release(), not DestroyImmediate()
             if (provinceColorTexture != null) DestroyImmediate(provinceColorTexture);
             if (provinceColorPalette != null) DestroyImmediate(provinceColorPalette);
             if (borderTexture != null) borderTexture.Release();
             if (highlightTexture != null) highlightTexture.Release();
+            if (tempOwnerTexture != null) DestroyImmediate(tempOwnerTexture);
         }
 
         void OnDestroy()

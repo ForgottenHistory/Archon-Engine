@@ -11,11 +11,15 @@ namespace Map.Rendering
     /// Handles population of map textures from province data
     /// Extracted from MapGenerator to follow single responsibility principle
     /// Manages conversion from bitmap data to GPU textures with simulation integration
+    /// Architecture: Uses GPU compute shader for owner texture (NO CPU pixel ops)
     /// </summary>
     public class MapTexturePopulator : MonoBehaviour
     {
         [Header("Configuration")]
         [SerializeField] private bool logPopulationProgress = true;
+
+        [Header("GPU Dispatcher")]
+        [SerializeField] private OwnerTextureDispatcher ownerTextureDispatcher;
 
         /// <summary>
         /// Populate MapTextureManager textures using data from Core simulation systems
@@ -70,10 +74,8 @@ namespace Map.Rendering
                             // Set province color for visual display (from bitmap)
                             textureManager.SetProvinceColor(x, y, pixelColor);
 
-                            // Get owner from simulation data and set owner texture
-                            ushort ownerID = provinceQueries.GetOwner(provinceID);
-                            // SetProvinceOwner expects the country ID, not the color
-                            textureManager.SetProvinceOwner(x, y, ownerID);
+                            // Owner texture populated by GPU compute shader (see below)
+                            // Architecture: NO CPU pixel ops for owner texture
 
                             // Add pixel to province mapping
                             mapping.AddPixelToProvince(provinceID, x, y);
@@ -82,8 +84,28 @@ namespace Map.Rendering
                 }
             }
 
-            // Apply all texture changes
+            // Apply texture changes for ID and color textures (CPU-written)
             textureManager.ApplyTextureChanges();
+
+            // Populate owner texture using GPU compute shader (architecture compliance: NO CPU pixel ops)
+            if (ownerTextureDispatcher == null)
+            {
+                ownerTextureDispatcher = GetComponent<OwnerTextureDispatcher>();
+                if (ownerTextureDispatcher == null)
+                {
+                    ownerTextureDispatcher = FindFirstObjectByType<OwnerTextureDispatcher>();
+                }
+            }
+
+            if (ownerTextureDispatcher != null)
+            {
+                DominionLogger.Log("MapTexturePopulator: Populating owner texture via GPU compute shader");
+                ownerTextureDispatcher.PopulateOwnerTexture(provinceQueries);
+            }
+            else
+            {
+                DominionLogger.LogError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot populate owner texture!");
+            }
 
             if (logPopulationProgress)
             {
@@ -161,6 +183,7 @@ namespace Map.Rendering
         /// <summary>
         /// Update texture manager with live simulation data changes
         /// Optimized method for runtime updates without full repopulation
+        /// Architecture: Uses GPU compute shader for owner texture updates (NO CPU pixel ops)
         /// </summary>
         public void UpdateSimulationData(MapTextureManager textureManager, ProvinceMapping mapping, GameState gameState, ushort[] changedProvinces)
         {
@@ -171,37 +194,26 @@ namespace Map.Rendering
             }
 
             var provinceQueries = gameState.ProvinceQueries;
-            int updatedPixels = 0;
 
-            foreach (ushort provinceID in changedProvinces)
+            // Architecture: Use GPU compute shader for owner texture population
+            // NO CPU pixel-by-pixel operations (removed legacy SetProvinceOwner loop)
+            if (ownerTextureDispatcher == null)
             {
-                if (provinceID > 0 && provinceQueries.Exists(provinceID))
+                ownerTextureDispatcher = GetComponent<OwnerTextureDispatcher>();
+                if (ownerTextureDispatcher == null)
                 {
-                    // Get new owner from simulation
-                    ushort newOwnerID = provinceQueries.GetOwner(provinceID);
-
-                    // Get all pixels for this province and update them
-                    var provincePixels = mapping.GetProvincePixels(provinceID);
-                    if (provincePixels != null)
-                    {
-                        foreach (var pixel in provincePixels)
-                        {
-                            textureManager.SetProvinceOwner(pixel.x, pixel.y, newOwnerID);
-                            updatedPixels++;
-                        }
-                    }
+                    ownerTextureDispatcher = FindFirstObjectByType<OwnerTextureDispatcher>();
                 }
             }
 
-            // Apply texture changes if any updates were made
-            if (updatedPixels > 0)
+            if (ownerTextureDispatcher != null)
             {
-                textureManager.ApplyTextureChanges();
-
-                if (logPopulationProgress)
-                {
-                    DominionLogger.Log($"MapTexturePopulator: Updated {updatedPixels} pixels for {changedProvinces.Length} changed provinces");
-                }
+                DominionLogger.Log($"MapTexturePopulator: Updating owner texture for {changedProvinces.Length} changed provinces via GPU compute shader");
+                ownerTextureDispatcher.PopulateOwnerTexture(provinceQueries);
+            }
+            else
+            {
+                DominionLogger.LogError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot update owner texture!");
             }
         }
     }

@@ -64,6 +64,7 @@ namespace Map.MapModes
             // GPU-based owner texture population (dual-layer architecture compliance)
             // Architecture: Core ProvinceQueries → GPU compute shader → Owner texture
             // Performance: ~2ms (GPU parallel) vs 50+ seconds (CPU loops)
+            // DEBUG: Re-enabled to see what data compute shader receives
             UpdateOwnershipTextureGPU(provinceQueries);
 
             var updateTime = (Time.realtimeSinceStartup - startTime) * 1000f;

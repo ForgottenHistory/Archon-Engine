@@ -87,16 +87,16 @@ namespace Map.Rendering
             runtimeMaterial = meshRenderer.material;  // Store the runtime instance
             textureManager.BindTexturesToMaterial(runtimeMaterial);
 
-            // MapModeManager initializes itself in Start()
-            if (logRenderingProgress && mapModeManager != null)
-            {
-                DominionLogger.Log("MapRenderingCoordinator: MapModeManager will initialize itself");
-            }
-
-            // Set initial map mode - delegate to MapModeManager
+            // Initialize MapModeManager explicitly before using it
             if (mapModeManager != null)
             {
-                // Start with political mode to show province ownership
+                mapModeManager.Initialize();
+                if (logRenderingProgress)
+                {
+                    DominionLogger.Log("MapRenderingCoordinator: Initialized MapModeManager");
+                }
+
+                // Set initial map mode - delegate to MapModeManager
                 mapModeManager.SetMapMode(Map.MapModes.MapMode.Political);
             }
 

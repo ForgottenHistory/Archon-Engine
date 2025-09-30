@@ -9,6 +9,7 @@ Shader "Dominion/MapCore"
         _ProvinceDevelopmentTexture ("Province Development Texture (R8)", 2D) = "black" {}
         _ProvinceTerrainTexture ("Province Terrain Texture (RGBA32)", 2D) = "white" {}
         _ProvinceColorPalette ("Province Color Palette (256x1 RGBA32)", 2D) = "white" {}
+        _CountryColorPalette ("Country Color Palette (1024x1 RGBA32)", 2D) = "white" {}
 
         // Generated render textures
         _BorderTexture ("Border Texture (R8)", 2D) = "black" {}
@@ -64,6 +65,7 @@ Shader "Dominion/MapCore"
                 float4 _ProvinceDevelopmentTexture_ST;
                 float4 _ProvinceTerrainTexture_ST;
                 float4 _ProvinceColorPalette_ST;
+                float4 _CountryColorPalette_ST;
                 float4 _BorderTexture_ST;
                 float4 _HighlightTexture_ST;
                 float4 _MainTex_ST;
@@ -81,6 +83,7 @@ Shader "Dominion/MapCore"
             TEXTURE2D(_ProvinceDevelopmentTexture); SAMPLER(sampler_ProvinceDevelopmentTexture);
             TEXTURE2D(_ProvinceTerrainTexture); SAMPLER(sampler_ProvinceTerrainTexture);
             TEXTURE2D(_ProvinceColorPalette); SAMPLER(sampler_ProvinceColorPalette);
+            TEXTURE2D(_CountryColorPalette); SAMPLER(sampler_CountryColorPalette);
             TEXTURE2D(_TerrainColorPalette); SAMPLER(sampler_TerrainColorPalette);
             TEXTURE2D(_BorderTexture); SAMPLER(sampler_BorderTexture);
             TEXTURE2D(_HighlightTexture); SAMPLER(sampler_HighlightTexture);

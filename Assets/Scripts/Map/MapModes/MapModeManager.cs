@@ -110,9 +110,10 @@ namespace Map.MapModes
             InitializeTextures();
             InitializeModeHandlers();
             InitializeUpdateScheduler();
+
+            isInitialized = true;  // Set BEFORE SetMapMode so it doesn't return early
             SetMapMode(currentMode, forceUpdate: true);
 
-            isInitialized = true;
             DominionLogger.Log("MapModeManager initialized");
         }
 

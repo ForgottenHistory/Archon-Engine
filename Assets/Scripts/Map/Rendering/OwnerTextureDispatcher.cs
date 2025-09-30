@@ -16,7 +16,7 @@ namespace Map.Rendering
         [SerializeField] private ComputeShader populateOwnerCompute;
 
         [Header("Debug")]
-        [SerializeField] private bool logPerformance = false;
+        [SerializeField] private bool logPerformance = true;
 
         // Kernel index
         private int populateOwnersKernel;
@@ -86,6 +86,8 @@ namespace Map.Rendering
         [ContextMenu("Populate Owner Texture")]
         public void PopulateOwnerTexture(ProvinceQueries provinceQueries)
         {
+            DominionLogger.Log("OwnerTextureDispatcher: PopulateOwnerTexture() called");
+
             if (populateOwnerCompute == null)
             {
                 DominionLogger.LogWarning("OwnerTextureDispatcher: Compute shader not loaded. Skipping owner texture population.");
@@ -149,6 +151,7 @@ namespace Map.Rendering
 
             // Fill with actual owner data
             int populatedCount = 0;
+            int nonZeroOwners = 0;
             for (int i = 0; i < allProvinces.Length; i++)
             {
                 ushort provinceId = allProvinces[i];
@@ -167,7 +170,19 @@ namespace Map.Rendering
                 ushort ownerId = provinceQueries.GetOwner(provinceId);
                 ownerData[provinceId] = ownerId;
                 populatedCount++;
+
+                if (ownerId != 0)
+                {
+                    nonZeroOwners++;
+                    // Log first few non-zero owners
+                    if (nonZeroOwners <= 10)
+                    {
+                        DominionLogger.Log($"OwnerTextureDispatcher: Province {provinceId} → Owner {ownerId}");
+                    }
+                }
             }
+
+            DominionLogger.Log($"OwnerTextureDispatcher: Populated {populatedCount} provinces, {nonZeroOwners} have non-zero owners");
 
             // Upload to GPU
             provinceOwnerBuffer.SetData(ownerData);
