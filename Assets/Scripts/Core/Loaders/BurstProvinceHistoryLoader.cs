@@ -68,7 +68,8 @@ namespace Core.Loaders
             }
 
             // Prepare output array for processed provinces
-            var processedProvinces = new NativeArray<ProvinceInitialState>(json5Result.rawData.Length, Allocator.TempJob);
+            // Use Allocator.Persistent because data survives >4 frames in coroutine processing
+            var processedProvinces = new NativeArray<ProvinceInitialState>(json5Result.rawData.Length, Allocator.Persistent);
 
             try
             {

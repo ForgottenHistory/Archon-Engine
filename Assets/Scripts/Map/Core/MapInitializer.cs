@@ -31,6 +31,7 @@ namespace Map.Core
         // Initialized components (accessible via properties)
         private MapTextureManager textureManager;
         private BorderComputeDispatcher borderDispatcher;
+        private OwnerTextureDispatcher ownerTextureDispatcher;  // GPU owner texture population
         private MapModeManager mapModeManager;
         private ProvinceMapProcessor provinceProcessor;
         private MapDataLoader dataLoader;
@@ -44,6 +45,7 @@ namespace Map.Core
         // Public accessors for initialized components
         public MapTextureManager TextureManager => textureManager;
         public BorderComputeDispatcher BorderDispatcher => borderDispatcher;
+        public OwnerTextureDispatcher OwnerTextureDispatcher => ownerTextureDispatcher;  // GPU owner texture dispatcher
         public MapModeManager MapModeManager => mapModeManager;
         public ProvinceMapProcessor ProvinceProcessor => provinceProcessor;
         public MapDataLoader DataLoader => dataLoader;
@@ -159,6 +161,7 @@ namespace Map.Core
             // Phase 1: Core texture and computation components
             InitializeTextureManager();
             InitializeBorderDispatcher();
+            InitializeOwnerTextureDispatcher();  // GPU owner texture population
             InitializeMapModeManager();
 
             // Phase 2: Processing components
@@ -213,6 +216,25 @@ namespace Map.Core
             if (borderDispatcher != null && textureManager != null)
             {
                 borderDispatcher.SetTextureManager(textureManager);
+            }
+        }
+
+        private void InitializeOwnerTextureDispatcher()
+        {
+            ownerTextureDispatcher = GetComponent<OwnerTextureDispatcher>();
+            if (ownerTextureDispatcher == null)
+            {
+                ownerTextureDispatcher = gameObject.AddComponent<OwnerTextureDispatcher>();
+                if (logInitializationProgress)
+                {
+                    DominionLogger.Log("MapInitializer: Created OwnerTextureDispatcher component");
+                }
+            }
+
+            // Set texture manager reference
+            if (ownerTextureDispatcher != null && textureManager != null)
+            {
+                ownerTextureDispatcher.SetTextureManager(textureManager);
             }
         }
 

@@ -308,10 +308,6 @@ namespace Core.Linking
             if (warnings.Count > 0)
             {
                 DominionLogger.LogDataLinkingWarning($"DataValidator: {warnings.Count} validation warnings found:");
-                foreach (var warning in warnings)
-                {
-                    DominionLogger.LogDataLinkingWarning($"  [{warning.Category}] {warning.Message}");
-                }
             }
         }
 

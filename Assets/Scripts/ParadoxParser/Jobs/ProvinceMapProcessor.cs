@@ -110,9 +110,10 @@ namespace ParadoxParser.Jobs
         /// </summary>
         private ProvinceColorMappings ProcessProvinceMappings(BMPLoadResult bmpResult, ProvinceDefinitionMappings definitions, bool hasDefinitions)
         {
+            // Use Allocator.Persistent because data survives >4 frames in coroutine processing
             var mappings = new ProvinceColorMappings
             {
-                ColorToProvinceID = new NativeHashMap<int, int>(bmpResult.UniqueColors.Count, Allocator.TempJob)
+                ColorToProvinceID = new NativeHashMap<int, int>(bmpResult.UniqueColors.Count, Allocator.Persistent)
             };
 
             if (hasDefinitions)
@@ -155,7 +156,8 @@ namespace ParadoxParser.Jobs
         /// </summary>
         private NativeHashMap<int, ProvinceStats> CalculateProvinceStatistics(BMPLoadResult bmpResult, ProvinceColorMappings mappings)
         {
-            var stats = new NativeHashMap<int, ProvinceStats>(mappings.ColorToProvinceID.Count, Allocator.TempJob);
+            // Use Allocator.Persistent because data survives >4 frames in coroutine processing
+            var stats = new NativeHashMap<int, ProvinceStats>(mappings.ColorToProvinceID.Count, Allocator.Persistent);
             var pixelData = bmpResult.GetPixelData();
 
             // Initialize stats for each province

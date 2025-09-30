@@ -91,7 +91,8 @@ namespace Core.Loaders
             }
 
             // Prepare output array for hot data only (burst-compatible)
-            var processedHotData = new NativeArray<CountryHotData>(json5Result.rawData.Length, Allocator.TempJob);
+            // Use Allocator.Persistent because data survives >4 frames in coroutine processing
+            var processedHotData = new NativeArray<CountryHotData>(json5Result.rawData.Length, Allocator.Persistent);
 
             try
             {

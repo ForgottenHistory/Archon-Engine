@@ -229,6 +229,9 @@ namespace Map.Loading
                 {
                     DominionLogger.Log("MapDataLoader: Populated terrain texture with colors from terrain.bmp");
                 }
+
+                // Dispose terrain result to free Persistent allocations
+                terrainResult.Dispose();
             }
             catch (System.Exception e)
             {

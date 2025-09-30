@@ -82,6 +82,9 @@ namespace Map.MapModes
             // Use the proper development texture from MapTextureManager
             ProvinceDevelopmentTexture = textureManager.ProvinceDevelopmentTexture;
 
+            // Use the terrain texture from MapTextureManager (critical for unowned provinces)
+            ProvinceTerrainTexture = textureManager.ProvinceTerrainTexture;
+
             // Create color palettes only
             CreateColorPalettes();
 

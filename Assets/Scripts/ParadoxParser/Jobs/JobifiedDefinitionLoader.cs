@@ -187,18 +187,21 @@ namespace ParadoxParser.Jobs
                 ReportProgress(0, 1, "Loading definition CSV...");
 
                 // Load CSV file data
-                var fileResult = await AsyncFileReader.ReadFileAsync(csvFilePath, Allocator.TempJob);
+                // Use Allocator.Persistent because data survives >4 frames in async processing
+                var fileResult = await AsyncFileReader.ReadFileAsync(csvFilePath, Allocator.Persistent);
                 if (!fileResult.Success)
                 {
                     return new DefinitionLoadResult { Success = false, ErrorMessage = "Failed to load definition CSV file" };
                 }
 
+                CSVParser.CSVParseResult csvResult = default;
                 try
                 {
                     ReportProgress(0, 1, "Parsing CSV with Burst jobs...");
 
                     // Parse CSV using high-performance Burst parser
-                    var csvResult = CSVParser.Parse(fileResult.Data, Allocator.TempJob);
+                    // Use Allocator.Persistent because data survives >4 frames in async processing
+                    csvResult = CSVParser.Parse(fileResult.Data, Allocator.Persistent);
                     if (!csvResult.Success)
                     {
                         return new DefinitionLoadResult { Success = false, ErrorMessage = "Failed to parse CSV data" };
@@ -219,6 +222,7 @@ namespace ParadoxParser.Jobs
                 finally
                 {
                     fileResult.Dispose();
+                    csvResult.Dispose();
                 }
             }
 
@@ -251,9 +255,10 @@ namespace ParadoxParser.Jobs
                 }
 
                 // Allocate native collections for mappings
-                var idToDefinition = new NativeHashMap<int, ProvinceDefinition>(dataRowCount, Allocator.TempJob);
-                var colorToID = new NativeHashMap<int, int>(dataRowCount, Allocator.TempJob);
-                var definitions = new NativeList<ProvinceDefinition>(dataRowCount, Allocator.TempJob);
+                // Use Allocator.Persistent because data survives >4 frames in coroutine processing
+                var idToDefinition = new NativeHashMap<int, ProvinceDefinition>(dataRowCount, Allocator.Persistent);
+                var colorToID = new NativeHashMap<int, int>(dataRowCount, Allocator.Persistent);
+                var definitions = new NativeList<ProvinceDefinition>(dataRowCount, Allocator.Persistent);
 
                 // Simple processing on main thread
                 for (int i = 0; i < dataRowCount; i++)

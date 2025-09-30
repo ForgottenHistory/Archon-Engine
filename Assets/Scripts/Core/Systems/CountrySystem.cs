@@ -196,10 +196,17 @@ namespace Core.Systems
             countryHotData[countryId] = hotData;
 
             // Set structure of arrays data
-            countryColors[countryId] = hotData.Color;
+            var color = hotData.Color;
+            countryColors[countryId] = color;
             countryTagHashes[countryId] = tagHash;
             countryGraphicalCultures[countryId] = hotData.graphicalCultureId;
             countryFlags[countryId] = hotData.flags;
+
+            // Debug: Log color for first few countries
+            if (countryId < 5)
+            {
+                UnityEngine.Debug.Log($"CountrySystem.RegisterCountry: Country {countryId} ({tag}) - Packed: 0x{hotData.colorRGB:X8}, Color property: R={color.r} G={color.g} B={color.b} A={color.a}");
+            }
 
             // Update lookup tables
             tagHashToId[tagHash] = countryId;
@@ -335,7 +342,16 @@ namespace Core.Systems
             if (countryId >= countryCount)
                 return Color.gray;
 
-            return countryColors[countryId];
+            var color = countryColors[countryId];
+
+            // Debug: Log color for first few countries
+            if (countryId < 5)
+            {
+                var hotData = countryHotData[countryId];
+                UnityEngine.Debug.Log($"CountrySystem.GetCountryColor: Country {countryId} ({GetCountryTag(countryId)}) - Packed: 0x{hotData.colorRGB:X8}, Unpacked: R={color.r} G={color.g} B={color.b} A={color.a}");
+            }
+
+            return color;
         }
 
         /// <summary>

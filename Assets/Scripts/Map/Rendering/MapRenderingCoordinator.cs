@@ -18,10 +18,11 @@ namespace Map.Rendering
         private MapTextureManager textureManager;
         private MapModeManager mapModeManager;
         private Material mapMaterial;
+        private Material runtimeMaterial;  // Actual material instance used by renderer
         private Camera mapCamera;
         private MeshRenderer meshRenderer;
 
-        public Material MapMaterial => mapMaterial;
+        public Material MapMaterial => runtimeMaterial ?? mapMaterial;  // Return runtime instance if available
 
         public void Initialize(MapTextureManager textures, MapModeManager modes, MeshRenderer renderer, Camera camera)
         {
@@ -83,7 +84,7 @@ namespace Map.Rendering
             meshRenderer.material = mapMaterial;
 
             // Now bind textures to the ACTUAL runtime material instance
-            Material runtimeMaterial = meshRenderer.material;
+            runtimeMaterial = meshRenderer.material;  // Store the runtime instance
             textureManager.BindTexturesToMaterial(runtimeMaterial);
 
             // MapModeManager initializes itself in Start()

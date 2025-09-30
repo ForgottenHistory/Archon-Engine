@@ -35,7 +35,8 @@ namespace ParadoxParser.Jobs
             ReportProgress(0, 1, "Loading BMP file...");
 
             // Load BMP file data
-            var fileResult = await AsyncFileReader.ReadFileAsync(bmpFilePath, Allocator.TempJob);
+            // Use Allocator.Persistent because data survives >4 frames in async processing
+            var fileResult = await AsyncFileReader.ReadFileAsync(bmpFilePath, Allocator.Persistent);
             if (!fileResult.Success)
             {
                 return new BMPLoadResult { Success = false, ErrorMessage = "Failed to load BMP file" };
@@ -92,7 +93,8 @@ namespace ParadoxParser.Jobs
         {
             // For BMP parsing, single-threaded is often faster due to job overhead
             // The main performance benefit comes from Burst compilation of BMPParser methods
-            return BMPParser.CollectUniqueColors(pixelData, Allocator.TempJob);
+            // Use Allocator.Persistent because this data survives >4 frames in coroutine processing
+            return BMPParser.CollectUniqueColors(pixelData, Allocator.Persistent);
         }
 
 
@@ -114,7 +116,8 @@ namespace ParadoxParser.Jobs
                 return new PersistentBMPPixelData { Success = false };
 
             // Create a persistent copy of the pixel data
-            var persistentData = new NativeArray<byte>(originalData.RawData.Length, Allocator.TempJob);
+            // Use Allocator.Persistent because data survives >4 frames in coroutine processing
+            var persistentData = new NativeArray<byte>(originalData.RawData.Length, Allocator.Persistent);
 
             // Copy slice data to the new array
             originalData.RawData.CopyTo(persistentData);

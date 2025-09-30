@@ -28,7 +28,15 @@ namespace ParadoxParser.CSV
             public void Dispose()
             {
                 if (HeaderHashes.IsCreated) HeaderHashes.Dispose();
-                if (Rows.IsCreated) Rows.Dispose();
+                if (Rows.IsCreated)
+                {
+                    // Dispose each row's Fields array before disposing the Rows array
+                    for (int i = 0; i < Rows.Length; i++)
+                    {
+                        Rows[i].Dispose();
+                    }
+                    Rows.Dispose();
+                }
             }
 
             public static CSVParseResult Failed(NativeSlice<byte> errorContext)

@@ -154,10 +154,11 @@ namespace Core.Loaders
             }
 
             // Allocate output arrays
-            var results = new NativeArray<ParadoxParser.Core.ParadoxParser.ParseResult>(batchSize, Allocator.TempJob);
-            var keyValueCounts = new NativeArray<int>(batchSize, Allocator.TempJob);
-            var blockCounts = new NativeArray<int>(batchSize, Allocator.TempJob);
-            var errorCounts = new NativeArray<int>(batchSize, Allocator.TempJob);
+            // Use Allocator.Persistent because data survives >4 frames in coroutine processing
+            var results = new NativeArray<ParadoxParser.Core.ParadoxParser.ParseResult>(batchSize, Allocator.Persistent);
+            var keyValueCounts = new NativeArray<int>(batchSize, Allocator.Persistent);
+            var blockCounts = new NativeArray<int>(batchSize, Allocator.Persistent);
+            var errorCounts = new NativeArray<int>(batchSize, Allocator.Persistent);
 
             // Schedule the batch job (simplified without shared arrays)
             var jobHandle = BatchParseJobHelpers.ScheduleBatchParseJob(
@@ -228,7 +229,8 @@ namespace Core.Loaders
             }
 
             // Combine all file data
-            var combinedData = new NativeArray<byte>(totalSize, Allocator.TempJob);
+            // Use Allocator.Persistent because data survives >4 frames in coroutine processing
+            var combinedData = new NativeArray<byte>(totalSize, Allocator.Persistent);
             int offset = 0;
             for (int i = 0; i < fileDataList.Count; i++)
             {
@@ -242,7 +244,8 @@ namespace Core.Loaders
             {
                 Success = true,
                 CombinedData = combinedData,
-                FilesInfo = new NativeArray<BatchFileInfo>(filesInfo.ToArray(), Allocator.TempJob)
+                // Use Allocator.Persistent because data survives >4 frames in coroutine processing
+                FilesInfo = new NativeArray<BatchFileInfo>(filesInfo.ToArray(), Allocator.Persistent)
             };
         }
 

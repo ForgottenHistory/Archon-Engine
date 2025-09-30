@@ -26,6 +26,7 @@ namespace Map.Core
         private Camera mapCamera;
         private MapTextureManager textureManager;
         private BorderComputeDispatcher borderDispatcher;
+        private OwnerTextureDispatcher ownerTextureDispatcher;  // GPU owner texture population
         private MapModeManager mapModeManager;
         private ProvinceMapProcessor provinceProcessor;
         private MapDataLoader dataLoader;
@@ -186,6 +187,7 @@ namespace Map.Core
             // Get initialized components from MapInitializer
             textureManager = initializer.TextureManager;
             borderDispatcher = initializer.BorderDispatcher;
+            ownerTextureDispatcher = initializer.OwnerTextureDispatcher;  // GPU owner texture dispatcher
             mapModeManager = initializer.MapModeManager;
             provinceProcessor = initializer.ProvinceProcessor;
             dataLoader = initializer.DataLoader;
@@ -222,6 +224,7 @@ namespace Map.Core
             // Core components
             textureManager = GetOrCreateComponent<MapTextureManager>();
             borderDispatcher = GetOrCreateComponent<BorderComputeDispatcher>();
+            ownerTextureDispatcher = GetOrCreateComponent<OwnerTextureDispatcher>();  // GPU owner texture population
             mapModeManager = GetOrCreateComponent<MapModeManager>();
             dataLoader = GetOrCreateComponent<MapDataLoader>();
             renderingCoordinator = GetOrCreateComponent<MapRenderingCoordinator>();
@@ -236,6 +239,7 @@ namespace Map.Core
         {
             // Setup component dependencies
             borderDispatcher?.SetTextureManager(textureManager);
+            ownerTextureDispatcher?.SetTextureManager(textureManager);  // GPU owner texture dispatcher
             dataLoader?.Initialize(provinceProcessor, borderDispatcher, textureManager);
             renderingCoordinator?.Initialize(textureManager, mapModeManager, meshRenderer, mapCamera);
         }

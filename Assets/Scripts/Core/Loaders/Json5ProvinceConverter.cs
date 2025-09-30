@@ -67,7 +67,8 @@ namespace Core.Loaders
             }
 
             // Convert to NativeArray for burst processing
-            var nativeArray = new NativeArray<RawProvinceData>(rawDataList.ToArray(), Allocator.TempJob);
+            // Use Allocator.Persistent because data survives >4 frames in coroutine processing
+            var nativeArray = new NativeArray<RawProvinceData>(rawDataList.ToArray(), Allocator.Persistent);
 
             DominionLogger.Log($"JSON5 province loading complete: {rawDataList.Count} loaded, {failedCount} failed");
 
