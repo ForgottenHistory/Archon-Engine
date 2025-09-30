@@ -3,9 +3,9 @@
 **📊 Implementation Status:** ✅ Implemented (CrossReferenceBuilder, ReferenceResolver, DataValidator exist)
 
 ## Executive Summary
-**Challenge**: Loaded data has string references ("ENG", "catholic", "grain") that need linking to actual game objects  
-**Solution**: Multi-phase loading with efficient ID mapping and reference resolution  
-**Key Principle**: Convert strings to IDs once at load time, never use strings at runtime  
+**Challenge**: Loaded data has string references ("ENG", "catholic", "grain") that need linking to actual game objects
+**Solution**: Multi-phase loading with efficient ID mapping and reference resolution
+**Key Principle**: Convert strings to IDs once at load time, never use strings at runtime
 **Result**: Fast lookups (array indexing), type-safe references, and clear data relationships
 
 ## The Core Problem
@@ -49,13 +49,13 @@ public class DataLoadingPipeline {
     public void LoadGameData() {
         // Phase 1: Discovery
         DiscoverAllEntities();
-        
+
         // Phase 2: Load
         LoadRawData();
-        
+
         // Phase 3: Link
         ResolveAllReferences();
-        
+
         // Phase 4: Validate
         ValidateDataIntegrity();
     }
@@ -79,36 +79,36 @@ public class Registry<T> : IRegistry<T> where T : class {
     private readonly Dictionary<string, ushort> stringToId = new();
     private readonly List<T> items = new();
     private readonly string typeName;
-    
+
     public Registry(string typeName) {
         this.typeName = typeName;
         items.Add(null); // Reserve index 0 for "none/invalid"
     }
-    
+
     public ushort Register(string key, T item) {
         if (stringToId.ContainsKey(key)) {
             throw new Exception($"Duplicate {typeName} key: {key}");
         }
-        
+
         ushort id = (ushort)items.Count;
         items.Add(item);
         stringToId[key] = id;
-        
+
         return id;
     }
-    
+
     public T Get(ushort id) {
         if (id >= items.Count) return null;
         return items[id];
     }
-    
+
     public T Get(string key) {
         if (stringToId.TryGetValue(key, out ushort id)) {
             return items[id];
         }
         return null;
     }
-    
+
     public ushort GetId(string key) {
         return stringToId.TryGetValue(key, out ushort id) ? id : (ushort)0;
     }
@@ -127,9 +127,8 @@ public class GameRegistries {
     public readonly Registry<Government> Governments = new("Government");
     public readonly Registry<TerrainType> Terrains = new("Terrain");
     public readonly Registry<Unit> Units = new("Unit");
-    
-    // Special registries with known IDs
-    public readonly ProvinceRegistry Provinces = new();
+
+    // Provinces use special handling (see below)
 }
 ```
 
@@ -137,15 +136,16 @@ public class GameRegistries {
 
 ### String Tags to Runtime IDs
 ```csharp
+// Optional: Type-safe ID wrappers
 public struct CountryId {
     public readonly ushort Value;
-    
+
     public CountryId(ushort value) => Value = value;
-    
+
     public static readonly CountryId None = new(0);
-    
+
     public bool IsValid => Value != 0;
-    
+
     // Implicit conversion for ease of use
     public static implicit operator ushort(CountryId id) => id.Value;
     public static implicit operator CountryId(ushort value) => new(value);
@@ -153,46 +153,120 @@ public struct CountryId {
 
 // During loading
 string countryTag = "ENG";
-CountryId englandId = Registries.Countries.GetId(countryTag);
+ushort englandId = Registries.Countries.GetId(countryTag);
 
 // At runtime - no strings!
 Province province = GetProvince(1234);
-Country owner = Registries.Countries.Get(province.OwnerId);
+Country owner = Registries.Countries.Get(province.ownerID);
 ```
 
-### Province ID Handling (Special Case)
-Provinces use numeric IDs, but still need registration:
+**Type-Safe ID Trade-offs:**
+- **Pros**: Can't accidentally mix province/country/religion IDs, self-documenting
+- **Cons**: Extra type complexity, implicit conversions can confuse debugging, struct wrapping overhead
+- **Recommendation**: Use plain `ushort` unless you have >200 entity types and complex cross-referencing
+
+### Province ID Handling (Value Types vs Reference Types)
+
+**Critical difference**: Provinces are value types in `NativeArray`, not reference types in `List`.
 
 ```csharp
-public class ProvinceRegistry {
-    private Province[] provinces;
-    private Dictionary<int, ushort> definitionToRuntime = new();
-    
-    public void Initialize(int maxProvinceId) {
-        // Province IDs from files might be sparse (1, 2, 5, 100, 101...)
-        // We want dense runtime IDs for array efficiency
-        provinces = new Province[maxProvinceId + 1];
+// ✅ For reference types (Countries, Religions, Buildings, etc.)
+public class Registry<T> where T : class {
+    private List<T> items = new();  // Managed heap
+    private Dictionary<string, ushort> stringToId = new();
+
+    public ushort Register(string key, T item) {
+        ushort id = (ushort)items.Count;
+        items.Add(item);
+        stringToId[key] = id;
+        return id;
     }
-    
-    public ushort Register(int definitionId, Province province) {
-        // Convert sparse file IDs to dense runtime IDs
-        ushort runtimeId = (ushort)definitionToRuntime.Count;
-        definitionToRuntime[definitionId] = runtimeId;
-        provinces[runtimeId] = province;
-        province.RuntimeId = runtimeId;
-        province.DefinitionId = definitionId;
-        return runtimeId;
-    }
-    
-    public Province GetByDefinition(int definitionId) {
-        if (definitionToRuntime.TryGetValue(definitionId, out ushort runtimeId)) {
-            return provinces[runtimeId];
+
+    public T Get(ushort id) => items[id];
+}
+
+// ✅ For provinces (value types in NativeArray)
+public class ProvinceSystem {
+    private NativeArray<ProvinceState> provinces;  // Unmanaged memory, Burst-compatible
+    private Dictionary<int, ushort> definitionToRuntime = new();  // File ID → Runtime ID
+
+    public void Initialize(ProvinceDefinition[] definitions) {
+        int count = definitions.Length;
+        provinces = new NativeArray<ProvinceState>(count, Allocator.Persistent);
+
+        for (int i = 0; i < count; i++) {
+            var def = definitions[i];
+            definitionToRuntime[def.id] = (ushort)i;
+
+            // Initialize ProvinceState struct
+            provinces[i] = new ProvinceState {
+                ownerID = ResolveCountryTag(def.owner),
+                terrain = ResolveTerrainType(def.terrain),
+                development = def.baseDevelopment,
+                // ... other fields
+            };
         }
-        return null;
     }
-    
-    public Province GetByRuntime(ushort runtimeId) {
-        return provinces[runtimeId];
+
+    public ref ProvinceState GetByDefinition(int definitionId) {
+        if (definitionToRuntime.TryGetValue(definitionId, out ushort runtimeId)) {
+            return ref provinces[runtimeId];
+        }
+        throw new Exception($"Province {definitionId} not found");
+    }
+
+    public ref ProvinceState GetByRuntime(ushort runtimeId) {
+        return ref provinces[runtimeId];
+    }
+}
+```
+
+**Why the difference matters:**
+- Reference types go in managed collections (`List<Country>`)
+- Value types go in unmanaged memory (`NativeArray<ProvinceState>`) for Burst compilation
+- Provinces are performance-critical hot data → NativeArray required
+- Countries/religions are cold data → managed collections fine
+
+### Sparse vs Dense Province IDs
+
+**Question:** Do you need sparse→dense mapping?
+
+```csharp
+// Sparse IDs: 1, 2, 5, 100, 200, 5000, 9999
+// Need mapping: Dictionary<int, ushort> definitionToRuntime
+
+// Dense IDs: 1, 2, 3, 4, 5, 6, 7, 8, 9, ...
+// Direct indexing: provinces[definitionId]
+```
+
+**When sparse→dense mapping is worth it:**
+- Province IDs have large gaps (e.g., 1-100, then 5000-6000)
+- Wasted memory from gaps exceeds ~10% of total
+- Example: Max ID 10000, but only 3000 actual provinces → 70% waste
+
+**When direct indexing is simpler:**
+- Province IDs are mostly contiguous (1-3925 with few gaps)
+- Wasted memory negligible (~50 gaps × 8 bytes = 400 bytes)
+- Simpler code: `provinces[id]` instead of `provinces[mapping[id]]`
+
+**Dominion reality:** Most Paradox-style games have nearly contiguous IDs. Unless profiling shows memory issues, direct indexing is simpler.
+
+```csharp
+// Simple approach (recommended unless proven bottleneck)
+public class ProvinceSystem {
+    private NativeArray<ProvinceState> provinces;  // Index = province definition ID
+
+    public void Initialize(ProvinceDefinition[] definitions) {
+        int maxId = definitions.Max(p => p.id);
+        provinces = new NativeArray<ProvinceState>(maxId + 1, Allocator.Persistent);
+
+        foreach (var def in definitions) {
+            provinces[def.id] = CreateProvinceState(def);
+        }
+    }
+
+    public ref ProvinceState Get(int provinceId) {
+        return ref provinces[provinceId];
     }
 }
 ```
@@ -203,27 +277,33 @@ public class ProvinceRegistry {
 ```csharp
 // What we load from files
 public class RawProvinceData {
-    public int Id;
-    public string Owner;
-    public string Controller;
-    public string Religion;
-    public string Culture;
-    public string TradeGood;
-    public List<string> Buildings;
-    public Dictionary<string, float> Modifiers;
+    public int id;
+    public string owner;
+    public string controller;
+    public string religion;
+    public string culture;
+    public string tradeGood;
+    public List<string> buildings;
+    public Dictionary<string, string> modifiers;
 }
 
-// What we want at runtime
-public class Province {
-    public ushort RuntimeId;
-    public int DefinitionId;
-    public CountryId Owner;
-    public CountryId Controller;
-    public ushort Religion;
-    public ushort Culture;
-    public ushort TradeGood;
-    public ushort[] Buildings;
-    public ModifierSet Modifiers;
+// What we want at runtime (8-byte struct)
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct ProvinceState {
+    public ushort ownerID;       // Resolved from "ENG" → 5
+    public ushort controllerID;  // Resolved from "FRA" → 12
+    public byte development;     // From raw data
+    public byte terrain;         // Resolved from "plains" → 2
+    public byte fortLevel;       // From raw data
+    public byte flags;           // Computed during resolution
+}
+
+// Cold data stored separately
+public class ProvinceColdData {
+    public ushort religion;      // Resolved from "catholic" → 3
+    public ushort culture;       // Resolved from "english" → 7
+    public ushort tradeGood;     // Resolved from "grain" → 4
+    public ushort[] buildings;   // Resolved from ["temple", "marketplace"] → [2, 5]
 }
 ```
 
@@ -233,107 +313,128 @@ public class ReferenceResolver {
     private GameRegistries registries;
     private List<Action> deferredResolutions = new();
     private List<string> errors = new();
-    
-    public void ResolveProvince(RawProvinceData raw, Province province) {
-        // Resolve country references
-        province.Owner = ResolveCountryRef(raw.Owner, $"Province {raw.Id} owner");
-        province.Controller = ResolveCountryRef(raw.Controller ?? raw.Owner, $"Province {raw.Id} controller");
-        
-        // Resolve other references
-        province.Religion = ResolveRef(registries.Religions, raw.Religion, $"Province {raw.Id} religion");
-        province.Culture = ResolveRef(registries.Cultures, raw.Culture, $"Province {raw.Id} culture");
-        province.TradeGood = ResolveRef(registries.TradeGoods, raw.TradeGood, $"Province {raw.Id} trade good");
-        
-        // Resolve building list
-        if (raw.Buildings != null) {
-            province.Buildings = raw.Buildings
-                .Select(b => ResolveRef(registries.Buildings, b, $"Province {raw.Id} building"))
-                .Where(id => id != 0)
-                .ToArray();
-        }
+
+    public ProvinceState ResolveProvinceHotData(RawProvinceData raw) {
+        return new ProvinceState {
+            ownerID = ResolveCountryRef(raw.owner, $"Province {raw.id} owner"),
+            controllerID = ResolveCountryRef(raw.controller ?? raw.owner, $"Province {raw.id} controller"),
+            development = raw.baseDevelopment,
+            terrain = ResolveTerrainRef(raw.terrain, $"Province {raw.id} terrain"),
+            fortLevel = raw.fortLevel,
+            flags = ComputeFlags(raw)
+        };
     }
-    
-    private CountryId ResolveCountryRef(string tag, string context) {
-        if (string.IsNullOrEmpty(tag)) return CountryId.None;
-        
+
+    public ProvinceColdData ResolveProvinceColdData(RawProvinceData raw) {
+        return new ProvinceColdData {
+            religion = ResolveRef(registries.Religions, raw.religion, $"Province {raw.id} religion"),
+            culture = ResolveRef(registries.Cultures, raw.culture, $"Province {raw.id} culture"),
+            tradeGood = ResolveRef(registries.TradeGoods, raw.tradeGood, $"Province {raw.id} trade good"),
+            buildings = ResolveBuildingList(raw.buildings, raw.id)
+        };
+    }
+
+    private ushort ResolveCountryRef(string tag, string context) {
+        if (string.IsNullOrEmpty(tag)) return 0;
+
         var id = registries.Countries.GetId(tag);
         if (id == 0) {
             errors.Add($"{context}: Unknown country '{tag}'");
-            return CountryId.None;
+            return 0;
         }
-        
+
         return id;
     }
-    
+
     private ushort ResolveRef<T>(Registry<T> registry, string key, string context) where T : class {
         if (string.IsNullOrEmpty(key)) return 0;
-        
+
         var id = registry.GetId(key);
         if (id == 0) {
             errors.Add($"{context}: Unknown {registry.TypeName} '{key}'");
         }
-        
+
         return id;
     }
-    
+
+    private ushort[] ResolveBuildingList(List<string> buildingNames, int provinceId) {
+        if (buildingNames == null) return Array.Empty<ushort>();
+
+        return buildingNames
+            .Select(b => ResolveRef(registries.Buildings, b, $"Province {provinceId} building"))
+            .Where(id => id != 0)
+            .ToArray();
+    }
+
     public void DeferResolution(Action resolution) {
         // Some references might need to be resolved after everything is loaded
         deferredResolutions.Add(resolution);
     }
-    
+
     public void ResolveDeferredReferences() {
         foreach (var resolution in deferredResolutions) {
             resolution();
         }
     }
+
+    public bool HasErrors() => errors.Count > 0;
+    public IReadOnlyList<string> GetErrors() => errors;
 }
 ```
 
 ## Cross-Reference System
 
 ### Bidirectional References
+After loading, build reverse lookups for performance (see [data-flow-architecture.md](data-flow-architecture.md) for why this is important).
+
 ```csharp
 public class CrossReferenceBuilder {
     // Build reverse lookups after loading
     public void BuildCountryProvinces(GameData data) {
-        // Clear any existing data
-        foreach (var country in data.Countries.GetAll()) {
-            country.OwnedProvinces.Clear();
-            country.ControlledProvinces.Clear();
+        // Create reverse index: Country → Provinces
+        var provincesByOwner = new List<ushort>[data.Countries.Count];
+        for (int i = 0; i < provincesByOwner.Length; i++) {
+            provincesByOwner[i] = new List<ushort>();
         }
-        
-        // Build province lists for countries
-        foreach (var province in data.Provinces.GetAll()) {
-            if (province.Owner.IsValid) {
-                var owner = data.Countries.Get(province.Owner);
-                owner.OwnedProvinces.Add(province.RuntimeId);
-            }
-            
-            if (province.Controller.IsValid) {
-                var controller = data.Countries.Get(province.Controller);
-                controller.ControlledProvinces.Add(province.RuntimeId);
+
+        // Populate from provinces
+        for (ushort i = 0; i < data.Provinces.Count; i++) {
+            var province = data.Provinces.Get(i);
+            if (province.ownerID != 0) {
+                provincesByOwner[province.ownerID].Add(i);
             }
         }
+
+        // Store in ProvinceSystem
+        data.Provinces.SetProvinceLists(provincesByOwner);
     }
-    
+
     public void BuildCultureGroups(GameData data) {
         // Group cultures by culture group
         foreach (var culture in data.Cultures.GetAll()) {
-            var group = data.CultureGroups.Get(culture.GroupId);
+            var group = data.CultureGroups.Get(culture.groupId);
             if (group != null) {
-                group.Cultures.Add(culture.Id);
+                group.cultures.Add(culture.id);
             }
         }
     }
-    
+
     public void BuildTradeNodes(GameData data) {
         // Link provinces to trade nodes
-        foreach (var province in data.Provinces.GetAll()) {
-            if (province.TradeNodeId != 0) {
-                var node = data.TradeNodes.Get(province.TradeNodeId);
-                node.Provinces.Add(province.RuntimeId);
+        var provincesByTradeNode = new Dictionary<ushort, List<ushort>>();
+
+        for (ushort i = 0; i < data.Provinces.Count; i++) {
+            var coldData = data.Provinces.GetColdData(i);
+            if (coldData?.tradeNodeId != 0) {
+                if (!provincesByTradeNode.ContainsKey(coldData.tradeNodeId)) {
+                    provincesByTradeNode[coldData.tradeNodeId] = new List<ushort>();
+                }
+                provincesByTradeNode[coldData.tradeNodeId].Add(i);
             }
         }
+
+        // Store in TradeSystem
+        data.TradeSystem.SetProvincesByNode(provincesByTradeNode);
     }
 }
 ```
@@ -344,67 +445,85 @@ public class CrossReferenceBuilder {
 ```csharp
 public class DataValidator {
     private List<ValidationError> errors = new();
-    
+    private List<ValidationWarning> warnings = new();
+
     public bool ValidateGameData(GameData data) {
         ValidateCountries(data);
         ValidateProvinces(data);
         ValidateTechnologies(data);
         ValidateTradeNetwork(data);
-        
+
         if (errors.Count > 0) {
             LogErrors();
             return false;
         }
-        
+
+        if (warnings.Count > 0) {
+            LogWarnings();
+        }
+
         return true;
     }
-    
+
     private void ValidateProvinces(GameData data) {
-        foreach (var province in data.Provinces.GetAll()) {
+        for (ushort i = 0; i < data.Provinces.Count; i++) {
+            var province = data.Provinces.Get(i);
+
             // Every owned province must have valid owner
-            if (province.Owner != 0) {
-                var owner = data.Countries.Get(province.Owner);
+            if (province.ownerID != 0) {
+                var owner = data.Countries.Get(province.ownerID);
                 if (owner == null) {
-                    AddError($"Province {province.DefinitionId} has invalid owner {province.Owner}");
+                    AddError($"Province {i} has invalid owner {province.ownerID}");
                 }
             }
-            
+
             // Controller must be valid if different from owner
-            if (province.Controller != province.Owner) {
-                var controller = data.Countries.Get(province.Controller);
+            if (province.controllerID != province.ownerID) {
+                var controller = data.Countries.Get(province.controllerID);
                 if (controller == null) {
-                    AddError($"Province {province.DefinitionId} has invalid controller");
+                    AddError($"Province {i} has invalid controller {province.controllerID}");
                 }
-                
+
                 // Controller different from owner implies war
-                if (!IsAtWar(province.Owner, province.Controller)) {
-                    AddWarning($"Province {province.DefinitionId} controlled by {province.Controller} but no war with {province.Owner}");
+                if (!data.Diplomacy.IsAtWar(province.ownerID, province.controllerID)) {
+                    AddWarning($"Province {i} controlled by {province.controllerID} but no war with {province.ownerID}");
                 }
             }
-            
-            // Validate religion exists
-            if (province.Religion != 0 && data.Religions.Get(province.Religion) == null) {
-                AddError($"Province {province.DefinitionId} has invalid religion");
+
+            // Validate terrain type
+            if (province.terrain == 0 || data.Terrains.Get(province.terrain) == null) {
+                AddError($"Province {i} has invalid terrain {province.terrain}");
             }
         }
     }
-    
+
     private void ValidateCountries(GameData data) {
         foreach (var country in data.Countries.GetAll()) {
+            if (country == null) continue;
+
             // Capital must be owned
-            if (country.Capital != 0) {
-                var capital = data.Provinces.GetByRuntime(country.Capital);
-                if (capital == null || capital.Owner != country.Id) {
-                    AddError($"Country {country.Tag} capital not owned");
+            if (country.capital != 0) {
+                var capital = data.Provinces.Get(country.capital);
+                if (capital.ownerID != country.id) {
+                    AddError($"Country {country.tag} capital not owned");
                 }
             }
-            
+
             // Technology group must exist
-            if (!data.TechGroups.Exists(country.TechGroup)) {
-                AddError($"Country {country.Tag} has invalid tech group");
+            if (country.techGroup == 0 || data.TechGroups.Get(country.techGroup) == null) {
+                AddError($"Country {country.tag} has invalid tech group {country.techGroup}");
+            }
+
+            // Must own at least one province
+            var ownedProvinces = data.Provinces.GetNationProvinces(country.id);
+            if (ownedProvinces.Count == 0) {
+                AddWarning($"Country {country.tag} owns no provinces");
             }
         }
     }
+
+    private void AddError(string message) => errors.Add(new ValidationError(message));
+    private void AddWarning(string message) => warnings.Add(new ValidationWarning(message));
 }
 ```
 
@@ -417,34 +536,34 @@ public class GameDataLoader {
     private ReferenceResolver resolver;
     private CrossReferenceBuilder crossRef = new();
     private DataValidator validator = new();
-    
+
     public GameData LoadGame(string dataPath) {
         var gameData = new GameData();
-        
+
         try {
             // Phase 1: Load static data (no dependencies)
             LoadStaticData(dataPath);
-            
+
             // Phase 2: Register all entities
             RegisterEntities(dataPath);
-            
+
             // Phase 3: Load entity data with string refs
-            LoadEntityData(dataPath);
-            
-            // Phase 4: Resolve all references
-            ResolveReferences();
-            
-            // Phase 5: Build cross-references
+            var rawData = LoadRawData(dataPath);
+
+            // Phase 4: Resolve all references to IDs
+            ResolveReferences(rawData, gameData);
+
+            // Phase 5: Build cross-references (bidirectional mappings)
             BuildCrossReferences(gameData);
-            
-            // Phase 6: Validate
+
+            // Phase 6: Validate data integrity
             if (!validator.ValidateGameData(gameData)) {
                 throw new Exception("Data validation failed");
             }
-            
+
             // Phase 7: Optimize for runtime
             OptimizeForRuntime(gameData);
-            
+
             return gameData;
         }
         catch (Exception e) {
@@ -452,7 +571,7 @@ public class GameDataLoader {
             throw;
         }
     }
-    
+
     private void LoadStaticData(string dataPath) {
         // Load data that doesn't reference other data
         LoadReligions($"{dataPath}/common/religions");
@@ -461,55 +580,69 @@ public class GameDataLoader {
         LoadBuildings($"{dataPath}/common/buildings");
         LoadTerrains($"{dataPath}/map/terrain.txt");
     }
-    
+
     private void RegisterEntities(string dataPath) {
         // First pass - just register IDs
-        foreach (var file in Directory.GetFiles($"{dataPath}/history/provinces")) {
-            var provinceId = ExtractProvinceId(file);
-            registries.Provinces.Reserve(provinceId);
+        var provinceFiles = Directory.GetFiles($"{dataPath}/history/provinces", "*.txt");
+        var countryFiles = Directory.GetFiles($"{dataPath}/history/countries", "*.txt");
+
+        // Register provinces
+        foreach (var file in provinceFiles) {
+            var id = ExtractProvinceId(file);  // "123 - London.txt" → 123
+            // Provinces will be allocated directly by ID
         }
-        
-        foreach (var file in Directory.GetFiles($"{dataPath}/history/countries")) {
-            var tag = ExtractCountryTag(file);
-            registries.Countries.Register(tag, null);
-        }
-    }
-    
-    private void LoadEntityData(string dataPath) {
-        // Second pass - load actual data
-        var provinceLoader = new ProvinceLoader(registries);
-        foreach (var file in Directory.GetFiles($"{dataPath}/history/provinces")) {
-            var raw = ParseProvinceFile(file);
-            var province = new Province();
-            provinceLoader.Load(raw, province);
-            registries.Provinces.Set(raw.Id, province);
-        }
-        
-        var countryLoader = new CountryLoader(registries);
-        foreach (var file in Directory.GetFiles($"{dataPath}/history/countries")) {
-            var raw = ParseCountryFile(file);
-            var country = new Country();
-            countryLoader.Load(raw, country);
-            registries.Countries.Set(raw.Tag, country);
+
+        // Register countries
+        foreach (var file in countryFiles) {
+            var tag = ExtractCountryTag(file);  // "ENG - England.txt" → "ENG"
+            registries.Countries.Register(tag, new Country { tag = tag });
         }
     }
-    
-    private void ResolveReferences() {
+
+    private RawGameData LoadRawData(string dataPath) {
+        var raw = new RawGameData();
+
+        // Load province files with string references intact
+        foreach (var file in Directory.GetFiles($"{dataPath}/history/provinces", "*.txt")) {
+            var provinceData = ParseProvinceFile(file);
+            raw.provinces.Add(provinceData);
+        }
+
+        // Load country files
+        foreach (var file in Directory.GetFiles($"{dataPath}/history/countries", "*.txt")) {
+            var countryData = ParseCountryFile(file);
+            raw.countries.Add(countryData);
+        }
+
+        return raw;
+    }
+
+    private void ResolveReferences(RawGameData raw, GameData gameData) {
         resolver = new ReferenceResolver(registries);
-        
-        // Resolve all province references
-        foreach (var province in registries.Provinces.GetAll()) {
-            resolver.ResolveProvince(province);
+
+        // Resolve provinces
+        int maxProvinceId = raw.provinces.Max(p => p.id);
+        gameData.Provinces.Initialize(maxProvinceId + 1);
+
+        foreach (var rawProvince in raw.provinces) {
+            // Resolve to 8-byte struct
+            var state = resolver.ResolveProvinceHotData(rawProvince);
+            gameData.Provinces.Set(rawProvince.id, state);
+
+            // Resolve cold data separately
+            var coldData = resolver.ResolveProvinceColdData(rawProvince);
+            gameData.Provinces.SetColdData(rawProvince.id, coldData);
         }
-        
-        // Resolve all country references
-        foreach (var country in registries.Countries.GetAll()) {
-            resolver.ResolveCountry(country);
+
+        // Resolve countries
+        foreach (var rawCountry in raw.countries) {
+            var country = resolver.ResolveCountry(rawCountry);
+            registries.Countries.Set(rawCountry.tag, country);
         }
-        
+
         // Resolve deferred references
         resolver.ResolveDeferredReferences();
-        
+
         // Check for errors
         if (resolver.HasErrors()) {
             foreach (var error in resolver.GetErrors()) {
@@ -517,6 +650,23 @@ public class GameDataLoader {
             }
             throw new Exception("Reference resolution failed");
         }
+    }
+
+    private void BuildCrossReferences(GameData gameData) {
+        crossRef.BuildCountryProvinces(gameData);    // Country → Provinces
+        crossRef.BuildCultureGroups(gameData);       // CultureGroup → Cultures
+        crossRef.BuildTradeNodes(gameData);          // TradeNode → Provinces
+    }
+
+    private void OptimizeForRuntime(GameData gameData) {
+        // Trim excess capacity from dynamic lists
+        gameData.Provinces.TrimExcess();
+
+        // Pre-calculate frequently-used values
+        gameData.Provinces.PreCalculateNeighborCounts();
+
+        // Warm up caches
+        gameData.Economy.WarmUpCache();
     }
 }
 ```
@@ -527,66 +677,70 @@ public class GameDataLoader {
 ```csharp
 public class StringInterner {
     private Dictionary<string, string> interned = new();
-    
+
     public string Intern(string str) {
         if (string.IsNullOrEmpty(str)) return str;
-        
+
         if (!interned.TryGetValue(str, out string result)) {
             interned[str] = str;
             result = str;
         }
-        
+
         return result;
     }
-    
-    // Use during loading to reduce memory
-    public void InternAllStrings(RawData data) {
-        data.Name = Intern(data.Name);
-        data.Description = Intern(data.Description);
-        // ... intern all string fields
+
+    // Use during loading to reduce memory for repeated strings
+    public void InternAllStrings(RawCountryData data) {
+        data.name = Intern(data.name);
+        data.adjective = Intern(data.adjective);
+        data.governmentType = Intern(data.governmentType);
+        // Many countries share government types, religions, etc.
     }
 }
 ```
 
-### Compile-Time ID Generation
+### Compile-Time ID Generation (Optional)
+For frequently-used constants, generate at build time from data files.
+
 ```csharp
-// Generate at build time from data files
-public static class GeneratedIds {
-    // Countries
+// Auto-generated from countries.txt at build time
+public static class CountryIds {
     public const ushort ENG = 1;
     public const ushort FRA = 2;
     public const ushort SPA = 3;
-    
-    // Religions  
+    public const ushort HRE = 4;
+    // ...
+}
+
+public static class ReligionIds {
     public const ushort Catholic = 1;
     public const ushort Protestant = 2;
     public const ushort Orthodox = 3;
-    
-    // Trade Goods
-    public const ushort Grain = 1;
-    public const ushort Wine = 2;
-    public const ushort Wool = 3;
+    // ...
 }
 
-// Usage in code
-province.Owner = GeneratedIds.ENG;  // Type-safe!
-province.Religion = GeneratedIds.Catholic;
+// Usage in code (compile-time constants)
+if (province.ownerID == CountryIds.ENG) {
+    // Type-safe, no string comparison, no runtime lookup
+}
 ```
 
-### Lazy Loading
+**Trade-off:** Requires build-time code generation, but eliminates runtime lookups for common cases.
+
+### Lazy Loading for Cold Data
 ```csharp
 public class LazyLoader<T> where T : class {
-    private readonly string path;
+    private readonly Func<T> loader;
     private T data;
     private bool loaded;
-    
-    public LazyLoader(string path) {
-        this.path = path;
+
+    public LazyLoader(Func<T> loader) {
+        this.loader = loader;
     }
-    
+
     public T Get() {
         if (!loaded) {
-            data = LoadFromDisk(path);
+            data = loader();
             loaded = true;
         }
         return data;
@@ -595,17 +749,17 @@ public class LazyLoader<T> where T : class {
 
 // Use for rarely accessed data
 public class Country {
-    public ushort Id;
-    public string Tag;
-    
+    public ushort id;
+    public string tag;
+
     // Frequently accessed
-    public ushort Capital;
-    public List<ushort> OwnedProvinces;
-    
+    public ushort capital;
+    public List<ushort> ownedProvinces;
+
     // Rarely accessed - lazy load
-    private LazyLoader<CountryHistory> history;
-    
-    public CountryHistory History => history.Get();
+    private LazyLoader<CountryHistory> historyLoader;
+
+    public CountryHistory History => historyLoader.Get();
 }
 ```
 
@@ -614,32 +768,37 @@ public class Country {
 ### Missing Reference Strategies
 ```csharp
 public enum MissingReferenceStrategy {
-    ThrowException,     // Fail fast
-    LogWarning,         // Continue with warning
-    UseDefault,         // Silent fallback
-    CreatePlaceholder   // Generate missing entity
+    ThrowException,     // Fail fast (use for critical refs like countries)
+    LogWarning,         // Continue with warning (use for optional refs)
+    UseDefault,         // Silent fallback (use for cosmetic refs)
+    CreatePlaceholder   // Generate missing entity (use for modding)
 }
 
 public class ReferenceConfig {
     public MissingReferenceStrategy CountryStrategy = MissingReferenceStrategy.ThrowException;
     public MissingReferenceStrategy ReligionStrategy = MissingReferenceStrategy.UseDefault;
     public MissingReferenceStrategy BuildingStrategy = MissingReferenceStrategy.LogWarning;
-    
+
     public ushort HandleMissing<T>(string key, Registry<T> registry) where T : class {
-        switch (GetStrategy<T>()) {
+        var strategy = GetStrategy<T>();
+
+        switch (strategy) {
             case MissingReferenceStrategy.ThrowException:
                 throw new Exception($"Missing {typeof(T).Name}: {key}");
-                
+
             case MissingReferenceStrategy.LogWarning:
-                Debug.LogWarning($"Missing {typeof(T).Name}: {key}");
-                return 0;
-                
+                Debug.LogWarning($"Missing {typeof(T).Name}: {key}, using default");
+                return registry.GetDefault();
+
             case MissingReferenceStrategy.UseDefault:
                 return registry.GetDefault();
-                
+
             case MissingReferenceStrategy.CreatePlaceholder:
                 var placeholder = CreatePlaceholder<T>(key);
                 return registry.Register(key, placeholder);
+
+            default:
+                return 0;
         }
     }
 }
@@ -648,52 +807,76 @@ public class ReferenceConfig {
 ## Performance Considerations
 
 ### Memory Layout
-```csharp
-// Pack related data together for cache efficiency
-public struct ProvinceData {
-    // Hot data - accessed frequently
-    public ushort Owner;
-    public ushort Controller;
-    public ushort Development;
-    
-    // Cold data - accessed rarely
-    public ushort Religion;
-    public ushort Culture;
-    public ushort TradeGood;
-}
 
-// Separate arrays for better cache usage
-public class ProvinceSystem {
-    // Hot path - iterated frequently
-    private ushort[] owners;
-    private ushort[] controllers;
-    
-    // Cold path - accessed occasionally
-    private ushort[] religions;
-    private ushort[] cultures;
+```csharp
+// Hot data: 8-byte struct in NativeArray (cache-friendly)
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct ProvinceState {
+    public ushort ownerID;       // 2 bytes
+    public ushort controllerID;  // 2 bytes
+    public byte development;     // 1 byte
+    public byte terrain;         // 1 byte
+    public byte fortLevel;       // 1 byte
+    public byte flags;           // 1 byte
 }
+NativeArray<ProvinceState> provinces;  // Contiguous, Burst-compatible
+
+// Cold data: Separate storage (accessed rarely)
+Dictionary<ushort, ProvinceColdData> coldData;
 ```
+
+See [performance-architecture-guide.md](performance-architecture-guide.md) for why we keep the 8-byte struct together.
 
 ### Lookup Performance
 ```csharp
 public class PerformantLookups {
     // O(1) array lookup for runtime IDs
-    public Province GetProvince(ushort id) {
-        return provinces[id];  // Direct array access
+    public ref ProvinceState GetProvince(ushort id) {
+        return ref provinces[id];  // Direct array access
     }
-    
+
     // O(1) dictionary lookup for string tags (only during loading)
     public ushort GetCountryId(string tag) {
         return countryTags[tag];  // Hash table lookup
     }
-    
-    // Avoid this at runtime!
-    public Province GetProvinceByName(string name) {
-        // O(n) search - SLOW!
-        return provinces.FirstOrDefault(p => p.Name == name);
+
+    // ❌ Avoid this at runtime!
+    public ushort GetProvinceByName(string name) {
+        // O(n) search - SLOW! Only use during loading/debugging
+        for (ushort i = 0; i < provinces.Length; i++) {
+            var coldData = GetColdData(i);
+            if (coldData.name == name) return i;
+        }
+        return 0;
     }
 }
 ```
+
+## Burst Compatibility
+
+### Ensuring Burst Can Compile Hot Path
+
+```csharp
+// ✅ Burst-compatible: Value type struct in NativeArray
+[BurstCompile]
+struct ProcessProvincesJob : IJobParallelFor {
+    [ReadOnly] public NativeArray<ProvinceState> provinces;
+    public NativeArray<FixedPoint64> incomes;
+
+    public void Execute(int index) {
+        var province = provinces[index];
+        incomes[index] = CalculateIncome(province.development, province.terrain);
+    }
+}
+
+// ❌ NOT Burst-compatible: Managed references
+struct BadJob : IJobParallelFor {
+    public List<Province> provinces;  // Can't use managed collections in Burst
+    public Dictionary<int, float> data;  // Can't use managed collections in Burst
+}
+```
+
+**Key principle:** Hot data (ProvinceState) must be in NativeArray for Burst. Cold data (ProvinceColdData) can use managed collections since it's accessed rarely.
 
 ## Usage Examples
 
@@ -704,24 +887,24 @@ public class GameInitializer {
         // Load all game data
         var loader = new GameDataLoader();
         var gameData = loader.LoadGame("Assets/GameData");
-        
+
         // Now everything is linked with IDs
-        var england = gameData.Countries.Get("ENG");
-        var london = gameData.Provinces.GetByDefinition(236);
-        
-        Debug.Assert(london.Owner == england.Id);
-        Debug.Assert(england.Capital == london.RuntimeId);
-        
+        var englandId = gameData.Countries.GetId("ENG");
+        var london = gameData.Provinces.Get(236);
+
+        Debug.Assert(london.ownerID == englandId);
+
         // Runtime uses IDs only
-        ProcessProvince(london.RuntimeId);
-        UpdateCountry(england.Id);
+        ProcessProvince(236);
+        UpdateCountry(englandId);
     }
-    
+
     private void ProcessProvince(ushort provinceId) {
-        // Fast array lookups
-        var owner = owners[provinceId];
-        var development = developments[provinceId];
-        
+        // Fast array lookup (8-byte struct)
+        ref var province = ref provinces[provinceId];
+        var owner = province.ownerID;
+        var development = province.development;
+
         // No string comparisons at runtime!
     }
 }
@@ -734,13 +917,23 @@ public class ModLoader {
         // Mods can add new entities
         var modReligions = LoadReligions($"{modPath}/common/religions");
         foreach (var religion in modReligions) {
-            if (!registries.Religions.Exists(religion.Key)) {
-                registries.Religions.Register(religion.Key, religion.Value);
+            if (!registries.Religions.Exists(religion.key)) {
+                // New religion
+                registries.Religions.Register(religion.key, religion.value);
             } else {
                 // Mod overwrites base game
-                registries.Religions.Replace(religion.Key, religion.Value);
+                registries.Religions.Replace(religion.key, religion.value);
             }
         }
+
+        // Re-run reference resolution for mod provinces
+        var modProvinces = LoadProvinces($"{modPath}/history/provinces");
+        foreach (var province in modProvinces) {
+            ResolveAndUpdateProvince(province);
+        }
+
+        // Re-validate after mod loading
+        validator.ValidateGameData(gameData);
     }
 }
 ```
@@ -749,27 +942,35 @@ public class ModLoader {
 
 1. **Never use strings at runtime** - Convert everything to IDs during loading
 2. **Validate early and often** - Catch bad references during loading, not gameplay
-3. **Use typed IDs** - CountryId instead of ushort for type safety
-4. **Dense arrays over dictionaries** - Array indexing is much faster
-5. **Separate hot/cold data** - Don't load what you don't need
-6. **Build reverse lookups once** - Don't search arrays repeatedly
+3. **Use ushort for IDs** - Simpler than typed wrappers unless you have complex cross-referencing
+4. **Dense arrays over dictionaries** - Array indexing is much faster (unless IDs are very sparse)
+5. **Separate hot/cold data** - 8-byte hot struct in NativeArray, cold data in Dictionary
+6. **Build reverse lookups once** - Don't search arrays repeatedly (O(n) → O(1))
 7. **Reserve 0 for "none"** - Makes checking for unset values easy
 8. **Log all resolution failures** - Help modders debug their data
-9. **Support partial loading** - Allow game to run with some missing data
-10. **Generate compile-time constants** - For commonly used IDs
-
-## Related Documents
-
-- **[Moddable Engine Architecture](moddable-engine-architecture.md)** - Mods use the same reference resolution system for linking scripted content
+9. **Support partial loading** - Allow game to run with some missing optional data
+10. **Keep hot data Burst-compatible** - NativeArray with value types only
 
 ## Summary
 
 This linking architecture ensures:
-- **Type safety** through typed ID structs
+- **Type safety** through ID-based references
 - **Performance** through array indexing instead of string lookups
 - **Validation** catches all bad references at load time
 - **Flexibility** for mods to extend base game data
-- **Memory efficiency** through ID usage instead of string references
+- **Memory efficiency** through 8-byte structs and separate cold data
+- **Burst compatibility** through NativeArray and value types
 - **Clear error messages** for debugging data issues
 
-The key is the three-phase approach: discover, load, then link. This allows you to handle forward references, validate everything, and convert to efficient runtime representations.
+The key is the three-phase approach: discover entities, load raw data with strings, then resolve strings to IDs. This allows you to handle forward references, validate everything, and convert to efficient runtime representations.
+
+## Related Documents
+
+- [data-flow-architecture.md](data-flow-architecture.md) - System communication and bidirectional mappings
+- [performance-architecture-guide.md](performance-architecture-guide.md) - Memory layout and cache optimization
+- [../Planning/modding-design.md](../Planning/modding-design.md) - Mod system uses same reference resolution *(not implemented)*
+
+---
+
+*Last Updated: 2025-09-30*
+*For questions or updates, see master-architecture-document.md*
