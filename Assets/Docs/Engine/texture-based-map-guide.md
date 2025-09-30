@@ -23,89 +23,21 @@ Layer 2 (GPU): Presentation State
 
 ## Phase 1: Simulation Layer Foundation
 
-### Task 1.1: Province Simulation State
-- [x] Create fixed-size `ProvinceState` struct (8 bytes exactly)
-- [x] Implement `ProvinceSimulation` class with `NativeArray<ProvinceState>`
-- [x] Add state serialization/deserialization for networking
-- [x] Create command pattern for deterministic state changes
-- [x] Implement state validation and integrity checks
-- [x] Add hot/cold data separation (hot=8 bytes, cold=on-demand)
-
-```csharp
-// CRITICAL: This struct must be exactly 8 bytes for performance
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct ProvinceState {
-    public ushort ownerID;      // 2 bytes - who owns this province
-    public ushort controllerID; // 2 bytes - who controls it (different during occupation)
-    public byte development;    // 1 byte - 0-255 development level
-    public byte terrain;        // 1 byte - terrain type enum
-    public byte fortLevel;      // 1 byte - fortification level
-    public byte flags;          // 1 byte - 8 boolean flags (coastal, capital, etc.)
-}
-```
-
-### Task 1.2: Bitmap to Simulation Conversion
-- [x] Load provinces.bmp using existing optimized ParadoxParser ✅ *MapGenerator complete*
-- [x] Extract unique province IDs (1-65534, reserve 0 for ocean) ✅ *3925 provinces loaded*
-- [x] Create ProvinceID→ArrayIndex mapping for O(1) lookups ✅ *ProvinceMapping working*
-- [x] Initialize ProvinceState array with default values ✅ *Owner/color data populated*
-- [x] Validate province count fits in memory target (80KB for 10k provinces) ✅ *Well under limits*
-- [x] Store province pixel boundaries for GPU texture generation ✅ *Pixel data tracked per province*
-
-### Task 1.3: GPU Texture Infrastructure
-- [x] Create province ID texture (R16G16, point filtering, no mipmaps)
-- [x] Create province owner texture (R16, updated from simulation)
-- [x] Create province color palette texture (256×1 RGBA32)
-- [x] Create render textures for borders, selection, effects
-- [x] Implement texture update system from simulation state
-- [x] Add texture streaming for very large maps (>10k provinces)
-
-### Task 1.4: Command System (Multiplayer Foundation)
-- [x] Create `IProvinceCommand` interface for all state changes
-- [x] Implement command validation and execution
-- [x] Add command serialization for networking
-- [x] Create command buffer with rollback support
-- [x] Implement deterministic random number generation
-- [x] Add state checksum validation
+| Milestone | Status | Key Components |
+|-----------|--------|----------------|
+| **Province Simulation State** | ✅ Complete | 8-byte ProvinceState struct, NativeArray storage, hot/cold separation |
+| **Bitmap to Simulation** | ✅ Complete | 3925 provinces loaded, ID→Index mapping, pixel boundaries tracked |
+| **GPU Texture Infrastructure** | ✅ Complete | Province ID/owner textures, color palettes, border render textures |
+| **Command System** | ✅ Complete | IProvinceCommand interface, validation, serialization, rollback support |
 
 ## Phase 2: GPU Presentation Layer
 
-### Task 2.1: Core Map Shader (URP)
-- [x] Create URP Unlit shader for main map rendering
-- [x] Sample province ID texture with point filtering
-- [x] Use province ID to index into owner/color textures
-- [x] Implement map mode switching (political, terrain, etc.)
-- [x] Add SRP Batcher compatibility with CBUFFER blocks
-- [x] Support shader variants for different map modes
-
-```hlsl
-// Core map shader logic
-float2 provinceID_encoded = tex2D(_ProvinceIDTexture, uv);
-uint provinceID = DecodeProvinceID(provinceID_encoded);
-uint ownerID = tex2D(_ProvinceOwnerTexture, GetOwnerUV(provinceID));
-float4 provinceColor = tex2D(_ProvinceColorPalette, GetColorUV(ownerID));
-```
-
-### Task 2.2: GPU Compute Shaders
-- [x] **Border Detection Compute Shader**: Process entire map in parallel to find province borders
-- [ ] **Selection Compute Shader**: Generate selection highlights
-- [ ] **Effect Generation Compute Shader**: War effects, trade routes, etc.
-- [ ] **LOD Compute Shader**: Generate lower resolution textures for distant zoom
-- [ ] Thread group optimization (8×8 or 16×16 depending on GPU)
-- [ ] GPU profiling and optimization
-
-```hlsl
-// Border detection kernel - processes 64 pixels in parallel
-[numthreads(8,8,1)]
-void DetectBorders(uint3 id : SV_DispatchThreadID) {
-    uint currentProvince = DecodeProvinceID(ProvinceIDTexture[id.xy]);
-    uint rightProvince = DecodeProvinceID(ProvinceIDTexture[id.xy + int2(1,0)]);
-    uint bottomProvince = DecodeProvinceID(ProvinceIDTexture[id.xy + int2(0,1)]);
-
-    bool isBorder = (currentProvince != rightProvince) || (currentProvince != bottomProvince);
-    BorderTexture[id.xy] = isBorder ? 1.0 : 0.0;
-}
-```
+| Milestone | Status | Key Components |
+|-----------|--------|----------------|
+| **Core Map Shader (URP)** | ✅ Complete | Province ID sampling, owner indexing, map mode switching, SRP Batcher compat |
+| **Compute Shaders** | 🔄 Partial | Border detection ✅, Selection/Effects/LOD pending |
+| **Input System** | ⏳ Pending | Mouse→province lookup, async selection, caching |
+| **Dynamic Updates** | ⏳ Pending | Delta updates, double buffering, animations |
 
 ### Task 2.3: Optimized Input System
 - [ ] Mouse to province ID lookup using GPU readback
@@ -249,16 +181,19 @@ void DetectBorders(uint3 id : SV_DispatchThreadID) {
 - **GPU tests** across different graphics cards
 - **Network tests** with simulated packet loss
 
-## Migration from Current Implementation
+## Anti-Patterns (DON'T DO THESE)
 
-The current CPU-heavy neighbor detection system should be completely replaced:
+| Anti-Pattern | Why It's Wrong | Solution |
+|--------------|---------------|----------|
+| CPU neighbor detection | 51 seconds on large maps | GPU compute shader (<1ms) |
+| Dynamic collections in simulation | Unbounded growth, allocations | Fixed-size structs only |
+| GameObjects per province | Massive overhead | Textures only |
+| Store history in hot path | Memory bloat | Cold data separation |
 
-```csharp
-// REMOVE: CPU neighbor detection
-ProvinceNeighborDetector.DetectNeighbors(loadResult); // 51 seconds on large maps
+Migration: Replace CPU systems with GPU compute shaders as specified in architecture.
 
-// REPLACE WITH: GPU compute shader
-BorderDetectionCompute.Dispatch(threadGroupsX, threadGroupsY, 1); // <1ms
-```
+## Related Documents
 
-This new architecture will achieve the performance targets while maintaining the scalability and multiplayer requirements defined in the master architecture document.
+- **[Coordinate System Architecture](coordinate-system-architecture.md)** - Coordinate transforms for converting mouse positions to province selections
+- **[Master Architecture Document](master-architecture-document.md)** - Overall architecture overview and dual-layer system design
+- **[MapMode System Architecture](mapmode-system-architecture.md)** - Rendering layer that displays province data through GPU shaders

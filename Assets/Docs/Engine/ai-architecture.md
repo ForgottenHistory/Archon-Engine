@@ -741,6 +741,11 @@ public class AIDebugger {
 7. **Use simple heuristics** - Perfect is the enemy of good enough
 8. **Make AI explainable** - Players should understand why AI did something
 
+## Related Documents
+
+- **[Time System Architecture](time-system-architecture.md)** - AI update frequencies (monthly/weekly/daily/hourly) align with the time system's hierarchical tick structure
+- **[Performance Architecture Guide](performance-architecture-guide.md)** - Caching strategies and performance optimization patterns used by AI systems
+
 ## Summary
 
 This AI architecture achieves:

@@ -69,98 +69,13 @@ public class CommandBasedSave {
    └── Best for long games
 ```
 
-## The Command Pattern Implementation
+## Command Pattern Implementation
 
-### Base Command Structure
-```csharp
-[Serializable]
-public abstract class GameCommand {
-    // When this command was executed
-    public uint tick;
-    public float gameTime;
-    
-    // Who issued it (for multiplayer)
-    public byte issuingPlayer;
-    
-    // Validation and execution
-    public abstract bool Validate(GameState state);
-    public abstract void Execute(GameState state);
-    public abstract void Serialize(BinaryWriter writer);
-    public abstract void Deserialize(BinaryReader reader);
-}
+**Base Command**: Abstract class with `tick`, `gameTime`, `issuingPlayer`. Methods: `Validate()`, `Execute()`, `Serialize()`, `Deserialize()`.
 
-// Example concrete command
-[Serializable]
-public class MoveArmyCommand : GameCommand {
-    public ushort armyId;
-    public ushort targetProvince;
-    public PathType pathType;
-    
-    public override void Execute(GameState state) {
-        var army = state.Military.GetArmy(armyId);
-        var path = state.Pathfinding.FindPath(
-            army.currentProvince, 
-            targetProvince, 
-            pathType
-        );
-        army.SetPath(path);
-    }
-    
-    public override void Serialize(BinaryWriter writer) {
-        writer.Write((byte)CommandType.MoveArmy);
-        writer.Write(armyId);
-        writer.Write(targetProvince);
-        writer.Write((byte)pathType);
-    }
-    
-    public override void Deserialize(BinaryReader reader) {
-        armyId = reader.ReadUInt16();
-        targetProvince = reader.ReadUInt16();
-        pathType = (PathType)reader.ReadByte();
-    }
-}
-```
+**Concrete Example** (`MoveArmyCommand`): Stores `armyId`, `targetProvince`, `pathType`. Executes pathfinding and army movement. Serializes to 5 bytes.
 
-### Command History Management
-```csharp
-public class CommandHistory {
-    // All commands executed in this game
-    private List<GameCommand> executedCommands = new();
-    
-    // For undo/redo and replay
-    private int currentIndex = 0;
-    
-    // Checkpoints for faster seeking
-    private Dictionary<int, GameStateSnapshot> checkpoints = new();
-    
-    public void ExecuteCommand(GameCommand command) {
-        command.tick = TimeManager.CurrentTick;
-        command.gameTime = TimeManager.GameTime;
-        
-        if (command.Validate(GameState.Current)) {
-            command.Execute(GameState.Current);
-            
-            // Add to history
-            executedCommands.Add(command);
-            currentIndex++;
-            
-            // Create checkpoint every 1000 commands
-            if (executedCommands.Count % 1000 == 0) {
-                CreateCheckpoint();
-            }
-            
-            // For multiplayer
-            if (NetworkManager.IsMultiplayer) {
-                NetworkManager.BroadcastCommand(command);
-            }
-        }
-    }
-    
-    private void CreateCheckpoint() {
-        checkpoints[executedCommands.Count] = GameState.Current.CreateSnapshot();
-    }
-}
-```
+**Command History**: List of executed commands + checkpoint dictionary. Creates snapshot every 1000 commands for fast seeking. Broadcasts to network if multiplayer. Full implementation pattern above - see codebase for complete details.
 
 ## Snapshot Save System
 
@@ -566,47 +481,15 @@ public class MultiplayerSync {
 ## Save File Optimization
 
 ### Compression Strategies
-```csharp
-public class SaveCompression {
-    // Different compression for different data
-    public void OptimizedSave(BinaryWriter writer) {
-        // 1. Province ownership - Run Length Encoding
-        // Most provinces owned by same nation
-        WriteRunLengthEncoded(provinceOwners, writer);
-        
-        // 2. Diplomatic matrix - Sparse encoding
-        // Most nations have no relation
-        WriteSparseMatrix(diplomaticRelations, writer);
-        
-        // 3. Commands - Delta encoding
-        // Commands often similar (move army to adjacent province)
-        WriteDeltaEncoded(commandHistory, writer);
-        
-        // 4. Float values - Quantization
-        // Don't need full precision for game data
-        WriteQuantizedFloats(economicData, writer, precision: 0.01f);
-    }
-    
-    private void WriteRunLengthEncoded(byte[] data, BinaryWriter writer) {
-        byte currentValue = data[0];
-        ushort count = 1;
-        
-        for (int i = 1; i < data.Length; i++) {
-            if (data[i] == currentValue && count < ushort.MaxValue) {
-                count++;
-            } else {
-                writer.Write(currentValue);
-                writer.Write(count);
-                currentValue = data[i];
-                count = 1;
-            }
-        }
-        
-        writer.Write(currentValue);
-        writer.Write(count);
-    }
-}
-```
+
+| Data Type | Algorithm | Rationale |
+|-----------|-----------|-----------|
+| Province ownership | Run Length Encoding | Most provinces owned by same nation (contiguous regions) |
+| Diplomatic matrix | Sparse encoding | Most nation pairs have no relation |
+| Commands | Delta encoding | Commands often similar (adjacent provinces) |
+| Float values | Quantization | Don't need full precision for game data |
+
+**Example**: Run-length encode ownership as `(value, count)` pairs. Implementation in codebase.
 
 ### Save File Structure
 ```
@@ -750,3 +633,11 @@ The result is a save system that is:
 - **Feature-rich** (replay, time travel, multiplayer sync)
 
 All because we built on the command pattern from the start!
+
+---
+
+## Related Documents
+
+- **[Multiplayer Architecture](multiplayer-architecture-guide.md)** - Command pattern shared between save and multiplayer systems
+- **[Error Recovery Architecture](error-recovery-architecture.md)** - Save corruption recovery strategies
+- **[Master Architecture](master-architecture-document.md)** - Overview of deterministic simulation architecture

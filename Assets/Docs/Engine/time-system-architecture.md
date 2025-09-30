@@ -310,41 +310,11 @@ public class MilitarySystem {
 
 ## Bucketed Updates for Load Distribution
 
-### Spreading Monthly Updates
-```csharp
-public class BucketedUpdateSystem {
-    private const int DAILY_BUCKETS = 30;
-    private int currentBucket = 0;
-    
-    public void OnDailyTick(int dayOfMonth) {
-        // Spread province updates across the month
-        int provincesPerBucket = provinceCount / DAILY_BUCKETS;
-        int startIdx = currentBucket * provincesPerBucket;
-        int endIdx = Math.Min((currentBucket + 1) * provincesPerBucket, provinceCount);
-        
-        for (int i = startIdx; i < endIdx; i++) {
-            if (ShouldUpdateMonthly(i)) {
-                PerformMonthlyUpdate(i);
-            }
-        }
-        
-        currentBucket = (currentBucket + 1) % DAILY_BUCKETS;
-    }
-    
-    // Example: Spread culture conversion checks
-    public void UpdateCultureConversion(int bucketOffset) {
-        int start = (provinceCount / 365) * (dayOfYear + bucketOffset);
-        int end = start + (provinceCount / 365);
-        
-        for (int i = start; i < end; i++) {
-            if (provinces[i].culture != owners[provinces[i].owner].culture) {
-                CheckCultureConversion(i);
-            }
-        }
-        // Only checks ~27 provinces per day for 10k total
-    }
-}
-```
+### Bucketed Updates
+
+**Concept**: Spread expensive operations across multiple ticks to avoid spikes. Monthly updates distributed across 30 daily buckets. Yearly operations spread across 365 days.
+
+**Example**: Culture conversion checks ~27 provinces/day for 10k total (not all at once). Calculate bucket index: `(provinceCount / 365) * dayOfYear`. Full implementation in codebase.
 
 ## Event-Driven Update Triggers
 
@@ -539,44 +509,16 @@ public class TimeSystemConfig : ScriptableObject {
 }
 ```
 
-## Common Pitfalls & Solutions
+## Common Patterns
 
-### ❌ Anti-Pattern: Update Everything
-```csharp
-// BAD: Paradox style
-foreach (var province in allProvinces) {
-    province.UpdateEconomy();  // 99% unchanged
-    province.UpdateMilitary(); // 99% unchanged
-}
-```
+| Anti-Pattern | Why Wrong | Correct Pattern |
+|--------------|-----------|----------------|
+| **Update Everything** | 99% unchanged calculations | Update only dirty provinces |
+| **Immediate Updates** | Scattered recalculations, cache thrashing | Mark dirty, batch update later |
+| **Polling for Changes** | Check all entities every frame | Event-driven triggers |
+| **No Bucketing** | Spike when all entities update same tick | Spread across multiple ticks |
 
-### ✅ Pattern: Update Only Changed
-```csharp
-// GOOD: Dirty flag style
-foreach (var provinceId in dirtyEconomy) {
-    UpdateEconomy(provinceId);
-    dirtyEconomy.Remove(provinceId);
-}
-```
-
-### ❌ Anti-Pattern: Immediate Updates
-```csharp
-// BAD: Update immediately on change
-public void OnBuildingComplete(ushort province) {
-    RecalculateEconomy(province);      // Right now
-    RecalculateTrade(province);        // Right now
-    RecalculateSupplyLimit(province);  // Right now
-}
-```
-
-### ✅ Pattern: Deferred Updates
-```csharp
-// GOOD: Mark dirty, update later
-public void OnBuildingComplete(ushort province) {
-    MarkDirty(province, UpdateFlags.Economy | UpdateFlags.Trade);
-    // Actual update happens at next scheduled tick
-}
-```
+Brief examples omitted - full patterns demonstrated throughout document.
 
 ## Performance Comparison
 
@@ -611,7 +553,7 @@ Dirty Flag System:
 ## Best Practices
 
 1. **Default to OnDemand updates** - Only use scheduled updates for true time-based mechanics
-2. **Cache aggressively** - Never recalculate unchanged values
+2. **Cache aggressively** - Never recalculate unchanged values (see [Performance Architecture](performance-architecture-guide.md))
 3. **Bucket expensive operations** - Spread yearly updates across the entire year
 4. **Use events, not polling** - React to changes rather than checking for them
 5. **Profile everything** - Monitor update times and counts

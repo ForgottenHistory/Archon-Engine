@@ -314,6 +314,11 @@ color = lerp(normalColor, selectedColor, selected);
 3. Study compute shaders (advanced optimizations)
 4. Profile with RenderDoc (understand what GPU is doing)
 
+## Related Documents
+
+- **[Texture-Based Map Guide](texture-based-map-guide.md)** - Implementation details for the texture-based map rendering system
+- **[Performance Architecture Guide](performance-architecture-guide.md)** - Why performance matters and optimization strategies for 200+ FPS target
+
 ## Validation Criteria
 - [ ] Render 10,000 provinces at 200+ FPS
 - [ ] Province selection under 1ms

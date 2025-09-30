@@ -92,121 +92,18 @@ public class MapModeDataTextures {
 
 ## Improved Shader Architecture
 
-### Modular Shader System
+### Shader Architecture
 
-```hlsl
-// MapModeCore.shader - Improved version
+**Modular Organization**: Core shader includes mode-specific `.hlsl` files (Political, Terrain, Development). Fragment shader samples province ID once, switches on map mode, applies borders/highlights.
 
-Shader "GrandStrategy/MapModeCore" {
-    Properties {
-        // Data textures - organized by update frequency
-        [Header(Core Data - Never Changes)]
-        _ProvinceIDTex ("Province IDs", 2D) = "black" {}
-        _TerrainTex ("Terrain Types", 2D) = "black" {}
-        
-        [Header(Frequently Updated Data)]
-        _OwnerTex ("Province Owners", 2D) = "black" {}
-        _DevelopmentTex ("Development", 2D) = "black" {}
-        
-        [Header(Occasionally Updated Data)]
-        _CultureTex ("Cultures", 2D) = "black" {}
-        _ReligionTex ("Religions", 2D) = "black" {}
-        
-        [Header(Color Palettes)]
-        _CountryColors ("Country Colors", 2D) = "white" {}
-        _CultureColors ("Culture Colors", 2D) = "white" {}
-        _ReligionColors ("Religion Colors", 2D) = "white" {}
-        
-        [Header(Map Settings)]
-        _MapMode ("Map Mode", Int) = 0
-        _BorderIntensity ("Border Intensity", Range(0,1)) = 0.8
-        _HighlightColor ("Highlight Color", Color) = (1,1,0,1)
-    }
-    
-    SubShader {
-        Pass {
-            HLSLPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-            
-            // Better organization with includes
-            #include "MapModeCommon.hlsl"
-            #include "MapModePolitical.hlsl"
-            #include "MapModeTerrain.hlsl"
-            #include "MapModeDevelopment.hlsl"
-            
-            float4 frag(Varyings input) : SV_Target {
-                // Sample province ID once
-                uint provinceID = SampleProvinceID(input.uv);
-                
-                // Early out for ocean
-                if (provinceID == 0) {
-                    return _OceanColor;
-                }
-                
-                // Branch based on map mode
-                float4 color;
-                
-                switch(_MapMode) {
-                    case 0: // Political
-                        color = RenderPolitical(provinceID, input.uv);
-                        break;
-                    case 1: // Terrain
-                        color = RenderTerrain(provinceID, input.uv);
-                        break;
-                    case 2: // Development
-                        color = RenderDevelopment(provinceID, input.uv);
-                        break;
-                    case 3: // Culture
-                        color = RenderCulture(provinceID, input.uv);
-                        break;
-                    default:
-                        color = float4(1,0,1,1); // Magenta for undefined
-                }
-                
-                // Apply borders (shared across all modes)
-                color = ApplyBorders(color, input.uv);
-                
-                // Apply highlights (selected provinces, etc.)
-                color = ApplyHighlights(color, provinceID);
-                
-                return color;
-            }
-            ENDHLSL
-        }
-    }
-}
-```
+**Key Pattern**: `SampleProvinceID(uv)` → Mode-specific rendering function → `ApplyBorders()` → `ApplyHighlights()` → Output
 
-### Specialized Map Mode Shaders
+**Example Modes**:
+- **Political**: Sample owner ID → Index into country color palette
+- **Development**: Sample dev level (0-255) → Gradient (red=low, green=high)
+- **Terrain**: Sample terrain type → Index into terrain color palette
 
-```hlsl
-// MapModePolitical.hlsl
-float4 RenderPolitical(uint provinceID, float2 uv) {
-    // Get owner from texture
-    uint ownerID = SampleOwner(provinceID);
-    
-    if (ownerID == 0) {
-        return _UnownedColor; // Gray for unowned
-    }
-    
-    // Sample country color from palette
-    return SampleCountryColor(ownerID);
-}
-
-// MapModeDevelopment.hlsl  
-float4 RenderDevelopment(uint provinceID, float2 uv) {
-    // Get development level (0-255)
-    float development = SampleDevelopment(provinceID) / 255.0;
-    
-    // Color gradient from red (low) to green (high)
-    float3 lowColor = float3(0.5, 0.1, 0.1);  // Dark red
-    float3 highColor = float3(0.1, 0.5, 0.1); // Dark green
-    
-    float3 color = lerp(lowColor, highColor, development);
-    return float4(color, 1.0);
-}
-```
+Shader code organized by update frequency (static textures vs frequently updated). Full shader implementations in actual codebase.
 
 ## C# Map Mode Manager
 
@@ -616,6 +513,11 @@ Your current shader has good foundations but needs:
 6. **Use compute shaders** - For complex calculations
 7. **Implement LOD** - Reduce detail at distance
 8. **Batch updates** - Update multiple provinces at once
+
+## Related Documents
+
+- **[Core Data Access Guide](core-data-access-guide.md)** - How map modes get data from the Core simulation layer
+- **[Texture-Based Map Guide](texture-based-map-guide.md)** - GPU pipeline and texture architecture for map rendering
 
 ## Summary
 

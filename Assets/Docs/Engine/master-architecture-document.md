@@ -8,7 +8,7 @@
 This document outlines the complete architecture for a grand strategy game capable of:
 - **10,000+ provinces** at **200+ FPS** (single-player) / **144+ FPS** (multiplayer)
 - **<100MB** memory footprint for map system
-- **<5KB/s** network bandwidth in multiplayer
+- **<5KB/s** (lockstep) or **<10KB/s** (client-server) network bandwidth in multiplayer
 - **Deterministic** simulation enabling replays, saves, and multiplayer
 - **Zero** late-game performance degradation
 
@@ -69,7 +69,7 @@ CPU Memory (RAM):
 - Game Logic: Variable
 
 GPU Memory (VRAM):
-- Province ID Map: 46MB (5632×2048×4 bytes)
+- Province ID Map: 46MB (configurable, typically 4096×2048×4 bytes)
 - Owner Texture: 3MB (1408×512×4 bytes)
 - Color Palette: 1MB
 - Border Cache: 8MB
@@ -103,42 +103,15 @@ Texture Approach:
 
 ### 2.2 Province Data as Textures
 
-```hlsl
-// Map Fragment Shader (simplified)
-sampler2D _ProvinceIDs;    // Which province is this pixel?
-sampler2D _ProvinceOwners; // Who owns each province?
-sampler2D _CountryColors;  // What color is each country?
+Provinces are stored as GPU textures for parallel processing. The fragment shader reads province IDs from the texture, looks up ownership data, and renders colors in a single pass.
 
-fixed4 frag(v2f i) : SV_Target {
-    // Step 1: Read province ID at this pixel
-    float2 idData = tex2D(_ProvinceIDs, i.uv).rg;
-    int provinceID = DecodeProvinceID(idData);
-    
-    // Step 2: Look up owner
-    float ownerData = tex2D(_ProvinceOwners, GetProvinceUV(provinceID)).r;
-    int countryID = (int)(ownerData * 65535);
-    
-    // Step 3: Get country color
-    return tex2D(_CountryColors, float2(countryID / 256.0, 0));
-}
-```
+See [Texture-Based Map Guide](texture-based-map-guide.md) for shader implementation details.
 
 ### 2.3 Border Generation via Compute Shader
 
-```hlsl
-// BorderCompute.compute
-[numthreads(8,8,1)]
-void GenerateBorders(uint3 id : SV_DispatchThreadID) {
-    float2 uv = id.xy / TextureSize;
-    
-    int center = ReadProvinceID(uv);
-    int north = ReadProvinceID(uv + float2(0, 1.0/TextureHeight));
-    
-    bool isBorder = (center != north);
-    BorderTexture[id.xy] = isBorder ? 1.0 : 0.0;
-}
-// Processes all borders in ~2ms on GPU
-```
+Border generation uses GPU compute shaders to detect province boundaries in parallel, processing all 10,000+ provinces in ~2ms.
+
+See [Texture-Based Map Guide](texture-based-map-guide.md) for compute shader implementation.
 
 ### 2.4 Province Selection Without Raycasting
 
@@ -278,14 +251,15 @@ public class PredictiveClient {
 
 ```csharp
 // HOT: Accessed every frame (keep in cache)
-public struct ProvinceHot {  // 8 bytes, cache-line aligned
-    public ushort owner;
-    public ushort controller;
+public struct ProvinceState {  // 8 bytes, cache-line aligned
+    public ushort ownerID;
+    public ushort controllerID;
     public byte development;
     public byte terrain;
-    public ushort flags;  // 16 boolean flags
+    public byte fortLevel;
+    public byte flags;
 }
-NativeArray<ProvinceHot> hotData;  // Contiguous memory
+NativeArray<ProvinceState> hotData;  // Contiguous memory
 
 // COLD: Accessed rarely (can page to disk)
 public class ProvinceCold {
@@ -438,42 +412,9 @@ public class UpdateLOD {
 
 ---
 
-## Part 6: Implementation Roadmap
+## Part 6: Implementation Overview
 
-### Phase 1: Foundation (Weeks 1-2)
-- [ ] Set up URP with minimal features
-- [ ] Create map quad and basic shader
-- [ ] Load province bitmap into R16G16 texture
-- [ ] Implement basic province coloring
-- [ ] Test with 10,000 provinces
-
-### Phase 2: Core Systems (Weeks 3-4)
-- [ ] Implement command pattern
-- [ ] Create deterministic simulation layer
-- [ ] Add GPU texture update system
-- [ ] Implement province selection
-- [ ] Create border compute shader
-
-### Phase 3: Optimization (Weeks 5-6)
-- [ ] Separate hot/cold data
-- [ ] Implement dirty flag system
-- [ ] Add frame caching
-- [ ] Create spatial partitioning
-- [ ] Profile and optimize
-
-### Phase 4: Multiplayer Foundation (Weeks 7-8)
-- [ ] Add network command serialization
-- [ ] Implement state synchronization
-- [ ] Create rollback system
-- [ ] Add client prediction
-- [ ] Test with multiple clients
-
-### Phase 5: Polish (Weeks 9-10)
-- [ ] Add visual effects and animations
-- [ ] Implement all map modes
-- [ ] Create debug visualizations
-- [ ] Performance testing
-- [ ] Documentation
+See [Texture-Based Map Guide](texture-based-map-guide.md) for detailed implementation phases and step-by-step instructions.
 
 ---
 
@@ -495,39 +436,13 @@ Total:               5.0ms
 
 ### 7.2 Validation Tests
 
-```csharp
-[Test]
-public void Validate_10000_Provinces_200FPS() {
-    CreateProvinces(10000);
-    SimulateYears(400);
-    Assert.Less(AverageFrameTime, 5.0f);
-}
+Critical tests include:
+- 10,000 provinces maintaining 200 FPS over 400 years
+- Province selection under 1ms response time
+- Memory usage under 100MB
+- Deterministic simulation across platforms
 
-[Test]
-public void Validate_Selection_Under_1ms() {
-    CreateProvinces(10000);
-    var time = MeasureSelectionTime();
-    Assert.Less(time, 1.0f);
-}
-
-[Test]
-public void Validate_Memory_Under_100MB() {
-    CreateProvinces(10000);
-    var memory = Profiler.GetTotalAllocatedMemoryLong();
-    Assert.Less(memory, 100_000_000);
-}
-
-[Test]
-public void Validate_Determinism() {
-    var state1 = new GameState(seed: 12345);
-    var state2 = new GameState(seed: 12345);
-    
-    ExecuteCommands(state1, commands);
-    ExecuteCommands(state2, commands);
-    
-    Assert.AreEqual(state1.Hash(), state2.Hash());
-}
-```
+See [Performance Architecture](performance-architecture-guide.md) for testing strategies.
 
 ---
 
@@ -616,6 +531,20 @@ This architecture delivers Paradox-scale gameplay at 10x the performance through
 3. **Aggressive optimization** preventing late-game slowdown
 4. **Clean separation** of simulation and presentation
 
-The system scales to 20,000+ provinces while maintaining 144+ FPS in multiplayer and 200+ FPS in single-player, using less than 100MB of memory and 5KB/s of network bandwidth.
+The system scales to 20,000+ provinces while maintaining 144+ FPS in multiplayer and 200+ FPS in single-player, using less than 100MB of memory and 5-10KB/s of network bandwidth.
 
 Follow the implementation roadmap, avoid the anti-patterns, and you'll have a grand strategy engine that performs better than anything currently on the market.
+
+---
+
+## Related Documents
+
+For detailed implementation guidance, see:
+
+- **[Texture-Based Map Guide](texture-based-map-guide.md)** - Step-by-step implementation of GPU-based map rendering
+- **[Performance Architecture Guide](performance-architecture-guide.md)** - Late-game optimization and memory strategies
+- **[Multiplayer Architecture Guide](multiplayer-architecture-guide.md)** - Network synchronization and determinism
+- **[Time System Architecture](time-system-architecture.md)** - Update scheduling and dirty flag systems
+- **[Save/Load Architecture](save-load-architecture.md)** - Persistence and replay systems
+- **[Error Recovery Architecture](error-recovery-architecture.md)** - Robustness and fault tolerance
+- **[Coordinate System Architecture](coordinate-system-architecture.md)** - Spatial data and transformations

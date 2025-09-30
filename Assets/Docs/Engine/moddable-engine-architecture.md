@@ -210,138 +210,35 @@ public class ActiveEffectSystem {
 
 ## Condition System (High-Performance)
 
-### Bytecode Compiler
-```csharp
-public enum ConditionOpCode : byte {
-    // Stack operations
-    PushTrue = 0,
-    PushFalse = 1,
-    PushInt = 2,
-    PushFloat = 3,
-    PushString = 4,
-    
-    // Variable access
-    GetNationFlag = 10,
-    GetNationValue = 11,
-    GetProvinceValue = 12,
-    GetGlobalValue = 13,
-    
-    // Comparisons
-    Equal = 20,
-    NotEqual = 21,
-    Greater = 22,
-    Less = 23,
-    GreaterEqual = 24,
-    LessEqual = 25,
-    
-    // Logic
-    And = 30,
-    Or = 31,
-    Not = 32,
-    
-    // Special
-    HasCountryFlag = 40,
-    HasReform = 41,
-    IsAtWar = 42,
-    ControlsProvince = 43,
-}
+### Bytecode VM Architecture
 
-public class ConditionBytecode {
-    public byte[] code;
-    public object[] constants;
-    
-    // Stack-based VM for evaluation
-    public bool Evaluate(GameState state, byte nation, ushort? province = null) {
-        var stack = stackalloc int[16];  // Small stack on stack!
-        int stackPtr = 0;
-        
-        for (int pc = 0; pc < code.Length; pc++) {
-            switch ((ConditionOpCode)code[pc]) {
-                case ConditionOpCode.PushTrue:
-                    stack[stackPtr++] = 1;
-                    break;
-                    
-                case ConditionOpCode.PushFalse:
-                    stack[stackPtr++] = 0;
-                    break;
-                    
-                case ConditionOpCode.PushInt:
-                    stack[stackPtr++] = (int)constants[code[++pc]];
-                    break;
-                    
-                case ConditionOpCode.GetNationValue:
-                    var valueType = (NationValueType)code[++pc];
-                    stack[stackPtr++] = GetNationValue(state, nation, valueType);
-                    break;
-                    
-                case ConditionOpCode.Greater:
-                    stackPtr--;
-                    stack[stackPtr-1] = stack[stackPtr-1] > stack[stackPtr] ? 1 : 0;
-                    break;
-                    
-                case ConditionOpCode.And:
-                    stackPtr--;
-                    stack[stackPtr-1] = (stack[stackPtr-1] & stack[stackPtr]);
-                    break;
-                    
-                case ConditionOpCode.HasCountryFlag:
-                    var flagId = (ushort)constants[code[++pc]];
-                    stack[stackPtr++] = state.HasNationFlag(nation, flagId) ? 1 : 0;
-                    break;
-            }
+**OpCode Categories**: Stack ops (Push/Pop), Variable access (GetNationFlag, GetProvinceValue), Comparisons (Equal, Greater, Less), Logic (And, Or, Not), Special (HasCountryFlag, IsAtWar)
+
+**Evaluation Engine**: Stack-based VM uses `stackalloc int[16]` for zero-allocation execution. Iterates bytecode array, executing operations and maintaining evaluation stack. Final stack[0] contains boolean result.
+
+```csharp
+// Simplified example showing architecture
+public bool Evaluate(GameState state, byte nation) {
+    var stack = stackalloc int[16];
+    int stackPtr = 0;
+
+    for (int pc = 0; pc < code.Length; pc++) {
+        switch ((ConditionOpCode)code[pc]) {
+            case ConditionOpCode.PushInt:
+                stack[stackPtr++] = (int)constants[code[++pc]];
+                break;
+            case ConditionOpCode.Greater:
+                stackPtr--;
+                stack[stackPtr-1] = stack[stackPtr-1] > stack[stackPtr] ? 1 : 0;
+                break;
+            // ... other opcodes
         }
-        
-        return stack[0] != 0;
     }
+    return stack[0] != 0;
 }
 ```
 
-### Condition Compiler
-```csharp
-public class ConditionCompiler {
-    public static ConditionBytecode Compile(ParsedBlock block) {
-        var code = new List<byte>();
-        var constants = new List<object>();
-        
-        foreach (var node in block.nodes) {
-            CompileNode(node, code, constants);
-        }
-        
-        return new ConditionBytecode {
-            code = code.ToArray(),
-            constants = constants.ToArray()
-        };
-    }
-    
-    private static void CompileNode(ParsedNode node, List<byte> code, List<object> constants) {
-        switch (node.key) {
-            case "NOT":
-                CompileNode(node.value, code, constants);
-                code.Add((byte)ConditionOpCode.Not);
-                break;
-                
-            case "has_country_flag":
-                var flagName = node.value.ToString();
-                var flagId = FlagRegistry.GetId(flagName);
-                constants.Add(flagId);
-                code.Add((byte)ConditionOpCode.HasCountryFlag);
-                code.Add((byte)(constants.Count - 1));
-                break;
-                
-            case "trade_income_percentage":
-                code.Add((byte)ConditionOpCode.GetNationValue);
-                code.Add((byte)NationValueType.TradeIncomePercentage);
-                
-                constants.Add(node.value.ToFloat());
-                code.Add((byte)ConditionOpCode.PushFloat);
-                code.Add((byte)(constants.Count - 1));
-                
-                code.Add((byte)ConditionOpCode.Greater);
-                break;
-        }
-    }
-}
-```
+**Compiler**: Parses condition nodes and emits bytecode. Strings interned to IDs. See [Unity Paradox Parser Guide](unity_paradox_parser_guide.md) for parsing phase. Full implementation in actual codebase.
 
 ## Decision System
 
@@ -716,39 +613,9 @@ public class ScriptHotReload : MonoBehaviour {
 
 ## Performance Optimizations
 
-### String Interning for Flags
-```csharp
-public static class FlagRegistry {
-    private static Dictionary<string, ushort> stringToId = new();
-    private static string[] idToString = new string[65536];
-    private static ushort nextId = 0;
-    
-    public static ushort GetId(string flag) {
-        if (stringToId.TryGetValue(flag, out ushort id)) {
-            return id;
-        }
-        
-        // Intern new flag
-        id = nextId++;
-        stringToId[flag] = id;
-        idToString[id] = flag;
-        return id;
-    }
-    
-    public static string GetString(ushort id) => idToString[id];
-}
+### String Interning Optimization
 
-// Usage in nation state
-public struct NationFlags {
-    private BitArray flags;  // 65536 bits = 8KB
-    
-    public bool Has(string flagName) => Has(FlagRegistry.GetId(flagName));
-    public bool Has(ushort flagId) => flags[flagId];
-    
-    public void Set(string flagName) => Set(FlagRegistry.GetId(flagName));
-    public void Set(ushort flagId) => flags[flagId] = true;
-}
-```
+Flags stored as `ushort` IDs instead of strings. `FlagRegistry` maintains bidirectional mapping (string ↔ ID). Nations store `BitArray` (65536 bits = 8KB) for flag storage. Flag checks become bit lookups instead of string comparisons (10x+ faster).
 
 ### Modifier Caching
 ```csharp
@@ -834,6 +701,11 @@ Full update cycle (10k provinces, 256 nations):
 6. **Cache aggressively** - Recalc only when dirty
 7. **Pool objects** - Zero allocations in hot path
 8. **Separate data from logic** - Scripts define data, code executes
+
+## Related Documents
+
+- **[Data Linking Architecture](data-linking-architecture.md)** - Reference resolution system that mods use for linking string IDs to runtime entities
+- **[Unity Burst Jobs Architecture](unity-burst-jobs-architecture.md)** - Burst-compiled Paradox parser used for high-performance script loading
 
 ## Summary
 

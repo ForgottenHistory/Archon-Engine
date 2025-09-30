@@ -47,14 +47,14 @@ public struct ProvinceData {
 }
 ```
 
-### Position Lookup Tables (Warm Data)
+### Position Lookup Tables (Cold Data)
 ```csharp
 // Separate arrays for different position needs
 public class ProvinceSpatialData {
-    // Essential (always loaded)
+    // Essential (loaded when needed)
     public Vector2[] centers;        // 80KB - World space centers
     public ushort[] regions;         // 20KB - Which region contains
-    
+
     // Optional (loaded on demand)
     public Vector2[] labelPositions; // 80KB - UI label placement
     public Vector2[] portPositions;  // 80KB - Coastal provinces only
@@ -65,38 +65,9 @@ public class ProvinceSpatialData {
 
 ## Coordinate Transformations
 
-### Critical Transformation Functions
-```csharp
-public static class CoordinateSystem {
-    // World ↔ Texture
-    public static Vector2 WorldToTexture(Vector3 worldPos) {
-        return new Vector2(
-            worldPos.x / MapConstants.WORLD_WIDTH,
-            worldPos.z / MapConstants.WORLD_HEIGHT
-        );
-    }
-    
-    public static Vector3 TextureToWorld(Vector2 uv, float y = 0) {
-        return new Vector3(
-            uv.x * MapConstants.WORLD_WIDTH,
-            y,
-            uv.y * MapConstants.WORLD_HEIGHT
-        );
-    }
-    
-    // Province ID Lookups
-    public static ushort GetProvinceAt(Vector3 worldPos) {
-        Vector2 uv = WorldToTexture(worldPos);
-        return ReadProvinceTexture(uv);
-    }
-    
-    public static Vector3 GetProvinceCenter(ushort provinceID) {
-        Vector2 center2D = provinceCenters[provinceID];
-        float height = Terrain.SampleHeight(center2D);
-        return new Vector3(center2D.x, height, center2D.y);
-    }
-}
-```
+### Transformation Functions
+
+**World ↔ Texture**: Divide/multiply by map dimensions. **Province Lookups**: World → UV → Texture read. **Position Queries**: ID → Array lookup → Add height. Simple math operations (<0.0001ms). Full implementation in `CoordinateSystem` class.
 
 ### Texture Reading (GPU → CPU)
 ```csharp
@@ -131,20 +102,17 @@ Hot Data (accessed every frame):
 - Adjacency lists: ~200KB
 - Total: <300KB fits in L3 cache
 
-Warm Data (accessed occasionally):  
+Cold Data (loaded on demand):
 - Province centers: 80KB
 - Region mapping: 20KB
-- Total: ~100KB
-
-Cold Data (rarely accessed):
 - Label positions: 80KB
-- Port positions: 80KB  
+- Port positions: 80KB
 - Areas: 40KB
 - Bounds: 240KB
-- Total: ~440KB
+- Total: ~540KB
 
 GPU Data:
-- Province ID texture: 46MB (5632×2048×4)
+- Province ID texture: 46MB (4096×2048×4)
 - Province color texture: 46MB
 - Total: 92MB VRAM
 ```
@@ -220,47 +188,15 @@ Borders: Compute shader, not mesh
 Colors: Texture update, not materials
 ```
 
-## Common Pitfalls to Avoid
+## Do's and Don'ts
 
-### ❌ DON'T: Store positions in hot data
-```csharp
-// BAD: Wastes cache, rarely needed
-struct Province {
-    Vector3 position;  // 12 wasted bytes
-    byte owner;
-}
-```
-
-### ❌ DON'T: Read texture every frame
-```csharp
-// BAD: GPU→CPU transfer is expensive
-void Update() {
-    Color32[] pixels = texture.GetPixels32();  // 46MB transfer!
-}
-```
-
-### ❌ DON'T: Use floats for province IDs
-```csharp
-// BAD: Float precision issues
-float provinceID = 12534.0f;  // Might become 12534.0001
-```
-
-### ✅ DO: Cache aggressively
-```csharp
-// GOOD: Cache texture reads
-if (textureChanged) {
-    cachedPixels = texture.GetPixels32();
-    textureChanged = false;
-}
-```
-
-### ✅ DO: Quantize when possible
-```csharp
-// GOOD: 4 bytes instead of 8
-struct QuantizedPosition {
-    ushort x, y;  // 0-65535 range, plenty for strategy games
-}
-```
+| DON'T | DO |
+|-------|-----|
+| Store positions in hot data (12 wasted bytes) | Lookup table (80KB for 10k provinces) |
+| Read texture every frame (46MB transfer) | Cache pixels, invalidate on change |
+| Use floats for IDs (precision issues) | Use ushort (exact integers) |
+| Mixed hot/cold data | Separate by access patterns |
+| Compute positions repeatedly | Quantize to ushort if needed (4 bytes) |
 
 ## World Space Specifications
 
@@ -328,11 +264,16 @@ public struct QuantizedPos {
 5. **Keep simulation pure** - Position is for presentation only
 
 ## Questions Resolved
-✅ Store positions separately from hot data  
-✅ Use three coordinate systems (Province/Texture/World)  
-✅ Quantize to ushort if needed (not float)  
-✅ Cache all texture reads  
-✅ Use lookup tables for province centers  
+✅ Store positions separately from hot data
+✅ Use three coordinate systems (Province/Texture/World)
+✅ Quantize to ushort if needed (not float)
+✅ Cache all texture reads
+✅ Use lookup tables for province centers
+
+## Related Documents
+
+- **[Texture-Based Map Guide](texture-based-map-guide.md)** - Uses coordinate transformations for province selection
+- **[Master Architecture](master-architecture-document.md)** - Overview of dual-layer architecture this system supports
 
 ## Next Steps
 1. Implement basic ProvinceData struct

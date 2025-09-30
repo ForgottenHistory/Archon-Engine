@@ -53,16 +53,18 @@ Parallel.ForEach(tradeRoutes, route => {
 ```
 
 ### Principle 2: Separate Hot and Cold Data
-**Hot Data**: Accessed every frame (owner, controller, selection state)  
+**Hot Data**: Accessed every frame (owner, controller, selection state)
 **Cold Data**: Accessed rarely (history, statistics, modifier details)
 
 ```csharp
 // Data organized by access patterns
-public struct ProvinceHotData {  // 8 bytes, cache-friendly
+public struct ProvinceState {  // 8 bytes, cache-friendly
     public ushort ownerID;
     public ushort controllerID;
-    public ushort developmentLevel;
-    public ushort flags;
+    public byte development;
+    public byte terrain;
+    public byte fortLevel;
+    public byte flags;
 }
 
 public class ProvinceColdData {  // Loaded on-demand
@@ -72,7 +74,7 @@ public class ProvinceColdData {  // Loaded on-demand
 }
 
 // Hot data in contiguous array
-NativeArray<ProvinceHotData> provinceHotData;  // All in L2 cache
+NativeArray<ProvinceState> provinceHotData;  // All in L2 cache
 
 // Cold data in separate storage
 Dictionary<int, ProvinceColdData> provinceColdData;  // Paged to disk if needed
@@ -246,7 +248,7 @@ void GameTick() {
 ```csharp
 public class ProvinceUpdateSystem {
     HashSet<int> dirtyProvinces = new();
-    
+
     void GameTick() {
         // Only update changed provinces
         foreach (int id in dirtyProvinces) {
@@ -254,12 +256,14 @@ public class ProvinceUpdateSystem {
         }
         dirtyProvinces.Clear();
     }
-    
+
     void OnProvinceChanged(int id) {
         dirtyProvinces.Add(id);
     }
 }
 ```
+
+See [Time System Architecture](time-system-architecture.md) for layered update frequencies that work with dirty flags.
 
 ## Memory Architecture
 
@@ -269,16 +273,15 @@ public class ProvinceUpdateSystem {
 // TOTAL: ~50MB for core province data
 
 // Hot Data - Accessed Every Frame (80KB)
-NativeArray<ProvinceHotData> hotData;        // 10,000 × 8 bytes = 80KB
-
-// Warm Data - Accessed Frequently (2.4MB)
-NativeArray<ProvinceOwnership> ownership;     // 10,000 × 4 bytes = 40KB
-NativeArray<ProvinceDevelopment> development; // 10,000 × 12 bytes = 120KB
-NativeArray<ProvinceFlags> flags;            // 10,000 × 8 bytes = 80KB
-Texture2D provinceIDMap;                     // 5632 × 2048 × 4 bytes = 46MB
+NativeArray<ProvinceState> hotData;          // 10,000 × 8 bytes = 80KB
 
 // Cold Data - Loaded On Demand (Variable)
 Dictionary<int, ProvinceColdData> coldData;  // Paged to disk
+
+// GPU Textures (VRAM)
+Texture2D provinceIDMap;                     // 4096 × 2048 × 4 bytes = 46MB
+Texture2D provinceOwners;                    // 3MB
+Texture2D provinceColors;                    // 1MB
 
 // NOTE: Hot data corresponds exactly to network-synchronized data
 // See [Multiplayer Architecture](multiplayer-architecture-guide.md) for network serialization
@@ -373,46 +376,14 @@ Total:             5.0ms
 
 ## Anti-Patterns to Avoid
 
-### 1. The "It Works For Now" Trap
-```csharp
-// DON'T: This works fine with 10 provinces...
-List<Province> GetProvincesInRange(Province center, float range) {
-    return allProvinces.Where(p => 
-        Vector3.Distance(p.position, center.position) < range
-    ).ToList();  // O(n) allocation every call!
-}
-```
+| Anti-Pattern | Problem | Solution |
+|--------------|---------|----------|
+| **"It Works For Now"** | O(n) operations scale poorly | Design for 10k+ from start |
+| **"Invisible O(n²)"** | Hidden quadratic complexity (neighbor iterations) | Pre-compute adjacency lists |
+| **"Death by Thousand Cuts"** | 230k+ allocations/frame from many small objects | Pre-allocate pools |
+| **"Update Everything"** | Processing unchanged data every tick | Dirty flag systems (see [Time System](time-system-architecture.md)) |
 
-### 2. The "Invisible O(n²)" Problem
-```csharp
-// DON'T: Hidden quadratic complexity
-foreach (Province p in provinces) {
-    p.tradeValue = CalculateTradeValue(p);  // This touches all neighbors
-    // 10,000 × average 6 neighbors = 60,000 operations
-}
-```
-
-### 3. The "Death by a Thousand Cuts"
-```csharp
-// DON'T: Many small allocations
-void UpdateProvince(Province p) {
-    var modifiers = new List<Modifier>();  // Allocation
-    var neighbors = p.GetNeighbors();      // Allocation
-    var trade = new TradeCalculation();    // Allocation
-    // ... 20 more allocations
-}
-// 10,000 provinces × 23 allocations = 230,000 allocations/frame!
-```
-
-### 4. The "Update Everything" Syndrome
-```csharp
-// DON'T: Update unchanged data
-void GameTick() {
-    foreach (Province p in provinces) {
-        p.UpdateEverything();  // Even if nothing changed
-    }
-}
-```
+Brief code examples showing problems omitted - see full patterns in codebase implementations.
 
 ## Implementation Checklist
 
@@ -485,3 +456,11 @@ Late-game performance collapse is not inevitable. By designing for the end state
 The key is to **architect for scale from day one** rather than trying to optimize after problems appear. Every system should be designed with the question: "What happens when there are 10,000 of these?"
 
 Remember: The difference between Paradox's 20 FPS late-game and your 200 FPS late-game is architecture, not optimization.
+
+---
+
+## Related Documents
+
+- **[Time System Architecture](time-system-architecture.md)** - Layered update frequencies and dirty flag systems
+- **[Multiplayer Architecture](multiplayer-architecture-guide.md)** - Hot/cold data separation for network sync
+- **[Master Architecture](master-architecture-document.md)** - Overview of dual-layer architecture

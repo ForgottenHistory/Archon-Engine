@@ -289,11 +289,11 @@ public interface IProvinceCommand {
 public class ChangeOwnerCommand : IProvinceCommand {
     ushort provinceID;
     ushort newOwnerID;
-    
+
     public void Execute(GameState state) {
         state.provinces[provinceID].ownerID = newOwnerID;
     }
-    
+
     public byte[] Serialize() {
         // 5 bytes: [CommandType(1)][ProvinceID(2)][OwnerID(2)]
         return new byte[] {
@@ -306,6 +306,8 @@ public class ChangeOwnerCommand : IProvinceCommand {
     }
 }
 ```
+
+See [Save/Load Architecture](save-load-architecture.md) - command pattern enables both multiplayer AND save/replay with the same code.
 
 ### Pattern 2: Ring Buffer for Rollback
 
@@ -492,3 +494,12 @@ This architecture gives you:
 - Single-player: 200+ FPS
 - Multiplayer: 144+ FPS with <5KB/s bandwidth
 - Flexibility to add multiplayer later without rewriting
+
+---
+
+## Related Documents
+
+- **[Save/Load Architecture](save-load-architecture.md)** - Command pattern shared between multiplayer and save systems
+- **[Performance Architecture](performance-architecture-guide.md)** - Hot/cold data separation for network sync
+- **[Time System Architecture](time-system-architecture.md)** - Update frequencies aligned with network ticks
+- **[Master Architecture](master-architecture-document.md)** - Overview of dual-layer architecture

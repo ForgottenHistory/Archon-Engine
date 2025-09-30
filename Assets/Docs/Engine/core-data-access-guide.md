@@ -153,8 +153,6 @@ public class SomeMapMode : MapMode
         {
             var provinceId = allProvinces[i];
             var development = gameState.ProvinceQueries.GetDevelopment(provinceId);
-
-            // Map development to color
             paletteColors[i] = MapDevelopmentToColor(development);
         }
 
@@ -164,119 +162,7 @@ public class SomeMapMode : MapMode
 }
 ```
 
-### Use Case 2: UI Display
-
-```csharp
-public class ProvinceInfoPanel : MonoBehaviour
-{
-    public void ShowProvinceInfo(ushort provinceId)
-    {
-        var gameState = GameState.Instance;
-        if (!gameState.IsInitialized) return;
-
-        // Get basic info
-        var owner = gameState.ProvinceQueries.GetOwner(provinceId);
-        var development = gameState.ProvinceQueries.GetDevelopment(provinceId);
-        var terrain = gameState.ProvinceQueries.GetTerrain(provinceId);
-
-        // Get owner info
-        var ownerTag = "Unowned";
-        var ownerColor = Color.gray;
-        if (owner != 0)
-        {
-            ownerTag = gameState.CountryQueries.GetTag(owner);
-            ownerColor = gameState.CountryQueries.GetColor(owner);
-        }
-
-        // Update UI
-        provinceNameText.text = $"Province {provinceId}";
-        ownerText.text = $"Owner: {ownerTag}";
-        developmentText.text = $"Development: {development}";
-        ownerFlag.color = ownerColor;
-    }
-}
-```
-
-### Use Case 3: AI Decision Making
-
-```csharp
-public class AICountryEvaluator
-{
-    public float EvaluateCountryStrength(ushort countryId, GameState gameState)
-    {
-        var countryQueries = gameState.CountryQueries;
-
-        // Get country metrics
-        int totalDevelopment = countryQueries.GetTotalDevelopment(countryId);
-        int provinceCount = countryQueries.GetProvinceCount(countryId);
-        int landProvinces = countryQueries.GetLandProvinceCount(countryId);
-
-        // Calculate strength score
-        float strengthScore = totalDevelopment * 0.4f + landProvinces * 0.6f;
-
-        return strengthScore;
-    }
-
-    public List<ushort> FindExpansionTargets(ushort countryId, GameState gameState)
-    {
-        var targets = new List<ushort>();
-
-        // Get unowned land provinces
-        using var unownedProvinces = gameState.ProvinceQueries.GetUnownedProvinces(Allocator.Temp);
-
-        for (int i = 0; i < unownedProvinces.Length; i++)
-        {
-            var provinceId = unownedProvinces[i];
-
-            // Skip ocean provinces
-            if (gameState.ProvinceQueries.IsOcean(provinceId))
-                continue;
-
-            // Check if province has good development
-            var development = gameState.ProvinceQueries.GetDevelopment(provinceId);
-            if (development >= 10) // Minimum threshold
-            {
-                targets.Add(provinceId);
-            }
-        }
-
-        return targets;
-    }
-}
-```
-
-### Use Case 4: Data Analysis/Statistics
-
-```csharp
-public class GameStatistics
-{
-    public void GenerateReport(GameState gameState)
-    {
-        // Country statistics
-        var countryStats = gameState.CountryQueries.GetCountryStatistics();
-
-        // Province statistics
-        var provinceStats = gameState.ProvinceQueries.GetProvinceStatistics();
-
-        // Top countries by development
-        var topCountries = gameState.CountryQueries.GetCountriesByDevelopment(ascending: false);
-
-        DominionLogger.Log($"Game Statistics:");
-        DominionLogger.Log($"- Total Countries: {countryStats.TotalCountries}");
-        DominionLogger.Log($"- Total Provinces: {provinceStats.TotalProvinces}");
-        DominionLogger.Log($"- Total Development: {provinceStats.TotalDevelopment}");
-        DominionLogger.Log($"- Average Development: {provinceStats.AverageDevelopment:F1}");
-
-        if (topCountries.Length > 0)
-        {
-            var topCountryId = topCountries[0];
-            var topCountryTag = gameState.CountryQueries.GetTag(topCountryId);
-            var topCountryDev = gameState.CountryQueries.GetTotalDevelopment(topCountryId);
-            DominionLogger.Log($"- Most Developed Country: {topCountryTag} ({topCountryDev} development)");
-        }
-    }
-}
-```
+**Other common patterns**: UI Display (query owner/dev/terrain for panels), AI Decision Making (evaluate strength via total development), Data Analysis/Statistics (aggregate queries for reporting). All follow the same GameState → ProvinceQueries/CountryQueries pattern.
 
 ---
 
@@ -434,138 +320,27 @@ var historySummary = gameState.Provinces.GetHistorySummary(provinceId);
 
 ## Key Script Files Reference
 
-### Core System Files
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| **GameState.cs** | `Assets/Scripts/Core/` | Central coordinator, singleton pattern, entry point for all Core data |
+| **ProvinceSystem.cs** | `Assets/Scripts/Core/Systems/` | Province data owner (8-byte ProvinceState, NativeArray storage) |
+| **CountrySystem.cs** | `Assets/Scripts/Core/Systems/` | Country data owner (hot/cold data separation) |
+| **ProvinceQueries.cs** | `Assets/Scripts/Core/Queries/` | Optimized province data access (<0.001ms basic, <5ms computed) |
+| **CountryQueries.cs** | `Assets/Scripts/Core/Queries/` | Optimized country data access (cached with 1s TTL) |
+| **ProvinceState.cs** | `Assets/Scripts/Core/Data/` | 8-byte struct (owner, controller, development, terrain, flags) |
+| **ICommand.cs** | `Assets/Scripts/Core/Commands/` | Command interface for state changes |
+| **EventBus.cs** | `Assets/Scripts/Core/` | Inter-system communication |
 
-#### `GameState.cs` - Central Data Hub
-**Location:** `Assets/Scripts/Core/GameState.cs`
-- **Purpose:** Central coordinator for all Core data access
-- **Key Features:** Singleton pattern, system initialization, unified command execution
-- **Usage:** `GameState.Instance` - your entry point to all Core data
+**File Organization Pattern**: `Core/Systems/` (data owners) → `Core/Queries/` (read access) → `Core/Commands/` (write operations) → `Core/Data/` (structures)
 
-#### `ProvinceSystem.cs` - Province Data Owner
-**Location:** `Assets/Scripts/Core/Systems/ProvinceSystem.cs`
-- **Purpose:** Single source of truth for province simulation data (8-byte ProvinceState)
-- **Key Features:** Structure of Arrays, hot/cold separation, NativeArray storage
-- **Data Managed:** Province ownership, development, terrain, flags
-- **Access Via:** `gameState.Provinces` (internal) or `gameState.ProvinceQueries` (recommended)
-
-#### `CountrySystem.cs` - Country Data Owner
-**Location:** `Assets/Scripts/Core/Systems/CountrySystem.cs`
-- **Purpose:** Single source of truth for country/nation data (8-byte CountryHotData)
-- **Key Features:** Hot data (colors, tags) + cold data (detailed info), lazy loading
-- **Data Managed:** Country colors, tags, flags, graphical cultures
-- **Access Via:** `gameState.Countries` (internal) or `gameState.CountryQueries` (recommended)
-
-### Query Layer Files
-
-#### `ProvinceQueries.cs` - Province Data Access
-**Location:** `Assets/Scripts/Core/Queries/ProvinceQueries.cs`
-- **Purpose:** Optimized province data access with performance guarantees
-- **Query Types:** Basic (<0.001ms), Computed (<5ms), Cross-system, Cached
-- **Key Methods:** `GetOwner()`, `GetDevelopment()`, `GetCountryProvinces()`, `GetProvinceOwnerColor()`
-
-#### `CountryQueries.cs` - Country Data Access
-**Location:** `Assets/Scripts/Core/Queries/CountryQueries.cs`
-- **Purpose:** Optimized country data access with caching for expensive calculations
-- **Query Types:** Basic (colors, tags), Complex (total development), Cached (1s TTL)
-- **Key Methods:** `GetColor()`, `GetTag()`, `GetTotalDevelopment()`, `GetProvinces()`
-
-### Data Structure Files
-
-#### `ProvinceState.cs` - Core Province Data (8 bytes)
-**Location:** `Assets/Scripts/Core/Data/ProvinceState.cs`
-- **Purpose:** Exactly 8-byte struct for deterministic simulation
-- **Fields:** `ownerID`, `controllerID`, `development`, `terrain`, `fortLevel`, `flags`
-- **Features:** Compile-time size validation, serialization, flag operations
-
-#### `ProvinceInitialState.cs` - Province Initialization
-**Location:** `Assets/Scripts/Core/Data/ProvinceInitialState.cs`
-- **Purpose:** Burst-compatible initial province data from history files
-- **Contains:** Development components (BaseTax, BaseProduction, BaseManpower), string data
-- **Calculation:** `Development = BaseTax + BaseProduction + BaseManpower` (capped at 255)
-
-#### `Json5ProvinceData.cs` - Raw Province Data
-**Location:** `Assets/Scripts/Core/Data/Json5ProvinceData.cs`
-- **Purpose:** Intermediate format between JSON parsing and Burst processing
-- **Contains:** Raw values from province history files before ID resolution
-
-### Command System Files
-
-#### `ICommand.cs` - Command Interface
-**Location:** `Assets/Scripts/Core/Commands/ICommand.cs`
-- **Purpose:** Base interface for all game state changes
-- **Features:** Validation, execution, undo support, networking capability
-- **Pattern:** All Core modifications must go through commands
-
-#### `ProvinceCommands.cs` - Province Modification Commands
-**Location:** `Assets/Scripts/Core/Commands/ProvinceCommands.cs`
-- **Commands:** `ChangeProvinceOwnerCommand`, `ChangeProvinceDevelopmentCommand`, `TransferProvincesCommand`
-- **Usage:** Deterministic province state changes with validation and events
-
-### Event System Files
-
-#### `EventBus.cs` - Inter-System Communication
-**Location:** `Assets/Scripts/Core/EventBus.cs`
-- **Purpose:** Decoupled communication between Core systems
-- **Events:** `ProvinceOwnershipChangedEvent`, `ProvinceDevelopmentChangedEvent`, etc.
-- **Pattern:** Systems emit events, others subscribe to react
-
-### Data Loading Files
-
-#### `BurstProvinceHistoryLoader.cs` - High-Performance Loading
-**Location:** `Assets/Scripts/Core/Loaders/BurstProvinceHistoryLoader.cs`
-- **Purpose:** Burst-compiled parallel loading of province history data
-- **Features:** Job system integration, parallel processing, validation
-
-#### `JobifiedCountryLoader.cs` - Country Data Loading
-**Location:** `Assets/Scripts/Core/Loaders/JobifiedCountryLoader.cs`
-- **Purpose:** Parallel loading and processing of country definitions
-- **Features:** JSON5 parsing, color extraction, validation
-
-### Processing Jobs
-
-#### `ProvinceProcessingJob.cs` - Data Transformation
-**Location:** `Assets/Scripts/Core/Jobs/ProvinceProcessingJob.cs`
-- **Purpose:** Burst-compiled conversion from raw JSON data to ProvinceInitialState
-- **Features:** Parallel processing, validation, default value application
-- **Key Logic:** Development calculation, flag packing, bounds checking
+**Integration Points**: Map Layer → Queries only | State Changes → Commands | Communication → EventBus | Data Flow: Raw → Jobs → InitialState → ProvinceState → Queries
 
 ---
 
-## File Organization Pattern
+## Related Documents
 
-```
-Assets/Scripts/Core/
-├── GameState.cs                    # Central hub
-├── Systems/
-│   ├── ProvinceSystem.cs          # Province data owner
-│   ├── CountrySystem.cs           # Country data owner
-│   └── TimeManager.cs             # Game time management
-├── Queries/
-│   ├── ProvinceQueries.cs         # Province data access
-│   └── CountryQueries.cs          # Country data access
-├── Commands/
-│   ├── ICommand.cs                # Command interface
-│   └── ProvinceCommands.cs        # Province modification commands
-├── Data/
-│   ├── ProvinceState.cs           # 8-byte hot data
-│   ├── ProvinceInitialState.cs    # Initialization data
-│   └── Json5ProvinceData.cs       # Raw parsed data
-├── Jobs/
-│   └── ProvinceProcessingJob.cs   # Burst data processing
-└── Loaders/
-    ├── BurstProvinceHistoryLoader.cs  # Province history loading
-    └── JobifiedCountryLoader.cs       # Country data loading
-```
-
-### Integration Points
-
-- **Map Layer → Core:** Through Query classes only (`ProvinceQueries`, `CountryQueries`)
-- **State Changes:** Through Command pattern (`ICommand` implementations)
-- **System Communication:** Through EventBus (loose coupling)
-- **Data Flow:** Raw Data → Jobs → InitialState → ProvinceState → Queries
-
----
+- **[MapMode System Architecture](mapmode-system-architecture.md)** - Shows practical usage of Core data access in map rendering
+- **[Master Architecture Document](master-architecture-document.md)** - Architecture context and dual-layer system overview
 
 ## Summary
 

@@ -797,11 +797,16 @@ Memory Overhead:
 7. **Auto-report critical errors** - Get telemetry on real-world failures
 8. **Version everything** - Makes debugging user reports much easier
 
+## Related Documents
+
+- **[Save-Load Architecture](save-load-architecture.md)** - Recovery strategies for corrupted saves and partial load scenarios
+- **[Multiplayer Architecture Guide](multiplayer-architecture-guide.md)** - Desync recovery and network error handling
+
 ## Summary
 
 This error recovery architecture ensures:
 - **Game never crashes** - Always tries to recover
-- **Progress never lost** - Multiple backup strategies  
+- **Progress never lost** - Multiple backup strategies
 - **Clear error reporting** - Developers get actionable data
 - **Smooth user experience** - Errors handled transparently
 - **Multiplayer resilience** - Automatic resync on problems

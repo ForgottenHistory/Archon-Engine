@@ -756,6 +756,10 @@ public class ModLoader {
 9. **Support partial loading** - Allow game to run with some missing data
 10. **Generate compile-time constants** - For commonly used IDs
 
+## Related Documents
+
+- **[Moddable Engine Architecture](moddable-engine-architecture.md)** - Mods use the same reference resolution system for linking scripted content
+
 ## Summary
 
 This linking architecture ensures:

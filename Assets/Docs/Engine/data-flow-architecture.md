@@ -169,288 +169,95 @@ public class GoodGameState {
 
 ## Startup Flow - The Loading Screen
 
-### Phase 1: Initialize Core Systems (5%)
+Game initialization follows a sequential pipeline optimized for minimal load time:
+
 ```csharp
 public class GameInitializer {
     public async Task InitializeGame() {
-        UpdateLoadingScreen("Initializing core systems...", 0);
-        
-        // Create managers (instant)
-        var gameManager = new GameManager();
-        var timeManager = new TimeManager();
-        var eventBus = new EventBus();
-        
-        UpdateLoadingScreen("Creating world...", 5);
+        // 1. Core Systems (5%) - Instantiate managers, event bus
+        InitializeManagers();
+
+        // 2. Static Data (10-30%) - Parallel load all script files
+        await LoadGameDefinitions();  // Provinces, nations, buildings, etc.
+        CompileScripts();              // Convert text to runtime bytecode
+
+        // 3. Map Data (30-60%) - GPU texture generation
+        LoadProvinceBitmap();          // Load provinces.bmp
+        CreateProvinceTextures();      // Generate GPU textures
+        BuildAdjacencyGraph();         // For pathfinding
+
+        // 4. Scenario/Save (60-80%) - Initialize game state
+        LoadScenarioOrSave();          // Set province ownership, nation data
+
+        // 5. AI Initialization (80-90%) - Per-nation AI setup
+        InitializeAIForAllNations();
+
+        // 6. Final Prep (90-100%) - Cache warmup, UI setup
+        WarmUpCaches();
+        StartGameLoop();
     }
 }
 ```
 
-### Phase 2: Load Static Data (10-30%)
-```csharp
-// Load all the Paradox script files
-UpdateLoadingScreen("Loading game data...", 10);
-
-// Parallel load all script files
-var tasks = new List<Task> {
-    Task.Run(() => LoadProvinceDefinitions()),    // 5ms
-    Task.Run(() => LoadNationDefinitions()),       // 3ms
-    Task.Run(() => LoadBuildings()),               // 2ms
-    Task.Run(() => LoadTechnologies()),            // 2ms
-    Task.Run(() => LoadReligions()),               // 1ms
-    Task.Run(() => LoadCultures()),                // 1ms
-    Task.Run(() => LoadTradeGoods())               // 1ms
-};
-
-await Task.WhenAll(tasks);
-UpdateLoadingScreen("Compiling scripts...", 20);
-
-// Compile scripts to runtime format
-CompileEffects();      // Convert text to bytecode
-CompileConditions();   // Convert triggers to bytecode
-CompileDecisions();    // Link everything together
-
-UpdateLoadingScreen("Building indices...", 30);
-```
-
-### Phase 3: Initialize Map Data (30-60%)
-```csharp
-UpdateLoadingScreen("Loading map...", 30);
-
-// Load the province bitmap
-var provinceBitmap = LoadProvinceBitmap("provinces.bmp");  // 10ms
-
-UpdateLoadingScreen("Processing provinces...", 35);
-
-// Extract province data from bitmap
-var provinceData = ExtractProvinces(provinceBitmap);  // 50ms
-
-UpdateLoadingScreen("Generating province textures...", 40);
-
-// Create GPU textures
-CreateProvinceIDTexture(provinceData);     // 20ms
-CreateProvinceColorTexture(provinceData);  // 20ms
-
-UpdateLoadingScreen("Building adjacency...", 50);
-
-// Build adjacency graph for pathfinding
-BuildAdjacencyGraph(provinceData);  // 100ms
-
-UpdateLoadingScreen("Calculating regions...", 55);
-
-// Hierarchical regions for pathfinding
-BuildRegionHierarchy(provinceData);  // 50ms
-
-UpdateLoadingScreen("Initializing terrain...", 60);
-```
-
-### Phase 4: Load Scenario/Save (60-80%)
-```csharp
-UpdateLoadingScreen("Loading scenario...", 60);
-
-if (isNewGame) {
-    // Load starting scenario (1444, 1836, etc)
-    LoadScenario("1444_start.txt");
-    
-    // Assign province ownership
-    foreach (var setup in scenarioData.provinces) {
-        Provinces.SetOwner(setup.id, setup.owner);
-        Economy.SetProvinceTax(setup.id, setup.tax);
-    }
-    
-    // Setup nations
-    foreach (var nation in scenarioData.nations) {
-        Nations.Create(nation);
-        Economy.SetTreasury(nation.id, nation.startingGold);
-        Military.CreateStartingArmies(nation.id, nation.armies);
-    }
-} else {
-    // Load save game
-    LoadSaveGame(savePath);
-    DeserializeGameState();
-}
-
-UpdateLoadingScreen("Initializing nations...", 70);
-```
-
-### Phase 5: Initialize AI (80-90%)
-```csharp
-UpdateLoadingScreen("Initializing AI...", 80);
-
-// Create AI for each nation
-foreach (var nation in Nations.GetAll()) {
-    if (!nation.isPlayer) {
-        AI.InitializeNationAI(nation.id);
-        AI.CalculateInitialGoals(nation.id);  // 1ms per nation
-    }
-}
-
-UpdateLoadingScreen("Calculating initial state...", 85);
-
-// Pre-calculate expensive shared data
-SharedAIData.CalculateRegionStrengths();   // 5ms
-SharedAIData.CalculateTradeNodeValues();   // 3ms
-SharedAIData.BuildDiplomaticWeb();         // 2ms
-```
-
-### Phase 6: Final Initialization (90-100%)
-```csharp
-UpdateLoadingScreen("Starting simulation...", 90);
-
-// Warm up caches
-WarmUpPathfindingCache();  // Common routes
-WarmUpModifierCache();      // Calculate all modifiers once
-
-UpdateLoadingScreen("Preparing UI...", 95);
-
-// Initialize UI systems
-UI.Initialize(gameState);
-UI.CreateProvinceLabels();
-UI.BuildNationList();
-
-UpdateLoadingScreen("Ready!", 100);
-
-// Start the game loop
-GameManager.StartGameLoop();
-```
+**Key Performance**: Total load time ~500ms for 10k provinces with parallel loading and pre-compiled scripts.
 
 ## Data Access Patterns
 
 ### Reading Data - The Query Pattern
+Three query types based on performance needs:
+- **Simple queries**: Direct array access (<0.001ms)
+- **Computed queries**: Calculate on-demand from multiple sources
+- **Cached queries**: Frame-coherent caching for expensive calculations
+
 ```csharp
-public class DataQueries {
-    // Simple queries - direct access
-    public float GetProvinceTax(ushort province) {
-        return Economy.provinceTax[province];  // Direct array access, <0.001ms
-    }
-    
-    // Computed queries - calculate on demand
-    public float GetNationTotalIncome(byte nation) {
-        float income = 0;
-        
-        // Sum from all owned provinces
-        foreach (var province in GetNationProvinces(nation)) {
-            income += GetProvinceTax(province);
-            income += GetProvinceProduction(province);
-            income += GetProvinceTrade(province);
+// Example: Cached query for expensive calculation
+private CachedValue<float> cachedArmyStrength;
+public float GetNationArmyStrength(byte nation) {
+    return cachedArmyStrength.GetOrCalculate(nation, () => {
+        float strength = 0;
+        foreach (var army in GetNationArmies(nation)) {
+            strength += CalculateArmyStrength(army);
         }
-        
-        return income;
-    }
-    
-    // Cached queries - expensive calculations
-    private CachedValue<float> cachedArmyStrength;
-    
-    public float GetNationArmyStrength(byte nation) {
-        return cachedArmyStrength.GetOrCalculate(nation, () => {
-            // Expensive calculation
-            float strength = 0;
-            foreach (var army in GetNationArmies(nation)) {
-                strength += CalculateArmyStrength(army);
-            }
-            return strength;
-        });
-    }
+        return strength;
+    });
 }
 ```
 
 ### Writing Data - The Command Pattern
-```csharp
-// All changes go through commands for:
-// 1. Validation
-// 2. Event emission
-// 3. Multiplayer sync
-// 4. Save/replay
+All state changes use commands for validation, event emission, multiplayer sync, and replay support.
 
+```csharp
 public interface ICommand {
     bool Validate(GameState state);
     void Execute(GameState state);
-    void Undo(GameState state);  // For replay
+    void Undo(GameState state);
 }
 
+// Example: Province ownership change
 public class ChangeProvinceOwnerCommand : ICommand {
     public ushort provinceId;
     public byte newOwner;
-    private byte oldOwner;  // For undo
-    
-    public bool Validate(GameState state) {
-        // Can't take province that doesn't exist
-        if (provinceId >= state.Provinces.Count) return false;
-        
-        // Can't give to non-existent nation
-        if (newOwner >= state.Nations.Count) return false;
-        
-        return true;
-    }
-    
+
     public void Execute(GameState state) {
-        oldOwner = state.Provinces.GetOwner(provinceId);
         state.Provinces.SetOwner(provinceId, newOwner);
-        
-        // Emit events for other systems
-        EventBus.Emit(new ProvinceConqueredEvent {
-            province = provinceId,
-            oldOwner = oldOwner,
-            newOwner = newOwner
-        });
+        EventBus.Emit(new ProvinceConqueredEvent(provinceId, newOwner));
     }
-    
-    public void Undo(GameState state) {
-        state.Provinces.SetOwner(provinceId, oldOwner);
-    }
-}
-
-// Usage
-var command = new ChangeProvinceOwnerCommand {
-    provinceId = 1234,
-    newOwner = France
-};
-
-if (command.Validate(gameState)) {
-    command.Execute(gameState);
-    
-    // For multiplayer
-    Network.BroadcastCommand(command);
-    
-    // For replay
-    ReplayRecorder.Record(command);
 }
 ```
+See `save-load-architecture.md` for serialization details and `multiplayer-architecture-guide.md` for network synchronization.
 
 ### Deleting Data - Pooling Pattern
+Pre-allocated object pools prevent runtime allocations. Objects are recycled, not destroyed.
+
 ```csharp
-// Don't actually delete, recycle!
 public class ArmySystem {
     private Army[] armyPool = new Army[MAX_ARMIES];
     private Stack<int> freeArmies = new Stack<int>();
-    private List<int>[] nationArmies;  // Indices into pool
-    
+
     public int CreateArmy(byte nation) {
-        if (freeArmies.Count == 0) return -1;  // Pool exhausted
-        
         int armyId = freeArmies.Pop();
         armyPool[armyId].Reset();
-        armyPool[armyId].nation = nation;
-        armyPool[armyId].active = true;
-        
-        nationArmies[nation].Add(armyId);
         return armyId;
-    }
-    
-    public void DeleteArmy(int armyId) {
-        var army = armyPool[armyId];
-        nationArmies[army.nation].Remove(armyId);
-        
-        army.active = false;
-        freeArmies.Push(armyId);  // Return to pool
-    }
-    
-    // Iterate only active armies
-    public IEnumerable<Army> GetNationArmies(byte nation) {
-        foreach (var armyId in nationArmies[nation]) {
-            if (armyPool[armyId].active) {
-                yield return armyPool[armyId];
-            }
-        }
     }
 }
 ```
@@ -512,60 +319,26 @@ public class DirectQueries {
 
 ## The Game Loop
 
-### Main Loop Structure
 ```csharp
 public class GameManager {
-    private bool isRunning = true;
-    private float accumulator = 0;
-    private const float FIXED_TIMESTEP = 1f / 60f;  // 60 updates per second
-    
+    private const float FIXED_TIMESTEP = 1f / 60f;
+
     public void GameLoop() {
-        var lastTime = Time.Now;
-        
         while (isRunning) {
-            var currentTime = Time.Now;
-            var deltaTime = currentTime - lastTime;
-            lastTime = currentTime;
-            
-            // Input (immediate)
-            Input.ProcessInput();
-            
-            // Fixed timestep update
-            accumulator += deltaTime;
-            while (accumulator >= FIXED_TIMESTEP) {
-                FixedUpdate(FIXED_TIMESTEP);
-                accumulator -= FIXED_TIMESTEP;
-            }
-            
-            // Render (as fast as possible)
-            Render(deltaTime);
+            Input.ProcessInput();              // Immediate
+            FixedUpdate(FIXED_TIMESTEP);       // Deterministic simulation
+            Render(deltaTime);                 // As fast as possible
         }
     }
-    
+
     private void FixedUpdate(float dt) {
-        // Time progression
-        TimeManager.Tick(dt);
-        
-        // This triggers appropriate updates based on time
-        // Daily tick? -> Update daily systems
-        // Monthly tick? -> Update monthly systems
-        
-        // Process commands from player/AI
-        CommandProcessor.ProcessQueue();
-        
-        // Update dirty systems
-        UpdateDirtySystems();
-    }
-    
-    private void UpdateDirtySystems() {
-        // Only update what changed
-        if (Provinces.IsDirty) Provinces.Update();
-        if (Economy.IsDirty) Economy.Update();
-        if (Military.IsDirty) Military.Update();
-        // etc...
+        TimeManager.Tick(dt);                  // Triggers daily/monthly updates
+        CommandProcessor.ProcessQueue();       // Execute player/AI commands
+        UpdateDirtySystems();                  // Only update what changed
     }
 }
 ```
+See `time-system-architecture.md` for details on tick-based update scheduling and time progression.
 
 ## Specialized vs Generic Loaders
 
@@ -639,29 +412,7 @@ public class PoolingStrategy {
 ```
 
 ### Structure of Arrays
-```csharp
-// Instead of array of structures
-public class BadDesign {
-    public struct Province {
-        public ushort id;
-        public byte owner;
-        public float tax;
-        public float production;
-        public float manpower;
-    }
-    public Province[] provinces;  // Bad cache usage
-}
-
-// Use structure of arrays
-public class GoodDesign {
-    public ushort[] provinceIds;
-    public byte[] provinceOwners;
-    public float[] provinceTax;
-    public float[] provinceProduction;
-    public float[] provinceManpower;
-    // Each array is cache-friendly for iteration
-}
-```
+Use separate arrays for each field instead of array-of-structs to maximize cache efficiency during iteration. See `performance-architecture-guide.md` for detailed memory layout optimization strategies.
 
 ## Error Handling & Validation
 
@@ -735,3 +486,9 @@ The key is that each system is independent but coordinated through GameState and
 - **Multiplayer-ready** - Commands can be networked
 - **Moddable** - Data-driven through scripts
 - **Maintainable** - Clear ownership and responsibilities
+
+## Related Documentation
+- **time-system-architecture.md** - Tick-based update scheduling and game speed control
+- **save-load-architecture.md** - Serialization, persistence, and replay system
+- **multiplayer-architecture-guide.md** - Network synchronization and command distribution
+- **performance-architecture-guide.md** - Memory layout optimization and cache efficiency
