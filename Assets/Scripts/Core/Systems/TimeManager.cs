@@ -1,45 +1,78 @@
 using UnityEngine;
 using System;
+using Core.Data;
 
 namespace Core.Systems
 {
     /// <summary>
-    /// Manages game time progression and tick-based updates
-    /// Controls when different systems update based on game time scale
-    /// Supports pausing, speed changes, and deterministic time progression
+    /// Deterministic time manager for multiplayer-ready simulation
+    /// Uses fixed-point math and tick-based progression to ensure identical behavior across all clients
+    ///
+    /// CRITICAL ARCHITECTURE REQUIREMENTS:
+    /// - Fixed-point accumulator (NO float drift)
+    /// - 360-day year (30-day months, no leap years)
+    /// - Tick counter for command synchronization
+    /// - Exact fraction speed multipliers
+    /// - NO Time.time dependencies (non-deterministic)
+    ///
+    /// See: Assets/Docs/Engine/time-system-architecture.md
     /// </summary>
     public class TimeManager : MonoBehaviour
     {
-        [Header("Time Configuration")]
-        [SerializeField] private float timeScale = 1.0f;
-        [SerializeField] private bool isPaused = false;
+        // Time constants (deterministic 360-day year)
+        private const int HOURS_PER_DAY = 24;
+        private const int DAYS_PER_MONTH = 30;  // Simplified for determinism
+        private const int MONTHS_PER_YEAR = 12;
+        private const int DAYS_PER_YEAR = 360;  // 30 × 12 = 360 (NOT 365!)
+
+        [Header("Game Configuration")]
+        [SerializeField] private int startYear = 1444;
+        [SerializeField] private int startMonth = 11;
+        [SerializeField] private int startDay = 11;
         [SerializeField] private bool autoStart = true;
 
-        [Header("Tick Configuration")]
-        [SerializeField] private float dailyTickInterval = 1.0f;    // Real seconds per game day
-        [SerializeField] private float monthlyTickInterval = 30.0f;  // Real seconds per game month
-        [SerializeField] private float yearlyTickInterval = 365.0f;  // Real seconds per game year
+        [Header("Speed Configuration")]
+        [SerializeField] private int initialSpeedLevel = 2; // 0=paused, 1-4=speed levels
 
-        // Current game time
-        private GameTime currentGameTime;
-        private float lastTickTime;
-        private bool isInitialized;
+        // Current game time (deterministic)
+        private int hour = 0;
+        private int day = 1;
+        private int month = 1;
+        private int year = 1444;
 
-        // Events
-        public event Action<GameTime> OnDailyTick;
-        public event Action<GameTime> OnMonthlyTick;
-        public event Action<GameTime> OnYearlyTick;
-        public event Action<float> OnTimeScaleChanged;
-        public event Action<bool> OnPauseStateChanged;
+        // Speed control (deterministic fixed-point)
+        private int gameSpeedLevel = 2;
+        private FixedPoint64 accumulator = FixedPoint64.Zero;
+        private readonly FixedPoint64 hoursPerSecond = FixedPoint64.FromInt(24); // At speed level 2 (normal)
 
-        // Properties
-        public GameTime CurrentTime => currentGameTime;
-        public float TimeScale => timeScale;
-        public bool IsPaused => isPaused;
-        public bool IsInitialized => isInitialized;
+        // Tick counter for command synchronization (CRITICAL for multiplayer)
+        private ulong currentTick = 0;
+
+        // State
+        private bool isPaused = false;
+        private bool isInitialized = false;
 
         // Event bus reference
         private EventBus eventBus;
+
+        // Update delegates (layered update frequencies)
+        public event Action<int> OnHourlyTick;
+        public event Action<int> OnDailyTick;
+        public event Action<int> OnWeeklyTick;
+        public event Action<int> OnMonthlyTick;
+        public event Action<int> OnYearlyTick;
+        public event Action<int> OnSpeedChanged;
+        public event Action<bool> OnPauseStateChanged;
+
+        // Properties
+        public int CurrentYear => year;
+        public int CurrentMonth => month;
+        public int CurrentDay => day;
+        public int CurrentHour => hour;
+        public ulong CurrentTick => currentTick;
+        public int GameSpeed => gameSpeedLevel;
+        public bool IsPaused => isPaused;
+        public bool IsInitialized => isInitialized;
 
         /// <summary>
         /// Initialize the time manager with event bus
@@ -48,18 +81,20 @@ namespace Core.Systems
         {
             this.eventBus = eventBus;
 
-            // Initialize with default start date (can be customized)
-            currentGameTime = new GameTime
-            {
-                Year = 1444,
-                Month = 11,
-                Day = 11
-            };
+            // Set start date
+            year = startYear;
+            month = startMonth;
+            day = startDay;
+            hour = 0;
 
-            lastTickTime = Time.time;
+            gameSpeedLevel = initialSpeedLevel;
+            accumulator = FixedPoint64.Zero;
+            currentTick = 0;
+            isPaused = (gameSpeedLevel == 0);
+
             isInitialized = true;
 
-            DominionLogger.Log($"TimeManager initialized - Starting date: {currentGameTime}");
+            DominionLogger.Log($"TimeManager initialized - Starting date: {GetCurrentGameTime()}, Speed: {gameSpeedLevel}");
 
             if (autoStart && !isPaused)
             {
@@ -72,26 +107,61 @@ namespace Core.Systems
             if (!isInitialized || isPaused)
                 return;
 
-            ProcessTimeTicks();
+            ProcessTimeTicks(Time.deltaTime);
         }
 
         /// <summary>
-        /// Process time progression and emit tick events
+        /// Process time progression using deterministic fixed-point math
         /// </summary>
-        private void ProcessTimeTicks()
+        private void ProcessTimeTicks(float realDeltaTime)
         {
-            float currentTime = Time.time;
-            float deltaTime = (currentTime - lastTickTime) * timeScale;
+            // Convert real-time to game time (deterministic)
+            FixedPoint64 speedMultiplier = GetSpeedMultiplier(gameSpeedLevel);
+            FixedPoint64 gameTimeDelta = FixedPoint64.FromFloat(realDeltaTime) * speedMultiplier * hoursPerSecond;
 
-            // Check for daily tick
-            if (deltaTime >= dailyTickInterval)
+            accumulator += gameTimeDelta;
+
+            // Process full hours
+            while (accumulator >= FixedPoint64.One)
             {
-                AdvanceDay();
-                lastTickTime = currentTime;
+                accumulator -= FixedPoint64.One;
+                AdvanceHour();
+            }
+        }
 
-                // Emit daily tick event
-                OnDailyTick?.Invoke(currentGameTime);
-                eventBus?.Emit(new DailyTickEvent { GameTime = currentGameTime });
+        /// <summary>
+        /// Get deterministic speed multiplier (exact fractions)
+        /// </summary>
+        private FixedPoint64 GetSpeedMultiplier(int speedLevel)
+        {
+            // Exact fractions for determinism
+            return speedLevel switch
+            {
+                0 => FixedPoint64.Zero,                             // Paused
+                1 => FixedPoint64.FromFraction(1, 2),              // 0.5x
+                2 => FixedPoint64.One,                              // 1.0x (normal)
+                3 => FixedPoint64.FromInt(2),                      // 2.0x
+                4 => FixedPoint64.FromInt(5),                      // 5.0x (very fast)
+                _ => FixedPoint64.One
+            };
+        }
+
+        /// <summary>
+        /// Advance game time by one hour
+        /// </summary>
+        private void AdvanceHour()
+        {
+            hour++;
+            currentTick++;
+
+            // Emit hourly event
+            OnHourlyTick?.Invoke(hour);
+            eventBus?.Emit(new HourlyTickEvent { GameTime = GetCurrentGameTime(), Tick = currentTick });
+
+            if (hour >= HOURS_PER_DAY)
+            {
+                hour = 0;
+                AdvanceDay();
             }
         }
 
@@ -100,37 +170,46 @@ namespace Core.Systems
         /// </summary>
         private void AdvanceDay()
         {
-            currentGameTime.Day++;
+            day++;
 
-            // Handle month rollover
-            if (currentGameTime.Day > GetDaysInMonth(currentGameTime.Month, currentGameTime.Year))
+            // Emit daily event
+            OnDailyTick?.Invoke(day);
+            eventBus?.Emit(new DailyTickEvent { GameTime = GetCurrentGameTime(), Tick = currentTick });
+
+            // Weekly event (every 7 days)
+            if (day % 7 == 0)
             {
-                currentGameTime.Day = 1;
-                currentGameTime.Month++;
+                OnWeeklyTick?.Invoke(day / 7);
+                eventBus?.Emit(new WeeklyTickEvent { GameTime = GetCurrentGameTime(), Tick = currentTick });
+            }
 
-                // Emit monthly tick
-                OnMonthlyTick?.Invoke(currentGameTime);
-                eventBus?.Emit(new MonthlyTickEvent { GameTime = currentGameTime });
-
-                // Handle year rollover
-                if (currentGameTime.Month > 12)
-                {
-                    currentGameTime.Month = 1;
-                    currentGameTime.Year++;
-
-                    // Emit yearly tick
-                    OnYearlyTick?.Invoke(currentGameTime);
-                    eventBus?.Emit(new YearlyTickEvent { GameTime = currentGameTime });
-                }
+            if (day > DAYS_PER_MONTH)
+            {
+                day = 1;
+                AdvanceMonth();
             }
         }
 
         /// <summary>
-        /// Get number of days in a given month/year
+        /// Advance game time by one month
         /// </summary>
-        private int GetDaysInMonth(int month, int year)
+        private void AdvanceMonth()
         {
-            return DateTime.DaysInMonth(year, month);
+            month++;
+
+            // Emit monthly event
+            OnMonthlyTick?.Invoke(month);
+            eventBus?.Emit(new MonthlyTickEvent { GameTime = GetCurrentGameTime(), Tick = currentTick });
+
+            if (month > MONTHS_PER_YEAR)
+            {
+                month = 1;
+                year++;
+
+                // Emit yearly event
+                OnYearlyTick?.Invoke(year);
+                eventBus?.Emit(new YearlyTickEvent { GameTime = GetCurrentGameTime(), Tick = currentTick });
+            }
         }
 
         /// <summary>
@@ -141,9 +220,8 @@ namespace Core.Systems
             if (isPaused)
             {
                 isPaused = false;
-                lastTickTime = Time.time; // Reset to avoid time jump
                 OnPauseStateChanged?.Invoke(false);
-                eventBus?.Emit(new TimeStateChangedEvent { IsPaused = false, TimeScale = timeScale });
+                eventBus?.Emit(new TimeStateChangedEvent { IsPaused = false, GameSpeed = gameSpeedLevel });
                 DominionLogger.Log("Time progression started");
             }
         }
@@ -157,7 +235,7 @@ namespace Core.Systems
             {
                 isPaused = true;
                 OnPauseStateChanged?.Invoke(true);
-                eventBus?.Emit(new TimeStateChangedEvent { IsPaused = true, TimeScale = timeScale });
+                eventBus?.Emit(new TimeStateChangedEvent { IsPaused = true, GameSpeed = gameSpeedLevel });
                 DominionLogger.Log("Time progression paused");
             }
         }
@@ -174,46 +252,116 @@ namespace Core.Systems
         }
 
         /// <summary>
-        /// Set time scale (game speed)
+        /// Set game speed (0=paused, 1-4=speed levels)
         /// </summary>
-        public void SetTimeScale(float newTimeScale)
+        public void SetGameSpeed(int newSpeedLevel)
         {
-            if (newTimeScale < 0)
+            if (newSpeedLevel < 0 || newSpeedLevel > 4)
             {
-                DominionLogger.LogWarning("Time scale cannot be negative");
+                DominionLogger.LogWarning($"Invalid speed level: {newSpeedLevel} (must be 0-4)");
                 return;
             }
 
-            float oldTimeScale = timeScale;
-            timeScale = newTimeScale;
+            int oldSpeed = gameSpeedLevel;
+            gameSpeedLevel = newSpeedLevel;
 
-            OnTimeScaleChanged?.Invoke(timeScale);
-            eventBus?.Emit(new TimeStateChangedEvent { IsPaused = isPaused, TimeScale = timeScale });
+            // Speed 0 means paused
+            if (newSpeedLevel == 0)
+            {
+                PauseTime();
+            }
+            else if (oldSpeed == 0)
+            {
+                StartTime();
+            }
 
-            DominionLogger.Log($"Time scale changed from {oldTimeScale:F2} to {timeScale:F2}");
+            OnSpeedChanged?.Invoke(gameSpeedLevel);
+            eventBus?.Emit(new TimeStateChangedEvent { IsPaused = isPaused, GameSpeed = gameSpeedLevel });
+
+            DominionLogger.Log($"Game speed changed to level {gameSpeedLevel}");
         }
 
         /// <summary>
         /// Set specific game date (for loading saves, scenarios)
         /// </summary>
-        public void SetGameTime(GameTime newTime)
+        public void SetGameTime(int newYear, int newMonth, int newDay, int newHour = 0)
         {
-            currentGameTime = newTime;
-            lastTickTime = Time.time;
+            year = newYear;
+            month = Mathf.Clamp(newMonth, 1, MONTHS_PER_YEAR);
+            day = Mathf.Clamp(newDay, 1, DAYS_PER_MONTH);
+            hour = Mathf.Clamp(newHour, 0, HOURS_PER_DAY - 1);
 
-            eventBus?.Emit(new TimeChangedEvent { GameTime = currentGameTime });
-            DominionLogger.Log($"Game time set to: {currentGameTime}");
+            accumulator = FixedPoint64.Zero;
+
+            eventBus?.Emit(new TimeChangedEvent { GameTime = GetCurrentGameTime() });
+            DominionLogger.Log($"Game time set to: {GetCurrentGameTime()}");
         }
 
         /// <summary>
-        /// Get time until next tick in real seconds
+        /// Set specific tick (for multiplayer synchronization)
         /// </summary>
-        public float GetTimeUntilNextTick()
+        public void SetCurrentTick(ulong newTick)
         {
-            if (isPaused) return float.MaxValue;
+            currentTick = newTick;
+        }
 
-            float timeSinceLastTick = (Time.time - lastTickTime) * timeScale;
-            return Mathf.Max(0, dailyTickInterval - timeSinceLastTick);
+        /// <summary>
+        /// Synchronize to specific tick (for multiplayer)
+        /// Advances time until we reach the target tick
+        /// </summary>
+        public void SynchronizeToTick(ulong targetTick)
+        {
+            if (targetTick < currentTick)
+            {
+                DominionLogger.LogWarning($"Cannot synchronize backwards: current={currentTick}, target={targetTick}");
+                return;
+            }
+
+            while (currentTick < targetTick)
+            {
+                AdvanceHour();
+            }
+
+            DominionLogger.Log($"Synchronized to tick {currentTick}");
+        }
+
+        /// <summary>
+        /// Get current game time as struct
+        /// </summary>
+        public GameTime GetCurrentGameTime()
+        {
+            return new GameTime
+            {
+                Year = year,
+                Month = month,
+                Day = day,
+                Hour = hour
+            };
+        }
+
+        /// <summary>
+        /// Calculate total ticks since start date
+        /// </summary>
+        public ulong CalculateTotalTicks(int fromYear, int fromMonth, int fromDay)
+        {
+            ulong totalHours = 0;
+
+            // Calculate years
+            int yearDiff = year - fromYear;
+            totalHours += (ulong)(yearDiff * DAYS_PER_YEAR * HOURS_PER_DAY);
+
+            // Calculate months
+            int monthDiff = month - fromMonth;
+            totalHours += (ulong)(monthDiff * DAYS_PER_MONTH * HOURS_PER_DAY);
+
+            // Calculate days
+            int dayDiff = day - fromDay;
+            totalHours += (ulong)(dayDiff * HOURS_PER_DAY);
+
+            // Add current hour
+            totalHours += (ulong)hour;
+
+            return totalHours;
         }
 
         #if UNITY_EDITOR
@@ -225,11 +373,12 @@ namespace Core.Systems
             if (!debugShowControls || !isInitialized)
                 return;
 
-            GUILayout.BeginArea(new Rect(10, 10, 200, 150));
-            GUILayout.Label($"Game Time: {currentGameTime}");
-            GUILayout.Label($"Time Scale: {timeScale:F2}");
+            GUILayout.BeginArea(new Rect(10, 10, 250, 200));
+            GUILayout.Label($"Game Time: {year}.{month:D2}.{day:D2} {hour:D2}:00");
+            GUILayout.Label($"Tick: {currentTick}");
+            GUILayout.Label($"Speed: {gameSpeedLevel}x ({GetSpeedMultiplier(gameSpeedLevel).ToFloat():F1}x)");
             GUILayout.Label($"Paused: {isPaused}");
-            GUILayout.Label($"Next Tick: {GetTimeUntilNextTick():F1}s");
+            GUILayout.Label($"Accumulator: {accumulator.ToFloat():F2}");
 
             if (GUILayout.Button(isPaused ? "Resume" : "Pause"))
             {
@@ -237,11 +386,17 @@ namespace Core.Systems
             }
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("0.5x")) SetTimeScale(0.5f);
-            if (GUILayout.Button("1x")) SetTimeScale(1.0f);
-            if (GUILayout.Button("2x")) SetTimeScale(2.0f);
-            if (GUILayout.Button("5x")) SetTimeScale(5.0f);
+            if (GUILayout.Button("0.5x")) SetGameSpeed(1);
+            if (GUILayout.Button("1x")) SetGameSpeed(2);
+            if (GUILayout.Button("2x")) SetGameSpeed(3);
+            if (GUILayout.Button("5x")) SetGameSpeed(4);
             GUILayout.EndHorizontal();
+
+            if (GUILayout.Button("Advance 1 Day"))
+            {
+                for (int i = 0; i < HOURS_PER_DAY; i++)
+                    AdvanceHour();
+            }
 
             GUILayout.EndArea();
         }
@@ -249,23 +404,24 @@ namespace Core.Systems
     }
 
     /// <summary>
-    /// Represents a point in game time
+    /// Represents a point in game time (deterministic calendar)
     /// </summary>
     [System.Serializable]
     public struct GameTime
     {
         public int Year;
-        public int Month; // 1-12
-        public int Day;   // 1-31
+        public int Month;  // 1-12
+        public int Day;    // 1-30 (simplified 30-day months)
+        public int Hour;   // 0-23
 
         public override string ToString()
         {
-            return $"{Year}.{Month:D2}.{Day:D2}";
+            return $"{Year}.{Month:D2}.{Day:D2} {Hour:D2}:00";
         }
 
         public static bool operator ==(GameTime a, GameTime b)
         {
-            return a.Year == b.Year && a.Month == b.Month && a.Day == b.Day;
+            return a.Year == b.Year && a.Month == b.Month && a.Day == b.Day && a.Hour == b.Hour;
         }
 
         public static bool operator !=(GameTime a, GameTime b)
@@ -280,33 +436,68 @@ namespace Core.Systems
 
         public override int GetHashCode()
         {
-            return Year * 10000 + Month * 100 + Day;
+            return Year * 1000000 + Month * 10000 + Day * 100 + Hour;
+        }
+
+        /// <summary>
+        /// Convert to total hours since year 0
+        /// </summary>
+        public ulong ToTotalHours()
+        {
+            const int HOURS_PER_DAY = 24;
+            const int DAYS_PER_MONTH = 30;
+            const int DAYS_PER_YEAR = 360;
+
+            ulong totalHours = 0;
+            totalHours += (ulong)(Year * DAYS_PER_YEAR * HOURS_PER_DAY);
+            totalHours += (ulong)((Month - 1) * DAYS_PER_MONTH * HOURS_PER_DAY);
+            totalHours += (ulong)((Day - 1) * HOURS_PER_DAY);
+            totalHours += (ulong)Hour;
+
+            return totalHours;
         }
     }
 
-    // Time-related events
+    // Time-related events (all include tick for command synchronization)
+    public struct HourlyTickEvent : IGameEvent
+    {
+        public GameTime GameTime;
+        public ulong Tick;
+        public float TimeStamp { get; set; }
+    }
+
     public struct DailyTickEvent : IGameEvent
     {
         public GameTime GameTime;
+        public ulong Tick;
+        public float TimeStamp { get; set; }
+    }
+
+    public struct WeeklyTickEvent : IGameEvent
+    {
+        public GameTime GameTime;
+        public ulong Tick;
         public float TimeStamp { get; set; }
     }
 
     public struct MonthlyTickEvent : IGameEvent
     {
         public GameTime GameTime;
+        public ulong Tick;
         public float TimeStamp { get; set; }
     }
 
     public struct YearlyTickEvent : IGameEvent
     {
         public GameTime GameTime;
+        public ulong Tick;
         public float TimeStamp { get; set; }
     }
 
     public struct TimeStateChangedEvent : IGameEvent
     {
         public bool IsPaused;
-        public float TimeScale;
+        public int GameSpeed;
         public float TimeStamp { get; set; }
     }
 

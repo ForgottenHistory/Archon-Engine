@@ -7,6 +7,7 @@ namespace Core.Data
     /// <summary>
     /// Cold data storage for provinces (accessed rarely, loaded on-demand)
     /// This data is NOT synchronized in multiplayer - it's presentation/metadata only
+    /// CRITICAL: Uses FixedPoint64 for all calculations to ensure determinism if data flows to simulation
     /// </summary>
     public class ProvinceColdData
     {
@@ -22,13 +23,13 @@ namespace Core.Data
         // Historical data (bounded to prevent memory growth)
         public CircularBuffer<HistoricalEvent> RecentHistory { get; private set; }
 
-        // Gameplay data that changes infrequently
-        public Dictionary<string, float> Modifiers { get; private set; }
+        // Gameplay data that changes infrequently (uses FixedPoint64 for determinism)
+        public Dictionary<string, FixedPoint64> Modifiers { get; private set; }
         public List<BuildingType> Buildings { get; private set; }
 
-        // Cached expensive calculations
-        public float CachedTradeValue { get; set; }
-        public float CachedSupplyLimit { get; set; }
+        // Cached expensive calculations (uses FixedPoint64 for determinism)
+        public FixedPoint64 CachedTradeValue { get; set; }
+        public FixedPoint64 CachedSupplyLimit { get; set; }
         public int CacheFrame { get; set; } // For frame-coherent caching
 
         public ProvinceColdData(ushort provinceID)
@@ -42,11 +43,11 @@ namespace Core.Data
 
             // Fixed-size collections to prevent unbounded growth
             RecentHistory = new CircularBuffer<HistoricalEvent>(100); // Last 100 events only
-            Modifiers = new Dictionary<string, float>();
+            Modifiers = new Dictionary<string, FixedPoint64>();
             Buildings = new List<BuildingType>();
 
-            CachedTradeValue = 0f;
-            CachedSupplyLimit = 0f;
+            CachedTradeValue = FixedPoint64.Zero;
+            CachedSupplyLimit = FixedPoint64.Zero;
             CacheFrame = -1;
         }
 
@@ -67,20 +68,28 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Add or update a modifier
+        /// Add or update a modifier (uses FixedPoint64 for determinism)
         /// </summary>
-        public void SetModifier(string key, float value)
+        public void SetModifier(string key, FixedPoint64 value)
         {
             Modifiers[key] = value;
             InvalidateCache();
         }
 
         /// <summary>
-        /// Get modifier value
+        /// Get modifier value (returns FixedPoint64 for determinism)
         /// </summary>
-        public float GetModifier(string key, float defaultValue = 0f)
+        public FixedPoint64 GetModifier(string key, FixedPoint64 defaultValue)
         {
-            return Modifiers.TryGetValue(key, out float value) ? value : defaultValue;
+            return Modifiers.TryGetValue(key, out FixedPoint64 value) ? value : defaultValue;
+        }
+
+        /// <summary>
+        /// Get modifier value with default zero
+        /// </summary>
+        public FixedPoint64 GetModifier(string key)
+        {
+            return GetModifier(key, FixedPoint64.Zero);
         }
 
         /// <summary>
@@ -123,17 +132,18 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Calculate trade value (cached per frame)
+        /// Calculate trade value (cached per frame, uses FixedPoint64 for determinism)
         /// </summary>
-        public float CalculateTradeValue(ProvinceState hotState)
+        public FixedPoint64 CalculateTradeValue(ProvinceState hotState)
         {
             if (CacheFrame == Time.frameCount)
                 return CachedTradeValue;
 
             // Expensive calculation - only do once per frame
-            float baseValue = hotState.development * 0.5f;
-            float modifierBonus = GetModifier("trade_value_modifier", 0f);
-            float buildingBonus = Buildings.Count * 2f; // Simplified calculation
+            // Use deterministic fixed-point math
+            FixedPoint64 baseValue = FixedPoint64.FromInt(hotState.development) * FixedPoint64.FromFraction(1, 2); // * 0.5
+            FixedPoint64 modifierBonus = GetModifier("trade_value_modifier");
+            FixedPoint64 buildingBonus = FixedPoint64.FromInt(Buildings.Count * 2); // Simplified calculation
 
             CachedTradeValue = baseValue + modifierBonus + buildingBonus;
             CacheFrame = Time.frameCount;
@@ -142,16 +152,17 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Calculate supply limit (cached per frame)
+        /// Calculate supply limit (cached per frame, uses FixedPoint64 for determinism)
         /// </summary>
-        public float CalculateSupplyLimit(ProvinceState hotState)
+        public FixedPoint64 CalculateSupplyLimit(ProvinceState hotState)
         {
             if (CacheFrame == Time.frameCount)
                 return CachedSupplyLimit;
 
-            float baseSupply = hotState.development * 0.3f;
-            float fortBonus = hotState.fortLevel * 0.5f;
-            float buildingBonus = HasBuilding(BuildingType.Granary) ? 5f : 0f;
+            // Use deterministic fixed-point math
+            FixedPoint64 baseSupply = FixedPoint64.FromInt(hotState.development) * FixedPoint64.FromFraction(3, 10); // * 0.3
+            FixedPoint64 fortBonus = FixedPoint64.FromInt(hotState.fortLevel) * FixedPoint64.FromFraction(1, 2); // * 0.5
+            FixedPoint64 buildingBonus = HasBuilding(BuildingType.Granary) ? FixedPoint64.FromInt(5) : FixedPoint64.Zero;
 
             CachedSupplyLimit = baseSupply + fortBonus + buildingBonus;
             CacheFrame = Time.frameCount;
@@ -167,7 +178,7 @@ namespace Core.Data
             int baseSize = 64; // Object overhead
             int nameSize = (Name?.Length ?? 0) * 2; // Unicode string
             int historySize = RecentHistory.Count * 32; // Estimated per event
-            int modifiersSize = Modifiers.Count * 32; // Estimated per modifier
+            int modifiersSize = Modifiers.Count * 40; // String reference + FixedPoint64 (8 bytes)
             int buildingsSize = Buildings.Count * 4; // Enum size
 
             return baseSize + nameSize + historySize + modifiersSize + buildingsSize;

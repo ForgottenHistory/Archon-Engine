@@ -24,14 +24,9 @@ namespace Core.Systems
         [SerializeField] private int initialCapacity = 10000;
 
         // Core simulation data - EXACTLY 8 bytes per province (dual-layer architecture)
+        // Uses Array of Structures (AoS) pattern for grand strategy access patterns
+        // All fields accessed together (owner + development + terrain) for province queries
         private NativeArray<ProvinceState> provinceStates;
-
-        // Structure of Arrays for cache-friendly access
-        private NativeArray<ushort> provinceOwners;      // Most accessed - separate for performance (supports 65535 countries)
-        private NativeArray<ushort> provinceControllers; // Second most accessed - separate for occupation mechanics
-        private NativeArray<byte> provinceDevelopment;   // Third most accessed
-        private NativeArray<byte> provinceTerrain;       // Used for pathfinding, visuals
-        private NativeArray<byte> provinceFlags;         // Least accessed
 
         // Province ID management
         private NativeHashMap<ushort, int> idToIndex;    // Province ID -> Array index lookup
@@ -61,13 +56,8 @@ namespace Core.Systems
         {
             this.eventBus = eventBus;
 
-            // Allocate native arrays with initial capacity
+            // Allocate native array with initial capacity (8 bytes per province)
             provinceStates = new NativeArray<ProvinceState>(initialCapacity, Allocator.Persistent);
-            provinceOwners = new NativeArray<ushort>(initialCapacity, Allocator.Persistent);
-            provinceControllers = new NativeArray<ushort>(initialCapacity, Allocator.Persistent);
-            provinceDevelopment = new NativeArray<byte>(initialCapacity, Allocator.Persistent);
-            provinceTerrain = new NativeArray<byte>(initialCapacity, Allocator.Persistent);
-            provinceFlags = new NativeArray<byte>(initialCapacity, Allocator.Persistent);
 
             idToIndex = new NativeHashMap<ushort, int>(initialCapacity, Allocator.Persistent);
             activeProvinceIds = new NativeList<ushort>(initialCapacity, Allocator.Persistent);
@@ -75,7 +65,7 @@ namespace Core.Systems
             historyDatabase = new ProvinceHistoryDatabase();
 
             isInitialized = true;
-            DominionLogger.Log($"ProvinceSystem initialized with capacity {initialCapacity}");
+            DominionLogger.Log($"ProvinceSystem initialized with capacity {initialCapacity} (8 bytes per province = {initialCapacity * 8 / 1024}KB total)");
 
             // Validate ProvinceState is exactly 8 bytes
             ValidateProvinceStateSize();
@@ -157,16 +147,9 @@ namespace Core.Systems
 
             int arrayIndex = provinceCount;
 
-            // Create province state
+            // Create and store province state (8 bytes)
             var provinceState = ProvinceState.CreateDefault(terrainType);
-
-            // Set data in structure of arrays
             provinceStates[arrayIndex] = provinceState;
-            provinceOwners[arrayIndex] = provinceState.ownerID;
-            provinceControllers[arrayIndex] = provinceState.controllerID;
-            provinceDevelopment[arrayIndex] = provinceState.development;
-            provinceTerrain[arrayIndex] = provinceState.terrain;
-            provinceFlags[arrayIndex] = provinceState.flags;
 
             // Update lookup tables
             idToIndex[provinceId] = arrayIndex;
@@ -200,7 +183,7 @@ namespace Core.Systems
                 {
                     // Update terrain based on definition (if needed)
                     var terrainType = DetermineTerrainFromDefinition(definition);
-                    if (terrainType != provinceTerrain[arrayIndex])
+                    if (terrainType != provinceStates[arrayIndex].terrain)
                     {
                         SetProvinceTerrain(provinceId, terrainType);
                         updatedCount++;
@@ -219,7 +202,7 @@ namespace Core.Systems
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return UNOWNED_COUNTRY;
 
-            return provinceOwners[arrayIndex];
+            return provinceStates[arrayIndex].ownerID;
         }
 
         /// <summary>
@@ -233,15 +216,12 @@ namespace Core.Systems
                 return;
             }
 
-            ushort oldOwner = provinceOwners[arrayIndex];
+            var state = provinceStates[arrayIndex];
+            ushort oldOwner = state.ownerID;
             if (oldOwner == newOwner)
                 return; // No change
 
-            // Update data
-            provinceOwners[arrayIndex] = newOwner;
-
-            // Update the full ProvinceState for consistency
-            var state = provinceStates[arrayIndex];
+            // Update state and write back (structs are value types)
             state.ownerID = newOwner;
             provinceStates[arrayIndex] = state;
 
@@ -262,7 +242,7 @@ namespace Core.Systems
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return 0;
 
-            return provinceDevelopment[arrayIndex];
+            return provinceStates[arrayIndex].development;
         }
 
         /// <summary>
@@ -273,15 +253,12 @@ namespace Core.Systems
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return;
 
-            byte oldDevelopment = provinceDevelopment[arrayIndex];
+            var state = provinceStates[arrayIndex];
+            byte oldDevelopment = state.development;
             if (oldDevelopment == development)
                 return;
 
-            // Update data
-            provinceDevelopment[arrayIndex] = development;
-
-            // Update the full ProvinceState for consistency
-            var state = provinceStates[arrayIndex];
+            // Update state and write back (structs are value types)
             state.development = development;
             provinceStates[arrayIndex] = state;
 
@@ -302,7 +279,7 @@ namespace Core.Systems
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return OCEAN_TERRAIN;
 
-            return provinceTerrain[arrayIndex];
+            return provinceStates[arrayIndex].terrain;
         }
 
         /// <summary>
@@ -313,9 +290,7 @@ namespace Core.Systems
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return;
 
-            provinceTerrain[arrayIndex] = terrain;
-
-            // Update the full ProvinceState for consistency
+            // Update state and write back (structs are value types)
             var state = provinceStates[arrayIndex];
             state.terrain = terrain;
             provinceStates[arrayIndex] = state;
@@ -342,7 +317,7 @@ namespace Core.Systems
 
             for (int i = 0; i < provinceCount; i++)
             {
-                if (provinceOwners[i] == countryId)
+                if (provinceStates[i].ownerID == countryId)
                 {
                     result.Add(activeProvinceIds[i]);
                 }
@@ -490,16 +465,9 @@ namespace Core.Systems
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return;
 
-            // Convert to hot ProvinceState
+            // Convert to hot ProvinceState and store (8 bytes)
             var state = initialState.ToProvinceState();
-
-            // Update hot data arrays
             provinceStates[arrayIndex] = state;
-            provinceOwners[arrayIndex] = state.ownerID;
-            provinceControllers[arrayIndex] = state.controllerID;
-            provinceDevelopment[arrayIndex] = state.development;
-            provinceTerrain[arrayIndex] = state.terrain;
-            provinceFlags[arrayIndex] = state.flags;
 
             // Add initial ownership event to cold data (history database)
             if (initialState.OwnerID != UNOWNED_COUNTRY)
@@ -594,11 +562,6 @@ namespace Core.Systems
         public void Dispose()
         {
             if (provinceStates.IsCreated) provinceStates.Dispose();
-            if (provinceOwners.IsCreated) provinceOwners.Dispose();
-            if (provinceControllers.IsCreated) provinceControllers.Dispose();
-            if (provinceDevelopment.IsCreated) provinceDevelopment.Dispose();
-            if (provinceTerrain.IsCreated) provinceTerrain.Dispose();
-            if (provinceFlags.IsCreated) provinceFlags.Dispose();
             if (idToIndex.IsCreated) idToIndex.Dispose();
             if (activeProvinceIds.IsCreated) activeProvinceIds.Dispose();
 
