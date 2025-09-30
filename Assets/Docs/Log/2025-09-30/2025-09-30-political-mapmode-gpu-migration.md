@@ -400,10 +400,6 @@ Multiple bugs compounding:
 - [map-system-architecture.md](../Engine/map-system-architecture.md) - GPU texture-based rendering architecture
 - [FILE_REGISTRY.md](../../Scripts/Map/FILE_REGISTRY.md) - Map layer file organization and GPU requirements
 
-### Related Sessions
-- [2025-09-30-session-2-rendertexture-migration.md](2025-09-30-session-2-rendertexture-migration.md) - Previous session (RenderTexture conversion)
-- [2025-09-30-session-1-unknown.md](2025-09-30-session-1-unknown.md) - Session 1 (if exists)
-
 ### Code References
 - Compute shader: `Assets/Shaders/PopulateOwnerTexture.compute:22-69`
 - Owner texture dispatcher: `Assets/Scripts/Map/Rendering/OwnerTextureDispatcher.cs:86-214`
