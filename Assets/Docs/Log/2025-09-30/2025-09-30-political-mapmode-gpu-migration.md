@@ -26,7 +26,6 @@
 ## Context & Background
 
 **Previous Work:**
-- See: [2025-09-30-rendertexture-migration.md](2025-09-30-session-2-rendertexture-migration.md) (previous session)
 - Related: [map-system-architecture.md](../Engine/map-system-architecture.md)
 
 **Current State:**
