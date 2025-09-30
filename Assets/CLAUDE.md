@@ -7,6 +7,45 @@ Dominion is a grand strategy game capturing ancient political realities - where 
 
 You, Claude, cannot run tests. I run them manually.
 
+## CODEBASE NAVIGATION
+
+### File Registries - READ THESE FIRST!
+Before implementing or modifying code, **always check the file registries** to understand what exists and where things belong:
+
+- **[Assets/Scripts/Core/FILE_REGISTRY.md](Scripts/Core/FILE_REGISTRY.md)** - Complete Core layer catalog (56 files)
+  - All simulation systems, data structures, commands, queries, loaders
+  - Tags: `[MULTIPLAYER_CRITICAL]`, `[HOT_PATH]`, `[STABLE]`
+  - Quick reference: "Need to X? → Use Y"
+
+- **[Assets/Scripts/Map/FILE_REGISTRY.md](Scripts/Map/FILE_REGISTRY.md)** - Complete Map layer catalog (44 files)
+  - All rendering, textures, interaction, map modes
+  - Tags: `[GPU]`, `[HOT_PATH]`, `[LEGACY]`
+  - GPU vs CPU operation guidelines
+
+### Master Architecture Document
+- **[Assets/Docs/Engine/master-architecture-document.md](Docs/Engine/master-architecture-document.md)**
+  - Entry point for all architecture documentation
+  - Links to all specialized architecture docs
+  - Namespace organization and layer separation rules
+
+### Before Writing Code - Navigation Workflow:
+1. **Check FILE_REGISTRY.md** - Does this file/system already exist?
+2. **Read relevant architecture docs** - What are the rules for this area?
+3. **Check session logs** - Was this recently changed? (Docs/Log/)
+4. **Implement** - Follow architecture patterns from registries
+
+### Common Use Cases:
+- **"Where do I add province logic?"** → Check Core/FILE_REGISTRY.md → See ProvinceSystem.cs
+- **"How do I update map visuals?"** → Check Map/FILE_REGISTRY.md → See TextureUpdateBridge.cs
+- **"Need deterministic random?"** → Check Core/FILE_REGISTRY.md → See DeterministicRandom.cs
+- **"Need to change province state?"** → Check Core/FILE_REGISTRY.md → See Commands/ pattern
+
+**CRITICAL**: File registries prevent:
+- ❌ Reimplementing existing systems
+- ❌ Creating files in wrong locations
+- ❌ Breaking established patterns
+- ❌ Missing critical dependencies
+
 ## CORE ARCHITECTURE: DUAL-LAYER SYSTEM
 
 ### **Layer 1: Simulation (CPU)**
@@ -45,7 +84,7 @@ RenderTexture borderTexture;    // 8MB - generated via compute shader
 - ❌ **Texture filtering on province IDs** - point filtering only
 - ❌ **CPU neighbor detection** - GPU compute shaders for borders
 - ❌ **Floating-point in simulation** - use fixed-point math for determinism
-- ❌ **Array of Structures** - use Structure of Arrays for cache efficiency
+- ❌ **Data duplication** - single source of truth (ProvinceSystem uses 8-byte AoS)
 - ❌ **Unbounded data growth** - ring buffers with compression for history
 - ❌ **Update-everything-every-frame** - dirty flag systems only
 - ❌ **Mixed hot/cold data** - separate by access patterns
@@ -275,14 +314,15 @@ public TooltipData GetTooltip(int provinceID) {
     // ... cache lookup logic
 }
 
-// Pattern 3: Structure of Arrays (Cache-Friendly)
-// GOOD: All owners together in memory
-int[] provinceOwners;
-float[] provinceTaxes;
-bool[] isCoastal;
+// Pattern 3: Data Layout (Cache-Friendly)
+// ProvinceSystem uses Array of Structures (AoS) - 8-byte ProvinceState
+// This is optimal for grand strategy where queries access multiple fields together
+NativeArray<ProvinceState> provinceStates;  // owner + development + terrain accessed together
 
-// BAD: Mixed data breaks cache lines
-struct Province { int owner; float tax; bool coastal; }
+// Use Structure of Arrays (SoA) when accessing single fields frequently
+// Example: CountrySystem uses SoA for country colors (accessed separately)
+NativeArray<ushort> countryOwners;
+NativeArray<Color32> countryColors;
 ```
 
 ### Late-Game Performance Prevention
@@ -412,21 +452,22 @@ Reserve:             0.6ms (12%)
 
 ## KEY REMINDERS
 
-1. **Always ask about architecture compliance** before implementing
-2. **Never suggest CPU processing** of millions of pixels - GPU compute shaders only
-3. **Always consider multiplayer implications** - deterministic fixed-point math required
-4. **Enforce the 8-byte struct limit** for ProvinceState - critical for performance
-5. **GPU compute shaders** are the solution for all visual processing
-6. **Fixed-size data structures** prevent late-game performance collapse
-7. **Single draw call rendering** is mandatory - texture-based approach only
-8. **Hot/cold data separation** is required - never mix access patterns
-9. **Structure of Arrays** over Array of Structures for cache efficiency
-10. **Point filtering** on province textures - no interpolation allowed
-11. **URP only** - Built-in Pipeline is deprecated and not allowed
-12. **Profile at target scale** from day one - 10k provinces minimum
-13. **Ring buffers for history** - prevent unbounded memory growth
-14. **Dirty flags for updates** - never update everything every frame
-15. **Look things up before implementing** - avoid reimplementing or breaking flows
+1. **Check FILE_REGISTRY.md FIRST** - Don't reimplement existing systems, know what exists and where it belongs
+2. **Always ask about architecture compliance** before implementing
+3. **Never suggest CPU processing** of millions of pixels - GPU compute shaders only
+4. **Always consider multiplayer implications** - deterministic fixed-point math required
+5. **Enforce the 8-byte struct limit** for ProvinceState - critical for performance
+6. **GPU compute shaders** are the solution for all visual processing
+7. **Fixed-size data structures** prevent late-game performance collapse
+8. **Single draw call rendering** is mandatory - texture-based approach only
+9. **Hot/cold data separation** is required - never mix access patterns
+10. **Structure of Arrays** over Array of Structures for cache efficiency (UPDATE: ProvinceSystem uses AoS now)
+11. **Point filtering** on province textures - no interpolation allowed
+12. **URP only** - Built-in Pipeline is deprecated and not allowed
+13. **Profile at target scale** from day one - 10k provinces minimum
+14. **Ring buffers for history** - prevent unbounded memory growth
+15. **Dirty flags for updates** - never update everything every frame
+16. **Look things up before implementing** - FILE_REGISTRY.md and session logs tell you what changed recently
 
 ## CRITICAL SUCCESS FACTORS
 

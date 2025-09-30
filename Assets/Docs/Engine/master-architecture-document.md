@@ -18,6 +18,70 @@ The core innovation: **Dual-layer architecture** separating deterministic simula
 
 ---
 
+## Namespace Organization & File Registries
+
+### Core Namespace (`Core.*`)
+**Purpose:** Deterministic simulation layer - game state, logic, commands
+
+**Rules:**
+- ✅ Use FixedPoint64 for all math (NO float/double)
+- ✅ Deterministic operations only (multiplayer-safe)
+- ✅ No Unity API dependencies in hot paths
+- ✅ All state changes through command pattern
+
+**Key Systems:**
+- TimeManager - Tick-based time progression
+- ProvinceSystem - Province hot data (8-byte structs)
+- CommandProcessor - Deterministic command execution
+- EventBus - Decoupled system communication
+
+**Status:** ✅ Multiplayer-ready (deterministic simulation)
+
+**File Registry:** See [Core/FILE_REGISTRY.md](../../Scripts/Core/FILE_REGISTRY.md) for complete file listing with descriptions
+
+### Map Namespace (`Map.*`)
+**Purpose:** GPU-accelerated presentation layer - textures, rendering, interaction
+
+**Rules:**
+- ✅ GPU compute shaders for visual processing (NO CPU pixel ops)
+- ✅ Single draw call for base map
+- ✅ Presentation only (does NOT affect simulation)
+- ✅ Reads from Core layer, updates textures
+
+**Key Systems:**
+- MapTextureManager - Texture infrastructure (~60MB VRAM)
+- MapRenderer - Single draw call rendering
+- ProvinceSelector - Texture-based selection (<1ms)
+- MapModeManager - Visual display modes
+
+**Status:** ✅ Texture-based rendering operational
+
+**File Registry:** See [Map/FILE_REGISTRY.md](../../Scripts/Map/FILE_REGISTRY.md) for complete file listing with descriptions
+
+### Layer Separation
+```
+┌─────────────────────────────────────┐
+│     Map Layer (Presentation)        │
+│  - Textures, Shaders, Rendering     │
+│  - GPU Compute Shaders              │
+│  - User Interaction                 │
+│  - Read-only from Core              │
+└──────────────┬──────────────────────┘
+               │ Events (One-way)
+               ↓
+┌─────────────────────────────────────┐
+│   Core Layer (Simulation)           │
+│  - Deterministic Game State         │
+│  - FixedPoint64 Math                │
+│  - Command Pattern                  │
+│  - Multiplayer-ready                │
+└─────────────────────────────────────┘
+```
+
+**Critical:** Map layer CANNOT modify Core state. All changes go through Core.Commands.
+
+---
+
 ## Part 1: Core Architecture
 
 ### 1.1 Fundamental Design Principle
@@ -541,11 +605,18 @@ Follow the implementation roadmap, avoid the anti-patterns, and you'll have a gr
 
 ## Related Documents
 
-For detailed implementation guidance, see:
+### File Registries (Quick Reference)
+- **[Core/FILE_REGISTRY.md](../../Scripts/Core/FILE_REGISTRY.md)** - Complete listing of Core simulation layer files
+- **[Map/FILE_REGISTRY.md](../../Scripts/Map/FILE_REGISTRY.md)** - Complete listing of Map presentation layer files
 
+### Architecture Documents
 - **[Map System Architecture](map-system-architecture.md)** - Complete map rendering system (texture-based, coordinates, map modes)
 - **[Performance Architecture Guide](performance-architecture-guide.md)** - Late-game optimization and memory strategies
 - **[Time System Architecture](time-system-architecture.md)** - Update scheduling and dirty flag systems
+- **[Data Flow Architecture](data-flow-architecture.md)** - Hot/cold data separation and data linking
+- **[Data Linking Architecture](data-linking-architecture.md)** - Reference resolution and cross-linking
+
+### Planning Documents (Future)
 - **[Save/Load Design](../Planning/save-load-design.md)** - Persistence and replay systems *(Planning - not implemented)*
 - **[Multiplayer Design](../Planning/multiplayer-design.md)** - Network synchronization and determinism *(Planning - not implemented)*
 - **[Error Recovery Design](../Planning/error-recovery-design.md)** - Robustness and fault tolerance *(Planning - not implemented)*
