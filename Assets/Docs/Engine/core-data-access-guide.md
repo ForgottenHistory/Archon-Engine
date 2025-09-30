@@ -1,6 +1,8 @@
 # Core Data Access Guide
 ## How to Get Data from Core in Dominion's Architecture
 
+**📊 Implementation Status:** ✅ Implemented (ProvinceState, ProvinceColdData, hot/cold separation)
+
 ---
 
 ## Overview

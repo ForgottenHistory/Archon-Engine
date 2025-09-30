@@ -1,6 +1,10 @@
 # Grand Strategy Game Performance Architecture Guide
 ## Avoiding Late-Game Performance Collapse
 
+**📊 Implementation Status:** ⚠️ Partially Implemented (Hot/cold separation ✅, some patterns ✅, advanced features pending)
+
+> **📚 Architecture Context:** This document focuses on performance patterns. See [master-architecture-document.md](master-architecture-document.md) for the dual-layer architecture foundation.
+
 ## Executive Summary
 Grand strategy games face unique performance challenges that compound over time. A game running at 200 FPS in year 1 can drop to 20 FPS by year 400, even when paused. This document explains why this happens and how to architect systems to maintain performance throughout the entire game lifecycle.
 
@@ -56,29 +60,11 @@ Parallel.ForEach(tradeRoutes, route => {
 **Hot Data**: Accessed every frame (owner, controller, selection state)
 **Cold Data**: Accessed rarely (history, statistics, modifier details)
 
-```csharp
-// Data organized by access patterns
-public struct ProvinceState {  // 8 bytes, cache-friendly
-    public ushort ownerID;
-    public ushort controllerID;
-    public byte development;
-    public byte terrain;
-    public byte fortLevel;
-    public byte flags;
-}
+> **See:** [master-architecture-document.md](master-architecture-document.md) and [core-data-access-guide.md](core-data-access-guide.md) for complete hot/cold data architecture.
 
-public class ProvinceColdData {  // Loaded on-demand
-    public List<HistoricalEvent> history;
-    public Dictionary<string, float> modifiers;
-    public BuildingInventory buildings;
-}
-
-// Hot data in contiguous array
-NativeArray<ProvinceState> provinceHotData;  // All in L2 cache
-
-// Cold data in separate storage
-Dictionary<int, ProvinceColdData> provinceColdData;  // Paged to disk if needed
-```
+Key implementation:
+- `ProvinceState` (8 bytes): Hot data in `NativeArray` for cache efficiency
+- `ProvinceColdData`: Separate storage, loaded on-demand
 
 ### Principle 3: Fixed-Size Data Structures
 Dynamic growth is the enemy of performance.

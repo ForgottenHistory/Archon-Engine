@@ -1,5 +1,9 @@
 # Grand Strategy Game - Time System & Update Architecture
 
+**📊 Implementation Status:** ✅ Implemented (TimeManager exists, layered updates functional)
+
+> **📚 Architecture Context:** See [performance-architecture-guide.md](performance-architecture-guide.md) for dirty flag patterns and [master-architecture-document.md](master-architecture-document.md) for overall architecture.
+
 ## Executive Summary
 **Problem**: Paradox games update everything every tick, causing 200,000+ unnecessary calculations per day  
 **Solution**: Layered update frequencies with dirty flags - only update what changed  

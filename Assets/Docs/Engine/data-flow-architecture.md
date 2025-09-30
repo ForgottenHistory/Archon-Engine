@@ -1,5 +1,9 @@
 # Grand Strategy Game - Data Flow & System Architecture
 
+**📊 Implementation Status:** ⚠️ Partially Implemented (Command pattern ✅, event system status unclear)
+
+> **📚 Architecture Context:** This document describes system communication patterns. See [master-architecture-document.md](master-architecture-document.md) for overall architecture.
+
 ## Executive Summary
 **Question**: How do all these systems actually connect and communicate?  
 **Answer**: Hub-and-spoke architecture with specialized systems and a central game state  
@@ -244,7 +248,7 @@ public class ChangeProvinceOwnerCommand : ICommand {
     }
 }
 ```
-See `save-load-architecture.md` for serialization details and `multiplayer-architecture-guide.md` for network synchronization.
+See `../Planning/save-load-design.md` *(not implemented)* for serialization details and `../Planning/multiplayer-design.md` *(not implemented)* for network synchronization.
 
 ### Deleting Data - Pooling Pattern
 Pre-allocated object pools prevent runtime allocations. Objects are recycled, not destroyed.
@@ -489,6 +493,6 @@ The key is that each system is independent but coordinated through GameState and
 
 ## Related Documentation
 - **time-system-architecture.md** - Tick-based update scheduling and game speed control
-- **save-load-architecture.md** - Serialization, persistence, and replay system
-- **multiplayer-architecture-guide.md** - Network synchronization and command distribution
 - **performance-architecture-guide.md** - Memory layout optimization and cache efficiency
+- **../Planning/save-load-design.md** - Serialization, persistence, and replay system *(not implemented)*
+- **../Planning/multiplayer-design.md** - Network synchronization and command distribution *(not implemented)*

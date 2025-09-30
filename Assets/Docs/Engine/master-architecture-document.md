@@ -1,6 +1,8 @@
 # Grand Strategy Game Master Architecture Document
 ## High-Performance, Multiplayer-Ready, 10,000+ Province System
 
+**📊 Implementation Status:** ✅ Core Implemented (ProvinceState, command system, dual-layer) | ❌ Multiplayer sections are future planning
+
 ---
 
 ## Executive Summary
@@ -541,10 +543,9 @@ Follow the implementation roadmap, avoid the anti-patterns, and you'll have a gr
 
 For detailed implementation guidance, see:
 
-- **[Texture-Based Map Guide](texture-based-map-guide.md)** - Step-by-step implementation of GPU-based map rendering
+- **[Map System Architecture](map-system-architecture.md)** - Complete map rendering system (texture-based, coordinates, map modes)
 - **[Performance Architecture Guide](performance-architecture-guide.md)** - Late-game optimization and memory strategies
-- **[Multiplayer Architecture Guide](multiplayer-architecture-guide.md)** - Network synchronization and determinism
 - **[Time System Architecture](time-system-architecture.md)** - Update scheduling and dirty flag systems
-- **[Save/Load Architecture](save-load-architecture.md)** - Persistence and replay systems
-- **[Error Recovery Architecture](error-recovery-architecture.md)** - Robustness and fault tolerance
-- **[Coordinate System Architecture](coordinate-system-architecture.md)** - Spatial data and transformations
+- **[Save/Load Design](../Planning/save-load-design.md)** - Persistence and replay systems *(Planning - not implemented)*
+- **[Multiplayer Design](../Planning/multiplayer-design.md)** - Network synchronization and determinism *(Planning - not implemented)*
+- **[Error Recovery Design](../Planning/error-recovery-design.md)** - Robustness and fault tolerance *(Planning - not implemented)*

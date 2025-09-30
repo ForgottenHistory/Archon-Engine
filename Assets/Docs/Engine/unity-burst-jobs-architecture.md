@@ -1,5 +1,7 @@
 # Unity Burst Compiler & Job System Architecture Guide
 
+**📊 Implementation Status:** ⚠️ Partially Used (BurstProvinceHistoryLoader exists, extent of usage unclear) | 📚 Reference/Tutorial
+
 ## Executive Summary
 **What**: Unity's high-performance compilation and multithreading system for CPU-intensive operations  
 **Why**: Can achieve 10-100x performance improvements over regular C# code  
