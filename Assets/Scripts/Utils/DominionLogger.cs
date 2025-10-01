@@ -50,6 +50,7 @@ public static class DominionLogger
     public static class Systems
     {
         public const string DataLinking = "data_linking";
+        public const string MapInitialization = "map_initialization";
         public const string Provinces = "provinces";
         public const string Countries = "countries";
         public const string MapGeneration = "map_generation";
@@ -64,6 +65,11 @@ public static class DominionLogger
     public static void LogDataLinking(string message) => Log(message, Systems.DataLinking);
     public static void LogDataLinkingWarning(string message) => LogWarning(message, Systems.DataLinking);
     public static void LogDataLinkingError(string message) => LogError(message, Systems.DataLinking);
+
+    // Convenience methods for map initialization system
+    public static void LogMapInit(string message) => Log(message, Systems.MapInitialization);
+    public static void LogMapInitWarning(string message) => LogWarning(message, Systems.MapInitialization);
+    public static void LogMapInitError(string message) => LogError(message, Systems.MapInitialization);
 
     // Configuration methods
     public static void SetConsoleLogging(bool enabled) => logToConsole = enabled;

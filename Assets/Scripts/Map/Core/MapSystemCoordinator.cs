@@ -50,7 +50,7 @@ namespace Map.Core
 
             if (logSystemProgress)
             {
-                DominionLogger.Log("MapSystemCoordinator: Initializing complete map system...");
+                DominionLogger.LogMapInit("MapSystemCoordinator: Initializing complete map system...");
             }
 
             InitializeAllComponents();
@@ -58,7 +58,7 @@ namespace Map.Core
 
             if (logSystemProgress)
             {
-                DominionLogger.Log("MapSystemCoordinator: Map system initialization complete");
+                DominionLogger.LogMapInit("MapSystemCoordinator: Map system initialization complete");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Map.Core
 
                     if (logSystemProgress)
                     {
-                        DominionLogger.Log("MapSystemCoordinator: Initialized TextureUpdateBridge for runtime updates");
+                        DominionLogger.LogMapInit("MapSystemCoordinator: Initialized TextureUpdateBridge for runtime updates");
                     }
                 }
                 else if (logSystemProgress)
@@ -173,7 +173,7 @@ namespace Map.Core
         {
             if (logSystemProgress)
             {
-                DominionLogger.Log($"MapSystemCoordinator: Handling simulation ready with {simulationData.ProvinceCount} provinces");
+                DominionLogger.LogMapInit($"MapSystemCoordinator: Handling simulation ready with {simulationData.ProvinceCount} provinces");
             }
 
             // Get components from MapInitializer (which already initialized them)
@@ -200,8 +200,8 @@ namespace Map.Core
 
             if (logSystemProgress)
             {
-                DominionLogger.Log($"MapSystemCoordinator: Received camera reference: {(mapCamera != null ? mapCamera.name : "null")}");
-                DominionLogger.Log($"MapSystemCoordinator: Received meshRenderer reference: {(meshRenderer != null ? meshRenderer.name : "null")}");
+                DominionLogger.LogMapInit($"MapSystemCoordinator: Received camera reference: {(mapCamera != null ? mapCamera.name : "null")}");
+                DominionLogger.LogMapInit($"MapSystemCoordinator: Received meshRenderer reference: {(meshRenderer != null ? meshRenderer.name : "null")}");
             }
 
             if (meshRenderer == null)
@@ -215,7 +215,7 @@ namespace Map.Core
 
             if (success && logSystemProgress)
             {
-                DominionLogger.Log($"MapSystemCoordinator: Map generation complete. Rendering {simulationData.ProvinceCount} provinces.");
+                DominionLogger.LogMapInit($"MapSystemCoordinator: Map generation complete. Rendering {simulationData.ProvinceCount} provinces.");
             }
         }
 
@@ -252,7 +252,7 @@ namespace Map.Core
                 component = gameObject.AddComponent<T>();
                 if (logSystemProgress)
                 {
-                    DominionLogger.Log($"MapSystemCoordinator: Created {typeof(T).Name} component");
+                    DominionLogger.LogMapInit($"MapSystemCoordinator: Created {typeof(T).Name} component");
                 }
             }
             return component;

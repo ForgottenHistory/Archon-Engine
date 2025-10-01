@@ -39,7 +39,7 @@ namespace Map.Rendering
         {
             if (logRenderingProgress)
             {
-                DominionLogger.Log("MapRenderingCoordinator: Setting up map rendering system...");
+                DominionLogger.LogMapInit("MapRenderingCoordinator: Setting up map rendering system...");
             }
 
             // Set up material
@@ -50,7 +50,7 @@ namespace Map.Rendering
 
             if (logRenderingProgress)
             {
-                DominionLogger.Log("MapRenderingCoordinator: Map rendering setup complete");
+                DominionLogger.LogMapInit("MapRenderingCoordinator: Map rendering setup complete");
             }
         }
 
@@ -70,7 +70,7 @@ namespace Map.Rendering
                     mapMaterial.name = "MapRenderingCoordinator_Material";
                     if (logRenderingProgress)
                     {
-                        DominionLogger.Log("MapRenderingCoordinator: Created material with MapCore shader");
+                        DominionLogger.LogMapInit("MapRenderingCoordinator: Created material with MapCore shader");
                     }
                 }
                 else
@@ -93,7 +93,7 @@ namespace Map.Rendering
                 mapModeManager.Initialize();
                 if (logRenderingProgress)
                 {
-                    DominionLogger.Log("MapRenderingCoordinator: Initialized MapModeManager");
+                    DominionLogger.LogMapInit("MapRenderingCoordinator: Initialized MapModeManager");
                 }
 
                 // Set initial map mode - delegate to MapModeManager
@@ -105,7 +105,7 @@ namespace Map.Rendering
 
             if (logRenderingProgress)
             {
-                DominionLogger.Log("MapRenderingCoordinator: Material setup complete with all map textures bound");
+                DominionLogger.LogMapInit("MapRenderingCoordinator: Material setup complete with all map textures bound");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Map.Rendering
 
             if (logRenderingProgress)
             {
-                DominionLogger.Log($"MapRenderingCoordinator: Camera positioned for {textureManager.MapWidth}x{textureManager.MapHeight} map");
+                DominionLogger.LogMapInit($"MapRenderingCoordinator: Camera positioned for {textureManager.MapWidth}x{textureManager.MapHeight} map");
             }
         }
 

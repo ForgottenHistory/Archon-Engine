@@ -39,7 +39,7 @@ namespace Map.Rendering
 
             if (logPopulationProgress)
             {
-                DominionLogger.Log($"MapTexturePopulator: Starting texture population with simulation data for {width}x{height} map");
+                DominionLogger.LogMapInit($"MapTexturePopulator: Starting texture population with simulation data for {width}x{height} map");
             }
 
             // Get query interfaces for simulation data
@@ -99,18 +99,18 @@ namespace Map.Rendering
 
             if (ownerTextureDispatcher != null)
             {
-                DominionLogger.Log("MapTexturePopulator: Populating owner texture via GPU compute shader");
+                DominionLogger.LogMapInit("MapTexturePopulator: Populating owner texture via GPU compute shader");
                 ownerTextureDispatcher.PopulateOwnerTexture(provinceQueries);
             }
             else
             {
-                DominionLogger.LogError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot populate owner texture!");
+                DominionLogger.LogMapInitError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot populate owner texture!");
             }
 
             if (logPopulationProgress)
             {
-                DominionLogger.Log($"MapTexturePopulator: Populated texture manager with {width}x{height} province data from simulation layer");
-                DominionLogger.Log($"MapTexturePopulator: Processed {processedPixels} pixels, {validProvinces} valid province pixels");
+                DominionLogger.LogMapInit($"MapTexturePopulator: Populated texture manager with {width}x{height} province data from simulation layer");
+                DominionLogger.LogMapInit($"MapTexturePopulator: Processed {processedPixels} pixels, {validProvinces} valid province pixels");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Map.Rendering
 
             if (logPopulationProgress)
             {
-                DominionLogger.Log($"MapTexturePopulator: Starting texture population from province result for {width}x{height} map");
+                DominionLogger.LogMapInit($"MapTexturePopulator: Starting texture population from province result for {width}x{height} map");
             }
 
             // Populate province ID and color textures from BMP data
@@ -175,8 +175,8 @@ namespace Map.Rendering
 
             if (logPopulationProgress)
             {
-                DominionLogger.Log($"MapTexturePopulator: Populated texture manager with {width}x{height} province data");
-                DominionLogger.Log($"MapTexturePopulator: Processed {processedPixels} pixels, {validProvinces} valid province pixels");
+                DominionLogger.LogMapInit($"MapTexturePopulator: Populated texture manager with {width}x{height} province data");
+                DominionLogger.LogMapInit($"MapTexturePopulator: Processed {processedPixels} pixels, {validProvinces} valid province pixels");
             }
         }
 
@@ -208,7 +208,7 @@ namespace Map.Rendering
 
             if (ownerTextureDispatcher != null)
             {
-                DominionLogger.Log($"MapTexturePopulator: Updating owner texture for {changedProvinces.Length} changed provinces via GPU compute shader");
+                DominionLogger.LogMapInit($"MapTexturePopulator: Updating owner texture for {changedProvinces.Length} changed provinces via GPU compute shader");
                 ownerTextureDispatcher.PopulateOwnerTexture(provinceQueries);
             }
             else

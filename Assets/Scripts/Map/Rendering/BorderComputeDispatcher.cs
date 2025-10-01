@@ -61,7 +61,7 @@ namespace Map.Rendering
                 {
                     string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
                     borderDetectionCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    DominionLogger.Log($"BorderComputeDispatcher: Found compute shader at {path}");
+                    DominionLogger.LogMapInit($"BorderComputeDispatcher: Found compute shader at {path}");
                 }
                 #endif
 
@@ -79,7 +79,7 @@ namespace Map.Rendering
 
             if (logPerformance)
             {
-                DominionLogger.Log($"BorderComputeDispatcher: Initialized with kernels - " +
+                DominionLogger.LogMapInit($"BorderComputeDispatcher: Initialized with kernels - " +
                     $"Borders: {detectBordersKernel}, Thick: {detectBordersThickKernel}, Country: {detectCountryBordersKernel}");
             }
         }
