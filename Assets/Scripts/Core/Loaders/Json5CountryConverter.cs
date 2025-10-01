@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
@@ -18,7 +19,9 @@ namespace Core.Loaders
         /// <summary>
         /// Load all country JSON5 files and convert to burst-compatible structs
         /// </summary>
-        public static Json5CountryLoadResult LoadCountryJson5Files(string countriesDirectory)
+        /// <param name="countriesDirectory">Directory containing country JSON5 files</param>
+        /// <param name="tagMapping">Optional mapping of filenames to country tags from 00_countries.txt</param>
+        public static Json5CountryLoadResult LoadCountryJson5Files(string countriesDirectory, Dictionary<string, string> tagMapping = null)
         {
             if (!Directory.Exists(countriesDirectory))
             {
@@ -42,7 +45,7 @@ namespace Core.Loaders
             {
                 try
                 {
-                    var countryData = LoadSingleCountryFile(filePath);
+                    var countryData = LoadSingleCountryFile(filePath, tagMapping);
                     if (!string.IsNullOrEmpty(countryData.tag.ToString()) && countryData.tag.ToString() != "---")
                     {
                         rawDataList.Add(countryData);
@@ -76,11 +79,37 @@ namespace Core.Loaders
         /// <summary>
         /// Load and parse a single country JSON5 file
         /// </summary>
-        private static RawCountryData LoadSingleCountryFile(string filePath)
+        private static RawCountryData LoadSingleCountryFile(string filePath, Dictionary<string, string> tagMapping = null)
         {
-            // Extract country tag from filename
+            // Get filename without extension
             string fileName = Path.GetFileNameWithoutExtension(filePath);
-            string countryTag = ExtractCountryTagFromFilename(fileName);
+
+            // Try to get tag from mapping first, fallback to filename extraction
+            string countryTag = null;
+            bool foundInMapping = false;
+            if (tagMapping != null)
+            {
+                // Look for matching filename in tag mapping (e.g., "Shimazu.txt" -> "SMZ")
+                // Extract the actual filename from the path to avoid false matches
+                // (e.g., "Bar" shouldn't match "Malabar.txt")
+                var matchingEntry = tagMapping.FirstOrDefault(kvp =>
+                {
+                    string pathFileName = Path.GetFileNameWithoutExtension(kvp.Value);
+                    return pathFileName.Equals(fileName, StringComparison.OrdinalIgnoreCase);
+                });
+
+                if (matchingEntry.Key != null)
+                {
+                    countryTag = matchingEntry.Key;
+                    foundInMapping = true;
+                }
+            }
+
+            // Fallback to extracting from filename if no mapping found
+            if (string.IsNullOrEmpty(countryTag))
+            {
+                countryTag = ExtractCountryTagFromFilename(fileName);
+            }
 
             if (string.IsNullOrEmpty(countryTag))
             {

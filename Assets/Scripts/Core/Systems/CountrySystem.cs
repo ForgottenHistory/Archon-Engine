@@ -121,10 +121,26 @@ namespace Core.Systems
                 if (country == null) continue;
 
                 var tag = country.Tag;
+                var hotData = country.hotData; // Use the hotData from Burst job (already has correct color!)
                 var coldData = country.coldData;
 
-                // Create hot data from cold data
-                var hotData = CreateHotDataFromCold(coldData);
+                // Skip duplicates before assigning ID
+                if (usedTags.Contains(tag))
+                {
+                    // Don't increment nextCountryId - reuse this slot for next non-duplicate
+                    if (i < 50)
+                    {
+                        DominionLogger.Log($"CountrySystem: Skipping duplicate tag '{tag}' at index {i}");
+                    }
+                    continue;
+                }
+
+                // DEBUG: Log colors for first 20 countries
+                if (nextCountryId < 50)
+                {
+                    var color = hotData.Color;
+                    DominionLogger.Log($"CountrySystem: Country index {i} tag={tag} → ID {nextCountryId}, hotData color R={color.r} G={color.g} B={color.b}");
+                }
 
                 // Add country to system
                 AddCountry(nextCountryId, tag, hotData, coldData);
@@ -184,13 +200,6 @@ namespace Core.Systems
             // Calculate tag hash
             ushort tagHash = CalculateTagHash(tag);
 
-            // Check for duplicate tag using HashSet for O(1) lookup
-            if (usedTags.Contains(tag) && countryId != 0)
-            {
-                // Skip duplicates silently - this is expected with overlapping country files
-                return;
-            }
-
             // Set hot data
             hotData.tagHash = tagHash;
             countryHotData[countryId] = hotData;
@@ -241,8 +250,13 @@ namespace Core.Systems
         /// </summary>
         private CountryHotData CreateHotDataFromCold(CountryColdData coldData)
         {
-            // Generate default color from tag if not provided
-            var defaultColor = GenerateColorFromTag(coldData.tag);
+            // Use loaded color from EU4 data, fallback to generated color only if black (missing data)
+            var color = coldData.color;
+            if (color.r == 0 && color.g == 0 && color.b == 0)
+            {
+                // Only generate fallback color if loaded color is black (missing/invalid)
+                color = GenerateColorFromTag(coldData.tag);
+            }
 
             // Convert graphical culture string to ID (simplified mapping for now)
             byte graphicalCultureId = GetGraphicalCultureId(coldData.graphicalCulture);
@@ -252,7 +266,7 @@ namespace Core.Systems
                 graphicalCultureId = graphicalCultureId,
                 flags = 0 // Will be set based on cold data properties
             };
-            hotData.SetColor(defaultColor);
+            hotData.SetColor(color);
 
             // Set flags based on cold data
             if (coldData.historicalIdeaGroups != null && coldData.historicalIdeaGroups.Count > 0)

@@ -5,6 +5,7 @@ using Core.Data;
 using Core.Jobs;
 using UnityEngine;
 using Utils;
+using System.Collections.Generic;
 
 namespace Core.Loaders
 {
@@ -18,14 +19,16 @@ namespace Core.Loaders
         /// <summary>
         /// Load country data using hybrid JSON5 + Burst approach
         /// </summary>
-        public static CountryDataLoadResult LoadAllCountries(string dataDirectory)
+        /// <param name="dataDirectory">Directory containing country data</param>
+        /// <param name="tagMapping">Optional mapping of filenames to country tags from 00_countries.txt</param>
+        public static CountryDataLoadResult LoadAllCountries(string dataDirectory, Dictionary<string, string> tagMapping = null)
         {
             DominionLogger.Log("Starting hybrid JSON5 + Burst country loading...");
 
             try
             {
                 // Phase 1: Load JSON5 files to burst-compatible structs (main thread)
-                var json5Result = Json5CountryConverter.LoadCountryJson5Files(dataDirectory);
+                var json5Result = Json5CountryConverter.LoadCountryJson5Files(dataDirectory, tagMapping);
 
                 if (!json5Result.success)
                 {
@@ -164,7 +167,8 @@ namespace Core.Loaders
                 displayName = raw.tag.ToString(), // Use tag as display name for now
                 graphicalCulture = raw.hasGraphicalCulture ? raw.graphicalCulture.ToString() : "westerngfx",
                 preferredReligion = raw.hasPreferredReligion ? raw.preferredReligion.ToString() : "",
-                revolutionaryColors = raw.hasRevolutionaryColors ? raw.GetRevolutionaryColor() : raw.GetColor()
+                color = raw.GetColor(), // Always store main color
+                revolutionaryColors = raw.hasRevolutionaryColors ? raw.GetRevolutionaryColor() : new Color32(0, 0, 0, 0) // Revolutionary colors only if present
             };
 
             return coldData;

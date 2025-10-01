@@ -52,7 +52,7 @@ namespace Core.Loaders
         /// <summary>
         /// Load all country files using hybrid JSON5 + Burst architecture
         /// </summary>
-        public CountryDataLoadResult LoadAllCountriesJob(string countriesDirectory = "Assets/Data")
+        public CountryDataLoadResult LoadAllCountriesJob(string countriesDirectory = "Assets/Data", Dictionary<string, string> tagMapping = null)
         {
             globalStopwatch.Restart();
             globalErrors.Clear();
@@ -62,7 +62,7 @@ namespace Core.Loaders
             try
             {
                 // Use the new hybrid JSON5 + Burst loader
-                var result = BurstCountryLoader.LoadAllCountries(countriesDirectory);
+                var result = BurstCountryLoader.LoadAllCountries(countriesDirectory, tagMapping);
 
                 globalStopwatch.Stop();
 

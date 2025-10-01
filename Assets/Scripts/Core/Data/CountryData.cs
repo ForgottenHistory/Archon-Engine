@@ -71,6 +71,7 @@ namespace Core.Data
         public string tag;                          // 3-letter country tag (e.g., "ENG")
         public string displayName;                  // Extracted from filename
         public string graphicalCulture;             // Full graphical culture name
+        public Color32 color;                       // Main country color (from EU4 data)
         public Color32 revolutionaryColors;         // Alternative color scheme
         public string preferredReligion;            // Religion preference
 

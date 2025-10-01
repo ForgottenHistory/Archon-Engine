@@ -387,9 +387,16 @@ namespace Core
         {
             SetPhase(LoadingPhase.LoadingCountries, 35f, "Loading countries...");
 
-            // Load country data
+            // Load country tags FIRST to get correct tag→filename mapping
+            var countryTagResult = CountryTagLoader.LoadCountryTags(gameSettings.DataDirectory);
+            if (!countryTagResult.Success)
+            {
+                DominionLogger.LogWarning($"Failed to load country tags: {countryTagResult.ErrorMessage}. Tags will be extracted from filenames.");
+            }
+
+            // Load country data with tag mapping
             var countriesPath = System.IO.Path.Combine(gameSettings.DataDirectory, "common", "countries");
-            var countryResult = countryLoader.LoadAllCountriesJob(countriesPath);
+            var countryResult = countryLoader.LoadAllCountriesJob(countriesPath, countryTagResult.CountryTags);
 
             UpdateProgress(55f, "Initializing country system...");
             yield return null;
@@ -437,45 +444,43 @@ namespace Core
                 // Continue with limited functionality
             }
 
-            // Register countries using real tags from 00_countries.txt
+            // Register countries using actual tags from CountrySystem
             var countryIds = gameState.Countries.GetAllCountryIds();
-            DominionLogger.Log($"Country registration: Found {countryIds.Length} countries to register with {countryTagResult.CountryTags.Count} available tags");
+            DominionLogger.Log($"Country registration: Found {countryIds.Length} countries to register");
 
             var tagToIdMapping = new Dictionary<string, ushort>();
             var registeredCount = 0;
 
-            // Create mapping from filenames to country IDs (this is approximate for now)
-            for (int i = 0; i < countryIds.Length && registeredCount < countryTagResult.CountryTags.Count; i++)
+            // Use actual tags from CountrySystem instead of assigning by position
+            for (int i = 0; i < countryIds.Length; i++)
             {
                 var countryId = countryIds[i];
 
-                // Find a country tag for this ID (we'll improve this mapping later)
-                // For now, assign tags in order - this will be fixed when we have proper file→ID mapping
-                var availableTags = new List<string>(countryTagResult.CountryTags.Keys);
-                if (registeredCount < availableTags.Count)
+                // Get the ACTUAL tag from CountrySystem
+                var tag = gameState.Countries.GetCountryTag(countryId);
+                if (string.IsNullOrEmpty(tag) || tag == "---")
+                    continue;
+
+                var countryData = new Core.Registries.CountryData
                 {
-                    var tag = availableTags[registeredCount];
-                    var countryData = new Core.Registries.CountryData
-                    {
-                        Id = countryId,
-                        Tag = tag
-                    };
+                    Id = countryId,
+                    Tag = tag
+                };
 
-                    try
-                    {
-                        gameRegistries.Countries.Register(tag, countryData);
-                        tagToIdMapping[tag] = countryId;
-                        registeredCount++;
+                try
+                {
+                    gameRegistries.Countries.Register(tag, countryData);
+                    tagToIdMapping[tag] = countryId;
+                    registeredCount++;
 
-                        if (registeredCount <= 5) // Log first few for debugging
-                        {
-                            DominionLogger.LogDataLinking($"Registered country '{tag}' with ID {countryId}");
-                        }
-                    }
-                    catch (System.Exception e)
+                    if (registeredCount <= 10) // Log first 10 for debugging
                     {
-                        DominionLogger.LogDataLinkingError($"Failed to register country {tag} (ID: {countryId}): {e.Message}");
+                        DominionLogger.LogDataLinking($"Registered country '{tag}' with ID {countryId}");
                     }
+                }
+                catch (System.Exception e)
+                {
+                    DominionLogger.LogDataLinkingError($"Failed to register country {tag} (ID: {countryId}): {e.Message}");
                 }
             }
 

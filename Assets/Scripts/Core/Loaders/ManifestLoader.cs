@@ -85,8 +85,26 @@ namespace Core.Loaders
                     if (IsComment(key) || IsDirective(key))
                         continue;
 
-                    // Clean quotes from value
-                    value = value.Trim('"');
+                    // Extract value between quotes (handles inline comments after closing quote)
+                    // Format: KEY = "value" # optional comment
+                    if (value.StartsWith("\""))
+                    {
+                        var closingQuoteIndex = value.IndexOf('"', 1);
+                        if (closingQuoteIndex > 0)
+                        {
+                            value = value.Substring(1, closingQuoteIndex - 1);
+                        }
+                        else
+                        {
+                            // Fallback: just trim quotes if no closing quote found
+                            value = value.Trim('"');
+                        }
+                    }
+                    else
+                    {
+                        // No quotes - trim as-is
+                        value = value.Trim('"');
+                    }
 
                     if (!manifest.ContainsKey(key))
                     {
