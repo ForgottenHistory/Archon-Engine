@@ -135,8 +135,8 @@ namespace Core.Systems
                     continue;
                 }
 
-                // DEBUG: Log colors for first 20 countries
-                if (nextCountryId < 50)
+                // DEBUG: Log colors for first 5 countries
+                if (nextCountryId < 5)
                 {
                     var color = hotData.Color;
                     DominionLogger.Log($"CountrySystem: Country index {i} tag={tag} → ID {nextCountryId}, hotData color R={color.r} G={color.g} B={color.b}");
