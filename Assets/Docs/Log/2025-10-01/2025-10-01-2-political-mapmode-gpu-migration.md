@@ -738,5 +738,131 @@ So the bug is likely in compute shader write or shader read, not data preparatio
 
 ---
 
+## Session Continuation: Coordinate System Deep Dive
+
+**Continued debugging after break - Focus: Why compute shader reads wrong province IDs**
+
+### Investigation 8: Verify Texture Instance IDs Match
+**Hypothesis:** Compute shader might be reading from a different ProvinceIDTexture instance than C# populated
+
+**Implementation:**
+```csharp
+// MapTextureManager.cs - Log instance ID on creation
+DominionLogger.LogMapInit($"ProvinceIDTexture instance ID: {provinceIDTexture.GetInstanceID()}");
+
+// MapTexturePopulator.cs - Log instance ID after Graphics.Blit
+DominionLogger.LogMapInit($"MapTexturePopulator: Wrote to ProvinceIDTexture instance {textureManager.ProvinceIDTexture.GetInstanceID()}");
+
+// OwnerTextureDispatcher.cs - Log instance ID when binding to shader
+DominionLogger.LogMapInit($"OwnerTextureDispatcher: Bound ProvinceIDTexture ({provinceIDTex?.GetInstanceID()}, {provinceIDTex?.format}) directly to compute shader");
+```
+
+**Result:**
+```
+Line 11: ProvinceIDTexture instance ID: -18710
+Line 64: Wrote to ProvinceIDTexture instance -18710
+Line 83: Bound ProvinceIDTexture (-18710, ARGB32) directly to compute shader
+```
+
+✅ **All instance IDs match** - shader is reading from the correct texture instance
+
+### Investigation 9: Coordinate System Mismatch Discovery
+**Hypothesis:** ReadPixels and compute shader Load() use different coordinate systems
+
+**Research Finding:** WebSearch revealed platform-specific rendering differences:
+- **ReadPixels**: Uses Y=0 at bottom (OpenGL convention)
+- **Compute shader Load()**: Uses Y=0 at top (DirectX native)
+- **Graphics.Blit()**: Does automatic Y-flip when copying Texture2D to RenderTexture
+
+**Test Results:**
+- Line 65 (C# ReadPixels): Province 2751 at (2767, 711) ✅ Correct
+- Line 85 (Compute shader): Owner ID 6 at (2767, 711) ❌ Wrong (expected 151)
+
+**Conclusion:** Both are reading, but getting different data suggests coordinate system mismatch
+
+### Attempt 1: Y-Flip in Compute Shader
+**Implementation:**
+```hlsl
+uint flippedY = MapHeight - 1 - id.y;
+float4 provinceEncoded = ProvinceIDTexture.Load(int3(id.x, flippedY, 0));
+// ... process ...
+ProvinceOwnerTexture[uint2(id.x, flippedY)] = float(ownerID) / 65535.0;
+```
+
+**Result:** Map rendered upside down, still fragmented colors
+**Reason:** Y-flip was in wrong direction, just inverted the problem
+
+### Attempt 2: Y-Flip CPU Array Before Graphics.Blit
+**Hypothesis:** Pre-flip the CPU array to compensate for Graphics.Blit's automatic flip
+
+**Implementation:**
+```csharp
+// Y-flip the array to compensate for Graphics.Blit's automatic Y-flip
+Color32[] flippedPixels = new Color32[pixels.Length];
+for (int y = 0; y < height; y++)
+{
+    int flippedY = height - 1 - y;
+    for (int x = 0; x < width; x++)
+    {
+        flippedPixels[flippedY * width + x] = pixels[y * width + x];
+    }
+}
+```
+
+**Result:**
+```
+Line 62: CPU array at [711, 2767] = province 1466 (R=186 G=5)
+Line 65: ProvinceIDTexture at (2767,711) = province 1466 ✅ Matches CPU array
+Line 85: Owner ID 799 ❌ Wrong (expected 151)
+```
+
+**Analysis:** Double-flipping made both C# and shader see the flipped data. Map still upside down.
+
+### Attempt 3: Remove All Y-Flips
+**Hypothesis:** If C# ReadPixels works without Y-flip, compute shader should too
+
+**Implementation:** Reverted all Y-flip logic, using direct coordinates everywhere
+
+**Final Result (Current State):**
+```
+Line 62: CPU array at [711, 2767] = province 2751 (R=191 G=10) ✅
+Line 65: ProvinceIDTexture at (2767,711) = province 2751 ✅ Correct
+Line 85: ProvinceOwnerTexture at (2767,711) = owner ID 6 ❌ Wrong (expected 151 for Castile)
+```
+
+### Current Status: Mysterious Data Reading Issue
+
+**What We Know:**
+1. ✅ C# can read province 2751 correctly from ProvinceIDTexture
+2. ✅ Buffer has correct owner data: buffer[2751] = 151
+3. ✅ Instance IDs match throughout the pipeline
+4. ✅ Compute shader IS executing at correct pixel coordinates
+5. ❌ Compute shader writes owner ID 6 instead of 151
+
+**Hypotheses Remaining:**
+1. **Compute shader reading wrong province ID** - Shader might be reading province data that doesn't match what C# sees
+   - Evidence: Owner ID 6 suggests it looked up the wrong province in the buffer
+   - Next test: Add debug code to write *province ID* instead of owner ID to see what shader actually reads
+
+2. **Timing/synchronization issue** - Graphics.Blit might not complete before compute shader runs
+   - Evidence: None yet, but worth investigating
+   - Next test: Add explicit GPU fence/sync after Graphics.Blit
+
+3. **Texture Load() vs ReadPixels behavior difference** - Unknown DirectX/Unity behavior
+   - Evidence: Both claim to read from same texture but get different results
+   - Next test: Research Unity forums for Load() behavior on RenderTextures
+
+**User Feedback:** "its flipped right now, but still have the fragmented colors"
+**Session End:** User requested documentation update and session end
+
+### Next Session Priorities
+1. **Add debug code to write province ID instead of owner ID** - See what shader actually reads
+2. **Add GPU synchronization after Graphics.Blit** - Ensure blit completes before shader runs
+3. **Research Unity's Texture2D.Load() behavior** - Check if there are known platform quirks
+4. **Consider reverting to old CPU-based owner texture population temporarily** - To verify if issue is specific to compute shader approach
+
+---
+
 *Template Version: 1.0 - Created 2025-09-30*
-*Session completed but rendering issue remains - continuation needed*
+*Session 2 completed - Coordinate system debugging attempted, issue remains*
+*Status: Architecture correct, compute shader executes, but reads wrong data*

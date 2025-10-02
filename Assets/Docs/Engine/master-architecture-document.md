@@ -177,6 +177,8 @@ See [Texture-Based Map Guide](texture-based-map-guide.md) for shader implementat
 
 Border generation uses GPU compute shaders to detect province boundaries in parallel, processing all 10,000+ provinces in ~2ms.
 
+**CRITICAL:** When multiple compute shaders access the same RenderTexture sequentially, **explicit GPU synchronization is required** to avoid race conditions. See [Unity Compute Shader Coordination](../Log/learnings/unity-compute-shader-coordination.md) for patterns and pitfalls.
+
 See [Texture-Based Map Guide](texture-based-map-guide.md) for compute shader implementation.
 
 ### 2.4 Province Selection Without Raycasting
@@ -234,21 +236,25 @@ public class ChangeOwnerCommand : ICommand {
 
 ### 3.2 Fixed-Point Deterministic Math
 
+**All simulation math uses FixedPoint64 (32.32 format) for cross-platform determinism.**
+
+See **[Fixed-Point Determinism Decision Record](../Log/decisions/fixed-point-determinism.md)** for complete rationale, implementation guide, and examples.
+
 ```csharp
 // NEVER use float for gameplay calculations
 public struct FixedPoint64 {
-    long rawValue;  // Fixed-point representation
-    
+    long rawValue;  // Fixed-point representation (32.32 format)
+
     public static FixedPoint64 operator *(FixedPoint64 a, FixedPoint64 b) {
-        return new FixedPoint64 { 
-            rawValue = (a.rawValue * b.rawValue) >> 32 
+        return new FixedPoint64 {
+            rawValue = (a.rawValue * b.rawValue) >> 32
         };
     }
 }
 
-// Usage
-FixedPoint64 tax = baseTax * provinceDevelopment;  // Deterministic
-// float tax = baseTax * provinceDevelopment;      // NON-deterministic!
+// Usage - ALWAYS use exact fractions
+FixedPoint64 tax = baseTax * FixedPoint64.FromFraction(development, 100);  // Deterministic
+// float tax = baseTax * provinceDevelopment;                              // NON-deterministic!
 ```
 
 ### 3.3 Network Synchronization
@@ -527,7 +533,9 @@ See [Performance Architecture](performance-architecture-guide.md) for testing st
 - ❌ Mesh-based borders
 - ❌ Floating-point in simulation
 - ❌ Unbounded data growth
-- ❌ Synchronous GPU readbacks
+- ❌ **Unsynchronized GPU compute shader dispatches** (causes race conditions - see [Compute Shader Coordination](../Log/learnings/unity-compute-shader-coordination.md))
+- ❌ **Mixed Texture2D/RWTexture2D bindings** for same RenderTexture (causes UAV/SRV state transition failures)
+- ❌ **Y-flipping in compute shaders** (breaks coordinate systems - Y-flip only in fragment shader UVs)
 - ❌ Update-everything-every-frame
 
 ### 8.3 Key Innovations
@@ -615,6 +623,12 @@ Follow the implementation roadmap, avoid the anti-patterns, and you'll have a gr
 - **[Time System Architecture](time-system-architecture.md)** - Update scheduling and dirty flag systems
 - **[Data Flow Architecture](data-flow-architecture.md)** - Hot/cold data separation and data linking
 - **[Data Linking Architecture](data-linking-architecture.md)** - Reference resolution and cross-linking
+
+### Learning Documents (Critical Knowledge)
+- **[Unity Compute Shader Coordination](../Log/learnings/unity-compute-shader-coordination.md)** - GPU race conditions, texture binding patterns, coordinate systems (MUST READ before writing compute shaders)
+
+### Decision Records (Architecture Decisions)
+- **[Fixed-Point Determinism](../Log/decisions/fixed-point-determinism.md)** - Why FixedPoint64 (32.32 format) and 360-day calendar (MUST READ before implementing any simulation logic)
 
 ### Planning Documents (Future)
 - **[Save/Load Design](../Planning/save-load-design.md)** - Persistence and replay systems *(Planning - not implemented)*
