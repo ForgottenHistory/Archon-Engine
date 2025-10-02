@@ -11,6 +11,8 @@
 
 This learning document captures critical patterns and pitfalls when using **Unity compute shaders with RenderTextures**, specifically for dependent GPU operations where one compute shader writes data that another immediately reads.
 
+**Companion Document:** [unity-gpu-debugging-guide.md](unity-gpu-debugging-guide.md) - Generic GPU debugging tools, CommandBuffer patterns, and optimization techniques.
+
 **You MUST read this before:**
 - Writing new compute shaders that read from RenderTextures
 - Debugging coordinate system issues in GPU pipelines
@@ -39,6 +41,25 @@ This learning document captures critical patterns and pitfalls when using **Unit
 **Root Causes (2 separate bugs):**
 1. GPU race condition - second compute shader dispatched before first completed writes
 2. Texture binding mismatch - UAV vs SRV state transition not handled by Unity
+
+### Could RenderDoc Have Helped?
+
+**YES - would have reduced 8 hours to ~30 minutes.**
+
+RenderDoc is a free GPU frame capture tool that shows:
+- Actual GPU memory contents (what's REALLY in that texture)
+- UAV vs SRV binding states (the binding mismatch would be visible immediately)
+- GPU timeline (race conditions show up as overlapping operations)
+
+**Quick setup:**
+1. Download RenderDoc: https://renderdoc.org/
+2. Launch Unity through RenderDoc
+3. Press F12 to capture frame
+4. Inspect texture contents and shader bindings
+
+For detailed RenderDoc usage and other GPU debugging tools, see [unity-gpu-debugging-guide.md](unity-gpu-debugging-guide.md).
+
+**Use RenderDoc FIRST when debugging GPU issues.**
 
 ---
 
@@ -145,6 +166,37 @@ IEnumerator UpdateOwnerTextureAsync()
 
 **Trade-off:** Adds frame latency, but doesn't stall CPU.
 
+### Better Alternative: CommandBuffer (Recommended)
+
+**For complex pipelines, use CommandBuffer instead of manual sync:**
+
+```csharp
+using UnityEngine.Rendering;
+
+CommandBuffer gpuPipeline = new CommandBuffer();
+gpuPipeline.name = "Map Texture Pipeline";
+
+// Queue all GPU operations
+gpuPipeline.SetComputeTextureParam(shaderA, kernelA, "OutputTexture", texture);
+gpuPipeline.DispatchCompute(shaderA, kernelA, groupsX, groupsY, 1);
+
+// Unity handles GPU sync automatically
+gpuPipeline.SetComputeTextureParam(shaderB, kernelB, "InputTexture", texture);
+gpuPipeline.DispatchCompute(shaderB, kernelB, groupsX, groupsY, 1);
+
+// Execute entire pipeline (no CPU blocking!)
+Graphics.ExecuteCommandBuffer(gpuPipeline);
+gpuPipeline.Release();
+```
+
+**Benefits:**
+- No CPU blocking (GPU and CPU work in parallel)
+- Unity handles GPU-side sync automatically
+- Cleaner code for complex pipelines
+- Better for both initialization AND hot path
+
+**See [unity-gpu-debugging-guide.md](unity-gpu-debugging-guide.md#commandbuffer-api---better-gpu-pipeline-management) for full details.**
+
 ---
 
 ## Issue 2: Texture Binding - UAV vs SRV State Transitions
@@ -194,6 +246,8 @@ void PopulateOwners(uint3 id : SV_DispatchThreadID)
 - ReadPixels() works fine (forces state transition)
 - No error messages, just incorrect results
 - Data appears to come from "random" memory locations
+
+**For hardware-level explanation of UAV vs SRV and why mixing them breaks, see [unity-gpu-debugging-guide.md](unity-gpu-debugging-guide.md#texture-binding-uav-vs-srv-deep-dive).**
 
 ### The Solution: Uniform RWTexture2D Binding
 
@@ -698,6 +752,9 @@ computeShader.Dispatch(kernel, threadGroupsX, threadGroupsY, 1);
 
 ## Related Sessions & Code References
 
+### Related Documentation
+- **[unity-gpu-debugging-guide.md](unity-gpu-debugging-guide.md)** - GPU debugging tools, CommandBuffer patterns, optimization techniques
+
 ### Sessions Where This Was Learned
 - [2025-10-01-2-political-mapmode-gpu-migration.md](../2025-10-01/2025-10-01-2-political-mapmode-gpu-migration.md) - Initial GPU race condition discovery
 - [2025-10-02-1-gpu-compute-shader-coordination-fix.md](../2025-10-02/2025-10-02-1-gpu-compute-shader-coordination-fix.md) - Complete solution
@@ -745,13 +802,16 @@ computeShader.Dispatch(kernel, threadGroupsX, threadGroupsY, 1);
 
 ## Summary: The Golden Rules
 
-1. **GPU Dispatch is Async** - Always sync with `AsyncGPUReadback.WaitForCompletion()` for dependent shaders
-2. **Always RWTexture2D** - Use for all compute shader RenderTexture access, even read-only
-3. **No Y-Flip in Compute** - Use raw `id.xy` coordinates, Y-flip ONLY in fragment shader UVs
-4. **Test Coordinates** - Track data through entire pipeline with known test values
-5. **Avoid Graphics.Blit** - Use compute shaders for full coordinate system control
+1. **Use RenderDoc First** - Debug GPU issues with frame capture, not guesswork (saves hours)
+2. **GPU Dispatch is Async** - Sync dependent shaders with `CommandBuffer` (preferred) or `AsyncGPUReadback.WaitForCompletion()`
+3. **Always RWTexture2D** - Use for all compute shader RenderTexture access, even read-only
+4. **No Y-Flip in Compute** - Use raw `id.xy` coordinates, Y-flip ONLY in fragment shader UVs
+5. **Test Coordinates** - Track data through entire pipeline with known test values
+6. **Avoid Graphics.Blit** - Use compute shaders for full coordinate system control
 
 **Follow these rules = No 8-hour debugging sessions.**
+
+**For deeper GPU debugging tools, optimization techniques, and best practices, see [unity-gpu-debugging-guide.md](unity-gpu-debugging-guide.md).**
 
 ---
 
