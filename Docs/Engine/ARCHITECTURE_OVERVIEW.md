@@ -26,9 +26,10 @@
 | **Data Access** | ✅ Implemented | [core-data-access-guide](core-data-access-guide.md) | ~400 |
 | **Data Linking** | ✅ Implemented | [data-linking-architecture](data-linking-architecture.md) | ~350 |
 | **Data Flow** | ⚠️ Partial | [data-flow-architecture](data-flow-architecture.md) | ~450 |
+| **Data Loading** | ✅ Implemented | [data-loading-architecture](data-loading-architecture.md) | ~780 |
 | **Time System** | ✅ Implemented | [time-system-architecture](time-system-architecture.md) | ~600 |
 | **Performance** | ⚠️ Partial | [performance-architecture-guide](performance-architecture-guide.md) | ~450 |
-| **Unity/Burst** | ⚠️ Partial | [unity-burst-jobs-architecture](unity-burst-jobs-architecture.md) | ~580 |
+| **Unity/Burst** | ⚠️ Partial | [../Log/learnings/unity-burst-jobs-architecture](../Log/learnings/unity-burst-jobs-architecture.md) | ~580 |
 
 ### Future Systems (Planning/)
 

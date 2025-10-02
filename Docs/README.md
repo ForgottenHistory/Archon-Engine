@@ -12,16 +12,17 @@ Assets/Docs/
 ├── SESSION_START_GUIDE.md ⭐ Quick reference for starting sessions
 ├── DOCUMENTATION_AUDIT.md (quality assessment & history)
 │
-├── Engine/ (9 docs - IMPLEMENTED & PARTIAL systems)
+├── Engine/ (10 docs - IMPLEMENTED & PARTIAL systems)
 │   ├── ARCHITECTURE_OVERVIEW.md ⭐ START HERE
 │   ├── master-architecture-document.md
 │   ├── map-system-architecture.md (consolidated from 4 docs)
 │   ├── core-data-access-guide.md
 │   ├── data-linking-architecture.md
 │   ├── data-flow-architecture.md
+│   ├── data-loading-architecture.md (JSON5 + Burst loaders)
 │   ├── time-system-architecture.md
 │   ├── performance-architecture-guide.md
-│   └── unity-burst-jobs-architecture.md
+│   └── engine-game-separation.md
 │
 ├── Planning/ (5 docs - FUTURE features, not implemented)
 │   ├── README.md
@@ -114,20 +115,18 @@ CrossReferenceBuilder, ReferenceResolver, data validation
 **data-flow-architecture.md** (⚠️ Partial)
 System communication, command pattern, event system
 
+**data-loading-architecture.md** (✅ Implemented)
+JSON5 + Burst hybrid loading: BurstProvinceHistoryLoader, BurstCountryLoader
+Two-phase architecture: JSON5 parsing → Burst parallel processing
+
 **time-system-architecture.md** (✅ Implemented)
 TimeManager, layered update frequencies, dirty flags
 
 **performance-architecture-guide.md** (⚠️ Partial)
 Cache patterns, Structure of Arrays, hot/cold separation
 
-**save-load-architecture.md** (⚠️ Unknown)
-Command-based save system design (implementation status unclear)
-
-**error-recovery-architecture.md** (⚠️ Mostly Speculative)
-Error handling principles (advanced features not implemented)
-
-**unity-burst-jobs-architecture.md** (⚠️ Partial | 📚 Reference)
-Burst compiler tutorial and patterns (BurstProvinceHistoryLoader exists)
+**engine-game-separation.md** (✅ Implemented)
+Engine-game separation patterns, extension points, namespace organization
 
 ### Planning/ (Future Features)
 

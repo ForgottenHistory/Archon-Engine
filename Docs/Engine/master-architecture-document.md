@@ -623,6 +623,7 @@ Follow the implementation roadmap, avoid the anti-patterns, and you'll have a gr
 - **[Time System Architecture](time-system-architecture.md)** - Update scheduling and dirty flag systems
 - **[Data Flow Architecture](data-flow-architecture.md)** - Hot/cold data separation and data linking
 - **[Data Linking Architecture](data-linking-architecture.md)** - Reference resolution and cross-linking
+- **[Data Loading Architecture](data-loading-architecture.md)** - JSON5 + Burst hybrid loading system (BurstProvinceHistoryLoader, BurstCountryLoader)
 
 ### Learning Documents (Critical Knowledge)
 - **[Unity Compute Shader Coordination](../Log/learnings/unity-compute-shader-coordination.md)** - GPU race conditions, texture binding patterns, coordinate systems (MUST READ before writing compute shaders)
