@@ -202,8 +202,19 @@ namespace Core.Systems
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return UNOWNED_COUNTRY;
 
-            return provinceStates[arrayIndex].ownerID;
+            var ownerID = provinceStates[arrayIndex].ownerID;
+
+            // DEBUG: Log first few queries for Cuenca provinces
+            if ((provinceId == 2751 || provinceId == 817) && queryCount < 5)
+            {
+                DominionLogger.Log($"ProvinceSystem.GetProvinceOwner: Province {provinceId} → ownerID={ownerID}, arrayIndex={arrayIndex}");
+                queryCount++;
+            }
+
+            return ownerID;
         }
+
+        private static int queryCount = 0; // DEBUG counter
 
         /// <summary>
         /// Set province owner and emit events
@@ -465,9 +476,21 @@ namespace Core.Systems
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return;
 
+            // DEBUG: Log Spanish Cuenca and Incan Cuenca
+            if (provinceId == 2751 || provinceId == 817)
+            {
+                DominionLogger.Log($"ProvinceSystem.ApplyInitialState: Province {provinceId} BEFORE ToProvinceState() → initialState.OwnerID={initialState.OwnerID}");
+            }
+
             // Convert to hot ProvinceState and store (8 bytes)
             var state = initialState.ToProvinceState();
             provinceStates[arrayIndex] = state;
+
+            // DEBUG: Log Spanish Cuenca and Incan Cuenca
+            if (provinceId == 2751 || provinceId == 817)
+            {
+                DominionLogger.Log($"ProvinceSystem.ApplyInitialState: Province {provinceId} AFTER ToProvinceState() → state.ownerID={state.ownerID}, arrayIndex={arrayIndex}");
+            }
 
             // Add initial ownership event to cold data (history database)
             if (initialState.OwnerID != UNOWNED_COUNTRY)

@@ -39,14 +39,17 @@ float2 GetOwnerUV(uint provinceID, float2 baseUV)
 float2 GetColorUV(uint ownerID)
 {
     // Map owner ID to palette texture coordinate
-    // Palette is 1024x1, so X = ownerID/1024, Y = 0.5
-    return float2(ownerID / 1024.0, 0.5);
+    // Palette is 1024x1, so X = (ownerID + 0.5)/1024 to hit pixel center, Y = 0.5
+    // The +0.5 offset ensures we sample the pixel center, not the boundary
+    return float2((ownerID + 0.5) / 1024.0, 0.5);
 }
 
 // Sample province ID with corrected UV coordinates
 uint SampleProvinceID(float2 uv)
 {
-    // Fix flipped UV coordinates - flip only Y
+    // Fragment shader UVs: (0,0)=bottom-left, (1,1)=top-right
+    // RenderTexture: (0,0)=top-left
+    // Need Y-flip to convert UV space to texture space
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
 
     // Sample province ID texture with point filtering
@@ -57,17 +60,20 @@ uint SampleProvinceID(float2 uv)
 // Sample owner ID for a given province
 uint SampleOwnerID(float2 uv)
 {
-    // Fix flipped UV coordinates
+    // Fragment shader UVs: (0,0)=bottom-left, (1,1)=top-right
+    // RenderTexture: (0,0)=top-left
+    // Need Y-flip to convert UV space to texture space
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
 
-    // Sample owner texture - decode 16-bit owner ID from RG channels
-    float2 ownerData = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture, correctedUV).rg;
+    // Sample owner texture - R16 format stores 16-bit uint directly
+    // Read as float (normalized 0.0-1.0), then convert to uint16 (0-65535)
+    float ownerData = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture, correctedUV).r;
 
-    // Decode 16-bit owner ID: R = low byte, G = high byte
-    uint lowByte = (uint)(ownerData.r * 255.0 + 0.5);
-    uint highByte = (uint)(ownerData.g * 255.0 + 0.5);
+    // Convert normalized float to uint16
+    // R16 format: 0.0-1.0 maps to 0-65535
+    uint ownerID = (uint)(ownerData * 65535.0 + 0.5);
 
-    return lowByte | (highByte << 8);
+    return ownerID;
 }
 
 // Apply borders to base color
@@ -92,7 +98,6 @@ float4 ApplyHighlights(float4 baseColor, float2 uv)
 // NOTE: Since _ProvinceTerrainTexture now contains colors, we determine type from color
 uint SampleTerrainType(float2 uv)
 {
-    // Fix flipped UV coordinates
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
 
     // Sample terrain color and determine type from it
@@ -114,15 +119,15 @@ uint SampleTerrainType(float2 uv)
 float4 SampleTerrainColor(uint terrainType)
 {
     // Map terrain type to palette texture coordinate
-    // Terrain palette is 32x1, so X = terrainType/32, Y = 0.5
-    float2 terrainUV = float2(terrainType / 32.0, 0.5);
+    // Terrain palette is 32x1, so X = (terrainType + 0.5)/32 to hit pixel center, Y = 0.5
+    // The +0.5 offset ensures we sample the pixel center, not the boundary
+    float2 terrainUV = float2((terrainType + 0.5) / 32.0, 0.5);
     return SAMPLE_TEXTURE2D(_TerrainColorPalette, sampler_TerrainColorPalette, terrainUV);
 }
 
 // Sample terrain color directly from terrain.bmp texture at given UV
 float4 SampleTerrainColorDirect(float2 uv)
 {
-    // Fix flipped UV coordinates
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
 
     // Sample terrain color directly from terrain bitmap texture

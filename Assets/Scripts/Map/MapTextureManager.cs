@@ -17,8 +17,8 @@ namespace Map.Rendering
         [SerializeField] private bool logTextureCreation = true;
 
         // Core map textures
-        private Texture2D provinceIDTexture;      // R16G16 format for province IDs
-        private RenderTexture provinceOwnerTexture;   // RG16 format for province owners (needs UAV for compute shader writes)
+        private RenderTexture provinceIDTexture;      // ARGB32 RenderTexture for province IDs (GPU-accessible for compute shaders)
+        private RenderTexture provinceOwnerTexture;   // RFloat format for province owners (needs UAV for compute shader writes)
         private Texture2D provinceColorTexture;   // RGBA32 format for province colors (legacy)
         private Texture2D provinceDevelopmentTexture; // RGBA32 format for development visualization
         private Texture2D provinceTerrainTexture; // RGBA32 format for terrain colors from terrain.bmp
@@ -45,7 +45,7 @@ namespace Map.Rendering
         public int MapWidth => mapWidth;
         public int MapHeight => mapHeight;
 
-        public Texture2D ProvinceIDTexture => provinceIDTexture;
+        public RenderTexture ProvinceIDTexture => provinceIDTexture;
         public RenderTexture ProvinceOwnerTexture => provinceOwnerTexture;
         public Texture2D ProvinceColorTexture => provinceColorTexture;
         public Texture2D ProvinceDevelopmentTexture => provinceDevelopmentTexture;
@@ -75,44 +75,47 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"MapTextureManager initialized with {mapWidth}x{mapHeight} textures");
+                DominionLogger.LogMapInit($"MapTextureManager initialized with {mapWidth}x{mapHeight} textures");
             }
         }
 
         /// <summary>
-        /// Create province ID texture in R16G16 format for 65k province support
+        /// Create province ID texture as RenderTexture for GPU accessibility
+        /// Uses ARGB32 format (RG16 not supported as RenderTexture on all platforms)
+        /// Will be populated by compute shader instead of CPU SetPixel()
         /// </summary>
         private void CreateProvinceIDTexture()
         {
-            provinceIDTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.RG16, false);
-            provinceIDTexture.name = "ProvinceID_Texture";
+            provinceIDTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.ARGB32);
+            provinceIDTexture.name = "ProvinceID_RenderTexture";
+            provinceIDTexture.filterMode = FilterMode.Point;     // No filtering for pixel-perfect
+            provinceIDTexture.wrapMode = TextureWrapMode.Clamp;  // No wrapping
+            provinceIDTexture.useMipMap = false;
+            provinceIDTexture.autoGenerateMips = false;
+            provinceIDTexture.enableRandomWrite = true;  // Enable UAV for compute shader writes
+            provinceIDTexture.Create();
 
-            ConfigureMapTexture(provinceIDTexture);
-
-            // Initialize with zero (no province)
-            var pixels = new Color32[mapWidth * mapHeight];
-            for (int i = 0; i < pixels.Length; i++)
-            {
-                pixels[i] = new Color32(0, 0, 0, 255); // ID 0 = no province
-            }
-
-            provinceIDTexture.SetPixels32(pixels);
-            provinceIDTexture.Apply(false);
+            // Clear to zero (no province) using GPU
+            RenderTexture.active = provinceIDTexture;
+            GL.Clear(true, true, Color.black);
+            RenderTexture.active = null;
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"Created Province ID texture: {mapWidth}x{mapHeight} RG16 format");
+                DominionLogger.LogMapInit($"Created Province ID texture: {mapWidth}x{mapHeight} ARGB32 RenderTexture (GPU-accessible)");
+                DominionLogger.LogMapInit($"ProvinceIDTexture instance ID: {provinceIDTexture.GetInstanceID()}");
             }
         }
 
         /// <summary>
-        /// Create province owner render texture in RG16 format for 16-bit country IDs
+        /// Create province owner render texture for 16-bit country IDs
         /// Uses RenderTexture (not Texture2D) to allow compute shader writes
-        /// Uses two 8-bit channels (R and G) to encode owner ID 0-65535
+        /// Uses RFloat format: 32-bit float (needed for RWTexture2D<float> UAV support)
+        /// Stores owner ID as normalized float: ownerID / 65535.0
         /// </summary>
         private void CreateProvinceOwnerTexture()
         {
-            provinceOwnerTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.RG16);
+            provinceOwnerTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.RFloat);
             provinceOwnerTexture.name = "ProvinceOwner_RenderTexture";
             provinceOwnerTexture.filterMode = FilterMode.Point;
             provinceOwnerTexture.wrapMode = TextureWrapMode.Clamp;
@@ -128,7 +131,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"Created Province Owner RenderTexture: {mapWidth}x{mapHeight} RG16 format with UAV support");
+                DominionLogger.LogMapInit($"Created Province Owner RenderTexture: {mapWidth}x{mapHeight} RFloat format with UAV support");
             }
         }
 
@@ -154,7 +157,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"Created Province Color texture: {mapWidth}x{mapHeight} RGBA32 format");
+                DominionLogger.LogMapInit($"Created Province Color texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
         }
 
@@ -181,7 +184,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"Created Province Development texture: {mapWidth}x{mapHeight} RGBA32 format");
+                DominionLogger.LogMapInit($"Created Province Development texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
         }
 
@@ -209,7 +212,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"Created Province Terrain texture: {mapWidth}x{mapHeight} RGBA32 format");
+                DominionLogger.LogMapInit($"Created Province Terrain texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
         }
 
@@ -241,7 +244,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"Created Province Color Palette: 256×1 RGBA32 format");
+                DominionLogger.LogMapInit($"Created Province Color Palette: 256×1 RGBA32 format");
             }
         }
 
@@ -288,7 +291,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"Created Border RenderTexture: {mapWidth}x{mapHeight} R8 format");
+                DominionLogger.LogMapInit($"Created Border RenderTexture: {mapWidth}x{mapHeight} R8 format");
             }
         }
 
@@ -313,7 +316,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.Log($"Created Highlight RenderTexture: {mapWidth}x{mapHeight} ARGB32 format");
+                DominionLogger.LogMapInit($"Created Highlight RenderTexture: {mapWidth}x{mapHeight} ARGB32 format");
             }
         }
 
@@ -328,22 +331,21 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Update province ID at specific pixel coordinates using proper R16G16 packing
+        /// Update province ID at specific pixel coordinates
+        /// DEPRECATED: ProvinceIDTexture is now a RenderTexture populated by compute shader
+        /// This method is kept for backwards compatibility but does nothing
+        /// Use PopulateProvinceIDTextureFromBMP compute shader instead
         /// </summary>
-        /// <param name="x">X coordinate</param>
-        /// <param name="y">Y coordinate</param>
-        /// <param name="provinceID">Province ID (0-65535)</param>
         public void SetProvinceID(int x, int y, ushort provinceID)
         {
-            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return;
-
-            // Use ProvinceIDEncoder for consistent packing
-            Color32 packedColor = Province.ProvinceIDEncoder.PackProvinceID(provinceID);
-            provinceIDTexture.SetPixel(x, y, packedColor);
+            // DEPRECATED: Cannot use SetPixel on RenderTexture
+            // Province ID texture must be populated via compute shader
+            DominionLogger.LogWarning($"SetProvinceID is deprecated - use compute shader to populate ProvinceIDTexture");
         }
 
         /// <summary>
-        /// Get province ID at specific coordinates
+        /// Get province ID at specific coordinates using GPU readback
+        /// NOTE: This is slow (GPU→CPU readback) - use sparingly, only for mouse picking
         /// </summary>
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
@@ -352,7 +354,16 @@ namespace Map.Rendering
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return 0;
 
-            Color32 packedColor = provinceIDTexture.GetPixel(x, y);
+            // Read single pixel from RenderTexture (slow but necessary for mouse picking)
+            RenderTexture.active = provinceIDTexture;
+            Texture2D temp = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+            temp.ReadPixels(new Rect(x, y, 1, 1), 0, 0);
+            temp.Apply();
+            RenderTexture.active = null;
+
+            Color32 packedColor = temp.GetPixel(0, 0);
+            Object.Destroy(temp);
+
             return Province.ProvinceIDEncoder.UnpackProvinceID(packedColor);
         }
 
@@ -437,7 +448,7 @@ namespace Map.Rendering
         /// </summary>
         public void ApplyTextureChanges()
         {
-            provinceIDTexture.Apply(false);
+            // provinceIDTexture.Apply(false); // RenderTexture - no Apply() method needed
             // provinceOwnerTexture.Apply(false); // RenderTexture - no Apply() method needed
             provinceColorTexture.Apply(false);
             provinceDevelopmentTexture.Apply(false);
@@ -508,11 +519,11 @@ namespace Map.Rendering
             var retrievedTexture = material.GetTexture(ProvinceTerrainTexID);
             if (retrievedTexture == provinceTerrainTexture)
             {
-                DominionLogger.Log($"MapTextureManager: Successfully verified terrain texture binding - instances match");
+                DominionLogger.LogMapInit($"MapTextureManager: Successfully verified terrain texture binding - instances match");
             }
             else
             {
-                DominionLogger.LogError($"MapTextureManager: Terrain texture binding FAILED - set {provinceTerrainTexture?.GetInstanceID()}, got {retrievedTexture?.GetInstanceID()}");
+                DominionLogger.LogMapInitError($"MapTextureManager: Terrain texture binding FAILED - set {provinceTerrainTexture?.GetInstanceID()}, got {retrievedTexture?.GetInstanceID()}");
             }
             material.SetTexture(ProvinceColorPaletteID, provinceColorPalette);
             material.SetTexture(BorderTexID, borderTexture);
@@ -521,11 +532,11 @@ namespace Map.Rendering
             // Debug: Verify terrain texture binding
             if (provinceTerrainTexture != null)
             {
-                DominionLogger.Log($"MapTextureManager: Bound terrain texture instance {provinceTerrainTexture.GetInstanceID()} ({provinceTerrainTexture.name}) size {provinceTerrainTexture.width}x{provinceTerrainTexture.height} to material");
+                DominionLogger.LogMapInit($"MapTextureManager: Bound terrain texture instance {provinceTerrainTexture.GetInstanceID()} ({provinceTerrainTexture.name}) size {provinceTerrainTexture.width}x{provinceTerrainTexture.height} to material");
             }
             else
             {
-                DominionLogger.LogWarning("MapTextureManager: Terrain texture is null when binding to material!");
+                DominionLogger.LogMapInitWarning("MapTextureManager: Terrain texture is null when binding to material!");
             }
         }
 
@@ -546,7 +557,7 @@ namespace Map.Rendering
         /// </summary>
         private void ReleaseTextures()
         {
-            if (provinceIDTexture != null) DestroyImmediate(provinceIDTexture);
+            if (provinceIDTexture != null) provinceIDTexture.Release();  // RenderTexture uses Release()
             if (provinceOwnerTexture != null) provinceOwnerTexture.Release();  // RenderTexture uses Release(), not DestroyImmediate()
             if (provinceColorTexture != null) DestroyImmediate(provinceColorTexture);
             if (provinceColorPalette != null) DestroyImmediate(provinceColorPalette);

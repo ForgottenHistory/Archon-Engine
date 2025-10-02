@@ -42,7 +42,7 @@ namespace Map.Loading
         {
             if (logLoadingProgress)
             {
-                DominionLogger.Log("MapDataLoader: Getting province data from Core simulation systems...");
+                DominionLogger.LogMapInit("MapDataLoader: Getting province data from Core simulation systems...");
             }
 
             // Get GameState to access simulation data
@@ -71,7 +71,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.Log($"MapDataLoader: Loading province bitmap for rendering: {bmpPath}");
+                    DominionLogger.LogMapInit($"MapDataLoader: Loading province bitmap for rendering: {bmpPath}");
                 }
 
                 // Load province map for visual data only (Core already has the simulation data)
@@ -85,7 +85,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.Log($"MapDataLoader: Successfully loaded province bitmap with {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height} pixels");
+                    DominionLogger.LogMapInit($"MapDataLoader: Successfully loaded province bitmap with {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height} pixels");
                 }
 
                 // Load terrain bitmap for terrain colors
@@ -123,10 +123,10 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.Log($"MapDataLoader: Loading province map from: {bmpPath}");
+                DominionLogger.LogMapInit($"MapDataLoader: Loading province map from: {bmpPath}");
                 if (definitionPath != null)
                 {
-                    DominionLogger.Log($"MapDataLoader: Using definition file: {definitionPath}");
+                    DominionLogger.LogMapInit($"MapDataLoader: Using definition file: {definitionPath}");
                 }
             }
 
@@ -143,11 +143,11 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.Log($"MapDataLoader: Successfully processed province colors from bitmap");
-                    DominionLogger.Log($"MapDataLoader: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}");
+                    DominionLogger.LogMapInit($"MapDataLoader: Successfully processed province colors from bitmap");
+                    DominionLogger.LogMapInit($"MapDataLoader: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}");
                     if (provinceResult.HasDefinitions)
                     {
-                        DominionLogger.Log($"MapDataLoader: Loaded {provinceResult.Definitions.AllDefinitions.Length} province definitions");
+                        DominionLogger.LogMapInit($"MapDataLoader: Loaded {provinceResult.Definitions.AllDefinitions.Length} province definitions");
                     }
                 }
 
@@ -179,7 +179,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.Log("MapDataLoader: Generated province borders using GPU compute shader");
+                    DominionLogger.LogMapInit("MapDataLoader: Generated province borders using GPU compute shader");
                 }
             }
         }
@@ -205,7 +205,7 @@ namespace Map.Loading
             {
                 if (logLoadingProgress)
                 {
-                    DominionLogger.Log($"MapDataLoader: Loading terrain bitmap: {terrainBmpPath}");
+                    DominionLogger.LogMapInit($"MapDataLoader: Loading terrain bitmap: {terrainBmpPath}");
                 }
 
                 // Load terrain bitmap
@@ -219,7 +219,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.Log($"MapDataLoader: Successfully loaded terrain bitmap with {terrainResult.Width}x{terrainResult.Height} pixels");
+                    DominionLogger.LogMapInit($"MapDataLoader: Successfully loaded terrain bitmap with {terrainResult.Width}x{terrainResult.Height} pixels");
                 }
 
                 // Populate terrain texture with bitmap colors
@@ -227,7 +227,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.Log("MapDataLoader: Populated terrain texture with colors from terrain.bmp");
+                    DominionLogger.LogMapInit("MapDataLoader: Populated terrain texture with colors from terrain.bmp");
                 }
 
                 // Dispose terrain result to free Persistent allocations
@@ -255,7 +255,7 @@ namespace Map.Loading
             // DEBUG: Log texture instance details
             if (logLoadingProgress)
             {
-                DominionLogger.Log($"MapDataLoader: Populating terrain texture instance {terrainTexture.GetInstanceID()} ({terrainTexture.name}) size {terrainTexture.width}x{terrainTexture.height}");
+                DominionLogger.LogMapInit($"MapDataLoader: Populating terrain texture instance {terrainTexture.GetInstanceID()} ({terrainTexture.name}) size {terrainTexture.width}x{terrainTexture.height}");
             }
             int width = terrainTexture.width;
             int height = terrainTexture.height;
@@ -269,7 +269,7 @@ namespace Map.Loading
             // Debug: Log terrain bitmap format information
             if (logLoadingProgress)
             {
-                DominionLogger.Log($"MapDataLoader: Terrain bitmap format - Width: {terrainData.Width}, Height: {terrainData.Height}, BitsPerPixel: {terrainData.BitsPerPixel}");
+                DominionLogger.LogMapInit($"MapDataLoader: Terrain bitmap format - Width: {terrainData.Width}, Height: {terrainData.Height}, BitsPerPixel: {terrainData.BitsPerPixel}");
             }
 
             int successfulReads = 0;
@@ -373,7 +373,7 @@ namespace Map.Loading
             // Debug: Log read statistics and terrain index distribution
             if (logLoadingProgress)
             {
-                DominionLogger.Log($"MapDataLoader: Terrain bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
+                DominionLogger.LogMapInit($"MapDataLoader: Terrain bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
 
                 // Sample some terrain indices to see what we're actually getting
                 if (terrainData.BitsPerPixel == 8)
@@ -395,14 +395,14 @@ namespace Map.Loading
                         }
                     }
 
-                    DominionLogger.Log($"MapDataLoader: Terrain indices found in samples: {string.Join(", ", indexCounts.Keys)}");
+                    DominionLogger.LogMapInit($"MapDataLoader: Terrain indices found in samples: {string.Join(", ", indexCounts.Keys)}");
                 }
             }
 
             // Apply terrain colors to texture
             if (logLoadingProgress)
             {
-                DominionLogger.Log($"MapDataLoader: About to apply {pixels.Length} pixels to terrain texture instance {terrainTexture.GetInstanceID()}");
+                DominionLogger.LogMapInit($"MapDataLoader: About to apply {pixels.Length} pixels to terrain texture instance {terrainTexture.GetInstanceID()}");
             }
 
             terrainTexture.SetPixels32(pixels);
@@ -413,7 +413,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.Log($"MapDataLoader: Applied terrain pixels, called Apply(), and forced GPU sync on texture instance {terrainTexture.GetInstanceID()}");
+                DominionLogger.LogMapInit($"MapDataLoader: Applied terrain pixels, called Apply(), and forced GPU sync on texture instance {terrainTexture.GetInstanceID()}");
             }
 
             // Debug: Log some sample terrain colors to verify they're not all black
@@ -423,7 +423,7 @@ namespace Map.Loading
                 Color32 sample2 = pixels[width * height / 2]; // Sample from middle
                 Color32 sample3 = pixels[width * height * 3 / 4]; // Sample from 3/4 through
 
-                DominionLogger.Log($"MapDataLoader: Terrain texture samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]");
+                DominionLogger.LogMapInit($"MapDataLoader: Terrain texture samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]");
             }
 
             // DEBUG: Test sampling the populated texture from C# to verify it has colors
@@ -434,13 +434,13 @@ namespace Map.Loading
                 Color32 sample2 = terrainTexture.GetPixel(1000, 500);
                 Color32 sample3 = terrainTexture.GetPixel(2000, 1000);
 
-                DominionLogger.Log($"MapDataLoader: C# GetPixel samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]");
+                DominionLogger.LogMapInit($"MapDataLoader: C# GetPixel samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]");
 
                 // Also check if the texture is actually readable
                 try
                 {
                     var testRead = terrainTexture.GetPixels32();
-                    DominionLogger.Log($"MapDataLoader: Texture is readable, got {testRead.Length} pixels");
+                    DominionLogger.LogMapInit($"MapDataLoader: Texture is readable, got {testRead.Length} pixels");
                 }
                 catch (System.Exception e)
                 {
@@ -475,6 +475,19 @@ namespace Map.Loading
                     if (logLoadingProgress)
                     {
                         DominionLogger.Log($"MapDataLoader: Also bound textures to coordinator material {mapRenderingCoordinator.MapMaterial.GetInstanceID()}");
+                    }
+
+                    // CRITICAL FIX: Also rebind MapModeDataTextures so CountryColorPalette binding isn't lost!
+                    // MapTextureManager.BindTexturesToMaterial() doesn't bind map mode textures (CountryColorPalette, etc.)
+                    // So we need to also rebind those after rebinding base textures
+                    var mapModeManager = Object.FindFirstObjectByType<Map.MapModes.MapModeManager>();
+                    if (mapModeManager != null && mapModeManager.IsInitialized)
+                    {
+                        mapModeManager.RebindTextures();
+                        if (logLoadingProgress)
+                        {
+                            DominionLogger.Log($"MapDataLoader: Rebound MapModeManager textures (CountryColorPalette, etc.) after base texture rebind");
+                        }
                     }
                 }
             }

@@ -16,7 +16,7 @@ namespace Map.MapModes
         public int MapHeight { get; private set; }
 
         // Core ID textures (always needed)
-        public Texture2D ProvinceIDTexture { get; private set; }      // RG16: Province IDs (0-65535)
+        public RenderTexture ProvinceIDTexture { get; private set; }  // ARGB32 RenderTexture: Province IDs (0-65535)
         public Texture2D ProvinceColorTexture { get; private set; }   // RGBA32: Province colors from bitmap
 
         // Mode-specific data textures (created on demand)
@@ -89,7 +89,7 @@ namespace Map.MapModes
             CreateColorPalettes();
 
             isInitialized = true;
-            DominionLogger.Log($"MapModeDataTextures initialized: {MapWidth}x{MapHeight} - using existing texture system");
+            DominionLogger.LogMapInit($"MapModeDataTextures initialized: {MapWidth}x{MapHeight} - using existing texture system");
         }
 
         // REMOVED: CreateDataTextures method
@@ -139,20 +139,6 @@ namespace Map.MapModes
         }
 
         /// <summary>
-        /// Initialize province ID texture with zeros (will be populated by MapTexturePopulator)
-        /// </summary>
-        private void InitializeProvinceIDTexture()
-        {
-            var pixels = new Color32[MapWidth * MapHeight];
-            for (int i = 0; i < pixels.Length; i++)
-            {
-                pixels[i] = new Color32(0, 0, 0, 255); // Province ID 0 = no province
-            }
-            ProvinceIDTexture.SetPixels32(pixels);
-            ProvinceIDTexture.Apply(false);
-        }
-
-        /// <summary>
         /// Initialize color palettes with default colors
         /// </summary>
         private void InitializeDefaultPalettes()
@@ -165,10 +151,12 @@ namespace Map.MapModes
 
         private void InitializeCountryPalette()
         {
+            // Initialize with ocean color - PoliticalMapMode will populate with real country colors
             var colors = new Color32[1024];
+            Color32 oceanColor = new Color32(25, 25, 112, 255); // Dark blue ocean
             for (int i = 0; i < 1024; i++)
             {
-                colors[i] = GenerateCountryColor(i);
+                colors[i] = oceanColor;
             }
             CountryColorPalette.SetPixels32(colors);
             CountryColorPalette.Apply(false);
@@ -319,6 +307,10 @@ namespace Map.MapModes
             material.SetTexture(CultureColorPaletteID, CultureColorPalette);
             material.SetTexture(ReligionColorPaletteID, ReligionColorPalette);
             material.SetTexture(TerrainColorPaletteID, TerrainColorPalette);
+
+            // Debug: Verify binding
+            var boundTexture = material.GetTexture(CountryColorPaletteID);
+            DominionLogger.LogMapInit($"MapModeDataTextures: Bound _CountryColorPalette - Expected: {CountryColorPalette?.GetInstanceID()}, Got: {boundTexture?.GetInstanceID()}");
         }
 
         /// <summary>

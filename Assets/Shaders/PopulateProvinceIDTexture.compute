@@ -1,0 +1,46 @@
+// Province ID Texture Population Compute Shader
+// Populates ProvinceIDTexture RenderTexture from CPU-provided pixel data
+// Eliminates Graphics.Blit coordinate system issues
+
+#pragma kernel PopulateProvinceIDs
+
+// Input: CPU-provided province ID data as structured buffer
+struct ProvinceIDPixel
+{
+    uint packed; // ARGB32 packed as single uint
+};
+
+StructuredBuffer<ProvinceIDPixel> ProvinceIDPixelData;
+
+// Output: ProvinceIDTexture RenderTexture
+RWTexture2D<float4> ProvinceIDTexture;
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+[numthreads(8, 8, 1)]
+void PopulateProvinceIDs(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Calculate buffer index (row-major order, same as CPU array)
+    uint bufferIndex = id.y * MapWidth + id.x;
+
+    // Read packed ARGB32 from buffer
+    uint packed = ProvinceIDPixelData[bufferIndex].packed;
+
+    // Unpack to float4 (ARGB32 format)
+    float4 color;
+    color.a = ((packed >> 24) & 0xFF) / 255.0;
+    color.r = ((packed >> 16) & 0xFF) / 255.0;
+    color.g = ((packed >> 8) & 0xFF) / 255.0;
+    color.b = (packed & 0xFF) / 255.0;
+
+    // Write directly to GPU without Y-flip
+    // ReadPixels on RenderTexture reads raw GPU memory (no automatic flipping)
+    // Thread (x, y) writes to GPU(x, y) matching CPU array layout
+    ProvinceIDTexture[id.xy] = color;
+}

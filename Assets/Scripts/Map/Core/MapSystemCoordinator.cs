@@ -304,6 +304,13 @@ namespace Map.Core
                 byte b = (byte)(rgb & 0xFF);
                 var color = new Color32(r, g, b, 255);
 
+                // DEBUG: Log Spanish Cuenca
+                if (bitmapProvinceID == 2751 || bitmapProvinceID == 817)
+                {
+                    bool exists = provinceQueries.Exists((ushort)bitmapProvinceID);
+                    DominionLogger.LogMapInit($"MapSystemCoordinator: Province {bitmapProvinceID} in bitmap → Exists in simulation: {exists}");
+                }
+
                 if (provinceQueries.Exists((ushort)bitmapProvinceID))
                 {
                     mapping.AddProvince((ushort)bitmapProvinceID, color);

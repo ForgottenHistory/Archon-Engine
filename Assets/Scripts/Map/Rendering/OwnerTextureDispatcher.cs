@@ -17,6 +17,7 @@ namespace Map.Rendering
 
         [Header("Debug")]
         [SerializeField] private bool logPerformance = true;
+        [SerializeField] private bool debugWriteProvinceIDs = false; // Debug: Write province IDs instead of owner IDs to verify texture reading
 
         // Kernel index
         private int populateOwnersKernel;
@@ -50,7 +51,7 @@ namespace Map.Rendering
                 {
                     string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
                     populateOwnerCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    DominionLogger.Log($"OwnerTextureDispatcher: Found compute shader at {path}");
+                    DominionLogger.LogMapInit($"OwnerTextureDispatcher: Found compute shader at {path}");
                 }
                 #endif
 
@@ -66,7 +67,7 @@ namespace Map.Rendering
 
             if (logPerformance)
             {
-                DominionLogger.Log($"OwnerTextureDispatcher: Initialized with kernel index {populateOwnersKernel}");
+                DominionLogger.LogMapInit($"OwnerTextureDispatcher: Initialized with kernel index {populateOwnersKernel}");
             }
         }
 
@@ -86,7 +87,7 @@ namespace Map.Rendering
         [ContextMenu("Populate Owner Texture")]
         public void PopulateOwnerTexture(ProvinceQueries provinceQueries)
         {
-            DominionLogger.Log("OwnerTextureDispatcher: PopulateOwnerTexture() called");
+            DominionLogger.LogMapInit("OwnerTextureDispatcher: PopulateOwnerTexture() called");
 
             if (populateOwnerCompute == null)
             {
@@ -136,7 +137,7 @@ namespace Map.Rendering
 
                 if (logPerformance)
                 {
-                    DominionLogger.Log($"OwnerTextureDispatcher: Created GPU buffer for {bufferCapacity} provinces");
+                    DominionLogger.LogMapInit($"OwnerTextureDispatcher: Created GPU buffer for {bufferCapacity} provinces");
                 }
             }
 
@@ -177,24 +178,43 @@ namespace Map.Rendering
                     // Log first few non-zero owners
                     if (nonZeroOwners <= 10)
                     {
-                        DominionLogger.Log($"OwnerTextureDispatcher: Province {provinceId} → Owner {ownerId}");
+                        DominionLogger.LogMapInit($"OwnerTextureDispatcher: Province {provinceId} → Owner {ownerId}");
                     }
                 }
             }
 
-            DominionLogger.Log($"OwnerTextureDispatcher: Populated {populatedCount} provinces, {nonZeroOwners} have non-zero owners");
+            DominionLogger.LogMapInit($"OwnerTextureDispatcher: Populated {populatedCount} provinces, {nonZeroOwners} have non-zero owners");
+
+            // DEBUG: Check specific test provinces before uploading to GPU
+            DominionLogger.LogMapInit($"OwnerTextureDispatcher: Buffer at index 2751 (Castile) = {ownerData[2751]} (expected 151)");
+            DominionLogger.LogMapInit($"OwnerTextureDispatcher: Buffer at index 817 (Inca) = {ownerData[817]} (expected 731)");
 
             // Upload to GPU
             provinceOwnerBuffer.SetData(ownerData);
 
-            // Set compute shader parameters
-            populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
+            // ProvinceIDTexture is now a RenderTexture, so compute shader can read it directly
+            var provinceIDTex = textureManager.ProvinceIDTexture;
+
+            // Set compute shader parameters - direct binding, no temporary copy needed
+            populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceIDTexture", provinceIDTex);
             populateOwnerCompute.SetBuffer(populateOwnersKernel, "ProvinceOwnerBuffer", provinceOwnerBuffer);
             populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
+
+            // DEBUG: Verify texture binding
+            DominionLogger.LogMapInit($"OwnerTextureDispatcher: Bound ProvinceIDTexture ({provinceIDTex?.GetInstanceID()}, {provinceIDTex?.format}) directly to compute shader");
+            DominionLogger.LogMapInit($"OwnerTextureDispatcher: Compute shader will write to ProvinceOwnerTexture instance {textureManager.ProvinceOwnerTexture?.GetInstanceID()}");
 
             // Set dimensions
             populateOwnerCompute.SetInt("MapWidth", textureManager.MapWidth);
             populateOwnerCompute.SetInt("MapHeight", textureManager.MapHeight);
+
+            // Set debug mode - write province IDs instead of owner IDs to verify coordinate system
+            populateOwnerCompute.SetInt("DebugWriteProvinceIDs", debugWriteProvinceIDs ? 1 : 0);
+
+            if (debugWriteProvinceIDs)
+            {
+                DominionLogger.LogMapInit("OwnerTextureDispatcher: DEBUG MODE - Writing province IDs instead of owner IDs to ProvinceOwnerTexture");
+            }
 
             // Calculate thread groups (round up division)
             int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
@@ -203,11 +223,34 @@ namespace Map.Rendering
             // Dispatch compute shader - GPU processes all pixels in parallel
             populateOwnerCompute.Dispatch(populateOwnersKernel, threadGroupsX, threadGroupsY, 1);
 
+            // DEBUG: Verify compute shader wrote data - sample a known province pixel
+            // Castile province 2751 should have owner 151
+            // We know from logs that province 2751 is at approx pixel (2767, 711) based on previous debugging
+            // But we don't want to loop - just sample ONE specific pixel
+            RenderTexture.active = textureManager.ProvinceOwnerTexture;
+            Texture2D singlePixel = new Texture2D(1, 1, TextureFormat.RFloat, false);
+            singlePixel.ReadPixels(new Rect(2767, 711, 1, 1), 0, 0);
+            singlePixel.Apply();
+            RenderTexture.active = null;
+
+            float ownerNormalized = singlePixel.GetPixel(0, 0).r;
+            uint decodedValue = (uint)(ownerNormalized * 65535.0f + 0.5f);
+            Object.Destroy(singlePixel);
+
+            if (debugWriteProvinceIDs)
+            {
+                DominionLogger.LogMapInit($"OwnerTextureDispatcher: DEBUG - ProvinceOwnerTexture at pixel (2767,711) contains province ID {decodedValue} (expected 2751 for Castile if coordinates match)");
+            }
+            else
+            {
+                DominionLogger.LogMapInit($"OwnerTextureDispatcher: ProvinceOwnerTexture at pixel (2767,711) contains owner ID {decodedValue} (expected 151 for Castile)");
+            }
+
             // Log performance
             if (logPerformance)
             {
                 float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                DominionLogger.Log($"OwnerTextureDispatcher: Owner texture populated in {elapsedMs:F2}ms " +
+                DominionLogger.LogMapInit($"OwnerTextureDispatcher: Owner texture populated in {elapsedMs:F2}ms " +
                     $"({populatedCount} provinces, {textureManager.MapWidth}x{textureManager.MapHeight} pixels, " +
                     $"{threadGroupsX}x{threadGroupsY} thread groups)");
             }

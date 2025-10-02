@@ -340,8 +340,7 @@ namespace Map.Integration
                 {
                     // Check if this pixel belongs to our province by sampling ID texture
                     // This is more efficient than storing all pixel coordinates
-                    Color32 idPixel = textureManager.ProvinceIDTexture.GetPixel(x, y);
-                    ushort pixelProvinceID = (ushort)(idPixel.r + (idPixel.g << 8));
+                    ushort pixelProvinceID = textureManager.GetProvinceID(x, y);
 
                     if (pixelProvinceID == provinceID)
                     {
@@ -373,8 +372,7 @@ namespace Map.Integration
                 for (int x = minX; x <= maxX; x++)
                 {
                     // Check if this pixel belongs to our province
-                    Color32 idPixel = textureManager.ProvinceIDTexture.GetPixel(x, y);
-                    ushort pixelProvinceID = (ushort)(idPixel.r + (idPixel.g << 8));
+                    ushort pixelProvinceID = textureManager.GetProvinceID(x, y);
 
                     if (pixelProvinceID == provinceID)
                     {
@@ -401,8 +399,7 @@ namespace Map.Integration
                 for (int x = 0; x < width; x++)
                 {
                     // Get province ID at this pixel
-                    Color32 idPixel = textureManager.ProvinceIDTexture.GetPixel(x, y);
-                    ushort provinceID = (ushort)(idPixel.r + (idPixel.g << 8));
+                    ushort provinceID = textureManager.GetProvinceID(x, y);
 
                     // Update if this province is in our update set
                     if (provinceColors.TryGetValue(provinceID, out Color32 newColor))
@@ -432,8 +429,7 @@ namespace Map.Integration
             textureY = Mathf.Clamp(textureY, 0, textureManager.MapHeight - 1);
 
             // Sample province ID texture
-            Color32 idPixel = textureManager.ProvinceIDTexture.GetPixel(textureX, textureY);
-            return (ushort)(idPixel.r + (idPixel.g << 8));
+            return textureManager.GetProvinceID(textureX, textureY);
         }
 
         /// <summary>

@@ -87,6 +87,7 @@ namespace Map.MapModes
                 if (renderingCoordinator != null)
                 {
                     mapMaterial = renderingCoordinator.MapMaterial;
+                    DominionLogger.LogMapInit($"MapModeManager: Got material instance {mapMaterial?.GetInstanceID()} from MapRenderingCoordinator");
                 }
             }
 
@@ -95,6 +96,25 @@ namespace Map.MapModes
                 DominionLogger.LogError("MapModeManager: Map material not found - ensure MapRenderingCoordinator is initialized first");
                 Invoke(nameof(InitializeSystem), 0.5f);
                 return;
+            }
+
+            // CRITICAL DEBUG: Verify this is the SAME material the renderer is using
+            var mapRenderer = Object.FindFirstObjectByType<Map.Rendering.MapRenderer>();
+            if (mapRenderer != null)
+            {
+                var rendererMaterial = mapRenderer.GetMaterial();
+                DominionLogger.Log($"MapModeManager: MapModeManager has material instance {mapMaterial.GetInstanceID()}, MapRenderer is using instance {rendererMaterial?.GetInstanceID()}");
+                if (rendererMaterial != null && mapMaterial.GetInstanceID() != rendererMaterial.GetInstanceID())
+                {
+                    DominionLogger.LogError($"MapModeManager: ✗ MATERIAL MISMATCH! MapModeManager is binding to instance {mapMaterial.GetInstanceID()} but renderer is using instance {rendererMaterial.GetInstanceID()}!");
+                    // FIX: Use the renderer's material instead
+                    mapMaterial = rendererMaterial;
+                    DominionLogger.Log($"MapModeManager: Switched to renderer's material instance {mapMaterial.GetInstanceID()}");
+                }
+                else
+                {
+                    DominionLogger.Log("MapModeManager: ✓ Material instances match - both using same instance");
+                }
             }
 
             // Get ProvinceMapping from MapSystemCoordinator
@@ -114,7 +134,7 @@ namespace Map.MapModes
             isInitialized = true;  // Set BEFORE SetMapMode so it doesn't return early
             SetMapMode(currentMode, forceUpdate: true);
 
-            DominionLogger.Log("MapModeManager initialized");
+            DominionLogger.LogMapInit("MapModeManager initialized");
         }
 
         private void InitializeTextures()
@@ -182,11 +202,30 @@ namespace Map.MapModes
             if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
             {
                 currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
+
+                // CRITICAL: Rebind textures to material after update to force GPU upload
+                // Without this, Unity may use cached texture data from before the update
+                dataTextures.BindToMaterial(mapMaterial);
+            }
+
+            // DEBUG: Verify which texture is actually bound to the material after update
+            var boundPalette = mapMaterial.GetTexture(Shader.PropertyToID("_CountryColorPalette"));
+            DominionLogger.LogMapInit($"MapModeManager: After SetMapMode, material has CountryColorPalette instance {boundPalette?.GetInstanceID()} bound (dataTextures has instance {dataTextures?.CountryColorPalette?.GetInstanceID()})");
+            if (boundPalette != null && dataTextures?.CountryColorPalette != null)
+            {
+                if (boundPalette.GetInstanceID() == dataTextures.CountryColorPalette.GetInstanceID())
+                {
+                    DominionLogger.LogMapInit("MapModeManager: ✓ Material is bound to the CORRECT texture instance that we're updating");
+                }
+                else
+                {
+                    DominionLogger.LogMapInitError($"MapModeManager: ✗ Material is bound to WRONG texture! Material has {boundPalette.GetInstanceID()}, but we're updating {dataTextures.CountryColorPalette.GetInstanceID()}");
+                }
             }
 
             if (logModeChanges)
             {
-                DominionLogger.Log($"Switched to {currentMode} mode");
+                DominionLogger.LogMapInit($"Switched to {currentMode} mode");
             }
         }
 
@@ -212,8 +251,20 @@ namespace Map.MapModes
             if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
             {
                 currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
-                DominionLogger.Log($"MapModeManager: Forced texture update for {currentMode} mode");
+                DominionLogger.LogMapInit($"MapModeManager: Forced texture update for {currentMode} mode");
             }
+        }
+
+        /// <summary>
+        /// Rebind all map mode textures to the material
+        /// Call this after other systems rebind base textures to prevent losing map mode texture bindings
+        /// </summary>
+        public void RebindTextures()
+        {
+            if (!isInitialized || dataTextures == null || mapMaterial == null) return;
+
+            dataTextures.BindToMaterial(mapMaterial);
+            DominionLogger.LogMapInit($"MapModeManager: Rebound map mode textures to material (CountryColorPalette, etc.)");
         }
 
         void OnDestroy()

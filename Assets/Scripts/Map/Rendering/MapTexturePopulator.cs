@@ -18,8 +18,9 @@ namespace Map.Rendering
         [Header("Configuration")]
         [SerializeField] private bool logPopulationProgress = true;
 
-        [Header("GPU Dispatcher")]
+        [Header("GPU Dispatchers")]
         [SerializeField] private OwnerTextureDispatcher ownerTextureDispatcher;
+        [SerializeField] private ComputeShader populateProvinceIDCompute;
 
         /// <summary>
         /// Populate MapTextureManager textures using data from Core simulation systems
@@ -50,6 +51,17 @@ namespace Map.Rendering
             int processedPixels = 0;
             int validProvinces = 0;
 
+            // Create pixel arrays for batch operations (GPU-friendly)
+            Color32[] provinceIDPixels = new Color32[width * height];
+            Color32[] provinceColorPixels = new Color32[width * height];
+
+            // Initialize with default (black = no province)
+            for (int i = 0; i < provinceIDPixels.Length; i++)
+            {
+                provinceIDPixels[i] = new Color32(0, 0, 0, 255);
+                provinceColorPixels[i] = new Color32(0, 0, 0, 255);
+            }
+
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
@@ -68,11 +80,13 @@ namespace Map.Rendering
                         {
                             validProvinces++;
 
-                            // Set province ID in texture
-                            textureManager.SetProvinceID(x, y, provinceID);
+                            int pixelIndex = y * width + x;
+
+                            // Encode province ID into Color32 for batch write
+                            provinceIDPixels[pixelIndex] = Province.ProvinceIDEncoder.PackProvinceID(provinceID);
 
                             // Set province color for visual display (from bitmap)
-                            textureManager.SetProvinceColor(x, y, pixelColor);
+                            provinceColorPixels[pixelIndex] = pixelColor;
 
                             // Owner texture populated by GPU compute shader (see below)
                             // Architecture: NO CPU pixel ops for owner texture
@@ -84,8 +98,26 @@ namespace Map.Rendering
                 }
             }
 
-            // Apply texture changes for ID and color textures (CPU-written)
-            textureManager.ApplyTextureChanges();
+            // DEBUG: Check what we wrote to the CPU array
+            int testPixelIndex = 711 * width + 2767;
+            var testColor = provinceIDPixels[testPixelIndex];
+            ushort testProvinceID = Province.ProvinceIDEncoder.UnpackProvinceID(testColor);
+            DominionLogger.LogMapInit($"MapTexturePopulator: CPU array at [711, 2767] (index {testPixelIndex}) = province {testProvinceID} (R={testColor.r} G={testColor.g})");
+
+            // Also check what's at the Y-flipped location (what GPU might have after Graphics.Blit)
+            int flippedPixelIndex = (height - 1 - 711) * width + 2767; // Y-flipped location
+            var flippedColor = provinceIDPixels[flippedPixelIndex];
+            ushort flippedProvinceID = Province.ProvinceIDEncoder.UnpackProvinceID(flippedColor);
+            DominionLogger.LogMapInit($"MapTexturePopulator: CPU array at Y-flipped [{height-1-711}, 2767] (index {flippedPixelIndex}) = province {flippedProvinceID} (R={flippedColor.r} G={flippedColor.g})");
+
+            // Batch-write to GPU using RenderTexture (architecture: GPU-native textures)
+            PopulateProvinceIDTextureGPU(textureManager, width, height, provinceIDPixels);
+
+            // DEBUG: Verify ProvinceIDTexture was populated correctly after blit
+            ushort verifyProvinceID = textureManager.GetProvinceID(2767, 711);
+            DominionLogger.LogMapInit($"MapTexturePopulator: ProvinceIDTexture at pixel (2767,711) contains province ID {verifyProvinceID} AFTER blit (expected 2751 for Castile)");
+
+            PopulateProvinceColorTextureGPU(textureManager, width, height, provinceColorPixels);
 
             // Populate owner texture using GPU compute shader (architecture compliance: NO CPU pixel ops)
             if (ownerTextureDispatcher == null)
@@ -214,6 +246,126 @@ namespace Map.Rendering
             else
             {
                 DominionLogger.LogError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot update owner texture!");
+            }
+        }
+
+        /// <summary>
+        /// Populate ProvinceIDTexture RenderTexture using compute shader
+        /// Architecture: CPU data → GPU buffer → compute shader → RenderTexture
+        /// This ensures same coordinate system as OwnerTextureDispatcher compute shader
+        /// </summary>
+        private void PopulateProvinceIDTextureGPU(MapTextureManager textureManager, int width, int height, Color32[] pixels)
+        {
+            // Load compute shader if not assigned
+            if (populateProvinceIDCompute == null)
+            {
+                #if UNITY_EDITOR
+                string[] guids = UnityEditor.AssetDatabase.FindAssets("PopulateProvinceIDTexture t:ComputeShader");
+                if (guids.Length > 0)
+                {
+                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+                    populateProvinceIDCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
+                }
+                #endif
+
+                if (populateProvinceIDCompute == null)
+                {
+                    DominionLogger.LogError("MapTexturePopulator: PopulateProvinceIDTexture compute shader not found! Falling back to Graphics.Blit");
+                    PopulateProvinceIDTextureGPU_Fallback(textureManager, width, height, pixels);
+                    return;
+                }
+            }
+
+            // Convert Color32[] to packed uint[] for GPU buffer
+            uint[] packedPixels = new uint[pixels.Length];
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                Color32 c = pixels[i];
+                packedPixels[i] = ((uint)c.a << 24) | ((uint)c.r << 16) | ((uint)c.g << 8) | (uint)c.b;
+            }
+
+            // DEBUG: Verify what we're sending to GPU for test pixel
+            int testIndex = 711 * width + 2767;
+            uint testPacked = packedPixels[testIndex];
+            byte testR = (byte)((testPacked >> 16) & 0xFF);
+            byte testG = (byte)((testPacked >> 8) & 0xFF);
+            ushort testProvinceFromBuffer = (ushort)((testG << 8) | testR);
+            DominionLogger.LogMapInit($"MapTexturePopulator: GPU buffer[{testIndex}] (x=2767,y=711) = packed 0x{testPacked:X8}, R={testR} G={testG}, province={testProvinceFromBuffer}");
+
+            // Create GPU buffer
+            ComputeBuffer pixelBuffer = new ComputeBuffer(packedPixels.Length, sizeof(uint));
+            pixelBuffer.SetData(packedPixels);
+
+            // Setup compute shader
+            int kernel = populateProvinceIDCompute.FindKernel("PopulateProvinceIDs");
+            populateProvinceIDCompute.SetBuffer(kernel, "ProvinceIDPixelData", pixelBuffer);
+            populateProvinceIDCompute.SetTexture(kernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
+            populateProvinceIDCompute.SetInt("MapWidth", width);
+            populateProvinceIDCompute.SetInt("MapHeight", height);
+
+            // Dispatch compute shader (same thread group size as OwnerTextureDispatcher)
+            const int THREAD_GROUP_SIZE = 8;
+            int threadGroupsX = (width + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+            int threadGroupsY = (height + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+            populateProvinceIDCompute.Dispatch(kernel, threadGroupsX, threadGroupsY, 1);
+
+            // CRITICAL: Force GPU synchronization before subsequent shaders read ProvinceIDTexture
+            // Dispatch() is async - GPU may not have finished writing when PopulateOwnerTexture runs
+            // This forces CPU to wait for GPU completion
+            var asyncRead = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.ProvinceIDTexture);
+            asyncRead.WaitForCompletion();
+
+            // Clean up
+            pixelBuffer.Release();
+
+            // DEBUG: Verify what the compute shader actually wrote
+            RenderTexture.active = textureManager.ProvinceIDTexture;
+            Texture2D debugPixel = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+            debugPixel.ReadPixels(new Rect(2767, 711, 1, 1), 0, 0);
+            debugPixel.Apply();
+            RenderTexture.active = null;
+
+            Color32 debugColor = debugPixel.GetPixel(0, 0);
+            ushort debugProvinceID = Province.ProvinceIDEncoder.UnpackProvinceID(debugColor);
+            Object.Destroy(debugPixel);
+
+            DominionLogger.LogMapInit($"MapTexturePopulator: VERIFY - After compute shader, ProvinceIDTexture(2767,711) = province {debugProvinceID} (R={debugColor.r} G={debugColor.g} - expected 2751)");
+
+            if (logPopulationProgress)
+            {
+                DominionLogger.LogMapInit($"MapTexturePopulator: Populated ProvinceIDTexture via compute shader (eliminates Graphics.Blit coordinate issues)");
+                DominionLogger.LogMapInit($"MapTexturePopulator: Wrote to ProvinceIDTexture instance {textureManager.ProvinceIDTexture.GetInstanceID()}");
+            }
+        }
+
+        /// <summary>
+        /// Fallback method using Graphics.Blit (has coordinate system issues)
+        /// </summary>
+        private void PopulateProvinceIDTextureGPU_Fallback(MapTextureManager textureManager, int width, int height, Color32[] pixels)
+        {
+            Texture2D tempTex = new Texture2D(width, height, TextureFormat.ARGB32, false);
+            tempTex.filterMode = FilterMode.Point;
+            tempTex.wrapMode = TextureWrapMode.Clamp;
+            tempTex.SetPixels32(pixels);
+            tempTex.Apply(false);
+            Graphics.Blit(tempTex, textureManager.ProvinceIDTexture);
+            GL.Flush();
+            GL.InvalidateState();
+            Object.Destroy(tempTex);
+        }
+
+        /// <summary>
+        /// Populate ProvinceColorTexture using batch operations
+        /// </summary>
+        private void PopulateProvinceColorTextureGPU(MapTextureManager textureManager, int width, int height, Color32[] pixels)
+        {
+            // ProvinceColorTexture is still a Texture2D, so we can use SetPixels32 directly
+            textureManager.ProvinceColorTexture.SetPixels32(pixels);
+            textureManager.ProvinceColorTexture.Apply(false);
+
+            if (logPopulationProgress)
+            {
+                DominionLogger.LogMapInit($"MapTexturePopulator: Populated ProvinceColorTexture via batch SetPixels32");
             }
         }
     }

@@ -6,39 +6,38 @@
 #pragma kernel PopulateOwners
 
 // Input textures
-Texture2D<float2> ProvinceIDTexture;  // RG16 format - which province at each pixel (2 channels)
+// ProvinceIDTexture is now ARGB32 RenderTexture (RG16 not supported on all platforms)
+// Province IDs are encoded in RG channels (low 8 bits in R, high 8 bits in G)
+// CHANGED: Use RWTexture2D instead of Texture2D to match UAV binding from PopulateProvinceIDTexture
+// This ensures consistent texture state between compute shader dispatches
+RWTexture2D<float4> ProvinceIDTexture;  // ARGB32 format - province ID encoded in RG channels
 
 // Input buffers
 StructuredBuffer<uint> ProvinceOwnerBuffer;  // Owner ID per province (indexed by province ID)
 
 // Output texture
-RWTexture2D<float2> ProvinceOwnerTexture;  // RG16 format - owner ID at each pixel (R=low byte, G=high byte)
+RWTexture2D<float> ProvinceOwnerTexture;  // RFloat format - owner ID as normalized float (0.0-1.0)
 
 // Map dimensions
 uint MapWidth;
 uint MapHeight;
 
-// Province ID decoding - must match BorderDetection.compute exactly
-uint DecodeProvinceID(float2 encoded)
+// Debug mode - write province IDs instead of owner IDs to verify texture reading
+uint DebugWriteProvinceIDs;
+
+// Province ID decoding - extracts from ARGB32 format (RG channels)
+uint DecodeProvinceID(float4 encoded)
 {
-    // Convert from float [0,1] back to uint16 values
+    // Convert from float [0,1] back to uint8 values (RG channels contain province ID)
     uint r = (uint)(encoded.r * 255.0 + 0.5);
     uint g = (uint)(encoded.g * 255.0 + 0.5);
 
     // Reconstruct 16-bit province ID from RG channels
+    // R = low 8 bits, G = high 8 bits
     return (g << 8) | r;
 }
 
-// Encode owner ID to RG16 format
-float2 EncodeOwnerID(uint ownerID)
-{
-    // Encode as RG16: Store full 16-bit value in RG channels
-    uint r = ownerID & 0xFF;        // Low byte (R channel)
-    uint g = (ownerID >> 8) & 0xFF; // High byte (G channel)
-
-    // Return as normalized float2 for RG16 format
-    return float2(r / 255.0, g / 255.0);
-}
+// No encoding needed for R16 format - store uint16 directly
 
 // Thread group size - 8x8 = 64 threads per group
 // This is optimal for most modern GPUs and matches BorderDetection.compute
@@ -49,8 +48,11 @@ void PopulateOwners(uint3 id : SV_DispatchThreadID)
     if (id.x >= MapWidth || id.y >= MapHeight)
         return;
 
-    // Sample province ID at this pixel
-    float2 provinceEncoded = ProvinceIDTexture[id.xy];  // Returns float2 directly from RG16 texture
+    // Read directly from GPU without Y-flip
+    // Both ProvinceIDTexture and ProvinceOwnerTexture use same raw GPU coordinates
+    // RWTexture2D uses direct indexing, not Load()
+    float4 provinceEncoded = ProvinceIDTexture[id.xy];
+
     uint provinceID = DecodeProvinceID(provinceEncoded);
 
     // Look up owner ID from buffer
@@ -63,7 +65,17 @@ void PopulateOwners(uint3 id : SV_DispatchThreadID)
         ownerID = ProvinceOwnerBuffer[provinceID];
     }
 
-    // Encode and write owner ID to texture
-    // Write directly to id.xy (no Y-flip) - fragment shader handles coordinate conversion with (1.0 - uv.y)
-    ProvinceOwnerTexture[id.xy] = EncodeOwnerID(ownerID);
+    // Write directly to GPU without Y-flip
+    uint2 writePos = id.xy;
+
+    if (DebugWriteProvinceIDs > 0)
+    {
+        // Debug mode: Write province ID instead of owner ID to verify texture reading
+        ProvinceOwnerTexture[writePos] = float(provinceID) / 65535.0;
+    }
+    else
+    {
+        // Normal mode: Write owner ID
+        ProvinceOwnerTexture[writePos] = float(ownerID) / 65535.0;
+    }
 }
