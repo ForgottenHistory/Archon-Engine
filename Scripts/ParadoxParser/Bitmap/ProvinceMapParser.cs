@@ -2,7 +2,6 @@ using System;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using ParadoxParser.CSV;
-using ParadoxParser.Utilities;
 
 namespace ParadoxParser.Bitmap
 {
@@ -207,10 +206,10 @@ namespace ParadoxParser.Bitmap
             try
             {
                 // Find column indices
-                var provinceHash = FastHasher.HashFNV1a32("province");
-                var redHash = FastHasher.HashFNV1a32("red");
-                var greenHash = FastHasher.HashFNV1a32("green");
-                var blueHash = FastHasher.HashFNV1a32("blue");
+                var provinceHash = ComputeStringHash("province");
+                var redHash = ComputeStringHash("red");
+                var greenHash = ComputeStringHash("green");
+                var blueHash = ComputeStringHash("blue");
 
                 int provinceCol = CSVParser.FindColumnIndex(csvResult.HeaderHashes, provinceHash);
                 int redCol = CSVParser.FindColumnIndex(csvResult.HeaderHashes, redHash);
@@ -336,6 +335,24 @@ namespace ParadoxParser.Bitmap
             {
                 if (UnmappedColors.IsCreated) UnmappedColors.Dispose();
             }
+        }
+
+        /// <summary>
+        /// Compute FNV-1a hash of string
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static uint ComputeStringHash(string str)
+        {
+            const uint FNV_OFFSET_BASIS = 2166136261;
+            const uint FNV_PRIME = 16777619;
+
+            uint hash = FNV_OFFSET_BASIS;
+            for (int i = 0; i < str.Length; i++)
+            {
+                hash ^= (byte)str[i];
+                hash *= FNV_PRIME;
+            }
+            return hash;
         }
     }
 }

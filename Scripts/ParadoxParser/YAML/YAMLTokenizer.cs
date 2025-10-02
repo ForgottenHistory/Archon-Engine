@@ -3,12 +3,20 @@ using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
-using ParadoxParser.Data;
-using ParadoxParser.Core;
-using ParadoxParser.Utilities;
 
 namespace ParadoxParser.YAML
 {
+    /// <summary>
+    /// Error severity levels
+    /// </summary>
+    public enum ErrorSeverity : byte
+    {
+        Info = 0,
+        Warning = 1,
+        Error = 2,
+        Critical = 3
+    }
+
     /// <summary>
     /// High-performance YAML tokenizer for Paradox localization files
     /// Handles YAML format natively without preprocessing
@@ -272,7 +280,7 @@ namespace ParadoxParser.YAML
                                 Length = versionStart - identifierStart - 1, // Exclude the :
                                 Line = line,
                                 Column = column - (pos - identifierStart),
-                                StringHash = FastHasher.HashFNV1a32(dataPtr + identifierStart, versionStart - identifierStart - 1),
+                                StringHash = ComputeHashUnsafe(dataPtr + identifierStart, versionStart - identifierStart - 1),
                                 VersionNumber = version
                             });
                         }
@@ -286,7 +294,7 @@ namespace ParadoxParser.YAML
                                 Length = pos - identifierStart,
                                 Line = line,
                                 Column = column - (pos - identifierStart),
-                                StringHash = FastHasher.HashFNV1a32(dataPtr + identifierStart, pos - identifierStart),
+                                StringHash = ComputeHashUnsafe(dataPtr + identifierStart, pos - identifierStart),
                                 VersionNumber = -1
                             });
                         }
@@ -348,6 +356,25 @@ namespace ParadoxParser.YAML
         private static bool IsDigit(byte b)
         {
             return b >= '0' && b <= '9';
+        }
+
+        /// <summary>
+        /// Compute FNV-1a hash from unsafe pointer
+        /// </summary>
+        [BurstCompile]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static unsafe uint ComputeHashUnsafe(byte* data, int length)
+        {
+            const uint FNV_OFFSET_BASIS = 2166136261;
+            const uint FNV_PRIME = 16777619;
+
+            uint hash = FNV_OFFSET_BASIS;
+            for (int i = 0; i < length; i++)
+            {
+                hash ^= data[i];
+                hash *= FNV_PRIME;
+            }
+            return hash;
         }
     }
 }

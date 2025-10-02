@@ -2,7 +2,6 @@ using System;
 using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
-using ParadoxParser.Utilities;
 
 namespace ParadoxParser.CSV
 {
@@ -167,7 +166,7 @@ namespace ParadoxParser.CSV
                     if (token.Type == CSVTokenizer.CSVTokenType.Field ||
                         token.Type == CSVTokenizer.CSVTokenType.QuotedField)
                     {
-                        headerHashes[col] = FastHasher.HashFNV1a32(token.Data);
+                        headerHashes[col] = ComputeHash(token.Data);
                         tokenIndex++;
                     }
                     else if (token.Type == CSVTokenizer.CSVTokenType.EndOfRow)
@@ -268,12 +267,7 @@ namespace ParadoxParser.CSV
             var field = GetField(row, columnIndex);
             if (field.Length > 0)
             {
-                var parseResult = FastNumberParser.ParseFloat(field);
-                if (parseResult.Success)
-                {
-                    value = (int)parseResult.Value;
-                    return true;
-                }
+                return TryParseInt(field, out value);
             }
             value = 0;
             return false;
@@ -288,15 +282,115 @@ namespace ParadoxParser.CSV
             var field = GetField(row, columnIndex);
             if (field.Length > 0)
             {
-                var parseResult = FastNumberParser.ParseFloat(field);
-                if (parseResult.Success)
-                {
-                    value = parseResult.Value;
-                    return true;
-                }
+                return TryParseFloat(field, out value);
             }
             value = 0f;
             return false;
+        }
+
+        /// <summary>
+        /// Compute FNV-1a hash of byte slice
+        /// </summary>
+        [BurstCompile]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static uint ComputeHash(NativeSlice<byte> data)
+        {
+            const uint FNV_OFFSET_BASIS = 2166136261;
+            const uint FNV_PRIME = 16777619;
+
+            uint hash = FNV_OFFSET_BASIS;
+            for (int i = 0; i < data.Length; i++)
+            {
+                hash ^= data[i];
+                hash *= FNV_PRIME;
+            }
+            return hash;
+        }
+
+        /// <summary>
+        /// Parse integer from byte slice
+        /// </summary>
+        [BurstCompile]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool TryParseInt(NativeSlice<byte> data, out int value)
+        {
+            value = 0;
+            if (data.Length == 0) return false;
+
+            int sign = 1;
+            int start = 0;
+
+            if (data[0] == '-')
+            {
+                sign = -1;
+                start = 1;
+            }
+
+            for (int i = start; i < data.Length; i++)
+            {
+                byte c = data[i];
+                if (c >= '0' && c <= '9')
+                {
+                    value = value * 10 + (c - '0');
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            value *= sign;
+            return true;
+        }
+
+        /// <summary>
+        /// Parse float from byte slice
+        /// </summary>
+        [BurstCompile]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool TryParseFloat(NativeSlice<byte> data, out float value)
+        {
+            value = 0f;
+            if (data.Length == 0) return false;
+
+            float sign = 1f;
+            int start = 0;
+            float result = 0f;
+            float decimalPlace = 0f;
+
+            if (data[0] == '-')
+            {
+                sign = -1f;
+                start = 1;
+            }
+
+            for (int i = start; i < data.Length; i++)
+            {
+                byte c = data[i];
+                if (c >= '0' && c <= '9')
+                {
+                    if (decimalPlace > 0)
+                    {
+                        result += (c - '0') / decimalPlace;
+                        decimalPlace *= 10f;
+                    }
+                    else
+                    {
+                        result = result * 10f + (c - '0');
+                    }
+                }
+                else if (c == '.' && decimalPlace == 0)
+                {
+                    decimalPlace = 10f;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            value = result * sign;
+            return true;
         }
     }
 }

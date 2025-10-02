@@ -2,7 +2,6 @@ using System;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
-using ParadoxParser.Data;
 
 namespace ParadoxParser.YAML
 {
@@ -149,10 +148,28 @@ namespace ParadoxParser.YAML
                 keyBytes[i] = (byte)key[i];
             }
 
-            uint keyHash = ParadoxParser.Utilities.FastHasher.HashFNV1a32(keyBytes);
+            uint keyHash = ComputeHash(keyBytes);
             keyBytes.Dispose();
 
             return ResolveWithFallback(multiLangResult, fallbackChain, keyHash);
+        }
+
+        /// <summary>
+        /// Compute FNV-1a hash of byte array
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static uint ComputeHash(NativeArray<byte> data)
+        {
+            const uint FNV_OFFSET_BASIS = 2166136261;
+            const uint FNV_PRIME = 16777619;
+
+            uint hash = FNV_OFFSET_BASIS;
+            for (int i = 0; i < data.Length; i++)
+            {
+                hash ^= data[i];
+                hash *= FNV_PRIME;
+            }
+            return hash;
         }
 
         /// <summary>

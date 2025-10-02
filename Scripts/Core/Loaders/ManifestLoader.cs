@@ -1,14 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using ParadoxParser.Core;
-using ParadoxParser.Data;
-using ParadoxParser.Tokenization;
-using ParadoxParser.Utilities;
-using Unity.Collections;
 using UnityEngine;
 using Utils;
-using static ParadoxParser.Utilities.ParadoxDataExtractionHelpers;
 
 namespace Core.Loaders
 {

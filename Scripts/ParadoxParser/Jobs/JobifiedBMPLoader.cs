@@ -1,9 +1,9 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Unity.Collections;
 using Unity.Jobs;
 using ParadoxParser.Bitmap;
-using ParadoxParser.Core;
 
 namespace ParadoxParser.Jobs
 {
@@ -29,35 +29,42 @@ namespace ParadoxParser.Jobs
         /// <summary>
         /// Load and process BMP file with Burst jobs for optimal performance
         /// Generic method that works with any BMP file type (provinces, heightmaps, terrain, etc.)
+        /// Note: Runs synchronously on main thread due to NativeCollection thread safety
         /// </summary>
-        public async Task<BMPLoadResult> LoadBMPAsync(string bmpFilePath)
+        public Task<BMPLoadResult> LoadBMPAsync(string bmpFilePath)
         {
             ReportProgress(0, 1, "Loading BMP file...");
 
-            // Load BMP file data
-            // Use Allocator.Persistent because data survives >4 frames in async processing
-            var fileResult = await AsyncFileReader.ReadFileAsync(bmpFilePath, Allocator.Persistent);
-            if (!fileResult.Success)
+            // Load BMP file data (synchronously to avoid NativeArray thread issues)
+            byte[] fileBytes;
+            try
             {
-                return new BMPLoadResult { Success = false, ErrorMessage = "Failed to load BMP file" };
+                fileBytes = File.ReadAllBytes(bmpFilePath);
             }
+            catch (Exception ex)
+            {
+                return Task.FromResult(new BMPLoadResult { Success = false, ErrorMessage = $"Failed to load BMP file: {ex.Message}" });
+            }
+
+            // Use Allocator.Persistent because data survives >4 frames in async processing
+            var fileData = new NativeArray<byte>(fileBytes, Allocator.Persistent);
 
             try
             {
                 ReportProgress(0, 1, "Parsing BMP header...");
 
                 // Parse BMP header
-                var header = BMPParser.ParseHeader(fileResult.Data);
+                var header = BMPParser.ParseHeader(fileData);
                 if (!header.IsValid)
                 {
-                    return new BMPLoadResult { Success = false, ErrorMessage = "Invalid BMP header" };
+                    return Task.FromResult(new BMPLoadResult { Success = false, ErrorMessage = "Invalid BMP header" });
                 }
 
                 // Get pixel data
-                var pixelData = BMPParser.GetPixelData(fileResult.Data, header);
+                var pixelData = BMPParser.GetPixelData(fileData, header);
                 if (!pixelData.Success)
                 {
-                    return new BMPLoadResult { Success = false, ErrorMessage = "Failed to extract pixel data" };
+                    return Task.FromResult(new BMPLoadResult { Success = false, ErrorMessage = "Failed to extract pixel data" });
                 }
 
                 ReportProgress(0, 1, "Processing pixels with Burst jobs...");
@@ -68,7 +75,7 @@ namespace ParadoxParser.Jobs
                 // Create persistent copy of pixel data before disposing file data
                 var persistentPixelData = CopyPixelDataToPersistentMemory(pixelData);
 
-                return new BMPLoadResult
+                var result = new BMPLoadResult
                 {
                     Success = true,
                     PixelData = persistentPixelData,
@@ -77,10 +84,13 @@ namespace ParadoxParser.Jobs
                     Height = header.Height,
                     BitsPerPixel = header.BitsPerPixel
                 };
+
+                return Task.FromResult(result);
             }
             finally
             {
-                fileResult.Dispose();
+                if (fileData.IsCreated)
+                    fileData.Dispose();
             }
         }
 
