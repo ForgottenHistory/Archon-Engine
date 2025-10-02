@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using UnityEngine;
-using ParadoxParser.Jobs;
 using Map.Rendering;
 using Core;
 using Utils;
 using System.Collections.Generic;
+using static Map.Loading.ProvinceMapProcessor;
 
 namespace Map.Loading
 {

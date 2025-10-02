@@ -101,7 +101,7 @@ namespace Map.Loading
                 {
                     for (int x = 0; x < result.BMPData.Width; x += sampleStride)
                     {
-                        if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                        if (pixelData.TryGetPixelRGB(x, y, out byte r, out byte g, out byte b))
                         {
                             var color = new Color32(r, g, b, 255);
                             if (colorToID.TryGetValue(color, out ushort provinceID))

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using ParadoxParser.Jobs;
 using Core;
+using static Map.Loading.ProvinceMapProcessor;
 
 namespace Map.Loading
 {

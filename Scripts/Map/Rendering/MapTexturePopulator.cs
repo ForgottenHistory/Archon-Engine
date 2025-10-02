@@ -1,9 +1,10 @@
 using UnityEngine;
 using Map.Rendering;
-using ParadoxParser.Jobs;
+using Map.Loading;
 using ParadoxParser.Bitmap;
 using Core;
 using Utils;
+using static Map.Loading.ProvinceMapProcessor;
 
 namespace Map.Rendering
 {
@@ -66,7 +67,7 @@ namespace Map.Rendering
             {
                 for (int x = 0; x < width; x++)
                 {
-                    if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                    if (pixelData.TryGetPixelRGB(x, y, out byte r, out byte g, out byte b))
                     {
                         processedPixels++;
 
@@ -175,7 +176,7 @@ namespace Map.Rendering
             {
                 for (int x = 0; x < width; x++)
                 {
-                    if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                    if (pixelData.TryGetPixelRGB(x, y, out byte r, out byte g, out byte b))
                     {
                         processedPixels++;
 

@@ -72,9 +72,9 @@ namespace Core.Systems
         }
 
         /// <summary>
-        /// Initialize provinces from ProvinceMapProcessor result
+        /// Initialize provinces from JSON5 + Burst loaded province states
         /// </summary>
-        public void InitializeFromMapData(ProvinceMapResult mapResult)
+        public void InitializeFromProvinceStates(ProvinceInitialStateLoadResult loadResult)
         {
             if (!isInitialized)
             {
@@ -82,48 +82,42 @@ namespace Core.Systems
                 return;
             }
 
-            if (!mapResult.Success)
+            if (!loadResult.Success)
             {
-                DominionLogger.LogError($"Cannot initialize from failed map result: {mapResult.ErrorMessage}");
+                DominionLogger.LogError($"Cannot initialize from failed load result: {loadResult.ErrorMessage}");
                 return;
             }
 
-            DominionLogger.Log($"Initializing {mapResult.ProvinceMappings.ColorToProvinceID.Count} provinces from bitmap data (unique colors found)");
+            DominionLogger.Log($"Initializing {loadResult.LoadedCount} provinces from JSON5 + Burst data");
 
             // Clear existing data
             provinceCount = 0;
             idToIndex.Clear();
             activeProvinceIds.Clear();
 
-            // Process each province from the map data
-            var colorEnumerator = mapResult.ProvinceMappings.ColorToProvinceID.GetEnumerator();
-            while (colorEnumerator.MoveNext())
+            // Process each loaded province
+            for (int i = 0; i < loadResult.InitialStates.Length; i++)
             {
-                var provinceId = (ushort)colorEnumerator.Current.Value;
-                var colorRGB = colorEnumerator.Current.Key;
+                var initialState = loadResult.InitialStates[i];
 
-                // Add province to system
-                AddProvince(provinceId, DetermineTerrainFromColor(colorRGB));
+                if (!initialState.IsValid)
+                    continue;
+
+                ushort provinceId = (ushort)initialState.ProvinceID;
+
+                // Add province to system with basic initialization
+                AddProvince(provinceId, initialState.Terrain);
+
+                // Store the initial state for later reference linking
+                // The actual ownership and other data will be applied after reference resolution
             }
 
-            // Apply province definitions if available
-            if (mapResult.HasDefinitions)
-            {
-                DominionLogger.Log($"Applying province definitions from definition.csv ({mapResult.Definitions.AllDefinitions.Length} definitions available)");
-                ApplyProvinceDefinitions(mapResult.Definitions);
-            }
-            else
-            {
-                DominionLogger.Log("No province definitions available - provinces will use color-based terrain detection");
-            }
-
-            DominionLogger.Log($"ProvinceSystem initialized with {provinceCount} provinces (bitmap data + definitions applied)");
+            DominionLogger.Log($"ProvinceSystem initialized with {provinceCount} provinces (ownership will be resolved in linking phase)");
 
             // Emit initialization complete event
             eventBus?.Emit(new ProvinceSystemInitializedEvent
             {
-                ProvinceCount = provinceCount,
-                HasDefinitions = mapResult.HasDefinitions
+                ProvinceCount = provinceCount
             });
         }
 
@@ -158,41 +152,6 @@ namespace Core.Systems
             provinceCount++;
         }
 
-        /// <summary>
-        /// Apply province definitions from definition.csv
-        /// </summary>
-        private void ApplyProvinceDefinitions(ProvinceDefinitionMappings definitions)
-        {
-            if (!definitions.Success)
-                return;
-
-            DominionLogger.Log($"Applying definitions to {definitions.AllDefinitions.Length} provinces");
-
-            int updatedCount = 0;
-
-            for (int i = 0; i < definitions.AllDefinitions.Length; i++)
-            {
-                var definition = definitions.AllDefinitions[i];
-                if (!definition.IsValid)
-                    continue;
-
-                var provinceId = (ushort)definition.ID;
-
-                // Find province in our system
-                if (idToIndex.TryGetValue(provinceId, out int arrayIndex))
-                {
-                    // Update terrain based on definition (if needed)
-                    var terrainType = DetermineTerrainFromDefinition(definition);
-                    if (terrainType != provinceStates[arrayIndex].terrain)
-                    {
-                        SetProvinceTerrain(provinceId, terrainType);
-                        updatedCount++;
-                    }
-                }
-            }
-
-            DominionLogger.Log($"Province definitions applied: {updatedCount} terrain updates from {definitions.AllDefinitions.Length} definitions");
-        }
 
         /// <summary>
         /// Get province owner - most common query (must be ultra-fast)
@@ -553,17 +512,6 @@ namespace Core.Systems
             if (r > 100 && g < 100 && b < 100) return 3; // Mountain (brown)
 
             return 1; // Default to grassland
-        }
-
-        /// <summary>
-        /// Determine terrain type from province definition
-        /// </summary>
-        private byte DetermineTerrainFromDefinition(ProvinceDefinition definition)
-        {
-            // For now, use color-based detection
-            // In the future, this could use definition metadata
-            int packedRGB = definition.PackedRGB;
-            return DetermineTerrainFromColor(packedRGB);
         }
 
         /// <summary>

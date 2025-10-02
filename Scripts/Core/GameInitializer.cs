@@ -55,8 +55,9 @@ namespace Core
 
         // Core systems
         private GameState gameState;
-        private ProvinceMapProcessor provinceProcessor;
-        private JobifiedCountryLoader countryLoader;
+        // TODO: Reimplement for JSON5
+        // private ProvinceMapProcessor provinceProcessor;
+        // private JobifiedCountryLoader countryLoader;
 
         // Data linking systems
         private GameRegistries gameRegistries;
@@ -245,9 +246,10 @@ namespace Core
             UpdateProgress(3f, "Creating data loaders...");
             yield return null;
 
+            // TODO: Reimplement loaders for JSON5
             // Create loaders
-            provinceProcessor = new ProvinceMapProcessor();
-            countryLoader = new JobifiedCountryLoader();
+            // provinceProcessor = new ProvinceMapProcessor();
+            // countryLoader = new JobifiedCountryLoader();
 
             UpdateProgress(10f, "Core systems ready");
 
@@ -318,45 +320,17 @@ namespace Core
         }
 
         /// <summary>
-        /// Phase 3: Load province data from BMP and definitions
+        /// Phase 3: Load province data using JSON5 + Burst architecture
         /// </summary>
         private IEnumerator LoadProvinceDataPhase()
         {
-            SetPhase(LoadingPhase.LoadingProvinces, 15f, "Loading province map...");
+            SetPhase(LoadingPhase.LoadingProvinces, 15f, "Loading province data...");
 
-            // Start province loading
-            var provinceTask = LoadProvinceDataAsync();
-
-            // Wait for completion while updating progress
-            while (!provinceTask.IsCompleted)
-            {
-                yield return null;
-            }
-
-            if (provinceTask.Exception != null)
-            {
-                ReportError($"Province loading failed: {provinceTask.Exception.GetBaseException().Message}");
-                yield break;
-            }
-
-            var mapResult = provinceTask.Result;
-            if (!mapResult.Success)
-            {
-                ReportError($"Province loading failed: {mapResult.ErrorMessage}");
-                yield break;
-            }
-
-            UpdateProgress(32f, "Initializing province system...");
+            // Load province initial states using hybrid JSON5 + Burst approach
+            UpdateProgress(15f, "Loading province JSON5 files...");
             yield return null;
 
-            // Initialize ProvinceSystem with loaded data
-            gameState.Provinces.InitializeFromMapData(mapResult);
-
-            UpdateProgress(35f, "Loading province initial states...");
-            yield return null;
-
-            // Load province initial states for reference linking (don't apply yet)
-            provinceInitialStates = gameState.Provinces.LoadProvinceInitialStatesForLinking(gameSettings.DataDirectory);
+            provinceInitialStates = BurstProvinceHistoryLoader.LoadProvinceInitialStates(gameSettings.DataDirectory);
 
             if (!provinceInitialStates.Success)
             {
@@ -364,20 +338,16 @@ namespace Core
                 yield break;
             }
 
+            DominionLogger.Log($"Province loading complete: {provinceInitialStates.LoadedCount} provinces loaded, {provinceInitialStates.FailedCount} failed");
+
+            UpdateProgress(32f, "Initializing province system...");
+            yield return null;
+
+            // Initialize ProvinceSystem with loaded data
+            gameState.Provinces.InitializeFromProvinceStates(provinceInitialStates);
+
             UpdateProgress(40f, "Province data loaded");
-            LogPhaseComplete($"Loaded {provinceInitialStates.LoadedCount} provinces with history data (ready for reference linking)");
-
-            // Emit province data ready event
-            gameState.EventBus.Emit(new ProvinceDataReadyEvent
-            {
-                ProvinceCount = gameState.Provinces.ProvinceCount,
-                HasDefinitions = mapResult.HasDefinitions,
-                HasInitialStates = true, // We loaded initial states
-                TimeStamp = Time.time
-            });
-
-            // Clean up
-            mapResult.Dispose();
+            LogPhaseComplete($"Loaded {provinceInitialStates.LoadedCount} provinces from JSON5 (ready for reference linking)");
         }
 
         /// <summary>
@@ -389,40 +359,41 @@ namespace Core
 
             // Load country tags FIRST to get correct tag→filename mapping
             var countryTagResult = CountryTagLoader.LoadCountryTags(gameSettings.DataDirectory);
-            if (!countryTagResult.Success)
+            Dictionary<string, string> tagMapping = null;
+
+            if (countryTagResult.Success)
+            {
+                tagMapping = countryTagResult.CountryTags;
+                DominionLogger.Log($"Loaded {tagMapping.Count} country tag mappings");
+            }
+            else
             {
                 DominionLogger.LogWarning($"Failed to load country tags: {countryTagResult.ErrorMessage}. Tags will be extracted from filenames.");
             }
 
-            // Load country data with tag mapping
+            UpdateProgress(50f, "Loading country JSON5 files...");
+            yield return null;
+
+            // Load country data using JSON5 + Burst architecture
             var countriesPath = System.IO.Path.Combine(gameSettings.DataDirectory, "common", "countries");
-            var countryResult = countryLoader.LoadAllCountriesJob(countriesPath, countryTagResult.CountryTags);
+            var countryDataResult = BurstCountryLoader.LoadAllCountries(countriesPath, tagMapping);
+
+            if (!countryDataResult.Success)
+            {
+                ReportError($"Country loading failed: {countryDataResult.ErrorMessage}");
+                yield break;
+            }
+
+            DominionLogger.Log($"Country loading complete: {countryDataResult.Statistics.FilesProcessed} countries loaded, {countryDataResult.Statistics.FilesSkipped} failed");
 
             UpdateProgress(55f, "Initializing country system...");
             yield return null;
 
-            if (!countryResult.Success)
-            {
-                ReportError($"Country loading failed: {countryResult.ErrorMessage}");
-                yield break;
-            }
-
             // Initialize CountrySystem with loaded data
-            gameState.Countries.InitializeFromCountryData(countryResult);
+            gameState.Countries.InitializeFromCountryData(countryDataResult);
 
-            UpdateProgress(60f, "Country data loaded");
-            LogPhaseComplete($"Loaded {gameState.Countries.CountryCount} countries");
-
-            // Emit country data ready event
-            gameState.EventBus.Emit(new CountryDataReadyEvent
-            {
-                CountryCount = gameState.Countries.CountryCount,
-                HasScenarioData = false, // Will be set to true after scenario loading
-                TimeStamp = Time.time
-            });
-
-            // Clean up
-            countryResult.Dispose();
+            UpdateProgress(60f, "Country phase complete");
+            LogPhaseComplete($"Loaded {countryDataResult.Statistics.FilesProcessed} countries from JSON5 (ready for reference linking)");
         }
 
         /// <summary>
@@ -705,25 +676,6 @@ namespace Core
             LogPhaseComplete("All systems ready");
         }
 
-        /// <summary>
-        /// Async province loading
-        /// </summary>
-        private async Task<ProvinceMapResult> LoadProvinceDataAsync()
-        {
-            // Hook up progress reporting
-            provinceProcessor.OnProgressUpdate += (progress) =>
-            {
-                var adjustedProgress = 10f + (progress.ProgressPercentage * 25f);
-                UpdateProgress(adjustedProgress, progress.CurrentOperation);
-            };
-
-            var provinceBitmapPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.bmp");
-            var provinceDefinitionsPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "definition.csv");
-            return await provinceProcessor.LoadProvinceMapAsync(
-                provinceBitmapPath,
-                provinceDefinitionsPath
-            );
-        }
 
 
         /// <summary>
@@ -858,12 +810,6 @@ namespace Core
             }
         }
 
-        void OnDestroy()
-        {
-            // Clean up loaders
-            provinceProcessor = null;
-            countryLoader = null;
-        }
     }
 
     // ===========================

@@ -5,9 +5,9 @@ using Map.Loading;
 using Map.Interaction;
 using Map.Debug;
 using Map.Simulation;
-using ParadoxParser.Jobs;
 using Core;
 using Utils;
+using static Map.Loading.ProvinceMapProcessor;
 
 namespace Map.Core
 {
