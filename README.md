@@ -85,4 +85,4 @@ Archon/
 
 ## License
 
-Proprietary
+MIT License - see [LICENSE](LICENSE) for details
