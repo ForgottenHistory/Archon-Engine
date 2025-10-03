@@ -131,10 +131,15 @@ namespace Map.MapModes
             InitializeModeHandlers();
             InitializeUpdateScheduler();
 
-            isInitialized = true;  // Set BEFORE SetMapMode so it doesn't return early
-            SetMapMode(currentMode, forceUpdate: true);
+            isInitialized = true;
 
-            DominionLogger.LogMapInit("MapModeManager initialized");
+            // Don't set initial mode if no handlers registered yet (GAME layer will register them)
+            if (modeHandlers.Count > 0)
+            {
+                SetMapMode(currentMode, forceUpdate: true);
+            }
+
+            DominionLogger.LogMapInit("MapModeManager initialized - waiting for GAME to register map mode handlers");
         }
 
         private void InitializeTextures()
@@ -154,20 +159,25 @@ namespace Map.MapModes
 
         private void InitializeModeHandlers()
         {
-            modeHandlers = new Dictionary<MapMode, IMapModeHandler>
-            {
-                { MapMode.Political, new PoliticalMapMode() },
-                { MapMode.Terrain, new TerrainMapMode() },
-                { MapMode.Development, new DevelopmentMapMode() }
-                // TODO: Add other handlers as we implement them
-            };
+            // ENGINE provides infrastructure, GAME registers handlers via RegisterHandler()
+            modeHandlers = new Dictionary<MapMode, IMapModeHandler>();
         }
 
-        private void InitializeUpdateScheduler()
+        /// <summary>
+        /// Register a map mode handler - called by GAME layer during initialization
+        /// Enables dependency injection: ENGINE provides mechanism, GAME provides policy
+        /// </summary>
+        public void RegisterHandler(MapMode mode, IMapModeHandler handler)
         {
-            updateScheduler = new TextureUpdateScheduler();
+            if (modeHandlers == null)
+            {
+                modeHandlers = new Dictionary<MapMode, IMapModeHandler>();
+            }
 
-            foreach (var handler in modeHandlers.Values)
+            modeHandlers[mode] = handler;
+
+            // If scheduler exists, register the handler for updates
+            if (updateScheduler != null && gameState?.ProvinceQueries != null && provinceMapping != null)
             {
                 updateScheduler.RegisterHandler(handler, handler.GetUpdateFrequency(), (h) =>
                 {
@@ -177,6 +187,14 @@ namespace Map.MapModes
                     }
                 });
             }
+
+            DominionLogger.LogMapInit($"MapModeManager: Registered handler for {mode} mode");
+        }
+
+        private void InitializeUpdateScheduler()
+        {
+            // Create scheduler - handlers will be registered via RegisterHandler()
+            updateScheduler = new TextureUpdateScheduler();
         }
 
         public void SetMapMode(MapMode mode, bool forceUpdate = false)

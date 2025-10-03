@@ -64,6 +64,9 @@ namespace Core.Data
 
         /// <summary>
         /// Calculate development from base values
+        /// Default formula: sum of components, capped at 255
+        /// NOTE: This is a convenience default for Burst compatibility
+        /// GAME can override Development value after loading if different formula is needed
         /// </summary>
         public void CalculateDevelopment()
         {
