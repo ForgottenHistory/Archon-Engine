@@ -293,7 +293,7 @@ namespace ParadoxParser.CSV
         /// </summary>
         [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static uint ComputeHash(NativeSlice<byte> data)
+        private static uint ComputeHash(in NativeSlice<byte> data)
         {
             const uint FNV_OFFSET_BASIS = 2166136261;
             const uint FNV_PRIME = 16777619;
@@ -312,7 +312,7 @@ namespace ParadoxParser.CSV
         /// </summary>
         [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryParseInt(NativeSlice<byte> data, out int value)
+        private static bool TryParseInt(in NativeSlice<byte> data, out int value)
         {
             value = 0;
             if (data.Length == 0) return false;
@@ -348,7 +348,7 @@ namespace ParadoxParser.CSV
         /// </summary>
         [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryParseFloat(NativeSlice<byte> data, out float value)
+        private static bool TryParseFloat(in NativeSlice<byte> data, out float value)
         {
             value = 0f;
             if (data.Length == 0) return false;
