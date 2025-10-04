@@ -86,8 +86,8 @@ namespace Map.Core
                 renderingCoordinator.SetupMapRendering();
                 provinceSelector.Initialize(textureManager, meshRenderer.transform);
 
-                // Initialize map mode system after rendering is ready
-                mapModeManager?.Initialize();
+                // Note: MapModeManager initialization is controlled by GAME layer
+                // ENGINE provides mechanism, GAME controls initialization flow
 
                 return true;
             }
@@ -123,8 +123,8 @@ namespace Map.Core
                 renderingCoordinator.SetupMapRendering();
                 provinceSelector.Initialize(textureManager, meshRenderer.transform);
 
-                // Initialize map mode system after rendering is ready
-                mapModeManager?.Initialize();
+                // Note: MapModeManager initialization is controlled by GAME layer
+                // ENGINE provides mechanism, GAME controls initialization flow
 
                 // Initialize TextureUpdateBridge for runtime texture updates
                 if (textureUpdateBridge != null && gameState != null)

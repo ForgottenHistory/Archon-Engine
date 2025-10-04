@@ -87,17 +87,11 @@ namespace Map.Rendering
             runtimeMaterial = meshRenderer.material;  // Store the runtime instance
             textureManager.BindTexturesToMaterial(runtimeMaterial);
 
-            // Initialize MapModeManager explicitly before using it
-            if (mapModeManager != null)
+            // Note: MapModeManager initialization is controlled by GAME layer
+            // ENGINE provides mechanism, GAME controls initialization flow and initial mode
+            if (mapModeManager != null && logRenderingProgress)
             {
-                mapModeManager.Initialize();
-                if (logRenderingProgress)
-                {
-                    DominionLogger.LogMapInit("MapRenderingCoordinator: Initialized MapModeManager");
-                }
-
-                // Set initial map mode - delegate to MapModeManager
-                mapModeManager.SetMapMode(Map.MapModes.MapMode.Political);
+                DominionLogger.LogMapInit("MapRenderingCoordinator: MapModeManager ready for GAME initialization");
             }
 
             // Set general material properties not handled by mapmodes

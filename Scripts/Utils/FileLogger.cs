@@ -72,8 +72,10 @@ using UnityEngine;
         {
             if (isInitialized) return;
 
-            // Create logs directory inside Assets
-            string logsDir = Path.Combine(Application.dataPath, "Logs");
+            // Create logs directory in project root (NOT inside Assets/ - Unity tries to import them!)
+            // Application.dataPath = "D:/Project/Assets", we want "D:/Project/Logs"
+            string projectRoot = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+            string logsDir = Path.Combine(projectRoot, "Logs");
             if (!Directory.Exists(logsDir))
             {
                 Directory.CreateDirectory(logsDir);

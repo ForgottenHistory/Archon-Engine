@@ -46,8 +46,8 @@ namespace Map.MapModes
 
         void Start()
         {
-            // Don't auto-initialize - wait for explicit initialization
-            // This prevents timing issues with material availability
+            // ENGINE does not auto-initialize
+            // GAME layer controls initialization via Initialize() call
         }
 
         void Update()
@@ -62,84 +62,50 @@ namespace Map.MapModes
         }
 
         /// <summary>
-        /// Initialize the map mode system - call after MapRenderingCoordinator is set up
+        /// Initialize the map mode system
+        /// ENGINE provides MECHANISM, GAME controls WHEN to initialize
+        /// Called by GAME layer after handlers are registered
         /// </summary>
-        public void Initialize()
+        public void Initialize(GameState gameStateRef, Material material, ProvinceMapping mapping)
         {
-            InitializeSystem();
-        }
-
-        private void InitializeSystem()
-        {
-            if (isInitialized) return;
-
-            gameState = Object.FindFirstObjectByType<GameState>();
-            if (gameState == null || !gameState.IsInitialized)
+            if (isInitialized)
             {
-                Invoke(nameof(InitializeSystem), 0.5f);
+                DominionLogger.LogWarning("MapModeManager: Already initialized, skipping");
                 return;
             }
 
-            // Get material from MapRenderingCoordinator if not assigned
-            if (mapMaterial == null)
+            // Store references provided by GAME
+            gameState = gameStateRef;
+            mapMaterial = material;
+            provinceMapping = mapping;
+
+            // Validate required dependencies
+            if (gameState == null)
             {
-                var renderingCoordinator = Object.FindFirstObjectByType<MapRenderingCoordinator>();
-                if (renderingCoordinator != null)
-                {
-                    mapMaterial = renderingCoordinator.MapMaterial;
-                    DominionLogger.LogMapInit($"MapModeManager: Got material instance {mapMaterial?.GetInstanceID()} from MapRenderingCoordinator");
-                }
+                DominionLogger.LogError("MapModeManager: GameState is null - cannot initialize");
+                return;
             }
 
             if (mapMaterial == null)
             {
-                DominionLogger.LogError("MapModeManager: Map material not found - ensure MapRenderingCoordinator is initialized first");
-                Invoke(nameof(InitializeSystem), 0.5f);
+                DominionLogger.LogError("MapModeManager: Material is null - cannot initialize");
                 return;
             }
 
-            // CRITICAL DEBUG: Verify this is the SAME material the renderer is using
-            var mapRenderer = Object.FindFirstObjectByType<Map.Rendering.MapRenderer>();
-            if (mapRenderer != null)
+            if (provinceMapping == null)
             {
-                var rendererMaterial = mapRenderer.GetMaterial();
-                DominionLogger.Log($"MapModeManager: MapModeManager has material instance {mapMaterial.GetInstanceID()}, MapRenderer is using instance {rendererMaterial?.GetInstanceID()}");
-                if (rendererMaterial != null && mapMaterial.GetInstanceID() != rendererMaterial.GetInstanceID())
-                {
-                    DominionLogger.LogError($"MapModeManager: ✗ MATERIAL MISMATCH! MapModeManager is binding to instance {mapMaterial.GetInstanceID()} but renderer is using instance {rendererMaterial.GetInstanceID()}!");
-                    // FIX: Use the renderer's material instead
-                    mapMaterial = rendererMaterial;
-                    DominionLogger.Log($"MapModeManager: Switched to renderer's material instance {mapMaterial.GetInstanceID()}");
-                }
-                else
-                {
-                    DominionLogger.Log("MapModeManager: ✓ Material instances match - both using same instance");
-                }
-            }
-
-            // Get ProvinceMapping from MapSystemCoordinator
-            var mapSystemCoordinator = Object.FindFirstObjectByType<MapSystemCoordinator>();
-            if (mapSystemCoordinator?.ProvinceMapping == null)
-            {
-                DominionLogger.LogError("MapModeManager: ProvinceMapping not found - ensure MapSystemCoordinator is initialized first");
-                Invoke(nameof(InitializeSystem), 0.5f);
+                DominionLogger.LogError("MapModeManager: ProvinceMapping is null - cannot initialize");
                 return;
             }
-            provinceMapping = mapSystemCoordinator.ProvinceMapping;
 
+            // Initialize subsystems
             InitializeTextures();
             InitializeModeHandlers();
             InitializeUpdateScheduler();
 
             isInitialized = true;
 
-            // Don't set initial mode if no handlers registered yet (GAME layer will register them)
-            if (modeHandlers.Count > 0)
-            {
-                SetMapMode(currentMode, forceUpdate: true);
-            }
-
-            DominionLogger.LogMapInit("MapModeManager initialized - waiting for GAME to register map mode handlers");
+            DominionLogger.LogMapInit("MapModeManager initialized - ready for GAME to register handlers and set mode");
         }
 
         private void InitializeTextures()

@@ -59,6 +59,7 @@ public static class DominionLogger
         public const string Network = "network";
         public const string AI = "ai";
         public const string UI = "ui";
+        public const string Game = "game"; // GAME layer logs (policy, not engine mechanism)
     }
 
     // Convenience methods for data linking system
@@ -70,6 +71,11 @@ public static class DominionLogger
     public static void LogMapInit(string message) => Log(message, Systems.MapInitialization);
     public static void LogMapInitWarning(string message) => LogWarning(message, Systems.MapInitialization);
     public static void LogMapInitError(string message) => LogError(message, Systems.MapInitialization);
+
+    // Convenience methods for game layer system
+    public static void LogGame(string message) => Log(message, Systems.Game);
+    public static void LogGameWarning(string message) => LogWarning(message, Systems.Game);
+    public static void LogGameError(string message) => LogError(message, Systems.Game);
 
     // Configuration methods
     public static void SetConsoleLogging(bool enabled) => logToConsole = enabled;
