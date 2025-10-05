@@ -187,21 +187,30 @@ namespace Core
             }
         }
 
+        /// <summary>
+        /// Process events every frame (frame-coherent batching)
+        /// </summary>
+        void Update()
+        {
+            if (!IsInitialized)
+                return;
+
+            // Process all queued events
+            EventBus?.ProcessEvents();
+
+            #if UNITY_EDITOR
+            // Update debug info
+            debugProvinceCount = Provinces?.ProvinceCount ?? 0;
+            debugCountryCount = Countries?.CountryCount ?? 0;
+            debugEventBusActive = EventBus?.IsActive ?? false;
+            #endif
+        }
+
         #if UNITY_EDITOR
         [Header("Debug Info")]
         [SerializeField, ReadOnly] private int debugProvinceCount;
         [SerializeField, ReadOnly] private int debugCountryCount;
         [SerializeField, ReadOnly] private bool debugEventBusActive;
-
-        void Update()
-        {
-            if (IsInitialized)
-            {
-                debugProvinceCount = Provinces?.ProvinceCount ?? 0;
-                debugCountryCount = Countries?.CountryCount ?? 0;
-                debugEventBusActive = EventBus?.IsActive ?? false;
-            }
-        }
         #endif
     }
 

@@ -1,78 +1,65 @@
 using System;
 using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
 
 namespace Core
 {
     /// <summary>
     /// High-performance event bus for decoupled system communication
-    /// Features: Type-safe events, pooled allocation, frame-coherent processing
-    /// Performance: Zero allocations during gameplay, batch event processing
+    /// Features: Type-safe events, zero-allocation processing, frame-coherent batching
+    /// Performance: ZERO allocations during gameplay (no boxing), batch event processing
+    ///
+    /// Architecture: Uses typed EventQueue<T> wrapper to avoid boxing and reflection
+    /// See: Assets/Archon-Engine/Docs/Engine/data-flow-architecture.md
     /// </summary>
     public class EventBus : IDisposable
     {
-        private const int INITIAL_LISTENER_CAPACITY = 16;
-        private const int INITIAL_EVENT_QUEUE_CAPACITY = 256;
+        private const int INITIAL_CAPACITY = 16;
 
-        // Event listeners organized by type
-        private readonly Dictionary<Type, List<IEventListener>> listeners;
-
-        // Event queue for frame-coherent processing
-        private readonly Queue<IGameEvent> eventQueue;
-        private readonly Queue<IGameEvent> processingQueue;
-
-        // Event pooling for zero allocations
-        private readonly Dictionary<Type, Queue<IGameEvent>> eventPools;
+        // Type-specific event queues - uses IEventQueue interface for polymorphism without boxing
+        private readonly Dictionary<Type, IEventQueue> eventQueues;
 
         // Performance monitoring
         private int eventsProcessedThisFrame;
         private int totalEventsProcessed;
 
         public bool IsActive { get; private set; }
-        public int EventsInQueue => eventQueue.Count;
         public int EventsProcessedTotal => totalEventsProcessed;
+
+        public int EventsInQueue
+        {
+            get
+            {
+                int total = 0;
+                foreach (var queue in eventQueues.Values)
+                {
+                    total += queue.Count;
+                }
+                return total;
+            }
+        }
 
         public EventBus()
         {
-            listeners = new Dictionary<Type, List<IEventListener>>(INITIAL_LISTENER_CAPACITY);
-            eventQueue = new Queue<IGameEvent>(INITIAL_EVENT_QUEUE_CAPACITY);
-            processingQueue = new Queue<IGameEvent>(INITIAL_EVENT_QUEUE_CAPACITY);
-            eventPools = new Dictionary<Type, Queue<IGameEvent>>();
-
+            eventQueues = new Dictionary<Type, IEventQueue>(INITIAL_CAPACITY);
             IsActive = true;
-            DominionLogger.Log("EventBus initialized");
+            DominionLogger.Log("EventBus initialized (zero-allocation mode)");
         }
 
         /// <summary>
         /// Subscribe to events of a specific type
-        /// Thread-safe and can be called during event processing
         /// </summary>
         public void Subscribe<T>(Action<T> handler) where T : struct, IGameEvent
         {
             var eventType = typeof(T);
 
-            if (!listeners.ContainsKey(eventType))
+            if (!eventQueues.TryGetValue(eventType, out var queue))
             {
-                listeners[eventType] = new List<IEventListener>();
+                queue = new EventQueue<T>();
+                eventQueues[eventType] = queue;
             }
 
-            listeners[eventType].Add(new EventListener<T>(handler));
-        }
-
-        /// <summary>
-        /// Subscribe with a listener object (for automatic cleanup)
-        /// </summary>
-        public void Subscribe<T>(IEventListener<T> listener) where T : struct, IGameEvent
-        {
-            var eventType = typeof(T);
-
-            if (!listeners.ContainsKey(eventType))
-            {
-                listeners[eventType] = new List<IEventListener>();
-            }
-
-            listeners[eventType].Add(listener);
+            ((EventQueue<T>)queue).AddListener(handler);
         }
 
         /// <summary>
@@ -82,133 +69,73 @@ namespace Core
         {
             var eventType = typeof(T);
 
-            if (!listeners.ContainsKey(eventType))
+            if (!eventQueues.TryGetValue(eventType, out var queue))
                 return;
 
-            listeners[eventType].RemoveAll(l => l is EventListener<T> el && el.Handler.Equals(handler));
-        }
-
-        /// <summary>
-        /// Unsubscribe a listener object
-        /// </summary>
-        public void Unsubscribe<T>(IEventListener<T> listener) where T : struct, IGameEvent
-        {
-            var eventType = typeof(T);
-
-            if (!listeners.ContainsKey(eventType))
-                return;
-
-            listeners[eventType].Remove(listener);
+            ((EventQueue<T>)queue).RemoveListener(handler);
         }
 
         /// <summary>
         /// Emit an event - queued for frame-coherent processing
-        /// Zero allocation if event type is pooled
+        /// ZERO ALLOCATION: Event stays as struct T in EventQueue<T>
         /// </summary>
         public void Emit<T>(T gameEvent) where T : struct, IGameEvent
         {
             if (!IsActive)
                 return;
 
+            var eventType = typeof(T);
+
             // Set timestamp
-            var timestampedEvent = gameEvent;
-            timestampedEvent.TimeStamp = Time.time;
+            gameEvent.TimeStamp = Time.time;
 
-            // Queue for processing
-            eventQueue.Enqueue(timestampedEvent);
-        }
-
-        /// <summary>
-        /// Get a pooled event instance to avoid allocations
-        /// </summary>
-        public T GetPooledEvent<T>() where T : struct, IGameEvent
-        {
-            var eventType = typeof(T);
-
-            if (eventPools.ContainsKey(eventType) && eventPools[eventType].Count > 0)
+            // Get or create type-specific queue
+            if (!eventQueues.TryGetValue(eventType, out var queue))
             {
-                return (T)eventPools[eventType].Dequeue();
+                queue = new EventQueue<T>();
+                eventQueues[eventType] = queue;
             }
 
-            return new T();
+            // Enqueue - NO BOXING (cast is safe, EventQueue<T> is what we created)
+            ((EventQueue<T>)queue).Enqueue(gameEvent);
         }
 
-        /// <summary>
-        /// Return event to pool after processing
-        /// </summary>
-        public void ReturnToPool<T>(T gameEvent) where T : struct, IGameEvent
-        {
-            var eventType = typeof(T);
-
-            if (!eventPools.ContainsKey(eventType))
-            {
-                eventPools[eventType] = new Queue<IGameEvent>();
-            }
-
-            eventPools[eventType].Enqueue(gameEvent);
-        }
+        // Cached list for processing (reused to avoid allocations)
+        private readonly List<IEventQueue> queuesToProcess = new List<IEventQueue>(16);
 
         /// <summary>
         /// Process all queued events - call once per frame
         /// Frame-coherent processing ensures consistent event ordering
+        /// ZERO ALLOCATION: No boxing, events stay as struct T throughout
         /// </summary>
         public void ProcessEvents()
         {
-            if (!IsActive || eventQueue.Count == 0)
+            if (!IsActive || eventQueues.Count == 0)
                 return;
 
             eventsProcessedThisFrame = 0;
 
-            // Swap queues to allow new events during processing
-            while (eventQueue.Count > 0)
+            // Copy queues to list (prevents concurrent modification if new event types emitted during processing)
+            queuesToProcess.Clear();
+            foreach (var queue in eventQueues.Values)
             {
-                processingQueue.Enqueue(eventQueue.Dequeue());
+                queuesToProcess.Add(queue);
             }
 
-            // Process all events in order
-            while (processingQueue.Count > 0)
+            // Process all type-specific queues
+            for (int i = 0; i < queuesToProcess.Count; i++)
             {
-                var gameEvent = processingQueue.Dequeue();
-                ProcessEvent(gameEvent);
-                eventsProcessedThisFrame++;
-                totalEventsProcessed++;
+                int processed = queuesToProcess[i].ProcessEvents();
+                eventsProcessedThisFrame += processed;
+                totalEventsProcessed += processed;
             }
 
             #if UNITY_EDITOR
-            if (eventsProcessedThisFrame > 100)
+            if (eventsProcessedThisFrame > 1000)
             {
-                DominionLogger.LogWarning($"EventBus processed {eventsProcessedThisFrame} events this frame - potential performance issue");
+                DominionLogger.LogWarning($"EventBus processed {eventsProcessedThisFrame} events this frame");
             }
             #endif
-        }
-
-        /// <summary>
-        /// Process a single event by notifying all listeners
-        /// </summary>
-        private void ProcessEvent(IGameEvent gameEvent)
-        {
-            var eventType = gameEvent.GetType();
-
-            if (!listeners.ContainsKey(eventType))
-                return;
-
-            var eventListeners = listeners[eventType];
-
-            // Process all listeners for this event type
-            for (int i = eventListeners.Count - 1; i >= 0; i--)
-            {
-                try
-                {
-                    eventListeners[i].OnEvent(gameEvent);
-                }
-                catch (Exception e)
-                {
-                    DominionLogger.LogError($"Error processing event {eventType.Name}: {e.Message}");
-
-                    // Remove broken listeners
-                    eventListeners.RemoveAt(i);
-                }
-            }
         }
 
         /// <summary>
@@ -216,16 +143,12 @@ namespace Core
         /// </summary>
         public void Clear()
         {
-            eventQueue.Clear();
-            processingQueue.Clear();
-            listeners.Clear();
-
-            // Clear but keep pools for reuse
-            foreach (var pool in eventPools.Values)
+            foreach (var queue in eventQueues.Values)
             {
-                pool.Clear();
+                queue.Clear();
             }
 
+            eventQueues.Clear();
             DominionLogger.Log("EventBus cleared");
         }
 
@@ -244,61 +167,111 @@ namespace Core
         {
             DominionLogger.LogDataLinking($"EventBus Status:\n" +
                       $"- Active: {IsActive}\n" +
-                      $"- Events in queue: {eventQueue.Count}\n" +
-                      $"- Event types registered: {listeners.Count}\n" +
+                      $"- Events in queue: {EventsInQueue}\n" +
+                      $"- Event types registered: {eventQueues.Count}\n" +
                       $"- Total events processed: {totalEventsProcessed}\n" +
                       $"- Events this frame: {eventsProcessedThisFrame}");
         }
         #endif
+
+        /// <summary>
+        /// Internal interface for type-erased event queue storage
+        /// Virtual method calls don't box value types
+        /// </summary>
+        private interface IEventQueue
+        {
+            int ProcessEvents();
+            void Clear();
+            int Count { get; }
+        }
+
+        /// <summary>
+        /// Type-specific event queue that processes events without boxing
+        /// This is the key to zero-allocation: Queue<T> stays as T throughout
+        /// </summary>
+        private class EventQueue<T> : IEventQueue where T : struct, IGameEvent
+        {
+            private const int INITIAL_QUEUE_CAPACITY = 256;
+
+            private readonly Queue<T> eventQueue;
+            private readonly Queue<T> processingQueue;
+            private Action<T> listeners;
+
+            public int Count => eventQueue.Count;
+
+            public EventQueue()
+            {
+                eventQueue = new Queue<T>(INITIAL_QUEUE_CAPACITY);
+                processingQueue = new Queue<T>(INITIAL_QUEUE_CAPACITY);
+            }
+
+            public void Enqueue(T gameEvent)
+            {
+                eventQueue.Enqueue(gameEvent);  // NO BOXING - T stays T
+            }
+
+            public void AddListener(Action<T> handler)
+            {
+                listeners = (Action<T>)Delegate.Combine(listeners, handler);
+            }
+
+            public void RemoveListener(Action<T> handler)
+            {
+                listeners = (Action<T>)Delegate.Remove(listeners, handler);
+
+                if (listeners == null && eventQueue.Count == 0)
+                {
+                    // Queue is now unused, could be cleaned up
+                }
+            }
+
+            public int ProcessEvents()
+            {
+                if (eventQueue.Count == 0)
+                    return 0;
+
+                int processed = 0;
+
+                // Swap queues to allow new events during processing
+                while (eventQueue.Count > 0)
+                {
+                    processingQueue.Enqueue(eventQueue.Dequeue());  // NO BOXING - T to T
+                }
+
+                // Process all events
+                while (processingQueue.Count > 0)
+                {
+                    var gameEvent = processingQueue.Dequeue();  // NO BOXING - T stays T
+
+                    try
+                    {
+                        // Invoke listeners - NO BOXING - direct Action<T> call
+                        listeners?.Invoke(gameEvent);
+                        processed++;
+                    }
+                    catch (Exception e)
+                    {
+                        DominionLogger.LogError($"Error processing event {typeof(T).Name}: {e.Message}\n{e.StackTrace}");
+                    }
+                }
+
+                return processed;
+            }
+
+            public void Clear()
+            {
+                eventQueue.Clear();
+                processingQueue.Clear();
+            }
+        }
     }
 
     /// <summary>
     /// Base interface for all game events
+    /// Events MUST be structs to avoid allocations
     /// </summary>
     public interface IGameEvent
     {
         float TimeStamp { get; set; }
-    }
-
-    /// <summary>
-    /// Base interface for event listeners
-    /// </summary>
-    public interface IEventListener
-    {
-        void OnEvent(IGameEvent gameEvent);
-    }
-
-    /// <summary>
-    /// Typed event listener interface
-    /// </summary>
-    public interface IEventListener<T> : IEventListener where T : struct, IGameEvent
-    {
-        void OnEvent(T gameEvent);
-    }
-
-    /// <summary>
-    /// Internal event listener wrapper for Action delegates
-    /// </summary>
-    internal class EventListener<T> : IEventListener<T> where T : struct, IGameEvent
-    {
-        public readonly Action<T> Handler;
-
-        public EventListener(Action<T> handler)
-        {
-            Handler = handler;
-        }
-
-        public void OnEvent(IGameEvent gameEvent)
-        {
-            if (gameEvent is T typedEvent)
-            {
-                Handler(typedEvent);
-            }
-        }
-
-        public void OnEvent(T gameEvent)
-        {
-            Handler(gameEvent);
-        }
     }
 }

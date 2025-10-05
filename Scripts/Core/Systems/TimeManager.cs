@@ -32,7 +32,7 @@ namespace Core.Systems
         [SerializeField] private bool autoStart = true;
 
         [Header("Speed Configuration")]
-        [SerializeField] private int initialSpeedLevel = 2; // 0=paused, 1-4=speed levels
+        [SerializeField] private int initialSpeedLevel = 0; // 0=paused, 1-4=speed levels (default paused for manual testing)
 
         // Current game time (deterministic)
         private int hour = 0;
