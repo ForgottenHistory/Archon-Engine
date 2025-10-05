@@ -801,6 +801,59 @@ void UpdateProvinceVisuals(Province[] provinces)
 
 ---
 
+## Common GPU Gotchas
+
+### TYPELESS Texture Format Trap
+
+**Problem:** RenderTextures with `enableRandomWrite = true` may become DXGI_FORMAT_*_TYPELESS instead of UNORM/SNORM.
+
+**Symptom:**
+- Texture contains correct data (verified with ReadPixels)
+- Shader reads garbage/zeros
+- RenderDoc shows TYPELESS format instead of UNORM
+
+**Root Cause:** Unity's RenderTexture constructor can create TYPELESS format on some platforms when UAV (enableRandomWrite) is enabled.
+
+**Example of the Bug:**
+```csharp
+// This CAN become TYPELESS on some platforms
+var texture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
+texture.enableRandomWrite = true;  // ❌ May trigger TYPELESS format
+
+// RenderDoc shows: DXGI_FORMAT_R8G8B8A8_TYPELESS
+// Shader reads garbage because GPU doesn't know how to interpret bytes
+```
+
+**The Fix: Always Use Explicit GraphicsFormat**
+```csharp
+// Use RenderTextureDescriptor with explicit GraphicsFormat
+var descriptor = new RenderTextureDescriptor(
+    width,
+    height,
+    UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm,  // ✅ Explicit!
+    0  // No depth buffer
+);
+descriptor.enableRandomWrite = true;  // UAV support
+var texture = new RenderTexture(descriptor);
+
+// RenderDoc shows: DXGI_FORMAT_R8G8B8A8_UNORM ✅
+```
+
+**Why This Matters:**
+- TYPELESS is platform-dependent (works in editor, fails in builds)
+- Breaks multiplayer (different platforms read different data)
+- Silent failure (no error, just wrong rendering)
+
+**How to Detect:**
+1. Capture frame in RenderDoc
+2. Find your RenderTexture in Texture Viewer
+3. Check format in properties panel
+4. If it says "TYPELESS" → you have the bug
+
+**Related Decision:** See [decisions/explicit-graphics-format.md](../decisions/explicit-graphics-format.md)
+
+---
+
 ## Summary: GPU Debugging Workflow
 
 **When you hit a GPU bug:**
@@ -823,4 +876,4 @@ void UpdateProvinceVisuals(Province[] provinces)
 
 ---
 
-*Last updated: 2025-10-02*
+*Last updated: 2025-10-05 - Added TYPELESS texture format gotcha*

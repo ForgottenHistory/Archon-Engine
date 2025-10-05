@@ -13,7 +13,8 @@ struct ProvinceIDPixel
 StructuredBuffer<ProvinceIDPixel> ProvinceIDPixelData;
 
 // Output: ProvinceIDTexture RenderTexture
-RWTexture2D<float4> ProvinceIDTexture;
+// CRITICAL: unorm float4 ensures proper byte interpretation (not TYPELESS)
+RWTexture2D<unorm float4> ProvinceIDTexture;
 
 // Map dimensions
 uint MapWidth;

@@ -224,9 +224,21 @@
 - **Purpose:** JSON5 parsing utilities
 - **Status:** ✅ Data format support
 
-### **Json5ProvinceConverter.cs, Json5CountryConverter.cs**
-- **Purpose:** Convert JSON5 to game data structures
+### **Json5ProvinceConverter.cs**
+- **Purpose:** Convert JSON5 province history to game data structures
+- **Key Feature:** Applies dated historical events up to start date (1444.11.11)
+- **Example:** Province with `owner: "TIM"` + `"1442.1.1": {owner: "QOM"}` → QOM at 1444
+- **Status:** ✅ Data conversion with historical event processing
+
+### **Json5CountryConverter.cs**
+- **Purpose:** Convert JSON5 country data to game data structures
 - **Status:** ✅ Data conversion
+
+### **DefinitionLoader.cs**
+- **Purpose:** Load ALL provinces from definition.csv (4941 total)
+- **API:** LoadDefinitions(), RegisterDefinitions()
+- **Use Case:** Registers provinces without JSON5 files (uncolonized, water)
+- **Status:** ✅ Handles EU4 uncolonized provinces
 
 ### **ReligionLoader.cs, CultureLoader.cs, TradeGoodLoader.cs, TerrainLoader.cs, CountryTagLoader.cs**
 - **Purpose:** Load specific registry data types
@@ -352,6 +364,6 @@ Files marked `[HOT_PATH]` are performance-critical:
 
 ---
 
-*Last Updated: 2025-09-30*
-*Total Files: 56 scripts*
+*Last Updated: 2025-10-05*
+*Total Files: 57 scripts*
 *Status: Multiplayer-ready, deterministic simulation layer*

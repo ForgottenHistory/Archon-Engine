@@ -62,6 +62,7 @@ namespace Core
         // Data linking systems
         private GameRegistries gameRegistries;
         private ProvinceInitialStateLoadResult provinceInitialStates;
+        private System.Collections.Generic.List<DefinitionLoader.DefinitionEntry> provinceDefinitions;
         private ReferenceResolver referenceResolver;
         private CrossReferenceBuilder crossReferenceBuilder;
         private DataValidator dataValidator;
@@ -243,6 +244,9 @@ namespace Core
             crossReferenceBuilder = new CrossReferenceBuilder(gameRegistries);
             dataValidator = new DataValidator(gameRegistries);
 
+            // Provide registries to GameState for central access
+            gameState.SetRegistries(gameRegistries);
+
             UpdateProgress(3f, "Creating data loaders...");
             yield return null;
 
@@ -320,14 +324,27 @@ namespace Core
         }
 
         /// <summary>
-        /// Phase 3: Load province data using JSON5 + Burst architecture
+        /// Phase 3: Load province data using definition.csv + JSON5 + Burst architecture
         /// </summary>
         private IEnumerator LoadProvinceDataPhase()
         {
             SetPhase(LoadingPhase.LoadingProvinces, 15f, "Loading province data...");
 
-            // Load province initial states using hybrid JSON5 + Burst approach
-            UpdateProgress(15f, "Loading province JSON5 files...");
+            // Step 1: Load definition.csv to get ALL provinces (including uncolonized ones)
+            UpdateProgress(15f, "Loading definition.csv...");
+            yield return null;
+
+            provinceDefinitions = DefinitionLoader.LoadDefinitions(gameSettings.DataDirectory);
+            if (provinceDefinitions.Count == 0)
+            {
+                ReportError("Failed to load province definitions from definition.csv");
+                yield break;
+            }
+
+            DominionLogger.Log($"Loaded {provinceDefinitions.Count} province definitions from definition.csv");
+
+            // Step 2: Load province initial states from JSON5 files (history data)
+            UpdateProgress(20f, "Loading province JSON5 files...");
             yield return null;
 
             provinceInitialStates = BurstProvinceHistoryLoader.LoadProvinceInitialStates(gameSettings.DataDirectory);
@@ -457,11 +474,11 @@ namespace Core
 
             DominionLogger.Log($"Country registration complete: {gameRegistries.Countries.Count} countries registered with real tags");
 
-            UpdateProgress(55f, "Processing province data with real references...");
+            UpdateProgress(53f, "Registering provinces with JSON5 history data...");
             yield return null;
 
-            // Process all loaded province initial states with string references
-            DominionLogger.Log($"Province processing: Found {provinceInitialStates.LoadedCount} provinces with string references");
+            // STEP 1: Register provinces that have JSON5 history files (full data)
+            DominionLogger.Log($"Province processing: Found {provinceInitialStates.LoadedCount} provinces with JSON5 history files");
 
             for (int i = 0; i < provinceInitialStates.InitialStates.Length; i++)
             {
@@ -497,7 +514,16 @@ namespace Core
                 }
             }
 
-            DominionLogger.Log($"Province registration complete: {gameRegistries.Provinces.Count} provinces registered with real data");
+            DominionLogger.Log($"Province registration (JSON5): {gameRegistries.Provinces.Count} provinces registered with historical data");
+
+            UpdateProgress(55f, "Filling in missing provinces from definition.csv...");
+            yield return null;
+
+            // STEP 2: Register remaining provinces from definition.csv (uncolonized/water provinces without JSON5)
+            // RegisterDefinitions() automatically skips provinces already registered in step 1
+            DefinitionLoader.RegisterDefinitions(provinceDefinitions, gameRegistries.Provinces);
+
+            DominionLogger.Log($"Province registration complete: {gameRegistries.Provinces.Count} total provinces (JSON5 + definition.csv)");
 
             UpdateProgress(58f, "Resolving province references...");
             yield return null;

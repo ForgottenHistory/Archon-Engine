@@ -290,33 +290,52 @@ namespace Map.Core
                 return null;
 
             var mapping = new ProvinceMapping();
-            var provinceQueries = gameState.ProvinceQueries;
+
+            // BUG FIX: bitmapProvinceID is a definition ID (from definition.csv), not a runtime ID
+            // Must use ProvinceRegistry.ExistsByDefinition() instead of ProvinceQueries.Exists()
+            // ProvinceRegistry maps: definition ID (sparse: 1, 10, 1299, etc.) → runtime ID (dense: 1, 2, 334, etc.)
+            var provinceRegistry = gameState.Registries?.Provinces;
+            if (provinceRegistry == null)
+            {
+                DominionLogger.LogMapInitError("MapSystemCoordinator: GameState.Registries not set! Cannot validate provinces.");
+                return null;
+            }
 
             // Build mappings with simulation validation
             var colorMappingEnumerator = provinceResult.ProvinceMappings.ColorToProvinceID.GetEnumerator();
+            int totalBitmapProvinces = 0;
+            int validatedProvinces = 0;
+            int skippedProvinces = 0;
+
             while (colorMappingEnumerator.MoveNext())
             {
                 int rgb = colorMappingEnumerator.Current.Key;
                 int bitmapProvinceID = colorMappingEnumerator.Current.Value;
+                totalBitmapProvinces++;
 
                 byte r = (byte)((rgb >> 16) & 0xFF);
                 byte g = (byte)((rgb >> 8) & 0xFF);
                 byte b = (byte)(rgb & 0xFF);
                 var color = new Color32(r, g, b, 255);
 
-                // DEBUG: Log Spanish Cuenca
-                if (bitmapProvinceID == 2751 || bitmapProvinceID == 817)
-                {
-                    bool exists = provinceQueries.Exists((ushort)bitmapProvinceID);
-                    DominionLogger.LogMapInit($"MapSystemCoordinator: Province {bitmapProvinceID} in bitmap → Exists in simulation: {exists}");
-                }
-
-                if (provinceQueries.Exists((ushort)bitmapProvinceID))
+                // Check if province exists by definition ID (from definition.csv)
+                if (provinceRegistry.ExistsByDefinition(bitmapProvinceID))
                 {
                     mapping.AddProvince((ushort)bitmapProvinceID, color);
+                    validatedProvinces++;
+                }
+                else
+                {
+                    skippedProvinces++;
+                    // Log first few skipped provinces for debugging
+                    if (skippedProvinces <= 10)
+                    {
+                        DominionLogger.LogMapInit($"MapSystemCoordinator: Skipping province {bitmapProvinceID} RGB({r},{g},{b}) - not in registry");
+                    }
                 }
             }
 
+            DominionLogger.LogMapInit($"MapSystemCoordinator: Province mapping complete - {totalBitmapProvinces} in bitmap, {validatedProvinces} validated, {skippedProvinces} skipped");
             return mapping;
         }
     }

@@ -48,6 +48,15 @@ namespace Map.Rendering
             var provinceQueries = gameState.ProvinceQueries;
             var countryQueries = gameState.CountryQueries;
 
+            // BUG FIX: provinceID from mapping is a DEFINITION ID, not runtime ID
+            // Must use ProvinceRegistry.ExistsByDefinition() for validation
+            var provinceRegistry = gameState.Registries?.Provinces;
+            if (provinceRegistry == null)
+            {
+                DominionLogger.LogMapInitError("MapTexturePopulator: GameState.Registries not set! Cannot validate provinces.");
+                return;
+            }
+
             // Populate province ID, color, and owner textures from bitmap + simulation data
             int processedPixels = 0;
             int validProvinces = 0;
@@ -74,10 +83,11 @@ namespace Map.Rendering
                         // Create Color32 for province lookup
                         var pixelColor = new Color32(r, g, b, 255);
 
-                        // Find province ID for this color using ProvinceMapping
+                        // Find province ID for this color using ProvinceMapping (returns DEFINITION ID)
                         ushort provinceID = mapping.GetProvinceByColor(pixelColor);
 
-                        if (provinceID > 0 && provinceQueries.Exists(provinceID))
+                        // Check if province exists by definition ID (from definition.csv/bitmap)
+                        if (provinceID > 0 && provinceRegistry.ExistsByDefinition(provinceID))
                         {
                             validProvinces++;
 

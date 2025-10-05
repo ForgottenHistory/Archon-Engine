@@ -3,6 +3,7 @@ using Unity.Collections;
 using Core.Systems;
 using Core.Queries;
 using Core.Commands;
+using Core.Registries;
 
 namespace Core
 {
@@ -24,6 +25,9 @@ namespace Core
         // Query Interfaces - These provide optimized data access
         public ProvinceQueries ProvinceQueries { get; private set; }
         public CountryQueries CountryQueries { get; private set; }
+
+        // Registries - Static data lookups (definition ID → runtime ID, etc.)
+        public GameRegistries Registries { get; private set; }
 
         // Core Infrastructure
         public EventBus EventBus { get; private set; }
@@ -53,6 +57,15 @@ namespace Core
             {
                 InitializeSystems();
             }
+        }
+
+        /// <summary>
+        /// Set game registries (called by GameInitializer during loading)
+        /// </summary>
+        public void SetRegistries(GameRegistries registries)
+        {
+            Registries = registries;
+            DominionLogger.Log("GameState: Registries set");
         }
 
         /// <summary>

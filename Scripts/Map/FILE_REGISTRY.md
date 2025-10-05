@@ -29,11 +29,12 @@
 
 ### **MapTextureManager.cs** [HOT_PATH] [STABLE]
 - **Purpose:** Manage all map textures (IDs, owners, colors, borders)
-- **Textures:** ProvinceID (R16G16), Owner (R16), Color (RGBA32), Border (R8)
+- **Textures:** ProvinceID (R8G8B8A8_UNorm RenderTexture), Owner (RFloat), Color (RGBA32), Border (R8)
+- **Format:** Uses explicit GraphicsFormat to prevent TYPELESS issues
 - **Memory:** ~60MB total for 5632×2048 map
 - **API:** SetProvinceID(), SetProvinceOwner(), BindTexturesToMaterial()
 - **Status:** ✅ Texture infrastructure
-- **Lines:** 522
+- **Lines:** 565
 
 ### **MapRenderer.cs** [HOT_PATH]
 - **Purpose:** Single draw call map rendering
@@ -361,6 +362,6 @@ Map.MapRenderer (renders)
 
 ---
 
-*Last Updated: 2025-09-30*
+*Last Updated: 2025-10-05*
 *Total Files: 44 scripts*
 *Status: GPU-accelerated texture-based rendering operational*

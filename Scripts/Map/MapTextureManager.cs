@@ -81,18 +81,21 @@ namespace Map.Rendering
 
         /// <summary>
         /// Create province ID texture as RenderTexture for GPU accessibility
-        /// Uses ARGB32 format (RG16 not supported as RenderTexture on all platforms)
+        /// Uses explicit GraphicsFormat.R8G8B8A8_UNorm to prevent TYPELESS format
         /// Will be populated by compute shader instead of CPU SetPixel()
         /// </summary>
         private void CreateProvinceIDTexture()
         {
-            provinceIDTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.ARGB32);
+            // Use RenderTextureDescriptor with explicit GraphicsFormat to avoid TYPELESS
+            var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, 0);
+            descriptor.enableRandomWrite = true;  // Enable UAV for compute shader writes
+            descriptor.useMipMap = false;
+            descriptor.autoGenerateMips = false;
+
+            provinceIDTexture = new RenderTexture(descriptor);
             provinceIDTexture.name = "ProvinceID_RenderTexture";
             provinceIDTexture.filterMode = FilterMode.Point;     // No filtering for pixel-perfect
             provinceIDTexture.wrapMode = TextureWrapMode.Clamp;  // No wrapping
-            provinceIDTexture.useMipMap = false;
-            provinceIDTexture.autoGenerateMips = false;
-            provinceIDTexture.enableRandomWrite = true;  // Enable UAV for compute shader writes
             provinceIDTexture.Create();
 
             // Clear to zero (no province) using GPU
@@ -510,6 +513,18 @@ namespace Map.Rendering
             if (material == null) return;
 
             material.SetTexture(ProvinceIDTexID, provinceIDTexture);
+
+            // DEBUG: Verify ProvinceIDTexture was bound correctly
+            var retrievedIDTexture = material.GetTexture(ProvinceIDTexID);
+            if (retrievedIDTexture == provinceIDTexture)
+            {
+                DominionLogger.LogMapInit($"MapTextureManager: ✓ ProvinceIDTexture bound correctly - instance {provinceIDTexture.GetInstanceID()}");
+            }
+            else
+            {
+                DominionLogger.LogMapInitError($"MapTextureManager: ✗ ProvinceIDTexture binding FAILED - set {provinceIDTexture?.GetInstanceID()}, got {retrievedIDTexture?.GetInstanceID()}");
+            }
+
             material.SetTexture(ProvinceOwnerTexID, provinceOwnerTexture);
             material.SetTexture(ProvinceColorTexID, provinceColorTexture);
             material.SetTexture(ProvinceDevelopmentTexID, provinceDevelopmentTexture);
