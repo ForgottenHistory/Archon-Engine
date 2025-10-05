@@ -9,8 +9,9 @@ using Map.Loading;
 namespace Map.Integration
 {
     /// <summary>
-    /// Integrates texture-based rendering with province data management
-    /// Handles synchronization between GPU textures and CPU data structures
+    /// Coordinates province data management by delegating to specialized components
+    /// Orchestrates ProvinceDataConverter, ProvinceTextureSynchronizer, and ProvinceMetadataManager
+    /// Refactored to follow single responsibility principle
     /// </summary>
     public class MapDataIntegrator : MonoBehaviour
     {
@@ -26,14 +27,19 @@ namespace Map.Integration
         [SerializeField] private bool generateMetadata = true;
         [SerializeField] private bool generateConvexHulls = true;
 
+        // Core data manager
         private ProvinceDataManager dataManager;
-        private ProvinceNeighborDetector.NeighborResult neighborResult;
-        private ProvinceMetadataGenerator.MetadataResult metadataResult;
+
+        // Specialized components (extracted for single responsibility)
+        private ProvinceTextureSynchronizer textureSynchronizer;
+        private ProvinceMetadataManager metadataManager;
+
         private bool isInitialized = false;
 
+        // Public accessors
         public ProvinceDataManager DataManager => dataManager;
-        public ProvinceNeighborDetector.NeighborResult NeighborResult => neighborResult;
-        public ProvinceMetadataGenerator.MetadataResult MetadataResult => metadataResult;
+        public ProvinceNeighborDetector.NeighborResult NeighborResult => metadataManager?.NeighborResult ?? default;
+        public ProvinceMetadataGenerator.MetadataResult MetadataResult => metadataManager?.MetadataResult ?? default;
         public bool IsInitialized => isInitialized;
 
         void Awake()
@@ -47,6 +53,10 @@ namespace Map.Integration
 
             if (mapRenderer == null)
                 mapRenderer = FindFirstObjectByType<MapRenderer>();
+
+            // Initialize specialized components
+            textureSynchronizer = new ProvinceTextureSynchronizer(dataManager, textureManager);
+            metadataManager = new ProvinceMetadataManager(dataManager);
         }
 
         void Start()
@@ -113,8 +123,8 @@ namespace Map.Integration
                 textureManager.ResizeTextures(loadResult.Width, loadResult.Height);
             }
 
-            // Convert load result to data manager format
-            ConvertLoadResultToDataManager(loadResult);
+            // Convert load result to data manager format using extracted component
+            ProvinceDataConverter.ConvertLoadResult(loadResult, dataManager);
 
             // Populate textures with province data
             PopulateTexturesFromLoadResult(loadResult);
@@ -123,14 +133,14 @@ namespace Map.Integration
             if (detectNeighbors)
             {
                 ArchonLogger.Log("Detecting province neighbors...");
-                neighborResult = ProvinceNeighborDetector.DetectNeighbors(loadResult, includeOceanNeighbors);
+                var neighborResult = ProvinceNeighborDetector.DetectNeighbors(loadResult, includeOceanNeighbors);
 
                 if (neighborResult.Success)
                 {
                     ProvinceNeighborDetector.LogNeighborStatistics(neighborResult);
 
-                    // Update province data manager with coastal flags
-                    UpdateCoastalFlags();
+                    // Update metadata manager with neighbor results (automatically updates coastal flags)
+                    metadataManager.SetNeighborResult(neighborResult);
                 }
                 else
                 {
@@ -142,14 +152,14 @@ namespace Map.Integration
             if (generateMetadata)
             {
                 ArchonLogger.Log("Generating province metadata...");
-                metadataResult = ProvinceMetadataGenerator.GenerateMetadata(loadResult, neighborResult, generateConvexHulls);
+                var metadataResult = ProvinceMetadataGenerator.GenerateMetadata(loadResult, metadataManager.NeighborResult, generateConvexHulls);
 
                 if (metadataResult.Success)
                 {
                     ArchonLogger.Log($"Province metadata generation complete for {metadataResult.ProvinceMetadata.Count} provinces");
 
-                    // Update province data manager with terrain flags
-                    UpdateTerrainFlags();
+                    // Update metadata manager with metadata results (automatically updates terrain flags)
+                    metadataManager.SetMetadataResult(metadataResult);
                 }
                 else
                 {
@@ -170,83 +180,30 @@ namespace Map.Integration
             ArchonLogger.Log($"Map data integration complete! {dataManager.ProvinceCount} provinces loaded.");
         }
 
-        /// <summary>
-        /// Convert load result to data manager format
-        /// </summary>
-        private void ConvertLoadResultToDataManager(ProvinceMapLoader.LoadResult loadResult)
-        {
-            // Group pixels by province ID
-            var provincePixelGroups = new Dictionary<ushort, List<int2>>();
-
-            // Initialize groups for all provinces
-            foreach (var kvp in loadResult.ColorToID)
-            {
-                provincePixelGroups[kvp.Value] = new List<int2>();
-            }
-
-            // Group pixels by province
-            for (int i = 0; i < loadResult.ProvincePixels.Length; i++)
-            {
-                var pixel = loadResult.ProvincePixels[i];
-                if (pixel.ProvinceID > 0) // Skip ocean (ID 0)
-                {
-                    provincePixelGroups[pixel.ProvinceID].Add(pixel.Position);
-                }
-            }
-
-            // Add provinces to data manager
-            foreach (var kvp in provincePixelGroups)
-            {
-                ushort provinceID = kvp.Key;
-                var pixelList = kvp.Value;
-
-                if (pixelList.Count == 0) continue;
-
-                // Convert to native array
-                var pixels = new NativeArray<int2>(pixelList.Count, Allocator.Temp);
-                for (int i = 0; i < pixelList.Count; i++)
-                {
-                    pixels[i] = pixelList[i];
-                }
-
-                // Find the color for this province ID
-                Color32 provinceColor = Color.black;
-                foreach (var colorKvp in loadResult.ColorToID)
-                {
-                    if (colorKvp.Value == provinceID)
-                    {
-                        provinceColor = colorKvp.Key;
-                        break;
-                    }
-                }
-
-                // Add to data manager
-                dataManager.AddProvince(provinceID, provinceColor, pixels);
-
-                pixels.Dispose();
-            }
-        }
 
         /// <summary>
         /// Populate textures from load result data
         /// </summary>
         private void PopulateTexturesFromLoadResult(ProvinceMapLoader.LoadResult loadResult)
         {
-            // Populate all textures with province data
+            // TODO: Populate textures using GPU compute shader instead of CPU
+            // Deprecated CPU methods removed - use ProvinceMapProcessor and OwnerTextureDispatcher
+            // for (int i = 0; i < loadResult.ProvincePixels.Length; i++)
+            // {
+            //     var pixel = loadResult.ProvincePixels[i];
+            //     int x = pixel.Position.x;
+            //     int y = pixel.Position.y;
+            //
+            //     // textureManager.SetProvinceID(x, y, pixel.ProvinceID); // DEPRECATED
+            //     textureManager.SetProvinceColor(x, y, pixel.Color);
+            //     // textureManager.SetProvinceOwner(x, y, 0); // DEPRECATED
+            // }
+
+            // Set province colors only (IDs and owners handled by GPU)
             for (int i = 0; i < loadResult.ProvincePixels.Length; i++)
             {
                 var pixel = loadResult.ProvincePixels[i];
-                int x = pixel.Position.x;
-                int y = pixel.Position.y;
-
-                // Set province ID
-                textureManager.SetProvinceID(x, y, pixel.ProvinceID);
-
-                // Set initial display color (same as identifier color)
-                textureManager.SetProvinceColor(x, y, pixel.Color);
-
-                // No owner initially
-                textureManager.SetProvinceOwner(x, y, 0);
+                textureManager.SetProvinceColor(pixel.Position.x, pixel.Position.y, pixel.Color);
             }
 
             // Apply all texture changes
@@ -267,10 +224,10 @@ namespace Map.Integration
             // Update data manager
             dataManager.SetProvinceOwner(provinceID, ownerCountryID);
 
-            // Sync with textures if auto-sync enabled
+            // Sync with textures if auto-sync enabled (delegate to texture synchronizer)
             if (autoSyncChanges)
             {
-                SyncProvinceOwnerToTexture(provinceID);
+                textureSynchronizer.SyncProvinceOwner(provinceID);
             }
         }
 
@@ -288,10 +245,10 @@ namespace Map.Integration
             // Update data manager
             dataManager.SetProvinceDisplayColor(provinceID, newColor);
 
-            // Sync with textures if auto-sync enabled
+            // Sync with textures if auto-sync enabled (delegate to texture synchronizer)
             if (autoSyncChanges)
             {
-                SyncProvinceColorToTexture(provinceID);
+                textureSynchronizer.SyncProvinceColor(provinceID);
             }
         }
 
@@ -312,105 +269,16 @@ namespace Map.Integration
                 dataManager.SetProvinceDisplayColor(kvp.Key, kvp.Value);
             }
 
-            // Batch sync with textures
+            // Batch sync with textures (delegate to texture synchronizer)
             if (autoSyncChanges)
             {
-                SyncMultipleProvinceColors(provinceColors);
-            }
-        }
-
-        /// <summary>
-        /// Sync province owner from data manager to texture
-        /// </summary>
-        private void SyncProvinceOwnerToTexture(ushort provinceID)
-        {
-            var provinceData = dataManager.GetProvinceByID(provinceID);
-            if (provinceData.id == 0) return; // Province not found
-
-            // Get province bounds for efficient update
-            int minX = Mathf.FloorToInt(provinceData.boundsMin.x);
-            int maxX = Mathf.CeilToInt(provinceData.boundsMax.x);
-            int minY = Mathf.FloorToInt(provinceData.boundsMin.y);
-            int maxY = Mathf.CeilToInt(provinceData.boundsMax.y);
-
-            // Update texture in bounding rectangle
-            for (int y = minY; y <= maxY; y++)
-            {
-                for (int x = minX; x <= maxX; x++)
+                foreach (var kvp in provinceColors)
                 {
-                    // Check if this pixel belongs to our province by sampling ID texture
-                    // This is more efficient than storing all pixel coordinates
-                    ushort pixelProvinceID = textureManager.GetProvinceID(x, y);
-
-                    if (pixelProvinceID == provinceID)
-                    {
-                        textureManager.SetProvinceOwner(x, y, provinceData.ownerCountryID);
-                    }
+                    textureSynchronizer.SyncProvinceColor(kvp.Key);
                 }
             }
-
-            textureManager.ApplyTextureChanges();
         }
 
-        /// <summary>
-        /// Sync province color from data manager to texture
-        /// </summary>
-        private void SyncProvinceColorToTexture(ushort provinceID)
-        {
-            var provinceData = dataManager.GetProvinceByID(provinceID);
-            if (provinceData.id == 0) return; // Province not found
-
-            // Get province bounds for efficient update
-            int minX = Mathf.FloorToInt(provinceData.boundsMin.x);
-            int maxX = Mathf.CeilToInt(provinceData.boundsMax.x);
-            int minY = Mathf.FloorToInt(provinceData.boundsMin.y);
-            int maxY = Mathf.CeilToInt(provinceData.boundsMax.y);
-
-            // Update texture in bounding rectangle
-            for (int y = minY; y <= maxY; y++)
-            {
-                for (int x = minX; x <= maxX; x++)
-                {
-                    // Check if this pixel belongs to our province
-                    ushort pixelProvinceID = textureManager.GetProvinceID(x, y);
-
-                    if (pixelProvinceID == provinceID)
-                    {
-                        textureManager.SetProvinceColor(x, y, provinceData.displayColor);
-                    }
-                }
-            }
-
-            textureManager.ApplyTextureChanges();
-        }
-
-        /// <summary>
-        /// Efficiently sync multiple province colors at once
-        /// </summary>
-        private void SyncMultipleProvinceColors(NativeHashMap<ushort, Color32> provinceColors)
-        {
-            // Get full texture dimensions for batch update
-            int width = textureManager.MapWidth;
-            int height = textureManager.MapHeight;
-
-            // Process entire texture once for efficiency
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    // Get province ID at this pixel
-                    ushort provinceID = textureManager.GetProvinceID(x, y);
-
-                    // Update if this province is in our update set
-                    if (provinceColors.TryGetValue(provinceID, out Color32 newColor))
-                    {
-                        textureManager.SetProvinceColor(x, y, newColor);
-                    }
-                }
-            }
-
-            textureManager.ApplyTextureChanges();
-        }
 
         /// <summary>
         /// Get province at world position (for mouse interaction)
@@ -433,7 +301,7 @@ namespace Map.Integration
         }
 
         /// <summary>
-        /// Force full sync of all data to textures
+        /// Force full sync of all data to textures (delegate to texture synchronizer)
         /// </summary>
         [ContextMenu("Force Full Sync")]
         public void ForceFullSync()
@@ -441,139 +309,94 @@ namespace Map.Integration
             if (!isInitialized) return;
 
             ArchonLogger.Log("Performing full data-to-texture sync...");
-
-            var allProvinces = dataManager.GetAllProvinces();
-            var colorUpdates = new NativeHashMap<ushort, Color32>(allProvinces.Length, Allocator.Temp);
-
-            foreach (var province in allProvinces)
-            {
-                colorUpdates.TryAdd(province.id, province.displayColor);
-            }
-
-            SyncMultipleProvinceColors(colorUpdates);
-            colorUpdates.Dispose();
-
+            textureSynchronizer.SyncAllProvinces(syncOwner: false, syncColor: true, syncDevelopment: false);
             ArchonLogger.Log("Full sync complete!");
         }
 
         /// <summary>
-        /// Update coastal flags in data manager from neighbor detection
+        /// Get neighbors of a specific province (delegate to metadata manager)
         /// </summary>
-        private void UpdateCoastalFlags()
-        {
-            if (!neighborResult.Success) return;
-
-            foreach (var coastalID in neighborResult.CoastalProvinces)
-            {
-                dataManager.AddProvinceFlag(coastalID, ProvinceFlags.IsCoastal);
-            }
-
-            ArchonLogger.Log($"Updated coastal flags for {neighborResult.CoastalProvinces.Count} provinces");
-        }
-
-        /// <summary>
-        /// Update terrain flags in data manager from metadata generation
-        /// </summary>
-        private void UpdateTerrainFlags()
-        {
-            if (!metadataResult.Success) return;
-
-            foreach (var kvp in metadataResult.ProvinceMetadata)
-            {
-                ushort provinceID = kvp.Key;
-                var metadata = kvp.Value;
-
-                // Set impassable flag for mountains, lakes, etc.
-                if (metadata.TerrainType == ProvinceMetadataGenerator.TerrainType.Impassable ||
-                    metadata.TerrainType == ProvinceMetadataGenerator.TerrainType.Lake ||
-                    metadata.TerrainType == ProvinceMetadataGenerator.TerrainType.Mountains)
-                {
-                    dataManager.AddProvinceFlag(provinceID, ProvinceFlags.IsImpassable);
-                }
-
-                // Set trade center flag for large, compact provinces
-                if (ProvinceMetadataGenerator.IsSuitableForLargeLabel(metadata, 1000f))
-                {
-                    dataManager.AddProvinceFlag(provinceID, ProvinceFlags.IsTradeCenter);
-                }
-            }
-
-            ArchonLogger.Log($"Updated terrain flags for {metadataResult.ProvinceMetadata.Count} provinces");
-        }
-
-        /// <summary>
-        /// Get neighbors of a specific province
-        /// </summary>
-        /// <param name="provinceID">Province to get neighbors for</param>
-        /// <param name="allocator">Memory allocator for result</param>
-        /// <returns>Array of neighbor province IDs</returns>
         public NativeArray<ushort> GetProvinceNeighbors(ushort provinceID, Allocator allocator)
         {
-            if (!isInitialized || !neighborResult.Success)
+            if (!isInitialized) return new NativeArray<ushort>(0, allocator);
+
+            var neighbors = metadataManager.GetNeighbors(provinceID);
+            var neighborArray = new NativeArray<ushort>(neighbors.Count, allocator);
+
+            int index = 0;
+            foreach (var neighbor in neighbors)
             {
-                return new NativeArray<ushort>(0, allocator);
+                neighborArray[index++] = neighbor;
             }
 
-            return ProvinceNeighborDetector.GetNeighbors(neighborResult.ProvinceNeighbors, provinceID, allocator);
+            return neighborArray;
         }
 
         /// <summary>
-        /// Check if two provinces are neighbors
+        /// Check if two provinces are neighbors (delegate to metadata manager)
         /// </summary>
         public bool AreProvincesNeighbors(ushort provinceID1, ushort provinceID2)
         {
-            if (!isInitialized || !neighborResult.Success)
-                return false;
-
-            return ProvinceNeighborDetector.AreNeighbors(neighborResult.ProvinceNeighbors, provinceID1, provinceID2);
+            if (!isInitialized) return false;
+            return metadataManager.AreNeighbors(provinceID1, provinceID2);
         }
 
         /// <summary>
-        /// Get neighbor count for a province
+        /// Get neighbor count for a province (delegate to metadata manager)
         /// </summary>
         public int GetProvinceNeighborCount(ushort provinceID)
         {
-            if (!isInitialized || !neighborResult.Success)
-                return 0;
-
-            return ProvinceNeighborDetector.GetNeighborCount(neighborResult.ProvinceNeighbors, provinceID);
+            if (!isInitialized) return 0;
+            return metadataManager.GetNeighbors(provinceID).Count;
         }
 
         /// <summary>
-        /// Check if province is coastal
+        /// Check if province is coastal (delegate to data manager)
         /// </summary>
         public bool IsProvinceCoastal(ushort provinceID)
         {
-            if (!isInitialized || !neighborResult.Success)
-                return false;
+            if (!isInitialized) return false;
 
-            return neighborResult.CoastalProvinces.Contains(provinceID);
+            var data = dataManager.GetProvinceByID(provinceID);
+            if (data.id != 0)
+            {
+                return (data.flags & ProvinceFlags.IsCoastal) != 0;
+            }
+
+            return false;
         }
 
         /// <summary>
-        /// Get province bounding box
+        /// Get province bounding box (delegate to metadata manager)
         /// </summary>
         public bool TryGetProvinceBounds(ushort provinceID, out ProvinceNeighborDetector.ProvinceBounds bounds)
         {
             bounds = default;
+            if (!isInitialized) return false;
 
-            if (!isInitialized || !neighborResult.Success)
-                return false;
+            var (min, max) = metadataManager.GetProvinceBounds(provinceID);
+            if (min == Vector2.zero && max == Vector2.zero) return false;
 
-            return neighborResult.ProvinceBounds.TryGetValue(provinceID, out bounds);
+            bounds = new ProvinceNeighborDetector.ProvinceBounds
+            {
+                ProvinceID = provinceID,
+                Min = new int2((int)min.x, (int)min.y),
+                Max = new int2((int)max.x, (int)max.y)
+            };
+
+            return true;
         }
 
         /// <summary>
-        /// Get province metadata
+        /// Get province metadata (delegate to metadata manager)
         /// </summary>
         public bool TryGetProvinceMetadata(ushort provinceID, out ProvinceMetadataGenerator.ProvinceMetadata metadata)
         {
             metadata = default;
+            if (!isInitialized) return false;
 
-            if (!isInitialized || !metadataResult.Success)
-                return false;
-
-            return metadataResult.ProvinceMetadata.TryGetValue(provinceID, out metadata);
+            metadata = metadataManager.GetMetadata(provinceID);
+            return metadata.PixelCount > 0; // Check if valid metadata
         }
 
         /// <summary>
@@ -642,14 +465,15 @@ namespace Map.Integration
                 dataManager.Dispose();
             }
 
-            if (neighborResult.Success)
+            // Dispose neighbor and metadata results through metadata manager accessors
+            if (metadataManager?.NeighborResult.Success == true)
             {
-                neighborResult.Dispose();
+                metadataManager.NeighborResult.Dispose();
             }
 
-            if (metadataResult.Success)
+            if (metadataManager?.MetadataResult.Success == true)
             {
-                metadataResult.Dispose();
+                metadataManager.MetadataResult.Dispose();
             }
         }
 

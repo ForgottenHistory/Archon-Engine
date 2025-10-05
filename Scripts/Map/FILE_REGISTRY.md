@@ -27,14 +27,45 @@
 
 ## Map/Rendering/ - GPU Rendering Pipeline
 
-### **MapTextureManager.cs** [HOT_PATH] [STABLE]
-- **Purpose:** Manage all map textures (IDs, owners, colors, borders, heightmap, normal map)
-- **Textures:** ProvinceID (R8G8B8A8_UNorm RenderTexture), Owner (RFloat), Color (RGBA32), Border (R8), Heightmap (R8), NormalMap (RGB24)
-- **Format:** Uses explicit GraphicsFormat to prevent TYPELESS issues
+### **MapTextureManager.cs** [HOT_PATH] [REFACTORED]
+- **Purpose:** Facade coordinator for all map textures - delegates to specialized texture sets
+- **Pattern:** Coordinator pattern with delegation
+- **Components:** CoreTextureSet, VisualTextureSet, DynamicTextureSet, PaletteTextureManager
 - **Memory:** ~60MB total for 5632×2048 map
-- **API:** SetProvinceID(), SetProvinceOwner(), BindTexturesToMaterial()
-- **Status:** ✅ Texture infrastructure with heightmap/normal map support
-- **Lines:** 565
+- **API:** SetProvinceColor(), SetProvinceDevelopment(), SetPaletteColor(), BindTexturesToMaterial()
+- **Status:** ✅ Refactored to coordinator (223 lines, down from 636)
+- **Lines:** 223
+
+### **CoreTextureSet.cs** [NEW]
+- **Purpose:** Manage core gameplay-critical textures
+- **Textures:** Province ID (R8G8B8A8_UNorm), Owner (RFloat), Color (RGBA32), Development (RGBA32)
+- **Pattern:** Texture lifecycle management for one category
+- **API:** CreateTextures(), BindToMaterial(), SetProvinceColor(), ApplyChanges()
+- **Status:** ✅ Single responsibility - core gameplay textures
+- **Lines:** 235
+
+### **VisualTextureSet.cs** [NEW]
+- **Purpose:** Manage visual enhancement textures
+- **Textures:** Terrain (RGBA32), Heightmap (R8), Normal Map (RGB24)
+- **Pattern:** Texture lifecycle management for visual quality
+- **API:** CreateTextures(), BindToMaterial(), ApplyChanges()
+- **Status:** ✅ Single responsibility - visual enhancement textures
+- **Lines:** 192
+
+### **DynamicTextureSet.cs** [NEW]
+- **Purpose:** Manage runtime-generated dynamic textures
+- **Textures:** Border (RG16), Highlight (ARGB32) RenderTextures
+- **Pattern:** Texture lifecycle management for dynamic effects
+- **API:** CreateTextures(), BindToMaterial(), SetBorderStyle()
+- **Status:** ✅ Single responsibility - dynamic effect textures
+- **Lines:** 142
+
+### **PaletteTextureManager.cs** [NEW]
+- **Purpose:** Manage color palette texture (256×1 RGBA32)
+- **Pattern:** Specialized palette generation with HSV golden angle distribution
+- **API:** CreatePalette(), SetPaletteColor(), SetPaletteColors(), ApplyChanges()
+- **Status:** ✅ Single responsibility - color palette management
+- **Lines:** 137
 
 ### **MapRenderer.cs** [HOT_PATH]
 - **Purpose:** Single draw call map rendering
@@ -249,12 +280,43 @@
 
 ---
 
-## Map/ - Root Level
+## Map/Integration/ - Data Integration Components
 
-### **MapDataIntegrator.cs**
-- **Purpose:** Integrate map data from multiple sources
-- **API:** IntegrateMapData(), MergeSources()
-- **Status:** ✅ Data integration
+### **MapDataIntegrator.cs** [REFACTORED]
+- **Purpose:** Coordinate province data integration (high-level orchestrator)
+- **Pattern:** Coordinator pattern - delegates to specialized components
+- **Components:** ProvinceDataConverter, ProvinceTextureSynchronizer, ProvinceMetadataManager
+- **API:** InitializeMapData(), SetProvinceOwner(), SetProvinceDisplayColor()
+- **Status:** ✅ Refactored to coordinator (501 lines, down from 688)
+- **Lines:** 501
+
+### **ProvinceDataConverter.cs** [NEW]
+- **Purpose:** Convert ProvinceMapLoader.LoadResult to ProvinceDataManager format
+- **Pattern:** Static utility class for data conversion
+- **API:** ConvertLoadResult() - groups pixels by province and initializes data
+- **Handles:** Pixel grouping, province registration, initial data setup
+- **Status:** ✅ Single responsibility - data conversion only
+- **Lines:** 115
+
+### **ProvinceTextureSynchronizer.cs** [NEW]
+- **Purpose:** Synchronize CPU province data with GPU textures
+- **Pattern:** Generic sync operations to eliminate duplication
+- **API:** SyncProvinceOwner(), SyncProvinceColor(), SyncProvinceDevelopment(), SyncAllProvinces()
+- **Handles:** CPU↔GPU texture updates with bounds optimization
+- **Status:** ✅ Single responsibility - texture synchronization only
+- **Lines:** 175
+
+### **ProvinceMetadataManager.cs** [NEW]
+- **Purpose:** Manage province metadata (neighbors, terrain flags, coastal status)
+- **Pattern:** Query-focused component with automatic flag updates
+- **API:** GetNeighbors(), AreNeighbors(), GetMetadata(), GetCoastalProvinces(), GetProvinceBounds()
+- **Handles:** Neighbor queries, metadata queries, coastal/terrain flag updates
+- **Status:** ✅ Single responsibility - metadata management and queries
+- **Lines:** 200
+
+---
+
+## Map/ - Root Level
 
 ### **MapRendererSetup.cs**
 - **Purpose:** Setup and configure MapRenderer
@@ -372,5 +434,10 @@ Map.MapRenderer (renders)
 ---
 
 *Last Updated: 2025-10-05*
-*Total Files: 44 scripts*
+*Total Files: 51 scripts* (+7 from refactoring)
 *Status: GPU-accelerated texture-based rendering operational*
+*Recent Refactoring:*
+- *Phase 1: MapDataLoader.cs split into specialized loaders (845→208 lines, -641 lines)*
+- *Phase 2: MapTextureManager.cs split into 4 texture sets (636→223 lines, -413 lines)*
+- *Phase 3: MapDataIntegrator.cs split into 3 components (688→501 lines, -187 lines)*
+- ***Total reduction: -1,470 lines, +10 focused components***

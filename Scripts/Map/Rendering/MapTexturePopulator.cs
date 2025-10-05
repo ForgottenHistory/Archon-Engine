@@ -200,8 +200,9 @@ namespace Map.Rendering
                         {
                             validProvinces++;
 
-                            // Set province ID in texture
-                            textureManager.SetProvinceID(x, y, provinceID);
+                            // TODO: Set province ID using GPU compute shader instead of CPU
+                            // Deprecated CPU method removed - use ProvinceMapProcessor compute shader
+                            // textureManager.SetProvinceID(x, y, provinceID); // DEPRECATED
 
                             // Set province color for visual display
                             textureManager.SetProvinceColor(x, y, pixelColor);

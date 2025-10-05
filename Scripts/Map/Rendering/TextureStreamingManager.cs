@@ -352,15 +352,16 @@ namespace Map.Rendering
             int endX = Mathf.Min(startX + tileSize, mapWidth);
             int endY = Mathf.Min(startY + tileSize, mapHeight);
 
-            // Clear texture data in this region (simplified)
-            for (int y = startY; y < endY; y += 8) // Sample every 8 pixels for performance
-            {
-                for (int x = startX; x < endX; x += 8)
-                {
-                    textureManager.SetProvinceID(x, y, 0); // Clear to ocean
-                    textureManager.SetProvinceOwner(x, y, 0); // Clear owner
-                }
-            }
+            // TODO: Clear texture data using GPU compute shader instead of CPU
+            // Deprecated CPU methods removed - use OwnerTextureDispatcher for GPU-based updates
+            // for (int y = startY; y < endY; y += 8)
+            // {
+            //     for (int x = startX; x < endX; x += 8)
+            //     {
+            //         textureManager.SetProvinceID(x, y, 0); // DEPRECATED
+            //         textureManager.SetProvinceOwner(x, y, 0); // DEPRECATED
+            //     }
+            // }
         }
 
         /// <summary>

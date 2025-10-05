@@ -47,117 +47,11 @@ namespace ProvinceSystem
         }
 
         /// <summary>
-        /// Main scanning method - single pass through the bitmap
-        /// This is how Paradox likely does it
+        /// Parallel province adjacency scanning using Unity Job System + Burst compilation
+        /// Single-pass algorithm that finds borders as it scans the bitmap
         /// </summary>
         [ContextMenu("Scan For Adjacencies")]
         public ScanResult ScanForAdjacencies()
-        {
-            if (provinceMap == null)
-            {
-                ArchonLogger.LogError("No province map assigned!");
-                return null;
-            }
-
-            float startTime = Time.realtimeSinceStartup;
-
-            Color32[] pixels = provinceMap.GetPixels32();
-            int width = provinceMap.width;
-            int height = provinceMap.height;
-
-            colorAdjacencies = new Dictionary<Color32, HashSet<Color32>>(new Color32Comparer());
-            HashSet<Color32> uniqueColors = new HashSet<Color32>(new Color32Comparer());
-
-            // Single pass through the bitmap
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    int index = y * width + x;
-                    Color32 currentColor = pixels[index];
-
-                    // Skip black/ocean pixels
-                    if (IsBlackOrOcean(currentColor))
-                        continue;
-
-                    // Track unique province colors
-                    uniqueColors.Add(currentColor);
-
-                    // Ensure this province has an entry
-                    if (!colorAdjacencies.ContainsKey(currentColor))
-                    {
-                        colorAdjacencies[currentColor] = new HashSet<Color32>(new Color32Comparer());
-                    }
-
-                    // Check RIGHT neighbor (if not at edge)
-                    if (x < width - 1)
-                    {
-                        Color32 rightColor = pixels[index + 1];
-                        CheckAndAddAdjacency(currentColor, rightColor);
-                    }
-
-                    // Check BOTTOM neighbor (if not at edge)
-                    if (y < height - 1)
-                    {
-                        Color32 bottomColor = pixels[index + width];
-                        CheckAndAddAdjacency(currentColor, bottomColor);
-                    }
-
-                    // Optional: Check diagonal neighbors
-                    if (!ignoreDiagonals)
-                    {
-                        // Check BOTTOM-RIGHT
-                        if (x < width - 1 && y < height - 1)
-                        {
-                            Color32 bottomRightColor = pixels[index + width + 1];
-                            CheckAndAddAdjacency(currentColor, bottomRightColor);
-                        }
-
-                        // Check BOTTOM-LEFT
-                        if (x > 0 && y < height - 1)
-                        {
-                            Color32 bottomLeftColor = pixels[index + width - 1];
-                            CheckAndAddAdjacency(currentColor, bottomLeftColor);
-                        }
-                    }
-
-                    // Note: We only check right and bottom (and their diagonals) to avoid 
-                    // duplicate checks. The left and top neighbors were already checked
-                    // when processing those pixels.
-                }
-            }
-
-            lastScanTime = Time.realtimeSinceStartup - startTime;
-
-            // Count total connections
-            int totalConnections = 0;
-            foreach (var adjacencySet in colorAdjacencies.Values)
-            {
-                totalConnections += adjacencySet.Count;
-            }
-
-            var result = new ScanResult
-            {
-                adjacencies = colorAdjacencies,
-                provinceCount = uniqueColors.Count,
-                connectionCount = totalConnections / 2, // Each connection is counted twice
-                scanTime = lastScanTime
-            };
-
-            if (showDebugInfo)
-            {
-                ArchonLogger.Log($"Adjacency scan complete in {lastScanTime:F3} seconds\n" +
-                         $"Found {result.provinceCount} provinces with {result.connectionCount} connections");
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Parallel version using Unity Job System for even faster scanning
-        /// </summary>
-        [ContextMenu("Scan For Adjacencies (Parallel)")]
-        public ScanResult ScanForAdjacenciesParallel()
         {
             if (provinceMap == null)
             {
@@ -239,7 +133,7 @@ namespace ProvinceSystem
 
             if (showDebugInfo)
             {
-                ArchonLogger.Log($"Parallel adjacency scan complete in {lastScanTime:F3} seconds\n" +
+                ArchonLogger.Log($"Adjacency scan complete in {lastScanTime:F3} seconds\n" +
                         $"Found {result.provinceCount} provinces with {result.connectionCount} unique adjacency pairs");
 
                 if (pairCount > estimatedAdjacencies * 0.8f)
@@ -250,34 +144,6 @@ namespace ProvinceSystem
             }
 
             return result;
-        }
-
-        private void CheckAndAddAdjacency(Color32 color1, Color32 color2)
-        {
-            // Skip if same color or if second color is black/ocean
-            if (ColorsEqual(color1, color2) || IsBlackOrOcean(color2))
-                return;
-
-            // Add bidirectional adjacency
-            if (!colorAdjacencies.ContainsKey(color2))
-            {
-                colorAdjacencies[color2] = new HashSet<Color32>(new Color32Comparer());
-            }
-
-            colorAdjacencies[color1].Add(color2);
-            colorAdjacencies[color2].Add(color1);
-        }
-
-        private bool IsBlackOrOcean(Color32 color)
-        {
-            return color.r < blackThreshold &&
-                   color.g < blackThreshold &&
-                   color.b < blackThreshold;
-        }
-
-        private bool ColorsEqual(Color32 a, Color32 b)
-        {
-            return a.r == b.r && a.g == b.g && a.b == b.b;
         }
 
         private uint Color32ToUInt(Color32 c)
@@ -320,25 +186,6 @@ namespace ProvinceSystem
 
             ArchonLogger.Log($"Converted {idAdjacencies.Count} color adjacencies to ID adjacencies");
         }
-
-        /// <summary>
-        /// Build color to ID map from ProvinceDataService
-        /// </summary>
-        /*
-        public void BuildColorToIdMapFromDataService(ProvinceSystem.Services.ProvinceDataService dataService)
-        {
-            var colorToIdMap = new Dictionary<Color32, int>(new Color32Comparer());
-
-            foreach (var province in dataService.GetAllProvinces().Values)
-            {
-                Color32 color32 = province.color;
-                colorToIdMap[color32] = province.id;
-            }
-
-            ConvertToIdAdjacencies(colorToIdMap);
-            ArchonLogger.Log($"Built color->ID map with {colorToIdMap.Count} entries from ProvinceDataService");
-        }
-        */
 
         /// <summary>
         /// Get neighbors for a specific province color
