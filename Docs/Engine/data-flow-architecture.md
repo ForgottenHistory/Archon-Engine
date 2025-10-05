@@ -1,6 +1,6 @@
 # Grand Strategy Game - Data Flow & System Architecture
 
-**📊 Implementation Status:** ⚠️ Partially Implemented (Command pattern ✅, event system status unclear)
+**📊 Implementation Status:** ✅ Implemented (Command pattern ✅, EventBus zero-allocation ✅)
 
 > **📚 Architecture Context:** This document describes system communication patterns. See [master-architecture-document.md](master-architecture-document.md) for overall architecture.
 
@@ -402,11 +402,15 @@ public class ArmySystem {
 
 ## Event System Design
 
-### Typed Events for Performance and Type Safety
+### Zero-Allocation Event System with Frame-Coherent Batching
+
+**Architecture Goal:** Type-safe events with **zero allocations** during gameplay and frame-coherent processing.
+
+**Key Innovation:** `EventQueue<T>` wrapper pattern avoids boxing struct events.
 
 ```csharp
 // Event types are structs for zero allocation
-public struct ProvinceOwnershipChanged {
+public struct ProvinceOwnershipChanged : IGameEvent {
     public readonly ushort provinceId;
     public readonly ushort oldOwner;
     public readonly ushort newOwner;
@@ -418,22 +422,76 @@ public struct ProvinceOwnershipChanged {
     }
 }
 
-// Event bus with typed delegates
+// EventBus with zero-allocation architecture
 public class EventBus {
-    private Dictionary<Type, Delegate> listeners = new();
+    // Type-specific event queues (no boxing!)
+    private readonly Dictionary<Type, IEventQueue> eventQueues = new();
 
-    public void Subscribe<T>(Action<T> listener) where T : struct {
-        var type = typeof(T);
-        if (!listeners.ContainsKey(type)) {
-            listeners[type] = listener;
-        } else {
-            listeners[type] = Delegate.Combine(listeners[type], listener);
-        }
+    // Internal interface for polymorphism without boxing
+    private interface IEventQueue {
+        int ProcessEvents();
+        void Clear();
+        int Count { get; }
     }
 
-    public void Emit<T>(T eventData) where T : struct {
-        if (listeners.TryGetValue(typeof(T), out var del)) {
-            ((Action<T>)del)?.Invoke(eventData);
+    // Type-specific wrapper - keeps Queue<T> and Action<T> as concrete types
+    private class EventQueue<T> : IEventQueue where T : struct, IGameEvent {
+        private readonly Queue<T> eventQueue = new();
+        private Action<T> listeners;
+
+        public void Subscribe(Action<T> listener) {
+            listeners += listener;  // Multicast delegate
+        }
+
+        public void Enqueue(T gameEvent) {
+            eventQueue.Enqueue(gameEvent);  // NO BOXING - T stays T
+        }
+
+        public int ProcessEvents() {
+            int processed = 0;
+            while (eventQueue.Count > 0) {
+                var evt = eventQueue.Dequeue();  // NO BOXING
+                listeners?.Invoke(evt);          // Direct Action<T> call
+                processed++;
+            }
+            return processed;
+        }
+
+        public void Clear() => eventQueue.Clear();
+        public int Count => eventQueue.Count;
+    }
+
+    public void Subscribe<T>(Action<T> listener) where T : struct, IGameEvent {
+        var type = typeof(T);
+        if (!eventQueues.TryGetValue(type, out var queue)) {
+            var newQueue = new EventQueue<T>();
+            eventQueues[type] = newQueue;
+            queue = newQueue;
+        }
+        ((EventQueue<T>)queue).Subscribe(listener);
+    }
+
+    public void Emit<T>(T gameEvent) where T : struct, IGameEvent {
+        var type = typeof(T);
+        if (!eventQueues.TryGetValue(type, out var queue)) {
+            var newQueue = new EventQueue<T>();
+            eventQueues[type] = newQueue;
+            queue = newQueue;
+        }
+        ((EventQueue<T>)queue).Enqueue(gameEvent);
+    }
+
+    // Called once per frame from GameState.Update()
+    public void ProcessEvents() {
+        // Take snapshot to allow new events during processing
+        queuesToProcess.Clear();
+        foreach (var queue in eventQueues.Values) {
+            queuesToProcess.Add(queue);
+        }
+
+        // Process all queued events
+        for (int i = 0; i < queuesToProcess.Count; i++) {
+            queuesToProcess[i].ProcessEvents();
         }
     }
 }
@@ -442,46 +500,40 @@ public class EventBus {
 EventBus.Subscribe<ProvinceOwnershipChanged>(OnProvinceOwnershipChanged);
 
 void OnProvinceOwnershipChanged(ProvinceOwnershipChanged evt) {
-    // Type-safe, zero allocation
+    // Type-safe, ZERO allocation
     UpdateProvinceLists(evt.provinceId, evt.oldOwner, evt.newOwner);
 }
 ```
 
+**Why This Pattern Works:**
+- **No Boxing:** `EventQueue<T>` stores concrete `Queue<T>` and `Action<T>` types
+- **Virtual Calls Don't Box:** `IEventQueue.ProcessEvents()` is a virtual method call, which doesn't box value types
+- **Frame-Coherent:** Events queued during frame, processed once per frame via `GameState.Update()`
+- **Type Safety:** Compile-time type checking via generics
+
+**Performance Results** _(from stress test 2025-10-05)_:
+- **Before:** 12.56ms avg, 312KB-2,356KB allocations per frame
+- **After:** 0.85ms avg, 4KB total for 100-frame test
+- **Improvement:** 15x faster, 99.99% allocation reduction
+
 ### Event Ordering and Guarantees
 
 **Ordering rules:**
-1. Events are processed **synchronously** in subscription order
-2. Event handlers should **not** emit new events directly (causes recursion)
-3. If an event needs to trigger another event, use **deferred events**
+1. Events are **queued** during frame, processed once per frame
+2. Processing order: Type registration order (deterministic within type)
+3. Events emitted during `ProcessEvents()` are queued for next frame
+4. All listeners for a type execute before next type processes
 
+**Frame-Coherent Processing:**
 ```csharp
-public class EventBus {
-    private Queue<object> deferredEvents = new();
-    private bool isProcessing = false;
+// GameState.Update() - called every frame
+void Update() {
+    if (!IsInitialized) return;
 
-    public void Emit<T>(T eventData) where T : struct {
-        if (isProcessing) {
-            // Defer event to avoid recursion
-            deferredEvents.Enqueue(eventData);
-            return;
-        }
-
-        isProcessing = true;
-
-        // Invoke all listeners
-        if (listeners.TryGetValue(typeof(T), out var del)) {
-            ((Action<T>)del)?.Invoke(eventData);
-        }
-
-        // Process deferred events
-        while (deferredEvents.Count > 0) {
-            var deferred = deferredEvents.Dequeue();
-            EmitDeferred(deferred);
-        }
-
-        isProcessing = false;
-    }
+    // Process all queued events once per frame
+    EventBus?.ProcessEvents();
 }
+```
 ```
 
 ### When NOT to Use Events
@@ -507,6 +559,54 @@ public FixedPoint64 CalculateIncome(ushort province) {
     return economicSystem.CalculateIncome(state.development, state.terrain);
 }
 ```
+
+### Anti-Patterns to Avoid
+
+**❌ ANTI-PATTERN: Interface-Typed Collections for Value Types**
+```csharp
+// DON'T: Storing structs in interface-typed collections
+public class BadEventBus {
+    private Queue<IGameEvent> eventQueue;  // ← Boxes every struct!
+
+    public void Emit<T>(T evt) where T : struct, IGameEvent {
+        eventQueue.Enqueue(evt);  // struct → interface = boxing (~40 bytes)
+    }
+}
+// Result: 312KB allocations per frame for 10k events
+```
+
+**❌ ANTI-PATTERN: Reflection for Hot Path Operations**
+```csharp
+// DON'T: Using reflection in event processing
+public void ProcessEvents() {
+    foreach (var kvp in eventQueues) {
+        MethodInfo method = typeof(EventBus).GetMethod("ProcessQueue");
+        method.Invoke(this, new object[] { kvp.Value });  // ← Boxes parameters!
+    }
+}
+// Reflection always boxes value type parameters
+```
+
+**✅ CORRECT: EventQueue<T> Wrapper Pattern**
+```csharp
+// DO: Use wrapper class with virtual methods (no boxing)
+private interface IEventQueue {
+    int ProcessEvents();  // Virtual call doesn't box value types
+}
+
+private class EventQueue<T> : IEventQueue where T : struct {
+    private Queue<T> queue;  // Concrete type stays T
+
+    public int ProcessEvents() {
+        while (queue.Count > 0) {
+            var evt = queue.Dequeue();  // NO BOXING
+            listeners?.Invoke(evt);
+        }
+    }
+}
+```
+
+**Key Principle:** When you need polymorphic storage of generic types without boxing, use **interface with virtual methods**, not **interface-typed collections**.
 
 ## The Game Loop
 

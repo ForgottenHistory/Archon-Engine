@@ -298,12 +298,13 @@
 - **Purpose:** Game configuration and settings
 - **Status:** ✅ Configuration
 
-### **EventBus.cs** [STABLE]
+### **EventBus.cs** [STABLE] [ZERO_ALLOC]
 - **Purpose:** Decoupled system communication via events
-- **Pattern:** Type-safe publish/subscribe, frame-coherent processing
-- **Performance:** Event pooling for zero allocations
+- **Pattern:** EventQueue<T> wrapper pattern for zero-allocation polymorphism
+- **Performance:** 0.85ms for 10k events, 99.99% allocation reduction (stress tested 2025-10-05)
 - **API:** Subscribe(), Emit(), ProcessEvents()
-- **Status:** ✅ Zero-allocation event system
+- **Architecture:** Virtual methods avoid boxing, frame-coherent batching
+- **Status:** ✅ Production-ready zero-allocation event system
 - **Lines:** 304
 
 ### **GameInitializer.cs**

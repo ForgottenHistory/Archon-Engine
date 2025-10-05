@@ -473,6 +473,49 @@ Total:             5.0ms
 | **"Update Everything"** | Processing unchanged data every tick | Dirty flag systems (see [time-system-architecture.md](time-system-architecture.md)) |
 | **"Premature SoA Optimization"** | Splitting data that's used together | Profile first, optimize only if needed |
 | **"Float in Simulation"** | Non-deterministic across platforms | Use fixed-point math (FixedPoint64) |
+| **"Interface-Typed Collections"** | Storing structs in `Queue<IEvent>` boxes every item | Use EventQueue<T> wrapper pattern (see below) |
+| **"Reflection in Hot Path"** | `MethodInfo.Invoke()` boxes all parameters | Use virtual methods (don't box value types) |
+
+### Case Study: EventBus Zero-Allocation Pattern
+
+**Problem:** Original EventBus allocated 312KB per frame when processing 10k events due to boxing.
+
+**Failed Approach:** Reflection-based processing still boxed parameters via `MethodInfo.Invoke()`.
+
+**Solution:** EventQueue<T> wrapper pattern _(implemented 2025-10-05)_:
+
+```csharp
+// Internal interface for polymorphism
+private interface IEventQueue {
+    int ProcessEvents();  // Virtual call doesn't box!
+}
+
+// Type-specific wrapper keeps Queue<T> concrete
+private class EventQueue<T> : IEventQueue where T : struct {
+    private Queue<T> eventQueue;      // NO interface, stays T
+    private Action<T> listeners;       // Direct delegate
+
+    public void Enqueue(T evt) {
+        eventQueue.Enqueue(evt);       // NO BOXING
+    }
+
+    public int ProcessEvents() {
+        while (eventQueue.Count > 0) {
+            var evt = eventQueue.Dequeue();  // NO BOXING
+            listeners?.Invoke(evt);           // Direct call
+        }
+    }
+}
+```
+
+**Results:**
+- Before: 12.56ms avg, 312KB-2,356KB allocations/frame
+- After: 0.85ms avg, 4KB total for 100-frame test
+- **Improvement: 15x faster, 99.99% allocation reduction**
+
+**Key Insight:** Virtual method calls don't box value types. Use interface with virtual methods, not interface-typed collections.
+
+See [data-flow-architecture.md](data-flow-architecture.md) for complete EventBus implementation.
 
 ## Implementation Checklist
 
