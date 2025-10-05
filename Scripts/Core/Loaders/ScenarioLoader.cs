@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Core.Commands;
+using Core.Data;
 
 namespace Core.Loaders
 {
@@ -87,7 +88,7 @@ namespace Core.Loaders
             public ushort CountryId;
             public string Tag;
             public string Name;
-            public float Treasury;
+            public FixedPoint64 Treasury;  // Changed from float - must be deterministic
             public byte Technology;
             public string Government;
             public string Religion;
@@ -104,7 +105,7 @@ namespace Core.Loaders
             public ushort Country1;
             public ushort Country2;
             public RelationType Type;
-            public float Value;
+            public FixedPoint64 Value;  // Changed from float - must be deterministic
         }
 
         public enum RelationType
@@ -391,7 +392,7 @@ namespace Core.Loaders
                 CountryId = 1,
                 Tag = "TST",
                 Name = "Test Country 1",
-                Treasury = 1000f,
+                Treasury = FixedPoint64.FromInt(1000),
                 Technology = 3,
                 Capital = 1
             });
@@ -401,7 +402,7 @@ namespace Core.Loaders
                 CountryId = 2,
                 Tag = "TS2",
                 Name = "Test Country 2",
-                Treasury = 800f,
+                Treasury = FixedPoint64.FromInt(800),
                 Technology = 3,
                 Capital = 2
             });

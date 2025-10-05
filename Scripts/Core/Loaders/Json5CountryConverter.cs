@@ -155,39 +155,21 @@ namespace Core.Loaders
             // Handle historical score
             rawData.hasHistoricalScore = rawData.historicalScore > 0;
 
-            // Extract color array [R, G, B]
-            var colorArray = Json5Loader.GetIntArray(json, "color");
-            if (colorArray != null && colorArray.Count >= 3)
-            {
-                rawData.colorR = (byte)Mathf.Clamp(colorArray[0], 0, 255);
-                rawData.colorG = (byte)Mathf.Clamp(colorArray[1], 0, 255);
-                rawData.colorB = (byte)Mathf.Clamp(colorArray[2], 0, 255);
-            }
-            else
-            {
-                // Default gray color
-                rawData.colorR = 128;
-                rawData.colorG = 128;
-                rawData.colorB = 128;
-            }
+            // Extract color array [R, G, B] using shared utility
+            var defaultGray = new Color32(128, 128, 128, 255);
+            var color = Json5Loader.GetColor32(json, "color", defaultGray);
+            rawData.colorR = color.r;
+            rawData.colorG = color.g;
+            rawData.colorB = color.b;
 
-            // Extract revolutionary colors [R, G, B]
-            var revolutionaryColorArray = Json5Loader.GetIntArray(json, "revolutionary_colors");
-            if (revolutionaryColorArray != null && revolutionaryColorArray.Count >= 3)
-            {
-                rawData.revolutionaryColorR = (byte)Mathf.Clamp(revolutionaryColorArray[0], 0, 255);
-                rawData.revolutionaryColorG = (byte)Mathf.Clamp(revolutionaryColorArray[1], 0, 255);
-                rawData.revolutionaryColorB = (byte)Mathf.Clamp(revolutionaryColorArray[2], 0, 255);
-                rawData.hasRevolutionaryColors = true;
-            }
-            else
-            {
-                // Default to same as regular color
-                rawData.revolutionaryColorR = rawData.colorR;
-                rawData.revolutionaryColorG = rawData.colorG;
-                rawData.revolutionaryColorB = rawData.colorB;
-                rawData.hasRevolutionaryColors = false;
-            }
+            // Extract revolutionary colors [R, G, B] using shared utility
+            var revolutionaryColor = Json5Loader.GetColor32(json, "revolutionary_colors", color);
+            rawData.revolutionaryColorR = revolutionaryColor.r;
+            rawData.revolutionaryColorG = revolutionaryColor.g;
+            rawData.revolutionaryColorB = revolutionaryColor.b;
+            rawData.hasRevolutionaryColors = (revolutionaryColor.r != color.r ||
+                                              revolutionaryColor.g != color.g ||
+                                              revolutionaryColor.b != color.b);
 
             return rawData;
         }

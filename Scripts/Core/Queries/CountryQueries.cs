@@ -101,54 +101,8 @@ namespace Core.Queries
             return countrySystem.HasCountryFlag(countryId, flag);
         }
 
-        #endregion
-
-        #region Convenience Flag Queries
-
-        /// <summary>
-        /// Check if country has historical ideas
-        /// Performance target: <0.001ms
-        /// </summary>
-        public bool HasHistoricalIdeas(ushort countryId)
-        {
-            return HasFlag(countryId, CountryHotData.FLAG_HAS_HISTORICAL_IDEAS);
-        }
-
-        /// <summary>
-        /// Check if country has historical units
-        /// Performance target: <0.001ms
-        /// </summary>
-        public bool HasHistoricalUnits(ushort countryId)
-        {
-            return HasFlag(countryId, CountryHotData.FLAG_HAS_HISTORICAL_UNITS);
-        }
-
-        /// <summary>
-        /// Check if country has monarch names defined
-        /// Performance target: <0.001ms
-        /// </summary>
-        public bool HasMonarchNames(ushort countryId)
-        {
-            return HasFlag(countryId, CountryHotData.FLAG_HAS_MONARCH_NAMES);
-        }
-
-        /// <summary>
-        /// Check if country has revolutionary colors
-        /// Performance target: <0.001ms
-        /// </summary>
-        public bool HasRevolutionaryColors(ushort countryId)
-        {
-            return HasFlag(countryId, CountryHotData.FLAG_HAS_REVOLUTIONARY_COLORS);
-        }
-
-        /// <summary>
-        /// Check if country has preferred religion
-        /// Performance target: <0.001ms
-        /// </summary>
-        public bool HasPreferredReligion(ushort countryId)
-        {
-            return HasFlag(countryId, CountryHotData.FLAG_HAS_PREFERRED_RELIGION);
-        }
+        // Convenience flag methods removed - use GetHotData().HasHistoricalIdeas etc.
+        // or HasFlag() for explicit flag checks
 
         #endregion
 

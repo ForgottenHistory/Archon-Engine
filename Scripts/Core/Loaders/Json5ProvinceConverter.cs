@@ -204,7 +204,7 @@ namespace Core.Loaders
             foreach (var property in provinceJson.Properties())
             {
                 // Skip dated properties (they look like "1442.1.1")
-                if (!IsDateKey(property.Name))
+                if (!Json5Loader.IsDateKey(property.Name))
                 {
                     effectiveState[property.Name] = property.Value;
                 }
@@ -215,12 +215,12 @@ namespace Core.Loaders
 
             foreach (var property in provinceJson.Properties())
             {
-                if (IsDateKey(property.Name))
+                if (Json5Loader.IsDateKey(property.Name))
                 {
-                    if (TryParseDate(property.Name, out int year, out int month, out int day))
+                    if (Json5Loader.TryParseDate(property.Name, out int year, out int month, out int day))
                     {
                         // Only include events at or before start date
-                        if (IsDateBeforeOrEqual(year, month, day, startYear, startMonth, startDay))
+                        if (Json5Loader.IsDateBeforeOrEqual(year, month, day, startYear, startMonth, startDay))
                         {
                             if (property.Value is JObject eventObj)
                             {
@@ -252,64 +252,6 @@ namespace Core.Loaders
             }
 
             return effectiveState;
-        }
-
-        /// <summary>
-        /// Check if a property name looks like a date (e.g., "1442.1.1")
-        /// </summary>
-        private static bool IsDateKey(string key)
-        {
-            if (string.IsNullOrEmpty(key)) return false;
-
-            // Date keys start with a digit
-            if (!char.IsDigit(key[0])) return false;
-
-            // Date keys contain dots
-            if (!key.Contains('.')) return false;
-
-            // Quick validation: should have 2 dots (Y.M.D format)
-            int dotCount = 0;
-            foreach (char c in key)
-            {
-                if (c == '.') dotCount++;
-            }
-
-            return dotCount == 2;
-        }
-
-        /// <summary>
-        /// Parse EU4 date format (Y.M.D like "1442.1.1")
-        /// </summary>
-        private static bool TryParseDate(string dateStr, out int year, out int month, out int day)
-        {
-            year = 0;
-            month = 0;
-            day = 0;
-
-            if (string.IsNullOrEmpty(dateStr)) return false;
-
-            string[] parts = dateStr.Split('.');
-            if (parts.Length != 3) return false;
-
-            if (!int.TryParse(parts[0], out year)) return false;
-            if (!int.TryParse(parts[1], out month)) return false;
-            if (!int.TryParse(parts[2], out day)) return false;
-
-            return year > 0 && month > 0 && day > 0;
-        }
-
-        /// <summary>
-        /// Check if date1 is before or equal to date2
-        /// </summary>
-        private static bool IsDateBeforeOrEqual(int y1, int m1, int d1, int y2, int m2, int d2)
-        {
-            if (y1 < y2) return true;
-            if (y1 > y2) return false;
-            // Years equal, check months
-            if (m1 < m2) return true;
-            if (m1 > m2) return false;
-            // Months equal, check days
-            return d1 <= d2;
         }
 
         /// <summary>

@@ -19,16 +19,35 @@
 - **Emits:** HourlyTickEvent, DailyTickEvent, MonthlyTickEvent, YearlyTickEvent
 - **Uses:** EventBus, FixedPoint64
 - **Status:** ✅ Deterministic (rewritten 2025-09-30)
-- **Lines:** 510
+- **Lines:** 460 (refactored 2025-10-05, ✅ under 500 line limit)
 
-### **ProvinceSystem.cs** [HOT_PATH] [MULTIPLAYER_CRITICAL]
-- **Purpose:** Single source of truth for province hot data (8-byte AoS)
-- **Key Data:** `NativeArray<ProvinceState>` (10k × 8 bytes = 80KB)
-- **Pattern:** Array of Structures (NOT Structure of Arrays)
-- **API:** Get/Set owner, development, terrain; country province queries
-- **Uses:** EventBus, ProvinceHistoryDatabase, idToIndex lookup
-- **Status:** ✅ Architecture compliant (fixed 2025-09-30)
-- **Lines:** 664
+### **ProvinceSystem.cs** [HOT_PATH] [MULTIPLAYER_CRITICAL] [STABLE]
+- **Purpose:** Facade for province system - orchestrates data, loading, and history
+- **Pattern:** Facade pattern - delegates to ProvinceDataManager, ProvinceStateLoader, ProvinceHistoryDatabase
+- **API:** Get/Set owner, development, terrain; country province queries, loading, history
+- **Components:** Owns NativeArrays, passes references to managers
+- **Status:** ✅ Refactored (2025-10-05) - extracted to 3 components
+- **Lines:** 214 (reduced from 576, -362 lines, ✅ under 500 line limit)
+
+### **Province/ProvinceDataManager.cs** [HOT_PATH] [MULTIPLAYER_CRITICAL]
+- **Purpose:** Manages province hot data NativeArray operations
+- **Key Data:** References to `NativeArray<ProvinceState>`, idToIndex, activeProvinceIds
+- **API:** AddProvince, Get/Set owner/development/terrain, GetCountryProvinces
+- **Status:** ✅ Extracted from ProvinceSystem (2025-10-05)
+- **Lines:** 235
+
+### **Province/ProvinceStateLoader.cs** [HOT_PATH]
+- **Purpose:** Handles loading and applying province initial states
+- **Uses:** BurstProvinceHistoryLoader, ProvinceDataManager, ProvinceHistoryDatabase
+- **API:** LoadProvinceInitialStates, LoadProvinceInitialStatesForLinking, ApplyResolvedInitialStates
+- **Status:** ✅ Extracted from ProvinceSystem (2025-10-05)
+- **Lines:** 146
+
+### **Province/ProvinceEvents.cs** [STABLE]
+- **Purpose:** Province-related event definitions for EventBus
+- **Events:** ProvinceSystemInitializedEvent, ProvinceOwnershipChangedEvent, ProvinceDevelopmentChangedEvent, ProvinceInitialStatesLoadedEvent
+- **Status:** ✅ Extracted from ProvinceSystem (2025-10-05)
+- **Lines:** 37
 
 ### **ProvinceSimulation.cs**
 - **Purpose:** Province-level simulation logic (development, economy)
@@ -36,12 +55,36 @@
 - **Uses:** ProvinceSystem, CommandProcessor
 - **Status:** ✅ Simulation core
 
-### **CountrySystem.cs**
-- **Purpose:** Country hot data management (8-byte structs)
-- **Key Data:** `NativeArray<CountryHotData>`, hot/cold separation
-- **Pattern:** Structure of Arrays for cache efficiency
-- **Uses:** CountryRegistry, EventBus
-- **Status:** ✅ Architecture compliant
+### **CountrySystem.cs** [REFACTORED]
+- **Purpose:** Country system orchestrator (facade pattern)
+- **Pattern:** Delegates to CountryDataManager and CountryStateLoader
+- **API:** GetCountryColor(), GetCountryTag(), GetCountryIdFromTag(), InitializeFromCountryData()
+- **Uses:** EventBus, NativeArray for hot data
+- **Status:** ✅ Refactored (2025-10-05): 564 → 187 lines (-377 lines, -66.8%)
+- **Lines:** 187
+
+#### Country/ - Country System Components
+
+##### **Country/CountryEvents.cs** [STABLE]
+- **Purpose:** Country-related event definitions
+- **Events:** CountrySystemInitializedEvent, CountryColorChangedEvent
+- **Status:** ✅ Extracted from CountrySystem (2025-10-05)
+- **Lines:** 23
+
+##### **Country/CountryDataManager.cs** [STABLE]
+- **Purpose:** Manages country hot/cold data operations (NativeArray + dictionary)
+- **Key Data:** NativeArray<CountryHotData>, NativeArray<Color32>, NativeHashMap for ID mapping
+- **Pattern:** Structure of Arrays (SoA) for country colors, tag hash mapping
+- **API:** AddCountry(), GetCountryColor(), SetCountryColor(), GetCountryColdData()
+- **Status:** ✅ Extracted from CountrySystem (2025-10-05)
+- **Lines:** 308
+
+##### **Country/CountryStateLoader.cs** [STABLE]
+- **Purpose:** Handles loading and initializing country data from files
+- **Pattern:** Loads from CountryDataLoadResult, handles duplicates, creates default unowned country
+- **API:** InitializeFromCountryData()
+- **Status:** ✅ Extracted from CountrySystem (2025-10-05)
+- **Lines:** 117
 
 ### **CommandProcessor.cs** [MULTIPLAYER_CRITICAL]
 - **Purpose:** Deterministic command validation, tick-based execution
@@ -95,11 +138,18 @@
 
 ### **DeterministicRandom.cs** [MULTIPLAYER_CRITICAL]
 - **Purpose:** xorshift128+ RNG for deterministic random generation
-- **Types:** Also includes FixedPoint32 (16.16 format)
 - **API:** NextUInt(), NextInt(), NextFixed(), NextBool(), Shuffle()
 - **Pattern:** Seed-based, state serializable
 - **Status:** ✅ Deterministic
-- **Lines:** 400
+- **Lines:** 329 (refactored 2025-10-05)
+
+### **Math/FixedPointMath.cs** [MULTIPLAYER_CRITICAL]
+- **Purpose:** Fixed-point math types for deterministic calculations
+- **Types:** FixedPoint32 (16.16 format), FixedPoint2 (2D vector)
+- **API:** Operators (+,-,*,<,>,<=,>=), FromInt(), FromRaw(), ToFloat()
+- **Pattern:** Immutable value types with operator overloads
+- **Status:** ✅ Deterministic
+- **Lines:** 75 (extracted from DeterministicRandom 2025-10-05)
 
 ### **ProvinceInitialState.cs**
 - **Purpose:** Initial province data from scenario files
@@ -165,10 +215,13 @@
 - **Pattern:** Separates reads from writes
 - **Status:** ✅ Query layer
 
-### **CountryQueries.cs**
-- **Purpose:** Query operations on country data
-- **API:** GetCountryProvinces(), GetCapital(), GetRevenue()
-- **Status:** ✅ Query layer
+### **CountryQueries.cs** [REFACTORED]
+- **Purpose:** High-performance country data access layer with caching
+- **Pattern:** Thin query wrapper with frame-coherent caching for expensive calculations
+- **API:** GetColor(), GetTag(), GetHotData(), GetColdData(), GetTotalDevelopment()
+- **Cache:** Dictionary-based cache with 1-second lifetime for computed queries
+- **Status:** ✅ Refactored (2025-10-05): 507 → 461 lines (-46 lines, removed redundant flag methods)
+- **Lines:** 461
 
 ---
 
@@ -286,6 +339,88 @@
 
 ---
 
+## Core/Events/ - Event Definitions
+
+### **TimeEvents.cs** [STABLE]
+- **Purpose:** Time-related event structs for EventBus
+- **Events:** HourlyTickEvent, DailyTickEvent, WeeklyTickEvent, MonthlyTickEvent, YearlyTickEvent, TimeStateChangedEvent, TimeChangedEvent
+- **Pattern:** All include tick counter for command synchronization
+- **Status:** ✅ Extracted from TimeManager (2025-10-05)
+- **Lines:** 53
+
+---
+
+## Core/Initialization/ - Phase-Based Engine Initialization
+
+### **IInitializationPhase.cs** [STABLE]
+- **Purpose:** Interface for phase-based initialization pattern
+- **Pattern:** Each phase handles one aspect of engine startup
+- **API:** ExecuteAsync(), Rollback(), PhaseName, ProgressStart/End
+- **Status:** ✅ New phase-based architecture (2025-10-05)
+- **Lines:** 38
+
+### **InitializationContext.cs** [STABLE]
+- **Purpose:** Shared state container passed between initialization phases
+- **Contains:** GameState, Systems, Registries, Loaded Data, Progress callbacks
+- **Pattern:** Replaces scattered private fields in EngineInitializer
+- **Status:** ✅ New phase-based architecture (2025-10-05)
+- **Lines:** 58
+
+### **Phases/CoreSystemsInitializationPhase.cs** [STABLE]
+- **Purpose:** Phase 1 - Initialize core engine systems (GameState, EventBus, TimeManager)
+- **Replaces:** EngineInitializer.InitializeCoreSystemsPhase() method
+- **Progress:** 0-5%
+- **Status:** ✅ Extracted from EngineInitializer (2025-10-05)
+- **Lines:** 75
+
+### **Phases/StaticDataLoadingPhase.cs** [STABLE]
+- **Purpose:** Phase 2 - Load static game data (religions, cultures, trade goods, terrains)
+- **Replaces:** EngineInitializer.LoadStaticDataPhase() method
+- **Progress:** 5-15%
+- **Emits:** StaticDataReadyEvent
+- **Status:** ✅ Extracted from EngineInitializer (2025-10-05)
+- **Lines:** 98
+
+### **Phases/ProvinceDataLoadingPhase.cs** [STABLE]
+- **Purpose:** Phase 3 - Load province data using definition.csv + JSON5 + Burst
+- **Replaces:** EngineInitializer.LoadProvinceDataPhase() method
+- **Progress:** 15-40%
+- **Emits:** ProvinceDataReadyEvent
+- **Status:** ✅ Extracted from EngineInitializer (2025-10-05)
+- **Lines:** 97
+
+### **Phases/CountryDataLoadingPhase.cs** [STABLE]
+- **Purpose:** Phase 4 - Load country data using JSON5 + Burst
+- **Replaces:** EngineInitializer.LoadCountryDataPhase() method
+- **Progress:** 40-60%
+- **Emits:** CountryDataReadyEvent
+- **Status:** ✅ Extracted from EngineInitializer (2025-10-05)
+- **Lines:** 91
+
+### **Phases/ReferenceLinkingPhase.cs** [STABLE]
+- **Purpose:** Phase 5 - Link all string references to numeric IDs
+- **Replaces:** EngineInitializer.LinkingReferencesPhase() method
+- **Progress:** 60-65%
+- **Emits:** ReferencesLinkedEvent
+- **Status:** ✅ Extracted from EngineInitializer (2025-10-05)
+- **Lines:** 214
+
+### **Phases/ScenarioLoadingPhase.cs** [STABLE]
+- **Purpose:** Phase 6 - Load scenario data
+- **Replaces:** EngineInitializer.LoadScenarioDataPhase() method
+- **Progress:** 65-75%
+- **Status:** ✅ Extracted from EngineInitializer (2025-10-05)
+- **Lines:** 92
+
+### **Phases/SystemsWarmupPhase.cs** [STABLE]
+- **Purpose:** Phase 7-8 - Initialize systems, warm caches, validate
+- **Replaces:** EngineInitializer.InitializeSystemsPhase() + WarmCachesPhase() methods
+- **Progress:** 75-100%
+- **Status:** ✅ Extracted from EngineInitializer (2025-10-05)
+- **Lines:** 95
+
+---
+
 ## Core/ - Root Level
 
 ### **GameState.cs** [MULTIPLAYER_CRITICAL]
@@ -307,10 +442,12 @@
 - **Status:** ✅ Production-ready zero-allocation event system
 - **Lines:** 304
 
-### **GameInitializer.cs**
-- **Purpose:** Initialize all game systems in correct order
-- **Orchestrates:** TimeManager, ProvinceSystem, EventBus initialization
-- **Status:** ✅ Initialization flow
+### **EngineInitializer.cs** [STABLE]
+- **Purpose:** ENGINE LAYER - Orchestrate phase-based initialization sequence
+- **Pattern:** Phase-based architecture (all 7 phases extracted)
+- **Orchestrates:** CoreSystemsInitializationPhase, StaticDataLoadingPhase, ProvinceDataLoadingPhase, CountryDataLoadingPhase, ReferenceLinkingPhase, ScenarioLoadingPhase, SystemsWarmupPhase
+- **Status:** ✅ Refactoring complete (2025-10-05)
+- **Lines:** 340 (reduced from 904, -62.4%, ✅ under 500 line limit)
 
 ---
 
@@ -366,5 +503,5 @@ Files marked `[HOT_PATH]` are performance-critical:
 ---
 
 *Last Updated: 2025-10-05*
-*Total Files: 57 scripts*
-*Status: Multiplayer-ready, deterministic simulation layer*
+*Total Files: 69 scripts* (+7 phases, +3 Province components, +3 Country components from refactoring)
+*Status: Multiplayer-ready, deterministic simulation layer, all files under 500 lines* ✅

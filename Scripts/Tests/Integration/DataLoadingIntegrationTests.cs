@@ -15,22 +15,22 @@ namespace Tests.Integration
     public class DataLoadingIntegrationTests
     {
         private GameObject testGameObject;
-        private GameInitializer initializer;
+        private EngineInitializer initializer;
         private GameSettings testSettings;
 
         [SetUp]
         public void SetUp()
         {
-            // Create test GameObject with GameInitializer
-            testGameObject = new GameObject("TestGameInitializer");
-            initializer = testGameObject.AddComponent<GameInitializer>();
+            // Create test GameObject with EngineInitializer
+            testGameObject = new GameObject("TestEngineInitializer");
+            initializer = testGameObject.AddComponent<EngineInitializer>();
 
             // Create test settings
             testSettings = ScriptableObject.CreateInstance<GameSettings>();
             SetupTestSettings();
 
             // Assign settings to initializer
-            var settingsField = typeof(GameInitializer).GetField("gameSettings",
+            var settingsField = typeof(EngineInitializer).GetField("gameSettings",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             settingsField.SetValue(initializer, testSettings);
         }
@@ -80,7 +80,7 @@ namespace Tests.Integration
             // Assert - should fail gracefully
             Assert.IsTrue(initializationComplete);
             Assert.IsFalse(initializationSuccessful, "Should fail when critical files are missing");
-            Assert.AreEqual(GameInitializer.LoadingPhase.Error, initializer.CurrentPhase);
+            Assert.AreEqual(EngineInitializer.LoadingPhase.Error, initializer.CurrentPhase);
         }
 
 

@@ -4,6 +4,8 @@ using Unity.Collections.LowLevel.Unsafe;
 using System.Collections.Generic;
 using Core.Data;
 using Core.Loaders;
+using Core.Systems.Country;
+using Utils;
 
 namespace Core.Systems
 {
@@ -20,32 +22,31 @@ namespace Core.Systems
         [SerializeField] private bool enableColdDataCaching = true;
         [SerializeField] private int coldDataCacheSize = 64;
 
-        // Hot data - frequently accessed (8 bytes per country)
+        // Core components (refactored for better separation)
+        private CountryDataManager dataManager;
+        private CountryStateLoader stateLoader;
+
+        // Native arrays (owned by this class, passed to components)
         private NativeArray<CountryHotData> countryHotData;
+        private NativeArray<Color32> countryColors;
+        private NativeArray<ushort> countryTagHashes;
+        private NativeArray<byte> countryGraphicalCultures;
+        private NativeArray<byte> countryFlags;
+        private NativeHashMap<ushort, ushort> tagHashToId;
+        private NativeHashMap<ushort, ushort> idToTagHash;
+        private NativeList<ushort> activeCountryIds;
 
-        // Structure of Arrays for most accessed data
-        private NativeArray<Color32> countryColors;          // Most accessed for rendering
-        private NativeArray<ushort> countryTagHashes;        // Second most accessed for identification
-        private NativeArray<byte> countryGraphicalCultures;  // Used for unit graphics
-        private NativeArray<byte> countryFlags;              // Least accessed hot data
-
-        // Country ID management
-        private NativeHashMap<ushort, ushort> tagHashToId;     // Tag hash -> Country ID lookup
-        private NativeHashMap<ushort, ushort> idToTagHash;     // Country ID -> Tag hash lookup
-        private NativeList<ushort> activeCountryIds;           // List of valid country IDs
-
-        // Cold data management (lazy-loaded, cached)
+        // Cold data (managed collections)
         private Dictionary<ushort, CountryColdData> coldDataCache;
-        private Dictionary<ushort, string> countryTags;        // Country ID -> 3-letter tag (e.g., "ENG")
-        private HashSet<string> usedTags;                    // Track used tags for duplicate detection
+        private Dictionary<ushort, string> countryTags;
+        private HashSet<string> usedTags;
 
-        // Performance tracking
-        private int countryCount;
+        // State
         private bool isInitialized;
         private EventBus eventBus;
 
         // Properties
-        public int CountryCount => countryCount;
+        public int CountryCount => dataManager?.CountryCount ?? 0;
         public int Capacity => countryHotData.IsCreated ? countryHotData.Length : 0;
         public bool IsInitialized => isInitialized;
 
@@ -73,6 +74,17 @@ namespace Core.Systems
             countryTags = new Dictionary<ushort, string>(initialCapacity);
             usedTags = new HashSet<string>(initialCapacity);
 
+            // Initialize components with references to native arrays
+            dataManager = new CountryDataManager(
+                countryHotData, countryColors, countryTagHashes,
+                countryGraphicalCultures, countryFlags,
+                tagHashToId, idToTagHash, activeCountryIds,
+                coldDataCache, countryTags, usedTags,
+                eventBus, enableColdDataCaching
+            );
+
+            stateLoader = new CountryStateLoader(dataManager, eventBus, initialCapacity);
+
             isInitialized = true;
             ArchonLogger.Log($"CountrySystem initialized with capacity {initialCapacity}");
 
@@ -80,9 +92,8 @@ namespace Core.Systems
             ValidateCountryHotDataSize();
         }
 
-        /// <summary>
-        /// Initialize countries from JobifiedCountryLoader result
-        /// </summary>
+        // ===== LOADING OPERATIONS (delegated to CountryStateLoader) =====
+
         public void InitializeFromCountryData(CountryDataLoadResult countryDataResult)
         {
             if (!isInitialized)
@@ -90,405 +101,30 @@ namespace Core.Systems
                 ArchonLogger.LogError("CountrySystem not initialized - call Initialize() first");
                 return;
             }
-
-            if (!countryDataResult.Success)
-            {
-                ArchonLogger.LogError($"Cannot initialize from failed country data: {countryDataResult.ErrorMessage}");
-                return;
-            }
-
-            var countryData = countryDataResult.Countries;
-            ArchonLogger.Log($"Initializing {countryData.Count} countries from data");
-
-            // Clear existing data
-            countryCount = 0;
-            tagHashToId.Clear();
-            idToTagHash.Clear();
-            activeCountryIds.Clear();
-            coldDataCache.Clear();
-            countryTags.Clear();
-            usedTags.Clear();
-
-            // Add default "unowned" country at ID 0
-            AddDefaultUnownedCountry();
-
-            // Process each country from the loaded data
-            ushort nextCountryId = 1; // Start from 1 (0 is reserved for unowned)
-
-            for (int i = 0; i < countryData.Count; i++)
-            {
-                var country = countryData.GetCountryByIndex(i);
-                if (country == null) continue;
-
-                var tag = country.Tag;
-                var hotData = country.hotData; // Use the hotData from Burst job (already has correct color!)
-                var coldData = country.coldData;
-
-                // Skip duplicates before assigning ID
-                if (usedTags.Contains(tag))
-                {
-                    // Don't increment nextCountryId - reuse this slot for next non-duplicate
-                    if (i < 50)
-                    {
-                        ArchonLogger.Log($"CountrySystem: Skipping duplicate tag '{tag}' at index {i}");
-                    }
-                    continue;
-                }
-
-                // DEBUG: Log colors for first 5 countries
-                if (nextCountryId < 5)
-                {
-                    var color = hotData.Color;
-                    ArchonLogger.Log($"CountrySystem: Country index {i} tag={tag} → ID {nextCountryId}, hotData color R={color.r} G={color.g} B={color.b}");
-                }
-
-                // Add country to system
-                AddCountry(nextCountryId, tag, hotData, coldData);
-                nextCountryId++;
-
-                if (nextCountryId >= initialCapacity)
-                {
-                    ArchonLogger.LogWarning($"Country capacity exceeded: {nextCountryId}/{initialCapacity}");
-                    break;
-                }
-            }
-
-            ArchonLogger.Log($"CountrySystem initialized with {countryCount} countries");
-
-            // Emit initialization complete event
-            eventBus?.Emit(new CountrySystemInitializedEvent
-            {
-                CountryCount = countryCount
-            });
+            stateLoader.InitializeFromCountryData(countryDataResult);
         }
 
-        /// <summary>
-        /// Add the default "unowned" country at ID 0
-        /// </summary>
-        private void AddDefaultUnownedCountry()
-        {
-            var defaultHotData = new CountryHotData
-            {
-                tagHash = 0, // No tag
-                graphicalCultureId = 0,
-                flags = 0
-            };
-            defaultHotData.SetColor(Color.gray);
+        // ===== DATA ACCESS OPERATIONS (delegated to CountryDataManager) =====
 
-            var defaultColdData = new CountryColdData
-            {
-                tag = "---",
-                displayName = "Unowned",
-                graphicalCulture = "western",
-                // ... other default values
-            };
+        public Color32 GetCountryColor(ushort countryId) => dataManager.GetCountryColor(countryId);
+        public string GetCountryTag(ushort countryId) => dataManager.GetCountryTag(countryId);
+        public ushort GetCountryIdFromTag(string tag) => dataManager.GetCountryIdFromTag(tag);
+        public CountryHotData GetCountryHotData(ushort countryId) => dataManager.GetCountryHotData(countryId);
+        public CountryColdData GetCountryColdData(ushort countryId) => dataManager.GetCountryColdData(countryId);
+        public byte GetCountryGraphicalCulture(ushort countryId) => dataManager.GetCountryGraphicalCulture(countryId);
+        public bool HasCountryFlag(ushort countryId, byte flag) => dataManager.HasCountryFlag(countryId, flag);
+        public NativeArray<ushort> GetAllCountryIds(Allocator allocator = Allocator.TempJob) => dataManager.GetAllCountryIds(allocator);
+        public bool HasCountry(ushort countryId) => dataManager.HasCountry(countryId);
+        public void SetCountryColor(ushort countryId, Color32 newColor) => dataManager.SetCountryColor(countryId, newColor);
 
-            AddCountry(0, "---", defaultHotData, defaultColdData);
-        }
+        // Old code removed - now handled by CountryDataManager and CountryStateLoader:
+        // - AddDefaultUnownedCountry()
+        // - AddCountry()
+        // - CreateHotDataFromCold()
+        // - GenerateColorFromTag()
+        // - GetGraphicalCultureId()
+        // - CalculateTagHash()
 
-        /// <summary>
-        /// Add a new country to the system
-        /// </summary>
-        private void AddCountry(ushort countryId, string tag, CountryHotData hotData, CountryColdData coldData)
-        {
-            if (countryId >= countryHotData.Length)
-            {
-                ArchonLogger.LogError($"Country ID {countryId} exceeds capacity {countryHotData.Length}");
-                return;
-            }
-
-            // Calculate tag hash
-            ushort tagHash = CalculateTagHash(tag);
-
-            // Set hot data
-            hotData.tagHash = tagHash;
-            countryHotData[countryId] = hotData;
-
-            // Set structure of arrays data
-            var color = hotData.Color;
-            countryColors[countryId] = color;
-            countryTagHashes[countryId] = tagHash;
-            countryGraphicalCultures[countryId] = hotData.graphicalCultureId;
-            countryFlags[countryId] = hotData.flags;
-
-            // Debug: Log color for first few countries
-            if (countryId < 5)
-            {
-                UnityEngine.Debug.Log($"CountrySystem.RegisterCountry: Country {countryId} ({tag}) - Packed: 0x{hotData.colorRGB:X8}, Color property: R={color.r} G={color.g} B={color.b} A={color.a}");
-            }
-
-            // Update lookup tables
-            tagHashToId[tagHash] = countryId;
-            idToTagHash[countryId] = tagHash;
-            countryTags[countryId] = tag;
-            usedTags.Add(tag);
-
-            // Cache cold data if enabled
-            if (enableColdDataCaching)
-            {
-                coldDataCache[countryId] = coldData;
-            }
-
-            // Update active list
-            if (countryId >= activeCountryIds.Length)
-            {
-                activeCountryIds.Add(countryId);
-            }
-            else
-            {
-                activeCountryIds[countryId] = countryId;
-            }
-
-            if (countryId + 1 > countryCount)
-            {
-                countryCount = countryId + 1;
-            }
-        }
-
-        /// <summary>
-        /// Create hot data from cold data
-        /// </summary>
-        private CountryHotData CreateHotDataFromCold(CountryColdData coldData)
-        {
-            // Use loaded color from EU4 data, fallback to generated color only if black (missing data)
-            var color = coldData.color;
-            if (color.r == 0 && color.g == 0 && color.b == 0)
-            {
-                // Only generate fallback color if loaded color is black (missing/invalid)
-                color = GenerateColorFromTag(coldData.tag);
-            }
-
-            // Convert graphical culture string to ID (simplified mapping for now)
-            byte graphicalCultureId = GetGraphicalCultureId(coldData.graphicalCulture);
-
-            var hotData = new CountryHotData
-            {
-                graphicalCultureId = graphicalCultureId,
-                flags = 0 // Will be set based on cold data properties
-            };
-            hotData.SetColor(color);
-
-            // Set flags based on cold data
-            if (coldData.historicalIdeaGroups != null && coldData.historicalIdeaGroups.Count > 0)
-                hotData.SetFlag(CountryHotData.FLAG_HAS_HISTORICAL_IDEAS, true);
-
-            if (coldData.historicalUnits != null && coldData.historicalUnits.Count > 0)
-                hotData.SetFlag(CountryHotData.FLAG_HAS_HISTORICAL_UNITS, true);
-
-            if (coldData.monarchNames != null && coldData.monarchNames.Count > 0)
-                hotData.SetFlag(CountryHotData.FLAG_HAS_MONARCH_NAMES, true);
-
-            if (coldData.revolutionaryColors.a > 0)
-                hotData.SetFlag(CountryHotData.FLAG_HAS_REVOLUTIONARY_COLORS, true);
-
-            if (!string.IsNullOrEmpty(coldData.preferredReligion))
-                hotData.SetFlag(CountryHotData.FLAG_HAS_PREFERRED_RELIGION, true);
-
-            return hotData;
-        }
-
-        /// <summary>
-        /// Generate a consistent color from country tag
-        /// </summary>
-        private Color32 GenerateColorFromTag(string tag)
-        {
-            if (string.IsNullOrEmpty(tag))
-                return new Color32(128, 128, 128, 255);
-
-            // Generate a consistent color from tag hash
-            uint hash = (uint)tag.GetHashCode();
-            return new Color32(
-                (byte)((hash >> 16) & 0xFF),
-                (byte)((hash >> 8) & 0xFF),
-                (byte)(hash & 0xFF),
-                255
-            );
-        }
-
-        /// <summary>
-        /// Convert graphical culture string to ID (simplified mapping)
-        /// </summary>
-        private byte GetGraphicalCultureId(string graphicalCulture)
-        {
-            if (string.IsNullOrEmpty(graphicalCulture))
-                return 0;
-
-            // Simplified mapping - in a full implementation this would be a proper lookup table
-            switch (graphicalCulture.ToLower())
-            {
-                case "western":
-                case "westerneuropean":
-                    return 1;
-                case "eastern":
-                case "easterneuropean":
-                    return 2;
-                case "muslim":
-                case "middleeast":
-                    return 3;
-                case "indian":
-                    return 4;
-                case "chinese":
-                    return 5;
-                case "african":
-                    return 6;
-                default:
-                    return 0; // Default/unknown
-            }
-        }
-
-        /// <summary>
-        /// Calculate hash for country tag (3-letter code)
-        /// </summary>
-        private ushort CalculateTagHash(string tag)
-        {
-            if (string.IsNullOrEmpty(tag) || tag.Length != 3)
-                return 0;
-
-            // Simple hash: combine 3 characters into 16 bits
-            return (ushort)((tag[0] << 10) + (tag[1] << 5) + tag[2]);
-        }
-
-        /// <summary>
-        /// Get country color - most common query (must be ultra-fast)
-        /// </summary>
-        public Color32 GetCountryColor(ushort countryId)
-        {
-            if (countryId >= countryCount)
-                return Color.gray;
-
-            var color = countryColors[countryId];
-
-            // Debug: Log color for first few countries
-            if (countryId < 5)
-            {
-                var hotData = countryHotData[countryId];
-                UnityEngine.Debug.Log($"CountrySystem.GetCountryColor: Country {countryId} ({GetCountryTag(countryId)}) - Packed: 0x{hotData.colorRGB:X8}, Unpacked: R={color.r} G={color.g} B={color.b} A={color.a}");
-            }
-
-            return color;
-        }
-
-        /// <summary>
-        /// Get country tag (3-letter code)
-        /// </summary>
-        public string GetCountryTag(ushort countryId)
-        {
-            if (countryTags.TryGetValue(countryId, out string tag))
-                return tag;
-
-            return "---";
-        }
-
-        /// <summary>
-        /// Get country ID from tag
-        /// </summary>
-        public ushort GetCountryIdFromTag(string tag)
-        {
-            ushort tagHash = CalculateTagHash(tag);
-            if (tagHashToId.TryGetValue(tagHash, out ushort countryId))
-                return countryId;
-
-            return 0; // Unowned
-        }
-
-        /// <summary>
-        /// Get country hot data (8-byte struct)
-        /// </summary>
-        public CountryHotData GetCountryHotData(ushort countryId)
-        {
-            if (countryId >= countryCount)
-                return new CountryHotData();
-
-            return countryHotData[countryId];
-        }
-
-        /// <summary>
-        /// Get country cold data (lazy-loaded)
-        /// </summary>
-        public CountryColdData GetCountryColdData(ushort countryId)
-        {
-            // Check cache first
-            if (coldDataCache.TryGetValue(countryId, out CountryColdData cachedData))
-                return cachedData;
-
-            // If not cached and caching is disabled, we need to load it
-            // For now, return null - in full implementation, this would trigger loading
-            ArchonLogger.LogWarning($"Cold data for country {countryId} not cached and lazy loading not implemented");
-            return null;
-        }
-
-        /// <summary>
-        /// Get graphical culture ID for a country
-        /// </summary>
-        public byte GetCountryGraphicalCulture(ushort countryId)
-        {
-            if (countryId >= countryCount)
-                return 0;
-
-            return countryGraphicalCultures[countryId];
-        }
-
-        /// <summary>
-        /// Check if country has specific flag
-        /// </summary>
-        public bool HasCountryFlag(ushort countryId, byte flag)
-        {
-            if (countryId >= countryCount)
-                return false;
-
-            return (countryFlags[countryId] & flag) != 0;
-        }
-
-        /// <summary>
-        /// Get all active country IDs
-        /// </summary>
-        public NativeArray<ushort> GetAllCountryIds(Allocator allocator = Allocator.TempJob)
-        {
-            var result = new NativeArray<ushort>(countryCount, allocator);
-            for (int i = 0; i < countryCount; i++)
-            {
-                result[i] = (ushort)i;
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Check if country exists
-        /// </summary>
-        public bool HasCountry(ushort countryId)
-        {
-            return countryId < countryCount;
-        }
-
-        /// <summary>
-        /// Set country color (for dynamic changes)
-        /// </summary>
-        public void SetCountryColor(ushort countryId, Color32 newColor)
-        {
-            if (countryId >= countryCount)
-                return;
-
-            Color32 oldColor = countryColors[countryId];
-            if (oldColor.r == newColor.r && oldColor.g == newColor.g &&
-                oldColor.b == newColor.b && oldColor.a == newColor.a)
-                return; // No change
-
-            // Update data
-            countryColors[countryId] = newColor;
-
-            // Update hot data
-            var hotData = countryHotData[countryId];
-            hotData.SetColor(newColor);
-            countryHotData[countryId] = hotData;
-
-            // Emit color change event
-            eventBus?.Emit(new CountryColorChangedEvent
-            {
-                CountryId = countryId,
-                OldColor = oldColor,
-                NewColor = newColor
-            });
-        }
 
         /// <summary>
         /// Validate that CountryHotData is exactly 8 bytes
@@ -540,26 +176,13 @@ namespace Core.Systems
         {
             if (isInitialized)
             {
-                debugCountryCount = countryCount;
+                debugCountryCount = CountryCount;
                 debugCachedColdData = coldDataCache?.Count ?? 0;
-                debugMemoryUsageKB = (countryCount * 8) / 1024; // 8 bytes per country hot data
+                debugMemoryUsageKB = (CountryCount * 8) / 1024; // 8 bytes per country hot data
             }
         }
         #endif
     }
 
-    // Country-related events
-    public struct CountrySystemInitializedEvent : IGameEvent
-    {
-        public int CountryCount;
-        public float TimeStamp { get; set; }
-    }
-
-    public struct CountryColorChangedEvent : IGameEvent
-    {
-        public ushort CountryId;
-        public Color32 OldColor;
-        public Color32 NewColor;
-        public float TimeStamp { get; set; }
-    }
+    // Country-related events moved to Country/CountryEvents.cs
 }

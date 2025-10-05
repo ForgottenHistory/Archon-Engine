@@ -24,7 +24,7 @@ namespace Tests.Manual
         [SerializeField] private GameSettings testGameSettings;
         [SerializeField] private bool enableDetailedLogging = true;
 
-        private GameInitializer gameInitializer;
+        private EngineInitializer gameInitializer;
         private System.Text.StringBuilder logBuilder;
         private float testStartTime;
 
@@ -32,7 +32,7 @@ namespace Tests.Manual
         {
             SetupUI();
             InitializeLogging();
-            CreateGameInitializer();
+            CreateEngineInitializer();
         }
 
         void SetupUI()
@@ -56,21 +56,21 @@ namespace Tests.Manual
             Application.logMessageReceived += OnLogMessage;
         }
 
-        void CreateGameInitializer()
+        void CreateEngineInitializer()
         {
-            // Find existing or create new GameInitializer
-            gameInitializer = FindFirstObjectByType<GameInitializer>();
+            // Find existing or create new EngineInitializer
+            gameInitializer = FindFirstObjectByType<EngineInitializer>();
 
             if (gameInitializer == null)
             {
-                var initializerGO = new GameObject("GameInitializer");
-                gameInitializer = initializerGO.AddComponent<GameInitializer>();
+                var initializerGO = new GameObject("EngineInitializer");
+                gameInitializer = initializerGO.AddComponent<EngineInitializer>();
             }
 
             // Assign test settings if available
             if (testGameSettings != null)
             {
-                var settingsField = typeof(GameInitializer).GetField("gameSettings",
+                var settingsField = typeof(EngineInitializer).GetField("gameSettings",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 settingsField?.SetValue(gameInitializer, testGameSettings);
             }
@@ -84,7 +84,7 @@ namespace Tests.Manual
         {
             if (gameInitializer == null)
             {
-                UpdateStatus("ERROR: GameInitializer not found!");
+                UpdateStatus("ERROR: EngineInitializer not found!");
                 return;
             }
 
@@ -133,19 +133,19 @@ namespace Tests.Manual
 
         public void ResetTest()
         {
-            // Destroy existing GameState and GameInitializer
+            // Destroy existing GameState and EngineInitializer
             if (GameState.Instance != null)
             {
                 DestroyImmediate(GameState.Instance.gameObject);
             }
 
-            if (gameInitializer != null && gameInitializer.gameObject.name == "GameInitializer")
+            if (gameInitializer != null && gameInitializer.gameObject.name == "EngineInitializer")
             {
                 DestroyImmediate(gameInitializer.gameObject);
             }
 
-            // Create fresh GameInitializer
-            CreateGameInitializer();
+            // Create fresh EngineInitializer
+            CreateEngineInitializer();
 
             // Reset UI
             if (progressBar != null)
@@ -161,7 +161,7 @@ namespace Tests.Manual
             LogMessage("=== Test Environment Reset ===");
         }
 
-        void OnLoadingProgress(GameInitializer.LoadingPhase phase, float progress, string status)
+        void OnLoadingProgress(EngineInitializer.LoadingPhase phase, float progress, string status)
         {
             UpdateStatus($"[{phase}] {status}");
 

@@ -220,12 +220,47 @@ namespace Core.Loaders
         /// <summary>
         /// Check if a key looks like a date (e.g., "1444.11.11")
         /// </summary>
-        private static bool IsDateKey(string key)
+        public static bool IsDateKey(string key)
         {
             if (string.IsNullOrEmpty(key)) return false;
 
             // Simple check: contains at least two dots and starts with digit
             return key.Split('.').Length >= 3 && char.IsDigit(key[0]);
+        }
+
+        /// <summary>
+        /// Parse EU4 date format (Y.M.D like "1442.1.1")
+        /// </summary>
+        public static bool TryParseDate(string dateStr, out int year, out int month, out int day)
+        {
+            year = 0;
+            month = 0;
+            day = 0;
+
+            if (string.IsNullOrEmpty(dateStr)) return false;
+
+            string[] parts = dateStr.Split('.');
+            if (parts.Length != 3) return false;
+
+            if (!int.TryParse(parts[0], out year)) return false;
+            if (!int.TryParse(parts[1], out month)) return false;
+            if (!int.TryParse(parts[2], out day)) return false;
+
+            return year > 0 && month > 0 && day > 0;
+        }
+
+        /// <summary>
+        /// Check if date1 is before or equal to date2
+        /// </summary>
+        public static bool IsDateBeforeOrEqual(int y1, int m1, int d1, int y2, int m2, int d2)
+        {
+            if (y1 < y2) return true;
+            if (y1 > y2) return false;
+            // Years equal, check months
+            if (m1 < m2) return true;
+            if (m1 > m2) return false;
+            // Months equal, check days
+            return d1 <= d2;
         }
     }
 }

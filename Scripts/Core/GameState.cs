@@ -60,7 +60,7 @@ namespace Core
         }
 
         /// <summary>
-        /// Set game registries (called by GameInitializer during loading)
+        /// Set game registries (called by EngineInitializer during loading)
         /// </summary>
         public void SetRegistries(GameRegistries registries)
         {
