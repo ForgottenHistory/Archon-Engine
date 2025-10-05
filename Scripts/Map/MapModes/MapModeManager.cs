@@ -240,6 +240,44 @@ namespace Map.MapModes
         }
 
         /// <summary>
+        /// Update material reference when material is swapped
+        /// Called by GAME layer (VisualStyleManager) when material changes
+        /// </summary>
+        public void UpdateMaterial(Material newMaterial)
+        {
+            if (!isInitialized)
+            {
+                DominionLogger.LogWarning("MapModeManager: Cannot update material - not initialized");
+                return;
+            }
+
+            if (newMaterial == null)
+            {
+                DominionLogger.LogError("MapModeManager: Cannot update to null material");
+                return;
+            }
+
+            mapMaterial = newMaterial;
+
+            // Rebind all textures to new material
+            dataTextures.BindToMaterial(mapMaterial);
+
+            // Re-apply current map mode to new material
+            if (currentHandler != null)
+            {
+                currentHandler.OnActivate(mapMaterial, dataTextures);
+
+                if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
+                {
+                    currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
+                    dataTextures.BindToMaterial(mapMaterial);
+                }
+            }
+
+            DominionLogger.LogMapInit($"MapModeManager: Updated material reference and re-applied {currentMode} mode");
+        }
+
+        /// <summary>
         /// Rebind all map mode textures to the material
         /// Call this after other systems rebind base textures to prevent losing map mode texture bindings
         /// </summary>

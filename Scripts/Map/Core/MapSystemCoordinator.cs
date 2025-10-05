@@ -145,7 +145,7 @@ namespace Map.Core
             }
             catch (System.Exception e)
             {
-                DominionLogger.LogError($"MapSystemCoordinator: Exception during simulation-based generation: {e.Message}");
+                DominionLogger.LogError($"MapSystemCoordinator: Exception during simulation-based generation: {e.Message}\n{e.StackTrace}");
                 return false;
             }
         }
@@ -216,6 +216,13 @@ namespace Map.Core
             if (success && logSystemProgress)
             {
                 DominionLogger.LogMapInit($"MapSystemCoordinator: Map generation complete. Rendering {simulationData.ProvinceCount} provinces.");
+            }
+
+            // Notify MapInitializer that initialization is complete
+            var mapInitializer = GetComponent<MapInitializer>();
+            if (mapInitializer != null)
+            {
+                mapInitializer.SetInitialized(success);
             }
         }
 

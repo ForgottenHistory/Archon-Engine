@@ -28,12 +28,12 @@
 ## Map/Rendering/ - GPU Rendering Pipeline
 
 ### **MapTextureManager.cs** [HOT_PATH] [STABLE]
-- **Purpose:** Manage all map textures (IDs, owners, colors, borders)
-- **Textures:** ProvinceID (R8G8B8A8_UNorm RenderTexture), Owner (RFloat), Color (RGBA32), Border (R8)
+- **Purpose:** Manage all map textures (IDs, owners, colors, borders, heightmap, normal map)
+- **Textures:** ProvinceID (R8G8B8A8_UNorm RenderTexture), Owner (RFloat), Color (RGBA32), Border (R8), Heightmap (R8), NormalMap (RGB24)
 - **Format:** Uses explicit GraphicsFormat to prevent TYPELESS issues
 - **Memory:** ~60MB total for 5632×2048 map
 - **API:** SetProvinceID(), SetProvinceOwner(), BindTexturesToMaterial()
-- **Status:** ✅ Texture infrastructure
+- **Status:** ✅ Texture infrastructure with heightmap/normal map support
 - **Lines:** 565
 
 ### **MapRenderer.cs** [HOT_PATH]
@@ -113,6 +113,14 @@
 - **Purpose:** Show province development levels (heatmap)
 - **Status:** ✅ Development visualization
 
+### **DebugMapModeHandler.cs**
+- **Purpose:** Generic handler for debug visualization modes (heightmap, normal map, etc.)
+- **Pattern:** Reusable handler that sets shader mode ID without updating textures
+- **Used For:** HeightmapDebug (mode 102), NormalMapDebug (mode 103)
+- **API:** Constructor takes MapMode enum and display name
+- **Update Frequency:** Never (static debug textures)
+- **Status:** ✅ Debug visualization support
+
 ### **MapModeDataTextures.cs**
 - **Purpose:** Manage textures for different map modes
 - **Status:** ✅ Mode texture management
@@ -160,9 +168,10 @@
 - **Status:** ✅ Provider interface
 
 ### **MapDataLoader.cs**
-- **Purpose:** Load map from bitmap files (provinces.bmp, terrain.bmp)
-- **API:** LoadFromBitmap(), ParseDefinitions()
-- **Status:** ✅ Bitmap loading
+- **Purpose:** Load map from bitmap files (provinces.bmp, terrain.bmp, heightmap.bmp, world_normal.bmp)
+- **API:** LoadFromBitmap(), ParseDefinitions(), LoadHeightmapBitmapAsync(), LoadNormalMapBitmapAsync()
+- **Formats:** R8 for heightmap (8-bit grayscale), RGB24 for normal map (24-bit RGB)
+- **Status:** ✅ Bitmap loading with heightmap/normal map support
 
 ---
 

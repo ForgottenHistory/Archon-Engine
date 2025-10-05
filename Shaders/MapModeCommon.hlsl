@@ -77,11 +77,24 @@ uint SampleOwnerID(float2 uv)
 }
 
 // Apply borders to base color
+// BorderTexture format: R=country borders, G=province borders
+// Colors and strengths are configurable from GAME layer
 float4 ApplyBorders(float4 baseColor, float2 uv)
 {
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
-    float borderStrength = SAMPLE_TEXTURE2D(_BorderTexture, sampler_BorderTexture, correctedUV).r;
-    baseColor.rgb = lerp(baseColor.rgb, _BorderColor.rgb, borderStrength * _BorderStrength);
+    float2 borders = SAMPLE_TEXTURE2D(_BorderTexture, sampler_BorderTexture, correctedUV).rg;
+
+    float countryBorder = borders.r;   // Country borders (between different owners)
+    float provinceBorder = borders.g;  // Province borders (same owner)
+
+    // Apply province borders first (configurable from GAME layer)
+    float provinceBorderStrength = provinceBorder * _ProvinceBorderStrength;
+    baseColor.rgb = lerp(baseColor.rgb, _ProvinceBorderColor.rgb, provinceBorderStrength);
+
+    // Apply country borders on top (configurable from GAME layer)
+    float countryBorderStrength = countryBorder * _CountryBorderStrength;
+    baseColor.rgb = lerp(baseColor.rgb, _CountryBorderColor.rgb, countryBorderStrength);
+
     return baseColor;
 }
 
@@ -134,10 +147,8 @@ float4 SampleTerrainColorDirect(float2 uv)
     return SAMPLE_TEXTURE2D(_ProvinceTerrainTexture, sampler_ProvinceTerrainTexture, correctedUV);
 }
 
-// Ocean color constant (for invalid areas)
-#define OCEAN_COLOR float4(0.2, 0.4, 0.8, 1.0)
-
-// Unowned land color constant
-#define UNOWNED_LAND_COLOR float4(0.8, 0.7, 0.5, 1.0) // Beige/tan
+// Ocean color (configurable from GAME layer via _OceanColor parameter)
+// Unowned land color (configurable from GAME layer via _UnownedLandColor parameter)
+// These are accessed directly from the shader parameters, not as defines
 
 #endif // MAPMODE_COMMON_INCLUDED

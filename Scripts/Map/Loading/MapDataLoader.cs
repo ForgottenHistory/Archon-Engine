@@ -23,8 +23,10 @@ namespace Map.Loading
         private BorderComputeDispatcher borderDispatcher;
         private MapTextureManager textureManager;
 
-        // Terrain loading
+        // Terrain, heightmap, and normal map loading
         private ParadoxParser.Jobs.JobifiedBMPLoader terrainLoader;
+        private ParadoxParser.Jobs.JobifiedBMPLoader heightmapLoader;
+        private ParadoxParser.Jobs.JobifiedBMPLoader normalMapLoader;
 
         public void Initialize(ProvinceMapProcessor processor, BorderComputeDispatcher borders, MapTextureManager textures)
         {
@@ -32,6 +34,8 @@ namespace Map.Loading
             borderDispatcher = borders;
             textureManager = textures;
             terrainLoader = new ParadoxParser.Jobs.JobifiedBMPLoader();
+            heightmapLoader = new ParadoxParser.Jobs.JobifiedBMPLoader();
+            normalMapLoader = new ParadoxParser.Jobs.JobifiedBMPLoader();
         }
 
         /// <summary>
@@ -90,6 +94,12 @@ namespace Map.Loading
 
                 // Load terrain bitmap for terrain colors
                 await LoadTerrainBitmapAsync(bmpPath);
+
+                // Load heightmap bitmap for elevation data
+                await LoadHeightmapBitmapAsync(bmpPath);
+
+                // Load normal map bitmap for surface normals
+                await LoadNormalMapBitmapAsync(bmpPath);
 
                 // Generate initial borders
                 GenerateBorders();
@@ -154,6 +164,12 @@ namespace Map.Loading
                 // Load terrain bitmap for terrain colors
                 await LoadTerrainBitmapAsync(bmpPath);
 
+                // Load heightmap bitmap for elevation data
+                await LoadHeightmapBitmapAsync(bmpPath);
+
+                // Load normal map bitmap for surface normals
+                await LoadNormalMapBitmapAsync(bmpPath);
+
                 // Generate initial borders
                 GenerateBorders();
 
@@ -173,14 +189,16 @@ namespace Map.Loading
         {
             if (borderDispatcher != null)
             {
-                borderDispatcher.ClearBorders();
-                borderDispatcher.SetBorderMode(BorderComputeDispatcher.BorderMode.Country);
-                borderDispatcher.DetectBorders();
-
+                // Note: Border mode and generation is controlled by GAME layer (VisualStyleManager)
+                // ENGINE only initializes the border system, GAME decides what borders to show
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit("MapDataLoader: Generated province borders using GPU compute shader");
+                    DominionLogger.LogMapInit("MapDataLoader: Border system ready (mode will be set by GAME layer)");
                 }
+            }
+            else
+            {
+                DominionLogger.LogMapInitError("MapDataLoader: BorderComputeDispatcher is NULL - borders will not be generated!");
             }
         }
 
@@ -487,6 +505,338 @@ namespace Map.Loading
                         if (logLoadingProgress)
                         {
                             DominionLogger.Log($"MapDataLoader: Rebound MapModeManager textures (CountryColorPalette, etc.) after base texture rebind");
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Load heightmap bitmap and populate heightmap texture with elevation data from heightmap.bmp
+        /// </summary>
+        private async Task LoadHeightmapBitmapAsync(string provincesBmpPath)
+        {
+            // Derive heightmap.bmp path from provinces.bmp path
+            string heightmapBmpPath = provincesBmpPath.Replace("provinces.bmp", "heightmap.bmp");
+
+            if (!System.IO.File.Exists(heightmapBmpPath))
+            {
+                if (logLoadingProgress)
+                {
+                    DominionLogger.LogWarning($"MapDataLoader: Heightmap bitmap not found at {heightmapBmpPath}, using default flat heightmap");
+                }
+                return;
+            }
+
+            try
+            {
+                if (logLoadingProgress)
+                {
+                    DominionLogger.LogMapInit($"MapDataLoader: Loading heightmap bitmap: {heightmapBmpPath}");
+                }
+
+                // Load heightmap bitmap
+                var heightmapResult = await heightmapLoader.LoadBMPAsync(heightmapBmpPath);
+
+                if (!heightmapResult.Success)
+                {
+                    DominionLogger.LogWarning($"MapDataLoader: Failed to load heightmap bitmap: {heightmapResult.ErrorMessage}");
+                    return;
+                }
+
+                if (logLoadingProgress)
+                {
+                    DominionLogger.LogMapInit($"MapDataLoader: Successfully loaded heightmap bitmap with {heightmapResult.Width}x{heightmapResult.Height} pixels, {heightmapResult.BitsPerPixel} bits per pixel");
+                }
+
+                // Populate heightmap texture with bitmap data
+                PopulateHeightmapTexture(heightmapResult);
+
+                if (logLoadingProgress)
+                {
+                    DominionLogger.LogMapInit("MapDataLoader: Populated heightmap texture with elevation data from heightmap.bmp");
+                }
+
+                // Dispose heightmap result to free Persistent allocations
+                heightmapResult.Dispose();
+            }
+            catch (System.Exception e)
+            {
+                DominionLogger.LogError($"MapDataLoader: Exception loading heightmap bitmap: {e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Populate heightmap texture with elevation data from loaded heightmap bitmap
+        /// Converts 8-bit indexed grayscale (0-255) to R8 texture format (0.0-1.0)
+        /// </summary>
+        private void PopulateHeightmapTexture(ParadoxParser.Jobs.BMPLoadResult heightmapData)
+        {
+            if (textureManager == null || textureManager.HeightmapTexture == null)
+            {
+                DominionLogger.LogError("MapDataLoader: Cannot populate heightmap texture - texture manager or heightmap texture not available");
+                return;
+            }
+
+            var heightmapTexture = textureManager.HeightmapTexture;
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.LogMapInit($"MapDataLoader: Populating heightmap texture instance {heightmapTexture.GetInstanceID()} ({heightmapTexture.name}) size {heightmapTexture.width}x{heightmapTexture.height}");
+            }
+
+            int width = heightmapTexture.width;
+            int height = heightmapTexture.height;
+
+            // Create pixel array for heightmap texture (R8 format uses Color with only R channel)
+            var pixels = new UnityEngine.Color[width * height];
+
+            // Get the pixel data from the heightmap bitmap
+            var pixelData = heightmapData.GetPixelData();
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.LogMapInit($"MapDataLoader: Heightmap bitmap format - Width: {heightmapData.Width}, Height: {heightmapData.Height}, BitsPerPixel: {heightmapData.BitsPerPixel}");
+            }
+
+            int successfulReads = 0;
+            int failedReads = 0;
+
+            // Process 8-bit indexed heightmap data
+            // For grayscale heightmaps, the palette index IS the height value (0-255)
+            for (int y = 0; y < height && y < heightmapData.Height; y++)
+            {
+                for (int x = 0; x < width && x < heightmapData.Width; x++)
+                {
+                    int textureIndex = y * width + x;
+
+                    // For 8-bit indexed color, read the palette index as height value
+                    if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte heightValue, out byte _, out byte __))
+                    {
+                        // Convert 8-bit height (0-255) to normalized float (0.0-1.0)
+                        float normalizedHeight = heightValue / 255f;
+                        pixels[textureIndex] = new UnityEngine.Color(normalizedHeight, 0, 0, 1);
+                        successfulReads++;
+                    }
+                    else
+                    {
+                        // Fallback to sea level (0.5) if pixel reading fails
+                        pixels[textureIndex] = new UnityEngine.Color(0.5f, 0, 0, 1);
+                        failedReads++;
+                    }
+                }
+            }
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.LogMapInit($"MapDataLoader: Heightmap bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
+
+                // Sample some height values to verify data
+                if (successfulReads > 0)
+                {
+                    int sampleIndex1 = width * height / 4;
+                    int sampleIndex2 = width * height / 2;
+                    int sampleIndex3 = width * height * 3 / 4;
+
+                    float h1 = pixels[sampleIndex1].r;
+                    float h2 = pixels[sampleIndex2].r;
+                    float h3 = pixels[sampleIndex3].r;
+
+                    DominionLogger.LogMapInit($"MapDataLoader: Heightmap samples - [{h1:F3}] [{h2:F3}] [{h3:F3}] (0.0=low, 1.0=high)");
+                }
+            }
+
+            // Apply height data to texture
+            heightmapTexture.SetPixels(pixels);
+            heightmapTexture.Apply(false);
+
+            // Force GPU sync to ensure texture upload completes
+            GL.Flush();
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.LogMapInit($"MapDataLoader: Applied heightmap data, called Apply(), and forced GPU sync on texture instance {heightmapTexture.GetInstanceID()}");
+            }
+
+            // Rebind textures to materials to ensure heightmap is available in shader
+            if (textureManager != null)
+            {
+                var mapRenderer = Object.FindFirstObjectByType<Map.Rendering.MapRenderer>();
+                if (mapRenderer != null)
+                {
+                    var runtimeMaterial = mapRenderer.GetMaterial();
+                    if (runtimeMaterial != null)
+                    {
+                        textureManager.BindTexturesToMaterial(runtimeMaterial);
+                        if (logLoadingProgress)
+                        {
+                            DominionLogger.Log($"MapDataLoader: Rebound textures (including heightmap) to RUNTIME material instance {runtimeMaterial.GetInstanceID()}");
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Load normal map bitmap and populate normal map texture with surface normal data from world_normal.bmp
+        /// </summary>
+        private async Task LoadNormalMapBitmapAsync(string provincesBmpPath)
+        {
+            // Derive world_normal.bmp path from provinces.bmp path
+            string normalMapBmpPath = provincesBmpPath.Replace("provinces.bmp", "world_normal.bmp");
+
+            if (!System.IO.File.Exists(normalMapBmpPath))
+            {
+                if (logLoadingProgress)
+                {
+                    DominionLogger.LogWarning($"MapDataLoader: Normal map bitmap not found at {normalMapBmpPath}, using default flat normals");
+                }
+                return;
+            }
+
+            try
+            {
+                if (logLoadingProgress)
+                {
+                    DominionLogger.LogMapInit($"MapDataLoader: Loading normal map bitmap: {normalMapBmpPath}");
+                }
+
+                // Load normal map bitmap
+                var normalMapResult = await normalMapLoader.LoadBMPAsync(normalMapBmpPath);
+
+                if (!normalMapResult.Success)
+                {
+                    DominionLogger.LogWarning($"MapDataLoader: Failed to load normal map bitmap: {normalMapResult.ErrorMessage}");
+                    return;
+                }
+
+                if (logLoadingProgress)
+                {
+                    DominionLogger.LogMapInit($"MapDataLoader: Successfully loaded normal map bitmap with {normalMapResult.Width}x{normalMapResult.Height} pixels, {normalMapResult.BitsPerPixel} bits per pixel");
+                }
+
+                // Populate normal map texture with bitmap data
+                PopulateNormalMapTexture(normalMapResult);
+
+                if (logLoadingProgress)
+                {
+                    DominionLogger.LogMapInit("MapDataLoader: Populated normal map texture with surface normal data from world_normal.bmp");
+                }
+
+                // Dispose normal map result to free Persistent allocations
+                normalMapResult.Dispose();
+            }
+            catch (System.Exception e)
+            {
+                DominionLogger.LogError($"MapDataLoader: Exception loading normal map bitmap: {e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Populate normal map texture with surface normal data from loaded normal map bitmap
+        /// Converts 24-bit RGB (0-255 per channel) to normal vectors
+        /// Normal map uses RGB to encode XYZ components: (R-128)/128, (G-128)/128, (B-128)/128
+        /// </summary>
+        private void PopulateNormalMapTexture(ParadoxParser.Jobs.BMPLoadResult normalMapData)
+        {
+            if (textureManager == null || textureManager.NormalMapTexture == null)
+            {
+                DominionLogger.LogError("MapDataLoader: Cannot populate normal map texture - texture manager or normal map texture not available");
+                return;
+            }
+
+            var normalMapTexture = textureManager.NormalMapTexture;
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.LogMapInit($"MapDataLoader: Populating normal map texture instance {normalMapTexture.GetInstanceID()} ({normalMapTexture.name}) size {normalMapTexture.width}x{normalMapTexture.height}");
+            }
+
+            int width = normalMapTexture.width;
+            int height = normalMapTexture.height;
+
+            // Create pixel array for normal map texture (RGB24 format)
+            var pixels = new UnityEngine.Color32[width * height];
+
+            // Get the pixel data from the normal map bitmap
+            var pixelData = normalMapData.GetPixelData();
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.LogMapInit($"MapDataLoader: Normal map bitmap format - Width: {normalMapData.Width}, Height: {normalMapData.Height}, BitsPerPixel: {normalMapData.BitsPerPixel}");
+            }
+
+            int successfulReads = 0;
+            int failedReads = 0;
+
+            // Process 24-bit RGB normal map data
+            // Normal maps encode surface normals as RGB where each channel represents X/Y/Z components
+            for (int y = 0; y < height && y < normalMapData.Height; y++)
+            {
+                for (int x = 0; x < width && x < normalMapData.Width; x++)
+                {
+                    int textureIndex = y * width + x;
+
+                    // Read RGB values from normal map (R=X, G=Y, B=Z)
+                    if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                    {
+                        // Store RGB directly (shader will decode to normal vector)
+                        pixels[textureIndex] = new UnityEngine.Color32(r, g, b, 255);
+                        successfulReads++;
+                    }
+                    else
+                    {
+                        // Fallback to flat normal (up direction) if pixel reading fails: RGB(128, 128, 255)
+                        pixels[textureIndex] = new UnityEngine.Color32(128, 128, 255, 255);
+                        failedReads++;
+                    }
+                }
+            }
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.LogMapInit($"MapDataLoader: Normal map bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
+
+                // Sample some normal values to verify data
+                if (successfulReads > 0)
+                {
+                    int sampleIndex1 = width * height / 4;
+                    int sampleIndex2 = width * height / 2;
+                    int sampleIndex3 = width * height * 3 / 4;
+
+                    var n1 = pixels[sampleIndex1];
+                    var n2 = pixels[sampleIndex2];
+                    var n3 = pixels[sampleIndex3];
+
+                    DominionLogger.LogMapInit($"MapDataLoader: Normal map samples - RGB[{n1.r},{n1.g},{n1.b}] RGB[{n2.r},{n2.g},{n2.b}] RGB[{n3.r},{n3.g},{n3.b}]");
+                }
+            }
+
+            // Apply normal data to texture
+            normalMapTexture.SetPixels32(pixels);
+            normalMapTexture.Apply(false);
+
+            // Force GPU sync to ensure texture upload completes
+            GL.Flush();
+
+            if (logLoadingProgress)
+            {
+                DominionLogger.LogMapInit($"MapDataLoader: Applied normal map data, called Apply(), and forced GPU sync on texture instance {normalMapTexture.GetInstanceID()}");
+            }
+
+            // Rebind textures to materials to ensure normal map is available in shader
+            if (textureManager != null)
+            {
+                var mapRenderer = Object.FindFirstObjectByType<Map.Rendering.MapRenderer>();
+                if (mapRenderer != null)
+                {
+                    var runtimeMaterial = mapRenderer.GetMaterial();
+                    if (runtimeMaterial != null)
+                    {
+                        textureManager.BindTexturesToMaterial(runtimeMaterial);
+                        if (logLoadingProgress)
+                        {
+                            DominionLogger.Log($"MapDataLoader: Rebound textures (including normal map) to RUNTIME material instance {runtimeMaterial.GetInstanceID()}");
                         }
                     }
                 }

@@ -94,6 +94,33 @@ namespace Map.Debug
 
             GUILayout.Space(10);
 
+            // Debug visualization modes
+            GUILayout.Label("Debug Modes:", GUI.skin.box);
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Heightmap"))
+            {
+                SwitchToMapMode(MapMode.HeightmapDebug);
+            }
+            if (GUILayout.Button("Normal Map"))
+            {
+                SwitchToMapMode(MapMode.NormalMapDebug);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Borders"))
+            {
+                SwitchToMapMode(MapMode.BorderDebug);
+            }
+            if (GUILayout.Button("Province IDs"))
+            {
+                SwitchToMapMode(MapMode.ProvinceIDDebug);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(10);
+
             // Advanced controls
             showAdvanced = GUILayout.Toggle(showAdvanced, "Show Advanced Controls");
 

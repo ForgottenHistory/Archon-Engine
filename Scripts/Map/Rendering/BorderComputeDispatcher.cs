@@ -27,6 +27,7 @@ namespace Map.Rendering
         private int detectBordersKernel;
         private int detectBordersThickKernel;
         private int detectCountryBordersKernel;
+        private int detectDualBordersKernel;
 
         // Thread group sizes (must match compute shader)
         private const int THREAD_GROUP_SIZE = 8;
@@ -39,6 +40,7 @@ namespace Map.Rendering
             Province,      // Show all province borders
             Country,       // Show only country/owner borders
             Thick,         // Show thick province borders
+            Dual,          // Show BOTH country AND province borders (recommended)
             None           // No borders
         }
 
@@ -76,11 +78,13 @@ namespace Map.Rendering
             detectBordersKernel = borderDetectionCompute.FindKernel("DetectBorders");
             detectBordersThickKernel = borderDetectionCompute.FindKernel("DetectBordersThick");
             detectCountryBordersKernel = borderDetectionCompute.FindKernel("DetectCountryBorders");
+            detectDualBordersKernel = borderDetectionCompute.FindKernel("DetectDualBorders");
 
             if (logPerformance)
             {
                 DominionLogger.LogMapInit($"BorderComputeDispatcher: Initialized with kernels - " +
-                    $"Borders: {detectBordersKernel}, Thick: {detectBordersThickKernel}, Country: {detectCountryBordersKernel}");
+                    $"Borders: {detectBordersKernel}, Thick: {detectBordersThickKernel}, " +
+                    $"Country: {detectCountryBordersKernel}, Dual: {detectDualBordersKernel}");
             }
         }
 
@@ -136,18 +140,30 @@ namespace Map.Rendering
                 case BorderMode.Thick:
                     kernelToUse = detectBordersThickKernel;
                     break;
+                case BorderMode.Dual:
+                    kernelToUse = detectDualBordersKernel;
+                    break;
             }
 
             // Set textures
             borderDetectionCompute.SetTexture(kernelToUse, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
-            borderDetectionCompute.SetTexture(kernelToUse, "BorderTexture", textureManager.BorderTexture);
+
+            // Dual mode uses DualBorderTexture, others use BorderTexture
+            if (borderMode == BorderMode.Dual)
+            {
+                borderDetectionCompute.SetTexture(kernelToUse, "DualBorderTexture", textureManager.BorderTexture);
+            }
+            else
+            {
+                borderDetectionCompute.SetTexture(kernelToUse, "BorderTexture", textureManager.BorderTexture);
+            }
 
             // Set dimensions
             borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
             borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
 
             // Set additional parameters for specific modes
-            if (borderMode == BorderMode.Country)
+            if (borderMode == BorderMode.Country || borderMode == BorderMode.Dual)
             {
                 borderDetectionCompute.SetTexture(kernelToUse, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
             }
@@ -244,6 +260,27 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Force enable borders (useful for runtime testing)
+        /// </summary>
+        [ContextMenu("Force Enable Borders (Province Mode)")]
+        public void ForceEnableBorders()
+        {
+            SetBorderMode(BorderMode.Province);
+            DominionLogger.Log($"BorderComputeDispatcher: Forced border mode to {borderMode}");
+        }
+
+        /// <summary>
+        /// Toggle border mode for testing
+        /// </summary>
+        [ContextMenu("Toggle Border Mode")]
+        public void ToggleBorderMode()
+        {
+            borderMode = (BorderMode)(((int)borderMode + 1) % 5);
+            DetectBorders();
+            DominionLogger.Log($"BorderComputeDispatcher: Toggled to border mode: {borderMode}");
+        }
+
+        /// <summary>
         /// Async border detection using CommandBuffer
         /// </summary>
         public void DetectBordersAsync(CommandBuffer cmd)
@@ -287,6 +324,8 @@ namespace Map.Rendering
                     return detectCountryBordersKernel;
                 case BorderMode.Thick:
                     return detectBordersThickKernel;
+                case BorderMode.Dual:
+                    return detectDualBordersKernel;
                 default:
                     return detectBordersKernel;
             }

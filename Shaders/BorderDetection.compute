@@ -204,3 +204,74 @@ void DetectCountryBorders(uint3 id : SV_DispatchThreadID)
     // Write result to border texture
     BorderTexture[id.xy] = isBorder ? 1.0 : 0.0;
 }
+
+// ============================================================================
+// Dual Border Detection - Generates BOTH province and country borders
+// R channel = Country borders (between different owners)
+// G channel = Province borders (between same-owner provinces)
+// ============================================================================
+#pragma kernel DetectDualBorders
+
+RWTexture2D<float2> DualBorderTexture;
+
+[numthreads(8, 8, 1)]
+void DetectDualBorders(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Sample current pixel's province and owner
+    float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
+    uint currentProvince = DecodeProvinceID(currentEncoded);
+
+    // Get owner ID (R16 format, stored in red channel)
+    float currentOwnerData = ProvinceOwnerTexture[id.xy].r;
+    uint currentOwner = (uint)(currentOwnerData * 65535.0 + 0.5);
+
+    // Initialize border detection
+    bool isProvinceBorder = false;
+    bool isCountryBorder = false;
+
+    // Check all four neighbors
+    int2 offsets[4] = { int2(1,0), int2(-1,0), int2(0,1), int2(0,-1) };
+
+    for (int i = 0; i < 4; i++)
+    {
+        int2 neighborPos = id.xy + offsets[i];
+
+        // Bounds check
+        if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+            neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+            continue;
+
+        // Get neighbor province
+        float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+        uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+        // Different province?
+        if (currentProvince != neighborProvince)
+        {
+            // Mark as province border
+            isProvinceBorder = true;
+
+            // Get neighbor owner
+            float neighborOwnerData = ProvinceOwnerTexture[neighborPos].r;
+            uint neighborOwner = (uint)(neighborOwnerData * 65535.0 + 0.5);
+
+            // Different owner? Mark as country border
+            if (currentOwner != neighborOwner)
+            {
+                isCountryBorder = true;
+            }
+        }
+    }
+
+    // Write results to dual border texture
+    // R channel = country borders (1.0 = border, 0.0 = no border)
+    // G channel = province borders (1.0 = border, 0.0 = no border)
+    DualBorderTexture[id.xy] = float2(
+        isCountryBorder ? 1.0 : 0.0,
+        isProvinceBorder ? 1.0 : 0.0
+    );
+}

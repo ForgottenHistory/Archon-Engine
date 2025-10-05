@@ -59,32 +59,45 @@ namespace Map.Rendering
         /// </summary>
         private void SetupMaterial()
         {
-            // Create material if not assigned
-            if (mapMaterial == null)
+            // Check if renderer already has a material (from GAME layer VisualStyleManager)
+            if (meshRenderer.material != null && meshRenderer.material.shader.name != "Hidden/InternalErrorShader")
             {
-                // Try to find the MapCore shader
-                Shader mapShader = Shader.Find("Dominion/MapCore");
-                if (mapShader != null)
+                // Use existing material from GAME layer
+                runtimeMaterial = meshRenderer.material;
+                if (logRenderingProgress)
                 {
-                    mapMaterial = new Material(mapShader);
-                    mapMaterial.name = "MapRenderingCoordinator_Material";
-                    if (logRenderingProgress)
-                    {
-                        DominionLogger.LogMapInit("MapRenderingCoordinator: Created material with MapCore shader");
-                    }
-                }
-                else
-                {
-                    DominionLogger.LogError("MapRenderingCoordinator: MapCore shader not found. Make sure the shader is in the project.");
-                    return;
+                    DominionLogger.LogMapInit($"MapRenderingCoordinator: Using existing material '{runtimeMaterial.shader.name}' from GAME layer");
                 }
             }
+            else
+            {
+                // Fallback: Create material if not assigned
+                if (mapMaterial == null)
+                {
+                    // Try to find the MapCore shader
+                    Shader mapShader = Shader.Find("Dominion/MapCore");
+                    if (mapShader != null)
+                    {
+                        mapMaterial = new Material(mapShader);
+                        mapMaterial.name = "MapRenderingCoordinator_Material";
+                        if (logRenderingProgress)
+                        {
+                            DominionLogger.LogMapInit("MapRenderingCoordinator: Created fallback material with MapCore shader");
+                        }
+                    }
+                    else
+                    {
+                        DominionLogger.LogError("MapRenderingCoordinator: MapCore shader not found. Make sure the shader is in the project.");
+                        return;
+                    }
+                }
 
-            // Set material to renderer FIRST (this creates a material instance)
-            meshRenderer.material = mapMaterial;
+                // Set material to renderer FIRST (this creates a material instance)
+                meshRenderer.material = mapMaterial;
+                runtimeMaterial = meshRenderer.material;  // Store the runtime instance
+            }
 
-            // Now bind textures to the ACTUAL runtime material instance
-            runtimeMaterial = meshRenderer.material;  // Store the runtime instance
+            // Bind ENGINE textures to the material (whether from GAME or fallback)
             textureManager.BindTexturesToMaterial(runtimeMaterial);
 
             // Note: MapModeManager initialization is controlled by GAME layer
@@ -95,7 +108,10 @@ namespace Map.Rendering
             }
 
             // Set general material properties not handled by mapmodes
-            mapMaterial.SetFloat("_HighlightStrength", 1.0f);
+            if (runtimeMaterial != null)
+            {
+                runtimeMaterial.SetFloat("_HighlightStrength", 1.0f);
+            }
 
             if (logRenderingProgress)
             {

@@ -12,6 +12,8 @@ namespace Map.Rendering
         [Header("Map Dimensions")]
         [SerializeField] private int mapWidth = 5632;
         [SerializeField] private int mapHeight = 2048;
+        [SerializeField] private int normalMapWidth = 2816;
+        [SerializeField] private int normalMapHeight = 1024;
 
         [Header("Debug")]
         [SerializeField] private bool logTextureCreation = true;
@@ -22,6 +24,8 @@ namespace Map.Rendering
         private Texture2D provinceColorTexture;   // RGBA32 format for province colors (legacy)
         private Texture2D provinceDevelopmentTexture; // RGBA32 format for development visualization
         private Texture2D provinceTerrainTexture; // RGBA32 format for terrain colors from terrain.bmp
+        private Texture2D heightmapTexture;       // R8 format for heightmap data from heightmap.bmp
+        private Texture2D normalMapTexture;       // RGB24 format for normal map data from world_normal.bmp (2816×1024)
         private Texture2D provinceColorPalette;   // 256×1 RGBA32 palette for efficient color lookup
 
         // Dynamic render textures
@@ -38,6 +42,8 @@ namespace Map.Rendering
         private static readonly int ProvinceColorTexID = Shader.PropertyToID("_ProvinceColorTexture");
         private static readonly int ProvinceDevelopmentTexID = Shader.PropertyToID("_ProvinceDevelopmentTexture");
         private static readonly int ProvinceTerrainTexID = Shader.PropertyToID("_ProvinceTerrainTexture");
+        private static readonly int HeightmapTexID = Shader.PropertyToID("_HeightmapTexture");
+        private static readonly int NormalMapTexID = Shader.PropertyToID("_NormalMapTexture");
         private static readonly int ProvinceColorPaletteID = Shader.PropertyToID("_ProvinceColorPalette");
         private static readonly int BorderTexID = Shader.PropertyToID("_BorderTexture");
         private static readonly int HighlightTexID = Shader.PropertyToID("_HighlightTexture");
@@ -50,6 +56,8 @@ namespace Map.Rendering
         public Texture2D ProvinceColorTexture => provinceColorTexture;
         public Texture2D ProvinceDevelopmentTexture => provinceDevelopmentTexture;
         public Texture2D ProvinceTerrainTexture => provinceTerrainTexture;
+        public Texture2D HeightmapTexture => heightmapTexture;
+        public Texture2D NormalMapTexture => normalMapTexture;
         public Texture2D ProvinceColorPalette => provinceColorPalette;
         public RenderTexture BorderTexture => borderTexture;
         public RenderTexture HighlightTexture => highlightTexture;
@@ -69,6 +77,8 @@ namespace Map.Rendering
             CreateProvinceColorTexture();
             CreateProvinceDevelopmentTexture();
             CreateProvinceTerrainTexture();
+            CreateHeightmapTexture();
+            CreateNormalMapTexture();
             CreateProvinceColorPalette();
             CreateBorderTexture();
             CreateHighlightTexture();
@@ -220,6 +230,71 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Create heightmap texture in R8 format for terrain elevation data from heightmap.bmp
+        /// Uses R8 (single channel, 8-bit) to match source BMP format and optimize memory (11.5MB)
+        /// Filter mode is Bilinear for smooth height interpolation
+        /// </summary>
+        private void CreateHeightmapTexture()
+        {
+            heightmapTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.R8, false);
+            heightmapTexture.name = "Heightmap_Texture";
+
+            // Heightmap uses bilinear filtering for smooth height sampling (not point filtering like IDs)
+            heightmapTexture.filterMode = FilterMode.Bilinear;
+            heightmapTexture.wrapMode = TextureWrapMode.Clamp;
+            heightmapTexture.anisoLevel = 0;
+
+            // Initialize with flat elevation (mid-height = 128)
+            var pixels = new Color[mapWidth * mapHeight];
+            Color midHeight = new Color(0.5f, 0, 0, 1); // 0.5 = 50% height = sea level
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                pixels[i] = midHeight;
+            }
+
+            heightmapTexture.SetPixels(pixels);
+            heightmapTexture.Apply(false);
+
+            if (logTextureCreation)
+            {
+                DominionLogger.LogMapInit($"Created Heightmap texture: {mapWidth}x{mapHeight} R8 format (bilinear filtering)");
+            }
+        }
+
+        /// <summary>
+        /// Create normal map texture in RGB24 format for surface normal data from world_normal.bmp
+        /// Uses RGB24 (3 channels, 24-bit) for X/Y/Z normal components
+        /// Resolution is half of main map (2816×1024) for performance
+        /// Filter mode is Bilinear for smooth normal interpolation
+        /// </summary>
+        private void CreateNormalMapTexture()
+        {
+            normalMapTexture = new Texture2D(normalMapWidth, normalMapHeight, TextureFormat.RGB24, false);
+            normalMapTexture.name = "NormalMap_Texture";
+
+            // Normal maps use bilinear filtering for smooth surface normals
+            normalMapTexture.filterMode = FilterMode.Bilinear;
+            normalMapTexture.wrapMode = TextureWrapMode.Clamp;
+            normalMapTexture.anisoLevel = 0;
+
+            // Initialize with default "up" normal (0, 0, 1) encoded as RGB (128, 128, 255)
+            var pixels = new Color32[normalMapWidth * normalMapHeight];
+            Color32 defaultNormal = new Color32(128, 128, 255, 255); // Flat surface pointing up
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                pixels[i] = defaultNormal;
+            }
+
+            normalMapTexture.SetPixels32(pixels);
+            normalMapTexture.Apply(false);
+
+            if (logTextureCreation)
+            {
+                DominionLogger.LogMapInit($"Created Normal Map texture: {normalMapWidth}x{normalMapHeight} RGB24 format (bilinear filtering)");
+            }
+        }
+
+        /// <summary>
         /// Create province color palette texture (256×1 RGBA32) for efficient color lookup
         /// Task 1.3: Create province color palette texture (256×1 RGBA32)
         /// </summary>
@@ -278,7 +353,7 @@ namespace Map.Rendering
         /// </summary>
         private void CreateBorderTexture()
         {
-            borderTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.R8);
+            borderTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.RG16);
             borderTexture.name = "Border_RenderTexture";
             borderTexture.filterMode = FilterMode.Point;
             borderTexture.wrapMode = TextureWrapMode.Clamp;
@@ -294,7 +369,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Border RenderTexture: {mapWidth}x{mapHeight} R8 format");
+                DominionLogger.LogMapInit($"Created Border RenderTexture: {mapWidth}x{mapHeight} RG16 format (R=country, G=province)");
             }
         }
 
@@ -529,6 +604,8 @@ namespace Map.Rendering
             material.SetTexture(ProvinceColorTexID, provinceColorTexture);
             material.SetTexture(ProvinceDevelopmentTexID, provinceDevelopmentTexture);
             material.SetTexture(ProvinceTerrainTexID, provinceTerrainTexture);
+            material.SetTexture(HeightmapTexID, heightmapTexture);
+            material.SetTexture(NormalMapTexID, normalMapTexture);
 
             // DEBUG: Verify the texture was actually set
             var retrievedTexture = material.GetTexture(ProvinceTerrainTexID);
@@ -544,6 +621,12 @@ namespace Map.Rendering
             material.SetTexture(BorderTexID, borderTexture);
             material.SetTexture(HighlightTexID, highlightTexture);
 
+            // Set default border parameters (GAME layer can override via SetBorderStyle)
+            material.SetFloat("_CountryBorderStrength", 1.0f);
+            material.SetColor("_CountryBorderColor", Color.black);
+            material.SetFloat("_ProvinceBorderStrength", 0.5f);
+            material.SetColor("_ProvinceBorderColor", new Color(0.3f, 0.3f, 0.3f));
+
             // Debug: Verify terrain texture binding
             if (provinceTerrainTexture != null)
             {
@@ -553,6 +636,26 @@ namespace Map.Rendering
             {
                 DominionLogger.LogMapInitWarning("MapTextureManager: Terrain texture is null when binding to material!");
             }
+        }
+
+        /// <summary>
+        /// Set border visual style (EXTENSION POINT for GAME layer)
+        /// Allows GAME layer to control border appearance without modifying ENGINE
+        /// </summary>
+        /// <param name="material">Material to update</param>
+        /// <param name="countryBorderColor">Color for country borders</param>
+        /// <param name="countryBorderStrength">Strength of country borders (0-1)</param>
+        /// <param name="provinceBorderColor">Color for province borders</param>
+        /// <param name="provinceBorderStrength">Strength of province borders (0-1)</param>
+        public void SetBorderStyle(Material material, Color countryBorderColor, float countryBorderStrength,
+                                    Color provinceBorderColor, float provinceBorderStrength)
+        {
+            if (material == null) return;
+
+            material.SetFloat("_CountryBorderStrength", Mathf.Clamp01(countryBorderStrength));
+            material.SetColor("_CountryBorderColor", countryBorderColor);
+            material.SetFloat("_ProvinceBorderStrength", Mathf.Clamp01(provinceBorderStrength));
+            material.SetColor("_ProvinceBorderColor", provinceBorderColor);
         }
 
         /// <summary>
@@ -575,6 +678,10 @@ namespace Map.Rendering
             if (provinceIDTexture != null) provinceIDTexture.Release();  // RenderTexture uses Release()
             if (provinceOwnerTexture != null) provinceOwnerTexture.Release();  // RenderTexture uses Release(), not DestroyImmediate()
             if (provinceColorTexture != null) DestroyImmediate(provinceColorTexture);
+            if (provinceDevelopmentTexture != null) DestroyImmediate(provinceDevelopmentTexture);
+            if (provinceTerrainTexture != null) DestroyImmediate(provinceTerrainTexture);
+            if (heightmapTexture != null) DestroyImmediate(heightmapTexture);
+            if (normalMapTexture != null) DestroyImmediate(normalMapTexture);
             if (provinceColorPalette != null) DestroyImmediate(provinceColorPalette);
             if (borderTexture != null) borderTexture.Release();
             if (highlightTexture != null) highlightTexture.Release();

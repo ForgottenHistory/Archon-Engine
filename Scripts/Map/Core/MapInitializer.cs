@@ -57,6 +57,22 @@ namespace Map.Core
         public ParadoxStyleCameraController CameraController => cameraController;
         public MapModeDebugUI DebugUI => debugUI;
 
+        // Initialization state
+        private bool isInitialized = false;
+        public bool IsInitialized => isInitialized;
+
+        /// <summary>
+        /// Set initialization state (called by MapSystemCoordinator when map generation completes)
+        /// </summary>
+        public void SetInitialized(bool success)
+        {
+            isInitialized = success;
+            if (logInitializationProgress)
+            {
+                DominionLogger.LogMapInit($"MapInitializer: Initialization {(success ? "completed successfully" : "failed")}");
+            }
+        }
+
         /// <summary>
         /// Subscribe to simulation events on startup
         /// </summary>
@@ -103,13 +119,37 @@ namespace Map.Core
         }
 
         /// <summary>
-        /// Handle simulation data ready - ONLY initialize components, then tell coordinator
+        /// Handle simulation data ready - store the event data, wait for GAME layer to trigger initialization
         /// </summary>
         private void OnSimulationDataReady(SimulationDataReadyEvent simulationData)
         {
             if (logInitializationProgress)
             {
-                DominionLogger.LogMapInit($"MapInitializer: Received simulation data with {simulationData.ProvinceCount} provinces - initializing components");
+                DominionLogger.LogMapInit($"MapInitializer: Received simulation data with {simulationData.ProvinceCount} provinces - waiting for GAME layer to trigger initialization");
+            }
+
+            // Store simulation data for later initialization
+            cachedSimulationData = simulationData;
+            hasSimulationData = true;
+        }
+
+        private SimulationDataReadyEvent cachedSimulationData;
+        private bool hasSimulationData = false;
+
+        /// <summary>
+        /// Manually trigger map initialization - called by GAME layer (HegemonInitializer) after visual style is applied
+        /// </summary>
+        public void StartMapInitialization()
+        {
+            if (!hasSimulationData)
+            {
+                DominionLogger.LogError("MapInitializer: StartMapInitialization called but no simulation data cached!");
+                return;
+            }
+
+            if (logInitializationProgress)
+            {
+                DominionLogger.LogMapInit($"MapInitializer: Starting map initialization with {cachedSimulationData.ProvinceCount} provinces");
             }
 
             // ONLY initialize components
@@ -139,7 +179,7 @@ namespace Map.Core
                 var provinceBitmapPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.bmp");
                 var provinceDefinitionsPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "definition.csv");
                 bool useDefinition = System.IO.File.Exists(provinceDefinitionsPath);
-                coordinator.HandleSimulationReady(simulationData, provinceBitmapPath, provinceDefinitionsPath, useDefinition);
+                coordinator.HandleSimulationReady(cachedSimulationData, provinceBitmapPath, provinceDefinitionsPath, useDefinition);
             }
             else
             {

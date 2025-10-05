@@ -17,8 +17,34 @@ Shader "Dominion/MapCore"
 
         // Map visualization settings
         [Enum(Political, 0, Terrain, 1, Development, 2, Culture, 3)] _MapMode ("Map Mode", Int) = 0
-        _BorderStrength ("Border Strength", Range(0, 1)) = 1.0
-        _BorderColor ("Border Color", Color) = (0, 0, 0, 1)
+
+        // Border visualization (configurable from GAME layer)
+        _CountryBorderStrength ("Country Border Strength", Range(0, 1)) = 1.0
+        _CountryBorderColor ("Country Border Color", Color) = (0, 0, 0, 1)
+        _ProvinceBorderStrength ("Province Border Strength", Range(0, 1)) = 0.5
+        _ProvinceBorderColor ("Province Border Color", Color) = (0.3, 0.3, 0.3, 1)
+
+        // Map mode colors (configurable from GAME layer)
+        _OceanColor ("Ocean Color", Color) = (0.098, 0.157, 0.439, 1)
+        _UnownedLandColor ("Unowned Land Color", Color) = (0.8, 0.7, 0.5, 1)
+
+        // Development gradient (configurable from GAME layer)
+        _DevVeryLow ("Development: Very Low", Color) = (0.545, 0, 0, 1)
+        _DevLow ("Development: Low", Color) = (0.863, 0.078, 0.078, 1)
+        _DevMedium ("Development: Medium", Color) = (1, 0.549, 0, 1)
+        _DevHigh ("Development: High", Color) = (1, 0.843, 0, 1)
+        _DevVeryHigh ("Development: Very High", Color) = (1, 1, 0, 1)
+
+        // Development tier thresholds
+        _DevTier1 ("Dev Tier 1 Threshold", Range(0, 1)) = 0.2
+        _DevTier2 ("Dev Tier 2 Threshold", Range(0, 1)) = 0.4
+        _DevTier3 ("Dev Tier 3 Threshold", Range(0, 1)) = 0.6
+        _DevTier4 ("Dev Tier 4 Threshold", Range(0, 1)) = 0.8
+
+        // Terrain adjustments (configurable from GAME layer)
+        _TerrainBrightness ("Terrain Brightness", Range(0.5, 2)) = 1.0
+        _TerrainSaturation ("Terrain Saturation", Range(0, 2)) = 1.0
+
         _HighlightStrength ("Highlight Strength", Range(0, 2)) = 1.0
 
         // Performance settings
@@ -71,8 +97,34 @@ Shader "Dominion/MapCore"
                 float4 _MainTex_ST;
 
                 int _MapMode;
-                float _BorderStrength;
-                float4 _BorderColor;
+
+                // Border parameters (configurable from GAME layer)
+                float _CountryBorderStrength;
+                float4 _CountryBorderColor;
+                float _ProvinceBorderStrength;
+                float4 _ProvinceBorderColor;
+
+                // Map mode colors (configurable from GAME layer)
+                float4 _OceanColor;
+                float4 _UnownedLandColor;
+
+                // Development gradient colors (configurable from GAME layer)
+                float4 _DevVeryLow;
+                float4 _DevLow;
+                float4 _DevMedium;
+                float4 _DevHigh;
+                float4 _DevVeryHigh;
+
+                // Development tier thresholds
+                float _DevTier1;
+                float _DevTier2;
+                float _DevTier3;
+                float _DevTier4;
+
+                // Terrain adjustments
+                float _TerrainBrightness;
+                float _TerrainSaturation;
+
                 float _HighlightStrength;
             CBUFFER_END
 
@@ -89,11 +141,12 @@ Shader "Dominion/MapCore"
             TEXTURE2D(_HighlightTexture); SAMPLER(sampler_HighlightTexture);
             TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); // For SRP Batcher
 
-            // Map mode includes - same directory (after texture declarations)
-            #include "MapModeCommon.hlsl"
-            #include "MapModeTerrain.hlsl"
-            #include "MapModePolitical.hlsl"
-            #include "MapModeDevelopment.hlsl"
+            // Map mode includes (after texture declarations)
+            #include "MapModeCommon.hlsl"  // ENGINE utilities
+            // GAME-specific map mode shaders (GAME POLICY - visualization rules)
+            #include "../../Game/Shaders/MapModes/MapModeTerrain.hlsl"
+            #include "../../Game/Shaders/MapModes/MapModePolitical.hlsl"
+            #include "../../Game/Shaders/MapModes/MapModeDevelopment.hlsl"
 
             // Vertex input structure
             struct Attributes
@@ -162,7 +215,7 @@ Shader "Dominion/MapCore"
                 // Handle ocean/invalid provinces (ID 0)
                 if (provinceID == 0)
                 {
-                    return OCEAN_COLOR;
+                    return _OceanColor; // Configurable from GAME layer
                 }
 
                 // Base color determination based on map mode using modular functions
