@@ -72,4 +72,3 @@ If you implement one of these systems, **move the document back to Engine/** and
 ## See Also
 
 - `Assets/Docs/Engine/` - Current implemented architecture
-- `Assets/Docs/DOCUMENTATION_AUDIT.md` - Full documentation analysis and scoring
