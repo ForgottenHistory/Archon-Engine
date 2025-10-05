@@ -15,7 +15,9 @@ namespace Map.Rendering
 
         [Header("Border Settings")]
         [SerializeField] private BorderMode borderMode = BorderMode.Province;
-        [SerializeField] private int borderThickness = 1;
+        [SerializeField] private int countryBorderThickness = 1;
+        [SerializeField] private int provinceBorderThickness = 0;
+        [SerializeField] private float borderAntiAliasing = 1.0f;
         [SerializeField] private bool autoUpdateBorders = true;
 
         public BorderMode CurrentBorderMode => borderMode;
@@ -162,14 +164,17 @@ namespace Map.Rendering
             borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
             borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
 
+            // Set border thickness (applies to all modes)
+            borderDetectionCompute.SetInt("CountryBorderThickness", countryBorderThickness);
+            borderDetectionCompute.SetInt("ProvinceBorderThickness", provinceBorderThickness);
+
+            // Set anti-aliasing
+            borderDetectionCompute.SetFloat("BorderAntiAliasing", borderAntiAliasing);
+
             // Set additional parameters for specific modes
             if (borderMode == BorderMode.Country || borderMode == BorderMode.Dual)
             {
                 borderDetectionCompute.SetTexture(kernelToUse, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
-            }
-            else if (borderMode == BorderMode.Thick)
-            {
-                borderDetectionCompute.SetInt("BorderThickness", borderThickness);
             }
 
             // Calculate thread groups (round up division)
@@ -236,13 +241,27 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Set border thickness for thick mode
+        /// Set border thickness for country and province borders
         /// </summary>
-        public void SetBorderThickness(int thickness)
+        public void SetBorderThickness(int countryThickness, int provinceThickness)
         {
-            borderThickness = Mathf.Clamp(thickness, 1, 5);
+            countryBorderThickness = Mathf.Clamp(countryThickness, 0, 5);
+            provinceBorderThickness = Mathf.Clamp(provinceThickness, 0, 5);
 
-            if (autoUpdateBorders && borderMode == BorderMode.Thick)
+            if (autoUpdateBorders)
+            {
+                DetectBorders();
+            }
+        }
+
+        /// <summary>
+        /// Set border anti-aliasing strength
+        /// </summary>
+        public void SetBorderAntiAliasing(float antiAliasing)
+        {
+            borderAntiAliasing = Mathf.Clamp(antiAliasing, 0f, 2f);
+
+            if (autoUpdateBorders)
             {
                 DetectBorders();
             }
@@ -296,13 +315,16 @@ namespace Map.Rendering
             cmd.SetComputeIntParam(borderDetectionCompute, "MapWidth", textureManager.MapWidth);
             cmd.SetComputeIntParam(borderDetectionCompute, "MapHeight", textureManager.MapHeight);
 
-            if (borderMode == BorderMode.Country)
+            // Set border thickness (applies to all modes)
+            cmd.SetComputeIntParam(borderDetectionCompute, "CountryBorderThickness", countryBorderThickness);
+            cmd.SetComputeIntParam(borderDetectionCompute, "ProvinceBorderThickness", provinceBorderThickness);
+
+            // Set anti-aliasing
+            cmd.SetComputeFloatParam(borderDetectionCompute, "BorderAntiAliasing", borderAntiAliasing);
+
+            if (borderMode == BorderMode.Country || borderMode == BorderMode.Dual)
             {
                 cmd.SetComputeTextureParam(borderDetectionCompute, kernelToUse, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
-            }
-            else if (borderMode == BorderMode.Thick)
-            {
-                cmd.SetComputeIntParam(borderDetectionCompute, "BorderThickness", borderThickness);
             }
 
             // Calculate thread groups

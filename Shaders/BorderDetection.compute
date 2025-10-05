@@ -15,6 +15,15 @@ RWTexture2D<float> BorderTexture;
 uint MapWidth;
 uint MapHeight;
 
+// Border thickness (ENGINE LAYER - generic mechanism)
+// 0 = thin borders (1px), 1-5 = progressively thicker borders
+uint CountryBorderThickness;
+uint ProvinceBorderThickness;
+
+// Anti-aliasing (ENGINE LAYER - generic mechanism)
+// 0 = no AA (hard edges), 1-2 = smooth AA gradient
+float BorderAntiAliasing;
+
 // Province ID decoding - must match the shader exactly
 uint DecodeProvinceID(float2 encoded)
 {
@@ -88,10 +97,8 @@ void DetectBorders(uint3 id : SV_DispatchThreadID)
 }
 
 // Advanced border detection with configurable thickness
+// Uses ProvinceBorderThickness for the thickness value
 #pragma kernel DetectBordersThick
-
-// Border thickness parameter
-uint BorderThickness;
 
 [numthreads(8, 8, 1)]
 void DetectBordersThick(uint3 id : SV_DispatchThreadID)
@@ -106,7 +113,7 @@ void DetectBordersThick(uint3 id : SV_DispatchThreadID)
 
     // Check in a radius for different provinces
     float borderStrength = 0.0;
-    int checkRadius = (int)BorderThickness;
+    int checkRadius = (int)ProvinceBorderThickness;
     int totalChecks = 0;
 
     for (int dy = -checkRadius; dy <= checkRadius; dy++)
@@ -209,6 +216,7 @@ void DetectCountryBorders(uint3 id : SV_DispatchThreadID)
 // Dual Border Detection - Generates BOTH province and country borders
 // R channel = Country borders (between different owners)
 // G channel = Province borders (between same-owner provinces)
+// Supports configurable thickness via BorderThickness parameter
 // ============================================================================
 #pragma kernel DetectDualBorders
 
@@ -229,49 +237,152 @@ void DetectDualBorders(uint3 id : SV_DispatchThreadID)
     float currentOwnerData = ProvinceOwnerTexture[id.xy].r;
     uint currentOwner = (uint)(currentOwnerData * 65535.0 + 0.5);
 
-    // Initialize border detection
-    bool isProvinceBorder = false;
-    bool isCountryBorder = false;
+    // Initialize border strengths
+    float provinceStrength = 0.0;
+    float countryStrength = 0.0;
 
-    // Check all four neighbors
-    int2 offsets[4] = { int2(1,0), int2(-1,0), int2(0,1), int2(0,-1) };
+    // Determine search radius for each border type
+    int provinceRadius = (int)ProvinceBorderThickness;
+    int countryRadius = (int)CountryBorderThickness;
 
-    for (int i = 0; i < 4; i++)
+    // Check maximum radius needed (so we only loop once)
+    int maxRadius = max(provinceRadius, countryRadius);
+
+    // Fast path: both borders are thin (0)
+    if (maxRadius == 0)
     {
-        int2 neighborPos = id.xy + offsets[i];
+        // Check all four neighbors (fast path)
+        int2 offsets[4] = { int2(1,0), int2(-1,0), int2(0,1), int2(0,-1) };
 
-        // Bounds check
-        if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
-            neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
-            continue;
-
-        // Get neighbor province
-        float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
-        uint neighborProvince = DecodeProvinceID(neighborEncoded);
-
-        // Different province?
-        if (currentProvince != neighborProvince)
+        for (int i = 0; i < 4; i++)
         {
-            // Mark as province border
-            isProvinceBorder = true;
+            int2 neighborPos = id.xy + offsets[i];
 
-            // Get neighbor owner
-            float neighborOwnerData = ProvinceOwnerTexture[neighborPos].r;
-            uint neighborOwner = (uint)(neighborOwnerData * 65535.0 + 0.5);
+            // Bounds check
+            if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+                neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+                continue;
 
-            // Different owner? Mark as country border
-            if (currentOwner != neighborOwner)
+            // Get neighbor province
+            float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+            uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+            // Different province?
+            if (currentProvince != neighborProvince)
             {
-                isCountryBorder = true;
+                provinceStrength = 1.0;
+
+                // Get neighbor owner
+                float neighborOwnerData = ProvinceOwnerTexture[neighborPos].r;
+                uint neighborOwner = (uint)(neighborOwnerData * 65535.0 + 0.5);
+
+                // Different owner? Mark as country border
+                if (currentOwner != neighborOwner)
+                {
+                    countryStrength = 1.0;
+                }
+            }
+        }
+    }
+    else
+    {
+        // Thick borders: check in radius with distance falloff
+        // Use separate thickness for country vs province borders
+        float minProvinceDistance = 999999.0;
+        float minCountryDistance = 999999.0;
+        bool hasProvinceBorder = false;
+        bool hasCountryBorder = false;
+
+        for (int dy = -maxRadius; dy <= maxRadius; dy++)
+        {
+            for (int dx = -maxRadius; dx <= maxRadius; dx++)
+            {
+                // Skip center pixel
+                if (dx == 0 && dy == 0)
+                    continue;
+
+                // Calculate neighbor position
+                int2 neighborPos = id.xy + int2(dx, dy);
+
+                // Bounds check
+                if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+                    neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+                    continue;
+
+                // Get neighbor province
+                float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+                uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+                // Calculate distance once
+                float distance = length(float2(dx, dy));
+
+                // Different province? Check if within province border radius
+                if (currentProvince != neighborProvince)
+                {
+                    hasProvinceBorder = true;
+                    minProvinceDistance = min(minProvinceDistance, distance);
+
+                    // Get neighbor owner
+                    float neighborOwnerData = ProvinceOwnerTexture[neighborPos].r;
+                    uint neighborOwner = (uint)(neighborOwnerData * 65535.0 + 0.5);
+
+                    // Different owner?
+                    if (currentOwner != neighborOwner)
+                    {
+                        hasCountryBorder = true;
+                        minCountryDistance = min(minCountryDistance, distance);
+                    }
+                }
+            }
+        }
+
+        // Calculate province border strength with anti-aliasing
+        if (hasProvinceBorder)
+        {
+            float provinceThreshold = (float)provinceRadius + BorderAntiAliasing;
+            if (minProvinceDistance <= provinceThreshold)
+            {
+                // Apply anti-aliasing: smooth gradient at the edge
+                if (BorderAntiAliasing > 0.0)
+                {
+                    // Smoothstep from full strength to zero over AA distance
+                    float aaStart = (float)provinceRadius;
+                    float aaEnd = provinceThreshold;
+                    provinceStrength = 1.0 - smoothstep(aaStart, aaEnd, minProvinceDistance);
+                }
+                else
+                {
+                    // No AA: hard cutoff at thickness
+                    provinceStrength = minProvinceDistance <= (float)provinceRadius ? 1.0 : 0.0;
+                }
+            }
+        }
+
+        // Calculate country border strength with anti-aliasing
+        if (hasCountryBorder)
+        {
+            float countryThreshold = (float)countryRadius + BorderAntiAliasing;
+            if (minCountryDistance <= countryThreshold)
+            {
+                // Apply anti-aliasing: smooth gradient at the edge
+                if (BorderAntiAliasing > 0.0)
+                {
+                    // Smoothstep from full strength to zero over AA distance
+                    float aaStart = (float)countryRadius;
+                    float aaEnd = countryThreshold;
+                    countryStrength = 1.0 - smoothstep(aaStart, aaEnd, minCountryDistance);
+                }
+                else
+                {
+                    // No AA: hard cutoff at thickness
+                    countryStrength = minCountryDistance <= (float)countryRadius ? 1.0 : 0.0;
+                }
             }
         }
     }
 
     // Write results to dual border texture
-    // R channel = country borders (1.0 = border, 0.0 = no border)
-    // G channel = province borders (1.0 = border, 0.0 = no border)
-    DualBorderTexture[id.xy] = float2(
-        isCountryBorder ? 1.0 : 0.0,
-        isProvinceBorder ? 1.0 : 0.0
-    );
+    // R channel = country borders (0.0-1.0 based on distance)
+    // G channel = province borders (0.0-1.0 based on distance)
+    DualBorderTexture[id.xy] = float2(countryStrength, provinceStrength);
 }
