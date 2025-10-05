@@ -95,7 +95,7 @@ Map/MapModes/
 **Utilities** (~1,000 lines)
 ```
 Utils/
-  ├── DominionLogger.cs          // Logging with categories
+  ├── ArchonLogger.cs          // Logging with categories
   └── (other generic utilities)
 ```
 
@@ -436,7 +436,7 @@ Archon/
 │   │   │   └── MapModes/         // IMapModeHandler interface
 │   │   │
 │   │   ├── Utils/                 // Generic utilities
-│   │   │   ├── Logging/          // DominionLogger
+│   │   │   ├── Logging/          // ArchonLogger
 │   │   │   └── Localization/     // ILocalizationSystem (future)
 │   │   │
 │   │   ├── Editor/                // Unity Editor tools
@@ -450,7 +450,7 @@ Archon/
 │   │   │
 │   │   └── package.json           // Unity package manifest
 │   │
-│   ├── Game/                       // ← GAME-SPECIFIC (Dominion)
+│   ├── Game/                       // ← GAME-SPECIFIC (Archon)
 │   │   ├── Systems/               // Game logic (future)
 │   │   │   ├── EconomySystem.cs
 │   │   │   ├── MilitarySystem.cs
@@ -760,7 +760,7 @@ void Start()
 
 ## Benefits of This Separation
 
-### For Current Project (Dominion)
+### For Current Project (Archon)
 - ✅ Clear separation of concerns
 - ✅ Engine code is battle-tested foundation
 - ✅ Game code is pure gameplay logic
@@ -902,7 +902,7 @@ public class BuildingSystem : IGameSystem {
 
 ### Year 1 (Current)
 - ✅ ArchonEngine complete (28k lines)
-- ✅ Dominion (EU4-like) built on engine (30k lines)
+- ✅ Archon (EU4-like) built on engine (30k lines)
 - ✅ Stress-tested at 10k provinces, 200 FPS
 
 ### Year 2 (Future)

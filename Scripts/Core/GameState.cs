@@ -47,7 +47,7 @@ namespace Core
             // Singleton pattern
             if (Instance != null && Instance != this)
             {
-                DominionLogger.LogError("Multiple GameState instances detected! Destroying duplicate.");
+                ArchonLogger.LogError("Multiple GameState instances detected! Destroying duplicate.");
                 Destroy(gameObject);
                 return;
             }
@@ -65,7 +65,7 @@ namespace Core
         public void SetRegistries(GameRegistries registries)
         {
             Registries = registries;
-            DominionLogger.Log("GameState: Registries set");
+            ArchonLogger.Log("GameState: Registries set");
         }
 
         /// <summary>
@@ -75,11 +75,11 @@ namespace Core
         {
             if (IsInitialized)
             {
-                DominionLogger.LogWarning("GameState already initialized");
+                ArchonLogger.LogWarning("GameState already initialized");
                 return;
             }
 
-            DominionLogger.Log("Initializing GameState systems...");
+            ArchonLogger.Log("Initializing GameState systems...");
 
             // 1. Core infrastructure first
             EventBus = new EventBus();
@@ -99,7 +99,7 @@ namespace Core
             Time.Initialize(EventBus);
 
             IsInitialized = true;
-            DominionLogger.Log("GameState initialization complete");
+            ArchonLogger.Log("GameState initialization complete");
 
             // Emit initialization complete event
             EventBus.Emit(new GameStateInitializedEvent());
@@ -113,14 +113,14 @@ namespace Core
         {
             if (!IsInitialized)
             {
-                DominionLogger.LogError("Cannot execute command - GameState not initialized");
+                ArchonLogger.LogError("Cannot execute command - GameState not initialized");
                 return false;
             }
 
             // Validate command
             if (!command.Validate(this))
             {
-                DominionLogger.LogWarning($"Command validation failed: {command.GetType().Name}");
+                ArchonLogger.LogWarning($"Command validation failed: {command.GetType().Name}");
                 return false;
             }
 
@@ -136,7 +136,7 @@ namespace Core
             }
             catch (System.Exception e)
             {
-                DominionLogger.LogError($"Command execution failed: {command.GetType().Name} - {e.Message}");
+                ArchonLogger.LogError($"Command execution failed: {command.GetType().Name} - {e.Message}");
                 EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), Success = false, Error = e.Message });
                 return false;
             }

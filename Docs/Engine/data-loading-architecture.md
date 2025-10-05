@@ -674,7 +674,7 @@ private IEnumerator LoadProvinceDataPhase()
 // Core/Systems/ProvinceSystem.cs
 public void InitializeFromProvinceStates(ProvinceInitialStateLoadResult loadResult)
 {
-    DominionLogger.Log($"Initializing {loadResult.LoadedCount} provinces from JSON5 + Burst");
+    ArchonLogger.Log($"Initializing {loadResult.LoadedCount} provinces from JSON5 + Burst");
 
     for (int i = 0; i < loadResult.InitialStates.Length; i++)
     {

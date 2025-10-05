@@ -36,7 +36,7 @@ namespace Map.Interaction
             {
                 if (logSelectionDebug)
                 {
-                    DominionLogger.LogWarning("ProvinceSelector: Cannot get province - missing dependencies");
+                    ArchonLogger.LogWarning("ProvinceSelector: Cannot get province - missing dependencies");
                 }
                 return 0;
             }
@@ -68,7 +68,7 @@ namespace Map.Interaction
 
             if (logSelectionDebug)
             {
-                DominionLogger.Log($"ProvinceSelector: World {worldPosition} → Local {localPos} → UV ({u:F3},{v:F3}) → Pixel ({x},{y}) → Province {provinceID}");
+                ArchonLogger.Log($"ProvinceSelector: World {worldPosition} → Local {localPos} → UV ({u:F3},{v:F3}) → Pixel ({x},{y}) → Province {provinceID}");
             }
 
             return provinceID;
@@ -86,7 +86,7 @@ namespace Map.Interaction
             {
                 if (logSelectionDebug)
                 {
-                    DominionLogger.LogWarning("ProvinceSelector: Cannot convert screen position - no camera provided");
+                    ArchonLogger.LogWarning("ProvinceSelector: Cannot convert screen position - no camera provided");
                 }
                 return 0;
             }

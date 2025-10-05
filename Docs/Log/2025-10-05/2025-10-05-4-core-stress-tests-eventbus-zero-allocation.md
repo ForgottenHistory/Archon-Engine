@@ -60,7 +60,7 @@ Tests validate ProvinceSystem, EventBus, FixedPoint64, and long-term stability. 
 
 **Architecture Compliance:**
 - ✅ Follows [performance-architecture-guide.md](../../Engine/performance-architecture-guide.md) - zero allocation requirements
-- ✅ Uses DominionLogger for file-based logging (not Debug.Log)
+- ✅ Uses ArchonLogger for file-based logging (not Debug.Log)
 - ✅ Manual start pattern prevents initialization race conditions
 
 ### 2. Discovered EventBus Boxing Allocations (312KB per frame)

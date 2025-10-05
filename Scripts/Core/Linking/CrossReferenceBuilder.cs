@@ -20,7 +20,7 @@ namespace Core.Linking
         public CrossReferenceBuilder(GameRegistries registries)
         {
             this.registries = registries ?? throw new System.ArgumentNullException(nameof(registries));
-            DominionLogger.LogDataLinking("CrossReferenceBuilder initialized");
+            ArchonLogger.LogDataLinking("CrossReferenceBuilder initialized");
         }
 
         /// <summary>
@@ -28,14 +28,14 @@ namespace Core.Linking
         /// </summary>
         public void BuildAllCrossReferences()
         {
-            DominionLogger.LogDataLinking("CrossReferenceBuilder: Building all cross-references");
+            ArchonLogger.LogDataLinking("CrossReferenceBuilder: Building all cross-references");
 
             BuildCountryProvinceReferences();
             BuildCultureGroupReferences();
             BuildProvinceNeighborReferences();
             ValidateCrossReferences();
 
-            DominionLogger.LogDataLinking("CrossReferenceBuilder: All cross-references built successfully");
+            ArchonLogger.LogDataLinking("CrossReferenceBuilder: All cross-references built successfully");
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Core.Linking
         /// </summary>
         public void BuildCountryProvinceReferences()
         {
-            DominionLogger.LogDataLinking("CrossReferenceBuilder: Building country-province references");
+            ArchonLogger.LogDataLinking("CrossReferenceBuilder: Building country-province references");
 
             // Clear existing references
             foreach (var country in registries.Countries.GetAll())
@@ -70,7 +70,7 @@ namespace Core.Linking
                     }
                     else
                     {
-                        DominionLogger.LogDataLinkingWarning($"Province {province.DefinitionId} has invalid owner ID {province.OwnerId}");
+                        ArchonLogger.LogDataLinkingWarning($"Province {province.DefinitionId} has invalid owner ID {province.OwnerId}");
                     }
                 }
 
@@ -85,12 +85,12 @@ namespace Core.Linking
                     }
                     else
                     {
-                        DominionLogger.LogDataLinkingWarning($"Province {province.DefinitionId} has invalid controller ID {province.ControllerId}");
+                        ArchonLogger.LogDataLinkingWarning($"Province {province.DefinitionId} has invalid controller ID {province.ControllerId}");
                     }
                 }
             }
 
-            DominionLogger.LogDataLinking($"CrossReferenceBuilder: Built {ownedCount} ownership and {controlledCount} control relationships");
+            ArchonLogger.LogDataLinking($"CrossReferenceBuilder: Built {ownedCount} ownership and {controlledCount} control relationships");
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Core.Linking
         /// </summary>
         public void BuildCultureGroupReferences()
         {
-            DominionLogger.LogDataLinking("CrossReferenceBuilder: Building culture group references");
+            ArchonLogger.LogDataLinking("CrossReferenceBuilder: Building culture group references");
 
             // TODO: Implement when culture groups are added
             // This would group cultures by their culture groups for efficient queries
@@ -127,7 +127,7 @@ namespace Core.Linking
                 }
             }
 
-            DominionLogger.LogDataLinking($"CrossReferenceBuilder: Grouped {registries.Cultures.Count} cultures into {culturesByGroup.Count} culture groups");
+            ArchonLogger.LogDataLinking($"CrossReferenceBuilder: Grouped {registries.Cultures.Count} cultures into {culturesByGroup.Count} culture groups");
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Core.Linking
         /// </summary>
         public void BuildProvinceNeighborReferences()
         {
-            DominionLogger.LogDataLinking("CrossReferenceBuilder: Building province neighbor references");
+            ArchonLogger.LogDataLinking("CrossReferenceBuilder: Building province neighbor references");
 
             // TODO: Implement when adjacency data is available
             // This would analyze the province bitmap to determine neighboring provinces
@@ -150,7 +150,7 @@ namespace Core.Linking
                 // 3. Build the bidirectional neighbor relationships
             }
 
-            DominionLogger.LogDataLinking("CrossReferenceBuilder: Province neighbor references initialized (bitmap analysis pending)");
+            ArchonLogger.LogDataLinking("CrossReferenceBuilder: Province neighbor references initialized (bitmap analysis pending)");
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Core.Linking
         /// </summary>
         public void ValidateCrossReferences()
         {
-            DominionLogger.LogDataLinking("CrossReferenceBuilder: Validating cross-references");
+            ArchonLogger.LogDataLinking("CrossReferenceBuilder: Validating cross-references");
 
             int validationErrors = 0;
             int validationWarnings = 0;
@@ -172,13 +172,13 @@ namespace Core.Linking
                     var province = registries.Provinces.GetByRuntime(provinceId);
                     if (province == null)
                     {
-                        DominionLogger.LogError($"Country {country.Tag} claims to own invalid province {provinceId}");
+                        ArchonLogger.LogError($"Country {country.Tag} claims to own invalid province {provinceId}");
                         country.OwnedProvinces.Remove(provinceId);
                         validationErrors++;
                     }
                     else if (province.OwnerId != country.Id)
                     {
-                        DominionLogger.LogError($"Country {country.Tag} claims to own province {province.DefinitionId}, but province owner is {province.OwnerId}");
+                        ArchonLogger.LogError($"Country {country.Tag} claims to own province {province.DefinitionId}, but province owner is {province.OwnerId}");
                         country.OwnedProvinces.Remove(provinceId);
                         validationErrors++;
                     }
@@ -190,13 +190,13 @@ namespace Core.Linking
                     var province = registries.Provinces.GetByRuntime(provinceId);
                     if (province == null)
                     {
-                        DominionLogger.LogError($"Country {country.Tag} claims to control invalid province {provinceId}");
+                        ArchonLogger.LogError($"Country {country.Tag} claims to control invalid province {provinceId}");
                         country.ControlledProvinces.Remove(provinceId);
                         validationErrors++;
                     }
                     else if (province.ControllerId != country.Id)
                     {
-                        DominionLogger.LogError($"Country {country.Tag} claims to control province {province.DefinitionId}, but province controller is {province.ControllerId}");
+                        ArchonLogger.LogError($"Country {country.Tag} claims to control province {province.DefinitionId}, but province controller is {province.ControllerId}");
                         country.ControlledProvinces.Remove(provinceId);
                         validationErrors++;
                     }
@@ -208,13 +208,13 @@ namespace Core.Linking
                     var capital = registries.Provinces.GetByRuntime(country.CapitalProvinceId);
                     if (capital == null)
                     {
-                        DominionLogger.LogDataLinkingWarning($"Country {country.Tag} has invalid capital province {country.CapitalProvinceId}");
+                        ArchonLogger.LogDataLinkingWarning($"Country {country.Tag} has invalid capital province {country.CapitalProvinceId}");
                         country.CapitalProvinceId = 0;
                         validationWarnings++;
                     }
                     else if (capital.OwnerId != country.Id)
                     {
-                        DominionLogger.LogDataLinkingWarning($"Country {country.Tag} capital {capital.DefinitionId} is not owned by the country (owner: {capital.OwnerId})");
+                        ArchonLogger.LogDataLinkingWarning($"Country {country.Tag} capital {capital.DefinitionId} is not owned by the country (owner: {capital.OwnerId})");
                         validationWarnings++;
                     }
                 }
@@ -222,11 +222,11 @@ namespace Core.Linking
 
             if (validationErrors > 0 || validationWarnings > 0)
             {
-                DominionLogger.LogDataLinkingWarning($"CrossReferenceBuilder: Validation completed with {validationErrors} errors and {validationWarnings} warnings");
+                ArchonLogger.LogDataLinkingWarning($"CrossReferenceBuilder: Validation completed with {validationErrors} errors and {validationWarnings} warnings");
             }
             else
             {
-                DominionLogger.LogDataLinking("CrossReferenceBuilder: Validation passed - all cross-references are consistent");
+                ArchonLogger.LogDataLinking("CrossReferenceBuilder: Validation passed - all cross-references are consistent");
             }
         }
 

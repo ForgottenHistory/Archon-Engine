@@ -1,4 +1,4 @@
-// Owner Texture Population Compute Shader for Dominion Map System
+// Owner Texture Population Compute Shader for Archon Map System
 // Populates ProvinceOwnerTexture from province ownership data
 // Runs entirely on GPU for maximum performance with 10,000+ provinces
 // Architecture: CPU simulation data → GPU texture (dual-layer architecture)

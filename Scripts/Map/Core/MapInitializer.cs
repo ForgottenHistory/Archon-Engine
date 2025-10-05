@@ -69,7 +69,7 @@ namespace Map.Core
             isInitialized = success;
             if (logInitializationProgress)
             {
-                DominionLogger.LogMapInit($"MapInitializer: Initialization {(success ? "completed successfully" : "failed")}");
+                ArchonLogger.LogMapInit($"MapInitializer: Initialization {(success ? "completed successfully" : "failed")}");
             }
         }
 
@@ -83,7 +83,7 @@ namespace Map.Core
             {
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: GameState not ready yet, will retry subscription...");
+                    ArchonLogger.LogMapInit("MapInitializer: GameState not ready yet, will retry subscription...");
                 }
                 StartCoroutine(WaitForGameStateAndSubscribe());
             }
@@ -100,7 +100,7 @@ namespace Map.Core
                 gameState.EventBus.Subscribe<SimulationDataReadyEvent>(OnSimulationDataReady);
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Subscribed to SimulationDataReadyEvent");
+                    ArchonLogger.LogMapInit("MapInitializer: Subscribed to SimulationDataReadyEvent");
                 }
                 return true;
             }
@@ -125,7 +125,7 @@ namespace Map.Core
         {
             if (logInitializationProgress)
             {
-                DominionLogger.LogMapInit($"MapInitializer: Received simulation data with {simulationData.ProvinceCount} provinces - waiting for GAME layer to trigger initialization");
+                ArchonLogger.LogMapInit($"MapInitializer: Received simulation data with {simulationData.ProvinceCount} provinces - waiting for GAME layer to trigger initialization");
             }
 
             // Store simulation data for later initialization
@@ -143,13 +143,13 @@ namespace Map.Core
         {
             if (!hasSimulationData)
             {
-                DominionLogger.LogError("MapInitializer: StartMapInitialization called but no simulation data cached!");
+                ArchonLogger.LogError("MapInitializer: StartMapInitialization called but no simulation data cached!");
                 return;
             }
 
             if (logInitializationProgress)
             {
-                DominionLogger.LogMapInit($"MapInitializer: Starting map initialization with {cachedSimulationData.ProvinceCount} provinces");
+                ArchonLogger.LogMapInit($"MapInitializer: Starting map initialization with {cachedSimulationData.ProvinceCount} provinces");
             }
 
             // ONLY initialize components
@@ -162,15 +162,15 @@ namespace Map.Core
                 coordinator = gameObject.AddComponent<MapSystemCoordinator>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created MapSystemCoordinator");
+                    ArchonLogger.LogMapInit("MapInitializer: Created MapSystemCoordinator");
                 }
             }
 
             // Debug: Verify our references before passing to coordinator
             if (logInitializationProgress)
             {
-                DominionLogger.LogMapInit($"MapInitializer: Camera reference: {(mapCamera != null ? mapCamera.name : "null")}");
-                DominionLogger.LogMapInit($"MapInitializer: MeshRenderer reference: {(meshRenderer != null ? meshRenderer.name : "null")}");
+                ArchonLogger.LogMapInit($"MapInitializer: Camera reference: {(mapCamera != null ? mapCamera.name : "null")}");
+                ArchonLogger.LogMapInit($"MapInitializer: MeshRenderer reference: {(meshRenderer != null ? meshRenderer.name : "null")}");
             }
 
             // Tell the coordinator to handle map generation using GameSettings
@@ -183,7 +183,7 @@ namespace Map.Core
             }
             else
             {
-                DominionLogger.LogError("MapInitializer: GameSettings not assigned - cannot proceed with map generation");
+                ArchonLogger.LogError("MapInitializer: GameSettings not assigned - cannot proceed with map generation");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Map.Core
         {
             if (logInitializationProgress)
             {
-                DominionLogger.LogMapInit("MapInitializer: Starting map system component initialization...");
+                ArchonLogger.LogMapInit("MapInitializer: Starting map system component initialization...");
             }
 
             // Phase 1: Core texture and computation components
@@ -222,7 +222,7 @@ namespace Map.Core
 
             if (logInitializationProgress)
             {
-                DominionLogger.LogMapInit("MapInitializer: All map system components initialized successfully");
+                ArchonLogger.LogMapInit("MapInitializer: All map system components initialized successfully");
             }
         }
 
@@ -234,7 +234,7 @@ namespace Map.Core
                 textureManager = gameObject.AddComponent<MapTextureManager>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created MapTextureManager component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created MapTextureManager component");
                 }
             }
         }
@@ -247,7 +247,7 @@ namespace Map.Core
                 borderDispatcher = gameObject.AddComponent<BorderComputeDispatcher>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created BorderComputeDispatcher component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created BorderComputeDispatcher component");
                 }
             }
 
@@ -266,7 +266,7 @@ namespace Map.Core
                 ownerTextureDispatcher = gameObject.AddComponent<OwnerTextureDispatcher>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created OwnerTextureDispatcher component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created OwnerTextureDispatcher component");
                 }
             }
 
@@ -285,7 +285,7 @@ namespace Map.Core
                 mapModeManager = gameObject.AddComponent<MapModeManager>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created MapModeManager component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created MapModeManager component");
                 }
             }
         }
@@ -297,7 +297,7 @@ namespace Map.Core
 
             if (logInitializationProgress)
             {
-                DominionLogger.LogMapInit("MapInitializer: Created ProvinceMapProcessor for high-performance province map processing");
+                ArchonLogger.LogMapInit("MapInitializer: Created ProvinceMapProcessor for high-performance province map processing");
             }
         }
 
@@ -309,7 +309,7 @@ namespace Map.Core
                 dataLoader = gameObject.AddComponent<MapDataLoader>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created MapDataLoader component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created MapDataLoader component");
                 }
             }
 
@@ -328,7 +328,7 @@ namespace Map.Core
                 renderingCoordinator = gameObject.AddComponent<MapRenderingCoordinator>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created MapRenderingCoordinator component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created MapRenderingCoordinator component");
                 }
             }
 
@@ -347,7 +347,7 @@ namespace Map.Core
                 provinceSelector = gameObject.AddComponent<ProvinceSelector>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created ProvinceSelector component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created ProvinceSelector component");
                 }
             }
         }
@@ -360,7 +360,7 @@ namespace Map.Core
                 texturePopulator = gameObject.AddComponent<MapTexturePopulator>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created MapTexturePopulator component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created MapTexturePopulator component");
                 }
             }
         }
@@ -377,11 +377,11 @@ namespace Map.Core
                 }
                 if (mapCamera == null)
                 {
-                    DominionLogger.LogError("MapInitializer: No camera found for map rendering");
+                    ArchonLogger.LogError("MapInitializer: No camera found for map rendering");
                 }
                 else if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Found camera for map rendering");
+                    ArchonLogger.LogMapInit("MapInitializer: Found camera for map rendering");
                 }
             }
         }
@@ -408,12 +408,12 @@ namespace Map.Core
 
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit($"MapInitializer: Initialized ParadoxStyleCameraController on {cameraController.gameObject.name}");
+                    ArchonLogger.LogMapInit($"MapInitializer: Initialized ParadoxStyleCameraController on {cameraController.gameObject.name}");
                 }
             }
             else if (logInitializationProgress)
             {
-                DominionLogger.LogMapInit("MapInitializer: No ParadoxStyleCameraController found in scene - camera control disabled");
+                ArchonLogger.LogMapInit("MapInitializer: No ParadoxStyleCameraController found in scene - camera control disabled");
             }
         }
 
@@ -425,7 +425,7 @@ namespace Map.Core
                 textureUpdateBridge = gameObject.AddComponent<TextureUpdateBridge>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created TextureUpdateBridge component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created TextureUpdateBridge component");
                 }
             }
         }
@@ -439,7 +439,7 @@ namespace Map.Core
                 debugUI = gameObject.AddComponent<MapModeDebugUI>();
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Created MapModeDebugUI component");
+                    ArchonLogger.LogMapInit("MapInitializer: Created MapModeDebugUI component");
                 }
             }
 
@@ -449,7 +449,7 @@ namespace Map.Core
                 debugUI.SetMapModeManager(mapModeManager);
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Connected MapModeDebugUI to MapModeManager");
+                    ArchonLogger.LogMapInit("MapInitializer: Connected MapModeDebugUI to MapModeManager");
                 }
             }
 #endif
@@ -476,7 +476,7 @@ namespace Map.Core
                 provinceSelector.Initialize(textureManager, meshRenderer.transform);
                 if (logInitializationProgress)
                 {
-                    DominionLogger.LogMapInit("MapInitializer: Initialized ProvinceSelector for province interaction");
+                    ArchonLogger.LogMapInit("MapInitializer: Initialized ProvinceSelector for province interaction");
                 }
             }
         }

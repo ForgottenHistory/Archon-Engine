@@ -748,13 +748,13 @@ So the bug is likely in compute shader write or shader read, not data preparatio
 **Implementation:**
 ```csharp
 // MapTextureManager.cs - Log instance ID on creation
-DominionLogger.LogMapInit($"ProvinceIDTexture instance ID: {provinceIDTexture.GetInstanceID()}");
+ArchonLogger.LogMapInit($"ProvinceIDTexture instance ID: {provinceIDTexture.GetInstanceID()}");
 
 // MapTexturePopulator.cs - Log instance ID after Graphics.Blit
-DominionLogger.LogMapInit($"MapTexturePopulator: Wrote to ProvinceIDTexture instance {textureManager.ProvinceIDTexture.GetInstanceID()}");
+ArchonLogger.LogMapInit($"MapTexturePopulator: Wrote to ProvinceIDTexture instance {textureManager.ProvinceIDTexture.GetInstanceID()}");
 
 // OwnerTextureDispatcher.cs - Log instance ID when binding to shader
-DominionLogger.LogMapInit($"OwnerTextureDispatcher: Bound ProvinceIDTexture ({provinceIDTex?.GetInstanceID()}, {provinceIDTex?.format}) directly to compute shader");
+ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Bound ProvinceIDTexture ({provinceIDTex?.GetInstanceID()}, {provinceIDTex?.format}) directly to compute shader");
 ```
 
 **Result:**

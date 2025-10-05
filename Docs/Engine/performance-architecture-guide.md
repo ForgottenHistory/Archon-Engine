@@ -369,7 +369,7 @@ void UpdateOwnerTexture() {
 }
 ```
 
-**In practice for Dominion:** This optimization is **not needed** because:
+**In practice for Archon:** This optimization is **not needed** because:
 1. GPU texture updates are infrequent (only dirty provinces, ~100-500 per tick)
 2. The GPU texture write dominates the 6-byte cache "waste"
 3. Code simplicity and network sync elegance outweigh marginal gains

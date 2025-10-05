@@ -1,10 +1,10 @@
 using UnityEngine;
 
 /// <summary>
-/// Static helper class for easy logging throughout the Dominion project
+/// Static helper class for easy logging throughout the Archon project
 /// Provides a unified logging interface with direct file logging
 /// </summary>
-public static class DominionLogger
+public static class ArchonLogger
 {
     private static bool logToConsole = true;
     private static bool logToFile = true;

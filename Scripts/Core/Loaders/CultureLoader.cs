@@ -21,13 +21,13 @@ namespace Core.Loaders
 
             if (!Directory.Exists(culturesPath))
             {
-                DominionLogger.LogWarning($"Cultures directory not found: {culturesPath}");
+                ArchonLogger.LogWarning($"Cultures directory not found: {culturesPath}");
                 CreateDefaultCultures(cultureRegistry);
                 return;
             }
 
             var cultureFiles = Directory.GetFiles(culturesPath, "*.txt");
-            DominionLogger.Log($"CultureLoader: Found {cultureFiles.Length} culture files in {culturesPath}");
+            ArchonLogger.Log($"CultureLoader: Found {cultureFiles.Length} culture files in {culturesPath}");
 
             int loaded = 0;
             foreach (var file in cultureFiles)
@@ -39,16 +39,16 @@ namespace Core.Loaders
                 }
                 catch (System.Exception e)
                 {
-                    DominionLogger.LogError($"CultureLoader: Failed to load {file}: {e.Message}");
+                    ArchonLogger.LogError($"CultureLoader: Failed to load {file}: {e.Message}");
                 }
             }
 
-            DominionLogger.Log($"CultureLoader: Loaded {loaded}/{cultureFiles.Length} culture files, {cultureRegistry.Count} cultures registered");
+            ArchonLogger.Log($"CultureLoader: Loaded {loaded}/{cultureFiles.Length} culture files, {cultureRegistry.Count} cultures registered");
 
             // If no cultures loaded, create defaults
             if (cultureRegistry.Count == 0)
             {
-                DominionLogger.LogWarning("CultureLoader: No cultures loaded, creating defaults");
+                ArchonLogger.LogWarning("CultureLoader: No cultures loaded, creating defaults");
                 CreateDefaultCultures(cultureRegistry);
             }
         }
@@ -149,7 +149,7 @@ namespace Core.Loaders
                 cultureRegistry.Register(key, culture);
             }
 
-            DominionLogger.Log($"CultureLoader: Created {defaultCultures.Length} default cultures");
+            ArchonLogger.Log($"CultureLoader: Created {defaultCultures.Length} default cultures");
         }
     }
 }

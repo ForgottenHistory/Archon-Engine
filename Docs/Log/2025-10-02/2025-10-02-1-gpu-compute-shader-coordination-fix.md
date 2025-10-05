@@ -55,7 +55,7 @@ uint testPacked = packedPixels[testIndex];
 byte testR = (byte)((testPacked >> 16) & 0xFF);
 byte testG = (byte)((testPacked >> 8) & 0xFF);
 ushort testProvinceFromBuffer = (ushort)((testG << 8) | testR);
-DominionLogger.LogMapInit($"MapTexturePopulator: GPU buffer[{testIndex}] (x=2767,y=711) = packed 0x{testPacked:X8}, R={testR} G={testG}, province={testProvinceFromBuffer}");
+ArchonLogger.LogMapInit($"MapTexturePopulator: GPU buffer[{testIndex}] (x=2767,y=711) = packed 0x{testPacked:X8}, R={testR} G={testG}, province={testProvinceFromBuffer}");
 
 // Verify RenderTexture contents after compute shader write
 RenderTexture.active = textureManager.ProvinceIDTexture;
@@ -68,7 +68,7 @@ Color32 debugColor = debugPixel.GetPixel(0, 0);
 ushort debugProvinceID = Province.ProvinceIDEncoder.UnpackProvinceID(debugColor);
 Object.Destroy(debugPixel);
 
-DominionLogger.LogMapInit($"MapTexturePopulator: VERIFY - After compute shader, ProvinceIDTexture(2767,711) = province {debugProvinceID} (R={debugColor.r} G={debugColor.g} - expected 2751)");
+ArchonLogger.LogMapInit($"MapTexturePopulator: VERIFY - After compute shader, ProvinceIDTexture(2767,711) = province {debugProvinceID} (R={debugColor.r} G={debugColor.g} - expected 2751)");
 ```
 
 **Rationale:**

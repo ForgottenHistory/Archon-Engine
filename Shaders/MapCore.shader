@@ -1,4 +1,4 @@
-Shader "Dominion/MapCore"
+Shader "Archon/MapCore"
 {
     Properties
     {

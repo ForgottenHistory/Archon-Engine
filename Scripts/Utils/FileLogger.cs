@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
     /// <summary>
-    /// File-based logging system that captures all DominionLogger.Log messages
+    /// File-based logging system that captures all ArchonLogger.Log messages
     /// </summary>
     public class FileLogger : MonoBehaviour
     {
@@ -101,14 +101,14 @@ using UnityEngine;
             }
             catch (Exception e)
             {
-                DominionLogger.LogError($"Failed to initialize FileLogger: {e.Message}");
+                ArchonLogger.LogError($"Failed to initialize FileLogger: {e.Message}");
             }
         }
 
         void WriteHeader()
         {
             logWriter.WriteLine("========================================");
-            logWriter.WriteLine($"Dominion Complete Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            logWriter.WriteLine($"Archon Complete Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
             logWriter.WriteLine($"Unity Version: {Application.unityVersion}");
             logWriter.WriteLine($"Platform: {Application.platform}");
             logWriter.WriteLine($"Map: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
@@ -132,7 +132,7 @@ using UnityEngine;
 
                 // Write system-specific header
                 writer.WriteLine("========================================");
-                writer.WriteLine($"Dominion {systemName} Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                writer.WriteLine($"Archon {systemName} Log - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
                 writer.WriteLine($"System-specific logging for {systemName}");
                 writer.WriteLine("========================================");
                 writer.WriteLine();
@@ -288,7 +288,7 @@ using UnityEngine;
             }
             catch (Exception e)
             {
-                // Can't use DominionLogger.LogError here as it would create infinite loop
+                // Can't use ArchonLogger.LogError here as it would create infinite loop
                 Console.WriteLine($"Failed to write to log file: {e.Message}");
             }
         }

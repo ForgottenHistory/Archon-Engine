@@ -225,11 +225,11 @@ material.SetTexture(ProvinceIDTexID, provinceIDTexture);
 var retrievedIDTexture = material.GetTexture(ProvinceIDTexID);
 if (retrievedIDTexture == provinceIDTexture)
 {
-    DominionLogger.LogMapInit($"✓ ProvinceIDTexture bound correctly - instance {provinceIDTexture.GetInstanceID()}");
+    ArchonLogger.LogMapInit($"✓ ProvinceIDTexture bound correctly - instance {provinceIDTexture.GetInstanceID()}");
 }
 else
 {
-    DominionLogger.LogMapInitError($"✗ ProvinceIDTexture binding FAILED - set {provinceIDTexture?.GetInstanceID()}, got {retrievedIDTexture?.GetInstanceID()}");
+    ArchonLogger.LogMapInitError($"✗ ProvinceIDTexture binding FAILED - set {provinceIDTexture?.GetInstanceID()}, got {retrievedIDTexture?.GetInstanceID()}");
 }
 ```
 

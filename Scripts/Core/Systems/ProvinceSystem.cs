@@ -65,7 +65,7 @@ namespace Core.Systems
             historyDatabase = new ProvinceHistoryDatabase();
 
             isInitialized = true;
-            DominionLogger.Log($"ProvinceSystem initialized with capacity {initialCapacity} (8 bytes per province = {initialCapacity * 8 / 1024}KB total)");
+            ArchonLogger.Log($"ProvinceSystem initialized with capacity {initialCapacity} (8 bytes per province = {initialCapacity * 8 / 1024}KB total)");
 
             // Validate ProvinceState is exactly 8 bytes
             ValidateProvinceStateSize();
@@ -78,17 +78,17 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                DominionLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
+                ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
                 return;
             }
 
             if (!loadResult.Success)
             {
-                DominionLogger.LogError($"Cannot initialize from failed load result: {loadResult.ErrorMessage}");
+                ArchonLogger.LogError($"Cannot initialize from failed load result: {loadResult.ErrorMessage}");
                 return;
             }
 
-            DominionLogger.Log($"Initializing {loadResult.LoadedCount} provinces from JSON5 + Burst data");
+            ArchonLogger.Log($"Initializing {loadResult.LoadedCount} provinces from JSON5 + Burst data");
 
             // Clear existing data
             provinceCount = 0;
@@ -112,7 +112,7 @@ namespace Core.Systems
                 // The actual ownership and other data will be applied after reference resolution
             }
 
-            DominionLogger.Log($"ProvinceSystem initialized with {provinceCount} provinces (ownership will be resolved in linking phase)");
+            ArchonLogger.Log($"ProvinceSystem initialized with {provinceCount} provinces (ownership will be resolved in linking phase)");
 
             // Emit initialization complete event
             eventBus?.Emit(new ProvinceSystemInitializedEvent
@@ -128,14 +128,14 @@ namespace Core.Systems
         {
             if (provinceCount >= provinceStates.Length)
             {
-                DominionLogger.LogError($"Province capacity exceeded: {provinceCount}/{provinceStates.Length}");
+                ArchonLogger.LogError($"Province capacity exceeded: {provinceCount}/{provinceStates.Length}");
                 return;
             }
 
             // Check for duplicate province ID
             if (idToIndex.ContainsKey(provinceId))
             {
-                DominionLogger.LogWarning($"Province {provinceId} already exists, skipping");
+                ArchonLogger.LogWarning($"Province {provinceId} already exists, skipping");
                 return;
             }
 
@@ -166,7 +166,7 @@ namespace Core.Systems
             // DEBUG: Log first few queries for Cuenca provinces
             if ((provinceId == 2751 || provinceId == 817) && queryCount < 5)
             {
-                DominionLogger.Log($"ProvinceSystem.GetProvinceOwner: Province {provinceId} → ownerID={ownerID}, arrayIndex={arrayIndex}");
+                ArchonLogger.Log($"ProvinceSystem.GetProvinceOwner: Province {provinceId} → ownerID={ownerID}, arrayIndex={arrayIndex}");
                 queryCount++;
             }
 
@@ -182,7 +182,7 @@ namespace Core.Systems
         {
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
             {
-                DominionLogger.LogWarning($"Cannot set owner for invalid province {provinceId}");
+                ArchonLogger.LogWarning($"Cannot set owner for invalid province {provinceId}");
                 return;
             }
 
@@ -329,21 +329,21 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                DominionLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
+                ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
                 return;
             }
 
-            DominionLogger.Log($"Loading province initial states from {dataDirectory} using Burst jobs");
+            ArchonLogger.Log($"Loading province initial states from {dataDirectory} using Burst jobs");
 
             var result = BurstProvinceHistoryLoader.LoadProvinceInitialStates(dataDirectory);
 
             if (!result.Success)
             {
-                DominionLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}");
+                ArchonLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}");
                 return;
             }
 
-            DominionLogger.Log($"Province initial states loaded: {result.LoadedCount} successful, {result.FailedCount} failed");
+            ArchonLogger.Log($"Province initial states loaded: {result.LoadedCount} successful, {result.FailedCount} failed");
 
             ApplyInitialStates(result.InitialStates);
 
@@ -364,21 +364,21 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                DominionLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
+                ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
                 return ProvinceInitialStateLoadResult.Failed("ProvinceSystem not initialized");
             }
 
-            DominionLogger.Log($"Loading province initial states for reference linking from {dataDirectory}");
+            ArchonLogger.Log($"Loading province initial states for reference linking from {dataDirectory}");
 
             var result = BurstProvinceHistoryLoader.LoadProvinceInitialStates(dataDirectory);
 
             if (!result.Success)
             {
-                DominionLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}");
+                ArchonLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}");
                 return result;
             }
 
-            DominionLogger.Log($"Province initial states loaded for linking: {result.LoadedCount} successful, {result.FailedCount} failed");
+            ArchonLogger.Log($"Province initial states loaded for linking: {result.LoadedCount} successful, {result.FailedCount} failed");
 
             // Return the raw data WITHOUT applying it - caller will resolve references first
             return result;
@@ -416,7 +416,7 @@ namespace Core.Systems
 
                 if (!HasProvince(provinceId))
                 {
-                    DominionLogger.LogWarning($"Province {initialState.ProvinceID} has initial state but doesn't exist in map data");
+                    ArchonLogger.LogWarning($"Province {initialState.ProvinceID} has initial state but doesn't exist in map data");
                     continue;
                 }
 
@@ -424,7 +424,7 @@ namespace Core.Systems
                 appliedCount++;
             }
 
-            DominionLogger.Log($"Applied initial state to {appliedCount} provinces");
+            ArchonLogger.Log($"Applied initial state to {appliedCount} provinces");
         }
 
         /// <summary>
@@ -438,7 +438,7 @@ namespace Core.Systems
             // DEBUG: Log Spanish Cuenca and Incan Cuenca
             if (provinceId == 2751 || provinceId == 817)
             {
-                DominionLogger.Log($"ProvinceSystem.ApplyInitialState: Province {provinceId} BEFORE ToProvinceState() → initialState.OwnerID={initialState.OwnerID}");
+                ArchonLogger.Log($"ProvinceSystem.ApplyInitialState: Province {provinceId} BEFORE ToProvinceState() → initialState.OwnerID={initialState.OwnerID}");
             }
 
             // Convert to hot ProvinceState and store (8 bytes)
@@ -448,7 +448,7 @@ namespace Core.Systems
             // DEBUG: Log Spanish Cuenca and Incan Cuenca
             if (provinceId == 2751 || provinceId == 817)
             {
-                DominionLogger.Log($"ProvinceSystem.ApplyInitialState: Province {provinceId} AFTER ToProvinceState() → state.ownerID={state.ownerID}, arrayIndex={arrayIndex}");
+                ArchonLogger.Log($"ProvinceSystem.ApplyInitialState: Province {provinceId} AFTER ToProvinceState() → state.ownerID={state.ownerID}, arrayIndex={arrayIndex}");
             }
 
             // Add initial ownership event to cold data (history database)
@@ -522,11 +522,11 @@ namespace Core.Systems
             int actualSize = UnsafeUtility.SizeOf<ProvinceState>();
             if (actualSize != 8)
             {
-                DominionLogger.LogError($"ProvinceState size validation failed: expected 8 bytes, got {actualSize} bytes");
+                ArchonLogger.LogError($"ProvinceState size validation failed: expected 8 bytes, got {actualSize} bytes");
             }
             else
             {
-                DominionLogger.Log("ProvinceState size validation passed: 8 bytes");
+                ArchonLogger.Log("ProvinceState size validation passed: 8 bytes");
             }
         }
 
@@ -539,7 +539,7 @@ namespace Core.Systems
             historyDatabase?.Dispose();
 
             isInitialized = false;
-            DominionLogger.Log("ProvinceSystem disposed");
+            ArchonLogger.Log("ProvinceSystem disposed");
         }
 
         void OnDestroy()

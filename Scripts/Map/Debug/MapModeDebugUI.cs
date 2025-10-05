@@ -32,7 +32,7 @@ namespace Map.Debug
                 mapModeManager = FindFirstObjectByType<MapModeManager>();
                 if (mapModeManager == null)
                 {
-                    DominionLogger.LogWarning("MapModeDebugUI: No MapModeManager found in scene");
+                    ArchonLogger.LogWarning("MapModeDebugUI: No MapModeManager found in scene");
                 }
             }
 
@@ -45,7 +45,7 @@ namespace Map.Debug
             {
                 // Get all available map modes from the enum
                 availableModes = (MapMode[])Enum.GetValues(typeof(MapMode));
-                DominionLogger.Log($"MapModeDebugUI: Found {availableModes.Length} map mode types");
+                ArchonLogger.Log($"MapModeDebugUI: Found {availableModes.Length} map mode types");
             }
         }
 
@@ -161,13 +161,13 @@ namespace Map.Debug
 
                 if (GUILayout.Button("Force Texture Update"))
                 {
-                    DominionLogger.Log("MapModeDebugUI: Forced texture update");
+                    ArchonLogger.Log("MapModeDebugUI: Forced texture update");
                 }
 
                 if (GUILayout.Button("Get Tooltip (Province 1)"))
                 {
                     var tooltip = mapModeManager.GetProvinceTooltip(1);
-                    DominionLogger.Log($"Province 1 Tooltip: {tooltip}");
+                    ArchonLogger.Log($"Province 1 Tooltip: {tooltip}");
                 }
 
                 if (GUILayout.Button("Refresh Available Modes"))
@@ -188,11 +188,11 @@ namespace Map.Debug
             if (mapModeManager != null && mapModeManager.IsInitialized)
             {
                 mapModeManager.SetMapMode(mode);
-                DominionLogger.Log($"MapModeDebugUI: Switched to {mode} mode");
+                ArchonLogger.Log($"MapModeDebugUI: Switched to {mode} mode");
             }
             else
             {
-                DominionLogger.LogError($"MapModeDebugUI: Cannot switch to {mode} - manager not ready");
+                ArchonLogger.LogError($"MapModeDebugUI: Cannot switch to {mode} - manager not ready");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Map.Debug
         {
             mapModeManager = manager;
             RefreshAvailableModes();
-            DominionLogger.Log("MapModeDebugUI: MapModeManager assigned");
+            ArchonLogger.Log("MapModeDebugUI: MapModeManager assigned");
         }
 
         void Update()

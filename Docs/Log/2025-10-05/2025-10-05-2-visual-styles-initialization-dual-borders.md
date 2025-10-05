@@ -75,7 +75,7 @@ if (meshRenderer.material != null && meshRenderer.material.shader.name != "Hidde
 {
     // Use existing material from GAME layer
     runtimeMaterial = meshRenderer.material;
-    DominionLogger.LogMapInit($"MapRenderingCoordinator: Using existing material '{runtimeMaterial.shader.name}' from GAME layer");
+    ArchonLogger.LogMapInit($"MapRenderingCoordinator: Using existing material '{runtimeMaterial.shader.name}' from GAME layer");
 }
 else
 {
@@ -150,7 +150,7 @@ private bool hasSimulationData = false;
 
 private void OnSimulationDataReady(SimulationDataReadyEvent simulationData)
 {
-    DominionLogger.LogMapInit($"MapInitializer: Received simulation data with {simulationData.ProvinceCount} provinces - waiting for GAME layer to trigger initialization");
+    ArchonLogger.LogMapInit($"MapInitializer: Received simulation data with {simulationData.ProvinceCount} provinces - waiting for GAME layer to trigger initialization");
     cachedSimulationData = simulationData;
     hasSimulationData = true;
 }
@@ -159,7 +159,7 @@ public void StartMapInitialization()
 {
     if (!hasSimulationData)
     {
-        DominionLogger.LogError("MapInitializer: StartMapInitialization called but no simulation data cached!");
+        ArchonLogger.LogError("MapInitializer: StartMapInitialization called but no simulation data cached!");
         return;
     }
 
@@ -205,11 +205,11 @@ private void GenerateBorders()
 {
     if (borderDispatcher != null)
     {
-        DominionLogger.LogMapInit($"MapDataLoader: Generating borders - Mode: {BorderComputeDispatcher.BorderMode.Dual}");
+        ArchonLogger.LogMapInit($"MapDataLoader: Generating borders - Mode: {BorderComputeDispatcher.BorderMode.Dual}");
         borderDispatcher.ClearBorders();
         borderDispatcher.SetBorderMode(BorderComputeDispatcher.BorderMode.Dual);
         borderDispatcher.DetectBorders();
-        DominionLogger.LogMapInit($"MapDataLoader: ✓ Generated dual borders using GPU compute shader");
+        ArchonLogger.LogMapInit($"MapDataLoader: ✓ Generated dual borders using GPU compute shader");
     }
 }
 
@@ -220,7 +220,7 @@ private void GenerateBorders()
     {
         // Note: Border mode and generation is controlled by GAME layer (VisualStyleManager)
         // ENGINE only initializes the border system, GAME decides what borders to show
-        DominionLogger.LogMapInit("MapDataLoader: Border system ready (mode will be set by GAME layer)");
+        ArchonLogger.LogMapInit("MapDataLoader: Border system ready (mode will be set by GAME layer)");
     }
 }
 ```
@@ -282,7 +282,7 @@ public void ApplyBorderConfiguration(VisualStyleConfiguration style)
         if (style.borders.enableBordersOnStartup)
         {
             borderDispatcher.DetectBorders();
-            DominionLogger.Log($"VisualStyleManager: Applied {style.borders.defaultBorderMode} border mode from visual style");
+            ArchonLogger.Log($"VisualStyleManager: Applied {style.borders.defaultBorderMode} border mode from visual style");
         }
     }
 }
@@ -446,7 +446,7 @@ VisualStyleManager.ApplyBorderConfiguration(activeStyle);
 
 ## Problems Encountered & Solutions
 
-### Problem 1: Material Showing as 'Universal Render Pipeline/Lit' Instead of 'Dominion/EU3Classic'
+### Problem 1: Material Showing as 'Universal Render Pipeline/Lit' Instead of 'Archon/EU3Classic'
 
 **Symptom:** Logs showed `MapRenderingCoordinator: Using existing material 'Universal Render Pipeline/Lit' from GAME layer` even though EU3ClassicStyle had EU3Classic shader assigned.
 

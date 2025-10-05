@@ -160,7 +160,7 @@ namespace Map.MapModes
         protected void LogActivation(string message = null)
         {
             var msg = message ?? $"{Name} map mode activated";
-            DominionLogger.Log($"MapMode: {msg}");
+            ArchonLogger.Log($"MapMode: {msg}");
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Map.MapModes
         protected void LogDeactivation(string message = null)
         {
             var msg = message ?? $"{Name} map mode deactivated";
-            DominionLogger.Log($"MapMode: {msg}");
+            ArchonLogger.Log($"MapMode: {msg}");
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Core.Loaders
                 return Json5ProvinceLoadResult.Failed("No province JSON5 files found");
             }
 
-            DominionLogger.Log($"Loading {files.Length} province JSON5 files...");
+            ArchonLogger.Log($"Loading {files.Length} province JSON5 files...");
 
             var rawDataList = new List<RawProvinceData>();
             int failedCount = 0;
@@ -56,7 +56,7 @@ namespace Core.Loaders
                 }
                 catch (Exception e)
                 {
-                    DominionLogger.LogError($"Failed to load province file {filePath}: {e.Message}");
+                    ArchonLogger.LogError($"Failed to load province file {filePath}: {e.Message}");
                     failedCount++;
                 }
             }
@@ -70,7 +70,7 @@ namespace Core.Loaders
             // Use Allocator.Persistent because data survives >4 frames in coroutine processing
             var nativeArray = new NativeArray<RawProvinceData>(rawDataList.ToArray(), Allocator.Persistent);
 
-            DominionLogger.Log($"JSON5 province loading complete: {rawDataList.Count} loaded, {failedCount} failed");
+            ArchonLogger.Log($"JSON5 province loading complete: {rawDataList.Count} loaded, {failedCount} failed");
 
             return Json5ProvinceLoadResult.Success(nativeArray, rawDataList.Count, failedCount);
         }
@@ -87,7 +87,7 @@ namespace Core.Loaders
 
             if (provinceID <= 0)
             {
-                DominionLogger.LogError($"Invalid province ID in filename: {fileName}");
+                ArchonLogger.LogError($"Invalid province ID in filename: {fileName}");
                 return RawProvinceData.Invalid;
             }
 

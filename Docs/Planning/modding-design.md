@@ -530,7 +530,7 @@ public class ScriptLoader {
         // Phase 4: Validate
         ValidateAllScripts();
         
-        DominionLogger.Log($"Loaded {parseJobs.Count} files in {sw.ElapsedMilliseconds}ms");
+        ArchonLogger.Log($"Loaded {parseJobs.Count} files in {sw.ElapsedMilliseconds}ms");
     }
     
     private void CompileFile(ParsedFile file) {
@@ -601,10 +601,10 @@ public class ScriptHotReload : MonoBehaviour {
             // Notify mechanics
             MechanicRegistry.NotifyScriptsReloaded();
             
-            DominionLogger.Log($"Hot-reloaded: {Path.GetFileName(path)}");
+            ArchonLogger.Log($"Hot-reloaded: {Path.GetFileName(path)}");
         }
         catch (Exception e) {
-            DominionLogger.LogError($"Failed to reload {path}: {e.Message}");
+            ArchonLogger.LogError($"Failed to reload {path}: {e.Message}");
         }
     }
 }

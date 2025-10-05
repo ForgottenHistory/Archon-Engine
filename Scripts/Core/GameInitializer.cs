@@ -89,18 +89,18 @@ namespace Core
         {
             if (isLoading)
             {
-                DominionLogger.LogWarning("Game initialization already in progress!");
+                ArchonLogger.LogWarning("Game initialization already in progress!");
                 return;
             }
 
             if (gameSettings == null)
             {
-                DominionLogger.LogError("GameSettings not assigned! Cannot initialize game.");
+                ArchonLogger.LogError("GameSettings not assigned! Cannot initialize game.");
                 ReportError("Missing GameSettings configuration");
                 return;
             }
 
-            DominionLogger.Log("Starting game initialization...");
+            ArchonLogger.Log("Starting game initialization...");
             StartCoroutine(InitializeGameCoroutine());
         }
 
@@ -164,7 +164,7 @@ namespace Core
             }
             catch (System.Exception e)
             {
-                DominionLogger.LogError($"Critical error creating initialization phase: {e.Message}");
+                ArchonLogger.LogError($"Critical error creating initialization phase: {e.Message}");
                 Debug.LogException(e);
                 ReportError($"Phase creation failed: {e.Message}");
                 yield break;
@@ -188,7 +188,7 @@ namespace Core
             // Handle any errors that occurred
             if (hasError)
             {
-                DominionLogger.LogError($"Error during initialization phase: {errorMessage}");
+                ArchonLogger.LogError($"Error during initialization phase: {errorMessage}");
                 ReportError($"Phase failed: {errorMessage}");
             }
         }
@@ -341,7 +341,7 @@ namespace Core
                 yield break;
             }
 
-            DominionLogger.Log($"Loaded {provinceDefinitions.Count} province definitions from definition.csv");
+            ArchonLogger.Log($"Loaded {provinceDefinitions.Count} province definitions from definition.csv");
 
             // Step 2: Load province initial states from JSON5 files (history data)
             UpdateProgress(20f, "Loading province JSON5 files...");
@@ -355,7 +355,7 @@ namespace Core
                 yield break;
             }
 
-            DominionLogger.Log($"Province loading complete: {provinceInitialStates.LoadedCount} provinces loaded, {provinceInitialStates.FailedCount} failed");
+            ArchonLogger.Log($"Province loading complete: {provinceInitialStates.LoadedCount} provinces loaded, {provinceInitialStates.FailedCount} failed");
 
             UpdateProgress(32f, "Initializing province system...");
             yield return null;
@@ -381,11 +381,11 @@ namespace Core
             if (countryTagResult.Success)
             {
                 tagMapping = countryTagResult.CountryTags;
-                DominionLogger.Log($"Loaded {tagMapping.Count} country tag mappings");
+                ArchonLogger.Log($"Loaded {tagMapping.Count} country tag mappings");
             }
             else
             {
-                DominionLogger.LogWarning($"Failed to load country tags: {countryTagResult.ErrorMessage}. Tags will be extracted from filenames.");
+                ArchonLogger.LogWarning($"Failed to load country tags: {countryTagResult.ErrorMessage}. Tags will be extracted from filenames.");
             }
 
             UpdateProgress(50f, "Loading country JSON5 files...");
@@ -401,7 +401,7 @@ namespace Core
                 yield break;
             }
 
-            DominionLogger.Log($"Country loading complete: {countryDataResult.Statistics.FilesProcessed} countries loaded, {countryDataResult.Statistics.FilesSkipped} failed");
+            ArchonLogger.Log($"Country loading complete: {countryDataResult.Statistics.FilesProcessed} countries loaded, {countryDataResult.Statistics.FilesSkipped} failed");
 
             UpdateProgress(55f, "Initializing country system...");
             yield return null;
@@ -428,13 +428,13 @@ namespace Core
 
             if (!countryTagResult.Success)
             {
-                DominionLogger.LogError($"Failed to load country tags: {countryTagResult.ErrorMessage}");
+                ArchonLogger.LogError($"Failed to load country tags: {countryTagResult.ErrorMessage}");
                 // Continue with limited functionality
             }
 
             // Register countries using actual tags from CountrySystem
             var countryIds = gameState.Countries.GetAllCountryIds();
-            DominionLogger.Log($"Country registration: Found {countryIds.Length} countries to register");
+            ArchonLogger.Log($"Country registration: Found {countryIds.Length} countries to register");
 
             var tagToIdMapping = new Dictionary<string, ushort>();
             var registeredCount = 0;
@@ -463,22 +463,22 @@ namespace Core
 
                     if (registeredCount <= 10) // Log first 10 for debugging
                     {
-                        DominionLogger.LogDataLinking($"Registered country '{tag}' with ID {countryId}");
+                        ArchonLogger.LogDataLinking($"Registered country '{tag}' with ID {countryId}");
                     }
                 }
                 catch (System.Exception e)
                 {
-                    DominionLogger.LogDataLinkingError($"Failed to register country {tag} (ID: {countryId}): {e.Message}");
+                    ArchonLogger.LogDataLinkingError($"Failed to register country {tag} (ID: {countryId}): {e.Message}");
                 }
             }
 
-            DominionLogger.Log($"Country registration complete: {gameRegistries.Countries.Count} countries registered with real tags");
+            ArchonLogger.Log($"Country registration complete: {gameRegistries.Countries.Count} countries registered with real tags");
 
             UpdateProgress(53f, "Registering provinces with JSON5 history data...");
             yield return null;
 
             // STEP 1: Register provinces that have JSON5 history files (full data)
-            DominionLogger.Log($"Province processing: Found {provinceInitialStates.LoadedCount} provinces with JSON5 history files");
+            ArchonLogger.Log($"Province processing: Found {provinceInitialStates.LoadedCount} provinces with JSON5 history files");
 
             for (int i = 0; i < provinceInitialStates.InitialStates.Length; i++)
             {
@@ -510,11 +510,11 @@ namespace Core
                 }
                 catch (System.Exception e)
                 {
-                    DominionLogger.LogWarning($"Failed to register province {initialState.ProvinceID}: {e.Message}");
+                    ArchonLogger.LogWarning($"Failed to register province {initialState.ProvinceID}: {e.Message}");
                 }
             }
 
-            DominionLogger.Log($"Province registration (JSON5): {gameRegistries.Provinces.Count} provinces registered with historical data");
+            ArchonLogger.Log($"Province registration (JSON5): {gameRegistries.Provinces.Count} provinces registered with historical data");
 
             UpdateProgress(55f, "Filling in missing provinces from definition.csv...");
             yield return null;
@@ -523,7 +523,7 @@ namespace Core
             // RegisterDefinitions() automatically skips provinces already registered in step 1
             DefinitionLoader.RegisterDefinitions(provinceDefinitions, gameRegistries.Provinces);
 
-            DominionLogger.Log($"Province registration complete: {gameRegistries.Provinces.Count} total provinces (JSON5 + definition.csv)");
+            ArchonLogger.Log($"Province registration complete: {gameRegistries.Provinces.Count} total provinces (JSON5 + definition.csv)");
 
             UpdateProgress(58f, "Resolving province references...");
             yield return null;
@@ -618,13 +618,13 @@ namespace Core
                 }
                 else
                 {
-                    DominionLogger.LogWarning($"Scenario file not found: {scenarioPath}, using default");
+                    ArchonLogger.LogWarning($"Scenario file not found: {scenarioPath}, using default");
                     scenarioResult = ScenarioLoader.CreateDefaultScenario();
                 }
             }
             else
             {
-                DominionLogger.Log("No scenario directory specified, using default scenario");
+                ArchonLogger.Log("No scenario directory specified, using default scenario");
                 scenarioResult = ScenarioLoader.CreateDefaultScenario();
             }
 
@@ -633,7 +633,7 @@ namespace Core
 
             if (!scenarioResult.Success)
             {
-                DominionLogger.LogWarning($"Scenario loading failed: {scenarioResult.ErrorMessage}, using default");
+                ArchonLogger.LogWarning($"Scenario loading failed: {scenarioResult.ErrorMessage}, using default");
                 scenarioResult = ScenarioLoader.CreateDefaultScenario();
             }
 
@@ -641,10 +641,10 @@ namespace Core
             var validationIssues = ScenarioLoader.ValidateScenario(scenarioResult.Data, gameState);
             if (validationIssues.Count > 0)
             {
-                DominionLogger.LogWarning($"Scenario validation found {validationIssues.Count} issues");
+                ArchonLogger.LogWarning($"Scenario validation found {validationIssues.Count} issues");
                 foreach (var issue in validationIssues)
                 {
-                    DominionLogger.LogWarning($"  - {issue}");
+                    ArchonLogger.LogWarning($"  - {issue}");
                 }
             }
 
@@ -655,7 +655,7 @@ namespace Core
             bool applySuccess = ScenarioLoader.ApplyScenario(scenarioResult.Data, gameState);
             if (!applySuccess)
             {
-                DominionLogger.LogError("Failed to apply scenario");
+                ArchonLogger.LogError("Failed to apply scenario");
                 ReportError("Scenario application failed");
                 yield break;
             }
@@ -713,7 +713,7 @@ namespace Core
             var provinceCount = gameState.ProvinceQueries.GetTotalProvinceCount();
             var countryCount = gameState.CountryQueries.GetTotalCountryCount();
 
-            DominionLogger.Log($"Cache warm-up complete: {provinceCount} provinces, {countryCount} countries");
+            ArchonLogger.Log($"Cache warm-up complete: {provinceCount} provinces, {countryCount} countries");
         }
 
         /// <summary>
@@ -726,24 +726,24 @@ namespace Core
             // Validate province system
             if (!gameState.Provinces.IsInitialized)
             {
-                DominionLogger.LogError("ProvinceSystem not properly initialized!");
+                ArchonLogger.LogError("ProvinceSystem not properly initialized!");
                 issues++;
             }
 
             // Validate country system
             if (!gameState.Countries.IsInitialized)
             {
-                DominionLogger.LogError("CountrySystem not properly initialized!");
+                ArchonLogger.LogError("CountrySystem not properly initialized!");
                 issues++;
             }
 
             if (issues > 0)
             {
-                DominionLogger.LogWarning($"Data validation found {issues} issues");
+                ArchonLogger.LogWarning($"Data validation found {issues} issues");
             }
             else
             {
-                DominionLogger.Log("Data validation passed");
+                ArchonLogger.Log("Data validation passed");
             }
         }
 
@@ -756,7 +756,7 @@ namespace Core
             currentProgress = 100f;
             currentStatus = "Game ready!";
 
-            DominionLogger.Log($"Game initialization complete in {totalTime:F2} seconds");
+            ArchonLogger.Log($"Game initialization complete in {totalTime:F2} seconds");
 
             // Emit the main simulation data ready event for presentation layer
             var simulationEvent = new SimulationDataReadyEvent
@@ -767,7 +767,7 @@ namespace Core
                 TimeStamp = Time.time
             };
 
-            DominionLogger.Log($"Emitting SimulationDataReadyEvent: {simulationEvent.ProvinceCount} provinces, {simulationEvent.CountryCount} countries");
+            ArchonLogger.Log($"Emitting SimulationDataReadyEvent: {simulationEvent.ProvinceCount} provinces, {simulationEvent.CountryCount} countries");
             gameState.EventBus.Emit(simulationEvent);
 
             // Process events immediately to ensure MapGenerator receives the event
@@ -791,7 +791,7 @@ namespace Core
             currentPhase = LoadingPhase.Error;
             currentStatus = $"Error: {error}";
 
-            DominionLogger.LogError($"Game initialization failed: {error}");
+            ArchonLogger.LogError($"Game initialization failed: {error}");
 
             // Emit error event
             OnLoadingComplete?.Invoke(false, error);
@@ -808,7 +808,7 @@ namespace Core
 
             if (enableDetailedLogging)
             {
-                DominionLogger.Log($"[{phase}] {status} ({progress:F1}%)");
+                ArchonLogger.Log($"[{phase}] {status} ({progress:F1}%)");
             }
 
             OnLoadingProgress?.Invoke(phase, progress, status);
@@ -832,7 +832,7 @@ namespace Core
         {
             if (enableDetailedLogging)
             {
-                DominionLogger.Log($"[{currentPhase}] Complete: {message}");
+                ArchonLogger.Log($"[{currentPhase}] Complete: {message}");
             }
         }
 

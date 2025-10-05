@@ -125,7 +125,7 @@ namespace Core.Data
                     // TODO: Apply deserialized state to simulation
                     // This would require extending ProvinceSimulation with batch loading capabilities
 
-                    DominionLogger.LogDataLinking($"Successfully deserialized {provinceCount} provinces (version {stateVersion})");
+                    ArchonLogger.LogDataLinking($"Successfully deserialized {provinceCount} provinces (version {stateVersion})");
                     return true;
                 }
             }
@@ -181,7 +181,7 @@ namespace Core.Data
                 }
             }
 
-            DominionLogger.LogDataLinking($"Serialized delta state: {dirtyCount} changed provinces, {totalSize} bytes");
+            ArchonLogger.LogDataLinking($"Serialized delta state: {dirtyCount} changed provinces, {totalSize} bytes");
             return buffer;
         }
 

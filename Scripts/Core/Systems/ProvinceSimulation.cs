@@ -62,7 +62,7 @@ namespace Core.Systems
                 provinces[i] = defaultState;
             }
 
-            DominionLogger.Log($"ProvinceSimulation initialized with capacity for {capacity} provinces " +
+            ArchonLogger.Log($"ProvinceSimulation initialized with capacity for {capacity} provinces " +
                      $"({capacity * 8} bytes hot data)");
         }
 
@@ -73,25 +73,25 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                DominionLogger.LogError("ProvinceSimulation not initialized");
+                ArchonLogger.LogError("ProvinceSimulation not initialized");
                 return false;
             }
 
             if (provinceID == 0)
             {
-                DominionLogger.LogError("Province ID 0 is reserved for ocean");
+                ArchonLogger.LogError("Province ID 0 is reserved for ocean");
                 return false;
             }
 
             if (provinceCount >= provinces.Length)
             {
-                DominionLogger.LogError($"Province capacity exceeded ({provinces.Length})");
+                ArchonLogger.LogError($"Province capacity exceeded ({provinces.Length})");
                 return false;
             }
 
             if (idToIndex.ContainsKey(provinceID))
             {
-                DominionLogger.LogWarning($"Province {provinceID} already exists");
+                ArchonLogger.LogWarning($"Province {provinceID} already exists");
                 return false;
             }
 
@@ -404,7 +404,7 @@ namespace Core.Systems
         {
             var (totalBytes, hotBytes, coldBytes) = GetMemoryUsage();
 
-            DominionLogger.Log($"Province Simulation Statistics:\n" +
+            ArchonLogger.Log($"Province Simulation Statistics:\n" +
                      $"Provinces: {provinceCount}/{provinces.Length}\n" +
                      $"Memory Usage: {totalBytes / 1024f:F1} KB total\n" +
                      $"  - Hot Data: {hotBytes / 1024f:F1} KB ({hotBytes} bytes)\n" +

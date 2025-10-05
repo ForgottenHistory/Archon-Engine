@@ -81,7 +81,7 @@ namespace Core.Commands
         protected void LogExecution(string action)
         {
             #if UNITY_EDITOR
-            DominionLogger.Log($"Command {CommandId}: {action}");
+            ArchonLogger.Log($"Command {CommandId}: {action}");
             #endif
         }
     }

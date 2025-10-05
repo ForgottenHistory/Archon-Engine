@@ -1,4 +1,4 @@
-// Border Detection Compute Shader for Dominion Map System
+// Border Detection Compute Shader for Archon Map System
 // Processes province ID texture to detect borders between provinces
 // Runs entirely on GPU for maximum performance with 10,000+ provinces
 

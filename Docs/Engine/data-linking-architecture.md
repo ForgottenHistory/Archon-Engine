@@ -249,7 +249,7 @@ public class ProvinceSystem {
 - Wasted memory negligible (~50 gaps × 8 bytes = 400 bytes)
 - Simpler code: `provinces[id]` instead of `provinces[mapping[id]]`
 
-**Dominion reality:** Most Paradox-style games have nearly contiguous IDs. Unless profiling shows memory issues, direct indexing is simpler.
+**Archon reality:** Most Paradox-style games have nearly contiguous IDs. Unless profiling shows memory issues, direct indexing is simpler.
 
 ```csharp
 // Simple approach (recommended unless proven bottleneck)

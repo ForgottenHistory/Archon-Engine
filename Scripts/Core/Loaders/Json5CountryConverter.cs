@@ -36,7 +36,7 @@ namespace Core.Loaders
                 return Json5CountryLoadResult.Failed("No country JSON5 files found");
             }
 
-            DominionLogger.Log($"Loading {files.Length} country JSON5 files...");
+            ArchonLogger.Log($"Loading {files.Length} country JSON5 files...");
 
             var rawDataList = new List<RawCountryData>();
             int failedCount = 0;
@@ -57,7 +57,7 @@ namespace Core.Loaders
                 }
                 catch (Exception e)
                 {
-                    DominionLogger.LogError($"Failed to load country file {filePath}: {e.Message}");
+                    ArchonLogger.LogError($"Failed to load country file {filePath}: {e.Message}");
                     failedCount++;
                 }
             }
@@ -71,7 +71,7 @@ namespace Core.Loaders
             // Use Allocator.Persistent because data survives >4 frames in coroutine processing
             var nativeArray = new NativeArray<RawCountryData>(rawDataList.ToArray(), Allocator.Persistent);
 
-            DominionLogger.Log($"JSON5 country loading complete: {rawDataList.Count} loaded, {failedCount} failed");
+            ArchonLogger.Log($"JSON5 country loading complete: {rawDataList.Count} loaded, {failedCount} failed");
 
             return Json5CountryLoadResult.Success(nativeArray, rawDataList.Count, failedCount);
         }
@@ -113,7 +113,7 @@ namespace Core.Loaders
 
             if (string.IsNullOrEmpty(countryTag))
             {
-                DominionLogger.LogError($"Invalid country tag in filename: {fileName}");
+                ArchonLogger.LogError($"Invalid country tag in filename: {fileName}");
                 return RawCountryData.Invalid;
             }
 

@@ -110,7 +110,7 @@ Replaced CPU pixel-by-pixel writes with GPU compute shader call:
 
 // ADDED GPU path:
 if (ownerTextureDispatcher != null) {
-    DominionLogger.Log("MapTexturePopulator: Populating owner texture via GPU compute shader");
+    ArchonLogger.Log("MapTexturePopulator: Populating owner texture via GPU compute shader");
     ownerTextureDispatcher.PopulateOwnerTexture(provinceQueries);
 }
 ```

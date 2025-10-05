@@ -1,4 +1,4 @@
-Shader "Dominion/MapFallback"
+Shader "Archon/MapFallback"
 {
     // ENGINE FALLBACK SHADER
     // Minimal shader used when no GAME visual style is configured

@@ -64,7 +64,7 @@ namespace Map
         }
 
         isInitialized = true;
-        DominionLogger.Log("ParadoxStyleCameraController initialized successfully");
+        ArchonLogger.Log("ParadoxStyleCameraController initialized successfully");
     }
     
     void SetupCamera()
@@ -96,7 +96,7 @@ namespace Map
             actualMapWidth = planeScale.x * 10f;
             actualMapHeight = planeScale.z * 10f;
 
-            DominionLogger.Log($"Map dimensions: {actualMapWidth} x {actualMapHeight} world units");
+            ArchonLogger.Log($"Map dimensions: {actualMapWidth} x {actualMapHeight} world units");
         }
     }
     
@@ -121,7 +121,7 @@ namespace Map
         ghostMapRight.transform.rotation = mapPlane.transform.rotation;
         ghostMapRight.transform.localScale = mapPlane.transform.localScale;
         
-        DominionLogger.Log("Ghost maps created for seamless wrapping");
+        ArchonLogger.Log("Ghost maps created for seamless wrapping");
     }
 
         void Update()

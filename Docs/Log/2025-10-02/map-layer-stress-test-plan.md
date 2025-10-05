@@ -100,8 +100,8 @@ namespace Tests.Manual
             eventBus = gameState.EventBus;
             rng = new DeterministicRandom(99999);
 
-            DominionLogger.Log($"MapTextureStressTest initialized. Scenario: {scenario}");
-            DominionLogger.Log($"⚠️ Use Unity Profiler (GPU view) for accurate measurements!");
+            ArchonLogger.Log($"MapTextureStressTest initialized. Scenario: {scenario}");
+            ArchonLogger.Log($"⚠️ Use Unity Profiler (GPU view) for accurate measurements!");
         }
 
         void Update()
@@ -126,7 +126,7 @@ namespace Tests.Manual
 
                 if (allocated > 0)
                 {
-                    DominionLogger.LogWarning($"❌ Allocated {allocated / 1024f:F2} KB this frame! (should be 0)");
+                    ArchonLogger.LogWarning($"❌ Allocated {allocated / 1024f:F2} KB this frame! (should be 0)");
                 }
             }
 
@@ -135,8 +135,8 @@ namespace Tests.Manual
             if (logPerformance && frameCount % 60 == 0)
             {
                 int eventCount = GetEventCountForScenario();
-                DominionLogger.Log($"Texture Update Stress - Scenario: {scenario}, Events/frame: {eventCount}");
-                DominionLogger.Log($"Check Unity Profiler → GPU view for actual texture update time");
+                ArchonLogger.Log($"Texture Update Stress - Scenario: {scenario}, Events/frame: {eventCount}");
+                ArchonLogger.Log($"Check Unity Profiler → GPU view for actual texture update time");
             }
         }
 
@@ -289,14 +289,14 @@ namespace Tests.Manual
                 if (logPerformance && frameCount % 60 == 0)
                 {
                     float avgTime = totalComputeTime / frameCount;
-                    DominionLogger.Log($"Border Compute (GPU actual) - Avg: {avgTime:F2}ms, " +
+                    ArchonLogger.Log($"Border Compute (GPU actual) - Avg: {avgTime:F2}ms, " +
                         $"FPS: {1000f / avgTime:F1}");
-                    DominionLogger.LogWarning($"⚠️ WaitForCompletion adds {avgTime:F2}ms stall - disable for gameplay!");
+                    ArchonLogger.LogWarning($"⚠️ WaitForCompletion adds {avgTime:F2}ms stall - disable for gameplay!");
                 }
             }
             else if (logPerformance && frameCount % 60 == 0)
             {
-                DominionLogger.Log($"Border Compute Stress - Check Unity Profiler (GPU view) for actual time");
+                ArchonLogger.Log($"Border Compute Stress - Check Unity Profiler (GPU view) for actual time");
             }
 
             frameCount++;
@@ -397,7 +397,7 @@ namespace Tests.Manual
             if (logPerformance && frameCount % 60 == 0)
             {
                 float avgTime = totalQueryTime / frameCount;
-                DominionLogger.Log($"Selection Stress - Avg: {avgTime:F2}ms/frame, " +
+                ArchonLogger.Log($"Selection Stress - Avg: {avgTime:F2}ms/frame, " +
                     $"Queries: {queriesPerFrame}, Time/query: {avgTime / queriesPerFrame:F3}ms");
             }
         }
@@ -464,7 +464,7 @@ namespace Tests.Manual
             if (logPerformance && frameCount % 60 == 0)
             {
                 float avgTime = totalSwitchTime / frameCount;
-                DominionLogger.Log($"Map Mode Switch Stress - Avg: {avgTime:F2}ms/frame");
+                ArchonLogger.Log($"Map Mode Switch Stress - Avg: {avgTime:F2}ms/frame");
             }
         }
     }
@@ -551,11 +551,11 @@ namespace Tests.Manual
             // Log if frame budget exceeded
             if (frameTime > 16.67f)
             {
-                DominionLogger.LogWarning($"❌ Frame budget exceeded: {frameTime:F2}ms ({fps:F1} FPS)");
+                ArchonLogger.LogWarning($"❌ Frame budget exceeded: {frameTime:F2}ms ({fps:F1} FPS)");
             }
             else
             {
-                DominionLogger.Log($"✅ Within budget: {frameTime:F2}ms ({fps:F1} FPS)");
+                ArchonLogger.Log($"✅ Within budget: {frameTime:F2}ms ({fps:F1} FPS)");
             }
         }
 
@@ -630,7 +630,7 @@ void LogGPUBandwidth()
     float bandwidthMBps = (textureSizeBytes / 1_000_000f) * 60f;
     float bandwidthGBps = bandwidthMBps / 1000f;
 
-    DominionLogger.Log($"Texture upload bandwidth: {bandwidthGBps:F2} GB/s");
+    ArchonLogger.Log($"Texture upload bandwidth: {bandwidthGBps:F2} GB/s");
 
     // PCIe 3.0 x16 theoretical max: ~15 GB/s
     // PCIe 3.0 x16 realistic: ~12 GB/s
@@ -638,8 +638,8 @@ void LogGPUBandwidth()
 
     if (bandwidthGBps > 1.0f)
     {
-        DominionLogger.LogWarning($"⚠️ High bandwidth usage: {bandwidthGBps:F2} GB/s");
-        DominionLogger.LogWarning($"Consider dirty rectangle updates instead of full texture");
+        ArchonLogger.LogWarning($"⚠️ High bandwidth usage: {bandwidthGBps:F2} GB/s");
+        ArchonLogger.LogWarning($"Consider dirty rectangle updates instead of full texture");
     }
 }
 ```

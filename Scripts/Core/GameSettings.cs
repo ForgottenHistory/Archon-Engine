@@ -6,7 +6,7 @@ namespace Core
     /// ScriptableObject configuration for game initialization and data loading
     /// Contains paths, settings, and performance targets for the loading pipeline
     /// </summary>
-    [CreateAssetMenu(fileName = "GameSettings", menuName = "Dominion/Game Settings", order = 1)]
+    [CreateAssetMenu(fileName = "GameSettings", menuName = "Archon/Game Settings", order = 1)]
     public class GameSettings : ScriptableObject
     {
         [Header("Data File Paths")]
@@ -230,14 +230,14 @@ namespace Core
         /// </summary>
         public void LogConfiguration()
         {
-            DominionLogger.Log($"GameSettings Configuration:");
-            DominionLogger.Log($"  Data Directory: {DataDirectory}");
-            DominionLogger.Log($"  Expected Provinces: {ExpectedProvinceCount}");
-            DominionLogger.Log($"  Expected Countries: {ExpectedCountryCount}");
-            DominionLogger.Log($"  Target Loading Time: {TargetLoadingTime}s");
-            DominionLogger.Log($"  Target Memory: {TargetMaxMemoryMB}MB");
-            DominionLogger.Log($"  Parallel Loading: {EnableParallelLoading}");
-            DominionLogger.Log($"  Data Validation: {EnableDataValidation}");
+            ArchonLogger.Log($"GameSettings Configuration:");
+            ArchonLogger.Log($"  Data Directory: {DataDirectory}");
+            ArchonLogger.Log($"  Expected Provinces: {ExpectedProvinceCount}");
+            ArchonLogger.Log($"  Expected Countries: {ExpectedCountryCount}");
+            ArchonLogger.Log($"  Target Loading Time: {TargetLoadingTime}s");
+            ArchonLogger.Log($"  Target Memory: {TargetMaxMemoryMB}MB");
+            ArchonLogger.Log($"  Parallel Loading: {EnableParallelLoading}");
+            ArchonLogger.Log($"  Data Validation: {EnableDataValidation}");
         }
 
         #if UNITY_EDITOR

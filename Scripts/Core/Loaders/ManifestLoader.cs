@@ -35,13 +35,13 @@ namespace Core.Loaders
 
             try
             {
-                DominionLogger.Log($"ManifestLoader: Loading manifest from {manifestFilePath}");
+                ArchonLogger.Log($"ManifestLoader: Loading manifest from {manifestFilePath}");
 
                 // Read and parse file content directly (simple approach for small manifest files)
                 var lines = File.ReadAllLines(manifestFilePath);
                 ParseManifestLines(lines);
 
-                DominionLogger.Log($"ManifestLoader: Loaded {manifest.Count} entries from manifest");
+                ArchonLogger.Log($"ManifestLoader: Loaded {manifest.Count} entries from manifest");
 
                 return ManifestLoadResult.CreateSuccess(manifest, errors);
             }
@@ -49,7 +49,7 @@ namespace Core.Loaders
             {
                 var error = $"Failed to load manifest {manifestFilePath}: {e.Message}";
                 errors.Add(error);
-                DominionLogger.LogError(error);
+                ArchonLogger.LogError(error);
                 return ManifestLoadResult.CreateFailed(error);
             }
         }
@@ -108,7 +108,7 @@ namespace Core.Loaders
                     {
                         var warning = $"Duplicate key in manifest: {key}";
                         errors.Add(warning);
-                        DominionLogger.LogWarning(warning);
+                        ArchonLogger.LogWarning(warning);
                     }
                 }
             }

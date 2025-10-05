@@ -94,7 +94,7 @@ namespace Core.Systems
 
             isInitialized = true;
 
-            DominionLogger.Log($"TimeManager initialized - Starting date: {GetCurrentGameTime()}, Speed: {gameSpeedLevel}");
+            ArchonLogger.Log($"TimeManager initialized - Starting date: {GetCurrentGameTime()}, Speed: {gameSpeedLevel}");
 
             if (autoStart && !isPaused)
             {
@@ -222,7 +222,7 @@ namespace Core.Systems
                 isPaused = false;
                 OnPauseStateChanged?.Invoke(false);
                 eventBus?.Emit(new TimeStateChangedEvent { IsPaused = false, GameSpeed = gameSpeedLevel });
-                DominionLogger.Log("Time progression started");
+                ArchonLogger.Log("Time progression started");
             }
         }
 
@@ -236,7 +236,7 @@ namespace Core.Systems
                 isPaused = true;
                 OnPauseStateChanged?.Invoke(true);
                 eventBus?.Emit(new TimeStateChangedEvent { IsPaused = true, GameSpeed = gameSpeedLevel });
-                DominionLogger.Log("Time progression paused");
+                ArchonLogger.Log("Time progression paused");
             }
         }
 
@@ -258,7 +258,7 @@ namespace Core.Systems
         {
             if (newSpeedLevel < 0 || newSpeedLevel > 4)
             {
-                DominionLogger.LogWarning($"Invalid speed level: {newSpeedLevel} (must be 0-4)");
+                ArchonLogger.LogWarning($"Invalid speed level: {newSpeedLevel} (must be 0-4)");
                 return;
             }
 
@@ -278,7 +278,7 @@ namespace Core.Systems
             OnSpeedChanged?.Invoke(gameSpeedLevel);
             eventBus?.Emit(new TimeStateChangedEvent { IsPaused = isPaused, GameSpeed = gameSpeedLevel });
 
-            DominionLogger.Log($"Game speed changed to level {gameSpeedLevel}");
+            ArchonLogger.Log($"Game speed changed to level {gameSpeedLevel}");
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Core.Systems
             accumulator = FixedPoint64.Zero;
 
             eventBus?.Emit(new TimeChangedEvent { GameTime = GetCurrentGameTime() });
-            DominionLogger.Log($"Game time set to: {GetCurrentGameTime()}");
+            ArchonLogger.Log($"Game time set to: {GetCurrentGameTime()}");
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Core.Systems
         {
             if (targetTick < currentTick)
             {
-                DominionLogger.LogWarning($"Cannot synchronize backwards: current={currentTick}, target={targetTick}");
+                ArchonLogger.LogWarning($"Cannot synchronize backwards: current={currentTick}, target={targetTick}");
                 return;
             }
 
@@ -322,7 +322,7 @@ namespace Core.Systems
                 AdvanceHour();
             }
 
-            DominionLogger.Log($"Synchronized to tick {currentTick}");
+            ArchonLogger.Log($"Synchronized to tick {currentTick}");
         }
 
         /// <summary>

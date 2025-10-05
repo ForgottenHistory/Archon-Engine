@@ -85,7 +85,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"MapTextureManager initialized with {mapWidth}x{mapHeight} textures");
+                ArchonLogger.LogMapInit($"MapTextureManager initialized with {mapWidth}x{mapHeight} textures");
             }
         }
 
@@ -115,8 +115,8 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Province ID texture: {mapWidth}x{mapHeight} ARGB32 RenderTexture (GPU-accessible)");
-                DominionLogger.LogMapInit($"ProvinceIDTexture instance ID: {provinceIDTexture.GetInstanceID()}");
+                ArchonLogger.LogMapInit($"Created Province ID texture: {mapWidth}x{mapHeight} ARGB32 RenderTexture (GPU-accessible)");
+                ArchonLogger.LogMapInit($"ProvinceIDTexture instance ID: {provinceIDTexture.GetInstanceID()}");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Province Owner RenderTexture: {mapWidth}x{mapHeight} RFloat format with UAV support");
+                ArchonLogger.LogMapInit($"Created Province Owner RenderTexture: {mapWidth}x{mapHeight} RFloat format with UAV support");
             }
         }
 
@@ -170,7 +170,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Province Color texture: {mapWidth}x{mapHeight} RGBA32 format");
+                ArchonLogger.LogMapInit($"Created Province Color texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Province Development texture: {mapWidth}x{mapHeight} RGBA32 format");
+                ArchonLogger.LogMapInit($"Created Province Development texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Province Terrain texture: {mapWidth}x{mapHeight} RGBA32 format");
+                ArchonLogger.LogMapInit($"Created Province Terrain texture: {mapWidth}x{mapHeight} RGBA32 format");
             }
         }
 
@@ -257,7 +257,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Heightmap texture: {mapWidth}x{mapHeight} R8 format (bilinear filtering)");
+                ArchonLogger.LogMapInit($"Created Heightmap texture: {mapWidth}x{mapHeight} R8 format (bilinear filtering)");
             }
         }
 
@@ -290,7 +290,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Normal Map texture: {normalMapWidth}x{normalMapHeight} RGB24 format (bilinear filtering)");
+                ArchonLogger.LogMapInit($"Created Normal Map texture: {normalMapWidth}x{normalMapHeight} RGB24 format (bilinear filtering)");
             }
         }
 
@@ -322,7 +322,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Province Color Palette: 256×1 RGBA32 format");
+                ArchonLogger.LogMapInit($"Created Province Color Palette: 256×1 RGBA32 format");
             }
         }
 
@@ -369,7 +369,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Border RenderTexture: {mapWidth}x{mapHeight} RG16 format (R=country, G=province)");
+                ArchonLogger.LogMapInit($"Created Border RenderTexture: {mapWidth}x{mapHeight} RG16 format (R=country, G=province)");
             }
         }
 
@@ -394,7 +394,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.LogMapInit($"Created Highlight RenderTexture: {mapWidth}x{mapHeight} ARGB32 format");
+                ArchonLogger.LogMapInit($"Created Highlight RenderTexture: {mapWidth}x{mapHeight} ARGB32 format");
             }
         }
 
@@ -418,7 +418,7 @@ namespace Map.Rendering
         {
             // DEPRECATED: Cannot use SetPixel on RenderTexture
             // Province ID texture must be populated via compute shader
-            DominionLogger.LogWarning($"SetProvinceID is deprecated - use compute shader to populate ProvinceIDTexture");
+            ArchonLogger.LogWarning($"SetProvinceID is deprecated - use compute shader to populate ProvinceIDTexture");
         }
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace Map.Rendering
         {
             if (colors.Length != 256)
             {
-                DominionLogger.LogError($"Palette colors array must be exactly 256 elements, got {colors.Length}");
+                ArchonLogger.LogError($"Palette colors array must be exactly 256 elements, got {colors.Length}");
                 return;
             }
 
@@ -554,7 +554,7 @@ namespace Map.Rendering
             if (blitMaterial == null || blitMaterial.shader == null)
             {
                 // Fallback: try standard Blit (might corrupt RG16 data)
-                DominionLogger.LogWarning("MapTextureManager: BlitCopy shader not found, using standard Blit (might corrupt RG16 data)");
+                ArchonLogger.LogWarning("MapTextureManager: BlitCopy shader not found, using standard Blit (might corrupt RG16 data)");
                 Graphics.Blit(tempOwnerTexture, provinceOwnerTexture);
             }
             else
@@ -567,7 +567,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                DominionLogger.Log("MapTextureManager: Copied owner texture updates to GPU RenderTexture via Blit");
+                ArchonLogger.Log("MapTextureManager: Copied owner texture updates to GPU RenderTexture via Blit");
             }
         }
 
@@ -593,11 +593,11 @@ namespace Map.Rendering
             var retrievedIDTexture = material.GetTexture(ProvinceIDTexID);
             if (retrievedIDTexture == provinceIDTexture)
             {
-                DominionLogger.LogMapInit($"MapTextureManager: ✓ ProvinceIDTexture bound correctly - instance {provinceIDTexture.GetInstanceID()}");
+                ArchonLogger.LogMapInit($"MapTextureManager: ✓ ProvinceIDTexture bound correctly - instance {provinceIDTexture.GetInstanceID()}");
             }
             else
             {
-                DominionLogger.LogMapInitError($"MapTextureManager: ✗ ProvinceIDTexture binding FAILED - set {provinceIDTexture?.GetInstanceID()}, got {retrievedIDTexture?.GetInstanceID()}");
+                ArchonLogger.LogMapInitError($"MapTextureManager: ✗ ProvinceIDTexture binding FAILED - set {provinceIDTexture?.GetInstanceID()}, got {retrievedIDTexture?.GetInstanceID()}");
             }
 
             material.SetTexture(ProvinceOwnerTexID, provinceOwnerTexture);
@@ -611,11 +611,11 @@ namespace Map.Rendering
             var retrievedTexture = material.GetTexture(ProvinceTerrainTexID);
             if (retrievedTexture == provinceTerrainTexture)
             {
-                DominionLogger.LogMapInit($"MapTextureManager: Successfully verified terrain texture binding - instances match");
+                ArchonLogger.LogMapInit($"MapTextureManager: Successfully verified terrain texture binding - instances match");
             }
             else
             {
-                DominionLogger.LogMapInitError($"MapTextureManager: Terrain texture binding FAILED - set {provinceTerrainTexture?.GetInstanceID()}, got {retrievedTexture?.GetInstanceID()}");
+                ArchonLogger.LogMapInitError($"MapTextureManager: Terrain texture binding FAILED - set {provinceTerrainTexture?.GetInstanceID()}, got {retrievedTexture?.GetInstanceID()}");
             }
             material.SetTexture(ProvinceColorPaletteID, provinceColorPalette);
             material.SetTexture(BorderTexID, borderTexture);
@@ -630,11 +630,11 @@ namespace Map.Rendering
             // Debug: Verify terrain texture binding
             if (provinceTerrainTexture != null)
             {
-                DominionLogger.LogMapInit($"MapTextureManager: Bound terrain texture instance {provinceTerrainTexture.GetInstanceID()} ({provinceTerrainTexture.name}) size {provinceTerrainTexture.width}x{provinceTerrainTexture.height} to material");
+                ArchonLogger.LogMapInit($"MapTextureManager: Bound terrain texture instance {provinceTerrainTexture.GetInstanceID()} ({provinceTerrainTexture.name}) size {provinceTerrainTexture.width}x{provinceTerrainTexture.height} to material");
             }
             else
             {
-                DominionLogger.LogMapInitWarning("MapTextureManager: Terrain texture is null when binding to material!");
+                ArchonLogger.LogMapInitWarning("MapTextureManager: Terrain texture is null when binding to material!");
             }
         }
 
@@ -707,7 +707,7 @@ namespace Map.Rendering
             totalMemory += pixelCount * 1; // Border (R8)
             totalMemory += pixelCount * 4; // Highlight (ARGB32)
 
-            DominionLogger.Log($"Map texture memory usage: {totalMemory / 1024f / 1024f:F2} MB");
+            ArchonLogger.Log($"Map texture memory usage: {totalMemory / 1024f / 1024f:F2} MB");
         }
 #endif
     }

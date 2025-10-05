@@ -308,7 +308,7 @@ struct BadJob : IJob {
     public List<int> list;  // Managed collection!
     
     public void Execute() {
-        DominionLogger.Log(text);  // Unity API call!
+        ArchonLogger.Log(text);  // Unity API call!
     }
 }
 
@@ -448,7 +448,7 @@ struct DebugJob : IJob {
     public void Execute() {
         // Only runs in non-Burst (for debugging)
         #if !UNITY_BURST_ENABLED
-        DominionLogger.Log("This only runs without Burst");
+        ArchonLogger.Log("This only runs without Burst");
         #endif
         
         // Conditional compilation

@@ -1,7 +1,7 @@
-# Dominion - Claude Development Guide
+# Archon - Claude Development Guide
 
 ## Project Overview
-Dominion is a grand strategy game capturing ancient political realities - where every decision creates winners and losers among your subjects. Success comes from understanding internal dynamics, not just optimizing abstract numbers.
+Archon is a grand strategy game capturing ancient political realities - where every decision creates winners and losers among your subjects. Success comes from understanding internal dynamics, not just optimizing abstract numbers.
 
 **CRITICAL**: Built on **dual-layer architecture** with deterministic simulation (CPU) + high-performance presentation (GPU). This enables 10,000+ provinces at 200+ FPS with multiplayer compatibility.
 

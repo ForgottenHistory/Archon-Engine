@@ -39,7 +39,7 @@ namespace Map.Rendering
         {
             if (logRenderingProgress)
             {
-                DominionLogger.LogMapInit("MapRenderingCoordinator: Setting up map rendering system...");
+                ArchonLogger.LogMapInit("MapRenderingCoordinator: Setting up map rendering system...");
             }
 
             // Set up material
@@ -50,7 +50,7 @@ namespace Map.Rendering
 
             if (logRenderingProgress)
             {
-                DominionLogger.LogMapInit("MapRenderingCoordinator: Map rendering setup complete");
+                ArchonLogger.LogMapInit("MapRenderingCoordinator: Map rendering setup complete");
             }
         }
 
@@ -66,7 +66,7 @@ namespace Map.Rendering
                 runtimeMaterial = meshRenderer.material;
                 if (logRenderingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapRenderingCoordinator: Using existing material '{runtimeMaterial.shader.name}' from GAME layer");
+                    ArchonLogger.LogMapInit($"MapRenderingCoordinator: Using existing material '{runtimeMaterial.shader.name}' from GAME layer");
                 }
             }
             else
@@ -75,19 +75,19 @@ namespace Map.Rendering
                 if (mapMaterial == null)
                 {
                     // Try to find the MapCore shader
-                    Shader mapShader = Shader.Find("Dominion/MapCore");
+                    Shader mapShader = Shader.Find("Archon/MapCore");
                     if (mapShader != null)
                     {
                         mapMaterial = new Material(mapShader);
                         mapMaterial.name = "MapRenderingCoordinator_Material";
                         if (logRenderingProgress)
                         {
-                            DominionLogger.LogMapInit("MapRenderingCoordinator: Created fallback material with MapCore shader");
+                            ArchonLogger.LogMapInit("MapRenderingCoordinator: Created fallback material with MapCore shader");
                         }
                     }
                     else
                     {
-                        DominionLogger.LogError("MapRenderingCoordinator: MapCore shader not found. Make sure the shader is in the project.");
+                        ArchonLogger.LogError("MapRenderingCoordinator: MapCore shader not found. Make sure the shader is in the project.");
                         return;
                     }
                 }
@@ -104,7 +104,7 @@ namespace Map.Rendering
             // ENGINE provides mechanism, GAME controls initialization flow and initial mode
             if (mapModeManager != null && logRenderingProgress)
             {
-                DominionLogger.LogMapInit("MapRenderingCoordinator: MapModeManager ready for GAME initialization");
+                ArchonLogger.LogMapInit("MapRenderingCoordinator: MapModeManager ready for GAME initialization");
             }
 
             // Set general material properties not handled by mapmodes
@@ -115,7 +115,7 @@ namespace Map.Rendering
 
             if (logRenderingProgress)
             {
-                DominionLogger.LogMapInit("MapRenderingCoordinator: Material setup complete with all map textures bound");
+                ArchonLogger.LogMapInit("MapRenderingCoordinator: Material setup complete with all map textures bound");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Map.Rendering
 
             if (logRenderingProgress)
             {
-                DominionLogger.LogMapInit($"MapRenderingCoordinator: Camera positioned for {textureManager.MapWidth}x{textureManager.MapHeight} map");
+                ArchonLogger.LogMapInit($"MapRenderingCoordinator: Camera positioned for {textureManager.MapWidth}x{textureManager.MapHeight} map");
             }
         }
 

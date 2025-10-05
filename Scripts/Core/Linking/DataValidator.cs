@@ -22,7 +22,7 @@ namespace Core.Linking
         public DataValidator(GameRegistries registries)
         {
             this.registries = registries ?? throw new System.ArgumentNullException(nameof(registries));
-            DominionLogger.LogDataLinking("DataValidator initialized");
+            ArchonLogger.LogDataLinking("DataValidator initialized");
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Core.Linking
         /// </summary>
         public bool ValidateGameData()
         {
-            DominionLogger.LogDataLinking("DataValidator: Starting comprehensive game data validation");
+            ArchonLogger.LogDataLinking("DataValidator: Starting comprehensive game data validation");
 
             ClearValidationResults();
 
@@ -42,7 +42,7 @@ namespace Core.Linking
             LogValidationResults();
 
             bool isValid = errors.Count == 0;
-            DominionLogger.LogDataLinking($"DataValidator: Validation {(isValid ? "PASSED" : "FAILED")} - {errors.Count} errors, {warnings.Count} warnings");
+            ArchonLogger.LogDataLinking($"DataValidator: Validation {(isValid ? "PASSED" : "FAILED")} - {errors.Count} errors, {warnings.Count} warnings");
 
             return isValid;
         }
@@ -73,7 +73,7 @@ namespace Core.Linking
                 AddError("No terrain types loaded", "Static Data");
             }
 
-            DominionLogger.LogDataLinking($"DataValidator: Static data validation complete - {registries.Religions.Count} religions, {registries.Cultures.Count} cultures, {registries.TradeGoods.Count} trade goods");
+            ArchonLogger.LogDataLinking($"DataValidator: Static data validation complete - {registries.Religions.Count} religions, {registries.Cultures.Count} cultures, {registries.TradeGoods.Count} trade goods");
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Core.Linking
                 }
             }
 
-            DominionLogger.LogDataLinking($"DataValidator: Country validation complete - {registries.Countries.Count} countries validated");
+            ArchonLogger.LogDataLinking($"DataValidator: Country validation complete - {registries.Countries.Count} countries validated");
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Core.Linking
                 }
             }
 
-            DominionLogger.LogDataLinking($"DataValidator: Province validation complete - {registries.Provinces.Count} provinces validated");
+            ArchonLogger.LogDataLinking($"DataValidator: Province validation complete - {registries.Provinces.Count} provinces validated");
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Core.Linking
                 AddError("No provinces are owned by any country", "Gameplay");
             }
 
-            DominionLogger.LogDataLinking($"DataValidator: Gameplay validation complete - {playableCountries} playable countries, {landProvinces} land provinces, {ownedProvinces} owned provinces");
+            ArchonLogger.LogDataLinking($"DataValidator: Gameplay validation complete - {playableCountries} playable countries, {landProvinces} land provinces, {ownedProvinces} owned provinces");
         }
 
         /// <summary>
@@ -298,16 +298,16 @@ namespace Core.Linking
         {
             if (errors.Count > 0)
             {
-                DominionLogger.LogError($"DataValidator: {errors.Count} validation errors found:");
+                ArchonLogger.LogError($"DataValidator: {errors.Count} validation errors found:");
                 foreach (var error in errors)
                 {
-                    DominionLogger.LogError($"  [{error.Category}] {error.Message}");
+                    ArchonLogger.LogError($"  [{error.Category}] {error.Message}");
                 }
             }
 
             if (warnings.Count > 0)
             {
-                DominionLogger.LogDataLinkingWarning($"DataValidator: {warnings.Count} validation warnings found:");
+                ArchonLogger.LogDataLinkingWarning($"DataValidator: {warnings.Count} validation warnings found:");
             }
         }
 

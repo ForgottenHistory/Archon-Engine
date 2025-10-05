@@ -46,14 +46,14 @@ namespace Map.Loading
         {
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit("MapDataLoader: Getting province data from Core simulation systems...");
+                ArchonLogger.LogMapInit("MapDataLoader: Getting province data from Core simulation systems...");
             }
 
             // Get GameState to access simulation data
             var gameState = Object.FindFirstObjectByType<GameState>();
             if (gameState == null)
             {
-                DominionLogger.LogError("MapDataLoader: Could not find GameState to access simulation data");
+                ArchonLogger.LogError("MapDataLoader: Could not find GameState to access simulation data");
                 return null;
             }
 
@@ -63,7 +63,7 @@ namespace Map.Loading
                 // simulation data from Core systems rather than parsing it ourselves
                 if (string.IsNullOrEmpty(bitmapPath))
                 {
-                    DominionLogger.LogError("MapDataLoader: Province bitmap path not set");
+                    ArchonLogger.LogError("MapDataLoader: Province bitmap path not set");
                     return null;
                 }
 
@@ -75,7 +75,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Loading province bitmap for rendering: {bmpPath}");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Loading province bitmap for rendering: {bmpPath}");
                 }
 
                 // Load province map for visual data only (Core already has the simulation data)
@@ -83,13 +83,13 @@ namespace Map.Loading
 
                 if (!provinceResult.Success)
                 {
-                    DominionLogger.LogError($"MapDataLoader: Failed to load province bitmap: {provinceResult.ErrorMessage}");
+                    ArchonLogger.LogError($"MapDataLoader: Failed to load province bitmap: {provinceResult.ErrorMessage}");
                     return null;
                 }
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Successfully loaded province bitmap with {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height} pixels");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Successfully loaded province bitmap with {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height} pixels");
                 }
 
                 // Load terrain bitmap for terrain colors
@@ -108,7 +108,7 @@ namespace Map.Loading
             }
             catch (System.Exception e)
             {
-                DominionLogger.LogError($"MapDataLoader: Exception during simulation-driven map loading: {e.Message}\n{e.StackTrace}");
+                ArchonLogger.LogError($"MapDataLoader: Exception during simulation-driven map loading: {e.Message}\n{e.StackTrace}");
                 return null;
             }
         }
@@ -121,7 +121,7 @@ namespace Map.Loading
         {
             if (string.IsNullOrEmpty(bitmapPath))
             {
-                DominionLogger.LogError("MapDataLoader: Province bitmap path not set");
+                ArchonLogger.LogError("MapDataLoader: Province bitmap path not set");
                 return null;
             }
 
@@ -133,10 +133,10 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Loading province map from: {bmpPath}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Loading province map from: {bmpPath}");
                 if (definitionPath != null)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Using definition file: {definitionPath}");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Using definition file: {definitionPath}");
                 }
             }
 
@@ -147,17 +147,17 @@ namespace Map.Loading
 
                 if (!provinceResult.Success)
                 {
-                    DominionLogger.LogError($"MapDataLoader: Failed to load province map: {provinceResult.ErrorMessage}");
+                    ArchonLogger.LogError($"MapDataLoader: Failed to load province map: {provinceResult.ErrorMessage}");
                     return null;
                 }
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Successfully processed province colors from bitmap");
-                    DominionLogger.LogMapInit($"MapDataLoader: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Successfully processed province colors from bitmap");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}");
                     if (provinceResult.HasDefinitions)
                     {
-                        DominionLogger.LogMapInit($"MapDataLoader: Loaded {provinceResult.Definitions.AllDefinitions.Length} province definitions");
+                        ArchonLogger.LogMapInit($"MapDataLoader: Loaded {provinceResult.Definitions.AllDefinitions.Length} province definitions");
                     }
                 }
 
@@ -177,7 +177,7 @@ namespace Map.Loading
             }
             catch (System.Exception e)
             {
-                DominionLogger.LogError($"MapDataLoader: Exception during province map loading: {e.Message}\n{e.StackTrace}");
+                ArchonLogger.LogError($"MapDataLoader: Exception during province map loading: {e.Message}\n{e.StackTrace}");
                 return null;
             }
         }
@@ -193,12 +193,12 @@ namespace Map.Loading
                 // ENGINE only initializes the border system, GAME decides what borders to show
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit("MapDataLoader: Border system ready (mode will be set by GAME layer)");
+                    ArchonLogger.LogMapInit("MapDataLoader: Border system ready (mode will be set by GAME layer)");
                 }
             }
             else
             {
-                DominionLogger.LogMapInitError("MapDataLoader: BorderComputeDispatcher is NULL - borders will not be generated!");
+                ArchonLogger.LogMapInitError("MapDataLoader: BorderComputeDispatcher is NULL - borders will not be generated!");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Map.Loading
             {
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogWarning($"MapDataLoader: Terrain bitmap not found at {terrainBmpPath}, using default terrain colors");
+                    ArchonLogger.LogWarning($"MapDataLoader: Terrain bitmap not found at {terrainBmpPath}, using default terrain colors");
                 }
                 return;
             }
@@ -223,7 +223,7 @@ namespace Map.Loading
             {
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Loading terrain bitmap: {terrainBmpPath}");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Loading terrain bitmap: {terrainBmpPath}");
                 }
 
                 // Load terrain bitmap
@@ -231,13 +231,13 @@ namespace Map.Loading
 
                 if (!terrainResult.Success)
                 {
-                    DominionLogger.LogWarning($"MapDataLoader: Failed to load terrain bitmap: {terrainResult.ErrorMessage}");
+                    ArchonLogger.LogWarning($"MapDataLoader: Failed to load terrain bitmap: {terrainResult.ErrorMessage}");
                     return;
                 }
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Successfully loaded terrain bitmap with {terrainResult.Width}x{terrainResult.Height} pixels");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Successfully loaded terrain bitmap with {terrainResult.Width}x{terrainResult.Height} pixels");
                 }
 
                 // Populate terrain texture with bitmap colors
@@ -245,7 +245,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit("MapDataLoader: Populated terrain texture with colors from terrain.bmp");
+                    ArchonLogger.LogMapInit("MapDataLoader: Populated terrain texture with colors from terrain.bmp");
                 }
 
                 // Dispose terrain result to free Persistent allocations
@@ -253,7 +253,7 @@ namespace Map.Loading
             }
             catch (System.Exception e)
             {
-                DominionLogger.LogError($"MapDataLoader: Exception loading terrain bitmap: {e.Message}");
+                ArchonLogger.LogError($"MapDataLoader: Exception loading terrain bitmap: {e.Message}");
             }
         }
 
@@ -264,7 +264,7 @@ namespace Map.Loading
         {
             if (textureManager == null || textureManager.ProvinceTerrainTexture == null)
             {
-                DominionLogger.LogError("MapDataLoader: Cannot populate terrain texture - texture manager or terrain texture not available");
+                ArchonLogger.LogError("MapDataLoader: Cannot populate terrain texture - texture manager or terrain texture not available");
                 return;
             }
 
@@ -273,7 +273,7 @@ namespace Map.Loading
             // DEBUG: Log texture instance details
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Populating terrain texture instance {terrainTexture.GetInstanceID()} ({terrainTexture.name}) size {terrainTexture.width}x{terrainTexture.height}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Populating terrain texture instance {terrainTexture.GetInstanceID()} ({terrainTexture.name}) size {terrainTexture.width}x{terrainTexture.height}");
             }
             int width = terrainTexture.width;
             int height = terrainTexture.height;
@@ -287,7 +287,7 @@ namespace Map.Loading
             // Debug: Log terrain bitmap format information
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Terrain bitmap format - Width: {terrainData.Width}, Height: {terrainData.Height}, BitsPerPixel: {terrainData.BitsPerPixel}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Terrain bitmap format - Width: {terrainData.Width}, Height: {terrainData.Height}, BitsPerPixel: {terrainData.BitsPerPixel}");
             }
 
             int successfulReads = 0;
@@ -349,7 +349,7 @@ namespace Map.Loading
                                 pixels[textureIndex] = new UnityEngine.Color32(139, 125, 107, 255);
                                 if (logLoadingProgress && successfulReads < 10) // Log first few unknown indices
                                 {
-                                    DominionLogger.Log($"MapDataLoader: Unknown terrain index {index} at ({x},{y})");
+                                    ArchonLogger.Log($"MapDataLoader: Unknown terrain index {index} at ({x},{y})");
                                 }
                             }
                             successfulReads++;
@@ -391,7 +391,7 @@ namespace Map.Loading
             // Debug: Log read statistics and terrain index distribution
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Terrain bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Terrain bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
 
                 // Sample some terrain indices to see what we're actually getting
                 if (terrainData.BitsPerPixel == 8)
@@ -413,14 +413,14 @@ namespace Map.Loading
                         }
                     }
 
-                    DominionLogger.LogMapInit($"MapDataLoader: Terrain indices found in samples: {string.Join(", ", indexCounts.Keys)}");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Terrain indices found in samples: {string.Join(", ", indexCounts.Keys)}");
                 }
             }
 
             // Apply terrain colors to texture
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: About to apply {pixels.Length} pixels to terrain texture instance {terrainTexture.GetInstanceID()}");
+                ArchonLogger.LogMapInit($"MapDataLoader: About to apply {pixels.Length} pixels to terrain texture instance {terrainTexture.GetInstanceID()}");
             }
 
             terrainTexture.SetPixels32(pixels);
@@ -431,7 +431,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Applied terrain pixels, called Apply(), and forced GPU sync on texture instance {terrainTexture.GetInstanceID()}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Applied terrain pixels, called Apply(), and forced GPU sync on texture instance {terrainTexture.GetInstanceID()}");
             }
 
             // Debug: Log some sample terrain colors to verify they're not all black
@@ -441,7 +441,7 @@ namespace Map.Loading
                 Color32 sample2 = pixels[width * height / 2]; // Sample from middle
                 Color32 sample3 = pixels[width * height * 3 / 4]; // Sample from 3/4 through
 
-                DominionLogger.LogMapInit($"MapDataLoader: Terrain texture samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]");
+                ArchonLogger.LogMapInit($"MapDataLoader: Terrain texture samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]");
             }
 
             // DEBUG: Test sampling the populated texture from C# to verify it has colors
@@ -452,17 +452,17 @@ namespace Map.Loading
                 Color32 sample2 = terrainTexture.GetPixel(1000, 500);
                 Color32 sample3 = terrainTexture.GetPixel(2000, 1000);
 
-                DominionLogger.LogMapInit($"MapDataLoader: C# GetPixel samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]");
+                ArchonLogger.LogMapInit($"MapDataLoader: C# GetPixel samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]");
 
                 // Also check if the texture is actually readable
                 try
                 {
                     var testRead = terrainTexture.GetPixels32();
-                    DominionLogger.LogMapInit($"MapDataLoader: Texture is readable, got {testRead.Length} pixels");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Texture is readable, got {testRead.Length} pixels");
                 }
                 catch (System.Exception e)
                 {
-                    DominionLogger.LogError($"MapDataLoader: Texture is NOT readable: {e.Message}");
+                    ArchonLogger.LogError($"MapDataLoader: Texture is NOT readable: {e.Message}");
                 }
             }
 
@@ -480,7 +480,7 @@ namespace Map.Loading
                         textureManager.BindTexturesToMaterial(runtimeMaterial);
                         if (logLoadingProgress)
                         {
-                            DominionLogger.Log($"MapDataLoader: Rebound textures to RUNTIME material instance {runtimeMaterial.GetInstanceID()}");
+                            ArchonLogger.Log($"MapDataLoader: Rebound textures to RUNTIME material instance {runtimeMaterial.GetInstanceID()}");
                         }
                     }
                 }
@@ -492,7 +492,7 @@ namespace Map.Loading
                     textureManager.BindTexturesToMaterial(mapRenderingCoordinator.MapMaterial);
                     if (logLoadingProgress)
                     {
-                        DominionLogger.Log($"MapDataLoader: Also bound textures to coordinator material {mapRenderingCoordinator.MapMaterial.GetInstanceID()}");
+                        ArchonLogger.Log($"MapDataLoader: Also bound textures to coordinator material {mapRenderingCoordinator.MapMaterial.GetInstanceID()}");
                     }
 
                     // CRITICAL FIX: Also rebind MapModeDataTextures so CountryColorPalette binding isn't lost!
@@ -504,7 +504,7 @@ namespace Map.Loading
                         mapModeManager.RebindTextures();
                         if (logLoadingProgress)
                         {
-                            DominionLogger.Log($"MapDataLoader: Rebound MapModeManager textures (CountryColorPalette, etc.) after base texture rebind");
+                            ArchonLogger.Log($"MapDataLoader: Rebound MapModeManager textures (CountryColorPalette, etc.) after base texture rebind");
                         }
                     }
                 }
@@ -523,7 +523,7 @@ namespace Map.Loading
             {
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogWarning($"MapDataLoader: Heightmap bitmap not found at {heightmapBmpPath}, using default flat heightmap");
+                    ArchonLogger.LogWarning($"MapDataLoader: Heightmap bitmap not found at {heightmapBmpPath}, using default flat heightmap");
                 }
                 return;
             }
@@ -532,7 +532,7 @@ namespace Map.Loading
             {
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Loading heightmap bitmap: {heightmapBmpPath}");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Loading heightmap bitmap: {heightmapBmpPath}");
                 }
 
                 // Load heightmap bitmap
@@ -540,13 +540,13 @@ namespace Map.Loading
 
                 if (!heightmapResult.Success)
                 {
-                    DominionLogger.LogWarning($"MapDataLoader: Failed to load heightmap bitmap: {heightmapResult.ErrorMessage}");
+                    ArchonLogger.LogWarning($"MapDataLoader: Failed to load heightmap bitmap: {heightmapResult.ErrorMessage}");
                     return;
                 }
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Successfully loaded heightmap bitmap with {heightmapResult.Width}x{heightmapResult.Height} pixels, {heightmapResult.BitsPerPixel} bits per pixel");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Successfully loaded heightmap bitmap with {heightmapResult.Width}x{heightmapResult.Height} pixels, {heightmapResult.BitsPerPixel} bits per pixel");
                 }
 
                 // Populate heightmap texture with bitmap data
@@ -554,7 +554,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit("MapDataLoader: Populated heightmap texture with elevation data from heightmap.bmp");
+                    ArchonLogger.LogMapInit("MapDataLoader: Populated heightmap texture with elevation data from heightmap.bmp");
                 }
 
                 // Dispose heightmap result to free Persistent allocations
@@ -562,7 +562,7 @@ namespace Map.Loading
             }
             catch (System.Exception e)
             {
-                DominionLogger.LogError($"MapDataLoader: Exception loading heightmap bitmap: {e.Message}");
+                ArchonLogger.LogError($"MapDataLoader: Exception loading heightmap bitmap: {e.Message}");
             }
         }
 
@@ -574,7 +574,7 @@ namespace Map.Loading
         {
             if (textureManager == null || textureManager.HeightmapTexture == null)
             {
-                DominionLogger.LogError("MapDataLoader: Cannot populate heightmap texture - texture manager or heightmap texture not available");
+                ArchonLogger.LogError("MapDataLoader: Cannot populate heightmap texture - texture manager or heightmap texture not available");
                 return;
             }
 
@@ -582,7 +582,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Populating heightmap texture instance {heightmapTexture.GetInstanceID()} ({heightmapTexture.name}) size {heightmapTexture.width}x{heightmapTexture.height}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Populating heightmap texture instance {heightmapTexture.GetInstanceID()} ({heightmapTexture.name}) size {heightmapTexture.width}x{heightmapTexture.height}");
             }
 
             int width = heightmapTexture.width;
@@ -596,7 +596,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Heightmap bitmap format - Width: {heightmapData.Width}, Height: {heightmapData.Height}, BitsPerPixel: {heightmapData.BitsPerPixel}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Heightmap bitmap format - Width: {heightmapData.Width}, Height: {heightmapData.Height}, BitsPerPixel: {heightmapData.BitsPerPixel}");
             }
 
             int successfulReads = 0;
@@ -629,7 +629,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Heightmap bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Heightmap bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
 
                 // Sample some height values to verify data
                 if (successfulReads > 0)
@@ -642,7 +642,7 @@ namespace Map.Loading
                     float h2 = pixels[sampleIndex2].r;
                     float h3 = pixels[sampleIndex3].r;
 
-                    DominionLogger.LogMapInit($"MapDataLoader: Heightmap samples - [{h1:F3}] [{h2:F3}] [{h3:F3}] (0.0=low, 1.0=high)");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Heightmap samples - [{h1:F3}] [{h2:F3}] [{h3:F3}] (0.0=low, 1.0=high)");
                 }
             }
 
@@ -655,7 +655,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Applied heightmap data, called Apply(), and forced GPU sync on texture instance {heightmapTexture.GetInstanceID()}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Applied heightmap data, called Apply(), and forced GPU sync on texture instance {heightmapTexture.GetInstanceID()}");
             }
 
             // Rebind textures to materials to ensure heightmap is available in shader
@@ -670,7 +670,7 @@ namespace Map.Loading
                         textureManager.BindTexturesToMaterial(runtimeMaterial);
                         if (logLoadingProgress)
                         {
-                            DominionLogger.Log($"MapDataLoader: Rebound textures (including heightmap) to RUNTIME material instance {runtimeMaterial.GetInstanceID()}");
+                            ArchonLogger.Log($"MapDataLoader: Rebound textures (including heightmap) to RUNTIME material instance {runtimeMaterial.GetInstanceID()}");
                         }
                     }
                 }
@@ -689,7 +689,7 @@ namespace Map.Loading
             {
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogWarning($"MapDataLoader: Normal map bitmap not found at {normalMapBmpPath}, using default flat normals");
+                    ArchonLogger.LogWarning($"MapDataLoader: Normal map bitmap not found at {normalMapBmpPath}, using default flat normals");
                 }
                 return;
             }
@@ -698,7 +698,7 @@ namespace Map.Loading
             {
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Loading normal map bitmap: {normalMapBmpPath}");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Loading normal map bitmap: {normalMapBmpPath}");
                 }
 
                 // Load normal map bitmap
@@ -706,13 +706,13 @@ namespace Map.Loading
 
                 if (!normalMapResult.Success)
                 {
-                    DominionLogger.LogWarning($"MapDataLoader: Failed to load normal map bitmap: {normalMapResult.ErrorMessage}");
+                    ArchonLogger.LogWarning($"MapDataLoader: Failed to load normal map bitmap: {normalMapResult.ErrorMessage}");
                     return;
                 }
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit($"MapDataLoader: Successfully loaded normal map bitmap with {normalMapResult.Width}x{normalMapResult.Height} pixels, {normalMapResult.BitsPerPixel} bits per pixel");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Successfully loaded normal map bitmap with {normalMapResult.Width}x{normalMapResult.Height} pixels, {normalMapResult.BitsPerPixel} bits per pixel");
                 }
 
                 // Populate normal map texture with bitmap data
@@ -720,7 +720,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    DominionLogger.LogMapInit("MapDataLoader: Populated normal map texture with surface normal data from world_normal.bmp");
+                    ArchonLogger.LogMapInit("MapDataLoader: Populated normal map texture with surface normal data from world_normal.bmp");
                 }
 
                 // Dispose normal map result to free Persistent allocations
@@ -728,7 +728,7 @@ namespace Map.Loading
             }
             catch (System.Exception e)
             {
-                DominionLogger.LogError($"MapDataLoader: Exception loading normal map bitmap: {e.Message}");
+                ArchonLogger.LogError($"MapDataLoader: Exception loading normal map bitmap: {e.Message}");
             }
         }
 
@@ -741,7 +741,7 @@ namespace Map.Loading
         {
             if (textureManager == null || textureManager.NormalMapTexture == null)
             {
-                DominionLogger.LogError("MapDataLoader: Cannot populate normal map texture - texture manager or normal map texture not available");
+                ArchonLogger.LogError("MapDataLoader: Cannot populate normal map texture - texture manager or normal map texture not available");
                 return;
             }
 
@@ -749,7 +749,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Populating normal map texture instance {normalMapTexture.GetInstanceID()} ({normalMapTexture.name}) size {normalMapTexture.width}x{normalMapTexture.height}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Populating normal map texture instance {normalMapTexture.GetInstanceID()} ({normalMapTexture.name}) size {normalMapTexture.width}x{normalMapTexture.height}");
             }
 
             int width = normalMapTexture.width;
@@ -763,7 +763,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Normal map bitmap format - Width: {normalMapData.Width}, Height: {normalMapData.Height}, BitsPerPixel: {normalMapData.BitsPerPixel}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Normal map bitmap format - Width: {normalMapData.Width}, Height: {normalMapData.Height}, BitsPerPixel: {normalMapData.BitsPerPixel}");
             }
 
             int successfulReads = 0;
@@ -795,7 +795,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Normal map bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Normal map bitmap read stats - Successful: {successfulReads}, Failed: {failedReads}");
 
                 // Sample some normal values to verify data
                 if (successfulReads > 0)
@@ -808,7 +808,7 @@ namespace Map.Loading
                     var n2 = pixels[sampleIndex2];
                     var n3 = pixels[sampleIndex3];
 
-                    DominionLogger.LogMapInit($"MapDataLoader: Normal map samples - RGB[{n1.r},{n1.g},{n1.b}] RGB[{n2.r},{n2.g},{n2.b}] RGB[{n3.r},{n3.g},{n3.b}]");
+                    ArchonLogger.LogMapInit($"MapDataLoader: Normal map samples - RGB[{n1.r},{n1.g},{n1.b}] RGB[{n2.r},{n2.g},{n2.b}] RGB[{n3.r},{n3.g},{n3.b}]");
                 }
             }
 
@@ -821,7 +821,7 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                DominionLogger.LogMapInit($"MapDataLoader: Applied normal map data, called Apply(), and forced GPU sync on texture instance {normalMapTexture.GetInstanceID()}");
+                ArchonLogger.LogMapInit($"MapDataLoader: Applied normal map data, called Apply(), and forced GPU sync on texture instance {normalMapTexture.GetInstanceID()}");
             }
 
             // Rebind textures to materials to ensure normal map is available in shader
@@ -836,7 +836,7 @@ namespace Map.Loading
                         textureManager.BindTexturesToMaterial(runtimeMaterial);
                         if (logLoadingProgress)
                         {
-                            DominionLogger.Log($"MapDataLoader: Rebound textures (including normal map) to RUNTIME material instance {runtimeMaterial.GetInstanceID()}");
+                            ArchonLogger.Log($"MapDataLoader: Rebound textures (including normal map) to RUNTIME material instance {runtimeMaterial.GetInstanceID()}");
                         }
                     }
                 }

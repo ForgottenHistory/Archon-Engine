@@ -26,7 +26,7 @@ namespace Core.Registries
             // Reserve index 0 for "none/invalid" - critical for architecture
             items.Add(null);
 
-            DominionLogger.LogDataLinking($"Registry<{this.typeName}> initialized");
+            ArchonLogger.LogDataLinking($"Registry<{this.typeName}> initialized");
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Core.Registries
             items.Add(item);
             stringToId[key] = id;
 
-            DominionLogger.LogDataLinking($"Registered {typeName} '{key}' with ID {id}");
+            ArchonLogger.LogDataLinking($"Registered {typeName} '{key}' with ID {id}");
             return id;
         }
 
@@ -167,7 +167,7 @@ namespace Core.Registries
                 throw new InvalidOperationException($"Cannot replace non-existent {typeName}: '{key}'");
 
             items[id] = newItem;
-            DominionLogger.LogDataLinking($"Replaced {typeName} '{key}' (ID {id})");
+            ArchonLogger.LogDataLinking($"Replaced {typeName} '{key}' (ID {id})");
         }
 
         /// <summary>

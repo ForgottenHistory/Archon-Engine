@@ -22,14 +22,14 @@ namespace Core.Commands
             // Check if province exists
             if (!ValidateProvinceId(gameState, ProvinceId))
             {
-                DominionLogger.LogWarning($"Invalid province ID: {ProvinceId}");
+                ArchonLogger.LogWarning($"Invalid province ID: {ProvinceId}");
                 return false;
             }
 
             // Check if new owner exists
             if (!ValidateCountryId(gameState, NewOwner))
             {
-                DominionLogger.LogWarning($"Invalid country ID: {NewOwner}");
+                ArchonLogger.LogWarning($"Invalid country ID: {NewOwner}");
                 return false;
             }
 
@@ -37,7 +37,7 @@ namespace Core.Commands
             ushort currentOwner = gameState.Provinces.GetProvinceOwner(ProvinceId);
             if (currentOwner == NewOwner)
             {
-                DominionLogger.LogWarning($"Province {ProvinceId} already owned by country {NewOwner}");
+                ArchonLogger.LogWarning($"Province {ProvinceId} already owned by country {NewOwner}");
                 return false;
             }
 
@@ -85,7 +85,7 @@ namespace Core.Commands
             // Check if province exists
             if (!ValidateProvinceId(gameState, ProvinceId))
             {
-                DominionLogger.LogWarning($"Invalid province ID: {ProvinceId}");
+                ArchonLogger.LogWarning($"Invalid province ID: {ProvinceId}");
                 return false;
             }
 
@@ -93,7 +93,7 @@ namespace Core.Commands
             byte terrain = gameState.Provinces.GetProvinceTerrain(ProvinceId);
             if (terrain == 0) // Ocean terrain
             {
-                DominionLogger.LogWarning($"Cannot develop ocean province {ProvinceId}");
+                ArchonLogger.LogWarning($"Cannot develop ocean province {ProvinceId}");
                 return false;
             }
 
@@ -103,7 +103,7 @@ namespace Core.Commands
             // Check if there's actually a change
             if (oldDevelopment == NewDevelopment)
             {
-                DominionLogger.LogWarning($"Province {ProvinceId} already has development {NewDevelopment}");
+                ArchonLogger.LogWarning($"Province {ProvinceId} already has development {NewDevelopment}");
                 return false;
             }
 
@@ -147,14 +147,14 @@ namespace Core.Commands
         {
             if (ProvinceIds == null || ProvinceIds.Length == 0)
             {
-                DominionLogger.LogWarning("No provinces specified for transfer");
+                ArchonLogger.LogWarning("No provinces specified for transfer");
                 return false;
             }
 
             // Check if new owner exists
             if (!ValidateCountryId(gameState, NewOwner))
             {
-                DominionLogger.LogWarning($"Invalid country ID: {NewOwner}");
+                ArchonLogger.LogWarning($"Invalid country ID: {NewOwner}");
                 return false;
             }
 
@@ -164,7 +164,7 @@ namespace Core.Commands
             {
                 if (!ValidateProvinceId(gameState, ProvinceIds[i]))
                 {
-                    DominionLogger.LogWarning($"Invalid province ID in batch: {ProvinceIds[i]}");
+                    ArchonLogger.LogWarning($"Invalid province ID in batch: {ProvinceIds[i]}");
                     return false;
                 }
 
@@ -218,13 +218,13 @@ namespace Core.Commands
             // Check if country exists
             if (!ValidateCountryId(gameState, CountryId))
             {
-                DominionLogger.LogWarning($"Invalid country ID: {CountryId}");
+                ArchonLogger.LogWarning($"Invalid country ID: {CountryId}");
                 return false;
             }
 
             if (DevelopmentIncrease == 0)
             {
-                DominionLogger.LogWarning("Development increase cannot be zero");
+                ArchonLogger.LogWarning("Development increase cannot be zero");
                 return false;
             }
 
@@ -233,7 +233,7 @@ namespace Core.Commands
 
             if (provinces.Length == 0)
             {
-                DominionLogger.LogWarning($"Country {CountryId} owns no provinces to develop");
+                ArchonLogger.LogWarning($"Country {CountryId} owns no provinces to develop");
                 provinces.Dispose();
                 return false;
             }

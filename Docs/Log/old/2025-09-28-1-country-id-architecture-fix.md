@@ -80,7 +80,7 @@ Reference: `Assets/Docs/Engine/data-linking-architecture.md`
 ## Key Files Modified This Session
 1. `Assets/Scripts/Core/Loaders/BurstProvinceHistoryLoader.cs` - ParadoxParser integration
 2. `Assets/Scripts/Utils/FileLogger.cs` - Sharing violation fixes
-3. `Assets/Scripts/Utils/DominionLogger.cs` - Shutdown safety checks
+3. `Assets/Scripts/Utils/ArchonLogger.cs` - Shutdown safety checks
 4. `Assets/Scripts/Core/Systems/CountrySystem.cs` - Capacity increased (reverted for architecture fix)
 
 ## Next Session Resumption

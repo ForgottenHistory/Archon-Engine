@@ -2,7 +2,7 @@
 
 **Created:** 2025-10-02
 **Last Updated:** 2025-10-02
-**Applies To:** All GPU compute shader work in Dominion
+**Applies To:** All GPU compute shader work in Archon
 **Debugging Time Saved:** 8+ hours (learned the hard way)
 
 ---
@@ -714,7 +714,7 @@ private ushort ReadPixelValue(RenderTexture tex, int x, int y)
 **AsyncGPUReadback.WaitForCompletion() cost:**
 - Small texture (512x512): ~5ms
 - Medium texture (2048x2048): ~15ms
-- Large texture (5632x2048, Dominion map): ~30ms
+- Large texture (5632x2048, Archon map): ~30ms
 
 **When it's acceptable:**
 - ✅ Initialization code (runs once)

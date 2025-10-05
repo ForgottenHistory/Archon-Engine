@@ -272,7 +272,7 @@ namespace Tests.Manual
             if (statusText != null)
                 statusText.text = status;
 
-            DominionLogger.Log($"[DataLoadingTest] {status}");
+            ArchonLogger.Log($"[DataLoadingTest] {status}");
         }
 
         void UpdateResults(string results)
@@ -333,7 +333,7 @@ namespace Tests.Manual
         }
 
         #if UNITY_EDITOR
-        [UnityEditor.MenuItem("Dominion/Create Data Loading Test Scene")]
+        [UnityEditor.MenuItem("Archon/Create Data Loading Test Scene")]
         public static void CreateTestScene()
         {
             // Create a simple test scene with UI
@@ -343,7 +343,7 @@ namespace Tests.Manual
             var testRunner = new GameObject("DataLoadingTestRunner");
             testRunner.AddComponent<DataLoadingTestRunner>();
 
-            DominionLogger.Log("Created Data Loading Test Scene");
+            ArchonLogger.Log("Created Data Loading Test Scene");
         }
         #endif
     }

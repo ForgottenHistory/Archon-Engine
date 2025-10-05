@@ -248,7 +248,7 @@ public class DebugInputHandler : MonoBehaviour
     {
         var activeStyle = visualStyleManager.GetActiveStyle();
         visualStyleManager.ReloadMaterialFromAsset(activeStyle);
-        DominionLogger.LogGame("DebugInputHandler: ✓ Material reloaded from asset");
+        ArchonLogger.LogGame("DebugInputHandler: ✓ Material reloaded from asset");
     }
 }
 
@@ -282,7 +282,7 @@ public void ReloadMaterialFromAsset(VisualStyleConfiguration style)
 
 **Architecture Compliance:**
 - ✅ Game layer (debug/development tool)
-- ✅ Uses DominionLogger for file-based logging
+- ✅ Uses ArchonLogger for file-based logging
 
 ### 7. Custom Shader GUI Warning
 **Files Changed:**
@@ -484,7 +484,7 @@ float3 lightDir = normalize(float3(-0.5, -0.5, 0.7));
 
 **Pattern for Future:** When adding visual effects for orthographic camera, test with exaggerated values first
 
-### Problem 2: Using Debug.Log Instead of DominionLogger
+### Problem 2: Using Debug.Log Instead of ArchonLogger
 **Symptom:** User repeatedly corrected: "youre using debug.log again! Use dominionlogger"
 
 **Root Cause:**
@@ -498,14 +498,14 @@ float3 lightDir = normalize(float3(-0.5, -0.5, 0.7));
 **Solution:**
 ```csharp
 // Replace all instances:
-Debug.Log(...) → DominionLogger.LogGame(...)
-Debug.LogError(...) → DominionLogger.LogGameError(...)
-Debug.LogWarning(...) → DominionLogger.LogGameWarning(...)
+Debug.Log(...) → ArchonLogger.LogGame(...)
+Debug.LogError(...) → ArchonLogger.LogGameError(...)
+Debug.LogWarning(...) → ArchonLogger.LogGameWarning(...)
 ```
 
-**Why This Works:** DominionLogger writes to `/Logs/game.log` and `/Logs/dominion_log.log` for persistent debugging
+**Why This Works:** ArchonLogger writes to `/Logs/game.log` and `/Logs/dominion_log.log` for persistent debugging
 
-**Pattern for Future:** Always use DominionLogger in this project - never Unity's Debug class
+**Pattern for Future:** Always use ArchonLogger in this project - never Unity's Debug class
 
 ### Problem 3: Circular Dependency (Engine ← Game)
 **Symptom:** Created DebugInputHandler in Engine layer that imported Game.VisualStyles
@@ -638,7 +638,7 @@ public void ReloadMaterialFromAsset(VisualStyleConfiguration style)
 
 ### Technical Debt
 - **Created:** None
-- **Paid Down:** Fixed multiple instances of Debug.Log → DominionLogger
+- **Paid Down:** Fixed multiple instances of Debug.Log → ArchonLogger
 - **TODOs:** None
 
 ---
@@ -687,7 +687,7 @@ None (visual feature complete)
 - Constraints: ScriptableObject is source of truth for all visual settings (not material)
 
 **Gotchas for Next Session:**
-- Watch out for: Using Debug.Log (use DominionLogger instead!)
+- Watch out for: Using Debug.Log (use ArchonLogger instead!)
 - Don't forget: Re-find components in reload methods (initialization timing)
 - Remember: ScriptableObject controls material, not the other way around
 
@@ -721,7 +721,7 @@ None (visual feature complete)
 - Custom shader GUI effectively solved the confusion with clear warning and navigation button
 - Normal mapping adds nice visual polish with minimal performance cost (~0.1ms)
 - F5 reload workflow works well once users understand ScriptableObject is the source of truth
-- DominionLogger usage must be enforced - Debug.Log doesn't write to log files
+- ArchonLogger usage must be enforced - Debug.Log doesn't write to log files
 - Component re-finding pattern necessary for reload methods due to Unity initialization order
 
 ---

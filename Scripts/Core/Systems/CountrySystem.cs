@@ -74,7 +74,7 @@ namespace Core.Systems
             usedTags = new HashSet<string>(initialCapacity);
 
             isInitialized = true;
-            DominionLogger.Log($"CountrySystem initialized with capacity {initialCapacity}");
+            ArchonLogger.Log($"CountrySystem initialized with capacity {initialCapacity}");
 
             // Validate CountryHotData size
             ValidateCountryHotDataSize();
@@ -87,18 +87,18 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                DominionLogger.LogError("CountrySystem not initialized - call Initialize() first");
+                ArchonLogger.LogError("CountrySystem not initialized - call Initialize() first");
                 return;
             }
 
             if (!countryDataResult.Success)
             {
-                DominionLogger.LogError($"Cannot initialize from failed country data: {countryDataResult.ErrorMessage}");
+                ArchonLogger.LogError($"Cannot initialize from failed country data: {countryDataResult.ErrorMessage}");
                 return;
             }
 
             var countryData = countryDataResult.Countries;
-            DominionLogger.Log($"Initializing {countryData.Count} countries from data");
+            ArchonLogger.Log($"Initializing {countryData.Count} countries from data");
 
             // Clear existing data
             countryCount = 0;
@@ -130,7 +130,7 @@ namespace Core.Systems
                     // Don't increment nextCountryId - reuse this slot for next non-duplicate
                     if (i < 50)
                     {
-                        DominionLogger.Log($"CountrySystem: Skipping duplicate tag '{tag}' at index {i}");
+                        ArchonLogger.Log($"CountrySystem: Skipping duplicate tag '{tag}' at index {i}");
                     }
                     continue;
                 }
@@ -139,7 +139,7 @@ namespace Core.Systems
                 if (nextCountryId < 5)
                 {
                     var color = hotData.Color;
-                    DominionLogger.Log($"CountrySystem: Country index {i} tag={tag} → ID {nextCountryId}, hotData color R={color.r} G={color.g} B={color.b}");
+                    ArchonLogger.Log($"CountrySystem: Country index {i} tag={tag} → ID {nextCountryId}, hotData color R={color.r} G={color.g} B={color.b}");
                 }
 
                 // Add country to system
@@ -148,12 +148,12 @@ namespace Core.Systems
 
                 if (nextCountryId >= initialCapacity)
                 {
-                    DominionLogger.LogWarning($"Country capacity exceeded: {nextCountryId}/{initialCapacity}");
+                    ArchonLogger.LogWarning($"Country capacity exceeded: {nextCountryId}/{initialCapacity}");
                     break;
                 }
             }
 
-            DominionLogger.Log($"CountrySystem initialized with {countryCount} countries");
+            ArchonLogger.Log($"CountrySystem initialized with {countryCount} countries");
 
             // Emit initialization complete event
             eventBus?.Emit(new CountrySystemInitializedEvent
@@ -193,7 +193,7 @@ namespace Core.Systems
         {
             if (countryId >= countryHotData.Length)
             {
-                DominionLogger.LogError($"Country ID {countryId} exceeds capacity {countryHotData.Length}");
+                ArchonLogger.LogError($"Country ID {countryId} exceeds capacity {countryHotData.Length}");
                 return;
             }
 
@@ -413,7 +413,7 @@ namespace Core.Systems
 
             // If not cached and caching is disabled, we need to load it
             // For now, return null - in full implementation, this would trigger loading
-            DominionLogger.LogWarning($"Cold data for country {countryId} not cached and lazy loading not implemented");
+            ArchonLogger.LogWarning($"Cold data for country {countryId} not cached and lazy loading not implemented");
             return null;
         }
 
@@ -498,11 +498,11 @@ namespace Core.Systems
             int actualSize = UnsafeUtility.SizeOf<CountryHotData>();
             if (actualSize != 8)
             {
-                DominionLogger.LogError($"CountryHotData size validation failed: expected 8 bytes, got {actualSize} bytes");
+                ArchonLogger.LogError($"CountryHotData size validation failed: expected 8 bytes, got {actualSize} bytes");
             }
             else
             {
-                DominionLogger.Log("CountryHotData size validation passed: 8 bytes");
+                ArchonLogger.Log("CountryHotData size validation passed: 8 bytes");
             }
         }
 
@@ -522,7 +522,7 @@ namespace Core.Systems
             usedTags?.Clear();
 
             isInitialized = false;
-            DominionLogger.Log("CountrySystem disposed");
+            ArchonLogger.Log("CountrySystem disposed");
         }
 
         void OnDestroy()

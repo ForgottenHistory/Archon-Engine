@@ -33,21 +33,21 @@ public void AddProvince(ushort provinceId, ProvinceState initialState)
 {
     if (!isInitialized)
     {
-        DominionLogger.LogError("ProvinceSystem not initialized");
+        ArchonLogger.LogError("ProvinceSystem not initialized");
         return;
     }
 
     // Check if province already exists
     if (idToIndex.ContainsKey(provinceId))
     {
-        DominionLogger.LogWarning($"Province {provinceId} already exists");
+        ArchonLogger.LogWarning($"Province {provinceId} already exists");
         return;
     }
 
     // Check capacity
     if (provinceCount >= provinceStates.Length)
     {
-        DominionLogger.LogError($"ProvinceSystem capacity exceeded ({provinceStates.Length})");
+        ArchonLogger.LogError($"ProvinceSystem capacity exceeded ({provinceStates.Length})");
         return;
     }
 
@@ -75,7 +75,7 @@ void Start()
         ScaleToTarget(10000);
     }
 
-    DominionLogger.Log($"Stress test starting with {provinceSystem.ProvinceCount} provinces");
+    ArchonLogger.Log($"Stress test starting with {provinceSystem.ProvinceCount} provinces");
 }
 
 /// <summary>
@@ -87,7 +87,7 @@ private void ScaleToTarget(int targetCount)
     int originalCount = provinceSystem.ProvinceCount;
     int toAdd = targetCount - originalCount;
 
-    DominionLogger.Log($"Scaling from {originalCount} to {targetCount} provinces (+{toAdd})");
+    ArchonLogger.Log($"Scaling from {originalCount} to {targetCount} provinces (+{toAdd})");
 
     ushort syntheticIdStart = 20000; // Start synthetic IDs at 20k
 
@@ -102,7 +102,7 @@ private void ScaleToTarget(int targetCount)
         provinceSystem.AddProvince(newId, sourceState);
     }
 
-    DominionLogger.Log($"✅ Scaled to {provinceSystem.ProvinceCount} provinces");
+    ArchonLogger.Log($"✅ Scaled to {provinceSystem.ProvinceCount} provinces");
 }
 ```
 
@@ -171,7 +171,7 @@ namespace Tests.Manual
             // Subscribe to tick events
             gameState.EventBus.Subscribe<HourlyTickEvent>(OnHourlyTick);
 
-            DominionLogger.Log($"ProvinceStressTest initialized. Total provinces: {provinceSystem.ProvinceCount}");
+            ArchonLogger.Log($"ProvinceStressTest initialized. Total provinces: {provinceSystem.ProvinceCount}");
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Tests.Manual
             int originalCount = provinceSystem.ProvinceCount;
             int toAdd = targetCount - originalCount;
 
-            DominionLogger.Log($"Scaling from {originalCount} to {targetCount} provinces (+{toAdd})");
+            ArchonLogger.Log($"Scaling from {originalCount} to {targetCount} provinces (+{toAdd})");
 
             ushort syntheticIdStart = 20000;
 
@@ -196,7 +196,7 @@ namespace Tests.Manual
                 provinceSystem.AddProvince(newId, sourceState);
             }
 
-            DominionLogger.Log($"✅ Scaled to {provinceSystem.ProvinceCount} provinces");
+            ArchonLogger.Log($"✅ Scaled to {provinceSystem.ProvinceCount} provinces");
         }
 
         void OnDestroy()
@@ -226,7 +226,7 @@ namespace Tests.Manual
             if (logPerformance && updateCount % 100 == 0)
             {
                 float avgTime = totalUpdateTime / updateCount;
-                DominionLogger.Log($"Stress Test - Avg update time: {avgTime:F2}ms, " +
+                ArchonLogger.Log($"Stress Test - Avg update time: {avgTime:F2}ms, " +
                     $"Provinces: {provinceSystem.ProvinceCount}, " +
                     $"Updates: {updateCount}");
             }
@@ -356,7 +356,7 @@ namespace Tests.Manual
             }
 
             float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
-            DominionLogger.Log($"Command Stress - Submitted {commandsPerTick} commands in {elapsed:F2}ms");
+            ArchonLogger.Log($"Command Stress - Submitted {commandsPerTick} commands in {elapsed:F2}ms");
         }
     }
 }
@@ -552,7 +552,7 @@ namespace Tests.Manual
 
             float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
 
-            DominionLogger.Log($"FixedPoint64 Benchmark - {calculationsPerFrame} calcs: {elapsed:F2}ms, " +
+            ArchonLogger.Log($"FixedPoint64 Benchmark - {calculationsPerFrame} calcs: {elapsed:F2}ms, " +
                 $"Result: {accumulator.ToInt()}");
 
             runBenchmark = false; // Run once
@@ -632,10 +632,10 @@ public class EventBusStressTest : MonoBehaviour
 
         if (allocated > 0)
         {
-            DominionLogger.LogWarning($"❌ EventBus allocated {allocated / 1024f:F2} KB (should be 0)");
+            ArchonLogger.LogWarning($"❌ EventBus allocated {allocated / 1024f:F2} KB (should be 0)");
         }
 
-        DominionLogger.Log($"EventBus Stress - {eventsPerTick} events, Check Unity Profiler for timing");
+        ArchonLogger.Log($"EventBus Stress - {eventsPerTick} events, Check Unity Profiler for timing");
 
         enableStressTest = false; // Run once
     }
@@ -720,7 +720,7 @@ namespace Tests.Manual
             startTime = Time.realtimeSinceStartup;
             startMemory = System.GC.GetTotalMemory(false);
 
-            DominionLogger.Log($"Starting {targetYears}-year simulation ({targetTicks} ticks)");
+            ArchonLogger.Log($"Starting {targetYears}-year simulation ({targetTicks} ticks)");
 
             // Subscribe to tick events
             gameState.EventBus.Subscribe<HourlyTickEvent>(OnTick);
@@ -746,7 +746,7 @@ namespace Tests.Manual
                 long currentMemory = System.GC.GetTotalMemory(false);
                 long memoryGrowth = currentMemory - startMemory;
 
-                DominionLogger.Log($"Year {currentYear}/{targetYears} - " +
+                ArchonLogger.Log($"Year {currentYear}/{targetYears} - " +
                     $"Time: {elapsedSeconds:F1}s, " +
                     $"Memory: {memoryGrowth / 1024f / 1024f:F2} MB growth");
             }
@@ -758,15 +758,15 @@ namespace Tests.Manual
                 long finalMemory = System.GC.GetTotalMemory(false);
                 long memoryGrowth = finalMemory - startMemory;
 
-                DominionLogger.Log($"✅ {targetYears}-year simulation complete!");
-                DominionLogger.Log($"Total time: {totalTime:F1}s ({tickCount} ticks)");
-                DominionLogger.Log($"Memory growth: {memoryGrowth / 1024f / 1024f:F2} MB");
-                DominionLogger.Log($"Avg tick time: {(totalTime * 1000f) / tickCount:F3}ms");
+                ArchonLogger.Log($"✅ {targetYears}-year simulation complete!");
+                ArchonLogger.Log($"Total time: {totalTime:F1}s ({tickCount} ticks)");
+                ArchonLogger.Log($"Memory growth: {memoryGrowth / 1024f / 1024f:F2} MB");
+                ArchonLogger.Log($"Avg tick time: {(totalTime * 1000f) / tickCount:F3}ms");
 
                 // Check for issues
                 if (memoryGrowth > 100 * 1024 * 1024) // >100MB growth
                 {
-                    DominionLogger.LogWarning($"⚠️ Excessive memory growth detected!");
+                    ArchonLogger.LogWarning($"⚠️ Excessive memory growth detected!");
                 }
 
                 enableTest = false;

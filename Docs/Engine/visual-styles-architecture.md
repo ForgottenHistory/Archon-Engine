@@ -74,7 +74,7 @@ GAME (visual policy)  ← Imports Core + Map, provides shaders/materials
 - **Location:** `Game/VisualStyles/VisualStyleManager.cs`
 
 #### EU3MapShader.shader (Complete Shader)
-- **Shader Name:** `Dominion/EU3Classic`
+- **Shader Name:** `Archon/EU3Classic`
 - **Includes:** All map mode visualization logic
   - `MapModeCommon.hlsl` - Utilities
   - `MapModePolitical.hlsl` - Political mode
@@ -169,13 +169,13 @@ color = lerp(color, _CountryBorderColor, countryBorderStrength);
    ```
 
 3. **Customize shader:**
-   - Change shader name: `Shader "Dominion/ImperatorRome"`
+   - Change shader name: `Shader "Archon/ImperatorRome"`
    - Modify map mode logic (terrain blending, soft borders, etc.)
    - Add custom effects (glow, gradients, etc.)
 
 4. **Create Material in Unity:**
    - Create Material asset: `ImperatorMapMaterial.mat`
-   - Assign shader: `Dominion/ImperatorRome`
+   - Assign shader: `Archon/ImperatorRome`
 
 5. **Create VisualStyleConfiguration asset:**
    - Create: `ImperatorVisualStyle.asset`

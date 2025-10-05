@@ -1,5 +1,5 @@
 # Core Data Access Guide
-## How to Get Data from Core in Dominion's Architecture
+## How to Get Data from Core in Archon's Architecture
 
 **📊 Implementation Status:** ✅ Implemented (ProvinceState, ProvinceColdData, hot/cold separation)
 
@@ -7,7 +7,7 @@
 
 ## Overview
 
-Dominion uses a **dual-layer architecture**:
+Archon uses a **dual-layer architecture**:
 - **Core Layer (CPU)**: Deterministic simulation with hot data (8-byte structs)
 - **Map Layer (GPU)**: High-performance presentation reading from Core
 
@@ -43,7 +43,7 @@ All Core data access goes through `GameState`:
 var gameState = Object.FindFirstObjectByType<GameState>();
 if (gameState?.IsInitialized != true)
 {
-    DominionLogger.LogError("GameState not available");
+    ArchonLogger.LogError("GameState not available");
     return;
 }
 

@@ -31,7 +31,7 @@ namespace Map.Rendering
         {
             if (textureManager == null || mapping == null || gameState == null)
             {
-                DominionLogger.LogError("MapTexturePopulator: Cannot populate textures - missing dependencies");
+                ArchonLogger.LogError("MapTexturePopulator: Cannot populate textures - missing dependencies");
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace Map.Rendering
 
             if (logPopulationProgress)
             {
-                DominionLogger.LogMapInit($"MapTexturePopulator: Starting texture population with simulation data for {width}x{height} map");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Starting texture population with simulation data for {width}x{height} map");
             }
 
             // Get query interfaces for simulation data
@@ -53,7 +53,7 @@ namespace Map.Rendering
             var provinceRegistry = gameState.Registries?.Provinces;
             if (provinceRegistry == null)
             {
-                DominionLogger.LogMapInitError("MapTexturePopulator: GameState.Registries not set! Cannot validate provinces.");
+                ArchonLogger.LogMapInitError("MapTexturePopulator: GameState.Registries not set! Cannot validate provinces.");
                 return;
             }
 
@@ -113,20 +113,20 @@ namespace Map.Rendering
             int testPixelIndex = 711 * width + 2767;
             var testColor = provinceIDPixels[testPixelIndex];
             ushort testProvinceID = Province.ProvinceIDEncoder.UnpackProvinceID(testColor);
-            DominionLogger.LogMapInit($"MapTexturePopulator: CPU array at [711, 2767] (index {testPixelIndex}) = province {testProvinceID} (R={testColor.r} G={testColor.g})");
+            ArchonLogger.LogMapInit($"MapTexturePopulator: CPU array at [711, 2767] (index {testPixelIndex}) = province {testProvinceID} (R={testColor.r} G={testColor.g})");
 
             // Also check what's at the Y-flipped location (what GPU might have after Graphics.Blit)
             int flippedPixelIndex = (height - 1 - 711) * width + 2767; // Y-flipped location
             var flippedColor = provinceIDPixels[flippedPixelIndex];
             ushort flippedProvinceID = Province.ProvinceIDEncoder.UnpackProvinceID(flippedColor);
-            DominionLogger.LogMapInit($"MapTexturePopulator: CPU array at Y-flipped [{height-1-711}, 2767] (index {flippedPixelIndex}) = province {flippedProvinceID} (R={flippedColor.r} G={flippedColor.g})");
+            ArchonLogger.LogMapInit($"MapTexturePopulator: CPU array at Y-flipped [{height-1-711}, 2767] (index {flippedPixelIndex}) = province {flippedProvinceID} (R={flippedColor.r} G={flippedColor.g})");
 
             // Batch-write to GPU using RenderTexture (architecture: GPU-native textures)
             PopulateProvinceIDTextureGPU(textureManager, width, height, provinceIDPixels);
 
             // DEBUG: Verify ProvinceIDTexture was populated correctly after blit
             ushort verifyProvinceID = textureManager.GetProvinceID(2767, 711);
-            DominionLogger.LogMapInit($"MapTexturePopulator: ProvinceIDTexture at pixel (2767,711) contains province ID {verifyProvinceID} AFTER blit (expected 2751 for Castile)");
+            ArchonLogger.LogMapInit($"MapTexturePopulator: ProvinceIDTexture at pixel (2767,711) contains province ID {verifyProvinceID} AFTER blit (expected 2751 for Castile)");
 
             PopulateProvinceColorTextureGPU(textureManager, width, height, provinceColorPixels);
 
@@ -142,18 +142,18 @@ namespace Map.Rendering
 
             if (ownerTextureDispatcher != null)
             {
-                DominionLogger.LogMapInit("MapTexturePopulator: Populating owner texture via GPU compute shader");
+                ArchonLogger.LogMapInit("MapTexturePopulator: Populating owner texture via GPU compute shader");
                 ownerTextureDispatcher.PopulateOwnerTexture(provinceQueries);
             }
             else
             {
-                DominionLogger.LogMapInitError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot populate owner texture!");
+                ArchonLogger.LogMapInitError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot populate owner texture!");
             }
 
             if (logPopulationProgress)
             {
-                DominionLogger.LogMapInit($"MapTexturePopulator: Populated texture manager with {width}x{height} province data from simulation layer");
-                DominionLogger.LogMapInit($"MapTexturePopulator: Processed {processedPixels} pixels, {validProvinces} valid province pixels");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Populated texture manager with {width}x{height} province data from simulation layer");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Processed {processedPixels} pixels, {validProvinces} valid province pixels");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Map.Rendering
         {
             if (textureManager == null || mapping == null)
             {
-                DominionLogger.LogError("MapTexturePopulator: Cannot populate textures - missing dependencies");
+                ArchonLogger.LogError("MapTexturePopulator: Cannot populate textures - missing dependencies");
                 return;
             }
 
@@ -175,7 +175,7 @@ namespace Map.Rendering
 
             if (logPopulationProgress)
             {
-                DominionLogger.LogMapInit($"MapTexturePopulator: Starting texture population from province result for {width}x{height} map");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Starting texture population from province result for {width}x{height} map");
             }
 
             // Populate province ID and color textures from BMP data
@@ -218,8 +218,8 @@ namespace Map.Rendering
 
             if (logPopulationProgress)
             {
-                DominionLogger.LogMapInit($"MapTexturePopulator: Populated texture manager with {width}x{height} province data");
-                DominionLogger.LogMapInit($"MapTexturePopulator: Processed {processedPixels} pixels, {validProvinces} valid province pixels");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Populated texture manager with {width}x{height} province data");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Processed {processedPixels} pixels, {validProvinces} valid province pixels");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Map.Rendering
         {
             if (textureManager == null || mapping == null || gameState == null || changedProvinces == null)
             {
-                DominionLogger.LogError("MapTexturePopulator: Cannot update simulation data - missing dependencies");
+                ArchonLogger.LogError("MapTexturePopulator: Cannot update simulation data - missing dependencies");
                 return;
             }
 
@@ -251,12 +251,12 @@ namespace Map.Rendering
 
             if (ownerTextureDispatcher != null)
             {
-                DominionLogger.LogMapInit($"MapTexturePopulator: Updating owner texture for {changedProvinces.Length} changed provinces via GPU compute shader");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Updating owner texture for {changedProvinces.Length} changed provinces via GPU compute shader");
                 ownerTextureDispatcher.PopulateOwnerTexture(provinceQueries);
             }
             else
             {
-                DominionLogger.LogError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot update owner texture!");
+                ArchonLogger.LogError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot update owner texture!");
             }
         }
 
@@ -281,7 +281,7 @@ namespace Map.Rendering
 
                 if (populateProvinceIDCompute == null)
                 {
-                    DominionLogger.LogError("MapTexturePopulator: PopulateProvinceIDTexture compute shader not found! Falling back to Graphics.Blit");
+                    ArchonLogger.LogError("MapTexturePopulator: PopulateProvinceIDTexture compute shader not found! Falling back to Graphics.Blit");
                     PopulateProvinceIDTextureGPU_Fallback(textureManager, width, height, pixels);
                     return;
                 }
@@ -301,7 +301,7 @@ namespace Map.Rendering
             byte testR = (byte)((testPacked >> 16) & 0xFF);
             byte testG = (byte)((testPacked >> 8) & 0xFF);
             ushort testProvinceFromBuffer = (ushort)((testG << 8) | testR);
-            DominionLogger.LogMapInit($"MapTexturePopulator: GPU buffer[{testIndex}] (x=2767,y=711) = packed 0x{testPacked:X8}, R={testR} G={testG}, province={testProvinceFromBuffer}");
+            ArchonLogger.LogMapInit($"MapTexturePopulator: GPU buffer[{testIndex}] (x=2767,y=711) = packed 0x{testPacked:X8}, R={testR} G={testG}, province={testProvinceFromBuffer}");
 
             // Create GPU buffer
             ComputeBuffer pixelBuffer = new ComputeBuffer(packedPixels.Length, sizeof(uint));
@@ -340,12 +340,12 @@ namespace Map.Rendering
             ushort debugProvinceID = Province.ProvinceIDEncoder.UnpackProvinceID(debugColor);
             Object.Destroy(debugPixel);
 
-            DominionLogger.LogMapInit($"MapTexturePopulator: VERIFY - After compute shader, ProvinceIDTexture(2767,711) = province {debugProvinceID} (R={debugColor.r} G={debugColor.g} - expected 2751)");
+            ArchonLogger.LogMapInit($"MapTexturePopulator: VERIFY - After compute shader, ProvinceIDTexture(2767,711) = province {debugProvinceID} (R={debugColor.r} G={debugColor.g} - expected 2751)");
 
             if (logPopulationProgress)
             {
-                DominionLogger.LogMapInit($"MapTexturePopulator: Populated ProvinceIDTexture via compute shader (eliminates Graphics.Blit coordinate issues)");
-                DominionLogger.LogMapInit($"MapTexturePopulator: Wrote to ProvinceIDTexture instance {textureManager.ProvinceIDTexture.GetInstanceID()}");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Populated ProvinceIDTexture via compute shader (eliminates Graphics.Blit coordinate issues)");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Wrote to ProvinceIDTexture instance {textureManager.ProvinceIDTexture.GetInstanceID()}");
             }
         }
 
@@ -376,7 +376,7 @@ namespace Map.Rendering
 
             if (logPopulationProgress)
             {
-                DominionLogger.LogMapInit($"MapTexturePopulator: Populated ProvinceColorTexture via batch SetPixels32");
+                ArchonLogger.LogMapInit($"MapTexturePopulator: Populated ProvinceColorTexture via batch SetPixels32");
             }
         }
     }

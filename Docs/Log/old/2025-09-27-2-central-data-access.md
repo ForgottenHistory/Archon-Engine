@@ -2,7 +2,7 @@
 
 ## Overview & Context
 
-This guide documents the implementation of a central GameState system for Dominion, providing unified access to province and country data. The system follows the dual-layer architecture principles and integrates with our existing Burst-optimized loading systems.
+This guide documents the implementation of a central GameState system for Archon, providing unified access to province and country data. The system follows the dual-layer architecture principles and integrates with our existing Burst-optimized loading systems.
 
 ## Background & Problem Statement
 

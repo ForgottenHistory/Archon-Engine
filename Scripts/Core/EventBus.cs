@@ -43,7 +43,7 @@ namespace Core
         {
             eventQueues = new Dictionary<Type, IEventQueue>(INITIAL_CAPACITY);
             IsActive = true;
-            DominionLogger.Log("EventBus initialized (zero-allocation mode)");
+            ArchonLogger.Log("EventBus initialized (zero-allocation mode)");
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Core
             #if UNITY_EDITOR
             if (eventsProcessedThisFrame > 1000)
             {
-                DominionLogger.LogWarning($"EventBus processed {eventsProcessedThisFrame} events this frame");
+                ArchonLogger.LogWarning($"EventBus processed {eventsProcessedThisFrame} events this frame");
             }
             #endif
         }
@@ -149,14 +149,14 @@ namespace Core
             }
 
             eventQueues.Clear();
-            DominionLogger.Log("EventBus cleared");
+            ArchonLogger.Log("EventBus cleared");
         }
 
         public void Dispose()
         {
             IsActive = false;
             Clear();
-            DominionLogger.Log("EventBus disposed");
+            ArchonLogger.Log("EventBus disposed");
         }
 
         #if UNITY_EDITOR
@@ -165,7 +165,7 @@ namespace Core
         /// </summary>
         public void LogDebugInfo()
         {
-            DominionLogger.LogDataLinking($"EventBus Status:\n" +
+            ArchonLogger.LogDataLinking($"EventBus Status:\n" +
                       $"- Active: {IsActive}\n" +
                       $"- Events in queue: {EventsInQueue}\n" +
                       $"- Event types registered: {eventQueues.Count}\n" +
@@ -251,7 +251,7 @@ namespace Core
                     }
                     catch (Exception e)
                     {
-                        DominionLogger.LogError($"Error processing event {typeof(T).Name}: {e.Message}\n{e.StackTrace}");
+                        ArchonLogger.LogError($"Error processing event {typeof(T).Name}: {e.Message}\n{e.StackTrace}");
                     }
                 }
 

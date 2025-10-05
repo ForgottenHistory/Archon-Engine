@@ -26,7 +26,7 @@ namespace Core.Registries
             // Reserve index 0 for "none/unowned"
             countries.Add(null);
 
-            DominionLogger.LogDataLinking("CountryRegistry initialized");
+            ArchonLogger.LogDataLinking("CountryRegistry initialized");
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Core.Registries
             country.Id = id;
             country.Tag = tag;
 
-            DominionLogger.LogDataLinking($"Registered country '{tag}' with ID {id}");
+            ArchonLogger.LogDataLinking($"Registered country '{tag}' with ID {id}");
             return id;
         }
 

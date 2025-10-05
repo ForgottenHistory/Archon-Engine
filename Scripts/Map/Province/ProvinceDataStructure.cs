@@ -157,7 +157,7 @@ namespace Map.Province
             idToArrayIndex = new NativeHashMap<ushort, int>(capacity, Allocator.Persistent);
             provinceCount = 0;
 
-            DominionLogger.Log($"ProvinceDataManager initialized with capacity for {capacity} provinces");
+            ArchonLogger.Log($"ProvinceDataManager initialized with capacity for {capacity} provinces");
         }
 
         /// <summary>
@@ -167,13 +167,13 @@ namespace Map.Province
         {
             if (provinceCount >= provinces.Length)
             {
-                DominionLogger.LogError("Province capacity exceeded!");
+                ArchonLogger.LogError("Province capacity exceeded!");
                 return false;
             }
 
             if (colorToID.ContainsKey(identifierColor))
             {
-                DominionLogger.LogWarning($"Province color {identifierColor} already exists!");
+                ArchonLogger.LogWarning($"Province color {identifierColor} already exists!");
                 return false;
             }
 
@@ -355,7 +355,7 @@ namespace Map.Province
         {
             var (totalBytes, provinceBytes, lookupBytes) = GetMemoryUsage();
 
-            DominionLogger.Log($"Province Data Manager Statistics:\n" +
+            ArchonLogger.Log($"Province Data Manager Statistics:\n" +
                      $"Provinces: {provinceCount}/{provinces.Length}\n" +
                      $"Memory Usage: {totalBytes / 1024f:F1} KB total\n" +
                      $"  - Province Data: {provinceBytes / 1024f:F1} KB\n" +
