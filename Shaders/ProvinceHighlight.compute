@@ -5,9 +5,11 @@
 #pragma kernel ClearHighlight
 #pragma kernel HighlightProvince
 #pragma kernel HighlightProvinceBorders
+#pragma kernel HighlightCountry
 
 // Input textures - Use RWTexture2D even for read-only to avoid UAV/SRV binding issues
 RWTexture2D<float4> ProvinceIDTexture;
+RWTexture2D<float> ProvinceOwnerTexture;
 
 // Output texture
 RWTexture2D<float4> HighlightTexture;
@@ -18,6 +20,7 @@ uint MapHeight;
 
 // Highlight parameters
 uint TargetProvinceID;
+uint TargetCountryID;
 float4 HighlightColor;  // RGBA color for highlight
 float BorderThickness;  // 0-5 for border outline thickness
 
@@ -135,4 +138,33 @@ void HighlightProvinceBorders(uint3 id : SV_DispatchThreadID)
 
     // NO Y-FLIP - write directly to raw GPU coords
     HighlightTexture[id.xy] = outputColor;
+}
+
+// ============================================================================
+// Highlight Country - Highlight all provinces owned by a specific country
+// Useful for country selection screens and diplomatic views
+// ============================================================================
+[numthreads(8, 8, 1)]
+void HighlightCountry(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Read owner ID from ProvinceOwnerTexture (NO Y-FLIP - raw GPU coords)
+    // ProvinceOwnerTexture stores owner IDs normalized to [0,1] range
+    // Denormalize: multiply by 65535 to get back to uint16 range
+    float ownerFloat = ProvinceOwnerTexture[id.xy];
+    uint ownerID = (uint)(ownerFloat * 65535.0 + 0.5);
+
+    // If this pixel belongs to a province owned by target country, highlight it
+    if (ownerID == TargetCountryID)
+    {
+        HighlightTexture[id.xy] = HighlightColor;
+    }
+    else
+    {
+        // Clear non-matching pixels
+        HighlightTexture[id.xy] = float4(0, 0, 0, 0);
+    }
 }

@@ -25,6 +25,7 @@ namespace Map.Interaction
         private int clearHighlightKernel;
         private int highlightProvinceKernel;
         private int highlightProvinceBordersKernel;
+        private int highlightCountryKernel;
 
         // Thread group sizes (must match compute shader)
         private const int THREAD_GROUP_SIZE = 8;
@@ -80,11 +81,12 @@ namespace Map.Interaction
             clearHighlightKernel = highlightCompute.FindKernel("ClearHighlight");
             highlightProvinceKernel = highlightCompute.FindKernel("HighlightProvince");
             highlightProvinceBordersKernel = highlightCompute.FindKernel("HighlightProvinceBorders");
+            highlightCountryKernel = highlightCompute.FindKernel("HighlightCountry");
 
             if (logOperations)
             {
                 ArchonLogger.LogMapInit($"ProvinceHighlighter: Initialized with kernels - " +
-                    $"Clear: {clearHighlightKernel}, Fill: {highlightProvinceKernel}, Borders: {highlightProvinceBordersKernel}");
+                    $"Clear: {clearHighlightKernel}, Fill: {highlightProvinceKernel}, Borders: {highlightProvinceBordersKernel}, Country: {highlightCountryKernel}");
             }
         }
 
@@ -176,6 +178,65 @@ namespace Map.Interaction
         public void HighlightProvince(ushort provinceID, Color color)
         {
             HighlightProvince(provinceID, color, highlightMode);
+        }
+
+        /// <summary>
+        /// Highlight all provinces owned by a specific country
+        /// ENGINE LAYER API - Game layer calls this for country selection or diplomatic views
+        /// </summary>
+        /// <param name="countryID">Country ID to highlight (owner ID from ProvinceOwnerTexture)</param>
+        /// <param name="color">Highlight color (use alpha for transparency)</param>
+        public void HighlightCountry(ushort countryID, Color color)
+        {
+            if (highlightCompute == null)
+            {
+                if (logOperations)
+                {
+                    ArchonLogger.LogWarning("ProvinceHighlighter: Compute shader not loaded. Cannot highlight country.");
+                }
+                return;
+            }
+
+            if (textureManager == null)
+            {
+                textureManager = FindFirstObjectByType<MapTextureManager>();
+                if (textureManager == null)
+                {
+                    ArchonLogger.LogError("ProvinceHighlighter: MapTextureManager not found!");
+                    return;
+                }
+            }
+
+            // If countryID is 0 or color is transparent, clear highlight
+            if (countryID == 0 || color.a < 0.01f)
+            {
+                ClearHighlight();
+                return;
+            }
+
+            // Set textures
+            highlightCompute.SetTexture(highlightCountryKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
+            highlightCompute.SetTexture(highlightCountryKernel, "HighlightTexture", textureManager.HighlightTexture);
+
+            // Set dimensions
+            highlightCompute.SetInt("MapWidth", textureManager.MapWidth);
+            highlightCompute.SetInt("MapHeight", textureManager.MapHeight);
+
+            // Set highlight parameters
+            highlightCompute.SetInt("TargetCountryID", countryID);
+            highlightCompute.SetVector("HighlightColor", color);
+
+            // Calculate thread groups (round up division)
+            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+
+            // Dispatch compute shader
+            highlightCompute.Dispatch(highlightCountryKernel, threadGroupsX, threadGroupsY, 1);
+
+            if (logOperations)
+            {
+                ArchonLogger.Log($"ProvinceHighlighter: Highlighted country {countryID} with color {color}");
+            }
         }
 
         /// <summary>
