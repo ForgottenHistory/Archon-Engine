@@ -26,9 +26,6 @@ namespace Core
         [SerializeField] private bool initializeOnStart = true;
         [SerializeField] private bool enableDetailedLogging = true;
 
-        [Header("Loading Progress")]
-        [SerializeField] private Canvas loadingCanvas;
-
         // Loading phases
         public enum LoadingPhase
         {
@@ -295,12 +292,6 @@ namespace Core
 
             // Process events immediately to ensure MapGenerator receives the event
             gameState.EventBus.ProcessEvents();
-
-            // Hide loading UI
-            if (loadingCanvas != null)
-            {
-                loadingCanvas.gameObject.SetActive(false);
-            }
 
             // Emit completion event
             OnLoadingComplete?.Invoke(true, "Initialization successful");

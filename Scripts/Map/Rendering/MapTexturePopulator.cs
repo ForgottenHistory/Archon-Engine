@@ -144,6 +144,17 @@ namespace Map.Rendering
             {
                 ArchonLogger.LogMapInit("MapTexturePopulator: Populating owner texture via GPU compute shader");
                 ownerTextureDispatcher.PopulateOwnerTexture(provinceQueries);
+
+                // CRITICAL: Force GPU synchronization after owner texture population
+                // OwnerTextureDispatcher.Dispatch() is async - fragment shader may try to read before GPU finishes writing
+                // This forces CPU to wait for GPU completion before rendering
+                var ownerSyncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.ProvinceOwnerTexture);
+                ownerSyncRequest.WaitForCompletion();
+
+                if (logPopulationProgress)
+                {
+                    ArchonLogger.LogMapInit("MapTexturePopulator: Forced GPU sync on ProvinceOwnerTexture");
+                }
             }
             else
             {

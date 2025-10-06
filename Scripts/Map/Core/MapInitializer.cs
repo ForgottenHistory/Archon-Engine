@@ -61,6 +61,10 @@ namespace Map.Core
         private bool isInitialized = false;
         public bool IsInitialized => isInitialized;
 
+        // Progress events for loading screen
+        public System.Action<float, string> OnInitializationProgress;
+        public System.Action<bool, string> OnInitializationComplete;
+
         /// <summary>
         /// Set initialization state (called by MapSystemCoordinator when map generation completes)
         /// </summary>
@@ -71,6 +75,28 @@ namespace Map.Core
             {
                 ArchonLogger.LogMapInit($"MapInitializer: Initialization {(success ? "completed successfully" : "failed")}");
             }
+
+            // Emit completion event
+            OnInitializationComplete?.Invoke(success, success ? "Map initialization complete" : "Map initialization failed");
+        }
+
+        /// <summary>
+        /// Report initialization progress
+        /// </summary>
+        private void ReportProgress(float progress, string status)
+        {
+            OnInitializationProgress?.Invoke(progress, status);
+        }
+
+        /// <summary>
+        /// Handle progress from MapSystemCoordinator and map to our progress range
+        /// Coordinator reports 0-100%, we map it to 20-100% (since component init is 0-20%)
+        /// </summary>
+        private void HandleCoordinatorProgress(float coordinatorProgress, string status)
+        {
+            // Map coordinator's 0-100% to our 20-100% range
+            float mappedProgress = 20f + (coordinatorProgress * 0.8f);
+            ReportProgress(mappedProgress, status);
         }
 
         /// <summary>
@@ -166,6 +192,9 @@ namespace Map.Core
                 }
             }
 
+            // Subscribe to coordinator's generation progress events
+            coordinator.OnGenerationProgress += HandleCoordinatorProgress;
+
             // Debug: Verify our references before passing to coordinator
             if (logInitializationProgress)
             {
@@ -189,6 +218,8 @@ namespace Map.Core
 
         /// <summary>
         /// Initialize all map system components in the correct order
+        /// Component initialization is 0-20% of total map initialization
+        /// Heavy work (bitmap loading, texture population) is 20-100% handled by MapSystemCoordinator
         /// </summary>
         public void InitializeAllComponents()
         {
@@ -197,28 +228,35 @@ namespace Map.Core
                 ArchonLogger.LogMapInit("MapInitializer: Starting map system component initialization...");
             }
 
-            // Phase 1: Core texture and computation components
+            ReportProgress(0f, "Initializing core components...");
+
+            // Phase 1: Core texture and computation components (0-5%)
             InitializeTextureManager();
             InitializeBorderDispatcher();
             InitializeOwnerTextureDispatcher();  // GPU owner texture population
             InitializeMapModeManager();
+            ReportProgress(5f, "Core components initialized");
 
-            // Phase 2: Processing components
+            // Phase 2: Processing components (5-10%)
             InitializeProvinceProcessor();
+            ReportProgress(10f, "Province processor initialized");
 
-            // Phase 3: High-level components
+            // Phase 3: High-level components (10-15%)
             InitializeDataLoader();
             InitializeRenderingCoordinator();
             InitializeProvinceSelector();
             InitializeTexturePopulator();
             InitializeTextureUpdateBridge();
+            ReportProgress(15f, "High-level components initialized");
 
-            // Phase 4: Camera setup
+            // Phase 4: Camera setup (15-18%)
             InitializeCamera();
             InitializeCameraController();
+            ReportProgress(18f, "Camera configured");
 
-            // Phase 5: Debug components (only in development builds)
+            // Phase 5: Debug components (18-20%)
             InitializeDebugUI();
+            ReportProgress(20f, "Components initialized");
 
             if (logInitializationProgress)
             {

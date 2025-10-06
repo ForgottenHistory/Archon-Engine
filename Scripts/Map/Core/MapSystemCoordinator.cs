@@ -21,6 +21,9 @@ namespace Map.Core
         [Header("Configuration")]
         [SerializeField] private bool logSystemProgress = true;
 
+        // Progress callback for loading screen
+        public System.Action<float, string> OnGenerationProgress;
+
         // Internal components - not exposed to MapGenerator
         private MeshRenderer meshRenderer;
         private Camera mapCamera;
@@ -105,7 +108,8 @@ namespace Map.Core
         {
             try
             {
-                // Load province data with simulation integration
+                // Load province data with simulation integration (0-40% of generation)
+                OnGenerationProgress?.Invoke(0f, "Loading province bitmap...");
                 var provinceResult = await dataLoader.LoadFromSimulationAsync(simulationData, bitmapPath, csvPath, useDefinition);
                 if (!provinceResult.HasValue)
                 {
@@ -113,20 +117,31 @@ namespace Map.Core
                     return false;
                 }
 
-                // Convert and populate with simulation data
+                OnGenerationProgress?.Invoke(40f, "Province bitmap loaded");
+
+                // Convert and populate with simulation data (40-80% of generation)
+                OnGenerationProgress?.Invoke(40f, "Validating provinces...");
                 var gameState = FindFirstObjectByType<GameState>();
                 ProvinceMapping = ConvertProvinceResultWithSimulationData(provinceResult.Value, textureManager, gameState);
+
+                OnGenerationProgress?.Invoke(50f, "Populating textures...");
                 texturePopulator.PopulateWithSimulationData(provinceResult.Value, textureManager, ProvinceMapping, gameState);
                 provinceResult.Value.Dispose();
 
-                // Setup rendering
+                OnGenerationProgress?.Invoke(80f, "Textures populated");
+
+                // Setup rendering (80-95% of generation)
+                OnGenerationProgress?.Invoke(80f, "Setting up rendering...");
                 renderingCoordinator.SetupMapRendering();
                 provinceSelector.Initialize(textureManager, meshRenderer.transform);
+
+                OnGenerationProgress?.Invoke(90f, "Rendering configured");
 
                 // Note: MapModeManager initialization is controlled by GAME layer
                 // ENGINE provides mechanism, GAME controls initialization flow
 
-                // Initialize TextureUpdateBridge for runtime texture updates
+                // Initialize TextureUpdateBridge for runtime texture updates (95-100%)
+                OnGenerationProgress?.Invoke(95f, "Initializing texture updates...");
                 if (textureUpdateBridge != null && gameState != null)
                 {
                     textureUpdateBridge.Initialize(gameState, textureManager, texturePopulator, ProvinceMapping);
@@ -140,6 +155,8 @@ namespace Map.Core
                 {
                     ArchonLogger.LogWarning("MapSystemCoordinator: TextureUpdateBridge not available - runtime texture updates disabled");
                 }
+
+                OnGenerationProgress?.Invoke(100f, "Map generation complete");
 
                 return true;
             }
