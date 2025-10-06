@@ -246,9 +246,14 @@ void DetectDualBorders(uint3 id : SV_DispatchThreadID)
     int countryRadius = (int)CountryBorderThickness;
 
     // Check maximum radius needed (so we only loop once)
+    // IMPORTANT: Include AA in radius calculation so AA works with thin borders
     int maxRadius = max(provinceRadius, countryRadius);
+    if (BorderAntiAliasing > 0.0)
+    {
+        maxRadius = max(maxRadius, (int)ceil(BorderAntiAliasing));
+    }
 
-    // Fast path: both borders are thin (0)
+    // Fast path: both borders are thin (0) AND no AA
     if (maxRadius == 0)
     {
         // Check all four neighbors (fast path)
