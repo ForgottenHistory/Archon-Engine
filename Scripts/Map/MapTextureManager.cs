@@ -84,9 +84,11 @@ namespace Map.Rendering
             RenderTexture.active = null;
 
             Color32 packedColor = temp.GetPixel(0, 0);
+            ushort provinceID = Province.ProvinceIDEncoder.UnpackProvinceID(packedColor);
+
             Object.Destroy(temp);
 
-            return Province.ProvinceIDEncoder.UnpackProvinceID(packedColor);
+            return provinceID;
         }
 
         /// <summary>

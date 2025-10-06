@@ -1,6 +1,7 @@
 using UnityEngine;
 using Map.Rendering;
 using Utils;
+using System;
 
 namespace Map.Interaction
 {
@@ -13,19 +14,106 @@ namespace Map.Interaction
     {
         [Header("Configuration")]
         [SerializeField] private bool logSelectionDebug = false;
+        [SerializeField] private bool enableSelection = true;
+
+        // Events for Game layer to subscribe to
+        public event Action<ushort> OnProvinceClicked;
+        public event Action<ushort> OnProvinceHovered;
+        public event Action OnSelectionCleared;
 
         // Dependencies
         private MapTextureManager textureManager;
         private Transform mapQuadTransform;
+        private Camera mainCamera;
+
+        // State tracking
+        private ushort currentHoveredProvince = 0;
+        private ushort lastSelectedProvince = 0;
+        private bool isInitialized = false;
 
         public void Initialize(MapTextureManager textures, Transform quadTransform)
         {
             textureManager = textures;
             mapQuadTransform = quadTransform;
+            mainCamera = Camera.main;
+            isInitialized = true;
+
+            if (logSelectionDebug)
+            {
+                ArchonLogger.Log("ProvinceSelector: Initialized with texture manager and map quad");
+            }
+        }
+
+        void Update()
+        {
+            if (!isInitialized || !enableSelection || mainCamera == null)
+            {
+                return;
+            }
+
+            // Handle hover detection
+            ushort hoveredProvince = GetProvinceAtMousePosition(mainCamera);
+            if (hoveredProvince != currentHoveredProvince)
+            {
+                currentHoveredProvince = hoveredProvince;
+
+                if (hoveredProvince != 0)
+                {
+                    OnProvinceHovered?.Invoke(hoveredProvince);
+                }
+            }
+
+            // Handle click detection
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Get detailed info for click debugging
+                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit) && hit.transform == mapQuadTransform)
+                {
+                    Vector2 uv = hit.textureCoord;
+                    int x = Mathf.FloorToInt(uv.x * textureManager.MapWidth);
+                    int y = Mathf.FloorToInt(uv.y * textureManager.MapHeight);
+                    x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
+                    y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
+                    ushort clickedProvince = textureManager.GetProvinceID(x, y);
+
+                    if (clickedProvince != 0)
+                    {
+                        lastSelectedProvince = clickedProvince;
+                        OnProvinceClicked?.Invoke(clickedProvince);
+
+                        // Test: Read the texture in a small area around the click
+                        ushort testNearby = textureManager.GetProvinceID(x + 10, y);
+                        ArchonLogger.Log($"CLICK: UV ({uv.x:F3},{uv.y:F3}) → Pixel ({x},{y}) → Province {clickedProvince} | Nearby pixel ({x+10},{y}) → Province {testNearby}");
+                    }
+                }
+                else
+                {
+                    // Clicked on non-province area (e.g., ocean, UI)
+                    OnSelectionCleared?.Invoke();
+
+                    if (logSelectionDebug)
+                    {
+                        ArchonLogger.Log("ProvinceSelector: Selection cleared (clicked outside provinces)");
+                    }
+                }
+            }
         }
 
         /// <summary>
-        /// Get province ID at world position (for mouse interaction)
+        /// Get the currently selected province ID
+        /// </summary>
+        public ushort GetSelectedProvince() => lastSelectedProvince;
+
+        /// <summary>
+        /// Get the currently hovered province ID
+        /// </summary>
+        public ushort GetHoveredProvince() => currentHoveredProvince;
+
+        /// <summary>
+        /// Get province ID at world position using raycast + texture lookup
         /// Uses texture-based lookup for optimal performance (<1ms)
         /// </summary>
         /// <param name="worldPosition">World position to query</param>
@@ -41,37 +129,35 @@ namespace Map.Interaction
                 return 0;
             }
 
-            // Convert world position to local quad space
-            Vector3 localPos = mapQuadTransform.InverseTransformPoint(worldPosition);
+            // Raycast from camera to world position to get UV coordinates
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            // Convert to UV coordinates (assuming quad is centered and scaled properly)
-            float aspectRatio = (float)textureManager.MapWidth / textureManager.MapHeight;
-            float quadHalfWidth = 5f * aspectRatio;
-            float quadHalfHeight = 5f;
-
-            float u = (localPos.x + quadHalfWidth) / (2f * quadHalfWidth);
-            float v = (localPos.y + quadHalfHeight) / (2f * quadHalfHeight);
-
-            // Clamp UV to valid range
-            u = Mathf.Clamp01(u);
-            v = Mathf.Clamp01(v);
-
-            // Convert to pixel coordinates
-            int x = Mathf.FloorToInt(u * textureManager.MapWidth);
-            int y = Mathf.FloorToInt(v * textureManager.MapHeight);
-
-            // Clamp to texture bounds
-            x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
-            y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
-
-            ushort provinceID = textureManager.GetProvinceID(x, y);
-
-            if (logSelectionDebug)
+            if (Physics.Raycast(ray, out hit))
             {
-                ArchonLogger.Log($"ProvinceSelector: World {worldPosition} → Local {localPos} → UV ({u:F3},{v:F3}) → Pixel ({x},{y}) → Province {provinceID}");
+                // Check if we hit the map quad
+                if (hit.transform == mapQuadTransform)
+                {
+                    // Get UV coordinates from raycast hit
+                    Vector2 uv = hit.textureCoord;
+
+                    // Convert UV to pixel coordinates
+                    int x = Mathf.FloorToInt(uv.x * textureManager.MapWidth);
+                    int y = Mathf.FloorToInt(uv.y * textureManager.MapHeight);
+
+                    // Clamp to texture bounds
+                    x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
+                    y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
+
+                    // Get province ID from texture
+                    ushort provinceID = textureManager.GetProvinceID(x, y);
+
+                    return provinceID;
+                }
             }
 
-            return provinceID;
+            // No hit or hit wrong object
+            return 0;
         }
 
         /// <summary>
