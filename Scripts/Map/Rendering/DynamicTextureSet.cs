@@ -42,18 +42,22 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Create border render texture in RG16 format
+        /// Create border render texture in R16G16_UNorm format
         /// R channel = country borders, G channel = province borders
+        /// Uses explicit GraphicsFormat to prevent TYPELESS format
         /// </summary>
         private void CreateBorderTexture()
         {
-            borderTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.RG16);
+            var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight,
+                UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16_UNorm, 0);
+            descriptor.enableRandomWrite = true;
+            descriptor.useMipMap = false;
+            descriptor.autoGenerateMips = false;
+
+            borderTexture = new RenderTexture(descriptor);
             borderTexture.name = "Border_RenderTexture";
             borderTexture.filterMode = FilterMode.Point;
             borderTexture.wrapMode = TextureWrapMode.Clamp;
-            borderTexture.useMipMap = false;
-            borderTexture.autoGenerateMips = false;
-            borderTexture.enableRandomWrite = true;
             borderTexture.Create();
 
             // Clear to black (no borders)
@@ -63,22 +67,26 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"DynamicTextureSet: Created Border RenderTexture {mapWidth}x{mapHeight} RG16");
+                ArchonLogger.LogMapInit($"DynamicTextureSet: Created Border RenderTexture {mapWidth}x{mapHeight} R16G16_UNorm");
             }
         }
 
         /// <summary>
         /// Create highlight render texture for selection effects
+        /// Uses explicit GraphicsFormat.R8G8B8A8_UNorm to prevent TYPELESS format
         /// </summary>
         private void CreateHighlightTexture()
         {
-            highlightTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.ARGB32);
+            var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight,
+                UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, 0);
+            descriptor.enableRandomWrite = true;
+            descriptor.useMipMap = false;
+            descriptor.autoGenerateMips = false;
+
+            highlightTexture = new RenderTexture(descriptor);
             highlightTexture.name = "Highlight_RenderTexture";
             highlightTexture.filterMode = FilterMode.Point;
             highlightTexture.wrapMode = TextureWrapMode.Clamp;
-            highlightTexture.useMipMap = false;
-            highlightTexture.autoGenerateMips = false;
-            highlightTexture.enableRandomWrite = true;
             highlightTexture.Create();
 
             // Clear to transparent
@@ -88,7 +96,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"DynamicTextureSet: Created Highlight RenderTexture {mapWidth}x{mapHeight} ARGB32");
+                ArchonLogger.LogMapInit($"DynamicTextureSet: Created Highlight RenderTexture {mapWidth}x{mapHeight} R8G8B8A8_UNorm");
             }
         }
 

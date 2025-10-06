@@ -71,15 +71,20 @@ namespace Map.Rendering
         /// <summary>
         /// Get province ID at specific coordinates using GPU readback
         /// NOTE: Slow (GPU→CPU readback) - use sparingly for mouse picking only
+        /// Y coordinate is in OpenGL convention (0 = bottom), RenderTexture uses GPU convention (0 = top)
         /// </summary>
         public ushort GetProvinceID(int x, int y)
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return 0;
 
+            // Y-flip: UV coordinates are OpenGL style (0,0 = bottom-left)
+            // but RenderTexture.ReadPixels uses GPU coordinates (0,0 = top-left)
+            int flippedY = mapHeight - 1 - y;
+
             // Read single pixel from RenderTexture
             RenderTexture.active = ProvinceIDTexture;
             Texture2D temp = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-            temp.ReadPixels(new Rect(x, y, 1, 1), 0, 0);
+            temp.ReadPixels(new Rect(x, flippedY, 1, 1), 0, 0);
             temp.Apply();
             RenderTexture.active = null;
 

@@ -1,0 +1,138 @@
+// Province Highlight Compute Shader for Archon Map System
+// Highlights selected provinces by filling pixels or outlining borders
+// Runs entirely on GPU for maximum performance with 10,000+ provinces
+
+#pragma kernel ClearHighlight
+#pragma kernel HighlightProvince
+#pragma kernel HighlightProvinceBorders
+
+// Input textures - Use RWTexture2D even for read-only to avoid UAV/SRV binding issues
+RWTexture2D<float4> ProvinceIDTexture;
+
+// Output texture
+RWTexture2D<float4> HighlightTexture;
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+// Highlight parameters
+uint TargetProvinceID;
+float4 HighlightColor;  // RGBA color for highlight
+float BorderThickness;  // 0-5 for border outline thickness
+
+// Province ID decoding - must match BorderDetection.compute
+uint DecodeProvinceID(float2 encoded)
+{
+    // Convert from float [0,1] back to uint16 values
+    uint r = (uint)(encoded.r * 255.0 + 0.5);
+    uint g = (uint)(encoded.g * 255.0 + 0.5);
+
+    // Reconstruct 16-bit province ID from RG channels
+    return (g << 8) | r;
+}
+
+// ============================================================================
+// Clear Highlight - Reset entire highlight texture to transparent
+// ============================================================================
+[numthreads(8, 8, 1)]
+void ClearHighlight(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Clear to transparent (NO Y-FLIP - use raw GPU coords)
+    HighlightTexture[id.xy] = float4(0, 0, 0, 0);
+}
+
+// ============================================================================
+// Highlight Province - Fill all pixels of target province with highlight color
+// ============================================================================
+[numthreads(8, 8, 1)]
+void HighlightProvince(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Get current pixel's province ID (NO Y-FLIP - raw GPU coords)
+    float2 encoded = ProvinceIDTexture[id.xy].rg;
+    uint provinceID = DecodeProvinceID(encoded);
+
+    // If this pixel belongs to target province, highlight it
+    if (provinceID == TargetProvinceID)
+    {
+        HighlightTexture[id.xy] = HighlightColor;
+    }
+    else
+    {
+        // Clear non-matching pixels (allows switching between provinces)
+        HighlightTexture[id.xy] = float4(0, 0, 0, 0);
+    }
+}
+
+// ============================================================================
+// Highlight Province Borders - Only outline the borders of target province
+// Useful for subtle selection feedback without filling entire province
+// ============================================================================
+[numthreads(8, 8, 1)]
+void HighlightProvinceBorders(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Get current pixel's province ID (NO Y-FLIP - raw GPU coords)
+    float2 encoded = ProvinceIDTexture[id.xy].rg;
+    uint provinceID = DecodeProvinceID(encoded);
+
+    // Default: transparent (no highlight)
+    float4 outputColor = float4(0, 0, 0, 0);
+
+    // Only process pixels that belong to target province
+    if (provinceID == TargetProvinceID)
+    {
+        // Check if this pixel is on the border of the province
+        bool isBorder = false;
+        int checkRadius = max(1, (int)BorderThickness);
+
+        // Check neighbors in radius to detect border
+        for (int dy = -checkRadius; dy <= checkRadius && !isBorder; dy++)
+        {
+            for (int dx = -checkRadius; dx <= checkRadius && !isBorder; dx++)
+            {
+                // Skip center pixel
+                if (dx == 0 && dy == 0)
+                    continue;
+
+                // Calculate neighbor position
+                int2 neighborPos = id.xy + int2(dx, dy);
+
+                // Bounds check
+                if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+                    neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+                    continue;
+
+                // Get neighbor province
+                float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+                uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+                // If neighbor is different province, we're on a border
+                if (neighborProvince != TargetProvinceID)
+                {
+                    isBorder = true;
+                }
+            }
+        }
+
+        // If on border, apply highlight color
+        if (isBorder)
+        {
+            outputColor = HighlightColor;
+        }
+    }
+
+    // NO Y-FLIP - write directly to raw GPU coords
+    HighlightTexture[id.xy] = outputColor;
+}

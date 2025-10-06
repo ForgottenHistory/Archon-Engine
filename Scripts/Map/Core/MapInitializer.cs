@@ -36,6 +36,7 @@ namespace Map.Core
         private MapDataLoader dataLoader;
         private MapRenderingCoordinator renderingCoordinator;
         private ProvinceSelector provinceSelector;
+        private ProvinceHighlighter provinceHighlighter;
         private MapTexturePopulator texturePopulator;
         private TextureUpdateBridge textureUpdateBridge;
         private ParadoxStyleCameraController cameraController;
@@ -50,6 +51,7 @@ namespace Map.Core
         public MapDataLoader DataLoader => dataLoader;
         public MapRenderingCoordinator RenderingCoordinator => renderingCoordinator;
         public ProvinceSelector ProvinceSelector => provinceSelector;
+        public ProvinceHighlighter ProvinceHighlighter => provinceHighlighter;
         public MapTexturePopulator TexturePopulator => texturePopulator;
         public TextureUpdateBridge TextureUpdateBridge => textureUpdateBridge;
         public Camera MapCamera => mapCamera;
@@ -245,6 +247,7 @@ namespace Map.Core
             InitializeDataLoader();
             InitializeRenderingCoordinator();
             InitializeProvinceSelector();
+            InitializeProvinceHighlighter();
             InitializeTexturePopulator();
             InitializeTextureUpdateBridge();
             ReportProgress(15f, "High-level components initialized");
@@ -387,6 +390,25 @@ namespace Map.Core
                 {
                     ArchonLogger.LogMapInit("MapInitializer: Created ProvinceSelector component");
                 }
+            }
+        }
+
+        private void InitializeProvinceHighlighter()
+        {
+            provinceHighlighter = GetComponent<ProvinceHighlighter>();
+            if (provinceHighlighter == null)
+            {
+                provinceHighlighter = gameObject.AddComponent<ProvinceHighlighter>();
+                if (logInitializationProgress)
+                {
+                    ArchonLogger.LogMapInit("MapInitializer: Created ProvinceHighlighter component");
+                }
+            }
+
+            // Set texture manager reference
+            if (provinceHighlighter != null && textureManager != null)
+            {
+                provinceHighlighter.Initialize(textureManager);
             }
         }
 

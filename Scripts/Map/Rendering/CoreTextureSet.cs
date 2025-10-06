@@ -80,17 +80,20 @@ namespace Map.Rendering
 
         /// <summary>
         /// Create province owner render texture for 16-bit country IDs
-        /// Uses RFloat format for UAV support
+        /// Uses explicit GraphicsFormat.R32_SFloat to prevent TYPELESS format
         /// </summary>
         private void CreateProvinceOwnerTexture()
         {
-            provinceOwnerTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.RFloat);
+            var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight,
+                UnityEngine.Experimental.Rendering.GraphicsFormat.R32_SFloat, 0);
+            descriptor.enableRandomWrite = true;
+            descriptor.useMipMap = false;
+            descriptor.autoGenerateMips = false;
+
+            provinceOwnerTexture = new RenderTexture(descriptor);
             provinceOwnerTexture.name = "ProvinceOwner_RenderTexture";
             provinceOwnerTexture.filterMode = FilterMode.Point;
             provinceOwnerTexture.wrapMode = TextureWrapMode.Clamp;
-            provinceOwnerTexture.useMipMap = false;
-            provinceOwnerTexture.autoGenerateMips = false;
-            provinceOwnerTexture.enableRandomWrite = true;
             provinceOwnerTexture.Create();
 
             // Clear to black
@@ -100,7 +103,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"CoreTextureSet: Created Province Owner RenderTexture {mapWidth}x{mapHeight} RFloat");
+                ArchonLogger.LogMapInit($"CoreTextureSet: Created Province Owner RenderTexture {mapWidth}x{mapHeight} R32_SFloat");
             }
         }
 
