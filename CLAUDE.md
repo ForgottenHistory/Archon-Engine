@@ -5,7 +5,44 @@ Archon is a grand strategy game capturing ancient political realities - where ev
 
 **CRITICAL**: Built on **dual-layer architecture** with deterministic simulation (CPU) + high-performance presentation (GPU). This enables 10,000+ provinces at 200+ FPS with multiplayer compatibility.
 
-You, Claude, cannot run tests. I run them manually.
+## UNITY MCP INTEGRATION
+
+This project uses **Unity MCP** (Model Context Protocol) to enable direct Unity Editor interaction. This provides far more capability than generic CLI tools.
+
+### What Unity MCP Enables
+- **Live Editor State**: Check if Unity is in Play Mode, compilation status, console errors
+- **Scene Manipulation**: Create/modify GameObjects, add components, set properties in real-time
+- **Asset Management**: Create/import/modify assets with immediate Unity recognition
+- **Menu Item Execution**: Trigger Unity commands programmatically
+- **Script Operations**: Create/edit/validate C# scripts with Unity's Roslyn integration
+- **Console Access**: Read runtime logs and errors directly
+
+### Visual Debugging - Screenshot Workflow
+
+**Script Location**: `Assets/Game/Debug/ScreenshotUtility.cs`
+
+I can take screenshots and view them directly! This is invaluable for visual debugging.
+
+**How to trigger:**
+1. **Automatic (Recommended)**: I can execute the menu item via MCP:
+   ```
+   "Take a screenshot now" → I trigger Tools/Take Screenshot for Claude
+   ```
+
+**How it works:**
+- Only available in Play Mode (for runtime screenshots)
+- Saves two files:
+  - `screenshot_[timestamp].png` - Archived timestamped version
+  - `latest.png` - Always the most recent (easy for me to find)
+- Location: `Assets/Game/Debug/Screenshots/`
+
+**Usage Example:**
+```
+User: "This rendering looks wrong"
+Claude: [Triggers screenshot via MCP] → [Reads latest.png] → "I can see the borders are rendering incorrectly..."
+```
+
+This enables **visual feedback loops** - you can describe visual issues and I can actually see what you're seeing.
 
 ## CODEBASE NAVIGATION
 
