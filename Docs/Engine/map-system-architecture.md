@@ -3,6 +3,8 @@
 
 **📊 Implementation Status:** ⚠️ Partially Implemented (Phase 1 complete, Phases 2-5 in progress)
 
+**🔄 Recent Update (2025-10-09):** ProvinceState refactored for engine-game separation. Game-specific fields (`development`, `fortLevel`, `flags`) moved to `HegemonProvinceData` in the game layer. Position remains in cold data (correct architecture). See [phase-3-complete-scenario-loader-bug-fixed.md](../Log/2025-10/2025-10-09/phase-3-complete-scenario-loader-bug-fixed.md) for complete refactoring details.
+
 > **📚 Architecture Context:** This document consolidates all map system architecture. See [master-architecture-document.md](master-architecture-document.md) for dual-layer architecture overview.
 
 ---
@@ -37,7 +39,8 @@ Traditional approach: Individual GameObjects/meshes per province
 
 **1. Dual-Layer System**
 ```
-CPU (Simulation):   8-byte ProvinceState × 10k = 80KB
+CPU (Engine):       8-byte ProvinceState × 10k = 80KB (generic primitives)
+CPU (Game):         4-byte HegemonProvinceData × 10k = 40KB (game mechanics)
 GPU (Presentation): Textures + Shaders = 60MB VRAM
 ```
 
@@ -106,16 +109,22 @@ public static Vector3 GetProvinceCenter(ushort id) {
 
 ### Architecture Decision: Position as Cold Data
 
-**NOT stored in ProvinceState (hot data):**
+**NOT stored in ProvinceState (engine hot data):**
 ```csharp
-// 8 bytes - no position!
+// ENGINE LAYER: 8 bytes - generic primitives only, no position!
 public struct ProvinceState {
     public ushort ownerID;
     public ushort controllerID;
+    public ushort terrainType;
+    public ushort gameDataSlot;
+}
+
+// GAME LAYER: 4 bytes - Hegemon-specific, no position!
+public struct HegemonProvinceData {
     public byte development;
-    public byte terrain;
     public byte fortLevel;
-    public byte flags;
+    public byte unrest;
+    public byte population;
 }
 ```
 
@@ -131,8 +140,9 @@ public class ProvinceSpatialData {
 
 **Rationale:**
 - Position is presentation, not simulation
-- Keeping it separate saves cache space (12 bytes per province)
+- Keeping it separate saves cache space (position vectors would add 8-12 bytes)
 - Accessed rarely, loaded on-demand
+- Maintains clean separation between simulation (hot) and presentation (spatial)
 
 ---
 
@@ -394,10 +404,11 @@ void BorderDetection(uint3 id : SV_DispatchThreadID) {
 
 **CPU (Simulation):**
 ```
-ProvinceState[]:    80KB  (8 bytes × 10k)
-Adjacency data:    200KB  (average 6 neighbors)
-Spatial lookups:    80KB  (province centers)
-Total CPU:         360KB
+ProvinceState[]:         80KB  (8 bytes × 10k, engine layer)
+HegemonProvinceData[]:   40KB  (4 bytes × 10k, game layer)
+Adjacency data:         200KB  (average 6 neighbors)
+Spatial lookups:         80KB  (province centers)
+Total CPU:              400KB
 ```
 
 **GPU (Presentation):**

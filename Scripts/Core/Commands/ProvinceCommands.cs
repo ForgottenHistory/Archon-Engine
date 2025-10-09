@@ -66,68 +66,9 @@ namespace Core.Commands
         }
     }
 
-    /// <summary>
-    /// Command to change province development level
-    /// Handles validation for development changes (buildings, investment, etc.)
-    /// </summary>
-    public class ChangeProvinceDevelopmentCommand : BaseCommand
-    {
-        public ushort ProvinceId { get; set; }
-        public byte NewDevelopment { get; set; }
-
-        // For undo support
-        private byte oldDevelopment;
-
-        public override int Priority => 50; // Medium priority
-
-        public override bool Validate(GameState gameState)
-        {
-            // Check if province exists
-            if (!ValidateProvinceId(gameState, ProvinceId))
-            {
-                ArchonLogger.LogWarning($"Invalid province ID: {ProvinceId}");
-                return false;
-            }
-
-            // Check if province is ocean (can't develop ocean)
-            byte terrain = gameState.Provinces.GetProvinceTerrain(ProvinceId);
-            if (terrain == 0) // Ocean terrain
-            {
-                ArchonLogger.LogWarning($"Cannot develop ocean province {ProvinceId}");
-                return false;
-            }
-
-            // Store old development for undo
-            oldDevelopment = gameState.Provinces.GetProvinceDevelopment(ProvinceId);
-
-            // Check if there's actually a change
-            if (oldDevelopment == NewDevelopment)
-            {
-                ArchonLogger.LogWarning($"Province {ProvinceId} already has development {NewDevelopment}");
-                return false;
-            }
-
-            return true;
-        }
-
-        public override void Execute(GameState gameState)
-        {
-            LogExecution($"Changing province {ProvinceId} development from {oldDevelopment} to {NewDevelopment}");
-
-            // Execute the development change
-            gameState.Provinces.SetProvinceDevelopment(ProvinceId, NewDevelopment);
-
-            // The ProvinceSystem will emit the appropriate events
-        }
-
-        public override void Undo(GameState gameState)
-        {
-            LogExecution($"Undoing province {ProvinceId} development change back to {oldDevelopment}");
-
-            // Restore previous development
-            gameState.Provinces.SetProvinceDevelopment(ProvinceId, oldDevelopment);
-        }
-    }
+    // REMOVED: ChangeProvinceDevelopmentCommand - game-specific, moved to Game/Commands/
+    // Development is game-specific and should not be in the engine layer
+    // Migration: Create HegemonProvinceDevelopmentCommand in Game layer using HegemonProvinceSystem
 
     /// <summary>
     /// Command to transfer multiple provinces at once (useful for peace deals, vassal integration)
@@ -197,89 +138,9 @@ namespace Core.Commands
         }
     }
 
-    /// <summary>
-    /// Command to develop all provinces owned by a country by a certain amount
-    /// Useful for technology advances, national decisions, etc.
-    /// </summary>
-    public class DevelopCountryProvincesCommand : BaseCommand
-    {
-        public ushort CountryId { get; set; }
-        public byte DevelopmentIncrease { get; set; }
-        public byte MaxDevelopment { get; set; } = 255; // Cap development
-
-        // For undo support
-        private ushort[] affectedProvinces;
-        private byte[] oldDevelopmentLevels;
-
-        public override int Priority => 30; // Lower priority for mass development
-
-        public override bool Validate(GameState gameState)
-        {
-            // Check if country exists
-            if (!ValidateCountryId(gameState, CountryId))
-            {
-                ArchonLogger.LogWarning($"Invalid country ID: {CountryId}");
-                return false;
-            }
-
-            if (DevelopmentIncrease == 0)
-            {
-                ArchonLogger.LogWarning("Development increase cannot be zero");
-                return false;
-            }
-
-            // Get all provinces owned by this country
-            var provinces = gameState.ProvinceQueries.GetCountryProvinces(CountryId, Unity.Collections.Allocator.Temp);
-
-            if (provinces.Length == 0)
-            {
-                ArchonLogger.LogWarning($"Country {CountryId} owns no provinces to develop");
-                provinces.Dispose();
-                return false;
-            }
-
-            // Store provinces and old development levels for undo
-            affectedProvinces = new ushort[provinces.Length];
-            oldDevelopmentLevels = new byte[provinces.Length];
-
-            for (int i = 0; i < provinces.Length; i++)
-            {
-                affectedProvinces[i] = provinces[i];
-                oldDevelopmentLevels[i] = gameState.Provinces.GetProvinceDevelopment(provinces[i]);
-            }
-
-            provinces.Dispose();
-            return true;
-        }
-
-        public override void Execute(GameState gameState)
-        {
-            LogExecution($"Developing all provinces of country {CountryId} by +{DevelopmentIncrease}");
-
-            // Develop all provinces
-            for (int i = 0; i < affectedProvinces.Length; i++)
-            {
-                byte currentDev = oldDevelopmentLevels[i];
-                byte newDev = (byte)Mathf.Min(currentDev + DevelopmentIncrease, MaxDevelopment);
-
-                if (newDev != currentDev)
-                {
-                    gameState.Provinces.SetProvinceDevelopment(affectedProvinces[i], newDev);
-                }
-            }
-        }
-
-        public override void Undo(GameState gameState)
-        {
-            LogExecution($"Undoing development of country {CountryId} provinces");
-
-            // Restore all old development levels
-            for (int i = 0; i < affectedProvinces.Length; i++)
-            {
-                gameState.Provinces.SetProvinceDevelopment(affectedProvinces[i], oldDevelopmentLevels[i]);
-            }
-        }
-    }
+    // REMOVED: DevelopCountryProvincesCommand - game-specific, moved to Game/Commands/
+    // Development is game-specific and should not be in the engine layer
+    // Migration: Create HegemonDevelopCountryProvincesCommand in Game layer using HegemonProvinceSystem
 
     /// <summary>
     /// Command factory for creating common province commands
@@ -311,17 +172,8 @@ namespace Core.Commands
             };
         }
 
-        /// <summary>
-        /// Create command to develop a province
-        /// </summary>
-        public static ChangeProvinceDevelopmentCommand DevelopProvince(ushort provinceId, byte newDevelopment)
-        {
-            return new ChangeProvinceDevelopmentCommand
-            {
-                ProvinceId = provinceId,
-                NewDevelopment = newDevelopment
-            };
-        }
+        // REMOVED: DevelopProvince() - game-specific command factory
+        // Migration: Create in Game/Commands/HegemonProvinceCommandFactory
 
         /// <summary>
         /// Create command to transfer multiple provinces (peace deal, vassal integration)
@@ -335,16 +187,7 @@ namespace Core.Commands
             };
         }
 
-        /// <summary>
-        /// Create command to develop all provinces of a country
-        /// </summary>
-        public static DevelopCountryProvincesCommand DevelopCountry(ushort countryId, byte developmentIncrease)
-        {
-            return new DevelopCountryProvincesCommand
-            {
-                CountryId = countryId,
-                DevelopmentIncrease = developmentIncrease
-            };
-        }
+        // REMOVED: DevelopCountry() - game-specific command factory
+        // Migration: Create in Game/Commands/HegemonProvinceCommandFactory
     }
 }

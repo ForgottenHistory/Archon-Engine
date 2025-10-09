@@ -79,8 +79,9 @@ namespace Map.Tests.Simulation
             var state = simulation.GetProvinceState(provinceID);
 
             Assert.AreEqual(0, state.ownerID, "New province should be unowned");
-            Assert.AreEqual((byte)TerrainType.Hills, state.terrain);
-            Assert.AreEqual(1, state.development, "Should have default development");
+            Assert.AreEqual((ushort)TerrainType.Hills, state.terrainType);  // Changed: .terrain → .terrainType (ushort)
+            // REMOVED: development field - now in HegemonProvinceSystem (game layer)
+            // Migration: Use hegemonProvinceSystem.GetDevelopment(provinceId) for game-specific data
         }
 
         [Test]
@@ -90,7 +91,7 @@ namespace Map.Tests.Simulation
 
             // Should return default state without crashing
             Assert.AreEqual(0, state.ownerID);
-            Assert.AreEqual(1, state.terrain); // Default grassland
+            Assert.AreEqual((ushort)1, state.terrainType); // Changed: .terrain → .terrainType (ushort)
         }
 
         [Test]
@@ -131,6 +132,10 @@ namespace Map.Tests.Simulation
             Assert.IsTrue(state.IsOccupied, "Should be occupied by different controller");
         }
 
+        // PHASE 3 MIGRATION NOTE: Development tests removed - development is now game-specific
+        // Development moved to HegemonProvinceSystem (game layer)
+        // Migrate these tests to Game.Tests for testing game-specific province data
+        /*
         [Test]
         public void SetProvinceDevelopment_ValidValues_ShouldUpdateCorrectly()
         {
@@ -143,7 +148,12 @@ namespace Map.Tests.Simulation
             Assert.IsTrue(result);
             Assert.AreEqual(newDevelopment, simulation.GetProvinceState(provinceID).development);
         }
+        */
 
+        // PHASE 3 MIGRATION NOTE: Flag tests removed - flags are now game-specific
+        // ProvinceFlags enum removed from engine layer
+        // Migrate these tests to Game.Tests for testing game-specific flag systems
+        /*
         [Test]
         public void SetProvinceFlag_ValidFlag_ShouldUpdateCorrectly()
         {
@@ -161,6 +171,7 @@ namespace Map.Tests.Simulation
             Assert.IsTrue(result2);
             Assert.IsFalse(simulation.GetProvinceState(provinceID).HasFlag(ProvinceFlags.IsCoastal));
         }
+        */
 
         [Test]
         public void GetProvincesByOwner_MultipleProvinces_ShouldReturnCorrectList()
@@ -228,9 +239,8 @@ namespace Map.Tests.Simulation
             simulation.SetProvinceOwner(1, 100);
             Assert.Greater(simulation.StateVersion, version1, "Version should increment on ownership change");
 
-            uint version2 = simulation.StateVersion;
-            simulation.SetProvinceDevelopment(1, 50);
-            Assert.Greater(simulation.StateVersion, version2, "Version should increment on development change");
+            // REMOVED: SetProvinceDevelopment test - development is now game-specific
+            // Engine only tracks ownership and terrain changes
         }
 
         [Test]

@@ -2,6 +2,8 @@
 
 **📊 Implementation Status:** ✅ Implemented (Command pattern ✅, EventBus zero-allocation ✅)
 
+**🔄 Recent Update (2025-10-09):** ProvinceState refactored for engine-game separation. Game-specific fields (`development`, `fortLevel`, `flags`) moved to `HegemonProvinceData` in the game layer. Examples updated to show dual-layer architecture. See [phase-3-complete-scenario-loader-bug-fixed.md](../Log/2025-10/2025-10-09/phase-3-complete-scenario-loader-bug-fixed.md) for complete refactoring details.
+
 > **📚 Architecture Context:** This document describes system communication patterns. See [master-architecture-document.md](master-architecture-document.md) for overall architecture.
 
 ## Executive Summary
@@ -157,11 +159,12 @@ public void SetProvinceOwner(ushort province, ushort newOwner) {
 
 // Direct calls: Required dependency, performance-critical
 public FixedPoint64 CalculateProvinceIncome(ushort province) {
-    var state = provinces[province];
+    var engineState = provinces[province];        // Engine layer data
+    var gameState = hegemonData[province];        // Game layer data
 
     // Direct calls - we NEED this data immediately
-    FixedPoint64 baseTax = economicSystem.GetBaseTax(state.development);
-    FixedPoint64 terrainMod = terrainSystem.GetModifier(state.terrain);
+    FixedPoint64 baseTax = economicSystem.GetBaseTax(gameState.development);
+    FixedPoint64 terrainMod = terrainSystem.GetModifier(engineState.terrainType);
 
     return baseTax * terrainMod;
 }
@@ -292,8 +295,9 @@ public ushort GetProvinceOwner(ushort province) {
 
 // Computed query: Calculate from multiple sources
 public FixedPoint64 GetProvinceIncome(ushort province) {
-    var state = provinces[province];
-    return economicSystem.CalculateIncome(state.development, state.terrain);
+    var engineState = provinces[province];
+    var gameState = hegemonData[province];
+    return economicSystem.CalculateIncome(gameState.development, engineState.terrainType);
 }
 
 // Cached query: Expensive calculation cached per-frame
@@ -555,8 +559,9 @@ public FixedPoint64 CalculateIncome(ushort province) {
 
 // ✅ GOOD: Direct call for required dependency
 public FixedPoint64 CalculateIncome(ushort province) {
-    var state = provinces[province];
-    return economicSystem.CalculateIncome(state.development, state.terrain);
+    var engineState = provinces[province];
+    var gameState = hegemonData[province];
+    return economicSystem.CalculateIncome(gameState.development, engineState.terrainType);
 }
 ```
 
@@ -740,17 +745,25 @@ public class MemoryManagement {
 ### Memory Layout for Core Simulation
 
 ```csharp
-// Core simulation state: 8-byte structs in NativeArray
+// ENGINE LAYER: Generic primitives (8-byte structs in NativeArray)
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct ProvinceState {
     public ushort ownerID;
     public ushort controllerID;
-    public byte development;
-    public byte terrain;
-    public byte fortLevel;
-    public byte flags;
+    public ushort terrainType;
+    public ushort gameDataSlot;
 }
 NativeArray<ProvinceState> provinces;  // 10,000 × 8 bytes = 80KB
+
+// GAME LAYER: Hegemon-specific hot data (4-byte structs)
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct HegemonProvinceData {
+    public byte development;
+    public byte fortLevel;
+    public byte unrest;
+    public byte population;
+}
+NativeArray<HegemonProvinceData> hegemonData;  // 10,000 × 4 bytes = 40KB
 
 // Derived indices: Regular managed collections
 List<ushort>[] provincesByOwner;  // Owner → provinces

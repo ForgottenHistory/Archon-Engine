@@ -756,8 +756,8 @@ computeShader.Dispatch(kernel, threadGroupsX, threadGroupsY, 1);
 - **[unity-gpu-debugging-guide.md](unity-gpu-debugging-guide.md)** - GPU debugging tools, CommandBuffer patterns, optimization techniques
 
 ### Sessions Where This Was Learned
-- [2025-10-01-2-political-mapmode-gpu-migration.md](../2025-10-01/2025-10-01-2-political-mapmode-gpu-migration.md) - Initial GPU race condition discovery
-- [2025-10-02-1-gpu-compute-shader-coordination-fix.md](../2025-10-02/2025-10-02-1-gpu-compute-shader-coordination-fix.md) - Complete solution
+- [2-political-mapmode-gpu-migration.md](../2025-10/01/2-political-mapmode-gpu-migration.md) - Initial GPU race condition discovery
+- [1-gpu-compute-shader-coordination-fix.md](../2025-10/02/1-gpu-compute-shader-coordination-fix.md) - Complete solution
 
 ### Code Examples in Project
 - **GPU Sync Pattern:** `MapTexturePopulator.cs:315-316`

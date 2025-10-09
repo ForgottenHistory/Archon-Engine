@@ -166,13 +166,8 @@ namespace Core
             return ProvinceQueries.GetCountryProvinces(countryId);
         }
 
-        /// <summary>
-        /// Complex cross-system query - get total development of a country
-        /// </summary>
-        public float GetCountryTotalDevelopment(ushort countryId)
-        {
-            return CountryQueries.GetTotalDevelopment(countryId);
-        }
+        // REMOVED: GetCountryTotalDevelopment()
+        // Development is game-specific - use Game layer queries instead
 
         void OnDestroy()
         {

@@ -3,6 +3,8 @@
 
 **📊 Implementation Status:** ⚠️ Partially Implemented (Hot/cold separation ✅, some patterns ✅, advanced features pending)
 
+**🔄 Recent Update (2025-10-09):** ProvinceState refactored to 8-byte engine primitives. Game-specific fields moved to HegemonProvinceData (4 bytes). See [phase-3-complete-scenario-loader-bug-fixed.md](../Log/2025-10/2025-10-09/phase-3-complete-scenario-loader-bug-fixed.md).
+
 > **📚 Architecture Context:** This document focuses on performance patterns. See [master-architecture-document.md](master-architecture-document.md) for the dual-layer architecture foundation.
 
 ## Executive Summary
@@ -75,32 +77,48 @@ Data "temperature" is determined by **access frequency**, not importance.
 
 **Key implementation:**
 ```csharp
-// Hot + Warm data together (accessed as a unit for simulation)
+// ENGINE: Hot data (generic primitives, accessed frequently)
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct ProvinceState {  // EXACTLY 8 bytes
     public ushort ownerID;       // HOT - read every frame for rendering
     public ushort controllerID;  // WARM - read during war calculations
-    public byte development;     // WARM - read for income/tooltip
-    public byte terrain;         // WARM - read for combat/modifiers
-    public byte fortLevel;       // WARM - read during sieges
-    public byte flags;           // WARM - various state bits
+    public ushort terrainType;   // WARM - read for combat/modifiers (expanded to ushort)
+    public ushort gameDataSlot;  // WARM - index into game-specific data
 }
 NativeArray<ProvinceState> provinces;  // 10,000 × 8 bytes = 80KB
 
-// Cold data - separate storage
+// GAME: Hegemon-specific hot data (game mechanics)
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct HegemonProvinceData {  // EXACTLY 4 bytes
+    public byte development;     // WARM - EU4-style development mechanic
+    public byte fortLevel;       // WARM - fortification system
+    public byte unrest;          // WARM - stability mechanic
+    public byte population;      // WARM - abstract population
+}
+NativeArray<HegemonProvinceData> hegemonData;  // 10,000 × 4 bytes = 40KB
+
+// Engine cold data - generic metadata
 public class ProvinceColdData {
+    public string name;
+    public Vector2Int position;
+    public ushort[] neighbors;
+}
+Dictionary<int, ProvinceColdData> coldData;
+
+// Game cold data - Hegemon-specific
+public class HegemonProvinceColdData {
     public CircularBuffer<HistoricalEvent> recentHistory;
     public Dictionary<string, FixedPoint64> modifiers;
     public BuildingInventory buildings;
-    public string flavorText;
 }
-Dictionary<int, ProvinceColdData> coldData;  // Loaded on-demand
+Dictionary<int, HegemonProvinceColdData> hegemonColdData;
 ```
 
 **Why this works:**
-- The 8-byte struct is small enough to keep everything together
-- Operations typically need multiple fields (owner + development + terrain for income calculation)
-- Keeping related data together is better than splitting it when you need it all at once
+- Engine state (8 bytes) and game state (4 bytes) are separate but parallel
+- Engine operations only need ownerID + terrainType (map rendering, multiplayer sync)
+- Game operations access both: hegemonData[id].development + terrainModifiers[provinces[id].terrainType]
+- Total memory: 120KB for 10k provinces (80KB engine + 40KB game)
 - Cold data separated prevents cache pollution and memory waste
 
 ### Principle 3: Fixed-Size Data Structures
@@ -325,25 +343,32 @@ Use AoS when operations typically access **multiple fields together**.
 // ✅ CORRECT: Tightly-related data in struct (AoS)
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct ProvinceState {
-    public ushort ownerID;      // Used together for
-    public ushort controllerID; // income calculation,
-    public byte development;    // tooltip generation,
-    public byte terrain;        // combat resolution, etc.
-    public byte fortLevel;
-    public byte flags;
+    public ushort ownerID;       // Engine: who owns it
+    public ushort controllerID;  // Engine: military control
+    public ushort terrainType;   // Engine: terrain ID
+    public ushort gameDataSlot;  // Engine: game data index
 }
 NativeArray<ProvinceState> provinces;
 
-// Typical usage - need multiple fields at once:
-void CalculateIncome(int provinceID) {
-    var state = provinces[provinceID];  // Load ONCE (8 bytes, one cache line)
+public struct HegemonProvinceData {
+    public byte development;     // Game: EU4-style mechanic
+    public byte fortLevel;       // Game: fortification
+    public byte unrest;          // Game: stability
+    public byte population;      // Game: manpower
+}
+NativeArray<HegemonProvinceData> hegemonData;
 
-    // Use owner, development, terrain together
-    FixedPoint64 baseIncome = FixedPoint64.FromInt(state.development);
-    FixedPoint64 terrainMod = terrainModifiers[state.terrain];
+// Typical usage - need fields from both layers:
+void CalculateIncome(int provinceID) {
+    var engineState = provinces[provinceID];        // Load engine data (8 bytes)
+    var gameState = hegemonData[provinceID];        // Load game data (4 bytes)
+
+    // Use owner (engine), development (game), terrain (engine) together
+    FixedPoint64 baseIncome = FixedPoint64.FromInt(gameState.development);
+    FixedPoint64 terrainMod = terrainModifiers[engineState.terrainType];
     FixedPoint64 income = baseIncome * terrainMod;
 
-    playerIncome[state.ownerID] += income;
+    playerIncome[engineState.ownerID] += income;
 }
 ```
 
@@ -411,11 +436,16 @@ public struct ProvinceState {
 public struct ProvinceState {
     public ushort ownerID;       // 2 bytes
     public ushort controllerID;  // 2 bytes
-    public byte development;     // 1 byte
-    public byte terrain;         // 1 byte
-    public byte fortLevel;       // 1 byte
-    public byte flags;           // 1 byte
+    public ushort terrainType;   // 2 bytes
+    public ushort gameDataSlot;  // 2 bytes
 }  // Total: 8 bytes, no pointers, fits in cache line
+
+public struct HegemonProvinceData {
+    public byte development;     // 1 byte
+    public byte fortLevel;       // 1 byte
+    public byte unrest;          // 1 byte
+    public byte population;      // 1 byte
+}  // Total: 4 bytes, no pointers
 
 // Buildings stored separately
 Dictionary<int, BuildingInventory> buildingData;  // Cold data

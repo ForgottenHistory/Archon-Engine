@@ -98,13 +98,23 @@
 
 ## Core/Data/ - Data Structures
 
-### **ProvinceState.cs** [MULTIPLAYER_CRITICAL] [STABLE]
-- **Purpose:** 8-byte province state struct (dual-layer architecture foundation)
-- **Layout:** ownerID(2) + controllerID(2) + development(1) + terrain(1) + fortLevel(1) + flags(1)
+### **ProvinceState.cs** [MULTIPLAYER_CRITICAL] [REFACTORED]
+- **Purpose:** 8-byte ENGINE province state struct (generic primitives only)
+- **Layout:** ownerID(2) + controllerID(2) + terrainType(2) + gameDataSlot(2)
+- **Architecture:** Engine provides MECHANISM, game layer provides POLICY
+- **Fields:**
+  - `ownerID` (ushort) - Who owns this province (generic)
+  - `controllerID` (ushort) - Who controls militarily (generic)
+  - `terrainType` (ushort) - Terrain type ID (generic, expanded from byte)
+  - `gameDataSlot` (ushort) - Index into game-specific data array
+- **REMOVED** (migrated to Game layer - HegemonProvinceData):
+  - ❌ `development` → HegemonProvinceSystem.GetDevelopment()
+  - ❌ `fortLevel` → HegemonProvinceSystem.GetFortLevel()
+  - ❌ `flags` → Moved to separate system if needed
 - **Validation:** Compile-time size check enforces 8 bytes
-- **API:** CreateDefault(), CreateOwned(), ToBytes(), FromBytes()
-- **Status:** ✅ Architecture compliant, DO NOT change size
-- **Lines:** 211
+- **API:** CreateDefault(), CreateOwned(), CreateOcean(), ToBytes(), FromBytes(), IsOwned, IsOccupied, IsOcean
+- **Status:** ✅ Refactored for engine-game separation (2025-10-09)
+- **Lines:** 209 (reduced from 211, removed game-specific fields)
 
 ### **ProvinceColdData.cs** [STABLE]
 - **Purpose:** Rarely-accessed province data (presentation, history, metadata)
@@ -502,6 +512,14 @@ Files marked `[HOT_PATH]` are performance-critical:
 
 ---
 
-*Last Updated: 2025-10-05*
+*Last Updated: 2025-10-09*
 *Total Files: 69 scripts* (+7 phases, +3 Province components, +3 Country components from refactoring)
 *Status: Multiplayer-ready, deterministic simulation layer, all files under 500 lines* ✅
+*Recent Changes:*
+- **2025-10-09:** ProvinceState.cs refactored for engine-game separation
+  - Removed game-specific fields (development, fortLevel, flags)
+  - Added gameDataSlot for game layer data indexing
+  - Expanded terrainType from byte to ushort (65k terrain types)
+  - True engine-game separation achieved
+  - See: Assets/Game/Compatibility/ProvinceStateExtensions.cs for migration bridge
+  - See: Assets/Archon-Engine/Docs/Log/2025-10/2025-10-09/ for refactoring plan

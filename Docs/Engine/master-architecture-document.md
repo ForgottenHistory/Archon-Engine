@@ -3,6 +3,8 @@
 
 **📊 Implementation Status:** ✅ Core Implemented (ProvinceState, command system, dual-layer) | ❌ Multiplayer sections are future planning
 
+**🔄 Recent Update (2025-10-09):** ProvinceState refactored for engine-game separation. Game-specific fields (`development`, `fortLevel`, `flags`) moved to `HegemonProvinceData` in the game layer. Engine now contains only generic primitives. See [phase-3-complete-scenario-loader-bug-fixed.md](../Log/2025-10/2025-10-09/phase-3-complete-scenario-loader-bug-fixed.md) for complete refactoring details.
+
 ---
 
 ## Executive Summary
@@ -97,20 +99,26 @@ Texture Data → Single Quad → GPU Shader → 200+ FPS
 ### 1.2 Dual-Layer Architecture
 
 ```csharp
-// LAYER 1: Simulation (CPU, Deterministic, Networked)
-public struct ProvinceState {  // 8 bytes fixed
-    public ushort ownerID;      // 2 bytes
-    public ushort controllerID; // 2 bytes
-    public byte development;    // 1 byte
-    public byte terrain;        // 1 byte
-    public byte fortLevel;      // 1 byte
-    public byte flags;          // 1 byte (8 boolean flags)
+// LAYER 1A: ENGINE Simulation (CPU, Deterministic, Networked, Generic)
+public struct ProvinceState {  // 8 bytes fixed - generic primitives only
+    public ushort ownerID;       // 2 bytes
+    public ushort controllerID;  // 2 bytes
+    public ushort terrainType;   // 2 bytes (expanded to ushort for 65k terrain types)
+    public ushort gameDataSlot;  // 2 bytes - index into game-specific data array
+}
+
+// LAYER 1B: GAME Simulation (CPU, Deterministic, Hegemon-Specific)
+public struct HegemonProvinceData {  // 4 bytes fixed - game mechanics
+    public byte development;     // 1 byte - EU4-style development
+    public byte fortLevel;       // 1 byte - fortification system
+    public byte unrest;          // 1 byte - stability mechanic
+    public byte population;      // 1 byte - population abstraction
 }
 
 // LAYER 2: Presentation (GPU, Local, Beautiful)
 public class RenderState {
     Texture2D provinceIDs;     // R16G16 - Which province is each pixel
-    Texture2D provinceOwners;  // R16 - Who owns each province  
+    Texture2D provinceOwners;  // R16 - Who owns each province
     Texture2D provinceColors;  // RGBA32 - Visual representation
     RenderTexture borders;     // Generated via compute shader
 }
@@ -130,7 +138,9 @@ Input → Command → Simulation → GPU Textures → Screen
 
 ```
 CPU Memory (RAM):
-- Simulation State: 80KB (10k provinces × 8 bytes)
+- Engine Simulation State: 80KB (10k provinces × 8 bytes)
+- Game Simulation State: 40KB (10k provinces × 4 bytes)
+- Total Simulation: 120KB
 - Command Buffer: 1MB (ring buffer for rollback)
 - Game Logic: Variable
 
@@ -143,7 +153,7 @@ GPU Memory (VRAM):
 
 Network:
 - Delta Updates: 40-100 bytes per tick
-- Full Sync: 80KB (rare)
+- Full Sync: 120KB (engine + game state)
 ```
 
 ---
@@ -252,9 +262,11 @@ public struct FixedPoint64 {
     }
 }
 
-// Usage - ALWAYS use exact fractions
-FixedPoint64 tax = baseTax * FixedPoint64.FromFraction(development, 100);  // Deterministic
-// float tax = baseTax * provinceDevelopment;                              // NON-deterministic!
+// Usage examples:
+FixedPoint64 baseTax = FixedPoint64.FromInt(10);
+FixedPoint64 devModifier = FixedPoint64.FromFraction(hegemonData.development, 10);
+FixedPoint64 tax = baseTax * devModifier;  // Deterministic
+// float tax = baseTax * development;      // NON-deterministic!
 ```
 
 ### 3.3 Network Synchronization
@@ -322,16 +334,23 @@ public class PredictiveClient {
 ### 4.1 Hot/Cold Data Separation
 
 ```csharp
-// HOT: Accessed every frame (keep in cache)
+// HOT: Engine layer - accessed every frame (keep in cache)
 public struct ProvinceState {  // 8 bytes, cache-line aligned
     public ushort ownerID;
     public ushort controllerID;
-    public byte development;
-    public byte terrain;
-    public byte fortLevel;
-    public byte flags;
+    public ushort terrainType;
+    public ushort gameDataSlot;
 }
-NativeArray<ProvinceState> hotData;  // Contiguous memory
+NativeArray<ProvinceState> engineHotData;  // Contiguous memory
+
+// HOT: Game layer - accessed frequently (keep in cache)
+public struct HegemonProvinceData {  // 4 bytes, cache-line aligned
+    public byte development;
+    public byte fortLevel;
+    public byte unrest;
+    public byte population;
+}
+NativeArray<HegemonProvinceData> gameHotData;  // Contiguous memory
 
 // COLD: Accessed rarely (can page to disk)
 public class ProvinceCold {

@@ -1,6 +1,8 @@
 # Archon Engine Architecture - Quick Reference
 **Start here for an overview of the entire system**
 
+**🔄 Recent Update (2025-10-09):** ProvinceState refactored for engine-game separation. Game-specific fields (`development`, `fortLevel`, `flags`) moved to `HegemonProvinceData` in the game layer. Engine now contains only generic primitives. See [phase-3-complete-scenario-loader-bug-fixed.md](../Log/2025-10/2025-10-09/phase-3-complete-scenario-loader-bug-fixed.md) for complete refactoring details.
+
 ---
 
 ## TL;DR - Core Architecture in 30 Seconds
@@ -48,21 +50,32 @@
 ## The 8-Byte Province (Heart of the System)
 
 ```csharp
+// ENGINE LAYER: Generic primitives only (8 bytes)
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct ProvinceState {  // EXACTLY 8 bytes
     public ushort ownerID;       // 2 bytes - who owns this
     public ushort controllerID;  // 2 bytes - who controls (war)
-    public byte development;     // 1 byte - economic level
-    public byte terrain;         // 1 byte - terrain type
-    public byte fortLevel;       // 1 byte - fortification
-    public byte flags;           // 1 byte - state flags
+    public ushort terrainType;   // 2 bytes - terrain type (expanded to ushort)
+    public ushort gameDataSlot;  // 2 bytes - index into game-specific data
+}
+
+// GAME LAYER: Hegemon-specific mechanics (4 bytes, separate from engine)
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct HegemonProvinceData {  // EXACTLY 4 bytes
+    public byte development;     // 1 byte - EU4-style development mechanic
+    public byte fortLevel;       // 1 byte - fortification system
+    public byte unrest;          // 1 byte - stability mechanic
+    public byte population;      // 1 byte - population abstraction
 }
 ```
 
-**Why 8 bytes matters:**
-- 10,000 provinces = 80KB (fits in L2 cache)
+**Why dual-layer matters:**
+- Engine 10,000 provinces = 80KB (fits in L2 cache)
+- Game 10,000 provinces = 40KB (separate hot data)
+- Total = 120KB for complete game state
 - Enables 200+ FPS with massive province counts
 - Network-friendly for multiplayer
+- Engine is reusable across different games
 
 **See:** [master-architecture-document.md](master-architecture-document.md) for complete explanation
 

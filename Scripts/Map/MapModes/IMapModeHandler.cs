@@ -47,7 +47,8 @@ namespace Map.MapModes
         /// Update the mode-specific data textures from Core simulation data
         /// Only called when data has changed or mode requires frequent updates
         /// </summary>
-        void UpdateTextures(MapModeDataTextures dataTextures, ProvinceQueries provinceQueries, CountryQueries countryQueries, ProvinceMapping provinceMapping);
+        /// <param name="gameProvinceSystem">Optional game-specific province system - engine passes through without knowing type</param>
+        void UpdateTextures(MapModeDataTextures dataTextures, ProvinceQueries provinceQueries, CountryQueries countryQueries, ProvinceMapping provinceMapping, object gameProvinceSystem = null);
 
         /// <summary>
         /// Get tooltip text for a specific province in this map mode
@@ -116,7 +117,7 @@ namespace Map.MapModes
 
         public abstract void OnActivate(Material mapMaterial, MapModeDataTextures dataTextures);
         public abstract void OnDeactivate(Material mapMaterial);
-        public abstract void UpdateTextures(MapModeDataTextures dataTextures, ProvinceQueries provinceQueries, CountryQueries countryQueries, ProvinceMapping provinceMapping);
+        public abstract void UpdateTextures(MapModeDataTextures dataTextures, ProvinceQueries provinceQueries, CountryQueries countryQueries, ProvinceMapping provinceMapping, object gameProvinceSystem = null);
         public abstract string GetProvinceTooltip(ushort provinceId, ProvinceQueries provinceQueries, CountryQueries countryQueries);
         public abstract UpdateFrequency GetUpdateFrequency();
 

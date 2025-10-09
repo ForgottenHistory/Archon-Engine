@@ -17,7 +17,7 @@ namespace Core.Systems.Province
 
         private int provinceCount;
 
-        private const byte OCEAN_TERRAIN = 0;
+        private const ushort OCEAN_TERRAIN = 0;
         private const ushort UNOWNED_COUNTRY = 0;
 
         public int ProvinceCount => provinceCount;
@@ -37,7 +37,7 @@ namespace Core.Systems.Province
         /// <summary>
         /// Add a new province to the system
         /// </summary>
-        public void AddProvince(ushort provinceId, byte terrainType)
+        public void AddProvince(ushort provinceId, ushort terrainType)
         {
             if (provinceCount >= provinceStates.Length)
             {
@@ -118,65 +118,33 @@ namespace Core.Systems.Province
             });
         }
 
-        /// <summary>
-        /// Get province development level
-        /// </summary>
-        public byte GetProvinceDevelopment(ushort provinceId)
-        {
-            if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
-                return 0;
-
-            return provinceStates[arrayIndex].development;
-        }
+        // REMOVED: GetProvinceDevelopment() and SetProvinceDevelopment()
+        // Development is game-specific and moved to Game layer (HegemonProvinceSystem)
+        // Old code: dataManager.GetProvinceDevelopment(provinceId)
+        // New code: hegemonSystem.GetDevelopment(provinceId)
 
         /// <summary>
-        /// Set province development level
+        /// Get province terrain type (now ushort instead of byte)
         /// </summary>
-        public void SetProvinceDevelopment(ushort provinceId, byte development)
-        {
-            if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
-                return;
-
-            var state = provinceStates[arrayIndex];
-            byte oldDevelopment = state.development;
-            if (oldDevelopment == development)
-                return;
-
-            // Update state and write back (structs are value types)
-            state.development = development;
-            provinceStates[arrayIndex] = state;
-
-            // Emit development change event
-            eventBus?.Emit(new ProvinceDevelopmentChangedEvent
-            {
-                ProvinceId = provinceId,
-                OldDevelopment = oldDevelopment,
-                NewDevelopment = development
-            });
-        }
-
-        /// <summary>
-        /// Get province terrain type
-        /// </summary>
-        public byte GetProvinceTerrain(ushort provinceId)
+        public ushort GetProvinceTerrain(ushort provinceId)
         {
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return OCEAN_TERRAIN;
 
-            return provinceStates[arrayIndex].terrain;
+            return provinceStates[arrayIndex].terrainType;
         }
 
         /// <summary>
-        /// Set province terrain type
+        /// Set province terrain type (now ushort instead of byte)
         /// </summary>
-        public void SetProvinceTerrain(ushort provinceId, byte terrain)
+        public void SetProvinceTerrain(ushort provinceId, ushort terrain)
         {
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return;
 
             // Update state and write back (structs are value types)
             var state = provinceStates[arrayIndex];
-            state.terrain = terrain;
+            state.terrainType = terrain;
             provinceStates[arrayIndex] = state;
         }
 

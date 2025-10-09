@@ -36,20 +36,13 @@ namespace Core.Queries
             return provinceSystem.GetProvinceOwner(provinceId);
         }
 
-        /// <summary>
-        /// Get province development level
-        /// Performance target: <0.001ms
-        /// </summary>
-        public byte GetDevelopment(ushort provinceId)
-        {
-            return provinceSystem.GetProvinceDevelopment(provinceId);
-        }
+        // REMOVED: GetDevelopment() - game-specific, moved to Game layer
 
         /// <summary>
-        /// Get province terrain type
+        /// Get province terrain type (now ushort)
         /// Performance target: <0.001ms
         /// </summary>
-        public byte GetTerrain(ushort provinceId)
+        public ushort GetTerrain(ushort provinceId)
         {
             return provinceSystem.GetProvinceTerrain(provinceId);
         }
@@ -104,23 +97,7 @@ namespace Core.Queries
             return provinceSystem.GetCountryProvinces(countryId, allocator);
         }
 
-        /// <summary>
-        /// Get total development of all provinces owned by a country
-        /// Performance target: <2ms for 10k provinces
-        /// </summary>
-        public int GetCountryTotalDevelopment(ushort countryId)
-        {
-            var provinces = GetCountryProvinces(countryId, Allocator.Temp);
-            int totalDevelopment = 0;
-
-            for (int i = 0; i < provinces.Length; i++)
-            {
-                totalDevelopment += GetDevelopment(provinces[i]);
-            }
-
-            provinces.Dispose();
-            return totalDevelopment;
-        }
+        // REMOVED: GetCountryTotalDevelopment() - game-specific, moved to Game layer
 
         /// <summary>
         /// Get number of provinces owned by a country
@@ -139,7 +116,7 @@ namespace Core.Queries
         /// Returns native array that must be disposed by caller
         /// Performance target: <5ms for 10k provinces
         /// </summary>
-        public NativeArray<ushort> GetProvincesByTerrain(byte terrainType, Allocator allocator = Allocator.TempJob)
+        public NativeArray<ushort> GetProvincesByTerrain(ushort terrainType, Allocator allocator = Allocator.TempJob)
         {
             var allProvinces = provinceSystem.GetAllProvinceIds(Allocator.Temp);
             var result = new NativeList<ushort>(allProvinces.Length / 4, Allocator.Temp);
@@ -310,8 +287,9 @@ namespace Core.Queries
         }
 
         /// <summary>
-        /// Get province statistics for debugging/UI
+        /// Get province statistics for debugging/UI (engine-only data)
         /// Performance target: <10ms for 10k provinces
+        /// Note: Development stats removed (game-specific)
         /// </summary>
         public ProvinceStatistics GetProvinceStatistics()
         {
@@ -333,11 +311,7 @@ namespace Core.Queries
                     stats.OwnedProvinces++;
                 else
                     stats.UnownedProvinces++;
-
-                stats.TotalDevelopment += GetDevelopment(provinceId);
             }
-
-            stats.AverageDevelopment = stats.LandProvinces > 0 ? (float)stats.TotalDevelopment / stats.LandProvinces : 0f;
 
             allProvinces.Dispose();
             return stats;
@@ -373,7 +347,8 @@ namespace Core.Queries
     }
 
     /// <summary>
-    /// Province statistics for debugging and UI
+    /// Province statistics for debugging and UI (engine-only data)
+    /// Note: Development fields removed (game-specific)
     /// </summary>
     public struct ProvinceStatistics
     {
@@ -382,8 +357,6 @@ namespace Core.Queries
         public int OceanProvinces;
         public int OwnedProvinces;
         public int UnownedProvinces;
-        public int TotalDevelopment;
-        public float AverageDevelopment;
     }
 
     /// <summary>

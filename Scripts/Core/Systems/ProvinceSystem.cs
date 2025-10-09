@@ -117,10 +117,9 @@ namespace Core.Systems
 
         public ushort GetProvinceOwner(ushort provinceId) => dataManager.GetProvinceOwner(provinceId);
         public void SetProvinceOwner(ushort provinceId, ushort newOwner) => dataManager.SetProvinceOwner(provinceId, newOwner);
-        public byte GetProvinceDevelopment(ushort provinceId) => dataManager.GetProvinceDevelopment(provinceId);
-        public void SetProvinceDevelopment(ushort provinceId, byte development) => dataManager.SetProvinceDevelopment(provinceId, development);
-        public byte GetProvinceTerrain(ushort provinceId) => dataManager.GetProvinceTerrain(provinceId);
-        public void SetProvinceTerrain(ushort provinceId, byte terrain) => dataManager.SetProvinceTerrain(provinceId, terrain);
+        // REMOVED: GetProvinceDevelopment/SetProvinceDevelopment (game-specific - use HegemonProvinceSystem)
+        public ushort GetProvinceTerrain(ushort provinceId) => dataManager.GetProvinceTerrain(provinceId);
+        public void SetProvinceTerrain(ushort provinceId, ushort terrain) => dataManager.SetProvinceTerrain(provinceId, terrain);
         public ProvinceState GetProvinceState(ushort provinceId) => dataManager.GetProvinceState(provinceId);
         public NativeArray<ushort> GetCountryProvinces(ushort countryId, Allocator allocator = Allocator.TempJob) => dataManager.GetCountryProvinces(countryId, allocator);
         public NativeArray<ushort> GetAllProvinceIds(Allocator allocator = Allocator.TempJob) => dataManager.GetAllProvinceIds(allocator);

@@ -36,7 +36,7 @@ namespace Map.MapModes
             // No cleanup needed for debug modes
         }
 
-        public override void UpdateTextures(MapModeDataTextures dataTextures, ProvinceQueries provinceQueries, CountryQueries countryQueries, ProvinceMapping provinceMapping)
+        public override void UpdateTextures(MapModeDataTextures dataTextures, ProvinceQueries provinceQueries, CountryQueries countryQueries, ProvinceMapping provinceMapping, object gameProvinceSystem = null)
         {
             // Debug modes don't update textures - they just visualize existing data
         }

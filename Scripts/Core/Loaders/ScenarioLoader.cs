@@ -64,7 +64,8 @@ namespace Core.Loaders
         }
 
         /// <summary>
-        /// Initial setup for a province
+        /// Initial setup for a province (ENGINE LAYER - minimal fields only)
+        /// Game-specific fields like Development should be handled by game layer loaders
         /// </summary>
         [System.Serializable]
         public struct ProvinceSetup
@@ -72,11 +73,7 @@ namespace Core.Loaders
             public ushort ProvinceId;
             public ushort Owner;
             public ushort Controller;
-            public byte Development;
             public byte Terrain;
-            public bool HasFort;
-            public string Religion;
-            public string Culture;
         }
 
         /// <summary>
@@ -253,14 +250,8 @@ namespace Core.Loaders
                     gameState.TryExecuteCommand(ownerCommand);
                 }
 
-                // Set development
-                if (setup.Development > 0)
-                {
-                    var devCommand = ProvinceCommandFactory.DevelopProvince(setup.ProvinceId, setup.Development);
-                    gameState.TryExecuteCommand(devCommand);
-                }
-
-                // TODO: Set terrain, religion, culture when those systems exist
+                // Terrain is engine field, but setting it requires terrain system
+                // TODO: Set terrain when terrain command exists
             }
 
             ArchonLogger.Log($"Applied {setups.Count} province setups");
@@ -373,7 +364,6 @@ namespace Core.Loaders
                 ProvinceId = 1,
                 Owner = 1,
                 Controller = 1,
-                Development = 10,
                 Terrain = 1
             });
 
@@ -382,7 +372,6 @@ namespace Core.Loaders
                 ProvinceId = 2,
                 Owner = 2,
                 Controller = 2,
-                Development = 8,
                 Terrain = 1
             });
 

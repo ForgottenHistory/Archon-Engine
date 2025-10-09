@@ -2,6 +2,8 @@
 
 **📊 Implementation Status:** ✅ Implemented (CrossReferenceBuilder, ReferenceResolver, DataValidator exist)
 
+**🔄 Recent Update (2025-10-09):** ProvinceState refactored for engine-game separation. Game-specific fields (`development`, `fortLevel`, `flags`) moved to `HegemonProvinceData`. See [phase-3-complete-scenario-loader-bug-fixed.md](../Log/2025-10/2025-10-09/phase-3-complete-scenario-loader-bug-fixed.md).
+
 ## Executive Summary
 **Challenge**: Loaded data has string references ("ENG", "catholic", "grain") that need linking to actual game objects
 **Solution**: Multi-phase loading with efficient ID mapping and reference resolution
@@ -287,19 +289,33 @@ public class RawProvinceData {
     public Dictionary<string, string> modifiers;
 }
 
-// What we want at runtime (8-byte struct)
+// What we want at runtime (8-byte ENGINE struct - generic primitives only)
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct ProvinceState {
     public ushort ownerID;       // Resolved from "ENG" → 5
     public ushort controllerID;  // Resolved from "FRA" → 12
-    public byte development;     // From raw data
-    public byte terrain;         // Resolved from "plains" → 2
-    public byte fortLevel;       // From raw data
-    public byte flags;           // Computed during resolution
+    public ushort terrainType;   // Resolved from "plains" → 2 (expanded to ushort for 65k terrains)
+    public ushort gameDataSlot;  // Index into game-specific data array
 }
 
-// Cold data stored separately
+// Engine cold data stored separately (generic metadata)
 public class ProvinceColdData {
+    public string name;          // Display name
+    public Vector2Int position;  // Map coordinates
+    public ushort[] neighbors;   // Adjacent province IDs
+}
+
+// GAME LAYER: Hegemon-specific hot data (4 bytes, separate from engine)
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct HegemonProvinceData {
+    public byte development;     // EU4-style development mechanic (GAME-SPECIFIC)
+    public byte fortLevel;       // Fortification system (GAME-SPECIFIC)
+    public byte unrest;          // Stability mechanic (GAME-SPECIFIC)
+    public byte population;      // Population abstraction (GAME-SPECIFIC)
+}
+
+// GAME LAYER: Hegemon-specific cold data
+public class HegemonProvinceColdData {
     public ushort religion;      // Resolved from "catholic" → 3
     public ushort culture;       // Resolved from "english" → 7
     public ushort tradeGood;     // Resolved from "grain" → 4
@@ -809,20 +825,31 @@ public class ReferenceConfig {
 ### Memory Layout
 
 ```csharp
-// Hot data: 8-byte struct in NativeArray (cache-friendly)
+// ENGINE: 8-byte hot struct (generic primitives only)
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct ProvinceState {
     public ushort ownerID;       // 2 bytes
     public ushort controllerID;  // 2 bytes
-    public byte development;     // 1 byte
-    public byte terrain;         // 1 byte
-    public byte fortLevel;       // 1 byte
-    public byte flags;           // 1 byte
+    public ushort terrainType;   // 2 bytes (expanded for 65k terrains)
+    public ushort gameDataSlot;  // 2 bytes (index into game data)
 }
-NativeArray<ProvinceState> provinces;  // Contiguous, Burst-compatible
+NativeArray<ProvinceState> provinces;  // 8 bytes × 10k = 80KB
 
-// Cold data: Separate storage (accessed rarely)
+// GAME: 4-byte hot struct (Hegemon-specific)
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public struct HegemonProvinceData {
+    public byte development;     // 1 byte (EU4-style mechanic)
+    public byte fortLevel;       // 1 byte (fortification system)
+    public byte unrest;          // 1 byte (stability)
+    public byte population;      // 1 byte (abstract population)
+}
+NativeArray<HegemonProvinceData> hegemonData;  // 4 bytes × 10k = 40KB
+
+// Engine cold data: Separate storage (accessed rarely)
 Dictionary<ushort, ProvinceColdData> coldData;
+
+// Game cold data: Separate storage
+Dictionary<ushort, HegemonProvinceColdData> hegemonColdData;
 ```
 
 See [performance-architecture-guide.md](performance-architecture-guide.md) for why we keep the 8-byte struct together.

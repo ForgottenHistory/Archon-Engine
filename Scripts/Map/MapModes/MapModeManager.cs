@@ -31,6 +31,7 @@ namespace Map.MapModes
         private TextureUpdateScheduler updateScheduler;
         private GameState gameState;
         private ProvinceMapping provinceMapping;
+        private object gameProvinceSystem; // Optional game-specific system (engine doesn't know type)
 
         // Handler management
         private Dictionary<MapMode, IMapModeHandler> modeHandlers;
@@ -66,7 +67,8 @@ namespace Map.MapModes
         /// ENGINE provides MECHANISM, GAME controls WHEN to initialize
         /// Called by GAME layer after handlers are registered
         /// </summary>
-        public void Initialize(GameState gameStateRef, Material material, ProvinceMapping mapping)
+        /// <param name="gameSystem">Optional game-specific province system - engine passes through without knowing type</param>
+        public void Initialize(GameState gameStateRef, Material material, ProvinceMapping mapping, object gameSystem = null)
         {
             if (isInitialized)
             {
@@ -78,6 +80,7 @@ namespace Map.MapModes
             gameState = gameStateRef;
             mapMaterial = material;
             provinceMapping = mapping;
+            gameProvinceSystem = gameSystem;
 
             // Validate required dependencies
             if (gameState == null)
@@ -149,7 +152,7 @@ namespace Map.MapModes
                 {
                     if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
                     {
-                        h.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
+                        h.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
                     }
                 });
             }
@@ -185,7 +188,7 @@ namespace Map.MapModes
 
             if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
             {
-                currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
+                currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
 
                 // CRITICAL: Rebind textures to material after update to force GPU upload
                 // Without this, Unity may use cached texture data from before the update
@@ -234,7 +237,7 @@ namespace Map.MapModes
 
             if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
             {
-                currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
+                currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
                 ArchonLogger.LogMapInit($"MapModeManager: Forced texture update for {currentMode} mode");
             }
         }
@@ -269,7 +272,7 @@ namespace Map.MapModes
 
                 if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
                 {
-                    currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping);
+                    currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
                     dataTextures.BindToMaterial(mapMaterial);
                 }
             }

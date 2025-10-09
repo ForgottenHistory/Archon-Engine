@@ -97,7 +97,7 @@ namespace Core.Systems
 
             // Add to simulation
             int index = provinceCount;
-            provinces[index] = ProvinceState.CreateDefault((byte)terrain);
+            provinces[index] = ProvinceState.CreateDefault((ushort)terrain);
             idToIndex.TryAdd(provinceID, index);
             provinceCount++;
 
@@ -174,40 +174,10 @@ namespace Core.Systems
             return false;
         }
 
-        /// <summary>
-        /// Set province development level
-        /// </summary>
-        public bool SetProvinceDevelopment(ushort provinceID, byte development)
-        {
-            if (idToIndex.TryGetValue(provinceID, out int index))
-            {
-                var state = provinces[index];
-                state.development = development;
-                provinces[index] = state;
-                MarkDirty(index);
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Set province flag
-        /// </summary>
-        public bool SetProvinceFlag(ushort provinceID, ProvinceFlags flag, bool value)
-        {
-            if (idToIndex.TryGetValue(provinceID, out int index))
-            {
-                var state = provinces[index];
-                if (value)
-                    state.SetFlag(flag);
-                else
-                    state.ClearFlag(flag);
-                provinces[index] = state;
-                MarkDirty(index);
-                return true;
-            }
-            return false;
-        }
+        // REMOVED: SetProvinceDevelopment() and SetProvinceFlag()
+        // These are game-specific methods that belong in the Game layer
+        // Development: Use HegemonProvinceSystem.SetDevelopment()
+        // Flags: Create separate flag system in game layer if needed
 
         /// <summary>
         /// Get all provinces owned by a country

@@ -51,12 +51,16 @@ namespace Map.Tests.Simulation
 
             Assert.AreEqual(0, state.ownerID, "Default province should be unowned");
             Assert.AreEqual(0, state.controllerID, "Default province should be uncontrolled");
-            Assert.AreEqual(1, state.development, "Default province should have minimal development");
-            Assert.AreEqual(1, state.terrain, "Default province should be grassland");
-            Assert.AreEqual(0, state.fortLevel, "Default province should have no fortifications");
-            Assert.AreEqual(0, state.flags, "Default province should have no flags");
+            // REMOVED: development, fortLevel, flags - now in HegemonProvinceSystem (game layer)
+            Assert.AreEqual((ushort)1, state.terrainType, "Default province should be grassland");  // Changed: .terrain → .terrainType (ushort)
+            Assert.AreEqual((ushort)0, state.gameDataSlot, "Default game data slot should be 0");  // NEW field
         }
 
+        // PHASE 3 MIGRATION NOTE: Tests using removed fields commented out
+        // ProvinceState no longer contains: development, fortLevel, flags
+        // These are now in HegemonProvinceSystem (game layer)
+        // Migrate these tests to Game.Tests for testing game-specific province data
+        /*
         [Test]
         public void ProvinceState_CreateOwned_ShouldSetOwnershipCorrectly()
         {
@@ -294,5 +298,7 @@ namespace Map.Tests.Simulation
 
             Assert.LessOrEqual(maxCombinedValue, 255, "All province flags must fit in single byte");
         }
+        */
+        // END OF COMMENTED OUT TESTS - All tests after CreateDefault reference removed fields
     }
 }

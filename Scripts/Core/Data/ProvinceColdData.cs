@@ -133,15 +133,16 @@ namespace Core.Data
 
         /// <summary>
         /// Calculate trade value (cached per frame, uses FixedPoint64 for determinism)
+        /// Note: development parameter must be provided by game layer (engine doesn't know about development)
         /// </summary>
-        public FixedPoint64 CalculateTradeValue(ProvinceState hotState)
+        public FixedPoint64 CalculateTradeValue(byte development)
         {
             if (CacheFrame == Time.frameCount)
                 return CachedTradeValue;
 
             // Expensive calculation - only do once per frame
             // Use deterministic fixed-point math
-            FixedPoint64 baseValue = FixedPoint64.FromInt(hotState.development) * FixedPoint64.FromFraction(1, 2); // * 0.5
+            FixedPoint64 baseValue = FixedPoint64.FromInt(development) * FixedPoint64.FromFraction(1, 2); // * 0.5
             FixedPoint64 modifierBonus = GetModifier("trade_value_modifier");
             FixedPoint64 buildingBonus = FixedPoint64.FromInt(Buildings.Count * 2); // Simplified calculation
 
@@ -153,15 +154,16 @@ namespace Core.Data
 
         /// <summary>
         /// Calculate supply limit (cached per frame, uses FixedPoint64 for determinism)
+        /// Note: development and fortLevel parameters must be provided by game layer (engine doesn't know about these)
         /// </summary>
-        public FixedPoint64 CalculateSupplyLimit(ProvinceState hotState)
+        public FixedPoint64 CalculateSupplyLimit(byte development, byte fortLevel)
         {
             if (CacheFrame == Time.frameCount)
                 return CachedSupplyLimit;
 
             // Use deterministic fixed-point math
-            FixedPoint64 baseSupply = FixedPoint64.FromInt(hotState.development) * FixedPoint64.FromFraction(3, 10); // * 0.3
-            FixedPoint64 fortBonus = FixedPoint64.FromInt(hotState.fortLevel) * FixedPoint64.FromFraction(1, 2); // * 0.5
+            FixedPoint64 baseSupply = FixedPoint64.FromInt(development) * FixedPoint64.FromFraction(3, 10); // * 0.3
+            FixedPoint64 fortBonus = FixedPoint64.FromInt(fortLevel) * FixedPoint64.FromFraction(1, 2); // * 0.5
             FixedPoint64 buildingBonus = HasBuilding(BuildingType.Granary) ? FixedPoint64.FromInt(5) : FixedPoint64.Zero;
 
             CachedSupplyLimit = baseSupply + fortBonus + buildingBonus;

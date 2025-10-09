@@ -83,22 +83,14 @@ namespace Map.Simulation
         }
 
         /// <summary>
-        /// Calculate checksum of development data
+        /// Calculate checksum of development data (REMOVED - game-specific)
+        /// NOTE: Development is game-specific, moved to game layer
         /// </summary>
         private static uint CalculateDevelopmentHash(ProvinceSimulation simulation)
         {
-            uint hash = 0x811C9DC5;
-            var allProvinceIDs = simulation.GetAllProvinceIDs();
-
-            foreach (var provinceID in allProvinceIDs)
-            {
-                var state = simulation.GetProvinceState(provinceID);
-                hash = HashUInt(hash, provinceID);
-                hash = HashByte(hash, state.development);
-                hash = HashByte(hash, state.fortLevel);
-            }
-
-            return hash;
+            // REMOVED: development and fortLevel no longer in engine ProvinceState
+            // Game layer should calculate its own checksums for game-specific data
+            return 0;
         }
 
         /// <summary>
@@ -113,24 +105,23 @@ namespace Map.Simulation
             {
                 var state = simulation.GetProvinceState(provinceID);
                 hash = HashUInt(hash, provinceID);
-                hash = HashByte(hash, state.terrain);
+                hash = HashUInt(hash, state.terrainType); // Changed from byte to ushort
             }
 
             return hash;
         }
 
         /// <summary>
-        /// Hash a single province state
+        /// Hash a single province state (engine data only)
         /// </summary>
         private static uint HashProvinceState(uint hash, ushort provinceID, ProvinceState state)
         {
             hash = HashUInt(hash, provinceID);
             hash = HashUInt(hash, state.ownerID);
             hash = HashUInt(hash, state.controllerID);
-            hash = HashByte(hash, state.development);
-            hash = HashByte(hash, state.terrain);
-            hash = HashByte(hash, state.fortLevel);
-            hash = HashByte(hash, state.flags);
+            hash = HashUInt(hash, state.terrainType);  // Now ushort
+            hash = HashUInt(hash, state.gameDataSlot);  // New field
+            // REMOVED: development, fortLevel, flags (game-specific)
             return hash;
         }
 
@@ -276,22 +267,13 @@ namespace Map.Simulation
                         result.Issues.Add($"Province {provinceID}: invalid controller ID {state.controllerID}");
                     }
 
-                    // Check development bounds
-                    if (state.development > 100)
-                    {
-                        result.Issues.Add($"Province {provinceID}: development {state.development} exceeds maximum (100)");
-                    }
+                    // REMOVED: Development and fort validation (game-specific)
+                    // Game layer should validate its own data
 
                     // Check terrain type validity
-                    if (!Enum.IsDefined(typeof(TerrainType), state.terrain))
+                    if (!Enum.IsDefined(typeof(TerrainType), state.terrainType))
                     {
-                        result.Issues.Add($"Province {provinceID}: invalid terrain type {state.terrain}");
-                    }
-
-                    // Check fort level bounds
-                    if (state.fortLevel > 10)
-                    {
-                        result.Issues.Add($"Province {provinceID}: fort level {state.fortLevel} exceeds maximum (10)");
+                        result.Issues.Add($"Province {provinceID}: invalid terrain type {state.terrainType}");
                     }
                 }
 
@@ -320,7 +302,8 @@ namespace Map.Simulation
 
         /// <summary>
         /// Create a lightweight checksum for frequent network synchronization
-        /// Only includes frequently changing data (ownership, development)
+        /// Only includes frequently changing data (ownership)
+        /// NOTE: Development removed (game-specific)
         /// </summary>
         public static uint CalculateLightweightChecksum(ProvinceSimulation simulation)
         {
@@ -335,7 +318,7 @@ namespace Map.Simulation
                 hash = HashUInt(hash, provinceID);
                 hash = HashUInt(hash, state.ownerID);
                 hash = HashUInt(hash, state.controllerID);
-                hash = HashByte(hash, state.development);
+                // REMOVED: development (game-specific)
             }
 
             return hash;

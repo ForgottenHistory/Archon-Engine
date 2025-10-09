@@ -47,7 +47,9 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Convert to hot ProvinceState for simulation
+        /// Convert to hot ProvinceState for simulation (engine layer only)
+        /// NOTE: Development, FortLevel, Flags removed from ProvinceState (now game-specific)
+        /// Game layer must initialize HegemonProvinceData separately with Development value
         /// </summary>
         public ProvinceState ToProvinceState()
         {
@@ -55,10 +57,8 @@ namespace Core.Data
             {
                 ownerID = OwnerID,
                 controllerID = ControllerID,
-                development = Development,
-                terrain = Terrain,
-                fortLevel = 0,
-                flags = Flags
+                terrainType = Terrain,
+                gameDataSlot = (ushort)ProvinceID  // Default 1:1 mapping (provinceID == gameDataSlot)
             };
         }
 

@@ -108,34 +108,10 @@ namespace Core.Queries
 
         #region Cached Complex Queries (Cross-system, expensive calculations)
 
-        /// <summary>
-        /// Get total development of all provinces owned by this country
-        /// Performance target: <0.01ms if cached, <5ms if calculating
-        /// </summary>
-        public int GetTotalDevelopment(ushort countryId)
-        {
-            var cached = GetCachedData(countryId);
-            if (cached.IsValid && Time.time - cached.CalculationTime < CACHE_LIFETIME)
-            {
-                return cached.TotalDevelopment;
-            }
-
-            // Calculate fresh
-            var provinces = provinceSystem.GetCountryProvinces(countryId, Allocator.Temp);
-            int totalDevelopment = 0;
-
-            for (int i = 0; i < provinces.Length; i++)
-            {
-                totalDevelopment += provinceSystem.GetProvinceDevelopment(provinces[i]);
-            }
-
-            provinces.Dispose();
-
-            // Update cache
-            UpdateCachedData(countryId, totalDevelopment: totalDevelopment);
-
-            return totalDevelopment;
-        }
+        // REMOVED: GetTotalDevelopment()
+        // Development is game-specific and belongs in Game layer
+        // This method has been moved to Game/Queries/HegemonCountryQueries.cs
+        // Migration: Use HegemonCountryQueries.GetTotalDevelopment(countryId) instead
 
         /// <summary>
         /// Get number of provinces owned by this country
@@ -170,17 +146,9 @@ namespace Core.Queries
             return provinceSystem.GetCountryProvinces(countryId, allocator);
         }
 
-        /// <summary>
-        /// Get average development of provinces owned by this country
-        /// Performance target: <0.01ms if cached, <5ms if calculating
-        /// </summary>
-        public float GetAverageDevelopment(ushort countryId)
-        {
-            int totalDev = GetTotalDevelopment(countryId);
-            int provinceCount = GetProvinceCount(countryId);
-
-            return provinceCount > 0 ? (float)totalDev / provinceCount : 0f;
-        }
+        // REMOVED: GetAverageDevelopment()
+        // Development is game-specific and belongs in Game layer
+        // Migration: Use HegemonCountryQueries.GetAverageDevelopment(countryId) instead
 
         /// <summary>
         /// Get total land area (non-ocean provinces) owned by this country
@@ -243,18 +211,9 @@ namespace Core.Queries
             return sharesBorder;
         }
 
-        /// <summary>
-        /// Compare two countries by total development
-        /// Returns: -1 if country1 < country2, 0 if equal, 1 if country1 > country2
-        /// Performance target: <0.1ms
-        /// </summary>
-        public int CompareDevelopment(ushort countryId1, ushort countryId2)
-        {
-            int dev1 = GetTotalDevelopment(countryId1);
-            int dev2 = GetTotalDevelopment(countryId2);
-
-            return dev1.CompareTo(dev2);
-        }
+        // REMOVED: CompareDevelopment()
+        // Development is game-specific and belongs in Game layer
+        // Migration: Use HegemonCountryQueries.CompareDevelopment(countryId1, countryId2) instead
 
         /// <summary>
         /// Compare two countries by province count
@@ -291,48 +250,14 @@ namespace Core.Queries
             return countrySystem.CountryCount;
         }
 
-        /// <summary>
-        /// Get countries sorted by total development
-        /// Returns array of country IDs sorted by development (highest first)
-        /// Performance target: <50ms for 256 countries
-        /// </summary>
-        public ushort[] GetCountriesByDevelopment(bool ascending = false)
-        {
-            var allCountries = GetAllCountryIds(Allocator.Temp);
-            var countryList = new System.Collections.Generic.List<(ushort id, int development)>();
-
-            for (int i = 0; i < allCountries.Length; i++)
-            {
-                var countryId = allCountries[i];
-                var development = GetTotalDevelopment(countryId);
-                countryList.Add((countryId, development));
-            }
-
-            allCountries.Dispose();
-
-            // Sort by development
-            if (ascending)
-            {
-                countryList.Sort((a, b) => a.development.CompareTo(b.development));
-            }
-            else
-            {
-                countryList.Sort((a, b) => b.development.CompareTo(a.development));
-            }
-
-            // Extract IDs
-            var result = new ushort[countryList.Count];
-            for (int i = 0; i < countryList.Count; i++)
-            {
-                result[i] = countryList[i].id;
-            }
-
-            return result;
-        }
+        // REMOVED: GetCountriesByDevelopment()
+        // Development is game-specific and belongs in Game layer
+        // Migration: Use HegemonCountryQueries.GetCountriesByDevelopment(ascending) instead
 
         /// <summary>
-        /// Get country statistics for debugging/UI
+        /// Get country statistics for debugging/UI (engine-only data - no game-specific fields)
         /// Performance target: <50ms for 256 countries
+        /// Note: Development statistics removed (game-specific). Use HegemonCountryQueries for game stats.
         /// </summary>
         public CountryStatistics GetCountryStatistics()
         {
@@ -349,33 +274,22 @@ namespace Core.Queries
                     continue;
 
                 int provinceCount = GetProvinceCount(countryId);
-                int development = GetTotalDevelopment(countryId);
 
                 if (provinceCount > 0)
                 {
                     stats.CountriesWithProvinces++;
                     stats.TotalProvinces += provinceCount;
-                    stats.TotalDevelopment += development;
 
                     if (provinceCount > stats.LargestCountryProvinces)
                     {
                         stats.LargestCountryProvinces = provinceCount;
                         stats.LargestCountryId = countryId;
                     }
-
-                    if (development > stats.MostDevelopedCountryDevelopment)
-                    {
-                        stats.MostDevelopedCountryDevelopment = development;
-                        stats.MostDevelopedCountryId = countryId;
-                    }
                 }
             }
 
             stats.AverageProvincesPerCountry = stats.CountriesWithProvinces > 0 ?
                 (float)stats.TotalProvinces / stats.CountriesWithProvinces : 0f;
-
-            stats.AverageDevelopmentPerCountry = stats.CountriesWithProvinces > 0 ?
-                (float)stats.TotalDevelopment / stats.CountriesWithProvinces : 0f;
 
             allCountries.Dispose();
             return stats;
@@ -393,15 +307,11 @@ namespace Core.Queries
             return new CachedCountryData(); // Invalid by default
         }
 
-        private void UpdateCachedData(ushort countryId, int? totalDevelopment = null,
-                                     int? provinceCount = null, int? landProvinceCount = null)
+        private void UpdateCachedData(ushort countryId, int? provinceCount = null, int? landProvinceCount = null)
         {
             var cached = GetCachedData(countryId);
             cached.IsValid = true;
             cached.CalculationTime = Time.time;
-
-            if (totalDevelopment.HasValue)
-                cached.TotalDevelopment = totalDevelopment.Value;
 
             if (provinceCount.HasValue)
                 cached.ProvinceCount = provinceCount.Value;
@@ -432,31 +342,29 @@ namespace Core.Queries
     }
 
     /// <summary>
-    /// Cached country data for expensive calculations
+    /// Cached country data for expensive calculations (engine-only data)
+    /// Note: TotalDevelopment removed (game-specific)
     /// </summary>
     internal struct CachedCountryData
     {
         public bool IsValid;
         public float CalculationTime;
-        public int TotalDevelopment;
         public int ProvinceCount;
         public int LandProvinceCount;
     }
 
     /// <summary>
-    /// Country statistics for debugging and UI
+    /// Country statistics for debugging and UI (engine-only data)
+    /// Note: Development-related fields removed (game-specific)
+    /// Use Game/Queries/HegemonCountryQueries for game statistics
     /// </summary>
     public struct CountryStatistics
     {
         public int TotalCountries;
         public int CountriesWithProvinces;
         public int TotalProvinces;
-        public int TotalDevelopment;
         public float AverageProvincesPerCountry;
-        public float AverageDevelopmentPerCountry;
         public int LargestCountryProvinces;
         public ushort LargestCountryId;
-        public int MostDevelopedCountryDevelopment;
-        public ushort MostDevelopedCountryId;
     }
 }
