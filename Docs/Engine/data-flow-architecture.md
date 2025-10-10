@@ -10,7 +10,7 @@
 **Question**: How do all these systems actually connect and communicate?
 **Answer**: Hub-and-spoke architecture with specialized systems and a central game state
 **Key Principle**: Each system owns its data, GameState provides unified access
-**Performance**: Zero allocations during gameplay, all queries <0.01ms
+**Performance**: Zero allocations during gameplay, fast query response
 
 ## The Big Picture - System Architecture
 
@@ -125,8 +125,8 @@ public class ProvinceSystem {
 ```
 
 **Why this is necessary:**
-- Without `provincesByOwner`, asking "What does France own?" requires iterating 10,000 provinces (O(n))
-- With `provincesByOwner`, it's O(1) array lookup
+- Without reverse mapping, queries require full iteration (O(n))
+- With reverse mapping, it's O(1) array lookup
 - The key: ONE system owns BOTH mappings and keeps them synchronized
 
 ### 4. Communication Patterns: Events vs Direct Calls
@@ -246,44 +246,22 @@ public class ConquerProvinceCommand : ICommand {
 
 Game initialization follows a sequential pipeline optimized for minimal load time:
 
-```csharp
-public class GameInitializer {
-    public async Task InitializeGame() {
-        // 1. Core Systems (5%) - Instantiate managers, event bus
-        InitializeManagers();
+**Loading Pipeline:**
+1. Core Systems - Instantiate managers, event bus
+2. Static Data - Parallel load all definitions
+3. Map Data - GPU texture generation
+4. Scenario/Save - Initialize game state
+5. Cross-References - Build derived data structures
+6. AI Initialization - Per-nation AI setup
+7. Final Prep - Cache warmup, UI setup
 
-        // 2. Static Data (10-30%) - Parallel load all definitions
-        await LoadGameDefinitions();  // Provinces, nations, buildings, etc.
-
-        // 3. Map Data (30-60%) - GPU texture generation
-        LoadProvinceBitmap();          // Load provinces.bmp
-        CreateProvinceTextures();      // Generate GPU textures
-        BuildAdjacencyGraph();         // For pathfinding
-
-        // 4. Scenario/Save (60-80%) - Initialize game state
-        LoadScenarioOrSave();          // Set province ownership, nation data
-
-        // 5. Cross-References (80-85%) - Build derived data structures
-        BuildProvinceLists();          // Nation → provinces mapping
-        BuildTradeNetwork();           // Province → trade node mapping
-
-        // 6. AI Initialization (85-90%) - Per-nation AI setup
-        InitializeAIForAllNations();
-
-        // 7. Final Prep (90-100%) - Cache warmup, UI setup
-        WarmUpCaches();
-        StartGameLoop();
-    }
-}
-```
-
-**Key Performance**: Total load time ~500ms for 10k provinces with parallel loading.
+**Key Performance**: Fast loading with parallel processing.
 
 ## Data Access Patterns
 
 ### Reading Data - The Query Pattern
 Three query types based on performance needs:
-- **Simple queries**: Direct array access (<0.001ms)
+- **Simple queries**: Direct array access (instant)
 - **Computed queries**: Calculate on-demand from multiple sources
 - **Cached queries**: Frame-coherent caching for expensive calculations
 
@@ -515,10 +493,10 @@ void OnProvinceOwnershipChanged(ProvinceOwnershipChanged evt) {
 - **Frame-Coherent:** Events queued during frame, processed once per frame via `GameState.Update()`
 - **Type Safety:** Compile-time type checking via generics
 
-**Performance Results** _(from stress test 2025-10-05)_:
-- **Before:** 12.56ms avg, 312KB-2,356KB allocations per frame
-- **After:** 0.85ms avg, 4KB total for 100-frame test
-- **Improvement:** 15x faster, 99.99% allocation reduction
+**Performance Results:**
+- Dramatic reduction in allocations
+- Significant performance improvement
+- Near-zero allocation pattern achieved
 
 ### Event Ordering and Guarantees
 
@@ -568,48 +546,23 @@ public FixedPoint64 CalculateIncome(ushort province) {
 ### Anti-Patterns to Avoid
 
 **❌ ANTI-PATTERN: Interface-Typed Collections for Value Types**
-```csharp
-// DON'T: Storing structs in interface-typed collections
-public class BadEventBus {
-    private Queue<IGameEvent> eventQueue;  // ← Boxes every struct!
-
-    public void Emit<T>(T evt) where T : struct, IGameEvent {
-        eventQueue.Enqueue(evt);  // struct → interface = boxing (~40 bytes)
-    }
-}
-// Result: 312KB allocations per frame for 10k events
-```
+Storing structs in interface-typed collections causes boxing:
+- Queue of interface type boxes every struct
+- Massive allocations for many events
+- Performance degradation
 
 **❌ ANTI-PATTERN: Reflection for Hot Path Operations**
-```csharp
-// DON'T: Using reflection in event processing
-public void ProcessEvents() {
-    foreach (var kvp in eventQueues) {
-        MethodInfo method = typeof(EventBus).GetMethod("ProcessQueue");
-        method.Invoke(this, new object[] { kvp.Value });  // ← Boxes parameters!
-    }
-}
-// Reflection always boxes value type parameters
-```
+Using reflection in event processing causes boxing:
+- Reflection always boxes value type parameters
+- Significant performance overhead
+- Avoid in hot paths
 
 **✅ CORRECT: EventQueue<T> Wrapper Pattern**
-```csharp
-// DO: Use wrapper class with virtual methods (no boxing)
-private interface IEventQueue {
-    int ProcessEvents();  // Virtual call doesn't box value types
-}
-
-private class EventQueue<T> : IEventQueue where T : struct {
-    private Queue<T> queue;  // Concrete type stays T
-
-    public int ProcessEvents() {
-        while (queue.Count > 0) {
-            var evt = queue.Dequeue();  // NO BOXING
-            listeners?.Invoke(evt);
-        }
-    }
-}
-```
+Pattern that avoids boxing:
+- Interface with virtual methods
+- Concrete generic queue type
+- Virtual calls don't box value types
+- Direct delegate invocation
 
 **Key Principle:** When you need polymorphic storage of generic types without boxing, use **interface with virtual methods**, not **interface-typed collections**.
 
@@ -719,59 +672,29 @@ public void CalculateCombat(ushort army1, ushort army2, uint seed) {
 
 ### Pre-Allocation
 
-```csharp
-public class MemoryManagement {
-    // Pre-allocate all possible objects at startup
-    public class GlobalPools {
-        public static Army[] ArmyPool = new Army[10000];
-        public static Event[] EventPool = new Event[1000];
-        public static Command[] CommandPool = new Command[10000];
-
-        static GlobalPools() {
-            // Initialize all objects at startup
-            for (int i = 0; i < ArmyPool.Length; i++) {
-                ArmyPool[i] = new Army();
-            }
-        }
-    }
-
-    // Never allocate during gameplay
-    public Army GetArmy() {
-        return GlobalPools.ArmyPool[GetFreeIndex()];
-    }
-}
-```
+Pre-allocate all objects at startup to avoid runtime allocations:
+- Global object pools for common types
+- Fixed-size arrays initialized on startup
+- Never allocate during gameplay
+- Reuse pooled objects instead of creating new ones
 
 ### Memory Layout for Core Simulation
 
-```csharp
-// ENGINE LAYER: Generic primitives (8-byte structs in NativeArray)
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct ProvinceState {
-    public ushort ownerID;
-    public ushort controllerID;
-    public ushort terrainType;
-    public ushort gameDataSlot;
-}
-NativeArray<ProvinceState> provinces;  // 10,000 × 8 bytes = 80KB
+**Engine Layer:** Compact structs in contiguous arrays
+- Generic primitive fields
+- Fixed-size for cache efficiency
+- Native array storage
 
-// GAME LAYER: Hegemon-specific hot data (4-byte structs)
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct HegemonProvinceData {
-    public byte development;
-    public byte fortLevel;
-    public byte unrest;
-    public byte population;
-}
-NativeArray<HegemonProvinceData> hegemonData;  // 10,000 × 4 bytes = 40KB
+**Game Layer:** Game-specific hot data
+- Separate but parallel to engine data
+- Compact representation
+- Native array storage
 
-// Derived indices: Regular managed collections
-List<ushort>[] provincesByOwner;  // Owner → provinces
-Dictionary<ushort, List<ushort>> provincesByReligion;  // Religion → provinces
+**Derived Indices:** Managed collections for reverse lookups
+- Owner to provinces mapping
+- Other categorical indices
 
-// Cold data: Separate storage
-Dictionary<ushort, ProvinceColdData> coldData;
-```
+**Cold Data:** Separate storage loaded on-demand
 
 See [performance-architecture-guide.md](performance-architecture-guide.md) for memory layout optimization strategies.
 
@@ -813,32 +736,13 @@ public class ValidationLayer {
 
 ### Built-in Profiling
 
-```csharp
-public class PerformanceMonitor {
-    private Dictionary<string, SystemMetrics> metrics = new();
+Track system performance metrics:
+- Record update times per system
+- Calculate running averages
+- Periodic logging of metrics
+- Warn when systems exceed thresholds
 
-    public void RecordSystemUpdate(string system, long ticks) {
-        if (!metrics.ContainsKey(system)) {
-            metrics[system] = new SystemMetrics();
-        }
-
-        metrics[system].totalTicks += ticks;
-        metrics[system].updateCount++;
-        metrics[system].averageMs = metrics[system].totalTicks /
-                                   (float)metrics[system].updateCount / 10000f;
-    }
-
-    public void LogFrameMetrics() {
-        if (Time.frameCount % 60 == 0) {  // Every second
-            foreach (var kvp in metrics) {
-                if (kvp.Value.averageMs > 1.0f) {
-                    LogWarning($"{kvp.Key} taking {kvp.Value.averageMs}ms!");
-                }
-            }
-        }
-    }
-}
-```
+Pattern allows identifying performance bottlenecks early.
 
 ## Summary - The Complete Flow
 
@@ -880,5 +784,4 @@ Floats produce different results on different CPUs/compilers. Fixed-point math i
 
 ---
 
-*Last Updated: 2025-09-30*
-*For questions or updates, see master-architecture-document.md*
+*Last Updated: 2025-10-10*

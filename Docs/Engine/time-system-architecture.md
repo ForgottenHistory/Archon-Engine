@@ -5,10 +5,17 @@
 > **📚 Architecture Context:** See [performance-architecture-guide.md](performance-architecture-guide.md) for dirty flag patterns and [master-architecture-document.md](master-architecture-document.md) for overall architecture.
 
 ## Executive Summary
-**Problem**: Paradox games update everything every tick, causing 200,000+ unnecessary calculations per day
+**Problem**: Traditional games update everything every tick, causing massive unnecessary calculations
 **Solution**: Layered update frequencies with dirty flags - only update what changed
-**Performance**: 50-100x fewer calculations, maintains 200+ FPS in late game
+**Performance**: Dramatic reduction in calculations, maintains excellent performance in late game
 **Key Insight**: Most game state doesn't change most of the time
+
+**Core Principles**:
+- Different systems update at different frequencies based on need
+- Dirty flags track what actually changed
+- Bucketing spreads expensive operations across time
+- Cascade depth control prevents infinite loops
+- Deterministic time for multiplayer compatibility
 
 ## Core Architecture: Update Layers
 
@@ -84,852 +91,424 @@ ON-DEMAND ONLY:
 ## The Time Manager
 
 ### Core Time System
-```csharp
-public class TimeManager {
-    // Time state (deterministic)
-    private int hour = 0;
-    private int day = 1;
-    private int month = 1;
-    private int year = 1444;
 
-    // Speed control
-    private int gameSpeedLevel = 2;  // 0=paused, 1-5 = speed levels
-    private FixedPoint64 accumulator = FixedPoint64.Zero;
-    private FixedPoint64 hoursPerSecond = FixedPoint64.FromInt(24);  // At speed 1
+**TimeManager Pattern**:
+- Maintains game time state (hour, day, month, year)
+- Uses fixed-point accumulator for deterministic time advancement
+- Tracks current tick for command synchronization
+- Delegates trigger layered updates at appropriate frequencies
+- Speed control with exact fractional multipliers
 
-    // Tick counter for commands
-    private ulong currentTick = 0;
+**Key Components**:
+- **Time State**: Current hour/day/month/year
+- **Accumulator**: Fixed-point value to prevent drift
+- **Tick Counter**: For multiplayer synchronization
+- **Update Delegates**: Registered callbacks for each frequency
+- **Speed Control**: Pause and variable game speed
 
-    // Update delegates
-    private Action<int> hourlyUpdates;
-    private Action<int> dailyUpdates;
-    private Action<int> weeklyUpdates;
-    private Action<int> monthlyUpdates;
-    private Action<int> yearlyUpdates;
+**Time Advancement Pattern**:
+1. Convert real deltaTime to game time using fixed-point math
+2. Accumulate game time
+3. Process full hours when accumulator exceeds threshold
+4. Trigger appropriate layered updates (hourly → daily → weekly → monthly → yearly)
+5. Increment tick counter
 
-    // Performance tracking
-    private long[] updateTimings = new long[8];
-    private int[] updateCounts = new int[8];
-
-    public void Tick(float deltaTime) {
-        if (gameSpeedLevel == 0) return;  // Paused
-
-        // Convert real-time to game time (deterministic)
-        FixedPoint64 speedMultiplier = GetSpeedMultiplier(gameSpeedLevel);
-        FixedPoint64 gameTimeDelta = FixedPoint64.FromFloat(deltaTime) * speedMultiplier * hoursPerSecond;
-
-        accumulator += gameTimeDelta;
-
-        // Process full hours
-        while (accumulator >= FixedPoint64.One) {
-            accumulator -= FixedPoint64.One;
-            AdvanceHour();
-            currentTick++;
-        }
-    }
-
-    private FixedPoint64 GetSpeedMultiplier(int speedLevel) {
-        // Deterministic speed multipliers
-        return speedLevel switch {
-            0 => FixedPoint64.Zero,
-            1 => FixedPoint64.FromFraction(1, 2),  // 0.5x
-            2 => FixedPoint64.One,                  // 1.0x
-            3 => FixedPoint64.FromInt(2),          // 2.0x
-            4 => FixedPoint64.FromInt(5),          // 5.0x
-            _ => FixedPoint64.One
-        };
-    }
-
-    private void AdvanceHour() {
-        hour++;
-        ExecuteLayeredUpdate(UpdateFrequency.Hourly, hour);
-
-        if (hour >= 24) {
-            hour = 0;
-            AdvanceDay();
-        }
-    }
-
-    private void AdvanceDay() {
-        day++;
-        ExecuteLayeredUpdate(UpdateFrequency.Daily, day);
-
-        if (day % 7 == 0) {
-            ExecuteLayeredUpdate(UpdateFrequency.Weekly, day / 7);
-        }
-
-        if (day > 30) {  // Simplified 30-day months for determinism
-            day = 1;
-            AdvanceMonth();
-        }
-    }
-
-    private void AdvanceMonth() {
-        month++;
-        ExecuteLayeredUpdate(UpdateFrequency.Monthly, month);
-
-        if (month % 3 == 0) {
-            ExecuteLayeredUpdate(UpdateFrequency.Quarterly, month / 3);
-        }
-
-        if (month > 12) {
-            month = 1;
-            year++;
-            ExecuteLayeredUpdate(UpdateFrequency.Yearly, year);
-        }
-    }
-
-    // For multiplayer: Synchronize to specific tick
-    public void SynchronizeToTick(ulong targetTick) {
-        while (currentTick < targetTick) {
-            AdvanceHour();
-            currentTick++;
-        }
-    }
-}
-```
-
-**Key Determinism Points:**
+**Determinism Requirements**:
 - Fixed-point accumulator (no float drift)
-- Simplified 30-day months (no calendar complexity)
+- Simplified calendar (30-day months, no leap years)
 - Tick counter for command synchronization
-- Speed multipliers are exact fractions
+- Speed multipliers as exact fractions
+- Synchronization method for multiplayer catchup
 
 ## Dirty Flag System
 
-### Province Update State
-```csharp
-[Flags]
-public enum ProvinceUpdateFlags : uint {
-    None         = 0,
-    Economy      = 1 << 0,   // Tax, production
-    Military     = 1 << 1,   // Manpower, fortifications
-    Trade        = 1 << 2,   // Trade routes, merchants
-    Population   = 1 << 3,   // Growth, migration
-    Development  = 1 << 4,   // Tech spread, improvements
-    Culture      = 1 << 5,   // Cultural conversion
-    Religion     = 1 << 6,   // Religious conversion
-    Buildings    = 1 << 7,   // Construction progress
-    Diplomacy    = 1 << 8,   // Claims, core progress
-    Rebellion    = 1 << 9,   // Unrest, rebel progress
-    // ... up to 32 systems
+### Province Update State Pattern
 
-    All = 0xFFFFFFFF
-}
+**Flag-Based Change Tracking**:
+- Bit flags for different system types (Economy, Military, Trade, Population, etc.)
+- Per-province dirty state tracking
+- Counter fields for time-since-last-update tracking
+- Bitwise operations for efficient flag management
 
-public struct ProvinceUpdateState {
-    public ProvinceUpdateFlags dirtyFlags;
-    public byte daysSinceEconomy;    // 0-255 days
-    public byte weeksSinceTrade;     // 0-255 weeks
-    public byte monthsSincePopulation; // 0-255 months
+**ProvinceUpdateFlags Design**:
+- Each system gets a bit flag (up to 32 systems with uint)
+- Flags combine via bitwise OR for multi-system updates
+- Check flags via bitwise AND for needed updates
+- Clear flags after processing
 
-    public void MarkDirty(ProvinceUpdateFlags flags) {
-        dirtyFlags |= flags;
-    }
+**Update State Tracking**:
+- Dirty flags indicate which systems need updates
+- Time counters track days/weeks/months since last update
+- Methods to mark dirty, check if needs update, clear flags
 
-    public bool NeedsUpdate(ProvinceUpdateFlags flags) {
-        return (dirtyFlags & flags) != 0;
-    }
+### Global Dirty Tracking Pattern
 
-    public void ClearFlags(ProvinceUpdateFlags flags) {
-        dirtyFlags &= ~flags;
-    }
-}
-```
+**DirtyTracker Components**:
+- **Per-Province State**: Array of update states
+- **System-Specific Lists**: HashSets for efficient iteration (dirtyEconomy, dirtyMilitary, etc.)
+- **Cascade Depth Tracking**: Prevents infinite update loops
+- **Bulk Operations**: Mark entire nations or regions dirty at once
 
-### Global Dirty Tracking
-```csharp
-public class DirtyTracker {
-    // Per-province dirty state
-    private ProvinceUpdateState[] provinceStates;
+**Efficient Iteration**:
+- Dedicated HashSets for frequently-checked systems
+- Fast lookup avoids scanning all provinces
+- Fallback to full scan for less common flag combinations
+- Clear lists after processing updates
 
-    // System-wide dirty lists for efficient iteration
-    private HashSet<ushort> dirtyEconomy = new();
-    private HashSet<ushort> dirtyMilitary = new();
-    private HashSet<ushort> dirtyTrade = new();
-
-    // Cascade depth tracking (see Cascade Control section)
-    private int currentCascadeDepth = 0;
-    private const int MAX_CASCADE_DEPTH = 5;
-
-    // Bulk operations
-    public void MarkNationDirty(ushort nation, ProvinceUpdateFlags flags) {
-        foreach (var provinceId in GetNationProvinces(nation)) {
-            provinceStates[provinceId].MarkDirty(flags);
-            AddToSystemList(provinceId, flags);
-        }
-    }
-
-    public void MarkRegionDirty(ushort region, ProvinceUpdateFlags flags) {
-        foreach (var provinceId in GetRegionProvinces(region)) {
-            provinceStates[provinceId].MarkDirty(flags);
-            AddToSystemList(provinceId, flags);
-        }
-    }
-
-    // Efficient iteration
-    public IEnumerable<ushort> GetDirtyProvinces(ProvinceUpdateFlags flags) {
-        if (flags == ProvinceUpdateFlags.Economy) return dirtyEconomy;
-        if (flags == ProvinceUpdateFlags.Military) return dirtyMilitary;
-        if (flags == ProvinceUpdateFlags.Trade) return dirtyTrade;
-
-        // Fallback to checking all provinces
-        for (ushort i = 0; i < provinceCount; i++) {
-            if (provinceStates[i].NeedsUpdate(flags)) {
-                yield return i;
-            }
-        }
-    }
-
-    private void AddToSystemList(ushort provinceId, ProvinceUpdateFlags flags) {
-        if ((flags & ProvinceUpdateFlags.Economy) != 0) dirtyEconomy.Add(provinceId);
-        if ((flags & ProvinceUpdateFlags.Military) != 0) dirtyMilitary.Add(provinceId);
-        if ((flags & ProvinceUpdateFlags.Trade) != 0) dirtyTrade.Add(provinceId);
-    }
-}
-```
+**Bulk Operations Pattern**:
+- Mark all provinces in a nation dirty (e.g., tech advancement)
+- Mark all provinces in a region dirty (e.g., trade node changes)
+- Add to system-specific lists for fast retrieval
 
 ## Update Systems Implementation
 
-### Economic Update System
-```csharp
-public class EconomicSystem {
-    private FixedPoint64[] baseTax;
-    private FixedPoint64[] production;
-    private FixedPoint64[] tradeValue;
-    private FixedPoint64[] cachedIncome;  // Cached total
+### Economic Update System Pattern
 
-    public void OnMonthlyUpdate(DirtyTracker tracker) {
-        var dirtyProvinces = tracker.GetDirtyProvinces(ProvinceUpdateFlags.Economy);
+**Update Flow**:
+1. Query DirtyTracker for provinces flagged with Economy changes
+2. Iterate only dirty provinces (not all provinces)
+3. Recalculate economic values using fixed-point math
+4. Cache results for tooltip/UI queries
+5. Clear dirty flags after processing
 
-        foreach (var provinceId in dirtyProvinces) {
-            UpdateProvinceEconomy(provinceId);
-            tracker.ClearProvinceFlags(provinceId, ProvinceUpdateFlags.Economy);
-        }
-    }
+**Data Storage**:
+- Fixed-point arrays for base values (tax, production, trade)
+- Cached result arrays for fast lookups
+- All calculations use deterministic fixed-point math
 
-    private void UpdateProvinceEconomy(ushort id) {
-        FixedPoint64 efficiency = GetTaxEfficiency(provinces[id].ownerID);
-        FixedPoint64 buildingBonus = GetBuildingBonus(id);
+**Event Triggers**:
+- Building completion marks province dirty
+- Tech advancement marks entire nation dirty
+- Trade route changes mark trade node provinces dirty
+- Updates deferred until scheduled monthly update
 
-        cachedIncome[id] = (baseTax[id] * efficiency) +
-                          (production[id] * buildingBonus) +
-                          tradeValue[id];
-    }
+### Military Update System Pattern
 
-    // Trigger updates when needed
-    public void OnBuildingComplete(ushort provinceId) {
-        // Mark dirty, but don't cascade yet
-        tracker.MarkProvinceDirty(provinceId, ProvinceUpdateFlags.Economy);
-    }
+**Update Flow**:
+1. Query DirtyTracker for provinces flagged with Military changes
+2. Iterate only dirty provinces
+3. Update manpower regeneration using fixed-point math
+4. Update fortification status if needed
+5. Clear dirty flags after processing
 
-    public void OnTechAdvance(ushort nation, TechType tech) {
-        if (tech == TechType.Taxation) {
-            // Bulk mark all nation provinces dirty
-            tracker.MarkNationDirty(nation, ProvinceUpdateFlags.Economy);
-        }
-    }
-}
-```
-
-### Military Update System
-```csharp
-public class MilitarySystem {
-    private FixedPoint64[] manpower;
-    private FixedPoint64[] manpowerMax;
-    private byte[] fortLevel;
-
-    public void OnDailyUpdate(DirtyTracker tracker) {
-        // Only update provinces that need it
-        var dirtyProvinces = tracker.GetDirtyProvinces(ProvinceUpdateFlags.Military);
-
-        foreach (var id in dirtyProvinces) {
-            RegenerateManpower(id);
-            UpdateFortification(id);
-            tracker.ClearProvinceFlags(id, ProvinceUpdateFlags.Military);
-        }
-    }
-
-    private void RegenerateManpower(ushort id) {
-        FixedPoint64 rate = FixedPoint64.FromFraction(1, 10); // 10% per month
-        FixedPoint64 daily = rate / FixedPoint64.FromInt(30);
-
-        FixedPoint64 regen = daily * manpowerMax[id];
-        manpower[id] = FixedPoint64.Min(manpower[id] + regen, manpowerMax[id]);
-    }
-}
-```
+**Fixed-Point Calculations**:
+- Regeneration rates as exact fractions
+- Daily rate derived from monthly rate
+- Clamped to maximum values
+- Deterministic across all platforms
 
 ## Bucketed Updates for Load Distribution
 
 ### The Bucketing Pattern
 
-**Problem:** Updating 10,000 provinces yearly creates a 50ms spike once per year.
+**Problem**: Updating all provinces for yearly operations creates performance spikes
 
-**Solution:** Spread yearly operations across 365 daily buckets.
+**Solution**: Spread yearly operations across daily buckets
 
-```csharp
-public class BucketedUpdates {
-    private int provinceCount = 10000;
+**Bucketing Pattern**:
+- Divide total provinces by number of days in period
+- Calculate which bucket (day of year) to process
+- Each province processed exactly once per year
+- Same province always processes on same day (deterministic)
 
-    // Calculate which provinces update today
-    public IEnumerable<ushort> GetBucketForDay(int dayOfYear, int totalDays) {
-        // Distribute provinces evenly across the year
-        int provincesPerDay = provinceCount / totalDays;
-        int startIndex = dayOfYear * provincesPerDay;
-        int endIndex = startIndex + provincesPerDay;
+**Example: Population Growth**:
+- Yearly operation split across daily buckets
+- Each day processes a fraction of provinces
+- Daily growth rate = yearly rate / days in year
+- Fixed-point math for determinism
 
-        for (int i = startIndex; i < endIndex && i < provinceCount; i++) {
-            yield return (ushort)i;
-        }
-    }
-
-    // Example: Culture conversion (yearly operation)
-    public void OnDailyTick_CultureConversion(int dayOfYear) {
-        var provincesToday = GetBucketForDay(dayOfYear, 365);
-
-        foreach (var provinceId in provincesToday) {
-            ProcessCultureConversion(provinceId);
-        }
-    }
-}
-```
-
-**Result:** Instead of 10,000 provinces × 5ms = 50ms spike once per year, we get ~27 provinces × 5ms = 0.135ms every single day.
-
-### Bucketing Example: Population Growth
-
-```csharp
-public class PopulationSystem {
-    private const int DAYS_PER_YEAR = 365;
-
-    public void OnDailyUpdate(int currentDay) {
-        // Calculate which bucket we're in (0-364)
-        int dayOfYear = currentDay % DAYS_PER_YEAR;
-
-        // Get provinces for this bucket
-        int provincesPerBucket = provinceCount / DAYS_PER_YEAR;
-        int startIndex = dayOfYear * provincesPerBucket;
-        int endIndex = Math.Min(startIndex + provincesPerBucket, provinceCount);
-
-        // Process this bucket's provinces
-        for (int i = startIndex; i < endIndex; i++) {
-            UpdatePopulationGrowth((ushort)i);
-        }
-    }
-
-    private void UpdatePopulationGrowth(ushort provinceId) {
-        // Population grows 1% per year
-        FixedPoint64 yearlyGrowth = FixedPoint64.FromFraction(1, 100);
-        FixedPoint64 dailyGrowth = yearlyGrowth / FixedPoint64.FromInt(365);
-
-        population[provinceId] += population[provinceId] * dailyGrowth;
-    }
-}
-```
-
-**Why this works:**
-- Each province is updated exactly once per year
-- Load is evenly distributed across all 365 days
-- No spikes, consistent frame time
-- Deterministic (same province always updates on same day of year)
+**Benefits**:
+- No performance spikes from bulk updates
+- Consistent frame time throughout year
+- Load evenly distributed
+- Deterministic execution order
+- Each province updated at correct frequency
 
 ## Cascade Depth Control
 
 ### The Cascade Problem
 
-**Scenario:**
-1. Building completes → marks province economy dirty
-2. Economy update runs → changes tax income → marks nation economy dirty
-3. Nation economy update → changes total income → marks bankruptcy check dirty
-4. Bankruptcy check → country goes bankrupt → marks stability dirty
-5. Stability loss → marks rebellion check dirty
-6. Rebellion check → spawns rebels → marks military dirty
-7. Military update → rebels capture province → marks economy dirty **AGAIN**
-8. **INFINITE LOOP**
+**Update chains can trigger infinite loops**:
+- Building completes → economy update → nation income update → bankruptcy check → stability change → rebellion check → military update → province capture → economy update → **LOOP**
 
-### Cascade Depth Tracking
+**Without control**: System can lock up in infinite update cascades
 
-```csharp
-public class CascadeController {
-    private int currentCascadeDepth = 0;
-    private const int MAX_CASCADE_DEPTH = 5;
-    private Queue<Action> deferredUpdates = new();
+### Cascade Depth Tracking Pattern
 
-    public bool CanCascade() {
-        return currentCascadeDepth < MAX_CASCADE_DEPTH;
-    }
+**CascadeController Pattern**:
+- Track current cascade depth with counter
+- Define maximum cascade depth limit
+- Defer updates beyond limit to prevent loops
+- Queue for next frame processing
+- Reset depth counter after frame
 
-    public void ExecuteWithCascadeControl(Action update) {
-        if (!CanCascade()) {
-            // Defer to next frame to prevent infinite loops
-            deferredUpdates.Enqueue(update);
-            Debug.LogWarning($"Cascade depth limit reached, deferring update");
-            return;
-        }
+**Execution Flow**:
+1. Check if cascade depth under limit
+2. If under limit: increment depth, execute update, decrement depth
+3. If over limit: queue update for deferred processing, log warning
+4. Process deferred queue at end of frame with fresh depth counter
 
-        currentCascadeDepth++;
-        try {
-            update();
-        }
-        finally {
-            currentCascadeDepth--;
-        }
-    }
+**Integration with Update Systems**:
+- Wrap cascading updates in cascade control
+- Only cascade on significant changes (threshold checks)
+- Significant change triggers higher-level update
+- Example: Province income changes enough → trigger nation-level economy update
 
-    public void ProcessDeferredUpdates() {
-        // Process deferred updates at the end of the frame
-        currentCascadeDepth = 0;
-
-        int processedCount = 0;
-        while (deferredUpdates.Count > 0 && processedCount < 1000) {
-            var update = deferredUpdates.Dequeue();
-            ExecuteWithCascadeControl(update);
-            processedCount++;
-        }
-
-        if (deferredUpdates.Count > 0) {
-            Debug.LogError($"Still have {deferredUpdates.Count} deferred updates after processing!");
-        }
-    }
-}
-```
-
-### Update System with Cascade Control
-
-```csharp
-public class EconomicSystem {
-    private CascadeController cascadeController;
-
-    public void UpdateProvinceEconomy(ushort id) {
-        FixedPoint64 oldIncome = cachedIncome[id];
-
-        // Calculate new income
-        cachedIncome[id] = CalculateIncome(id);
-
-        // If income changed significantly, cascade to nation
-        if (FixedPoint64.Abs(cachedIncome[id] - oldIncome) > SIGNIFICANT_CHANGE_THRESHOLD) {
-            cascadeController.ExecuteWithCascadeControl(() => {
-                nationEconomy.UpdateNationIncome(provinces[id].ownerID);
-            });
-        }
-    }
-}
-```
-
-**Key principles:**
-1. **Track cascade depth** - count how deep we are
-2. **Defer if too deep** - queue for next frame instead of infinite loop
-3. **Log warnings** - developer knows cascade limit was hit
-4. **Threshold checks** - only cascade if change is significant
+**Key Principles**:
+- **Track depth**: Count cascade levels
+- **Defer when deep**: Queue instead of loop
+- **Log warnings**: Alert developers to cascade limits
+- **Threshold checks**: Only cascade for meaningful changes
+- **Reset per frame**: Fresh start each frame
 
 ## Event-Driven Update Triggers
 
-### Common Event Triggers
-```csharp
-public static class UpdateTriggers {
-    // Construction
-    public static void OnBuildingQueued(ushort province, BuildingType type) {
-        dirtyTracker.MarkProvinceDirty(province, ProvinceUpdateFlags.Buildings);
-    }
+### Event Trigger Patterns
 
-    public static void OnBuildingComplete(ushort province, BuildingType type) {
-        dirtyTracker.MarkProvinceDirty(province, ProvinceUpdateFlags.Economy | ProvinceUpdateFlags.Military);
+**Construction Events**:
+- Building queued → mark Buildings flag dirty
+- Building complete → mark Economy and Military flags dirty
+- Trade building complete → cascade to trade node
+- Infrastructure complete → mark Development dirty
 
-        if (type.AffectsTrade()) {
-            // Cascade to trade node
-            var tradeNode = GetTradeNode(province);
-            dirtyTracker.MarkTradeNodeDirty(tradeNode, ProvinceUpdateFlags.Trade);
-        }
-    }
+**Warfare Events**:
+- Siege start → mark Military dirty, increase update frequency to hourly
+- Siege end → return to normal daily updates
+- Province occupation → mark all systems dirty, cascade to neighbors
+- Army movement → mark Military dirty for affected provinces
 
-    // Warfare
-    public static void OnSiegeStart(ushort province) {
-        dirtyTracker.MarkProvinceDirty(province, ProvinceUpdateFlags.Military);
+**Technology Events**:
+- Tech advancement → mark entire nation dirty for affected systems
+- Different tech categories affect different flag combinations
+- Taxation tech → Economy flags
+- Military tech → Military flags
+- Diplomatic tech → Diplomacy flags
 
-        // Sieges need hourly updates instead of daily
-        timeManager.SetProvinceUpdateFrequency(province, UpdateFrequency.Hourly);
-    }
+**Diplomatic Events**:
+- War declaration → mark Military for all involved nations
+- Alliance formed → mark Diplomacy for member nations
+- Trade agreement → mark Trade for affected trade nodes
+- Vassal integration → mark all systems for integrated provinces
 
-    public static void OnSiegeEnd(ushort province) {
-        // Return to normal daily updates
-        timeManager.SetProvinceUpdateFrequency(province, UpdateFrequency.Daily);
-    }
-
-    public static void OnOccupation(ushort province, ushort newController) {
-        // Mark everything dirty for occupied province
-        dirtyTracker.MarkProvinceDirty(province, ProvinceUpdateFlags.All);
-
-        // Neighbors also affected (trade routes, military supply, etc.)
-        foreach (var neighbor in GetNeighbors(province)) {
-            dirtyTracker.MarkProvinceDirty(neighbor,
-                ProvinceUpdateFlags.Military | ProvinceUpdateFlags.Trade);
-        }
-    }
-
-    // Technology
-    public static void OnTechAdvance(ushort nation, TechCategory category) {
-        var flags = GetTechAffectedSystems(category);
-        dirtyTracker.MarkNationDirty(nation, flags);
-    }
-
-    // Diplomacy
-    public static void OnWarDeclared(ushort attacker, ushort defender) {
-        dirtyTracker.MarkNationDirty(attacker, ProvinceUpdateFlags.Military);
-        dirtyTracker.MarkNationDirty(defender, ProvinceUpdateFlags.Military);
-
-        // Update allies
-        foreach (var ally in GetAllies(attacker)) {
-            dirtyTracker.MarkNationDirty(ally, ProvinceUpdateFlags.Military);
-        }
-    }
-}
-```
+**Dynamic Frequency Adjustment**:
+- Active combat/sieges switch to hourly updates
+- Normal provinces use daily/monthly updates
+- Return to lower frequency when events complete
+- Reduces unnecessary calculations while maintaining responsiveness
 
 ## Command Pattern Integration
 
-### Commands Execute on Specific Ticks
+### Command Execution Pattern
 
-```csharp
-public struct ConquerProvinceCommand : ICommand {
-    public ulong executionTick;  // WHEN to execute
-    public ushort provinceId;
-    public ushort newOwner;
+**Tick-Based Execution**:
+- Commands store target execution tick
+- Validated before execution
+- Execute state changes
+- Mark affected entities dirty
+- Tick verification for multiplayer safety
 
-    public void Execute(GameState state) {
-        // Verify we're on the correct tick
-        if (state.Time.CurrentTick != executionTick) {
-            Debug.LogError($"Command executed on wrong tick! Expected {executionTick}, got {state.Time.CurrentTick}");
-            return;
-        }
+**Command Queue Processing**:
+- Priority queue ordered by execution tick
+- Process all commands for current tick
+- Validate before executing
+- Dequeue after processing
 
-        // Execute state change
-        state.Provinces.SetOwner(provinceId, newOwner);
+**TimeManager Integration Order** (Critical):
+1. **Process commands first** - deterministic player/AI input
+2. **Run scheduled updates** - layered system updates (hourly/daily/etc.)
+3. **Process dirty flags** - update changed entities
+4. **Advance time** - increment tick, advance to next hour/day
 
-        // Mark dirty for next update cycle
-        state.DirtyTracker.MarkProvinceDirty(provinceId, ProvinceUpdateFlags.All);
-    }
-}
-```
-
-### Command Queue Processing
-
-```csharp
-public class CommandProcessor {
-    private PriorityQueue<ICommand, ulong> commandQueue = new();  // Priority = execution tick
-
-    public void EnqueueCommand(ICommand command, ulong executionTick) {
-        commandQueue.Enqueue(command, executionTick);
-    }
-
-    public void ProcessCommandsForTick(ulong currentTick) {
-        // Process all commands scheduled for this tick
-        while (commandQueue.Count > 0 && commandQueue.Peek().executionTick == currentTick) {
-            var command = commandQueue.Dequeue();
-
-            if (command.Validate(gameState)) {
-                command.Execute(gameState);
-            }
-        }
-    }
-}
-```
-
-**Integration with TimeManager:**
-```csharp
-private void AdvanceHour() {
-    hour++;
-    currentTick++;
-
-    // 1. Process commands for this tick FIRST
-    commandProcessor.ProcessCommandsForTick(currentTick);
-
-    // 2. Then run scheduled updates
-    ExecuteLayeredUpdate(UpdateFrequency.Hourly, hour);
-
-    // 3. Process dirty flags
-    ProcessDirtyUpdates();
-
-    if (hour >= 24) {
-        hour = 0;
-        AdvanceDay();
-    }
-}
-```
-
-**Why this order matters:**
-1. Commands execute first (deterministic input)
-2. Commands mark things dirty
-3. Updates process dirty flags
-4. Next tick begins
+**Why Order Matters**:
+- Commands execute first to provide deterministic input
+- Commands mark entities dirty
+- Updates process those dirty flags
+- Clean separation ensures multiplayer synchronization
+- Next tick begins with clean state
 
 ## Pause State Handling
 
-### What Happens When Paused?
+### Pause Behavior Pattern
 
-```csharp
-public class TimeManager {
-    private bool isPaused = false;
-    private Queue<ProvinceUpdateFlags> pausedDirtyFlags = new();
+**When Paused**:
+- Time stops advancing (tick counter frozen)
+- Dirty flags continue accumulating normally
+- Player actions still mark entities dirty
+- No updates execute until unpaused
 
-    public void SetPaused(bool paused) {
-        if (paused && !isPaused) {
-            // Entering pause: dirty flags continue accumulating normally
-            isPaused = true;
-        }
-        else if (!paused && isPaused) {
-            // Exiting pause: don't execute accumulated updates all at once
-            // They'll be processed on their normal schedule
-            isPaused = false;
-        }
-    }
+**When Unpaused**:
+- Time resumes from pause point
+- Accumulated dirty flags remain
+- Updates process on normal schedule (not all at once)
+- No performance spike from deferred updates
 
-    public void Tick(float deltaTime) {
-        if (isPaused) return;  // Time doesn't advance
+**Key Principles**:
+- Pause doesn't clear dirty flags
+- Unpause doesn't trigger immediate bulk updates
+- Updates execute when their scheduled time arrives
+- Example: Building completes while paused → Economy flag dirty → Next monthly update processes it
 
-        // Normal time advancement
-        // ...
-    }
-}
-```
-
-**Key behavior:**
-- **Dirty flags accumulate while paused** (building completes, player changes tax slider)
-- **When unpaused, updates run on their normal schedule** (not all at once)
-- **No update spike when unpausing** (updates are scheduled, not immediate)
-
-**Example:**
-1. Player pauses at tick 1000
-2. Player queues building (marks province dirty for economy)
-3. Player changes tax rate (marks province dirty for economy)
-4. Player unpauses at tick 1000 (no time passed)
-5. Monthly update at tick 1720 processes both dirty flags together
+**Benefits**:
+- No frame time spike when unpausing
+- State changes accumulate properly
+- Updates batched naturally at scheduled intervals
+- Player can make multiple changes while paused without penalty
 
 ## Multiplayer Time Synchronization
 
-### Lockstep Determinism
+### Lockstep Determinism Pattern
 
-```csharp
-public class MultiplayerTimeManager {
-    private ulong currentTick = 0;
-    private Dictionary<ulong, List<ICommand>> commandsPerTick = new();
+**Synchronization Requirements**:
+- All clients on same tick before advancing
+- Client ready signals coordinate advancement
+- Commands execute in deterministic order
+- Scheduled updates identical across clients
+- Dirty flag processing deterministic
 
-    // All clients must agree on tick before advancing
-    public void OnClientReady(int clientId, ulong readyForTick) {
-        if (readyForTick == currentTick + 1) {
-            clientReadyCount++;
+**Tick Advancement Flow**:
+1. Clients signal ready for next tick
+2. Wait for all clients to signal ready
+3. Advance tick on all clients simultaneously
+4. Process commands in sorted order (by player ID)
+5. Execute scheduled updates
+6. Process dirty flags
+7. Repeat
 
-            if (clientReadyCount == totalClients) {
-                // All clients ready, advance tick
-                AdvanceTick();
-            }
-        }
-    }
-
-    private void AdvanceTick() {
-        currentTick++;
-
-        // Process commands for this tick (same order on all clients)
-        if (commandsPerTick.TryGetValue(currentTick, out var commands)) {
-            // Sort by some deterministic property (e.g., player ID)
-            commands.Sort((a, b) => a.PlayerId.CompareTo(b.PlayerId));
-
-            foreach (var command in commands) {
-                command.Execute(gameState);
-            }
-        }
-
-        // Run scheduled updates (deterministic)
-        ExecuteScheduledUpdates();
-
-        // Process dirty flags (deterministic)
-        ProcessDirtyUpdates();
-    }
-}
-```
-
-**Critical multiplayer rules:**
-1. **All clients on same tick** - no client advances until all are ready
-2. **Commands execute in deterministic order** - same order on all clients
+**Critical Multiplayer Rules**:
+1. **Tick synchronization** - no client advances alone
+2. **Deterministic command order** - sorted by player ID
 3. **Fixed-point math only** - no float divergence
 4. **No real-time dependencies** - time budget doesn't affect simulation
-5. **Identical dirty flag processing** - same order of iteration
+5. **Identical iteration order** - dirty flags processed same way
+6. **Same RNG seed** - deterministic random number generation
 
-### Client-Server vs Lockstep
+### Multiplayer Architecture Comparison
 
-**Lockstep (recommended for <8 players):**
+**Lockstep** (recommended for smaller games):
 - All clients simulate identically
-- Slowest client limits speed
-- Minimal bandwidth (only commands)
-- Perfect for 2-4 players
+- Slowest client sets pace
+- Minimal bandwidth (commands only)
+- Perfect synchronization
+- Best for 2-8 players
 
-**Client-Server (recommended for 8+ players):**
-- Server is authoritative
+**Client-Server** (recommended for larger games):
+- Server authoritative
 - Clients predict and rollback
 - Higher bandwidth (state deltas)
 - Scales to many players
+- Best for 8+ players
 
 ## Performance Optimizations
 
-### Caching Strategy
-```csharp
-public class CachedCalculations {
-    // Never recalculate unless inputs change
-    private struct CachedValue<T> where T : struct {
-        public T value;
-        public uint version;  // Incremented when dependencies change
-        public bool valid;
+### Caching Strategy Pattern
 
-        public T Get(Func<T> recalculate, uint currentVersion) {
-            if (!valid || version != currentVersion) {
-                value = recalculate();
-                version = currentVersion;
-                valid = true;
-            }
-            return value;
-        }
-    }
+**Version-Based Cache Invalidation**:
+- Cache stores value + version number
+- Global version counter for each system
+- Increment version to invalidate all caches
+- Recompute only when version mismatch
 
-    // Example: Trade value caching
-    private CachedValue<FixedPoint64>[] tradeValues;
-    private uint tradeVersion = 0;
+**Cached Value Pattern**:
+- Store computed value with version tag
+- Validity flag tracks if cached
+- Get method checks version before returning
+- Recalculate if version outdated
+- Example: Trade values cached, invalidated when trade routes change
 
-    public void InvalidateTrade() {
-        tradeVersion++;  // All cached values now invalid
-    }
+**Benefits**:
+- Avoid redundant expensive calculations
+- Version-based invalidation is simple and fast
+- Works well with dirty flag systems
+- Deterministic for multiplayer
 
-    public FixedPoint64 GetTradeValue(ushort province) {
-        return tradeValues[province].Get(
-            () => CalculateTradeValue(province),
-            tradeVersion
-        );
-    }
-}
-```
+### Single-Player Time Budgets
 
-### Single-Player Time Budgets (Not Multiplayer!)
+**⚠️ WARNING: Single-Player Only**
 
-```csharp
-public class SinglePlayerOptimizations {
-    // ⚠️ ONLY use in single-player! Breaks multiplayer determinism!
+**Time Budget Pattern**:
+- Set maximum milliseconds per frame
+- Process batches until time budget exhausted
+- Defer remaining work to next frame
+- Continue where left off
 
-    public void ProcessBatchesWithTimeBudget(float maxMilliseconds) {
-        var stopwatch = Stopwatch.StartNew();
+**Why This Breaks Multiplayer**:
+- Fast client processes more work than slow client
+- Game states diverge between clients
+- Desynchronization occurs
+- Non-deterministic execution
 
-        while (pendingBatches.Count > 0 && stopwatch.Elapsed.TotalMilliseconds < maxMilliseconds) {
-            var batch = pendingBatches.Dequeue();
-            ProcessBatch(batch);
-        }
-
-        // If we ran out of time, continue next frame
-        if (pendingBatches.Count > 0) {
-            Debug.Log($"Deferred {pendingBatches.Count} batches to next frame");
-        }
-    }
-}
-```
-
-**Why this breaks multiplayer:**
-- Fast client processes 100 provinces
-- Slow client processes 50 provinces
-- Game states diverge
-- Desync
-
-**Solution for multiplayer:** All clients must process ALL work, regardless of real-time performance.
+**Multiplayer Solution**:
+- All clients must process ALL work
+- No time budgets for simulation
+- Performance determined by slowest client
+- Determinism over performance
 
 ## Profiling & Metrics
 
-### Performance Monitoring
-```csharp
-public class UpdateMetrics {
-    private Dictionary<UpdateFrequency, TimingInfo> timings = new();
+### Performance Monitoring Pattern
 
-    private class TimingInfo {
-        public long totalTime;
-        public int callCount;
-        public int entitiesUpdated;
-        public float averageMs => totalTime / (float)callCount / 10000f;
-    }
+**Metrics to Track**:
+- Update time per frequency layer (hourly, daily, monthly, etc.)
+- Entity count processed per update
+- Call count per update type
+- Average time per update
+- Peak time per update
 
-    public void RecordUpdate(UpdateFrequency freq, long ticks, int count) {
-        if (!timings.ContainsKey(freq)) {
-            timings[freq] = new TimingInfo();
-        }
+**Update Metrics Pattern**:
+- Dictionary keyed by update frequency
+- Track total time, call count, entities updated
+- Calculate averages for reporting
+- Log daily or on-demand
+- Identify performance bottlenecks
 
-        var info = timings[freq];
-        info.totalTime += ticks;
-        info.callCount++;
-        info.entitiesUpdated += count;
-    }
-
-    public void LogDaily() {
-        foreach (var kvp in timings) {
-            Debug.Log($"{kvp.Key}: {kvp.Value.averageMs:F2}ms avg, {kvp.Value.entitiesUpdated} entities");
-        }
-    }
-}
-```
+**Key Metrics**:
+- Average milliseconds per update type
+- Entity count processed
+- Frequency of updates
+- Performance trends over time
 
 ## Configuration & Tuning
 
-### Time Constants
-```csharp
-public static class TimeConstants {
-    // Base time units (deterministic)
-    public const int HOURS_PER_DAY = 24;
-    public const int DAYS_PER_WEEK = 7;
-    public const int DAYS_PER_MONTH = 30;  // Simplified for determinism
-    public const int MONTHS_PER_YEAR = 12;
-    public const int DAYS_PER_YEAR = 360;  // 30 × 12 = 360 (not 365!)
+### Time Constants Pattern
 
-    // Speed settings (exact fractions for determinism)
-    public static readonly FixedPoint64[] GAME_SPEEDS = {
-        FixedPoint64.Zero,                    // Pause
-        FixedPoint64.FromFraction(1, 2),      // Slow (0.5x)
-        FixedPoint64.One,                      // Normal (1.0x)
-        FixedPoint64.FromInt(2),              // Fast (2.0x)
-        FixedPoint64.FromInt(5)               // Very Fast (5.0x)
-    };
+**Base Time Units** (deterministic):
+- Hours per day: Standard
+- Days per week: Standard
+- Days per month: Simplified (30 days always)
+- Months per year: Standard
+- Days per year: Simplified (360 days, not 365)
 
-    // Cascade limits
-    public const int MAX_CASCADE_DEPTH = 5;
-    public const int MAX_DEFERRED_UPDATES = 1000;
-}
-```
+**Why Simplified Calendar**:
+- Evenly divisible by months and days
+- No leap year complexity
+- Simpler bucketing math
+- Fully deterministic across platforms
+- Easier modulo operations
 
-**Why 360 days instead of 365?**
-- Evenly divisible by 12 (months)
-- Evenly divisible by 30 (days per month)
-- Simpler math, no leap years
-- Fully deterministic
+**Speed Settings**:
+- Exact fractions for determinism
+- Pause, slow, normal, fast, very fast options
+- Fixed-point representation
+- Identical across all clients
 
-### System Configuration
-```csharp
-[CreateAssetMenu(fileName = "TimeConfig", menuName = "Config/Time System")]
-public class TimeSystemConfig : ScriptableObject {
-    [Header("Update Frequencies")]
-    public bool enableHourlyUpdates = true;
-    public bool enableWeeklyUpdates = true;
-    public bool enableQuarterlyUpdates = false;
+**Cascade Limits**:
+- Maximum cascade depth to prevent loops
+- Maximum deferred updates queue size
 
-    [Header("Performance")]
-    public int maxProvincesPerDailyBucket = 500;
-    public int maxProvincesPerMonthlyBucket = 100;
+### System Configuration Pattern
 
-    [Header("Bucketing")]
-    public bool enableUpdateBucketing = true;
-    public int dailyBuckets = 30;
-    public int yearlyBuckets = 360;  // Not 365!
+**Configurable Settings**:
+- **Update Frequencies**: Enable/disable specific frequency layers
+- **Performance**: Bucket size limits for load distribution
+- **Bucketing**: Enable bucketing, configure bucket counts
+- **Cascade Control**: Depth limits, warning flags
+- **Multiplayer**: Time budget flags (single-player only)
 
-    [Header("Cascade Control")]
-    public int maxCascadeDepth = 5;
-    public bool warnOnCascadeLimit = true;
-
-    [Header("Multiplayer")]
-    public bool enableTimeBudgets = false;  // ⚠️ Only for single-player!
-    public float updateTimeBudgetMs = 2f;
-}
-```
+**ScriptableObject Pattern**:
+- Configuration stored in asset
+- Designer-friendly tuning
+- Runtime accessible
+- Version controlled
 
 ## Common Patterns & Anti-Patterns
 
@@ -946,34 +525,37 @@ public class TimeSystemConfig : ScriptableObject {
 
 ## Performance Comparison
 
-### Traditional Approach (Paradox-style)
-```
-Daily Tick Performance:
-- 10,000 provinces × 20 systems = 200,000 checks
-- ~180,000 unchanged calculations
-- Time: 10-50ms per tick
-- Late game: 50-200ms (degrades over time)
-```
+### Traditional Update-Everything Approach
 
-### Layered Update Approach
-```
-Daily Tick Performance:
-- Check 10,000 dirty flags: 0.1ms
-- Update ~100 dirty provinces: 0.5ms
-- Process event queue: 0.2ms
-- Total: <1ms per tick
-- Late game: 1-2ms (consistent performance)
-```
+**Daily Tick Performance**:
+- All provinces × all systems = massive checks
+- Most calculations are redundant (nothing changed)
+- Time per tick increases with province count
+- Late game performance degrades significantly
 
-### Memory Usage
-```
-Dirty Flag System:
-- ProvinceUpdateState[]: 10,000 × 16 bytes = 160KB
-- Dirty lists: ~10KB
-- Cached calculations: ~400KB
-- Cascade control: ~10KB
-- Total overhead: ~580KB
-```
+### Layered Update with Dirty Flags Approach
+
+**Daily Tick Performance**:
+- Check dirty flags (fast array scan)
+- Update only changed provinces (small fraction)
+- Process event queue (minimal overhead)
+- Dramatically faster per tick
+- Late game performance remains consistent
+
+**Key Performance Differences**:
+- Dirty flags eliminate redundant calculations
+- Update time scales with changes, not total entities
+- Consistent performance from early to late game
+- Event-driven ensures accuracy without polling
+
+### Memory Overhead
+
+**Dirty Flag System Memory**:
+- Province update state array (minimal per-province overhead)
+- Dirty lists for fast iteration (small hash sets)
+- Cached calculations (modest overhead)
+- Cascade control structures (negligible)
+- Total overhead: Minimal relative to benefits
 
 ## Best Practices
 
@@ -1020,20 +602,21 @@ Dirty Flag System:
 ## Summary
 
 This time system architecture achieves:
-- **50-100x fewer calculations** than traditional approach
-- **Consistent performance** from hour 1 to hour 10,000
-- **<1ms update times** even with 10,000 provinces
-- **Event-driven accuracy** instead of arbitrary schedules
+- **Dramatic reduction in calculations** compared to traditional update-everything approach
+- **Consistent performance** throughout game lifecycle
+- **Fast update times** even at large scale
+- **Event-driven accuracy** instead of arbitrary polling schedules
 - **Zero performance degradation** in late game
 - **Multiplayer determinism** through fixed-point math and tick synchronization
 - **Cascade control** prevents infinite update loops
-- **Bucketing** prevents performance spikes
+- **Bucketing** prevents performance spikes from bulk updates
 
 The key insights:
-1. Most game state is static most of the time (dirty flags)
-2. Expensive operations should be spread across time (bucketing)
-3. Updates cascade and need depth control (cascade tracking)
-4. Multiplayer requires perfect determinism (fixed-point, tick sync)
+1. **Most game state is static most of the time** - dirty flags eliminate redundant work
+2. **Expensive operations should be spread across time** - bucketing prevents spikes
+3. **Updates cascade and need depth control** - cascade tracking prevents loops
+4. **Multiplayer requires perfect determinism** - fixed-point math and tick synchronization
+5. **Different systems need different frequencies** - layered updates match mechanics to update rates
 
 ## Related Architecture Documents
 
@@ -1044,5 +627,4 @@ The key insights:
 
 ---
 
-*Last Updated: 2025-09-30*
-*For questions or updates, see master-architecture-document.md*
+*Last Updated: 2025-10-10*

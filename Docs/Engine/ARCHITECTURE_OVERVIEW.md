@@ -8,8 +8,8 @@
 ## TL;DR - Core Architecture in 30 Seconds
 
 **Dual-Layer System:**
-- **CPU Layer (Simulation):** 8-byte structs, deterministic, 80KB for 10k provinces
-- **GPU Layer (Presentation):** Textures + shaders, 60MB VRAM, 200+ FPS
+- **CPU Layer (Simulation):** Fixed-size structs, deterministic, minimal memory
+- **GPU Layer (Presentation):** Textures + shaders, VRAM-based, high performance
 
 **Key Principle:** Simulation never knows about positions or rendering. Presentation never modifies game state.
 
@@ -21,59 +21,49 @@
 
 ### Implemented & Partial Systems (Engine/)
 
-| System | Status | Doc | Lines |
-|--------|--------|-----|-------|
-| **Core Architecture** | ✅ Implemented | [master-architecture-document](master-architecture-document.md) | ~800 |
-| **Map System** | ⚠️ Partial | [map-system-architecture](map-system-architecture.md) | ~650 |
-| **Data Access** | ✅ Implemented | [core-data-access-guide](core-data-access-guide.md) | ~400 |
-| **Data Linking** | ✅ Implemented | [data-linking-architecture](data-linking-architecture.md) | ~350 |
-| **Data Flow** | ⚠️ Partial | [data-flow-architecture](data-flow-architecture.md) | ~450 |
-| **Data Loading** | ✅ Implemented | [data-loading-architecture](data-loading-architecture.md) | ~780 |
-| **Time System** | ✅ Implemented | [time-system-architecture](time-system-architecture.md) | ~600 |
-| **Performance** | ⚠️ Partial | [performance-architecture-guide](performance-architecture-guide.md) | ~450 |
-| **Unity/Burst** | ⚠️ Partial | [../Log/learnings/unity-burst-jobs-architecture](../Log/learnings/unity-burst-jobs-architecture.md) | ~580 |
+| System | Status | Doc |
+|--------|--------|-----|
+| **Core Architecture** | ✅ Implemented | [master-architecture-document](master-architecture-document.md) |
+| **Map System** | ⚠️ Partial | [map-system-architecture](map-system-architecture.md) |
+| **Data Access** | ✅ Implemented | [core-data-access-guide](core-data-access-guide.md) |
+| **Data Linking** | ✅ Implemented | [data-linking-architecture](data-linking-architecture.md) |
+| **Data Flow** | ⚠️ Partial | [data-flow-architecture](data-flow-architecture.md) |
+| **Data Loading** | ✅ Implemented | [data-loading-architecture](data-loading-architecture.md) |
+| **Time System** | ✅ Implemented | [time-system-architecture](time-system-architecture.md) |
+| **Performance** | ⚠️ Partial | [performance-architecture-guide](performance-architecture-guide.md) |
 
 ### Future Systems (Planning/)
 
-| System | Status | Doc | Lines |
-|--------|--------|-----|-------|
-| **AI System** | ❌ Not Implemented | [../Planning/ai-design](../Planning/ai-design.md) | ~1000 |
-| **Multiplayer** | ❌ Not Implemented | [../Planning/multiplayer-design](../Planning/multiplayer-design.md) | ~500 |
-| **Modding** | ❌ Not Implemented | [../Planning/modding-design](../Planning/modding-design.md) | ~600 |
-| **Save/Load** | ❌ Not Implemented | [../Planning/save-load-design](../Planning/save-load-design.md) | ~650 |
-| **Error Recovery** | ❌ Not Implemented | [../Planning/error-recovery-design](../Planning/error-recovery-design.md) | ~400 |
+| System | Status | Doc |
+|--------|--------|-----|
+| **AI System** | ❌ Not Implemented | [../Planning/ai-design](../Planning/ai-design.md) |
+| **Multiplayer** | ❌ Not Implemented | [../Planning/multiplayer-design](../Planning/multiplayer-design.md) |
+| **Modding** | ❌ Not Implemented | [../Planning/modding-design](../Planning/modding-design.md) |
+| **Save/Load** | ❌ Not Implemented | [../Planning/save-load-design](../Planning/save-load-design.md) |
+| **Error Recovery** | ❌ Not Implemented | [../Planning/error-recovery-design](../Planning/error-recovery-design.md) |
 
 **Legend:** ✅ Implemented | ⚠️ Partial/Unknown | ❌ Not Implemented
 
 ---
 
-## The 8-Byte Province (Heart of the System)
+## The Compact Province State (Heart of the System)
 
-```csharp
-// ENGINE LAYER: Generic primitives only (8 bytes)
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct ProvinceState {  // EXACTLY 8 bytes
-    public ushort ownerID;       // 2 bytes - who owns this
-    public ushort controllerID;  // 2 bytes - who controls (war)
-    public ushort terrainType;   // 2 bytes - terrain type (expanded to ushort)
-    public ushort gameDataSlot;  // 2 bytes - index into game-specific data
-}
+**ENGINE LAYER: Generic primitives only**
+- Owner ID
+- Controller ID
+- Terrain type
+- Game data slot (index to game-specific data)
 
-// GAME LAYER: Hegemon-specific mechanics (4 bytes, separate from engine)
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
-public struct HegemonProvinceData {  // EXACTLY 4 bytes
-    public byte development;     // 1 byte - EU4-style development mechanic
-    public byte fortLevel;       // 1 byte - fortification system
-    public byte unrest;          // 1 byte - stability mechanic
-    public byte population;      // 1 byte - population abstraction
-}
-```
+**GAME LAYER: Game-specific mechanics (separate from engine)**
+- Development level
+- Fortification
+- Stability/unrest
+- Population
 
 **Why dual-layer matters:**
-- Engine 10,000 provinces = 80KB (fits in L2 cache)
-- Game 10,000 provinces = 40KB (separate hot data)
-- Total = 120KB for complete game state
-- Enables 200+ FPS with massive province counts
+- Minimal memory footprint (fits in CPU cache)
+- Separate hot data for engine and game
+- High performance at scale
 - Network-friendly for multiplayer
 - Engine is reusable across different games
 
@@ -127,14 +117,10 @@ public struct HegemonProvinceData {  // EXACTLY 4 bytes
 **See:** [core-data-access-guide.md](core-data-access-guide.md)
 
 ### Command Pattern
-Every state change is a command:
-```csharp
-interface ICommand {
-    void Execute(GameState state);
-    void Serialize(BinaryWriter writer);
-    bool Validate();
-}
-```
+Every state change is a command with:
+- Execute method for applying changes
+- Serialize method for networking/saving
+- Validate method for safety
 
 **Benefits:** Save/load for free, multiplayer sync, undo/replay
 
@@ -149,7 +135,7 @@ Layered update frequencies:
 - **Yearly:** Population, culture
 - **On-Demand:** Only when triggered (trade goods, supply limits)
 
-**Performance:** 50-100x fewer calculations than "update everything every tick"
+**Performance:** Dramatically fewer calculations than "update everything every tick"
 
 **See:** [time-system-architecture.md](time-system-architecture.md)
 
@@ -160,29 +146,29 @@ Layered update frequencies:
 - GPU compute shaders for borders
 - Texture lookup for selection
 
-**Performance:** 200+ FPS with 10,000 provinces vs 20 FPS with GameObjects
+**Performance:** Excellent scalability vs GameObject-based approach
 
 **See:** [map-system-architecture.md](map-system-architecture.md)
 
 ---
 
-## Performance Targets (Non-Negotiable)
+## Performance Targets
 
 ### Memory
-- **Simulation:** 80KB for 10k provinces
-- **GPU Textures:** <60MB
-- **Total:** <100MB
+- **Simulation:** Minimal footprint for province data
+- **GPU Textures:** Bounded VRAM usage
+- **Total:** Strict memory budget
 
 ### Performance
-- **Single-Player:** 200+ FPS @ 10k provinces
-- **Multiplayer:** 144+ FPS (target)
-- **Province Selection:** <1ms
-- **Map Updates:** <5ms
+- **Single-Player:** High frame rate at scale
+- **Multiplayer:** Smooth performance target
+- **Province Selection:** Sub-millisecond response
+- **Map Updates:** Fast refresh rate
 
 ### Network (Multiplayer - Future)
-- **Bandwidth:** <5KB/s per client
-- **State Sync:** 80KB for full state
-- **Command Size:** 8-16 bytes typical
+- **Bandwidth:** Minimal per client
+- **State Sync:** Compact full state
+- **Command Size:** Small packets
 
 **See:** [performance-architecture-guide.md](performance-architecture-guide.md)
 
@@ -198,12 +184,11 @@ Layered update frequencies:
 5. Store history in hot path → Use cold data separation
 6. Texture filtering on province IDs → Point filtering only
 7. Float math in simulation → Fixed-point for determinism
-8. Array of Structures → Structure of Arrays for cache
-9. Unbounded data growth → Ring buffers with compression
-10. Update everything every frame → Dirty flags only
+8. Unbounded data growth → Ring buffers with compression
+9. Update everything every frame → Dirty flags only
 
 ### ✅ ALWAYS DO THESE
-1. 8-byte fixed structs for simulation
+1. Fixed-size structs for simulation
 2. GPU compute shaders for visual processing
 3. Single draw call for map
 4. Deterministic operations (fixed-point math)
@@ -212,32 +197,31 @@ Layered update frequencies:
 7. NativeArray for contiguous memory
 8. Point filtering on province textures
 9. Dirty flag systems
-10. Profile at target scale (10k provinces)
+10. Profile at target scale
 
 ---
 
 ## Current Implementation Status
 
 ### ✅ Implemented Systems
-- ProvinceState 8-byte struct
+- Compact province state struct
 - Hot/cold data separation
 - Command pattern basics
 - TimeManager with layered updates
-- Data linking and validation (CrossReferenceBuilder, ReferenceResolver)
-- 3925 provinces loaded from bitmap
+- Data linking and validation
+- Province loading from bitmap
 
 ### ⚠️ Partially Implemented
-- Map rendering (Phase 1 done, Phase 2+ in progress)
+- Map rendering (ongoing phases)
 - Border generation (compute shader exists)
 - Performance patterns (some applied)
-- Burst compilation (BurstProvinceHistoryLoader exists)
+- Burst compilation (loaders exist)
 
 ### ❌ Not Implemented (See Planning/ folder)
 - AI system (see Planning/ai-design.md)
 - Multiplayer (see Planning/multiplayer-design.md)
 - Modding system (see Planning/modding-design.md)
-- Save/load (unclear status)
-- Performance monitoring (deleted - use Unity Profiler)
+- Save/load system
 
 ---
 
@@ -294,21 +278,6 @@ Layered update frequencies:
 
 ---
 
-## Project Stats
-
-**Documentation:**
-- Engine docs: 9 (8 architecture + 1 overview)
-- Planning docs: 5 (future features)
-- Total lines: ~5,500 (down from ~12,000 after consolidation)
-
-**Implementation:**
-- Provinces loaded: 3,925 (from bitmap)
-- Core systems: ~70% complete
-- Advanced features: ~30% complete
-- Multiplayer: 0% (future)
-
----
-
 ## Next Steps for New Developers
 
 1. **Read this document** (you're doing it!)
@@ -342,16 +311,15 @@ Layered update frequencies:
 ## Success Metrics
 
 The architecture is successful if:
-- ✅ 200+ FPS with 10,000 provinces
-- ✅ <100MB total memory usage
-- ✅ <1ms province selection
+- ✅ High FPS at scale
+- ✅ Bounded memory usage
+- ✅ Fast province selection
 - ✅ Zero allocations during gameplay
-- ⏳ 144+ FPS in multiplayer (when implemented)
-- ⏳ <5KB/s network bandwidth (when implemented)
+- ⏳ Smooth multiplayer performance (when implemented)
+- ⏳ Efficient network bandwidth (when implemented)
 
 **Current Status:** Core targets met for implemented systems. Multiplayer TBD.
 
 ---
 
-*Last Updated: 2025-09-30*
-*For questions or updates, see DOCUMENTATION_AUDIT.md*
+*Last Updated: 2025-10-10*

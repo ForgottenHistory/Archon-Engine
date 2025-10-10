@@ -1,86 +1,47 @@
 # Grand Strategy Game Master Architecture Document
-## High-Performance, Multiplayer-Ready, 10,000+ Province System
 
 **📊 Implementation Status:** ✅ Core Implemented (ProvinceState, command system, dual-layer) | ❌ Multiplayer sections are future planning
-
-**🔄 Recent Update (2025-10-09):** ProvinceState refactored for engine-game separation. Game-specific fields (`development`, `fortLevel`, `flags`) moved to `HegemonProvinceData` in the game layer. Engine now contains only generic primitives. See [phase-3-complete-scenario-loader-bug-fixed.md](../Log/2025-10/2025-10-09/phase-3-complete-scenario-loader-bug-fixed.md) for complete refactoring details.
 
 ---
 
 ## Executive Summary
 
-This document outlines the complete architecture for a grand strategy game capable of:
-- **10,000+ provinces** at **200+ FPS** (single-player) / **144+ FPS** (multiplayer)
-- **<100MB** memory footprint for map system
-- **<5KB/s** (lockstep) or **<10KB/s** (client-server) network bandwidth in multiplayer
+This document outlines the complete architecture for a scalable grand strategy game capable of:
+- **Large-scale provinces** with high performance
+- **Minimal memory footprint** for map system
+- **Efficient network synchronization** for multiplayer
 - **Deterministic** simulation enabling replays, saves, and multiplayer
-- **Zero** late-game performance degradation
+- **Sustainable** late-game performance
 
 The core innovation: **Dual-layer architecture** separating deterministic simulation (CPU) from high-performance presentation (GPU), with province data stored as textures in VRAM.
 
 ---
 
-## Namespace Organization & File Registries
+## Layer Separation
 
-### Core Namespace (`Core.*`)
-**Purpose:** Deterministic simulation layer - game state, logic, commands
+### Core Layer (Simulation)
+**Purpose:** Deterministic simulation - game state, logic, commands
 
-**Rules:**
-- ✅ Use FixedPoint64 for all math (NO float/double)
-- ✅ Deterministic operations only (multiplayer-safe)
-- ✅ No Unity API dependencies in hot paths
-- ✅ All state changes through command pattern
+**Principles:**
+- Use fixed-point math for determinism (NO float/double)
+- Deterministic operations only (multiplayer-safe)
+- No Unity API dependencies in hot paths
+- All state changes through command pattern
 
-**Key Systems:**
-- TimeManager - Tick-based time progression
-- ProvinceSystem - Province hot data (8-byte structs)
-- CommandProcessor - Deterministic command execution
-- EventBus - Decoupled system communication
+### Map Layer (Presentation)
+**Purpose:** GPU-accelerated presentation - textures, rendering, interaction
 
-**Status:** ✅ Multiplayer-ready (deterministic simulation)
+**Principles:**
+- GPU compute shaders for visual processing (NO CPU pixel ops)
+- Single draw call for base map
+- Presentation only (does NOT affect simulation)
+- Read-only from Core layer, updates textures
 
-**File Registry:** See [Core/FILE_REGISTRY.md](../../Scripts/Core/FILE_REGISTRY.md) for complete file listing with descriptions
-
-### Map Namespace (`Map.*`)
-**Purpose:** GPU-accelerated presentation layer - textures, rendering, interaction
-
-**Rules:**
-- ✅ GPU compute shaders for visual processing (NO CPU pixel ops)
-- ✅ Single draw call for base map
-- ✅ Presentation only (does NOT affect simulation)
-- ✅ Reads from Core layer, updates textures
-
-**Key Systems:**
-- MapTextureManager - Texture infrastructure (~60MB VRAM)
-- MapRenderer - Single draw call rendering
-- ProvinceSelector - Texture-based selection (<1ms)
-- MapModeManager - Visual display modes
-
-**Status:** ✅ Texture-based rendering operational
-
-**File Registry:** See [Map/FILE_REGISTRY.md](../../Scripts/Map/FILE_REGISTRY.md) for complete file listing with descriptions
-
-### Layer Separation
-```
-┌─────────────────────────────────────┐
-│     Map Layer (Presentation)        │
-│  - Textures, Shaders, Rendering     │
-│  - GPU Compute Shaders              │
-│  - User Interaction                 │
-│  - Read-only from Core              │
-└──────────────┬──────────────────────┘
-               │ Events (One-way)
-               ↓
-┌─────────────────────────────────────┐
-│   Core Layer (Simulation)           │
-│  - Deterministic Game State         │
-│  - FixedPoint64 Math                │
-│  - Command Pattern                  │
-│  - Multiplayer-ready                │
-└─────────────────────────────────────┘
-```
-
-**Critical:** Map layer CANNOT modify Core state. All changes go through Core.Commands.
+### Interaction Rules
+- Map layer CANNOT modify Core state
+- All state changes go through command pattern
+- One-way event flow: Core → Map
+- Strict separation prevents desync
 
 ---
 
@@ -88,73 +49,49 @@ The core innovation: **Dual-layer architecture** separating deterministic simula
 
 ### 1.1 Fundamental Design Principle
 
-```
-Traditional Approach (Fails at Scale):
-GameObject per Province → Mesh Renderer → Draw Calls → 20 FPS
+**Traditional Approach (Fails at Scale):**
+GameObject per Province → Mesh Renderer → Multiple Draw Calls → Poor Performance
 
-Our Approach (Scales to 20k+ Provinces):
-Texture Data → Single Quad → GPU Shader → 200+ FPS
-```
+**Our Approach (Scales Effectively):**
+Texture Data → Single Quad → GPU Shader → High Performance
 
 ### 1.2 Dual-Layer Architecture
 
-```csharp
-// LAYER 1A: ENGINE Simulation (CPU, Deterministic, Networked, Generic)
-public struct ProvinceState {  // 8 bytes fixed - generic primitives only
-    public ushort ownerID;       // 2 bytes
-    public ushort controllerID;  // 2 bytes
-    public ushort terrainType;   // 2 bytes (expanded to ushort for 65k terrain types)
-    public ushort gameDataSlot;  // 2 bytes - index into game-specific data array
-}
+**Simulation Layer (CPU):**
+- Fixed-size province state structs
+- Deterministic operations
+- Generic primitives for engine
+- Game-specific data slots
 
-// LAYER 1B: GAME Simulation (CPU, Deterministic, Hegemon-Specific)
-public struct HegemonProvinceData {  // 4 bytes fixed - game mechanics
-    public byte development;     // 1 byte - EU4-style development
-    public byte fortLevel;       // 1 byte - fortification system
-    public byte unrest;          // 1 byte - stability mechanic
-    public byte population;      // 1 byte - population abstraction
-}
-
-// LAYER 2: Presentation (GPU, Local, Beautiful)
-public class RenderState {
-    Texture2D provinceIDs;     // R16G16 - Which province is each pixel
-    Texture2D provinceOwners;  // R16 - Who owns each province
-    Texture2D provinceColors;  // RGBA32 - Visual representation
-    RenderTexture borders;     // Generated via compute shader
-}
-```
+**Presentation Layer (GPU):**
+- Province ID textures
+- Owner/controller textures
+- Visual color palettes
+- Generated borders
 
 ### 1.3 Data Flow Architecture
 
-```
 Input → Command → Simulation → GPU Textures → Screen
-         ↓           ↓
-      Network    Save/Load
-         ↓           ↓
-    Other Clients  Replay
-```
+- Commands enable networking and replays
+- State changes are deterministic
+- GPU updates are presentation-only
 
 ### 1.4 Memory Architecture
 
-```
-CPU Memory (RAM):
-- Engine Simulation State: 80KB (10k provinces × 8 bytes)
-- Game Simulation State: 40KB (10k provinces × 4 bytes)
-- Total Simulation: 120KB
-- Command Buffer: 1MB (ring buffer for rollback)
-- Game Logic: Variable
+**CPU Memory (RAM):**
+- Compact simulation state (fixed-size structs)
+- Command buffer (ring buffer for rollback)
+- Game logic data
 
-GPU Memory (VRAM):
-- Province ID Map: 46MB (configurable, typically 4096×2048×4 bytes)
-- Owner Texture: 3MB (1408×512×4 bytes)
-- Color Palette: 1MB
-- Border Cache: 8MB
-- Total: ~60MB
+**GPU Memory (VRAM):**
+- Province ID map (configurable resolution)
+- Owner/controller textures
+- Color palettes
+- Border cache
 
-Network:
-- Delta Updates: 40-100 bytes per tick
-- Full Sync: 120KB (engine + game state)
-```
+**Network:**
+- Delta updates (minimal bandwidth)
+- Full sync fallback (compact state)
 
 ---
 
@@ -162,52 +99,37 @@ Network:
 
 ### 2.1 Why Textures Instead of Meshes
 
-**Performance Comparison:**
-```
-Mesh Approach:
-- 10,000 GameObjects = 10,000 transform updates
-- 100+ draw calls (even with batching)
-- Vertex processing for millions of vertices
-- 50ms per frame → 20 FPS
+**Mesh Approach Issues:**
+- Multiple GameObjects = multiple transform updates
+- Many draw calls (even with batching)
+- Vertex processing overhead
+- Poor performance at scale
 
-Texture Approach:
-- 1 GameObject (quad)
-- 1 draw call
-- 4 vertices total
-- 0.5ms per frame → 2000 FPS (limited by monitor)
-```
+**Texture Approach Benefits:**
+- Single GameObject (quad)
+- Single draw call
+- Minimal vertices
+- Excellent performance at scale
 
 ### 2.2 Province Data as Textures
 
-Provinces are stored as GPU textures for parallel processing. The fragment shader reads province IDs from the texture, looks up ownership data, and renders colors in a single pass.
+Provinces are stored as GPU textures for parallel processing. Fragment shaders read province IDs, look up ownership data, and render colors in a single pass.
 
-See [Texture-Based Map Guide](texture-based-map-guide.md) for shader implementation details.
+See [Map System Architecture](map-system-architecture.md) for implementation details.
 
 ### 2.3 Border Generation via Compute Shader
 
-Border generation uses GPU compute shaders to detect province boundaries in parallel, processing all 10,000+ provinces in ~2ms.
+Border generation uses GPU compute shaders to detect province boundaries in parallel.
 
 **CRITICAL:** When multiple compute shaders access the same RenderTexture sequentially, **explicit GPU synchronization is required** to avoid race conditions. See [Unity Compute Shader Coordination](../Log/learnings/unity-compute-shader-coordination.md) for patterns and pitfalls.
 
-See [Texture-Based Map Guide](texture-based-map-guide.md) for compute shader implementation.
-
 ### 2.4 Province Selection Without Raycasting
 
-```csharp
-public int GetProvinceAtMouse() {
-    // Convert mouse to UV
-    Vector2 uv = ScreenToMapUV(Input.mousePosition);
-    
-    // Single texture read (0.01ms)
-    Color32 idColor = provinceIDTexture.GetPixel(
-        (int)(uv.x * textureWidth),
-        (int)(uv.y * textureHeight)
-    );
-    
-    return idColor.r + (idColor.g << 8);
-}
-// 1000x faster than physics raycasting
-```
+Texture-based province selection eliminates physics raycasting overhead:
+- Convert mouse position to texture UV coordinates
+- Read province ID from texture
+- Decode ID from color channels
+- Much faster than physics-based selection
 
 ---
 
@@ -215,117 +137,50 @@ public int GetProvinceAtMouse() {
 
 ### 3.1 Command Pattern for Determinism
 
-```csharp
-public interface ICommand {
-    void Execute(GameState state);
-    byte[] Serialize();
-    bool Validate(GameState state);
-}
+All state changes flow through commands for:
+- Serialization and network transmission
+- Validation before execution
+- Replay and debugging support
+- Deterministic execution order
 
-public class ChangeOwnerCommand : ICommand {
-    ushort provinceID;
-    ushort newOwnerID;
-    
-    public void Execute(GameState state) {
-        state.provinces[provinceID].ownerID = newOwnerID;
-        state.dirty.Add(provinceID);  // Mark for GPU update
-    }
-    
-    public byte[] Serialize() {
-        // 5 bytes total
-        return new byte[] {
-            CommandType.ChangeOwner,
-            (byte)(provinceID & 0xFF),
-            (byte)(provinceID >> 8),
-            (byte)(newOwnerID & 0xFF),
-            (byte)(newOwnerID >> 8)
-        };
-    }
-}
-```
+Commands are compact, serializable, and carry minimal data.
 
 ### 3.2 Fixed-Point Deterministic Math
 
-**All simulation math uses FixedPoint64 (32.32 format) for cross-platform determinism.**
+**All simulation math uses fixed-point arithmetic for cross-platform determinism.**
 
-See **[Fixed-Point Determinism Decision Record](../Log/decisions/fixed-point-determinism.md)** for complete rationale, implementation guide, and examples.
+See **[Fixed-Point Determinism Decision Record](../Log/decisions/fixed-point-determinism.md)** for complete rationale and implementation guide.
 
-```csharp
-// NEVER use float for gameplay calculations
-public struct FixedPoint64 {
-    long rawValue;  // Fixed-point representation (32.32 format)
-
-    public static FixedPoint64 operator *(FixedPoint64 a, FixedPoint64 b) {
-        return new FixedPoint64 {
-            rawValue = (a.rawValue * b.rawValue) >> 32
-        };
-    }
-}
-
-// Usage examples:
-FixedPoint64 baseTax = FixedPoint64.FromInt(10);
-FixedPoint64 devModifier = FixedPoint64.FromFraction(hegemonData.development, 10);
-FixedPoint64 tax = baseTax * devModifier;  // Deterministic
-// float tax = baseTax * development;      // NON-deterministic!
-```
+**Key Principles:**
+- Never use float/double in simulation
+- Use fixed-point types for fractional calculations
+- Ensure identical results across platforms
+- Enable perfect replay and multiplayer sync
 
 ### 3.3 Network Synchronization
 
-```csharp
-public class NetworkSync {
-    // Only sync changes (delta compression)
-    public byte[] CreateDeltaPacket(int tick) {
-        var changes = new List<ProvinceDelta>();
-        
-        for (int i = 0; i < provinces.Length; i++) {
-            if (provinces[i] != lastSentProvinces[i]) {
-                changes.Add(new ProvinceDelta {
-                    id = (ushort)i,
-                    newState = provinces[i]
-                });
-            }
-        }
-        
-        // Typical: 10 changes × 8 bytes = 80 bytes
-        return SerializeDeltas(changes);
-    }
-}
-```
+**Delta Compression:**
+- Only transmit changed data
+- Minimal bandwidth usage
+- Efficient for large game states
+
+**Synchronization Strategy:**
+- Delta updates for typical changes
+- Full sync as fallback
+- Checksum validation
 
 ### 3.4 Client Prediction & Rollback
 
-```csharp
-public class PredictiveClient {
-    RingBuffer<GameState> stateHistory = new(30);  // 0.5 seconds
-    
-    public void OnLocalCommand(ICommand cmd) {
-        // 1. Execute immediately (instant feedback)
-        cmd.Execute(localState);
-        UpdateGPUTextures(localState);
-        
-        // 2. Send to server
-        network.SendCommand(cmd);
-        
-        // 3. Store for rollback
-        unconfirmedCommands.Add(cmd);
-    }
-    
-    public void OnServerState(GameState authoritative, int tick) {
-        if (HasConflict(authoritative, tick)) {
-            // Rollback to authoritative state
-            localState = authoritative;
-            
-            // Replay unconfirmed commands
-            foreach (var cmd in unconfirmedCommands) {
-                cmd.Execute(localState);
-            }
-            
-            // Update visuals once
-            UpdateGPUTextures(localState);
-        }
-    }
-}
-```
+**Prediction:**
+- Execute commands immediately for responsive feel
+- Maintain command history for rollback
+- Update visuals optimistically
+
+**Rollback:**
+- Detect server/client divergence
+- Revert to authoritative state
+- Replay unconfirmed commands
+- Update visuals once after reconciliation
 
 ---
 
@@ -333,107 +188,41 @@ public class PredictiveClient {
 
 ### 4.1 Hot/Cold Data Separation
 
-```csharp
-// HOT: Engine layer - accessed every frame (keep in cache)
-public struct ProvinceState {  // 8 bytes, cache-line aligned
-    public ushort ownerID;
-    public ushort controllerID;
-    public ushort terrainType;
-    public ushort gameDataSlot;
-}
-NativeArray<ProvinceState> engineHotData;  // Contiguous memory
+**Hot Data (Frequent Access):**
+- Fixed-size structs in contiguous arrays
+- Cache-line aligned
+- Frequently accessed fields
+- Minimal memory footprint
 
-// HOT: Game layer - accessed frequently (keep in cache)
-public struct HegemonProvinceData {  // 4 bytes, cache-line aligned
-    public byte development;
-    public byte fortLevel;
-    public byte unrest;
-    public byte population;
-}
-NativeArray<HegemonProvinceData> gameHotData;  // Contiguous memory
-
-// COLD: Accessed rarely (can page to disk)
-public class ProvinceCold {
-    public List<Building> buildings;
-    public string history;
-    public Dictionary<string, float> modifiers;
-}
-Dictionary<int, ProvinceCold> coldData;  // Loaded on-demand
-```
+**Cold Data (Rare Access):**
+- Complex objects with detailed information
+- Loaded on-demand
+- Can page to disk
+- Not performance-critical
 
 ### 4.2 Frame-Coherent Caching
 
-```csharp
-public class FrameCache {
-    Dictionary<int, object> cache = new();
-    int lastFrame = -1;
-    
-    public T Get<T>(int key, Func<T> compute) {
-        if (Time.frameCount != lastFrame) {
-            cache.Clear();
-            lastFrame = Time.frameCount;
-        }
-        
-        if (!cache.TryGetValue(key, out var value)) {
-            value = compute();
-            cache[key] = value;
-        }
-        
-        return (T)value;
-    }
-}
-
-// Usage: Expensive calculations cached per frame
-var tradeValue = frameCache.Get(provinceId, 
-    () => CalculateTradeValue(provinceId));
-```
+Cache expensive calculations per frame:
+- Clear cache when frame changes
+- Compute once, reuse within frame
+- Avoid redundant calculations
+- Particularly useful for UI and tooltips
 
 ### 4.3 Dirty Flag System
 
-```csharp
-public class DirtyFlagSystem {
-    HashSet<int> dirtyProvinces = new();
-    
-    public void MarkDirty(int provinceID) {
-        dirtyProvinces.Add(provinceID);
-    }
-    
-    public void UpdateGPU() {
-        if (dirtyProvinces.Count == 0) return;
-        
-        // Only update changed provinces
-        foreach (int id in dirtyProvinces) {
-            UpdateProvinceTexture(id, provinces[id]);
-        }
-        
-        provinceTexture.Apply();  // Single GPU upload
-        dirtyProvinces.Clear();
-    }
-}
-```
+Only update what changed:
+- Track modified data
+- Batch GPU updates
+- Single upload per frame
+- Minimize redundant work
 
 ### 4.4 Spatial Partitioning for Culling
 
-```csharp
-public class SpatialGrid {
-    const int GRID_SIZE = 32;
-    List<int>[,] grid = new List<int>[GRID_SIZE, GRID_SIZE];
-    
-    public List<int> GetVisibleProvinces(Frustum frustum) {
-        var visible = new List<int>();
-        var bounds = frustum.GetGridBounds();
-        
-        // Only check grid cells in frustum
-        for (int y = bounds.yMin; y < bounds.yMax; y++) {
-            for (int x = bounds.xMin; x < bounds.xMax; x++) {
-                visible.AddRange(grid[x, y]);
-            }
-        }
-        
-        return visible;  // O(visible) not O(all)
-    }
-}
-```
+Optimize by reducing scope:
+- Partition world into grid
+- Query only visible regions
+- Skip processing for off-screen data
+- Scale with visible area, not total data
 
 ---
 
@@ -441,96 +230,55 @@ public class SpatialGrid {
 
 ### 5.1 Fixed-Size Data Structures
 
-```csharp
-// BAD: Unbounded growth
-public class Province {
-    List<HistoricalEvent> allEvents;  // Grows forever
-}
-
-// GOOD: Ring buffer with fixed size
-public class Province {
-    RingBuffer<HistoricalEvent> recentEvents = new(100);
-    CompressedHistory olderEvents;  // Compressed after 100 events
-}
-```
+Prevent unbounded growth:
+- Use ring buffers for history
+- Fixed-size arrays where possible
+- Compress or discard old data
+- Avoid dynamic collections in hot paths
 
 ### 5.2 Progressive History Compression
 
-```csharp
-public class HistorySystem {
-    // Recent: Full detail (last 10 years)
-    RingBuffer<DetailedEvent> recent = new(10 * 365);
-    
-    // Medium: Compressed (10-50 years ago)
-    CompressedEventList medium = new();
-    
-    // Ancient: Statistical only (50+ years)
-    HistoryStatistics ancient = new();
-    
-    public void AddEvent(DetailedEvent e) {
-        if (recent.IsFull) {
-            var old = recent.PopOldest();
-            medium.AddCompressed(old);
-            
-            if (medium.Age > 50_YEARS) {
-                ancient.AddStatistics(medium.PopOldest());
-            }
-        }
-        recent.Add(e);
-    }
-}
-```
+Multi-tier history storage:
+- Recent: Full detail
+- Medium: Compressed representation
+- Ancient: Statistical summaries only
+- Automatic aging and compression
 
 ### 5.3 LOD System for Province Updates
 
-```csharp
-public class UpdateLOD {
-    public enum Priority {
-        Critical = 1,   // Every tick (player provinces, combat)
-        High = 5,       // Every 5 ticks (nearby, visible)
-        Medium = 20,    // Every 20 ticks (fog of war)
-        Low = 100       // Every 100 ticks (other continents)
-    }
-    
-    public Priority GetPriority(int provinceID) {
-        if (IsPlayerProvince(provinceID)) return Priority.Critical;
-        if (IsVisible(provinceID)) return Priority.High;
-        if (IsKnown(provinceID)) return Priority.Medium;
-        return Priority.Low;
-    }
-}
-```
+Update frequency based on importance:
+- Critical: Player provinces, active combat
+- High: Visible provinces
+- Medium: Known but not visible
+- Low: Unexplored or distant regions
 
 ---
 
 ## Part 6: Implementation Overview
 
-See [Texture-Based Map Guide](texture-based-map-guide.md) for detailed implementation phases and step-by-step instructions.
+See [Map System Architecture](map-system-architecture.md) for detailed implementation phases and step-by-step instructions.
 
 ---
 
 ## Part 7: Performance Targets & Validation
 
-### 7.1 Performance Budget (5ms per frame = 200 FPS)
+### 7.1 Performance Budget
 
-```
-Map Rendering:        1.0ms (20%)
-Province Selection:   0.1ms (2%)
-Simulation Update:    1.5ms (30%)
-Command Processing:   0.5ms (10%)
-UI Updates:          1.0ms (20%)
-Network (if MP):     0.4ms (8%)
-Reserve:             0.5ms (10%)
-------------------------
-Total:               5.0ms
-```
+Allocate frame time carefully:
+- Map rendering
+- Province selection
+- Simulation update
+- Command processing
+- UI updates
+- Network synchronization (if multiplayer)
+- Reserve for spikes
 
 ### 7.2 Validation Tests
 
-Critical tests include:
-- 10,000 provinces maintaining 200 FPS over 400 years
-- Province selection under 1ms response time
-- Memory usage under 100MB
+Critical validation requirements:
+- Large-scale province performance over extended gameplay
+- Fast province selection response
+- Bounded memory usage
 - Deterministic simulation across platforms
 
 See [Performance Architecture](performance-architecture-guide.md) for testing strategies.
@@ -566,91 +314,53 @@ See [Performance Architecture](performance-architecture-guide.md) for testing st
 
 ---
 
-## Appendix A: Texture Format Reference
+## Appendix A: Technical References
 
-```csharp
-// Province ID Map (full resolution)
-TextureFormat.R16G16  // 0-65535 per channel, perfect for IDs
+**Texture Formats:**
+- Province IDs: High-precision formats for large ID ranges
+- Ownership: Moderate precision for country IDs
+- Development/Stats: Low precision sufficient
+- Colors: Full RGBA for visual fidelity
+- Borders: Minimal precision for binary data
 
-// Province Ownership (quarter resolution fine)
-TextureFormat.R16     // 0-65535, country IDs
+**Network Packet Structure:**
+- Command packets: Type + ID + payload
+- Delta updates: Change count + deltas
+- Full sync: Tick + checksum + full state
 
-// Province Development
-TextureFormat.R8      // 0-255, sufficient range
-
-// Country Colors
-TextureFormat.RGBA32  // Full color palette
-
-// Borders
-TextureFormat.R8      // Binary on/off sufficient
-```
-
-## Appendix B: Network Packet Formats
-
-```
-Command Packet (5-20 bytes):
-[Type:1][ProvinceID:2][Data:2-17]
-
-Delta Update (variable):
-[Count:1][ProvinceID:2][Changes:1][NewData:4]...
-
-Full Sync (80KB):
-[Tick:4][Checksum:4][ProvinceData:80000]
-```
-
-## Appendix C: Shader Snippets
-
-```hlsl
-// Province ID Decoding
-float2 idData = tex2D(_ProvinceIDs, uv).rg;
-int provinceID = (int)(idData.r * 255.0) + 
-                 ((int)(idData.g * 255.0) << 8);
-
-// Owner Color Lookup
-float ownerID = tex2D(_ProvinceOwners, provinceUV).r;
-float4 color = tex2D(_CountryColors, float2(ownerID, 0));
-
-// Border Detection
-bool isBorder = any(GetNeighborIDs(uv) != centerID);
-```
+**Shader Patterns:**
+- Province ID decoding from texture channels
+- Owner color lookup via indirection
+- Border detection via neighbor comparison
 
 ---
 
 ## Conclusion
 
-This architecture delivers Paradox-scale gameplay at 10x the performance through:
+This architecture delivers large-scale grand strategy gameplay through:
 1. **GPU-driven rendering** using textures instead of meshes
 2. **Deterministic simulation** enabling multiplayer and replays
 3. **Aggressive optimization** preventing late-game slowdown
 4. **Clean separation** of simulation and presentation
 
-The system scales to 20,000+ provinces while maintaining 144+ FPS in multiplayer and 200+ FPS in single-player, using less than 100MB of memory and 5-10KB/s of network bandwidth.
+The system scales to large province counts while maintaining excellent performance, minimal memory usage, and efficient network bandwidth.
 
-Follow the implementation roadmap, avoid the anti-patterns, and you'll have a grand strategy engine that performs better than anything currently on the market.
+Follow the implementation roadmap, avoid the anti-patterns, and you'll have a performant grand strategy engine.
 
 ---
 
 ## Related Documents
 
-### File Registries (Quick Reference)
-- **[Core/FILE_REGISTRY.md](../../Scripts/Core/FILE_REGISTRY.md)** - Complete listing of Core simulation layer files
-- **[Map/FILE_REGISTRY.md](../../Scripts/Map/FILE_REGISTRY.md)** - Complete listing of Map presentation layer files
-
 ### Architecture Documents
-- **[Map System Architecture](map-system-architecture.md)** - Complete map rendering system (texture-based, coordinates, map modes)
-- **[Performance Architecture Guide](performance-architecture-guide.md)** - Late-game optimization and memory strategies
+- **[Map System Architecture](map-system-architecture.md)** - Map rendering system details
+- **[Performance Architecture Guide](performance-architecture-guide.md)** - Optimization and memory strategies
 - **[Time System Architecture](time-system-architecture.md)** - Update scheduling and dirty flag systems
-- **[Data Flow Architecture](data-flow-architecture.md)** - Hot/cold data separation and data linking
+- **[Data Flow Architecture](data-flow-architecture.md)** - Hot/cold data separation
 - **[Data Linking Architecture](data-linking-architecture.md)** - Reference resolution and cross-linking
-- **[Data Loading Architecture](data-loading-architecture.md)** - JSON5 + Burst hybrid loading system (BurstProvinceHistoryLoader, BurstCountryLoader)
+- **[Data Loading Architecture](data-loading-architecture.md)** - Data loading system
 
-### Learning Documents (Critical Knowledge)
-- **[Unity Compute Shader Coordination](../Log/learnings/unity-compute-shader-coordination.md)** - GPU race conditions, texture binding patterns, coordinate systems (MUST READ before writing compute shaders)
+### Critical Knowledge
+- **[Unity Compute Shader Coordination](../Log/learnings/unity-compute-shader-coordination.md)** - GPU synchronization patterns (MUST READ before writing compute shaders)
 
-### Decision Records (Architecture Decisions)
-- **[Fixed-Point Determinism](../Log/decisions/fixed-point-determinism.md)** - Why FixedPoint64 (32.32 format) and 360-day calendar (MUST READ before implementing any simulation logic)
-
-### Planning Documents (Future)
-- **[Save/Load Design](../Planning/save-load-design.md)** - Persistence and replay systems *(Planning - not implemented)*
-- **[Multiplayer Design](../Planning/multiplayer-design.md)** - Network synchronization and determinism *(Planning - not implemented)*
-- **[Error Recovery Design](../Planning/error-recovery-design.md)** - Robustness and fault tolerance *(Planning - not implemented)*
+### Architecture Decisions
+- **[Fixed-Point Determinism](../Log/decisions/fixed-point-determinism.md)** - Deterministic math requirements (MUST READ before implementing simulation logic)
