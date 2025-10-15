@@ -139,12 +139,12 @@ struct ProvinceBuildings {
 
 ### Immediate (This Week)
 1. ✅ Document pre-allocation policy in performance-architecture-guide.md
-2. 🔄 Decide UI data access pattern (snapshots)
-3. 🔄 Design sparse data structure pattern
+2. ✅ Decide UI data access pattern (snapshots)
+3. ✅ Design sparse data structure pattern
 
 ### Near-Term (Before Economy System)
-4. ❌ Implement load balancing (cost-based job scheduling)
-5. ❌ Implement GameStateSnapshot system for UI reads
+4. ✅ Implement load balancing (cost-based job scheduling)
+5. ✅ Implement GameStateSnapshot system for UI reads
 
 ### Can Wait (Until Needed)
 - Dependency management system (only needed when systems get complex)
