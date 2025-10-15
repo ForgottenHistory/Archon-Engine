@@ -33,8 +33,7 @@
 - **Components:** CoreTextureSet, VisualTextureSet, DynamicTextureSet, PaletteTextureManager
 - **Memory:** ~60MB total for 5632×2048 map
 - **API:** SetProvinceColor(), SetProvinceDevelopment(), SetPaletteColor(), BindTexturesToMaterial()
-- **Status:** ✅ Refactored to coordinator (223 lines, down from 636)
-- **Lines:** 223
+- **Status:** ✅ Refactored to coordinator
 
 ### **CoreTextureSet.cs** [NEW]
 - **Purpose:** Manage core gameplay-critical textures
@@ -42,7 +41,6 @@
 - **Pattern:** Texture lifecycle management for one category
 - **API:** CreateTextures(), BindToMaterial(), SetProvinceColor(), ApplyChanges()
 - **Status:** ✅ Single responsibility - core gameplay textures
-- **Lines:** 235
 
 ### **VisualTextureSet.cs** [NEW]
 - **Purpose:** Manage visual enhancement textures
@@ -50,7 +48,6 @@
 - **Pattern:** Texture lifecycle management for visual quality
 - **API:** CreateTextures(), BindToMaterial(), ApplyChanges()
 - **Status:** ✅ Single responsibility - visual enhancement textures
-- **Lines:** 192
 
 ### **DynamicTextureSet.cs** [NEW]
 - **Purpose:** Manage runtime-generated dynamic textures
@@ -58,14 +55,12 @@
 - **Pattern:** Texture lifecycle management for dynamic effects
 - **API:** CreateTextures(), BindToMaterial(), SetBorderStyle()
 - **Status:** ✅ Single responsibility - dynamic effect textures
-- **Lines:** 142
 
 ### **PaletteTextureManager.cs** [NEW]
 - **Purpose:** Manage color palette texture (256×1 RGBA32)
 - **Pattern:** Specialized palette generation with HSV golden angle distribution
 - **API:** CreatePalette(), SetPaletteColor(), SetPaletteColors(), ApplyChanges()
 - **Status:** ✅ Single responsibility - color palette management
-- **Lines:** 137
 
 ### **MapRenderer.cs** [HOT_PATH]
 - **Purpose:** Single draw call map rendering
@@ -287,8 +282,7 @@
 - **Pattern:** Coordinator pattern - delegates to specialized components
 - **Components:** ProvinceDataConverter, ProvinceTextureSynchronizer, ProvinceMetadataManager
 - **API:** InitializeMapData(), SetProvinceOwner(), SetProvinceDisplayColor()
-- **Status:** ✅ Refactored to coordinator (501 lines, down from 688)
-- **Lines:** 501
+- **Status:** ✅ Refactored to coordinator
 
 ### **ProvinceDataConverter.cs** [NEW]
 - **Purpose:** Convert ProvinceMapLoader.LoadResult to ProvinceDataManager format
@@ -296,7 +290,6 @@
 - **API:** ConvertLoadResult() - groups pixels by province and initializes data
 - **Handles:** Pixel grouping, province registration, initial data setup
 - **Status:** ✅ Single responsibility - data conversion only
-- **Lines:** 115
 
 ### **ProvinceTextureSynchronizer.cs** [NEW]
 - **Purpose:** Synchronize CPU province data with GPU textures
@@ -304,7 +297,6 @@
 - **API:** SyncProvinceOwner(), SyncProvinceColor(), SyncProvinceDevelopment(), SyncAllProvinces()
 - **Handles:** CPU↔GPU texture updates with bounds optimization
 - **Status:** ✅ Single responsibility - texture synchronization only
-- **Lines:** 175
 
 ### **ProvinceMetadataManager.cs** [NEW]
 - **Purpose:** Manage province metadata (neighbors, terrain flags, coastal status)
@@ -312,7 +304,6 @@
 - **API:** GetNeighbors(), AreNeighbors(), GetMetadata(), GetCoastalProvinces(), GetProvinceBounds()
 - **Handles:** Neighbor queries, metadata queries, coastal/terrain flag updates
 - **Status:** ✅ Single responsibility - metadata management and queries
-- **Lines:** 200
 
 ---
 
@@ -433,11 +424,6 @@ Map.MapRenderer (renders)
 
 ---
 
-*Last Updated: 2025-10-05*
-*Total Files: 51 scripts* (+7 from refactoring)
-*Status: GPU-accelerated texture-based rendering operational*
-*Recent Refactoring:*
-- *Phase 1: MapDataLoader.cs split into specialized loaders (845→208 lines, -641 lines)*
-- *Phase 2: MapTextureManager.cs split into 4 texture sets (636→223 lines, -413 lines)*
-- *Phase 3: MapDataIntegrator.cs split into 3 components (688→501 lines, -187 lines)*
-- ***Total reduction: -1,470 lines, +10 focused components***
+*Updated: 2025-10-05*
+*Status: ✅ GPU-accelerated texture-based rendering operational*
+*Recent: Refactored MapDataLoader, MapTextureManager, MapDataIntegrator into focused components*
