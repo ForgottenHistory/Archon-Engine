@@ -55,6 +55,9 @@ namespace Core.Systems
         // Event bus reference
         private EventBus eventBus;
 
+        // ProvinceSystem reference for buffer swapping (zero-blocking UI pattern)
+        private ProvinceSystem provinceSystem;
+
         // Update delegates (layered update frequencies)
         public event Action<int> OnHourlyTick;
         public event Action<int> OnDailyTick;
@@ -75,11 +78,12 @@ namespace Core.Systems
         public bool IsInitialized => isInitialized;
 
         /// <summary>
-        /// Initialize the time manager with event bus
+        /// Initialize the time manager with event bus and province system
         /// </summary>
-        public void Initialize(EventBus eventBus)
+        public void Initialize(EventBus eventBus, ProvinceSystem provinceSystem = null)
         {
             this.eventBus = eventBus;
+            this.provinceSystem = provinceSystem;
 
             // Set start date
             year = startYear;
@@ -108,6 +112,10 @@ namespace Core.Systems
                 return;
 
             ProcessTimeTicks(Time.deltaTime);
+
+            // Swap double-buffers after all simulation updates complete
+            // This ensures UI reads from completed tick (zero-blocking pattern)
+            provinceSystem?.SwapBuffers();
         }
 
         /// <summary>

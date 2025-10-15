@@ -96,7 +96,7 @@ namespace Core
             // 4. Initialize systems
             Provinces.Initialize(EventBus);
             Countries.Initialize(EventBus);
-            Time.Initialize(EventBus);
+            Time.Initialize(EventBus, Provinces); // Pass ProvinceSystem for buffer swapping
 
             IsInitialized = true;
             ArchonLogger.Log("GameState initialization complete");

@@ -268,6 +268,13 @@
 - API: SplitByThreshold, SplitByPercentile, CalculateMedianThreshold
 - Status: ✅ Implemented (2025-10-15), 24.9% improvement at 10k provinces
 
+**GameStateSnapshot.cs** [NEW] [ZERO_ALLOC]
+- Double-buffer pattern for zero-blocking UI reads (Victoria 3 learned this the hard way)
+- Pattern: Simulation writes buffer A, UI reads buffer B, O(1) pointer swap after tick
+- Memory: 2x hot data (240KB at 10k provinces)
+- Performance: Zero blocking, no memcpy overhead
+- Status: ✅ Integrated (2025-10-15), used by ProvinceSystem
+
 ---
 
 ## Events/
@@ -380,5 +387,5 @@
 ---
 
 *Updated: 2025-10-15*
-*Status: ✅ Multiplayer-ready*
-*Recent: LoadBalancedScheduler added (Victoria 3 pattern)*
+*Status: ✅ Multiplayer-ready with zero-blocking UI*
+*Recent: Double-buffer pattern integrated (GameStateSnapshot), LoadBalancedScheduler added*

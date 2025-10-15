@@ -25,8 +25,10 @@ namespace Core.Systems
         private ProvinceStateLoader stateLoader;
         private ProvinceHistoryDatabase historyDatabase;
 
+        // Double-buffer snapshot for zero-blocking UI reads (Victoria 3 pattern)
+        private GameStateSnapshot snapshot;
+
         // Native arrays (owned by this class, passed to components)
-        private NativeArray<ProvinceState> provinceStates;
         private NativeHashMap<ushort, int> idToIndex;
         private NativeList<ushort> activeProvinceIds;
 
@@ -36,7 +38,7 @@ namespace Core.Systems
 
         // Properties
         public int ProvinceCount => dataManager?.ProvinceCount ?? 0;
-        public int Capacity => provinceStates.IsCreated ? provinceStates.Length : 0;
+        public int Capacity => snapshot?.Capacity ?? 0;
         public bool IsInitialized => isInitialized;
 
         /// <summary>
@@ -46,19 +48,23 @@ namespace Core.Systems
         {
             this.eventBus = eventBus;
 
-            // Allocate native arrays with initial capacity (8 bytes per province)
-            provinceStates = new NativeArray<ProvinceState>(initialCapacity, Allocator.Persistent);
+            // Initialize double-buffer snapshot (2x 8 bytes per province)
+            snapshot = new GameStateSnapshot();
+            snapshot.Initialize(initialCapacity);
+
+            // Allocate native arrays with initial capacity
             idToIndex = new NativeHashMap<ushort, int>(initialCapacity, Allocator.Persistent);
             activeProvinceIds = new NativeList<ushort>(initialCapacity, Allocator.Persistent);
 
             historyDatabase = new ProvinceHistoryDatabase();
 
-            // Initialize components with references to native arrays
-            dataManager = new ProvinceDataManager(provinceStates, idToIndex, activeProvinceIds, eventBus);
+            // Initialize components with references to snapshot's write buffer
+            // ProvinceDataManager writes to simulation buffer, UI reads from UI buffer
+            dataManager = new ProvinceDataManager(snapshot, idToIndex, activeProvinceIds, eventBus);
             stateLoader = new ProvinceStateLoader(dataManager, eventBus, historyDatabase);
 
             isInitialized = true;
-            ArchonLogger.Log($"ProvinceSystem initialized with capacity {initialCapacity} (8 bytes per province = {initialCapacity * 8 / 1024}KB total)");
+            ArchonLogger.Log($"ProvinceSystem initialized with capacity {initialCapacity} (double-buffered: {initialCapacity * 8 * 2 / 1024}KB total)");
 
             // Validate ProvinceState is exactly 8 bytes
             ValidateProvinceStateSize();
@@ -175,9 +181,35 @@ namespace Core.Systems
             }
         }
 
+        /// <summary>
+        /// Get read-only snapshot buffer for UI access (zero-blocking reads)
+        /// UI should NEVER write to this buffer - it's one frame behind simulation
+        /// </summary>
+        public NativeArray<ProvinceState> GetUIReadBuffer()
+        {
+            if (!isInitialized || snapshot == null)
+            {
+                throw new System.InvalidOperationException("ProvinceSystem not initialized");
+            }
+            return snapshot.GetProvinceReadBuffer();
+        }
+
+        /// <summary>
+        /// Called by TimeManager after simulation tick completes
+        /// Swaps write/read buffers so UI sees latest completed tick
+        /// </summary>
+        public void SwapBuffers()
+        {
+            if (!isInitialized || snapshot == null)
+            {
+                return;
+            }
+            snapshot.SwapBuffers();
+        }
+
         public void Dispose()
         {
-            if (provinceStates.IsCreated) provinceStates.Dispose();
+            snapshot?.Dispose();
             if (idToIndex.IsCreated) idToIndex.Dispose();
             if (activeProvinceIds.IsCreated) activeProvinceIds.Dispose();
 

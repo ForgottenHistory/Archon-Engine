@@ -4,13 +4,14 @@ using Core.Data;
 namespace Core.Systems.Province
 {
     /// <summary>
-    /// Manages province hot data (NativeArray) operations
+    /// Manages province hot data (double-buffered) operations
     /// Handles get/set operations, queries, and ID mapping
+    /// Uses snapshot's WRITE buffer for all simulation operations
     /// Extracted from ProvinceSystem.cs for better separation of concerns
     /// </summary>
     public class ProvinceDataManager
     {
-        private NativeArray<ProvinceState> provinceStates;
+        private GameStateSnapshot snapshot;
         private NativeHashMap<ushort, int> idToIndex;
         private NativeList<ushort> activeProvinceIds;
         private EventBus eventBus;
@@ -22,12 +23,12 @@ namespace Core.Systems.Province
 
         public int ProvinceCount => provinceCount;
 
-        public ProvinceDataManager(NativeArray<ProvinceState> provinceStates,
+        public ProvinceDataManager(GameStateSnapshot snapshot,
                                    NativeHashMap<ushort, int> idToIndex,
                                    NativeList<ushort> activeProvinceIds,
                                    EventBus eventBus)
         {
-            this.provinceStates = provinceStates;
+            this.snapshot = snapshot;
             this.idToIndex = idToIndex;
             this.activeProvinceIds = activeProvinceIds;
             this.eventBus = eventBus;
@@ -39,9 +40,9 @@ namespace Core.Systems.Province
         /// </summary>
         public void AddProvince(ushort provinceId, ushort terrainType)
         {
-            if (provinceCount >= provinceStates.Length)
+            if (provinceCount >= snapshot.Capacity)
             {
-                ArchonLogger.LogError($"Province capacity exceeded: {provinceCount}/{provinceStates.Length}");
+                ArchonLogger.LogError($"Province capacity exceeded: {provinceCount}/{snapshot.Capacity}");
                 return;
             }
 
@@ -56,7 +57,8 @@ namespace Core.Systems.Province
 
             // Create and store province state (8 bytes)
             var provinceState = ProvinceState.CreateDefault(terrainType);
-            provinceStates[arrayIndex] = provinceState;
+            var states = snapshot.GetProvinceWriteBuffer();
+            states[arrayIndex] = provinceState;
 
             // Update lookup tables
             idToIndex[provinceId] = arrayIndex;
@@ -85,7 +87,8 @@ namespace Core.Systems.Province
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return UNOWNED_COUNTRY;
 
-            var ownerID = provinceStates[arrayIndex].ownerID;
+            var states = snapshot.GetProvinceWriteBuffer();
+            var ownerID = states[arrayIndex].ownerID;
             return ownerID;
         }
 
@@ -100,14 +103,15 @@ namespace Core.Systems.Province
                 return;
             }
 
-            var state = provinceStates[arrayIndex];
+            var states = snapshot.GetProvinceWriteBuffer();
+            var state = states[arrayIndex];
             ushort oldOwner = state.ownerID;
             if (oldOwner == newOwner)
                 return; // No change
 
             // Update state and write back (structs are value types)
             state.ownerID = newOwner;
-            provinceStates[arrayIndex] = state;
+            states[arrayIndex] = state;
 
             // Emit ownership change event
             eventBus?.Emit(new ProvinceOwnershipChangedEvent
@@ -131,7 +135,8 @@ namespace Core.Systems.Province
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return OCEAN_TERRAIN;
 
-            return provinceStates[arrayIndex].terrainType;
+            var states = snapshot.GetProvinceWriteBuffer();
+            return states[arrayIndex].terrainType;
         }
 
         /// <summary>
@@ -143,9 +148,10 @@ namespace Core.Systems.Province
                 return;
 
             // Update state and write back (structs are value types)
-            var state = provinceStates[arrayIndex];
+            var states = snapshot.GetProvinceWriteBuffer();
+            var state = states[arrayIndex];
             state.terrainType = terrain;
-            provinceStates[arrayIndex] = state;
+            states[arrayIndex] = state;
         }
 
         /// <summary>
@@ -156,7 +162,8 @@ namespace Core.Systems.Province
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return ProvinceState.CreateDefault(OCEAN_TERRAIN);
 
-            return provinceStates[arrayIndex];
+            var states = snapshot.GetProvinceWriteBuffer();
+            return states[arrayIndex];
         }
 
         /// <summary>
@@ -167,7 +174,8 @@ namespace Core.Systems.Province
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
                 return;
 
-            provinceStates[arrayIndex] = state;
+            var states = snapshot.GetProvinceWriteBuffer();
+            states[arrayIndex] = state;
         }
 
         #endregion
@@ -181,10 +189,11 @@ namespace Core.Systems.Province
         public NativeArray<ushort> GetCountryProvinces(ushort countryId, Allocator allocator = Allocator.TempJob)
         {
             var result = new NativeList<ushort>(provinceCount / 10, Allocator.Temp);
+            var states = snapshot.GetProvinceWriteBuffer();
 
             for (int i = 0; i < provinceCount; i++)
             {
-                if (provinceStates[i].ownerID == countryId)
+                if (states[i].ownerID == countryId)
                 {
                     result.Add(activeProvinceIds[i]);
                 }
