@@ -77,6 +77,32 @@
 - API: CreateDefault/Owned/Ocean, ToBytes/FromBytes, IsOwned/Occupied/Ocean
 - Status: ✅ Engine-game separation (2025-10-09)
 
+### Data/SparseData/ - Sparse Collection Infrastructure
+
+**IDefinition.cs** [NEW]
+- Base interface for all definition types (buildings, modifiers, trade goods)
+- Fields: ID (runtime ushort), StringID (stable string), Version (compatibility)
+- Purpose: Enables mod compatibility with stable string identifiers
+- Status: ✅ Foundation (2025-10-15)
+
+**ISparseCollection.cs** [NEW]
+- Non-generic interface for polymorphic sparse collection management
+- Properties: Name, IsInitialized, Capacity, Count, CapacityUsage
+- Includes: SparseCollectionStats struct for memory monitoring
+- Purpose: Unified memory monitoring and disposal across all sparse collections
+- Status: ✅ Foundation (2025-10-15)
+
+**SparseCollectionManager<TKey, TValue>.cs** [NEW] [HOT_PATH]
+- Generic sparse storage using NativeParallelMultiHashMap (Collections 2.1+)
+- Pattern: One-to-many relationships (Province → BuildingIDs)
+- Memory: Scales with ACTUAL items (200KB) not POSSIBLE items (5MB dense)
+- Query APIs: Has/HasAny/Get/GetCount (O(1) to O(m) where m = items per key)
+- Modification APIs: Add/Remove/RemoveAll
+- Iteration APIs: ProcessValues (zero allocation), GetKeys
+- Pre-allocation: Allocator.Persistent, capacity warnings at 80%/95%
+- Purpose: Prevents HOI4's 30→500 equipment disaster (16x slowdown)
+- Status: ✅ Phase 1 & 2 complete (2025-10-15)
+
 **ProvinceColdData.cs** [STABLE]
 - Rarely-accessed data: Name, Color, Bounds, RecentHistory (CircularBuffer<100>)
 - Modifiers: Dictionary for gameplay bonuses
@@ -368,6 +394,7 @@
 **Load scenario?** → Use ScenarioLoader → Calls Burst loaders
 **Deterministic random?** → Use DeterministicRandom with seed
 **Fixed-point math?** → Use FixedPoint64 (32.32 format)
+**Optional/rare data?** → Use SparseCollectionManager<TKey, TValue> (scales with usage, not possibility)
 
 ---
 
@@ -387,5 +414,5 @@
 ---
 
 *Updated: 2025-10-15*
-*Status: ✅ Multiplayer-ready with zero-blocking UI*
-*Recent: Double-buffer pattern integrated (GameStateSnapshot), LoadBalancedScheduler added*
+*Status: ✅ Multiplayer-ready with zero-blocking UI and sparse data infrastructure*
+*Recent: Sparse data structures Phase 1 & 2 complete (prevents HOI4's mod scaling disaster)*
