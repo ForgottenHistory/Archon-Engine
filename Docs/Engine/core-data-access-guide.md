@@ -1,14 +1,14 @@
 # Core Data Access Guide
 ## How to Get Data from Core in Archon's Architecture
 
-**📊 Implementation Status:** ✅ Implemented (ProvinceState, ProvinceColdData, hot/cold separation)
+**Implementation Status:** ✅ Implemented (ProvinceState, ProvinceColdData, hot/cold separation)
 
 ---
 
 ## Overview
 
 Archon uses a **dual-layer architecture**:
-- **Core Layer (CPU)**: Deterministic simulation with hot data (8-byte structs)
+- **Core Layer (CPU)**: Deterministic simulation with hot data (compact structs)
 - **Map Layer (GPU)**: High-performance presentation reading from Core
 
 This guide explains how to properly access Core simulation data for any purpose - rendering, UI, AI, etc.
@@ -17,17 +17,17 @@ This guide explains how to properly access Core simulation data for any purpose 
 
 ## Architecture Principles
 
-### ✅ **The Right Way**
+### The Right Way
 ```
 Your Code → GameState → Query Classes → Core Systems → Data
 ```
 
-### ❌ **Wrong Way (Don't Do This)**
+### Wrong Way (Don't Do This)
 ```
 Your Code → Direct System Access → Data
 ```
 
-### ✅ **Core Owns Data, Map Reads Data**
+### Core Owns Data, Map Reads Data
 - Core systems (ProvinceSystem, CountrySystem) own authoritative data
 - Map layer reads from Core via queries for rendering
 - Never store Core data copies in Map layer
@@ -38,82 +38,27 @@ Your Code → Direct System Access → Data
 
 All Core data access goes through `GameState`:
 
-```csharp
-// Get the central hub
-var gameState = Object.FindFirstObjectByType<GameState>();
-if (gameState?.IsInitialized != true)
-{
-    ArchonLogger.LogError("GameState not available");
-    return;
-}
-
-// Access query interfaces
-var provinceQueries = gameState.ProvinceQueries;
-var countryQueries = gameState.CountryQueries;
-```
+**Pattern**: Get GameState instance, access query interfaces (ProvinceQueries, CountryQueries), verify initialization status before accessing
 
 ---
 
 ## Data Access Patterns
 
-### 1. Basic Queries (Ultra-Fast: <0.001ms)
+### 1. Basic Queries (Ultra-Fast)
 
-Direct access to hot data with no computation:
+Direct access to hot data with no computation. Examples include getting province owner, development, terrain, checking existence, and country data like colors and tags.
 
-```csharp
-// Province data
-ushort owner = provinceQueries.GetOwner(provinceId);
-byte development = provinceQueries.GetDevelopment(provinceId);
-byte terrain = provinceQueries.GetTerrain(provinceId);
-bool exists = provinceQueries.Exists(provinceId);
+### 2. Computed Queries (On-Demand)
 
-// Country data
-Color32 color = countryQueries.GetColor(countryId);
-string tag = countryQueries.GetTag(countryId);
-ushort countryId = countryQueries.GetIdFromTag("ENG");
-bool hasFlag = countryQueries.HasFlag(countryId, someFlag);
-```
+Calculations performed when requested. Examples include getting all provinces owned by a country or filtering provinces by criteria. Remember to dispose NativeArrays using `using` statement or manual disposal.
 
-### 2. Computed Queries (On-Demand: <5ms)
+### 3. Cross-System Queries
 
-Calculations performed when requested:
+Combines multiple systems. Examples include getting the color of the country that owns a province, getting the tag of the province owner, or checking if two provinces share the same owner.
 
-```csharp
-// Get all provinces owned by a country
-using var provinces = provinceQueries.GetCountryProvinces(countryId, Allocator.Temp);
-for (int i = 0; i < provinces.Length; i++)
-{
-    var provinceId = provinces[i];
-    // Process each province
-}
-// provinces.Dispose() called automatically by using statement
+### 4. Cached Queries (Expensive Calculations)
 
-// Filter provinces by criteria
-using var oceanProvinces = provinceQueries.GetOceanProvinces(Allocator.Temp);
-using var landProvinces = provinceQueries.GetLandProvinces(Allocator.Temp);
-```
-
-### 3. Cross-System Queries (Combines Multiple Systems)
-
-```csharp
-// Get the color of the country that owns a province
-Color32 ownerColor = provinceQueries.GetProvinceOwnerColor(provinceId);
-
-// Get the tag of the province owner
-string ownerTag = provinceQueries.GetProvinceOwnerTag(provinceId);
-
-// Check if two provinces have the same owner
-bool sameOwner = provinceQueries.ShareSameOwner(provinceId1, provinceId2);
-```
-
-### 4. Cached Queries (Expensive Calculations: <0.01ms if cached)
-
-```csharp
-// These are cached automatically for performance
-int totalDev = countryQueries.GetTotalDevelopment(countryId);
-int provinceCount = countryQueries.GetProvinceCount(countryId);
-float avgDev = countryQueries.GetAverageDevelopment(countryId);
-```
+These are cached automatically for performance. Examples include total development, province count, and average development for countries.
 
 ---
 
@@ -121,16 +66,7 @@ float avgDev = countryQueries.GetAverageDevelopment(countryId);
 
 Development is calculated as: **BaseTax + BaseProduction + BaseManpower** (capped at 255)
 
-```csharp
-// This calculation happens in Core during data loading:
-// Development = (byte)math.min(255, BaseTax + BaseProduction + BaseManpower);
-
-// To get the final development value:
-byte development = provinceQueries.GetDevelopment(provinceId);
-
-// The individual components are stored in cold data (ProvinceInitialState)
-// and accessed through the province history system if needed
-```
+The calculation happens in Core during data loading. To get the final development value, use province queries. Individual components are stored in cold data (ProvinceInitialState) and accessed through the province history system if needed.
 
 ---
 
@@ -138,31 +74,12 @@ byte development = provinceQueries.GetDevelopment(provinceId);
 
 ### Use Case 1: Map Rendering (GPU Textures)
 
-```csharp
-public class SomeMapMode : MapMode
-{
-    public override void UpdateGPUTextures(MapTextureManager textureManager)
-    {
-        var gameState = Object.FindFirstObjectByType<GameState>();
-        if (gameState?.ProvinceQueries == null) return;
-
-        // Get all provinces
-        using var allProvinces = gameState.ProvinceQueries.GetAllProvinceIds(Allocator.Temp);
-
-        // Update color palette based on Core data
-        var paletteColors = new Color32[256];
-        for (int i = 0; i < allProvinces.Length && i < 256; i++)
-        {
-            var provinceId = allProvinces[i];
-            var development = gameState.ProvinceQueries.GetDevelopment(provinceId);
-            paletteColors[i] = MapDevelopmentToColor(development);
-        }
-
-        textureManager.SetPaletteColors(paletteColors);
-        textureManager.ApplyPaletteChanges();
-    }
-}
-```
+Pattern for map modes updating GPU textures:
+- Get GameState reference
+- Access ProvinceQueries
+- Get all province IDs
+- Update color palette based on Core data
+- Apply changes to texture manager
 
 **Other common patterns**: UI Display (query owner/dev/terrain for panels), AI Decision Making (evaluate strength via total development), Data Analysis/Statistics (aggregate queries for reporting). All follow the same GameState → ProvinceQueries/CountryQueries pattern.
 
@@ -172,99 +89,35 @@ public class SomeMapMode : MapMode
 
 ### Memory Management
 
-```csharp
-// ✅ Use 'using' for automatic disposal
-using var provinces = provinceQueries.GetCountryProvinces(countryId, Allocator.Temp);
-// provinces.Dispose() called automatically
-
-// ✅ Manual disposal if needed
-var provinces = provinceQueries.GetCountryProvinces(countryId, Allocator.TempJob);
-try
-{
-    // Use provinces
-}
-finally
-{
-    provinces.Dispose();
-}
-
-// ❌ Don't forget to dispose!
-var provinces = provinceQueries.GetCountryProvinces(countryId, Allocator.TempJob);
-// Memory leak!
-```
+Always use `using` for automatic disposal or manual try-finally blocks to ensure NativeArrays are disposed. Never forget to dispose - memory leaks will occur.
 
 ### Allocator Choice
 
-```csharp
-// For short-lived data (within same frame)
-using var provinces = provinceQueries.GetCountryProvinces(countryId, Allocator.Temp);
-
-// For data passed between frames or jobs
-var provinces = provinceQueries.GetCountryProvinces(countryId, Allocator.TempJob);
-// Remember to dispose later
-
-// For permanent data (rare)
-var provinces = provinceQueries.GetCountryProvinces(countryId, Allocator.Persistent);
-// Must dispose manually when no longer needed
-```
+- **Allocator.Temp**: For short-lived data (within same frame)
+- **Allocator.TempJob**: For data passed between frames or jobs (remember to dispose later)
+- **Allocator.Persistent**: For permanent data (rare, must dispose manually when no longer needed)
 
 ### Caching Considerations
 
-```csharp
-// ✅ These are automatically cached
-int totalDev = countryQueries.GetTotalDevelopment(countryId); // Fast on subsequent calls
-
-// ✅ Invalidate cache when data changes
-countryQueries.InvalidateCache(countryId); // After ownership changes
-
-// ✅ Clear all cache periodically
-countryQueries.ClearCache(); // At end of major game events
-```
+- Certain queries are automatically cached (like total development)
+- Invalidate cache when data changes
+- Clear all cache periodically at end of major game events
 
 ---
 
 ## Anti-Patterns (DON'T DO THESE)
 
-### ❌ **Direct System Access**
-```csharp
-// WRONG - bypasses the query layer
-var provinceSystem = FindObjectOfType<ProvinceSystem>();
-var owner = provinceSystem.GetProvinceOwner(provinceId); // Don't do this!
-```
+### Direct System Access
+Don't bypass the query layer by accessing systems directly.
 
-### ❌ **Storing Core Data in Map Layer**
-```csharp
-// WRONG - Map layer should not store Core data
-public class SomeMapComponent : MonoBehaviour
-{
-    private Dictionary<ushort, ushort> provinceOwners; // Don't store this!
+### Storing Core Data in Map Layer
+Map layer should not store Core data - always read fresh from Core instead.
 
-    void Update()
-    {
-        // Always read fresh from Core instead
-        var owner = gameState.ProvinceQueries.GetOwner(provinceId);
-    }
-}
-```
+### Forgetting to Dispose Native Arrays
+Always dispose NativeArrays to prevent memory leaks.
 
-### ❌ **Forgetting to Dispose Native Arrays**
-```csharp
-// WRONG - memory leak
-var provinces = provinceQueries.GetCountryProvinces(countryId, Allocator.TempJob);
-return provinces.Length; // Forgot to dispose!
-```
-
-### ❌ **CPU Processing of Millions of Pixels**
-```csharp
-// WRONG - use GPU compute shaders instead
-for (int y = 0; y < 2048; y++)
-{
-    for (int x = 0; x < 2048; x++)
-    {
-        // Don't process millions of pixels on CPU!
-    }
-}
-```
+### CPU Processing of Millions of Pixels
+Use GPU compute shaders instead of CPU loops for pixel processing.
 
 ---
 
@@ -272,51 +125,16 @@ for (int y = 0; y < 2048; y++)
 
 ### Command Pattern for State Changes
 
-```csharp
-// ✅ Use commands to modify Core state
-var command = new ChangeOwnerCommand
-{
-    provinceId = provinceId,
-    newOwner = newOwner
-};
-
-if (gameState.TryExecuteCommand(command))
-{
-    // State changed, query layer will reflect the change
-    var updatedOwner = gameState.ProvinceQueries.GetOwner(provinceId);
-}
-```
+Use commands to modify Core state with Execute, Serialize, and Validate methods. Try executing command through GameState and query the updated state.
 
 ### Event-Driven Updates
 
-```csharp
-public class SomeSystem : MonoBehaviour
-{
-    void Start()
-    {
-        var gameState = GameState.Instance;
-        gameState.EventBus.Subscribe<ProvinceOwnershipChangedEvent>(OnProvinceOwnershipChanged);
-    }
-
-    private void OnProvinceOwnershipChanged(ProvinceOwnershipChangedEvent evt)
-    {
-        // React to ownership changes
-        UpdateDisplay(evt.ProvinceId);
-    }
-}
-```
+Subscribe to events through GameState EventBus to react to changes in game state.
 
 ### Hot vs Cold Data
 
-```csharp
-// Hot data: Available through queries (8-byte ProvinceState)
-var development = provinceQueries.GetDevelopment(provinceId);
-var owner = provinceQueries.GetOwner(provinceId);
-
-// Cold data: Historical events and detailed info
-var recentHistory = gameState.Provinces.GetRecentHistory(provinceId);
-var historySummary = gameState.Provinces.GetHistorySummary(provinceId);
-```
+- **Hot data**: Available through queries (compact ProvinceState) - frequently accessed
+- **Cold data**: Historical events and detailed info - accessed rarely
 
 ---
 
@@ -324,14 +142,14 @@ var historySummary = gameState.Provinces.GetHistorySummary(provinceId);
 
 | Component | Location | Purpose |
 |-----------|----------|---------|
-| **GameState.cs** | `Assets/Scripts/Core/` | Central coordinator, singleton pattern, entry point for all Core data |
-| **ProvinceSystem.cs** | `Assets/Scripts/Core/Systems/` | Province data owner (8-byte ProvinceState, NativeArray storage) |
-| **CountrySystem.cs** | `Assets/Scripts/Core/Systems/` | Country data owner (hot/cold data separation) |
-| **ProvinceQueries.cs** | `Assets/Scripts/Core/Queries/` | Optimized province data access (<0.001ms basic, <5ms computed) |
-| **CountryQueries.cs** | `Assets/Scripts/Core/Queries/` | Optimized country data access (cached with 1s TTL) |
-| **ProvinceState.cs** | `Assets/Scripts/Core/Data/` | 8-byte struct (owner, controller, development, terrain, flags) |
-| **ICommand.cs** | `Assets/Scripts/Core/Commands/` | Command interface for state changes |
-| **EventBus.cs** | `Assets/Scripts/Core/` | Inter-system communication |
+| **GameState.cs** | `Core/` | Central coordinator, entry point for all Core data |
+| **ProvinceSystem.cs** | `Core/Systems/` | Province data owner (compact ProvinceState in NativeArray) |
+| **CountrySystem.cs** | `Core/Systems/` | Country data owner (hot/cold data separation) |
+| **ProvinceQueries.cs** | `Core/Queries/` | Optimized province data access (fast basic, moderate computed queries) |
+| **CountryQueries.cs** | `Core/Queries/` | Optimized country data access (cached queries) |
+| **ProvinceState.cs** | `Core/Data/` | Compact struct (owner, controller, development, terrain, flags) |
+| **ICommand.cs** | `Core/Commands/` | Command interface for state changes |
+| **EventBus.cs** | `Core/` | Inter-system communication |
 
 **File Organization Pattern**: `Core/Systems/` (data owners) → `Core/Queries/` (read access) → `Core/Commands/` (write operations) → `Core/Data/` (structures)
 
@@ -341,8 +159,8 @@ var historySummary = gameState.Provinces.GetHistorySummary(provinceId);
 
 ## Related Documents
 
-- **[MapMode System Architecture](mapmode-system-architecture.md)** - Shows practical usage of Core data access in map rendering
-- **[Master Architecture Document](master-architecture-document.md)** - Architecture context and dual-layer system overview
+- **MapMode System Architecture** - Shows practical usage of Core data access in map rendering
+- **Master Architecture Document** - Architecture context and dual-layer system overview
 
 ## Summary
 
@@ -357,8 +175,12 @@ This architecture ensures:
 - **Performance**: Query layer is optimized for common access patterns
 - **Determinism**: Core simulation remains predictable
 - **Modularity**: Clear separation between simulation and presentation
-- **Scalability**: Handles 10,000+ provinces efficiently
+- **Scalability**: Handles many provinces efficiently
 
 ---
 
 **Remember**: Core is the single source of truth. Map layer renders what Core tells it. Everything else reads from Core through the Query system.
+
+---
+
+*Last Updated: 2025-10-15*
