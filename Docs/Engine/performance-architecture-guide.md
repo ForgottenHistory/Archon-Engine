@@ -1,9 +1,9 @@
 # Grand Strategy Game Performance Architecture Guide
 ## Avoiding Late-Game Performance Collapse
 
-**📊 Implementation Status:** ⚠️ Partially Implemented (Hot/cold separation ✅, some patterns ✅, advanced features pending)
+**📊 Implementation Status:** ⚠️ Partially Implemented (Hot/cold separation ✅, load balancing ✅, zero-blocking UI ✅, pre-allocation policy documented ✅)
 
-**🔄 Recent Update (2025-10-09):** ProvinceState refactored to 8-byte engine primitives. Game-specific fields moved to HegemonProvinceData (4 bytes). See [phase-3-complete-scenario-loader-bug-fixed.md](../Log/2025-10/2025-10-09/phase-3-complete-scenario-loader-bug-fixed.md).
+**🔄 Recent Update (2025-10-15):** Added pre-allocation policy (Principle 4) - HOI4's malloc lock lesson. Zero allocations during gameplay enforced by profiling.
 
 > **📚 Architecture Context:** This document focuses on performance patterns. See [master-architecture-document.md](master-architecture-document.md) for the dual-layer architecture foundation.
 
@@ -85,6 +85,91 @@ Dynamic growth is the enemy of performance.
 - Fixed-size ring buffers
 - Automatic compression of old data
 - Bounded memory regardless of game length
+
+### Principle 4: Pre-Allocation Policy (Zero Allocations During Gameplay)
+**Paradox Lesson:** HOI4 discovered parallel code became sequential due to malloc lock contention.
+
+**The Problem:**
+- Memory allocator uses global lock
+- All threads wait for allocation
+- Parallel code becomes sequential
+- Performance collapses under threading
+
+**The Solution:**
+- Pre-allocate temporary buffers at initialization
+- Clear and reuse during gameplay
+- Zero allocations = zero lock contention = full parallelism
+
+#### Core Rules
+
+**Initialization Phase:**
+- Allocate all temporary buffers with persistent lifetime
+- Size for worst-case usage
+- Store as system-level fields
+
+**Gameplay Phase:**
+- Clear buffers (cheap operation, no allocation)
+- Reuse existing allocations
+- Zero new memory requests
+
+**Loading/Setup Phase:**
+- Temporary allocations allowed
+- Not performance-critical
+- Cleaned up before gameplay
+
+#### Allocator Strategy
+
+**Long-Lived (Persistent):**
+- Temporary buffers reused each frame
+- System state data
+- Allocated once at initialization
+
+**Short-Lived (Temporary):**
+- Loading/initialization only
+- Never in hot paths
+- Banned from gameplay code
+
+**Managed Heap:**
+- Cold data only
+- UI systems
+- Non-gameplay code
+
+#### Decision Framework
+
+**Before Adding Collection:**
+- Is this accessed every frame? → Pre-allocate at initialization
+- Is this temporary? → Clear and reuse, don't recreate
+- Is this in hot path? → Must be persistent, verified by profiler
+- Can this grow unbounded? → Use fixed-size with ring buffer pattern
+
+#### Enforcement Strategy
+
+**Code Review Requirements:**
+- All gameplay collections must be persistent lifetime
+- Hot path methods verified zero allocations
+- Temporary allocators banned from gameplay
+
+**Profiling Requirements:**
+- Zero allocations during gameplay (profiler confirmed)
+- Any allocation in hot path = critical bug
+- Regular profiling sessions to catch regressions
+
+**Pattern Recognition:**
+- Initialization = allocate once
+- Gameplay = clear and reuse
+- Cleanup = dispose at system shutdown
+
+#### Why This Matters
+
+**Performance Impact:**
+- Malloc lock destroys parallelism (HOI4's hard lesson)
+- Pre-allocation maintains full parallel speedup
+- Zero allocation = predictable performance
+
+**Design Philosophy:**
+- Pay upfront cost at initialization
+- Zero ongoing cost during gameplay
+- Architecture prevents performance regression
 
 ## System-Specific Optimizations
 
@@ -249,7 +334,8 @@ Allocate frame time carefully across systems:
 |--------------|---------|----------|
 | **"It Works For Now"** | O(n) operations scale poorly | Design for scale from start |
 | **"Invisible O(n²)"** | Hidden quadratic complexity | Pre-compute adjacency lists |
-| **"Death by Thousand Cuts"** | Many small allocations per frame | Pre-allocate pools |
+| **"Death by Thousand Cuts"** | Many small allocations per frame | Pre-allocate pools (see Principle 4) |
+| **"Allocator.Temp in Hot Path"** | Malloc lock serializes parallel code | Use Allocator.Persistent, reuse buffers |
 | **"Update Everything"** | Processing unchanged data every tick | Dirty flag systems (see [time-system-architecture.md](time-system-architecture.md)) |
 | **"Premature SoA Optimization"** | Splitting data that's used together | Profile first, optimize only if needed |
 | **"Float in Simulation"** | Non-deterministic across platforms | Use fixed-point math |
@@ -369,9 +455,10 @@ Remember: Sustained performance comes from architecture, not post-hoc optimizati
 1. **Compact simulation state** - cache-friendly, network-friendly
 2. **GPU for visuals** - single draw call, compute shaders
 3. **Fixed-point math** - deterministic for multiplayer
-4. **Dirty flags** - only update what changed
-5. **Ring buffers** - prevent unbounded growth
-6. **Profile before optimizing** - don't split data structures prematurely
+4. **Pre-allocation** - zero allocations during gameplay (HOI4's malloc lock lesson)
+5. **Dirty flags** - only update what changed
+6. **Ring buffers** - prevent unbounded growth
+7. **Profile before optimizing** - don't split data structures prematurely
 
 ---
 
@@ -383,4 +470,4 @@ Remember: Sustained performance comes from architecture, not post-hoc optimizati
 
 ---
 
-*Last Updated: 2025-10-10*
+*Last Updated: 2025-10-15*
