@@ -1,9 +1,11 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2025-10-06
-**Version:** 1.0 (Foundation Complete)
+**Last Updated:** 2025-10-15
+**Version:** 1.1 (Paradox Infrastructure Complete)
 
 This document lists all implemented features in the Archon Engine. Features are organized by category with brief descriptions.
+
+**Recent:** Completed all 4 Paradox infrastructure priorities (load balancing, zero-blocking UI, pre-allocation policy, sparse data structures)
 
 ---
 
@@ -14,9 +16,11 @@ This document lists all implemented features in the Archon Engine. Features are 
 - **Fixed-Point Math (FixedPoint64)** - Deterministic 32.32 fixed-point arithmetic for multiplayer-ready simulation
 - **Hot/Cold Data Separation** - Performance optimization separating frequently-accessed from rarely-accessed data
 - **Command Pattern** - All state changes through commands for validation, networking, and replay support
-- **Zero-Allocation EventBus** - Frame-coherent event system with 99.99% allocation reduction
+- **Zero-Allocation EventBus** - Frame-coherent event system with 99.99% allocation reduction (EventQueue<T> pattern)
+- **GameStateSnapshot (Double-Buffer)** - Zero-blocking UI reads via O(1) pointer swap (240KB at 10k provinces, Victoria 3 lesson)
 - **NativeArray Storage** - Contiguous memory layout for optimal cache performance
 - **Deterministic Simulation** - Identical results across platforms for multiplayer compatibility
+- **Engine-Game Separation** - ProvinceState = ENGINE (8 bytes), game-specific data in GAME layer slot
 
 ---
 
@@ -111,7 +115,10 @@ This document lists all implemented features in the Archon Engine. Features are 
 
 ## Performance Optimizations
 
-- **Zero Allocations** - No runtime allocations during gameplay
+- **Load Balancing (LoadBalancedScheduler)** - Victoria 3 pattern: cost-based job scheduling prevents thread starvation (24.9% improvement at 10k provinces)
+- **Zero-Blocking UI Reads** - Double-buffer pattern eliminates lock contention (Victoria 3's profiler "waiting bars" lesson)
+- **Pre-Allocation Policy (Principle 4)** - Zero runtime allocations prevents malloc lock contention (HOI4's parallelism lesson)
+- **Zero Allocations** - No runtime allocations during gameplay loop
 - **Frame-Coherent Caching** - Per-frame cache invalidation for expensive queries
 - **Ring Buffers** - Bounded history storage preventing memory growth
 - **Dirty Flag Systems** - Update-only-what-changed architecture
@@ -176,13 +183,44 @@ This document lists all implemented features in the Archon Engine. Features are 
 
 ## Data Structures
 
-- **ProvinceState (8 bytes)** - ownerID, controllerID, development, terrain, fortLevel, flags
+- **ProvinceState (8 bytes)** - ownerID(2), controllerID(2), terrainType(2), gameDataSlot(2) - ENGINE struct only
 - **ProvinceColdData** - Name, color, bounds, history, modifiers
 - **CountryHotData** - Compact country state for cache efficiency
 - **CountryColdData** - Extended country metadata
 - **FixedPoint64** - 32.32 fixed-point for deterministic math
 - **FixedPoint32** - 16.16 fixed-point for compact storage
 - **FixedPoint2** - 2D vector with fixed-point components
+
+---
+
+## Sparse Data Infrastructure (NEW - 2025-10-15)
+
+**Purpose:** Prevents HOI4's 30→500 equipment disaster (16x slowdown with mods)
+
+**Pattern:** Three-layer architecture (Definitions → Storage → Access)
+
+**Key Components:**
+- **IDefinition** - Base interface for all definitions (buildings, modifiers, trade goods)
+  - ID: Runtime-assigned ushort (0-65535)
+  - StringID: Stable string for save/load compatibility ("farm", "gold_mine")
+  - Version: Definition compatibility checks
+- **ISparseCollection** - Non-generic interface for polymorphic management
+  - Unified memory monitoring and disposal across all sparse collections
+  - SparseCollectionStats struct for profiling
+- **SparseCollectionManager<TKey, TValue>** - Generic sparse storage (381 lines)
+  - NativeParallelMultiHashMap for one-to-many relationships (Collections 2.1+)
+  - Pre-allocation with Allocator.Persistent (Principle 4)
+  - Capacity warnings at 80%/95% thresholds
+  - Query APIs: Has/HasAny/Get/GetCount (O(1) to O(m) where m = items per key)
+  - Modification APIs: Add/Remove/RemoveAll
+  - Iteration APIs: ProcessValues (zero allocation), GetKeys
+
+**Memory Scaling:**
+- Dense approach: 10k entities × 500 types = 5 MB (must iterate all)
+- Sparse approach: 10k entities × 5 actual = 200 KB (iterate only actual)
+- Savings: 96% memory reduction at mod scale
+
+**Status:** Phase 1 & 2 complete (foundation ready for buildings/modifiers systems)
 
 ---
 
@@ -243,13 +281,14 @@ This document lists all implemented features in the Archon Engine. Features are 
 
 ## Quick Stats
 
-- **Engine Code:** ~28,000 lines (Core + Map layers)
-- **Documentation:** ~5,500 lines (9 engine docs + 5 planning docs)
-- **Systems:** 69 Core scripts, 51 Map scripts
+- **Engine Code:** ~29,000 lines (Core + Map layers, +1000 from sparse infrastructure)
+- **Documentation:** ~7,500 lines (12 engine docs + 4 session logs + 5 planning docs)
+- **Systems:** 72 Core scripts (+3 sparse data files), 51 Map scripts
 - **Refactoring Reduction:** -1,470 lines through focused component extraction
-- **Max File Size:** All files under 500 lines
-- **Provinces Tested:** 3,925 loaded (10,000 target)
-- **Performance:** 200+ FPS achieved at target scale
+- **Max File Size:** All files under 500 lines (except sparse-data-structures-design.md: 503 lines)
+- **Provinces Tested:** 10,000 provinces tested with load balancing
+- **Performance:** 200+ FPS achieved, 24.9% improvement with LoadBalancedScheduler
+- **Infrastructure:** All 4 Paradox priorities complete (load balancing, zero-blocking UI, pre-allocation, sparse data)
 
 ---
 
@@ -288,8 +327,9 @@ This document lists all implemented features in the Archon Engine. Features are 
 - ✅ data-flow-architecture.md - System communication
 - ✅ data-loading-architecture.md - JSON5 + Burst loading
 - ✅ time-system-architecture.md - Tick system
-- ✅ performance-architecture-guide.md - Optimization patterns
+- ✅ performance-architecture-guide.md - Optimization patterns (updated: Principle 4 - Pre-allocation)
 - ✅ engine-game-separation.md - Layer separation
+- ✅ sparse-data-structures-design.md - Sparse collections architecture (503 lines, prevents HOI4's 16x disaster)
 
 **Planning Docs (Planning/):**
 - ❌ ai-design.md - Not implemented
@@ -298,8 +338,14 @@ This document lists all implemented features in the Archon Engine. Features are 
 - ❌ save-load-design.md - Not implemented
 - ❌ error-recovery-design.md - Not implemented
 
+**Session Logs (Log/2025-10/15/):**
+- ✅ 1-engine-infrastructure-priorities-from-paradox-analysis.md - Identified 4 critical priorities
+- ✅ 2-load-balancing-implementation.md - LoadBalancedScheduler (24.9% improvement)
+- ✅ 3-double-buffer-pattern-integration.md - GameStateSnapshot (zero-blocking UI)
+- ✅ 4-pre-allocation-and-sparse-data-infrastructure.md - Principle 4 + sparse collections
+
 **File Registries:**
-- ✅ Scripts/Core/FILE_REGISTRY.md - 69 files cataloged
+- ✅ Scripts/Core/FILE_REGISTRY.md - Updated with sparse data files
 - ✅ Scripts/Map/FILE_REGISTRY.md - 51 files cataloged
 
 ---
