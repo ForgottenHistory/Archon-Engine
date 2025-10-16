@@ -16,7 +16,9 @@ namespace Map.Debug
 
         [Header("Debug UI Settings")]
         [SerializeField] private bool showDebugUI = true;
-        [SerializeField] private Vector2 uiPosition = new Vector2(220, 10);
+        [SerializeField] private bool alignRight = true;
+        [SerializeField] private float rightMargin = 10f;
+        [SerializeField] private float topMargin = 220f; // Below TimeManager (200px height + 20px spacing)
         [SerializeField] private Vector2 uiSize = new Vector2(280, 400);
 
         // UI state
@@ -55,8 +57,12 @@ namespace Map.Debug
             if (!showDebugUI || mapModeManager == null || !mapModeManager.IsInitialized)
                 return;
 
+            // Calculate position (align to right if enabled)
+            float xPosition = alignRight ? (Screen.width - uiSize.x - rightMargin) : rightMargin;
+            float yPosition = topMargin;
+
             // Create UI area
-            GUILayout.BeginArea(new Rect(uiPosition.x, uiPosition.y, uiSize.x, uiSize.y));
+            GUILayout.BeginArea(new Rect(xPosition, yPosition, uiSize.x, uiSize.y));
 
             // Title
             GUILayout.Label("Map Mode Debug Controls", GUI.skin.box);
