@@ -86,7 +86,6 @@ namespace Map.Interaction
 
                         // Test: Read the texture in a small area around the click
                         ushort testNearby = textureManager.GetProvinceID(x + 10, y);
-                        ArchonLogger.Log($"CLICK: UV ({uv.x:F3},{uv.y:F3}) → Pixel ({x},{y}) → Province {clickedProvince} | Nearby pixel ({x+10},{y}) → Province {testNearby}");
                     }
                 }
                 else
