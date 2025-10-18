@@ -3,7 +3,6 @@ using Map.Rendering;
 using Map.MapModes;
 using Map.Loading;
 using Map.Interaction;
-using Map.Debug;
 using Map.Simulation;
 using Core;
 using Utils;

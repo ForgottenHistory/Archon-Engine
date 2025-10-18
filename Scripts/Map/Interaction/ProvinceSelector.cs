@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Map.Rendering;
 using Utils;
 using System;
@@ -64,7 +65,8 @@ namespace Map.Interaction
             }
 
             // Handle click detection
-            if (Input.GetMouseButtonDown(0))
+            // Skip if clicking on UI elements
+            if (Input.GetMouseButtonDown(0) && !IsPointerOverUI())
             {
                 // Get detailed info for click debugging
                 Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -99,6 +101,17 @@ namespace Map.Interaction
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Check if the mouse pointer is over any UI element (works for both uGUI and UI Toolkit)
+        /// Uses Unity's Event System which handles both UI systems automatically
+        /// </summary>
+        private bool IsPointerOverUI()
+        {
+            // Unity's EventSystem.IsPointerOverGameObject works for both uGUI and UI Toolkit
+            // Returns true if pointer is over any UI content from either system
+            return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
         }
 
         /// <summary>

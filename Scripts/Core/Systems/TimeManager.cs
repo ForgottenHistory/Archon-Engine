@@ -372,51 +372,8 @@ namespace Core.Systems
             return totalHours;
         }
 
-        #if UNITY_EDITOR
-        [Header("Debug Controls")]
-        [SerializeField] private bool debugShowControls = true;
-        [SerializeField] private bool alignRight = true;
-        [SerializeField] private float rightMargin = 10f;
-        [SerializeField] private float topMargin = 10f;
-        [SerializeField] private Vector2 debugUISize = new Vector2(250, 200);
-
-        void OnGUI()
-        {
-            if (!debugShowControls || !isInitialized)
-                return;
-
-            // Calculate position (align to right if enabled)
-            float xPosition = alignRight ? (Screen.width - debugUISize.x - rightMargin) : rightMargin;
-            float yPosition = topMargin;
-
-            GUILayout.BeginArea(new Rect(xPosition, yPosition, debugUISize.x, debugUISize.y));
-            GUILayout.Label($"Game Time: {year}.{month:D2}.{day:D2} {hour:D2}:00");
-            GUILayout.Label($"Tick: {currentTick}");
-            GUILayout.Label($"Speed: {gameSpeedLevel}x ({GetSpeedMultiplier(gameSpeedLevel).ToFloat():F1}x)");
-            GUILayout.Label($"Paused: {isPaused}");
-            GUILayout.Label($"Accumulator: {accumulator.ToFloat():F2}");
-
-            if (GUILayout.Button(isPaused ? "Resume" : "Pause"))
-            {
-                TogglePause();
-            }
-
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("0.5x")) SetGameSpeed(1);
-            if (GUILayout.Button("1x")) SetGameSpeed(2);
-            if (GUILayout.Button("2x")) SetGameSpeed(3);
-            if (GUILayout.Button("5x")) SetGameSpeed(4);
-            GUILayout.EndHorizontal();
-
-            if (GUILayout.Button("Advance 1 Day"))
-            {
-                for (int i = 0; i < HOURS_PER_DAY; i++)
-                    AdvanceHour();
-            }
-
-            GUILayout.EndArea();
-        }
-        #endif
+        // Old OnGUI debug UI removed - replaced by Game.DebugTools.TimeDebugPanel (UI Toolkit)
+        // See: Assets/Game/Debug/TimeDebugPanel.cs
     }
 
     /// <summary>

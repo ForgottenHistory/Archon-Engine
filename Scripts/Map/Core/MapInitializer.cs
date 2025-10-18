@@ -3,7 +3,6 @@ using Map.Rendering;
 using Map.MapModes;
 using Map.Loading;
 using Map.Interaction;
-using Map.Debug;
 using System.Threading.Tasks;
 using Core;
 using Utils;
@@ -40,7 +39,6 @@ namespace Map.Core
         private MapTexturePopulator texturePopulator;
         private TextureUpdateBridge textureUpdateBridge;
         private ParadoxStyleCameraController cameraController;
-        private MapModeDebugUI debugUI;
 
         // Public accessors for initialized components
         public MapTextureManager TextureManager => textureManager;
@@ -57,7 +55,6 @@ namespace Map.Core
         public Camera MapCamera => mapCamera;
         public MeshRenderer MeshRenderer => meshRenderer;
         public ParadoxStyleCameraController CameraController => cameraController;
-        public MapModeDebugUI DebugUI => debugUI;
 
         // Initialization state
         private bool isInitialized = false;
@@ -252,14 +249,13 @@ namespace Map.Core
             InitializeTextureUpdateBridge();
             ReportProgress(15f, "High-level components initialized");
 
-            // Phase 4: Camera setup (15-18%)
+            // Phase 4: Camera setup (15-20%)
             InitializeCamera();
             InitializeCameraController();
-            ReportProgress(18f, "Camera configured");
-
-            // Phase 5: Debug components (18-20%)
-            InitializeDebugUI();
             ReportProgress(20f, "Components initialized");
+
+            // Debug UI moved to Game layer (Game.DebugTools.MapModeDebugPanel)
+            // Initialized by HegemonInitializer with dependency injection
 
             if (logInitializationProgress)
             {
@@ -488,31 +484,6 @@ namespace Map.Core
                     ArchonLogger.LogMapInit("MapInitializer: Created TextureUpdateBridge component");
                 }
             }
-        }
-
-        private void InitializeDebugUI()
-        {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            debugUI = GetComponent<MapModeDebugUI>();
-            if (debugUI == null)
-            {
-                debugUI = gameObject.AddComponent<MapModeDebugUI>();
-                if (logInitializationProgress)
-                {
-                    ArchonLogger.LogMapInit("MapInitializer: Created MapModeDebugUI component");
-                }
-            }
-
-            // Set the MapModeManager reference after both components are initialized
-            if (debugUI != null && mapModeManager != null)
-            {
-                debugUI.SetMapModeManager(mapModeManager);
-                if (logInitializationProgress)
-                {
-                    ArchonLogger.LogMapInit("MapInitializer: Connected MapModeDebugUI to MapModeManager");
-                }
-            }
-#endif
         }
 
         /// <summary>
