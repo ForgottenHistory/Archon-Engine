@@ -77,6 +77,10 @@ namespace Core.Initialization.Phases
                 yield break;
             }
 
+            // Sync province buffers after scenario load to prevent first-tick empty buffer bug
+            // This ensures both read and write buffers have the same initial province data
+            context.ProvinceSystem.SyncBuffersAfterLoad();
+
             context.ReportProgress(75f, "Scenario applied");
 
             if (context.EnableDetailedLogging)

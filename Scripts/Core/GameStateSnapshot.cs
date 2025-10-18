@@ -1,5 +1,6 @@
 using Unity.Collections;
 using Core.Data;
+using Utils;
 
 namespace Core
 {
@@ -40,7 +41,7 @@ namespace Core
         {
             if (isInitialized)
             {
-                UnityEngine.Debug.LogWarning("GameStateSnapshot already initialized");
+                ArchonLogger.LogWarning("GameStateSnapshot already initialized");
                 return;
             }
 
@@ -61,7 +62,7 @@ namespace Core
             currentWriteBuffer = 0; // Start with buffer A for writing
 
             isInitialized = true;
-            UnityEngine.Debug.Log($"GameStateSnapshot initialized: {provinceCapacity} provinces, {provinceCapacity * 8 * 2} bytes (double-buffered)");
+            ArchonLogger.Log($"GameStateSnapshot initialized: {provinceCapacity} provinces, {provinceCapacity * 8 * 2} bytes (double-buffered)");
         }
 
         /// <summary>
@@ -101,6 +102,27 @@ namespace Core
         }
 
         /// <summary>
+        /// Synchronize read buffer with write buffer (copy write → read)
+        ///
+        /// Used after scenario loading to ensure both buffers have the same initial data.
+        /// This prevents the first tick from reading from an empty buffer after the first swap.
+        ///
+        /// Performance: O(n) memcpy - only call during initialization, not during gameplay
+        /// </summary>
+        public void SyncBuffersAfterLoad()
+        {
+            ValidateInitialized();
+
+            var writeBuffer = GetProvinceWriteBuffer();
+            var readBuffer = GetProvinceReadBuffer();
+
+            // Copy all province states from write buffer to read buffer
+            NativeArray<ProvinceState>.Copy(writeBuffer, readBuffer, writeBuffer.Length);
+
+            ArchonLogger.Log($"GameStateSnapshot: Synced buffers after scenario load ({writeBuffer.Length} provinces copied)");
+        }
+
+        /// <summary>
         /// Check if initialized
         /// </summary>
         public bool IsInitialized => isInitialized;
@@ -129,7 +151,7 @@ namespace Core
                 provinceBufferB.Dispose();
 
             isInitialized = false;
-            UnityEngine.Debug.Log("GameStateSnapshot disposed");
+            ArchonLogger.Log("GameStateSnapshot disposed");
         }
 
         private void ValidateInitialized()

@@ -207,6 +207,20 @@ namespace Core.Systems
             snapshot.SwapBuffers();
         }
 
+        /// <summary>
+        /// Synchronize buffers after scenario loading
+        /// Ensures both buffers have identical data to prevent first-tick empty buffer bug
+        /// </summary>
+        public void SyncBuffersAfterLoad()
+        {
+            if (!isInitialized || snapshot == null)
+            {
+                ArchonLogger.LogWarning("ProvinceSystem: Cannot sync buffers, not initialized");
+                return;
+            }
+            snapshot.SyncBuffersAfterLoad();
+        }
+
         public void Dispose()
         {
             snapshot?.Dispose();
