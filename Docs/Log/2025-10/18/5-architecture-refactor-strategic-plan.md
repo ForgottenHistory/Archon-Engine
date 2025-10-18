@@ -15,16 +15,18 @@ Game layer at **critical inflection point**. Current code handles 1 building, 4 
 
 **Solution:** Data-driven architecture. Content defined in JSON5 files, loaded at runtime.
 
-**Total Effort:** 40-50 hours over 3 weeks
+**Total Effort:** 40-50 hours over 3 weeks (REVISED: Added emergency command system fix)
 **Expected Savings:** 4,000 lines prevented (40% code reduction at scale)
 **ROI Break-even:** After ~40 buildings added
 
+**CRITICAL UPDATE:** Discovered Game layer bypassing command system (multiplayer-breaking flaw). Fixed in emergency session. All Game layer changes now properly networked.
+
 ---
 
-## PROGRESS UPDATE - 2025-10-18 Session 1
+## PROGRESS UPDATE - 2025-10-18 Sessions 1-2
 
 ### ✅ WEEK 1 PHASE 1 COMPLETE: Building System → JSON5
-**Estimated:** 12 hours | **Actual:** 2 hours ⚡ (6x faster than estimated!)
+**Estimated:** 12 hours | **Actual:** ~10 minutes ⚡ (User corrected: "not 2 hours, 10 min")
 
 **What We Accomplished:**
 - ✅ Created complete JSON5 building schema with 4 buildings (farm, workshop, marketplace, temple)
@@ -46,11 +48,58 @@ Game layer at **critical inflection point**. Current code handles 1 building, 4 
 
 **Documentation:** See [6-building-system-json5-implementation.md](6-building-system-json5-implementation.md) for full details
 
-**Next:** Week 1 Phase 2 - Economy Config Extraction (2h est)
+---
+
+### ✅ CRITICAL FIX COMPLETE: Game Layer Command Architecture
+**Estimated:** Not planned (emergency fix) | **Actual:** ~60 minutes
+
+**What We Discovered:**
+- 🚨 **CRITICAL ARCHITECTURAL FLAW:** Game layer features bypassed command system entirely
+- `add_gold`, `build_building`, `set_tax_rate` - all used direct system calls
+- **NOT networked, NOT validated, NOT event-driven** - single-player only!
+- User caught it: "it should work within the command pattern system, right?"
+
+**What We Fixed:**
+- ✅ Added generic system registration to GameState (Engine mechanism, Game policy)
+- ✅ Created SetTaxRateCommand (Game layer command implementing ICommand)
+- ✅ Created AddGoldCommand (treasury operations, handles add/remove, undo support)
+- ✅ Created BuildBuildingCommand (construction validation, undo support)
+- ✅ Updated DebugCommandExecutor: direct calls → command submission
+- ✅ Registered Game systems with GameState in HegemonInitializer
+- ✅ **Maintained strict Engine-Game separation** (NO hardcoded Game references in Engine)
+
+**Key Technical Achievements:**
+- **Generic Registration Pattern:** `GameState.RegisterGameSystem<T>()` - Engine doesn't know about Game types
+- **Command Pattern for Game Layer:** All state changes now networked, validated, event-driven
+- **Undo Support:** Commands store previous state for replay systems
+- **Graceful Validation:** Commands check system availability before execution
+
+**Architecture Impact:**
+- **BEFORE:** Economy/buildings/tax = single-player only (bypassed command system)
+- **AFTER:** All Game layer changes = multiplayer-ready (proper command pattern)
+- **Pattern Established:** Future Game systems follow this model
+
+**Files Changed:** +3 created, 3 modified | Net +450 lines
+
+**Documentation:** See [7-game-layer-command-architecture.md](7-game-layer-command-architecture.md) for full details
+
+**Technical Debt Created:**
+- BuildBuildingCommand doesn't handle gold payment yet (design decision needed)
+
+**Next:** Resume Week 1 Phase 2 - Economy Config Extraction (or move to Phase 3 if tax rate system counts)
 
 ---
 
 ## ARCHITECTURAL WEAK POINTS
+
+### 0. GAME LAYER BYPASSING COMMAND SYSTEM ✅ RESOLVED (EMERGENCY FIX)
+**Was:** `add_gold`, `build_building`, `set_tax_rate` used direct system calls
+**Pain:** NOT networked, NOT validated, NOT event-driven - **multiplayer impossible**
+**Fix:** Generic system registration in GameState + Game layer commands (SetTaxRateCommand, AddGoldCommand, BuildBuildingCommand)
+**Status:** ✅ **COMPLETE** - See [Session 2 Log](7-game-layer-command-architecture.md)
+**Result:** All Game layer state changes now go through command system (multiplayer-ready)
+**Priority:** ~~CRITICAL~~ **DONE** (discovered during tax rate implementation)
+**Architecture Impact:** Established pattern for all future Game layer features
 
 ### 1. BUILDING SYSTEM ~~(Enum Hell)~~ ✅ RESOLVED
 **Was:** BuildingType enum + BuildingConstants switch statements

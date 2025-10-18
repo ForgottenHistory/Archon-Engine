@@ -4,6 +4,8 @@ using Core.Systems;
 using Core.Queries;
 using Core.Commands;
 using Core.Registries;
+using System;
+using System.Collections.Generic;
 
 namespace Core
 {
@@ -11,6 +13,11 @@ namespace Core
     /// Central hub for all game data access - follows hub-and-spoke architecture
     /// Provides unified access to all game systems without owning the data
     /// Performance: All queries should be <0.01ms, zero allocations during gameplay
+    ///
+    /// ARCHITECTURE: Engine-Game Separation
+    /// - Core systems (Provinces, Countries, Time) are owned by Engine
+    /// - Game layer systems (Economy, Buildings, etc.) register themselves via RegisterGameSystem
+    /// - Engine provides mechanism (registration), Game provides policy (specific systems)
     /// </summary>
     public class GameState : MonoBehaviour
     {
@@ -31,6 +38,11 @@ namespace Core
 
         // Core Infrastructure
         public EventBus EventBus { get; private set; }
+
+        // Game Layer System Registration (Engine mechanism, Game policy)
+        // Engine doesn't know about specific Game layer types (EconomySystem, BuildingSystem, etc.)
+        // Game layer systems register themselves so commands can access them
+        private readonly Dictionary<Type, object> registeredGameSystems = new Dictionary<Type, object>();
 
         // State Management
         public bool IsInitialized { get; private set; }
@@ -66,6 +78,51 @@ namespace Core
         {
             Registries = registries;
             ArchonLogger.Log("GameState: Registries set");
+        }
+
+        /// <summary>
+        /// Register a Game layer system for command access
+        /// ARCHITECTURE: Engine provides mechanism (registration), Game provides policy (specific systems)
+        /// Engine doesn't know about EconomySystem, BuildingSystem, etc. - they register themselves
+        /// </summary>
+        public void RegisterGameSystem<T>(T system) where T : class
+        {
+            if (system == null)
+            {
+                ArchonLogger.LogWarning($"GameState: Attempted to register null system of type {typeof(T).Name}");
+                return;
+            }
+
+            Type systemType = typeof(T);
+            if (registeredGameSystems.ContainsKey(systemType))
+            {
+                ArchonLogger.LogWarning($"GameState: System {systemType.Name} already registered, replacing");
+            }
+
+            registeredGameSystems[systemType] = system;
+            ArchonLogger.Log($"GameState: Registered Game layer system {systemType.Name}");
+        }
+
+        /// <summary>
+        /// Get a registered Game layer system for command execution
+        /// Returns null if system not registered (allows graceful degradation)
+        /// </summary>
+        public T GetGameSystem<T>() where T : class
+        {
+            Type systemType = typeof(T);
+            if (registeredGameSystems.TryGetValue(systemType, out object system))
+            {
+                return system as T;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Check if a Game layer system is registered
+        /// </summary>
+        public bool HasGameSystem<T>() where T : class
+        {
+            return registeredGameSystems.ContainsKey(typeof(T));
         }
 
         /// <summary>
