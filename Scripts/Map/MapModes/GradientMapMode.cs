@@ -39,6 +39,27 @@ namespace Map.MapModes
         protected virtual Color32 OceanColor => new Color32(25, 25, 112, 255);    // Dark blue
         protected virtual Color32 UnknownColor => new Color32(64, 64, 64, 255);   // Dark gray
 
+        // Dirty flag for optimization - skip updates when data hasn't changed
+        private bool isDirty = true;
+
+        /// <summary>
+        /// Mark this map mode as dirty (needs recalculation)
+        /// Call this when underlying data changes (province ownership, development, etc.)
+        /// </summary>
+        public void MarkDirty()
+        {
+            isDirty = true;
+        }
+
+        /// <summary>
+        /// Called when map mode is activated - always mark dirty to ensure first update
+        /// Subclasses should call base.OnMapModeActivated() if they override OnActivate
+        /// </summary>
+        protected void OnMapModeActivated()
+        {
+            isDirty = true; // Always update when activated
+        }
+
         // IMapModeHandler implementation
         public abstract MapMode Mode { get; }
         public abstract string Name { get; }
@@ -103,6 +124,12 @@ namespace Map.MapModes
                                           CountryQueries countryQueries, ProvinceMapping provinceMapping,
                                           object gameProvinceSystem = null)
         {
+            // Optimization: Skip update if data hasn't changed
+            if (!isDirty)
+            {
+                return;
+            }
+
             if (dataTextures?.ProvinceDevelopmentTexture == null)
             {
                 ArchonLogger.LogError($"{Name}: Development texture not available");
@@ -132,6 +159,9 @@ namespace Map.MapModes
             // Phase 2: Update texture with gradient colors
             UpdateGradientTexture(dataTextures, allProvinces, provinceQueries, provinceMapping,
                                  gameProvinceSystem, stats);
+
+            // Clear dirty flag - data is now up to date
+            isDirty = false;
 
             var elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
 
