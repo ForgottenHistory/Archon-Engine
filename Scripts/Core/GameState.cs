@@ -4,6 +4,7 @@ using Core.Systems;
 using Core.Queries;
 using Core.Commands;
 using Core.Registries;
+using Core.Modifiers;
 using System;
 using System.Collections.Generic;
 
@@ -28,6 +29,7 @@ namespace Core
         public Systems.ProvinceSystem Provinces { get; private set; }
         public Systems.CountrySystem Countries { get; private set; }
         public TimeManager Time { get; private set; }
+        public ModifierSystem Modifiers { get; private set; }
 
         // Query Interfaces - These provide optimized data access
         public ProvinceQueries ProvinceQueries { get; private set; }
@@ -146,11 +148,15 @@ namespace Core
             Provinces = GetComponent<Systems.ProvinceSystem>() ?? gameObject.AddComponent<Systems.ProvinceSystem>();
             Countries = GetComponent<Systems.CountrySystem>() ?? gameObject.AddComponent<Systems.CountrySystem>();
 
-            // 3. Query interfaces
+            // 3. Modifier system (Engine infrastructure for Game layer modifiers)
+            // TODO: Get province/country counts from ProvinceSystem/CountrySystem after they're initialized
+            Modifiers = new ModifierSystem(maxCountries: 256, maxProvinces: 8192);
+
+            // 4. Query interfaces
             ProvinceQueries = new ProvinceQueries(Provinces, Countries);
             CountryQueries = new CountryQueries(Countries, Provinces);
 
-            // 4. Initialize systems
+            // 5. Initialize systems
             Provinces.Initialize(EventBus);
             Countries.Initialize(EventBus);
             Time.Initialize(EventBus, Provinces); // Pass ProvinceSystem for buffer swapping
@@ -233,6 +239,7 @@ namespace Core
                 // Clean up systems
                 Provinces?.Dispose();
                 Countries?.Dispose();
+                Modifiers?.Dispose();
                 EventBus?.Dispose();
 
                 Instance = null;
