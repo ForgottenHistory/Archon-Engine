@@ -39,7 +39,7 @@ Grand strategy games have **four core pillars:**
 
 ## PILLAR 2: MILITARY (Next Priority)
 
-### 2.1 Unit System (Week 1: 20-25 hours)
+### 2.1 Unit System
 
 **ENGINE Components:**
 - UnitSystem - Manages all units (NativeArray<UnitState>)
@@ -68,7 +68,7 @@ struct UnitState {
 - Move 1k units simultaneously, verify deterministic
 - Save/Load with units, verify round-trip
 
-### 2.2 Movement System (Week 2: 15-20 hours)
+### 2.2 Movement System
 
 **ENGINE Components:**
 - MovementSystem - Processes move orders each tick
@@ -90,7 +90,7 @@ struct UnitState {
 - Save/Load mid-movement, verify units continue correctly
 - Deterministic movement (same seed = same paths)
 
-### 2.3 Combat System (Week 3: 15-20 hours)
+### 2.3 Combat System
 
 **ENGINE Components:**
 - CombatSystem - Resolves battles each tick
@@ -114,13 +114,11 @@ struct UnitState {
 - Save/Load mid-battle, verify outcome unchanged
 - Deterministic combat (same inputs = same casualties)
 
-**Total Effort: 50-65 hours (Military Pillar Complete)**
-
 ---
 
-## PILLAR 3: DIPLOMACY (Week 4-5: 30-40 hours)
+## PILLAR 3: DIPLOMACY
 
-### 3.1 Relations System (Week 4: 15-20 hours)
+### 3.1 Relations System
 
 **ENGINE Components:**
 - DiplomacySystem - Manages relations between countries
@@ -147,7 +145,7 @@ struct RelationData {
 - Save/Load relations, verify modifiers persist
 - Deterministic opinion changes
 
-### 3.2 Treaty System (Week 5: 15-20 hours)
+### 3.2 Treaty System
 
 **ENGINE Components:**
 - TreatySystem - Active treaties between countries
@@ -176,13 +174,11 @@ struct Treaty {
 - Save/Load treaties, verify expiration dates correct
 - Break treaty, verify opinion penalties apply
 
-**Total Effort: 30-40 hours (Diplomacy Pillar Complete)**
-
 ---
 
-## PILLAR 4: AI (Week 6-8: 40-60 hours)
+## PILLAR 4: AI
 
-### 4.1 AI Framework (Week 6: 15-20 hours)
+### 4.1 AI Framework
 
 **ENGINE Components:**
 - AISystem - Manages AI decision-making for all AI countries
@@ -207,7 +203,7 @@ struct Treaty {
 - AI builds buildings, recruits units, declares wars
 - Deterministic AI (same seed = same decisions)
 
-### 4.2 AI Evaluators (Week 7: 15-20 hours)
+### 4.2 AI Evaluators
 
 **Economic Evaluators:**
 - BuildBuildingEvaluator - Which province should build what?
@@ -239,7 +235,7 @@ float score =
 - AI adapts to player actions (defends when attacked)
 - AI difficulty scales (different evaluator weights)
 
-### 4.3 AI Personality (Week 8: 10-20 hours)
+### 4.3 AI Personality
 
 **ENGINE Components:**
 - AIPersonality - ScriptableObject defining AI behavior
@@ -266,13 +262,11 @@ float score =
 - Economic AI builds tall (many buildings, few wars)
 - Diplomatic AI forms alliances, avoids conflicts
 
-**Total Effort: 40-60 hours (AI Pillar Complete)**
-
 ---
 
-## INTEGRATION & POLISH (Week 9: 15-20 hours)
+## INTEGRATION & POLISH
 
-### 9.1 All Pillars Working Together
+### All Pillars Working Together
 
 **Scenarios:**
 1. AI declares war → units move to border → battles resolve → winner gains provinces
@@ -284,7 +278,7 @@ float score =
 - Save/Load mid-war, verify battles continue correctly
 - Deterministic full game (same seed = same outcome)
 
-### 9.2 Performance Validation
+### Performance Validation
 
 **Targets:**
 - 100 countries, 10k provinces, 5k units → 60 FPS
@@ -292,7 +286,7 @@ float score =
 - Combat resolution → <20ms for 100 simultaneous battles
 - Full tick (all systems) → <50ms
 
-### 9.3 Save/Load All Systems
+### Save/Load All Systems
 
 **Validation:**
 - Save game with units mid-movement
@@ -303,21 +297,19 @@ float score =
 
 ---
 
-## TIMELINE
+## IMPLEMENTATION ORDER
 
-| Week | Pillar | Feature | Hours | Status |
-|------|--------|---------|-------|--------|
-| 1 | Military | Unit System | 20-25 | 📋 Planned |
-| 2 | Military | Movement System | 15-20 | 📋 Planned |
-| 3 | Military | Combat System | 15-20 | 📋 Planned |
-| 4 | Diplomacy | Relations System | 15-20 | 📋 Planned |
-| 5 | Diplomacy | Treaty System | 15-20 | 📋 Planned |
-| 6 | AI | AI Framework | 15-20 | 📋 Planned |
-| 7 | AI | AI Evaluators | 15-20 | 📋 Planned |
-| 8 | AI | AI Personality | 10-20 | 📋 Planned |
-| 9 | Integration | All Pillars Together | 15-20 | 📋 Planned |
-
-**Total Estimated Effort:** 130-175 hours (6-9 weeks at 20h/week)
+| Phase | Pillar | Feature | Status |
+|-------|--------|---------|--------|
+| 1 | Military | Unit System | 📋 Planned |
+| 2 | Military | Movement System | 📋 Planned |
+| 3 | Military | Combat System | 📋 Planned |
+| 4 | Diplomacy | Relations System | 📋 Planned |
+| 5 | Diplomacy | Treaty System | 📋 Planned |
+| 6 | AI | AI Framework | 📋 Planned |
+| 7 | AI | AI Evaluators | 📋 Planned |
+| 8 | AI | AI Personality | 📋 Planned |
+| 9 | Integration | All Pillars Together | 📋 Planned |
 
 ---
 
@@ -392,5 +384,5 @@ This plan validates that Archon-Engine can handle:
 ---
 
 *Planning Document Created: 2025-10-19*
-*Estimated Duration: 6-9 weeks (130-175 hours)*
 *Priority: ENGINE validation - complete the four pillars*
+*Note: Time estimates intentionally omitted - focus on implementation order and validation criteria*

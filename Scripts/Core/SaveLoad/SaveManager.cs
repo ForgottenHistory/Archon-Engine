@@ -375,6 +375,15 @@ namespace Core.SaveLoad
                 SaveCountrySystem(saveData);
             }
 
+            if (gameState.Units != null)
+            {
+                if (logSaveLoadOperations)
+                {
+                    ArchonLogger.Log("SaveManager: Saving UnitSystem...");
+                }
+                SaveUnitSystem(saveData);
+            }
+
             // Save GAME layer PlayerState (via callback to maintain layer separation)
             if (OnSerializePlayerState != null)
             {
@@ -468,6 +477,15 @@ namespace Core.SaveLoad
                     ArchonLogger.Log("SaveManager: Loading CountrySystem...");
                 }
                 LoadCountrySystem(saveData);
+            }
+
+            if (gameState.Units != null)
+            {
+                if (logSaveLoadOperations)
+                {
+                    ArchonLogger.Log("SaveManager: Loading UnitSystem...");
+                }
+                LoadUnitSystem(saveData);
             }
 
             // Load GAME layer PlayerState (via callback to maintain layer separation)
@@ -803,6 +821,48 @@ namespace Core.SaveLoad
 
                 // Delegate to CountrySystem.LoadState
                 countries.LoadState(reader);
+            }
+        }
+
+        /// <summary>
+        /// Save UnitSystem data to save file
+        /// Saves: unit hot data, sparse mappings (province→units, country→units), cold data
+        /// </summary>
+        private void SaveUnitSystem(SaveGameData saveData)
+        {
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
+            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
+            {
+                var units = gameState.Units;
+
+                // Delegate to UnitSystem.SaveState
+                units.SaveState(writer);
+
+                // Store in save data
+                saveData.SetSystemData("UnitSystem", stream.ToArray());
+            }
+        }
+
+        /// <summary>
+        /// Load UnitSystem data from save file
+        /// Restores all units, sparse mappings, and cold data
+        /// </summary>
+        private void LoadUnitSystem(SaveGameData saveData)
+        {
+            byte[] data = saveData.GetSystemData<byte[]>("UnitSystem");
+            if (data == null)
+            {
+                ArchonLogger.LogWarning("SaveManager: No UnitSystem data found in save file");
+                return;
+            }
+
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
+            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
+            {
+                var units = gameState.Units;
+
+                // Delegate to UnitSystem.LoadState
+                units.LoadState(reader);
             }
         }
 

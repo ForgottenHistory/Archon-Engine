@@ -6,6 +6,7 @@ using Core.Commands;
 using Core.Registries;
 using Core.Modifiers;
 using Core.Resources;
+using Core.Units;
 using System;
 using System.Collections.Generic;
 
@@ -32,6 +33,7 @@ namespace Core
         public TimeManager Time { get; private set; }
         public ModifierSystem Modifiers { get; private set; }
         public ResourceSystem Resources { get; private set; }
+        public UnitSystem Units { get; private set; }
 
         // Query Interfaces - These provide optimized data access
         public ProvinceQueries ProvinceQueries { get; private set; }
@@ -173,7 +175,10 @@ namespace Core
             // Note: Resource registration happens in Game layer initialization (GameSystemInitializer)
             Resources = new ResourceSystem();
 
-            // 5. Query interfaces
+            // 5. Unit system (Engine infrastructure for Game layer units)
+            Units = new UnitSystem(initialCapacity: 10000, eventBus: EventBus);
+
+            // 6. Query interfaces
             ProvinceQueries = new ProvinceQueries(Provinces, Countries);
             CountryQueries = new CountryQueries(Countries, Provinces);
 
@@ -262,6 +267,7 @@ namespace Core
                 Countries?.Dispose();
                 Modifiers?.Dispose();
                 Resources?.Shutdown();
+                Units?.Dispose();
                 EventBus?.Dispose();
 
                 Instance = null;

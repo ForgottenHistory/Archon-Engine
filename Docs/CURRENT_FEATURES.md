@@ -1,11 +1,11 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2025-10-18
-**Version:** 1.2 (Architecture Refactor Complete)
+**Last Updated:** 2025-10-19
+**Version:** 1.3 (Save/Load System Complete)
 
 This document lists all implemented features in the Archon Engine. Features are organized by category with brief descriptions.
 
-**Recent:** Completed 3-week architecture refactor (modifier system, GameSystem lifecycle, command abstraction, resource system foundation)
+**Recent:** Save/Load system complete (hybrid snapshot + command log, all core systems serialize/deserialize)
 
 ---
 
@@ -65,6 +65,23 @@ This document lists all implemented features in the Archon Engine. Features are 
 - **Resource Query API** - GetResource/AddResource/RemoveResource for any resource type
 - **Event System** - OnResourceChanged events for UI updates
 - **Unlimited Types** - Support for any number of resource types (gold, manpower, prestige, etc.)
+
+---
+
+## Save/Load System (NEW - 2025-10-19)
+
+- **SaveManager** - Orchestrates save/load across all systems with layer separation via callbacks
+- **SaveGameData** - Binary save file structure (header + metadata + system data dictionary)
+- **SerializationHelper** - Binary serialization utilities (FixedPoint64, NativeArray, strings)
+- **Hybrid Architecture** - Snapshot for speed + command log for verification (determinism validation)
+- **Atomic Writes** - Temp file → rename pattern prevents corruption on crash
+- **Hot Data Serialization** - All core systems implement SaveState/LoadState
+- **Double Buffer Sync** - GameStateSnapshot.SyncBuffersAfterLoad() prevents stale UI reads
+- **Post-Load Finalization** - SaveLoadGameCoordinator rebuilds derived data (MAP textures, economy cache)
+- **GameLoadedEvent** - Event broadcast after load for UI refresh
+- **Quicksave/Quickload** - F6/F7 hotkeys for rapid save/load iteration
+- **Systems Supported** - TimeManager, ResourceSystem, ProvinceSystem, ModifierSystem, CountrySystem
+- **PlayerState Serialization** - 2-byte country selection persists across save/load
 
 ---
 
@@ -319,7 +336,6 @@ This document lists all implemented features in the Archon Engine. Features are 
 - AI System
 - Multiplayer Networking
 - Modding System
-- Save/Load System
 - Error Recovery System
 - Localization System
 
@@ -375,17 +391,20 @@ This document lists all implemented features in the Archon Engine. Features are 
 - ✅ performance-architecture-guide.md - Optimization patterns (updated: Principle 4 - Pre-allocation)
 - ✅ engine-game-separation.md - Layer separation
 - ✅ sparse-data-structures-design.md - Sparse collections architecture (503 lines, prevents HOI4's 16x disaster)
+- ✅ save-load-architecture.md - Hybrid snapshot + command log, serialization patterns, layer separation
 
 **Planning Docs (Planning/):**
+- ✅ save-load-hybrid-architecture.md - SUPERSEDED by save-load-architecture.md (implemented)
+- ✅ core-pillars-implementation.md - Military/Diplomacy/AI roadmap
 - ❌ ai-design.md - Not implemented
 - ❌ multiplayer-design.md - Not implemented
 - ❌ modding-design.md - Not implemented
-- ❌ save-load-design.md - Not implemented
 - ❌ error-recovery-design.md - Not implemented
 
 **Session Logs (Log/2025-10/):**
 - ✅ 15/ - Paradox infrastructure (load balancing, double-buffer, sparse data)
 - ✅ 18/ - Architecture refactor (modifier system, GameSystem lifecycle, command abstraction, resource system, performance optimization)
+- ✅ 19/ - Save/Load system (hybrid snapshot, post-finalization, UI refresh events)
 
 **File Registries:**
 - ✅ Scripts/Core/FILE_REGISTRY.md - Updated with sparse data files
