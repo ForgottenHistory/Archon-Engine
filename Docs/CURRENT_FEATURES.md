@@ -1,11 +1,11 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2025-10-15
-**Version:** 1.1 (Paradox Infrastructure Complete)
+**Last Updated:** 2025-10-18
+**Version:** 1.2 (Architecture Refactor Complete)
 
 This document lists all implemented features in the Archon Engine. Features are organized by category with brief descriptions.
 
-**Recent:** Completed all 4 Paradox infrastructure priorities (load balancing, zero-blocking UI, pre-allocation policy, sparse data structures)
+**Recent:** Completed 3-week architecture refactor (modifier system, GameSystem lifecycle, command abstraction, resource system foundation)
 
 ---
 
@@ -21,6 +21,50 @@ This document lists all implemented features in the Archon Engine. Features are 
 - **NativeArray Storage** - Contiguous memory layout for optimal cache performance
 - **Deterministic Simulation** - Identical results across platforms for multiplayer compatibility
 - **Engine-Game Separation** - ProvinceState = ENGINE (8 bytes), game-specific data in GAME layer slot
+
+---
+
+## Modifier System (NEW - 2025-10-18)
+
+- **ModifierValue** - Single modifier with base/additive/multiplicative bonuses
+- **ModifierSet** - Fixed-size array of 512 modifier types (4KB, zero allocations)
+- **ModifierSource** - Tracks modifier origin for tooltips and removal
+- **ActiveModifierList** - Maintains active modifiers with expiration support
+- **ScopedModifierContainer** - Province/Country/Global scope hierarchy
+- **ModifierSystem** - Central manager with scope inheritance (Province ← Country ← Global)
+- **Formula** - (base + additive) × (1 + multiplicative)
+- **Performance** - <0.1ms lookup, <20MB for 10k provinces, zero allocations
+
+---
+
+## GameSystem Lifecycle (NEW - 2025-10-18)
+
+- **GameSystem Base Class** - Abstract base for all game systems with standard lifecycle
+- **SystemRegistry** - Manages registration and initialization order
+- **Topological Sort** - Automatic dependency ordering via reflection
+- **Property Injection** - Dependencies injected via properties (MonoBehaviour compatible)
+- **Lifecycle Hooks** - Initialize/Shutdown/OnSaveGame/OnLoadGame
+- **Circular Dependency Detection** - Fail-fast validation at startup
+
+---
+
+## Command System Enhancements (NEW - 2025-10-18)
+
+- **CommandRegistry** - Reflection-based command auto-discovery
+- **CommandMetadataAttribute** - Declarative command metadata (name, aliases, description, usage)
+- **ICommandFactory** - Interface for argument parsing and command creation
+- **Auto-Registration** - Commands auto-discover via reflection, zero manual registration
+- **Self-Documenting** - Metadata generates help text automatically
+
+---
+
+## Resource System Foundation (NEW - 2025-10-18)
+
+- **ResourceSystem** - Generic multi-resource storage (Dictionary<ushort, FixedPoint64[]>)
+- **ResourceDefinition** - Data structure for resource properties
+- **Resource Query API** - GetResource/AddResource/RemoveResource for any resource type
+- **Event System** - OnResourceChanged events for UI updates
+- **Unlimited Types** - Support for any number of resource types (gold, manpower, prestige, etc.)
 
 ---
 
@@ -69,10 +113,12 @@ This document lists all implemented features in the Archon Engine. Features are 
 
 - **Political Map Mode** - Country ownership visualization with color palette
 - **Terrain Map Mode** - Terrain type visualization from terrain.bmp
-- **Development Map Mode** - Province development as configurable 5-tier gradient
 - **Debug Map Modes** - Heightmap and normal map debug visualization
 - **Map Mode Interface** - Extensible IMapModeHandler for custom modes
 - **Map Mode Manager** - Runtime switching between visualization modes
+- **GradientMapMode Base Class (NEW - 2025-10-18)** - Reusable gradient engine for numeric province data
+- **ColorGradient (NEW - 2025-10-18)** - Configurable color interpolation (red-to-yellow, etc.)
+- **Dirty Flag Optimization (NEW - 2025-10-18)** - Skip texture updates when data unchanged
 
 ---
 
@@ -281,14 +327,13 @@ This document lists all implemented features in the Archon Engine. Features are 
 
 ## Quick Stats
 
-- **Engine Code:** ~29,000 lines (Core + Map layers, +1000 from sparse infrastructure)
-- **Documentation:** ~7,500 lines (12 engine docs + 4 session logs + 5 planning docs)
-- **Systems:** 72 Core scripts (+3 sparse data files), 51 Map scripts
-- **Refactoring Reduction:** -1,470 lines through focused component extraction
-- **Max File Size:** All files under 500 lines (except sparse-data-structures-design.md: 503 lines)
-- **Provinces Tested:** 10,000 provinces tested with load balancing
-- **Performance:** 200+ FPS achieved, 24.9% improvement with LoadBalancedScheduler
-- **Infrastructure:** All 4 Paradox priorities complete (load balancing, zero-blocking UI, pre-allocation, sparse data)
+- **Engine Code:** ~29,000 lines (Core + Map layers)
+- **Documentation:** 12 engine docs + session logs
+- **Systems:** 75+ Core scripts, 51 Map scripts
+- **Max File Size:** All files under 500 lines
+- **Provinces Tested:** 10,000 provinces with load balancing
+- **Performance:** 200+ FPS achieved
+- **Architecture:** Modifier system, GameSystem lifecycle, command auto-registration, resource foundation complete
 
 ---
 
@@ -338,11 +383,9 @@ This document lists all implemented features in the Archon Engine. Features are 
 - ❌ save-load-design.md - Not implemented
 - ❌ error-recovery-design.md - Not implemented
 
-**Session Logs (Log/2025-10/15/):**
-- ✅ 1-engine-infrastructure-priorities-from-paradox-analysis.md - Identified 4 critical priorities
-- ✅ 2-load-balancing-implementation.md - LoadBalancedScheduler (24.9% improvement)
-- ✅ 3-double-buffer-pattern-integration.md - GameStateSnapshot (zero-blocking UI)
-- ✅ 4-pre-allocation-and-sparse-data-infrastructure.md - Principle 4 + sparse collections
+**Session Logs (Log/2025-10/):**
+- ✅ 15/ - Paradox infrastructure (load balancing, double-buffer, sparse data)
+- ✅ 18/ - Architecture refactor (modifier system, GameSystem lifecycle, command abstraction, resource system, performance optimization)
 
 **File Registries:**
 - ✅ Scripts/Core/FILE_REGISTRY.md - Updated with sparse data files
