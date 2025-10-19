@@ -38,7 +38,6 @@ namespace Map.Core
         private ProvinceHighlighter provinceHighlighter;
         private MapTexturePopulator texturePopulator;
         private TextureUpdateBridge textureUpdateBridge;
-        private ParadoxStyleCameraController cameraController;
         private FogOfWarSystem fogOfWarSystem;
 
         // Public accessors for initialized components
@@ -55,7 +54,6 @@ namespace Map.Core
         public TextureUpdateBridge TextureUpdateBridge => textureUpdateBridge;
         public Camera MapCamera => mapCamera;
         public MeshRenderer MeshRenderer => meshRenderer;
-        public ParadoxStyleCameraController CameraController => cameraController;
         public FogOfWarSystem FogOfWarSystem => fogOfWarSystem;
 
         // Initialization state
@@ -254,7 +252,6 @@ namespace Map.Core
 
             // Phase 4: Camera setup (15-20%)
             InitializeCamera();
-            InitializeCameraController();
             ReportProgress(20f, "Components initialized");
 
             // Debug UI moved to Game layer (Game.DebugTools.MapModeDebugPanel)
@@ -471,36 +468,9 @@ namespace Map.Core
             }
         }
 
-        private void InitializeCameraController()
-        {
-            // First check on this GameObject
-            cameraController = GetComponent<ParadoxStyleCameraController>();
-
-            // If not found, search the scene
-            if (cameraController == null)
-            {
-                cameraController = FindFirstObjectByType<ParadoxStyleCameraController>();
-            }
-
-            if (cameraController != null)
-            {
-                // Set up camera controller references
-                cameraController.mapCamera = mapCamera;
-                cameraController.mapPlane = meshRenderer?.gameObject;
-
-                // Initialize the camera controller
-                cameraController.Initialize();
-
-                if (logInitializationProgress)
-                {
-                    ArchonLogger.LogMapInit($"MapInitializer: Initialized ParadoxStyleCameraController on {cameraController.gameObject.name}");
-                }
-            }
-            else if (logInitializationProgress)
-            {
-                ArchonLogger.LogMapInit("MapInitializer: No ParadoxStyleCameraController found in scene - camera control disabled");
-            }
-        }
+        // NOTE: Camera controller initialization moved to GAME layer
+        // ENGINE layer cannot reference GAME layer (architecture rule)
+        // Camera controls are GAME policy - different games have different camera styles
 
         private void InitializeTextureUpdateBridge()
         {

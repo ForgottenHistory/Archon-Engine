@@ -109,10 +109,6 @@
 - **Status:** ✅ Texture-based selection
 - **Note:** 1000x faster than physics raycasting
 
-### **ParadoxStyleCameraController.cs**
-- **Purpose:** Grand strategy camera controls (pan, zoom, edge scrolling)
-- **Status:** ✅ Camera control
-
 ---
 
 ## Map/MapModes/ - Visual Display Modes
