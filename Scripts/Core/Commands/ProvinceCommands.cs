@@ -64,6 +64,18 @@ namespace Core.Commands
             // Restore previous ownership
             gameState.Provinces.SetProvinceOwner(ProvinceId, oldOwner);
         }
+
+        public override void Serialize(System.IO.BinaryWriter writer)
+        {
+            writer.Write(ProvinceId);
+            writer.Write(NewOwner);
+        }
+
+        public override void Deserialize(System.IO.BinaryReader reader)
+        {
+            ProvinceId = reader.ReadUInt16();
+            NewOwner = reader.ReadUInt16();
+        }
     }
 
     // REMOVED: ChangeProvinceDevelopmentCommand - game-specific, moved to Game/Commands/
@@ -134,6 +146,31 @@ namespace Core.Commands
             for (int i = 0; i < ProvinceIds.Length; i++)
             {
                 gameState.Provinces.SetProvinceOwner(ProvinceIds[i], oldOwners[i]);
+            }
+        }
+
+        public override void Serialize(System.IO.BinaryWriter writer)
+        {
+            writer.Write(NewOwner);
+
+            // Write province IDs array
+            writer.Write(ProvinceIds.Length);
+            for (int i = 0; i < ProvinceIds.Length; i++)
+            {
+                writer.Write(ProvinceIds[i]);
+            }
+        }
+
+        public override void Deserialize(System.IO.BinaryReader reader)
+        {
+            NewOwner = reader.ReadUInt16();
+
+            // Read province IDs array
+            int count = reader.ReadInt32();
+            ProvinceIds = new ushort[count];
+            for (int i = 0; i < count; i++)
+            {
+                ProvinceIds[i] = reader.ReadUInt16();
             }
         }
     }

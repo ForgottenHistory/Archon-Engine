@@ -151,9 +151,8 @@ namespace Core.Systems
         /// <summary>
         /// Save system state to save data
         /// Override to serialize system state for save/load
-        /// NOTE: Save/load system not implemented yet - placeholder for future
         /// </summary>
-        protected virtual void OnSave(object saveData)
+        protected virtual void OnSave(Core.SaveLoad.SaveGameData saveData)
         {
             // Default: no save logic
         }
@@ -161,9 +160,8 @@ namespace Core.Systems
         /// <summary>
         /// Load system state from save data
         /// Override to deserialize system state for save/load
-        /// NOTE: Save/load system not implemented yet - placeholder for future
         /// </summary>
-        protected virtual void OnLoad(object saveData)
+        protected virtual void OnLoad(Core.SaveLoad.SaveGameData saveData)
         {
             // Default: no load logic
         }

@@ -378,6 +378,36 @@ namespace Core.Systems
             return totalHours;
         }
 
+        // ====================================================================
+        // SAVE/LOAD SUPPORT
+        // ====================================================================
+
+        /// <summary>
+        /// Get current accumulator value for save/load
+        /// </summary>
+        public FixedPoint64 GetAccumulator()
+        {
+            return accumulator;
+        }
+
+        /// <summary>
+        /// Load complete TimeManager state from save file
+        /// Restores all internal state without triggering events
+        /// </summary>
+        public void LoadState(ulong tick, int newYear, int newMonth, int newDay, int newHour, int speedLevel, bool paused, FixedPoint64 newAccumulator)
+        {
+            currentTick = tick;
+            year = newYear;
+            month = newMonth;
+            day = newDay;
+            hour = newHour;
+            gameSpeedLevel = speedLevel;
+            isPaused = paused;
+            accumulator = newAccumulator;
+
+            ArchonLogger.Log($"TimeManager state loaded: {GetCurrentGameTime()}, Tick: {currentTick}, Speed: {gameSpeedLevel}, Paused: {isPaused}");
+        }
+
         // Old OnGUI debug UI removed - replaced by Game.DebugTools.TimeDebugPanel (UI Toolkit)
         // See: Assets/Game/Debug/TimeDebugPanel.cs
     }

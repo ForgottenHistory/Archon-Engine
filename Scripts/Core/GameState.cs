@@ -130,6 +130,21 @@ namespace Core
         }
 
         /// <summary>
+        /// Get all registered Game layer systems (for save/load)
+        /// Returns only systems that inherit from GameSystem
+        /// </summary>
+        public IEnumerable<Core.Systems.GameSystem> GetAllRegisteredGameSystems()
+        {
+            foreach (var kvp in registeredGameSystems)
+            {
+                if (kvp.Value is Core.Systems.GameSystem gameSystem)
+                {
+                    yield return gameSystem;
+                }
+            }
+        }
+
+        /// <summary>
         /// Initialize all core systems in correct dependency order
         /// </summary>
         public void InitializeSystems()

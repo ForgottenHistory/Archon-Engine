@@ -35,6 +35,22 @@ namespace Core.Commands
         void Undo(GameState gameState);
 
         /// <summary>
+        /// Serialize command data to binary writer
+        /// Used for save/load and command logging
+        /// Must be deterministic - same command = same bytes
+        /// </summary>
+        /// <param name="writer">Binary writer to serialize to</param>
+        void Serialize(System.IO.BinaryWriter writer);
+
+        /// <summary>
+        /// Deserialize command data from binary reader
+        /// Used for save/load and command replay
+        /// Must reconstruct identical command state
+        /// </summary>
+        /// <param name="reader">Binary reader to deserialize from</param>
+        void Deserialize(System.IO.BinaryReader reader);
+
+        /// <summary>
         /// Get command priority for execution ordering
         /// Higher priority commands execute first
         /// </summary>
@@ -58,6 +74,8 @@ namespace Core.Commands
         public abstract bool Validate(GameState gameState);
         public abstract void Execute(GameState gameState);
         public abstract void Undo(GameState gameState);
+        public abstract void Serialize(System.IO.BinaryWriter writer);
+        public abstract void Deserialize(System.IO.BinaryReader reader);
 
         /// <summary>
         /// Utility for common validation checks
