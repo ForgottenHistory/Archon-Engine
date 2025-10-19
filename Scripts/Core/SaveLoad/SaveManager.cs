@@ -20,6 +20,7 @@ namespace Core.SaveLoad
     /// - Pure orchestrator, doesn't own game state
     /// - Systems serialize their own data via OnSave/OnLoad
     /// - Dependency order handled by SystemRegistry
+    /// - GAME layer hooks OnPostLoadFinalize for game-specific finalization
     ///
     /// Usage:
     /// saveManager.SaveGame("my_save");
@@ -40,6 +41,14 @@ namespace Core.SaveLoad
 
         // GameState reference (accessed via singleton)
         private GameState gameState => GameState.Instance;
+
+        // GAME layer finalization callback (architecture compliance: ENGINE doesn't call GAME code)
+        // GAME layer sets this to rebuild caches, etc.
+        public System.Action OnPostLoadFinalize;
+
+        // GAME layer PlayerState serialization (ENGINE stores as opaque byte[], GAME interprets)
+        public System.Func<byte[]> OnSerializePlayerState;
+        public System.Action<byte[]> OnDeserializePlayerState;
 
         void Awake()
         {
@@ -133,6 +142,45 @@ namespace Core.SaveLoad
         }
 
         /// <summary>
+        /// Post-load finalization - sync ENGINE double buffers, delegate rest to callbacks
+        /// GAME/MAP layer finalization handled via OnPostLoadFinalize callback
+        /// </summary>
+        private void FinalizeAfterLoad()
+        {
+            if (logSaveLoadOperations)
+            {
+                ArchonLogger.Log("SaveManager: Finalizing after load...");
+            }
+
+            // Step 1: Sync double buffers (ENGINE layer only - safe)
+            SyncDoubleBuffers();
+
+            // Step 2: Let GAME layer handle MAP refresh + GAME finalization via callback
+            // (GAME can import MAP, so no architecture violation)
+            OnPostLoadFinalize?.Invoke();
+
+            if (logSaveLoadOperations)
+            {
+                ArchonLogger.Log("SaveManager: ✓ Post-load finalization complete");
+            }
+        }
+
+        /// <summary>
+        /// Sync double buffers after load to prevent UI reading stale data
+        /// </summary>
+        private void SyncDoubleBuffers()
+        {
+            if (gameState.Provinces != null)
+            {
+                gameState.Provinces.SyncBuffersAfterLoad();
+                if (logSaveLoadOperations)
+                {
+                    ArchonLogger.Log("SaveManager: ✓ Province buffers synced");
+                }
+            }
+        }
+
+        /// <summary>
         /// Load game from file
         /// </summary>
         public bool LoadGame(string saveName)
@@ -175,6 +223,9 @@ namespace Core.SaveLoad
 
                 // Call OnLoad for all systems (dependency order)
                 CallOnLoadForAllSystems(saveData);
+
+                // CRITICAL: Finalize after load - rebuild caches and refresh GPU textures
+                FinalizeAfterLoad();
 
                 if (logSaveLoadOperations)
                 {
@@ -297,7 +348,30 @@ namespace Core.SaveLoad
                 SaveResourceSystem(saveData);
             }
 
-            // TODO: Save other core systems (ModifierSystem, ProvinceSystem, CountrySystem)
+            if (gameState.Provinces != null)
+            {
+                if (logSaveLoadOperations)
+                {
+                    ArchonLogger.Log("SaveManager: Saving ProvinceSystem...");
+                }
+                SaveProvinceSystem(saveData);
+            }
+
+            // Save GAME layer PlayerState (via callback to maintain layer separation)
+            if (OnSerializePlayerState != null)
+            {
+                byte[] playerStateData = OnSerializePlayerState();
+                if (playerStateData != null)
+                {
+                    saveData.SetSystemData("PlayerState", playerStateData);
+                    if (logSaveLoadOperations)
+                    {
+                        ArchonLogger.Log("SaveManager: Saved PlayerState");
+                    }
+                }
+            }
+
+            // TODO: Save other core systems (ModifierSystem, CountrySystem)
 
             // Save GAME layer GameSystems by calling their OnSave methods via reflection
             foreach (var gameSystem in gameState.GetAllRegisteredGameSystems())
@@ -352,7 +426,30 @@ namespace Core.SaveLoad
                 LoadResourceSystem(saveData);
             }
 
-            // TODO: Load other core systems (ModifierSystem, ProvinceSystem, CountrySystem)
+            if (gameState.Provinces != null)
+            {
+                if (logSaveLoadOperations)
+                {
+                    ArchonLogger.Log("SaveManager: Loading ProvinceSystem...");
+                }
+                LoadProvinceSystem(saveData);
+            }
+
+            // Load GAME layer PlayerState (via callback to maintain layer separation)
+            if (OnDeserializePlayerState != null)
+            {
+                byte[] playerStateData = saveData.GetSystemData<byte[]>("PlayerState");
+                if (playerStateData != null)
+                {
+                    OnDeserializePlayerState(playerStateData);
+                    if (logSaveLoadOperations)
+                    {
+                        ArchonLogger.Log("SaveManager: Loaded PlayerState");
+                    }
+                }
+            }
+
+            // TODO: Load other core systems (ModifierSystem, CountrySystem)
 
             // Load GAME layer GameSystems by calling their OnLoad methods via reflection
             foreach (var gameSystem in gameState.GetAllRegisteredGameSystems())
@@ -544,6 +641,49 @@ namespace Core.SaveLoad
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Save ProvinceSystem data to save file
+        /// Saves: capacity, province states (8 bytes each), id mappings, active province list
+        /// Uses raw memory copy for ProvinceState array (blittable struct)
+        /// </summary>
+        private void SaveProvinceSystem(SaveGameData saveData)
+        {
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
+            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
+            {
+                var provinces = gameState.Provinces;
+
+                // Delegate to ProvinceSystem.SaveState
+                provinces.SaveState(writer);
+
+                // Store in save data
+                saveData.SetSystemData("ProvinceSystem", stream.ToArray());
+            }
+        }
+
+        /// <summary>
+        /// Load ProvinceSystem data from save file
+        /// Restores province states, mappings, and syncs double buffers
+        /// </summary>
+        private void LoadProvinceSystem(SaveGameData saveData)
+        {
+            byte[] data = saveData.GetSystemData<byte[]>("ProvinceSystem");
+            if (data == null)
+            {
+                ArchonLogger.LogWarning("SaveManager: No ProvinceSystem data found in save file");
+                return;
+            }
+
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
+            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
+            {
+                var provinces = gameState.Provinces;
+
+                // Delegate to ProvinceSystem.LoadState
+                provinces.LoadState(reader);
             }
         }
 

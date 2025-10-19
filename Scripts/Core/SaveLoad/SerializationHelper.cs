@@ -135,6 +135,50 @@ namespace Core.SaveLoad
             return array;
         }
 
+        /// <summary>
+        /// Deserialize NativeArray from raw bytes into existing array (in-place)
+        /// Does NOT allocate - reads into provided array
+        /// Useful for restoring double-buffered arrays without reallocation
+        /// </summary>
+        public static unsafe void ReadNativeArray<T>(BinaryReader reader, NativeArray<T> destinationArray) where T : struct
+        {
+            // Read length
+            int length = reader.ReadInt32();
+
+            if (length == 0)
+                return;
+
+            // Verify destination array is large enough
+            if (length > destinationArray.Length)
+            {
+                throw new System.InvalidOperationException(
+                    $"Cannot read {length} elements into NativeArray with capacity {destinationArray.Length}");
+            }
+
+            // Calculate byte size
+            int elementSize = UnsafeUtility.SizeOf<T>();
+            int totalBytes = length * elementSize;
+
+            // Read raw bytes
+            byte[] bytes = reader.ReadBytes(totalBytes);
+
+            // Copy to existing native array
+            void* ptr = destinationArray.GetUnsafePtr();
+            fixed (byte* src = bytes)
+            {
+                UnsafeUtility.MemCpy(ptr, src, totalBytes);
+            }
+
+            // If array is larger than saved data, zero out the rest
+            if (length < destinationArray.Length)
+            {
+                int remainingElements = destinationArray.Length - length;
+                int remainingBytes = remainingElements * elementSize;
+                byte* clearPtr = (byte*)ptr + totalBytes;
+                UnsafeUtility.MemClear(clearPtr, remainingBytes);
+            }
+        }
+
         // ====================================================================
         // SPARSE DATA SERIALIZATION (SKIP EMPTY ENTRIES)
         // ====================================================================

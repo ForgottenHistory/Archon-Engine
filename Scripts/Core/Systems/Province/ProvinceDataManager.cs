@@ -77,6 +77,15 @@ namespace Core.Systems.Province
             activeProvinceIds.Clear();
         }
 
+        /// <summary>
+        /// Restore province count after loading from save (Clear() sets it to 0)
+        /// CRITICAL for GetAllProvinceIds() to work after load
+        /// </summary>
+        public void RestoreProvinceCount(int count)
+        {
+            provinceCount = count;
+        }
+
         #region Hot Data Access
 
         /// <summary>

@@ -221,6 +221,111 @@ namespace Core.Systems
             snapshot.SyncBuffersAfterLoad();
         }
 
+        // ====================================================================
+        // SAVE/LOAD SUPPORT
+        // ====================================================================
+
+        /// <summary>
+        /// Save ProvinceSystem state to binary writer
+        /// Serializes: capacity, province states, id mappings
+        /// </summary>
+        public void SaveState(System.IO.BinaryWriter writer)
+        {
+            if (!isInitialized)
+            {
+                ArchonLogger.LogError("ProvinceSystem: Cannot save state - not initialized");
+                return;
+            }
+
+            // Write capacity
+            writer.Write(snapshot.Capacity);
+
+            // Write province count
+            writer.Write(ProvinceCount);
+
+            // Write province states from write buffer (authoritative state)
+            var writeBuffer = snapshot.GetProvinceWriteBuffer();
+            Core.SaveLoad.SerializationHelper.WriteNativeArray(writer, writeBuffer);
+
+            // Write idToIndex mapping
+            writer.Write(idToIndex.Count);
+            foreach (var kvp in idToIndex)
+            {
+                writer.Write(kvp.Key);   // provinceId (ushort)
+                writer.Write(kvp.Value); // index (int)
+            }
+
+            // Write activeProvinceIds list
+            writer.Write(activeProvinceIds.Length);
+            for (int i = 0; i < activeProvinceIds.Length; i++)
+            {
+                writer.Write(activeProvinceIds[i]);
+            }
+
+            ArchonLogger.Log($"ProvinceSystem: Saved {ProvinceCount} provinces ({snapshot.Capacity} capacity)");
+        }
+
+        /// <summary>
+        /// Load ProvinceSystem state from binary reader
+        /// Restores: capacity, province states, id mappings
+        /// Note: Must be called AFTER Initialize() but BEFORE any province operations
+        /// </summary>
+        public void LoadState(System.IO.BinaryReader reader)
+        {
+            if (!isInitialized)
+            {
+                ArchonLogger.LogError("ProvinceSystem: Cannot load state - not initialized");
+                return;
+            }
+
+            // Read capacity
+            int savedCapacity = reader.ReadInt32();
+
+            // Verify capacity matches (should match since we initialized with same capacity)
+            if (savedCapacity != snapshot.Capacity)
+            {
+                ArchonLogger.LogWarning($"ProvinceSystem: Capacity mismatch (saved: {savedCapacity}, current: {snapshot.Capacity})");
+            }
+
+            // Read province count
+            int savedProvinceCount = reader.ReadInt32();
+
+            // Clear existing data
+            dataManager.Clear();
+            idToIndex.Clear();
+            activeProvinceIds.Clear();
+
+            // Read province states into write buffer
+            var writeBuffer = snapshot.GetProvinceWriteBuffer();
+            Core.SaveLoad.SerializationHelper.ReadNativeArray(reader, writeBuffer);
+
+            // Read idToIndex mapping
+            int mappingCount = reader.ReadInt32();
+            for (int i = 0; i < mappingCount; i++)
+            {
+                ushort provinceId = reader.ReadUInt16();
+                int index = reader.ReadInt32();
+                idToIndex.TryAdd(provinceId, index);
+            }
+
+            // Read activeProvinceIds list
+            int activeCount = reader.ReadInt32();
+            for (int i = 0; i < activeCount; i++)
+            {
+                ushort provinceId = reader.ReadUInt16();
+                activeProvinceIds.Add(provinceId);
+            }
+
+            // CRITICAL: Restore provinceCount (dataManager.Clear() set it to 0)
+            // This must match activeProvinceIds.Length for GetAllProvinceIds() to work
+            dataManager.RestoreProvinceCount(activeCount);
+
+            // Sync both buffers so UI doesn't read stale data on first tick
+            snapshot.SyncBuffersAfterLoad();
+
+            ArchonLogger.Log($"ProvinceSystem: Loaded {savedProvinceCount} provinces (capacity: {savedCapacity})");
+        }
+
         public void Dispose()
         {
             snapshot?.Dispose();
