@@ -39,6 +39,7 @@ namespace Map.Rendering
         public Texture2D ProvinceColorPalette => paletteManager?.ProvinceColorPalette;
         public RenderTexture BorderTexture => dynamicTextures?.BorderTexture;
         public RenderTexture HighlightTexture => dynamicTextures?.HighlightTexture;
+        public RenderTexture FogOfWarTexture => dynamicTextures?.FogOfWarTexture;
 
         void Awake()
         {

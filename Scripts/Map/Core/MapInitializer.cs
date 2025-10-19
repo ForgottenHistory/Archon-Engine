@@ -39,6 +39,7 @@ namespace Map.Core
         private MapTexturePopulator texturePopulator;
         private TextureUpdateBridge textureUpdateBridge;
         private ParadoxStyleCameraController cameraController;
+        private FogOfWarSystem fogOfWarSystem;
 
         // Public accessors for initialized components
         public MapTextureManager TextureManager => textureManager;
@@ -55,6 +56,7 @@ namespace Map.Core
         public Camera MapCamera => mapCamera;
         public MeshRenderer MeshRenderer => meshRenderer;
         public ParadoxStyleCameraController CameraController => cameraController;
+        public FogOfWarSystem FogOfWarSystem => fogOfWarSystem;
 
         // Initialization state
         private bool isInitialized = false;
@@ -245,6 +247,7 @@ namespace Map.Core
             InitializeRenderingCoordinator();
             InitializeProvinceSelector();
             InitializeProvinceHighlighter();
+            InitializeFogOfWarSystem();
             InitializeTexturePopulator();
             InitializeTextureUpdateBridge();
             ReportProgress(15f, "High-level components initialized");
@@ -405,6 +408,32 @@ namespace Map.Core
             if (provinceHighlighter != null && textureManager != null)
             {
                 provinceHighlighter.Initialize(textureManager);
+            }
+        }
+
+        private void InitializeFogOfWarSystem()
+        {
+            fogOfWarSystem = GetComponent<FogOfWarSystem>();
+            if (fogOfWarSystem == null)
+            {
+                fogOfWarSystem = gameObject.AddComponent<FogOfWarSystem>();
+                if (logInitializationProgress)
+                {
+                    ArchonLogger.LogMapInit("MapInitializer: Created FogOfWarSystem component");
+                }
+            }
+
+            // Initialize with ProvinceQueries and province count from GameState
+            var gameState = FindFirstObjectByType<GameState>();
+            if (fogOfWarSystem != null && textureManager != null && gameState != null)
+            {
+                int provinceCount = gameState.Provinces.Capacity;
+                fogOfWarSystem.Initialize(gameState.ProvinceQueries, provinceCount);
+
+                if (logInitializationProgress)
+                {
+                    ArchonLogger.LogMapInit($"MapInitializer: Initialized FogOfWarSystem for {provinceCount} provinces");
+                }
             }
         }
 

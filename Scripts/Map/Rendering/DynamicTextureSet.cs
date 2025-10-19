@@ -5,7 +5,7 @@ namespace Map.Rendering
 {
     /// <summary>
     /// Manages runtime-generated dynamic textures
-    /// Border and Highlight RenderTextures for effects
+    /// Border, Highlight, and Fog of War RenderTextures for effects
     /// Extracted from MapTextureManager for single responsibility
     /// </summary>
     public class DynamicTextureSet
@@ -17,13 +17,16 @@ namespace Map.Rendering
         // Dynamic render textures
         private RenderTexture borderTexture;
         private RenderTexture highlightTexture;
+        private RenderTexture fogOfWarTexture;
 
         // Shader property IDs
         private static readonly int BorderTexID = Shader.PropertyToID("_BorderTexture");
         private static readonly int HighlightTexID = Shader.PropertyToID("_HighlightTexture");
+        private static readonly int FogOfWarTexID = Shader.PropertyToID("_FogOfWarTexture");
 
         public RenderTexture BorderTexture => borderTexture;
         public RenderTexture HighlightTexture => highlightTexture;
+        public RenderTexture FogOfWarTexture => fogOfWarTexture;
 
         public DynamicTextureSet(int width, int height, bool logCreation = true)
         {
@@ -39,6 +42,7 @@ namespace Map.Rendering
         {
             CreateBorderTexture();
             CreateHighlightTexture();
+            CreateFogOfWarTexture();
         }
 
         /// <summary>
@@ -101,6 +105,36 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Create fog of war render texture in R8_UNorm format
+        /// Single channel: 0.0 = unexplored, 0.5 = explored, 1.0 = visible
+        /// Uses explicit GraphicsFormat.R8_UNorm to prevent TYPELESS format
+        /// </summary>
+        private void CreateFogOfWarTexture()
+        {
+            var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight,
+                UnityEngine.Experimental.Rendering.GraphicsFormat.R8_UNorm, 0);
+            descriptor.enableRandomWrite = true;
+            descriptor.useMipMap = false;
+            descriptor.autoGenerateMips = false;
+
+            fogOfWarTexture = new RenderTexture(descriptor);
+            fogOfWarTexture.name = "FogOfWar_RenderTexture";
+            fogOfWarTexture.filterMode = FilterMode.Point;
+            fogOfWarTexture.wrapMode = TextureWrapMode.Clamp;
+            fogOfWarTexture.Create();
+
+            // Clear to black (unexplored)
+            RenderTexture.active = fogOfWarTexture;
+            GL.Clear(true, true, Color.black);
+            RenderTexture.active = null;
+
+            if (logCreation)
+            {
+                ArchonLogger.LogMapInit($"DynamicTextureSet: Created FogOfWar RenderTexture {mapWidth}x{mapHeight} R8_UNorm");
+            }
+        }
+
+        /// <summary>
         /// Bind dynamic textures to material
         /// </summary>
         public void BindToMaterial(Material material)
@@ -109,6 +143,7 @@ namespace Map.Rendering
 
             material.SetTexture(BorderTexID, borderTexture);
             material.SetTexture(HighlightTexID, highlightTexture);
+            material.SetTexture(FogOfWarTexID, fogOfWarTexture);
 
             if (logCreation)
             {
@@ -137,6 +172,7 @@ namespace Map.Rendering
         {
             if (borderTexture != null) borderTexture.Release();
             if (highlightTexture != null) highlightTexture.Release();
+            if (fogOfWarTexture != null) fogOfWarTexture.Release();
         }
     }
 }
