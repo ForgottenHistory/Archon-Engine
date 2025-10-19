@@ -31,6 +31,7 @@
 | **Data Loading** | ✅ Implemented | [data-loading-architecture](data-loading-architecture.md) |
 | **Time System** | ✅ Implemented | [time-system-architecture](time-system-architecture.md) |
 | **Performance** | ⚠️ Partial | [performance-architecture-guide](performance-architecture-guide.md) |
+| **Save/Load** | ✅ Implemented | [save-load-architecture](save-load-architecture.md) |
 
 ### Future Systems (Planning/)
 
@@ -39,7 +40,6 @@
 | **AI System** | ❌ Not Implemented | [../Planning/ai-design](../Planning/ai-design.md) |
 | **Multiplayer** | ❌ Not Implemented | [../Planning/multiplayer-design](../Planning/multiplayer-design.md) |
 | **Modding** | ❌ Not Implemented | [../Planning/modding-design](../Planning/modding-design.md) |
-| **Save/Load** | ❌ Not Implemented | [../Planning/save-load-design](../Planning/save-load-design.md) |
 | **Error Recovery** | ❌ Not Implemented | [../Planning/error-recovery-design](../Planning/error-recovery-design.md) |
 
 **Legend:** ✅ Implemented | ⚠️ Partial/Unknown | ❌ Not Implemented
@@ -124,7 +124,7 @@ Every state change is a command with:
 
 **Benefits:** Save/load for free, multiplayer sync, undo/replay
 
-**See:** [data-flow-architecture.md](data-flow-architecture.md), [save-load-design.md](../Planning/save-load-design.md) *(Planning - not implemented)*
+**See:** [data-flow-architecture.md](data-flow-architecture.md), [save-load-architecture.md](save-load-architecture.md)
 
 ### Time System
 Layered update frequencies:
@@ -210,6 +210,7 @@ Layered update frequencies:
 - TimeManager with layered updates
 - Data linking and validation
 - Province loading from bitmap
+- Save/Load system (hybrid snapshot + command log)
 
 ### ⚠️ Partially Implemented
 - Map rendering (ongoing phases)
@@ -221,7 +222,6 @@ Layered update frequencies:
 - AI system (see Planning/ai-design.md)
 - Multiplayer (see Planning/multiplayer-design.md)
 - Modding system (see Planning/modding-design.md)
-- Save/load system
 
 ---
 
@@ -236,6 +236,7 @@ Layered update frequencies:
 - [map-system-architecture.md](map-system-architecture.md) - Map rendering system
 - [time-system-architecture.md](time-system-architecture.md) - Update frequencies
 - [data-flow-architecture.md](data-flow-architecture.md) - System communication
+- [save-load-architecture.md](save-load-architecture.md) - Save/load system, serialization patterns
 
 ### Advanced Topics
 - [performance-architecture-guide.md](performance-architecture-guide.md) - Optimization patterns
@@ -248,8 +249,7 @@ Layered update frequencies:
 - [../Planning/ai-design.md](../Planning/ai-design.md) - AI system design
 - [../Planning/multiplayer-design.md](../Planning/multiplayer-design.md) - Multiplayer architecture
 - [../Planning/modding-design.md](../Planning/modding-design.md) - Modding system
-- [../Planning/save-load-design.md](../Planning/save-load-design.md) - Command-based saves *(not implemented)*
-- [../Planning/error-recovery-design.md](../Planning/error-recovery-design.md) - Error recovery *(not implemented)*
+- [../Planning/error-recovery-design.md](../Planning/error-recovery-design.md) - Error recovery
 
 ---
 

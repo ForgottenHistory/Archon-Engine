@@ -334,6 +334,155 @@ namespace Core.Modifiers
 
         #endregion
 
+        #region Save/Load Support
+
+        /// <summary>
+        /// Save ModifierSystem state to binary writer
+        /// Serializes: capacities, global scope, country scopes, province scopes
+        /// </summary>
+        public void SaveState(System.IO.BinaryWriter writer)
+        {
+            // Write capacities (for validation on load)
+            writer.Write(maxCountries);
+            writer.Write(maxProvinces);
+
+            // Write global scope
+            SaveScopedContainer(writer, globalScope);
+
+            // Write country scopes
+            for (int i = 0; i < maxCountries; i++)
+            {
+                SaveScopedContainer(writer, countryScopes[i]);
+            }
+
+            // Write province scopes
+            for (int i = 0; i < maxProvinces; i++)
+            {
+                SaveScopedContainer(writer, provinceScopes[i]);
+            }
+
+            Debug.Log($"[ModifierSystem] Saved state (countries: {maxCountries}, provinces: {maxProvinces})");
+        }
+
+        /// <summary>
+        /// Load ModifierSystem state from binary reader
+        /// Restores: capacities, global scope, country scopes, province scopes
+        /// Note: Must be called AFTER Initialize() with matching capacities
+        /// </summary>
+        public void LoadState(System.IO.BinaryReader reader)
+        {
+            // Read and validate capacities
+            int savedMaxCountries = reader.ReadInt32();
+            int savedMaxProvinces = reader.ReadInt32();
+
+            if (savedMaxCountries != maxCountries)
+            {
+                Debug.LogWarning($"[ModifierSystem] Country capacity mismatch (saved: {savedMaxCountries}, current: {maxCountries})");
+            }
+
+            if (savedMaxProvinces != maxProvinces)
+            {
+                Debug.LogWarning($"[ModifierSystem] Province capacity mismatch (saved: {savedMaxProvinces}, current: {maxProvinces})");
+            }
+
+            // Load global scope
+            LoadScopedContainer(reader, ref globalScope);
+
+            // Load country scopes
+            for (int i = 0; i < maxCountries; i++)
+            {
+                var scope = countryScopes[i];
+                LoadScopedContainer(reader, ref scope);
+                countryScopes[i] = scope; // Write back (struct value type)
+            }
+
+            // Load province scopes
+            for (int i = 0; i < maxProvinces; i++)
+            {
+                var scope = provinceScopes[i];
+                LoadScopedContainer(reader, ref scope);
+                provinceScopes[i] = scope; // Write back (struct value type)
+            }
+
+            Debug.Log($"[ModifierSystem] Loaded state (countries: {savedMaxCountries}, provinces: {savedMaxProvinces})");
+        }
+
+        /// <summary>
+        /// Save a ScopedModifierContainer to binary writer
+        /// Only saves local modifiers - cachedModifierSet will be rebuilt on load
+        /// </summary>
+        private void SaveScopedContainer(System.IO.BinaryWriter writer, ScopedModifierContainer container)
+        {
+            // Get access to internal state via ActiveModifierList
+            // We only need to save local modifiers (cachedModifierSet is derived data)
+            int activeCount = container.LocalModifierCount;
+            writer.Write(activeCount);
+
+            if (activeCount == 0)
+                return; // No modifiers to save
+
+            // Iterate and save all local modifiers
+            int savedCount = 0;
+            container.ForEachLocalModifier((modifier) =>
+            {
+                // Write ModifierSource fields
+                writer.Write((byte)modifier.Type);
+                writer.Write(modifier.SourceID);
+                writer.Write(modifier.ModifierTypeId);
+                writer.Write(modifier.Value);
+                writer.Write(modifier.IsMultiplicative);
+                writer.Write(modifier.IsTemporary);
+                writer.Write(modifier.ExpirationTick);
+                savedCount++;
+            });
+
+            if (savedCount != activeCount)
+            {
+                Debug.LogWarning($"[ModifierSystem] Saved count mismatch (expected: {activeCount}, actual: {savedCount})");
+            }
+        }
+
+        /// <summary>
+        /// Load a ScopedModifierContainer from binary reader
+        /// Rebuilds cache after loading by marking as dirty
+        /// </summary>
+        private void LoadScopedContainer(System.IO.BinaryReader reader, ref ScopedModifierContainer container)
+        {
+            // Clear existing modifiers
+            container.Clear();
+
+            // Read active count
+            int activeCount = reader.ReadInt32();
+
+            if (activeCount == 0)
+            {
+                container.MarkDirty(); // Force rebuild even if empty
+                return;
+            }
+
+            // Load all modifiers
+            for (int i = 0; i < activeCount; i++)
+            {
+                var modifier = new ModifierSource
+                {
+                    Type = (ModifierSource.SourceType)reader.ReadByte(),
+                    SourceID = reader.ReadUInt32(),
+                    ModifierTypeId = reader.ReadUInt16(),
+                    Value = reader.ReadSingle(),
+                    IsMultiplicative = reader.ReadBoolean(),
+                    IsTemporary = reader.ReadBoolean(),
+                    ExpirationTick = reader.ReadInt32()
+                };
+
+                container.Add(modifier);
+            }
+
+            // Mark as dirty to force cache rebuild on next access
+            container.MarkDirty();
+        }
+
+        #endregion
+
         #region Cleanup
 
         /// <summary>

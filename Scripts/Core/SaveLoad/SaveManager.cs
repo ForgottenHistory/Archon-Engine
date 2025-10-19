@@ -357,6 +357,24 @@ namespace Core.SaveLoad
                 SaveProvinceSystem(saveData);
             }
 
+            if (gameState.Modifiers != null)
+            {
+                if (logSaveLoadOperations)
+                {
+                    ArchonLogger.Log("SaveManager: Saving ModifierSystem...");
+                }
+                SaveModifierSystem(saveData);
+            }
+
+            if (gameState.Countries != null)
+            {
+                if (logSaveLoadOperations)
+                {
+                    ArchonLogger.Log("SaveManager: Saving CountrySystem...");
+                }
+                SaveCountrySystem(saveData);
+            }
+
             // Save GAME layer PlayerState (via callback to maintain layer separation)
             if (OnSerializePlayerState != null)
             {
@@ -371,7 +389,6 @@ namespace Core.SaveLoad
                 }
             }
 
-            // TODO: Save other core systems (ModifierSystem, CountrySystem)
 
             // Save GAME layer GameSystems by calling their OnSave methods via reflection
             foreach (var gameSystem in gameState.GetAllRegisteredGameSystems())
@@ -435,6 +452,24 @@ namespace Core.SaveLoad
                 LoadProvinceSystem(saveData);
             }
 
+            if (gameState.Modifiers != null)
+            {
+                if (logSaveLoadOperations)
+                {
+                    ArchonLogger.Log("SaveManager: Loading ModifierSystem...");
+                }
+                LoadModifierSystem(saveData);
+            }
+
+            if (gameState.Countries != null)
+            {
+                if (logSaveLoadOperations)
+                {
+                    ArchonLogger.Log("SaveManager: Loading CountrySystem...");
+                }
+                LoadCountrySystem(saveData);
+            }
+
             // Load GAME layer PlayerState (via callback to maintain layer separation)
             if (OnDeserializePlayerState != null)
             {
@@ -449,7 +484,6 @@ namespace Core.SaveLoad
                 }
             }
 
-            // TODO: Load other core systems (ModifierSystem, CountrySystem)
 
             // Load GAME layer GameSystems by calling their OnLoad methods via reflection
             foreach (var gameSystem in gameState.GetAllRegisteredGameSystems())
@@ -684,6 +718,91 @@ namespace Core.SaveLoad
 
                 // Delegate to ProvinceSystem.LoadState
                 provinces.LoadState(reader);
+            }
+        }
+
+        /// <summary>
+        /// Save ModifierSystem data to save file
+        /// Saves: capacities, global scope, country scopes, province scopes
+        /// Only saves local modifiers - cachedModifierSet will be rebuilt on load
+        /// </summary>
+        private void SaveModifierSystem(SaveGameData saveData)
+        {
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
+            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
+            {
+                var modifiers = gameState.Modifiers;
+
+                // Delegate to ModifierSystem.SaveState
+                modifiers.SaveState(writer);
+
+                // Store in save data
+                saveData.SetSystemData("ModifierSystem", stream.ToArray());
+            }
+        }
+
+        /// <summary>
+        /// Load ModifierSystem data from save file
+        /// Restores modifiers and marks caches as dirty to force rebuild
+        /// </summary>
+        private void LoadModifierSystem(SaveGameData saveData)
+        {
+            byte[] data = saveData.GetSystemData<byte[]>("ModifierSystem");
+            if (data == null)
+            {
+                ArchonLogger.LogWarning("SaveManager: No ModifierSystem data found in save file");
+                return;
+            }
+
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
+            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
+            {
+                var modifiers = gameState.Modifiers;
+
+                // Delegate to ModifierSystem.LoadState
+                modifiers.LoadState(reader);
+            }
+        }
+
+        /// <summary>
+        /// Save CountrySystem data to save file
+        /// Saves: capacity, hot data arrays, id mappings, tags, cold data cache
+        /// </summary>
+        private void SaveCountrySystem(SaveGameData saveData)
+        {
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
+            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
+            {
+                var countries = gameState.Countries;
+
+                // Delegate to CountrySystem.SaveState
+                countries.SaveState(writer);
+
+                // Store in save data
+                saveData.SetSystemData("CountrySystem", stream.ToArray());
+            }
+        }
+
+        /// <summary>
+        /// Load CountrySystem data from save file
+        /// Restores hot/cold data, id mappings, and tags
+        /// </summary>
+        private void LoadCountrySystem(SaveGameData saveData)
+        {
+            byte[] data = saveData.GetSystemData<byte[]>("CountrySystem");
+            if (data == null)
+            {
+                ArchonLogger.LogWarning("SaveManager: No CountrySystem data found in save file");
+                return;
+            }
+
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
+            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
+            {
+                var countries = gameState.Countries;
+
+                // Delegate to CountrySystem.LoadState
+                countries.LoadState(reader);
             }
         }
 

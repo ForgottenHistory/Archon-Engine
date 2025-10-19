@@ -358,6 +358,7 @@ Follow the implementation roadmap, avoid the anti-patterns, and you'll have a pe
 - **[Data Flow Architecture](data-flow-architecture.md)** - Hot/cold data separation
 - **[Data Linking Architecture](data-linking-architecture.md)** - Reference resolution and cross-linking
 - **[Data Loading Architecture](data-loading-architecture.md)** - Data loading system
+- **[Save/Load Architecture](save-load-architecture.md)** - Hybrid snapshot + command log, serialization patterns, layer separation
 
 ### Critical Knowledge
 - **[Unity Compute Shader Coordination](../Log/learnings/unity-compute-shader-coordination.md)** - GPU synchronization patterns (MUST READ before writing compute shaders)

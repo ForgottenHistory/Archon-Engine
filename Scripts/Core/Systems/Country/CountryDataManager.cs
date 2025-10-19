@@ -84,6 +84,15 @@ namespace Core.Systems.Country
         }
 
         /// <summary>
+        /// Restore country count after loading from save (Clear() sets it to 0)
+        /// CRITICAL for GetAllCountryIds() to work after load
+        /// </summary>
+        public void RestoreCountryCount(int count)
+        {
+            countryCount = count;
+        }
+
+        /// <summary>
         /// Check if a tag is already used
         /// </summary>
         public bool HasTag(string tag) => usedTags.Contains(tag);

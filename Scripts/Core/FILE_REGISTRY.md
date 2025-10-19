@@ -262,6 +262,33 @@
 
 ---
 
+## SaveLoad/
+
+**SaveManager.cs** [MULTIPLAYER_CRITICAL] [STABLE]
+- Orchestrates save/load across all systems
+- Pattern: Hybrid snapshot + command log for verification
+- API: QuickSave (F6), QuickLoad (F7), SaveGame, LoadGame
+- Layer Separation: Uses callbacks for GAME layer finalization
+- Status: ✅ Implemented (2025-10-19)
+
+**SaveGameData.cs** [STABLE]
+- Save file data structure (header + system data dictionary)
+- Format: Binary with metadata, atomic writes (temp → rename)
+- Status: ✅ Implemented (2025-10-19)
+
+**SerializationHelper.cs** [MULTIPLAYER_CRITICAL] [STABLE]
+- Binary serialization utilities for primitives, FixedPoint64, NativeArray
+- Patterns: Raw memory copy for NativeArray, deterministic FixedPoint64 as long
+- API: WriteFixedPoint64/NativeArray/String, ReadFixedPoint64/NativeArray/String
+- Status: ✅ Implemented (2025-10-19)
+
+**CommandLogger.cs**
+- Ring buffer for command history (last 6000 commands ≈ 100 ticks)
+- Purpose: Determinism verification via replay
+- Status: ⏸️ Planned (command logging exists, replay verification not implemented)
+
+---
+
 ## Linking/
 
 **CrossReferenceBuilder.cs**
@@ -309,6 +336,11 @@
 - Time event structs: HourlyTickEvent, DailyTickEvent, WeeklyTickEvent, MonthlyTickEvent, YearlyTickEvent
 - Pattern: All include tick counter for sync
 - Status: ✅ Extracted (2025-10-05)
+
+**SaveLoadEvents.cs** [STABLE]
+- Save/load event structs: GameLoadedEvent, GameSavedEvent
+- Purpose: UI refresh after load, achievement tracking after save
+- Status: ✅ Implemented (2025-10-19)
 
 ---
 
@@ -392,6 +424,7 @@
 **Query province data?** → Use ProvinceQueries or ProvinceSystem.GetProvinceState()
 **Time-based event?** → Subscribe to TimeManager events in EventBus
 **Load scenario?** → Use ScenarioLoader → Calls Burst loaders
+**Save/load game?** → Use SaveManager → F6 quicksave, F7 quickload
 **Deterministic random?** → Use DeterministicRandom with seed
 **Fixed-point math?** → Use FixedPoint64 (32.32 format)
 **Optional/rare data?** → Use SparseCollectionManager<TKey, TValue> (scales with usage, not possibility)
@@ -413,6 +446,6 @@
 
 ---
 
-*Updated: 2025-10-15*
+*Updated: 2025-10-19*
 *Status: ✅ Multiplayer-ready with zero-blocking UI and sparse data infrastructure*
-*Recent: Sparse data structures Phase 1 & 2 complete (prevents HOI4's mod scaling disaster)*
+*Recent: Save/Load system implemented (hybrid snapshot + command log)*
