@@ -275,13 +275,13 @@ namespace Core.Units
         {
             if (unitSystem == null)
             {
-                UnityEngine.Debug.LogError("[MoveUnitCommand] UnitSystem is null");
+                ArchonLogger.LogGameError("[MoveUnitCommand] UnitSystem is null");
                 return false;
             }
 
             if (!unitSystem.HasUnit(unitID))
             {
-                UnityEngine.Debug.LogError($"[MoveUnitCommand] Unit {unitID} does not exist");
+                ArchonLogger.LogGameError($"[MoveUnitCommand] Unit {unitID} does not exist");
                 return false;
             }
 
@@ -290,11 +290,24 @@ namespace Core.Units
             // Verify ownership
             if (unit.countryID != countryID)
             {
-                UnityEngine.Debug.LogError($"[MoveUnitCommand] Unit {unitID} is owned by country {unit.countryID}, not {countryID}");
+                ArchonLogger.LogGameError($"[MoveUnitCommand] Unit {unitID} is owned by country {unit.countryID}, not {countryID}");
                 return false;
             }
 
-            // Phase 2 TODO: Check adjacency, movement points, etc.
+            // Check if target province is adjacent to current province
+            if (gameState.Adjacencies == null || !gameState.Adjacencies.IsInitialized)
+            {
+                ArchonLogger.LogGameError("[MoveUnitCommand] Adjacency system not initialized");
+                return false;
+            }
+
+            if (!gameState.Adjacencies.IsAdjacent(unit.provinceID, targetProvinceID))
+            {
+                ArchonLogger.LogGameError($"[MoveUnitCommand] Province {targetProvinceID} is not adjacent to {unit.provinceID}");
+                return false;
+            }
+
+            // Phase 2B TODO: Check movement points, terrain costs, etc.
 
             return true;
         }

@@ -34,6 +34,7 @@ namespace Core
         public ModifierSystem Modifiers { get; private set; }
         public ResourceSystem Resources { get; private set; }
         public UnitSystem Units { get; private set; }
+        public AdjacencySystem Adjacencies { get; private set; }
 
         // Query Interfaces - These provide optimized data access
         public ProvinceQueries ProvinceQueries { get; private set; }
@@ -178,7 +179,10 @@ namespace Core
             // 5. Unit system (Engine infrastructure for Game layer units)
             Units = new UnitSystem(initialCapacity: 10000, eventBus: EventBus);
 
-            // 6. Query interfaces
+            // 6. Adjacency system (Populated during map initialization)
+            Adjacencies = new AdjacencySystem();
+
+            // 7. Query interfaces
             ProvinceQueries = new ProvinceQueries(Provinces, Countries);
             CountryQueries = new CountryQueries(Countries, Provinces);
 
