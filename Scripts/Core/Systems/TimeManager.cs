@@ -150,6 +150,10 @@ namespace Core.Systems
                 2 => FixedPoint64.One,                              // 1.0x (normal)
                 3 => FixedPoint64.FromInt(2),                      // 2.0x
                 4 => FixedPoint64.FromInt(5),                      // 5.0x (very fast)
+                5 => FixedPoint64.FromInt(10),                     // 10.0x (extreme - performance testing)
+                6 => FixedPoint64.FromInt(25),                     // 25.0x (extreme - performance testing)
+                7 => FixedPoint64.FromInt(50),                     // 50.0x (extreme - performance testing)
+                8 => FixedPoint64.FromInt(100),                    // 100.0x (extreme - performance testing)
                 _ => FixedPoint64.One
             };
         }
@@ -260,13 +264,15 @@ namespace Core.Systems
         }
 
         /// <summary>
-        /// Set game speed (0=paused, 1-4=speed levels)
+        /// Set game speed (0=paused, 1-8=speed levels)
+        /// Levels 1-4: Standard gameplay speeds (0.5x, 1x, 2x, 5x)
+        /// Levels 5-8: Extreme speeds for performance testing (10x, 25x, 50x, 100x)
         /// </summary>
         public void SetGameSpeed(int newSpeedLevel)
         {
-            if (newSpeedLevel < 0 || newSpeedLevel > 4)
+            if (newSpeedLevel < 0 || newSpeedLevel > 8)
             {
-                ArchonLogger.LogWarning($"Invalid speed level: {newSpeedLevel} (must be 0-4)");
+                ArchonLogger.LogWarning($"Invalid speed level: {newSpeedLevel} (must be 0-8)");
                 return;
             }
 
