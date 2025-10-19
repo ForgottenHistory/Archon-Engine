@@ -376,6 +376,7 @@ if (saveData.saveFormatVersion != CURRENT_VERSION) {
 ```
 Assets/Archon-Engine/Scripts/Core/SaveLoad/
 ├── SaveManager.cs              # Orchestrates save/load
+├── SystemSerializer.cs         # Generic system serialization helper (reduces boilerplate)
 ├── SaveGameData.cs             # Save file data structure
 ├── SerializationHelper.cs      # Binary serialization utilities
 └── CommandLogger.cs            # Command history (future)

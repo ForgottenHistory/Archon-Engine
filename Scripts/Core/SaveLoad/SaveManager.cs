@@ -42,6 +42,9 @@ namespace Core.SaveLoad
         // GameState reference (accessed via singleton)
         private GameState gameState => GameState.Instance;
 
+        // System serialization helper (reduces boilerplate)
+        private SystemSerializer systemSerializer;
+
         // GAME layer finalization callback (architecture compliance: ENGINE doesn't call GAME code)
         // GAME layer sets this to rebuild caches, etc.
         public System.Action OnPostLoadFinalize;
@@ -52,6 +55,9 @@ namespace Core.SaveLoad
 
         void Awake()
         {
+            // Initialize system serializer
+            systemSerializer = new SystemSerializer(logSaveLoadOperations);
+
             // Determine platform-specific save directory
             saveDirectory = GetSaveDirectory();
 
@@ -125,7 +131,7 @@ namespace Core.SaveLoad
 
                 // Serialize to disk (atomic write)
                 string filePath = GetSaveFilePath(saveName);
-                SerializeToDisk(saveData, filePath);
+                SaveFileSerializer.WriteToDisk(saveData, filePath);
 
                 if (logSaveLoadOperations)
                 {
@@ -213,10 +219,10 @@ namespace Core.SaveLoad
                 }
 
                 // Deserialize from disk
-                SaveGameData saveData = DeserializeFromDisk(filePath);
+                SaveGameData saveData = SaveFileSerializer.ReadFromDisk(filePath);
 
                 // Verify version compatibility
-                if (!VerifyVersionCompatibility(saveData))
+                if (!SaveFileSerializer.VerifyVersionCompatibility(saveData, Application.version))
                 {
                     return false;
                 }
@@ -329,59 +335,37 @@ namespace Core.SaveLoad
 
         private void CallOnSaveForAllSystems(SaveGameData saveData)
         {
-            // Save core ENGINE systems directly
+            // Save core ENGINE systems using SystemSerializer
             if (gameState.Time != null && gameState.Time.IsInitialized)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Saving TimeManager...");
-                }
-                SaveTimeManager(saveData);
+                systemSerializer.SaveSystem(saveData, "TimeManager", gameState.Time,
+                    writer => CustomSystemSerializers.SaveTimeManager(writer, gameState.Time));
             }
 
             if (gameState.Resources != null && gameState.Resources.IsInitialized)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Saving ResourceSystem...");
-                }
-                SaveResourceSystem(saveData);
+                systemSerializer.SaveSystem(saveData, "ResourceSystem", gameState.Resources,
+                    writer => CustomSystemSerializers.SaveResourceSystem(writer, gameState.Resources));
             }
 
             if (gameState.Provinces != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Saving ProvinceSystem...");
-                }
-                SaveProvinceSystem(saveData);
+                systemSerializer.SaveSystem(saveData, "ProvinceSystem", gameState.Provinces, writer => gameState.Provinces.SaveState(writer));
             }
 
             if (gameState.Modifiers != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Saving ModifierSystem...");
-                }
-                SaveModifierSystem(saveData);
+                systemSerializer.SaveSystem(saveData, "ModifierSystem", gameState.Modifiers, writer => gameState.Modifiers.SaveState(writer));
             }
 
             if (gameState.Countries != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Saving CountrySystem...");
-                }
-                SaveCountrySystem(saveData);
+                systemSerializer.SaveSystem(saveData, "CountrySystem", gameState.Countries, writer => gameState.Countries.SaveState(writer));
             }
 
             if (gameState.Units != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Saving UnitSystem...");
-                }
-                SaveUnitSystem(saveData);
+                systemSerializer.SaveSystem(saveData, "UnitSystem", gameState.Units, writer => gameState.Units.SaveState(writer));
             }
 
             // Save GAME layer PlayerState (via callback to maintain layer separation)
@@ -433,59 +417,37 @@ namespace Core.SaveLoad
 
         private void CallOnLoadForAllSystems(SaveGameData saveData)
         {
-            // Load core ENGINE systems directly
+            // Load core ENGINE systems using SystemSerializer
             if (gameState.Time != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Loading TimeManager...");
-                }
-                LoadTimeManager(saveData);
+                systemSerializer.LoadSystem(saveData, "TimeManager", gameState.Time,
+                    reader => CustomSystemSerializers.LoadTimeManager(reader, gameState.Time));
             }
 
             if (gameState.Resources != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Loading ResourceSystem...");
-                }
-                LoadResourceSystem(saveData);
+                systemSerializer.LoadSystem(saveData, "ResourceSystem", gameState.Resources,
+                    reader => CustomSystemSerializers.LoadResourceSystem(reader, gameState.Resources));
             }
 
             if (gameState.Provinces != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Loading ProvinceSystem...");
-                }
-                LoadProvinceSystem(saveData);
+                systemSerializer.LoadSystem(saveData, "ProvinceSystem", gameState.Provinces, reader => gameState.Provinces.LoadState(reader));
             }
 
             if (gameState.Modifiers != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Loading ModifierSystem...");
-                }
-                LoadModifierSystem(saveData);
+                systemSerializer.LoadSystem(saveData, "ModifierSystem", gameState.Modifiers, reader => gameState.Modifiers.LoadState(reader));
             }
 
             if (gameState.Countries != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Loading CountrySystem...");
-                }
-                LoadCountrySystem(saveData);
+                systemSerializer.LoadSystem(saveData, "CountrySystem", gameState.Countries, reader => gameState.Countries.LoadState(reader));
             }
 
             if (gameState.Units != null)
             {
-                if (logSaveLoadOperations)
-                {
-                    ArchonLogger.Log("SaveManager: Loading UnitSystem...");
-                }
-                LoadUnitSystem(saveData);
+                systemSerializer.LoadSystem(saveData, "UnitSystem", gameState.Units, reader => gameState.Units.LoadState(reader));
             }
 
             // Load GAME layer PlayerState (via callback to maintain layer separation)
@@ -536,464 +498,8 @@ namespace Core.SaveLoad
         }
 
         // ====================================================================
-        // CORE SYSTEM SERIALIZATION
+        // FILE PATH HELPER
         // ====================================================================
-
-        /// <summary>
-        /// Save TimeManager data to save file
-        /// Saves: tick, date/time, speed, pause state, accumulator
-        /// </summary>
-        private void SaveTimeManager(SaveGameData saveData)
-        {
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
-            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
-            {
-                var time = gameState.Time;
-
-                // Write tick counter
-                writer.Write(time.CurrentTick);
-
-                // Write date/time
-                writer.Write(time.CurrentYear);
-                writer.Write(time.CurrentMonth);
-                writer.Write(time.CurrentDay);
-                writer.Write(time.CurrentHour);
-
-                // Write speed and pause state
-                writer.Write(time.GameSpeed);
-                writer.Write(time.IsPaused);
-
-                // Write accumulator (need to add getter to TimeManager)
-                SerializationHelper.WriteFixedPoint64(writer, time.GetAccumulator());
-
-                // Store in save data
-                saveData.SetSystemData("TimeManager", stream.ToArray());
-            }
-        }
-
-        /// <summary>
-        /// Load TimeManager data from save file
-        /// </summary>
-        private void LoadTimeManager(SaveGameData saveData)
-        {
-            byte[] data = saveData.GetSystemData<byte[]>("TimeManager");
-            if (data == null)
-            {
-                ArchonLogger.LogWarning("SaveManager: No TimeManager data found in save file");
-                return;
-            }
-
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
-            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
-            {
-                var time = gameState.Time;
-
-                // Read tick counter
-                ulong tick = reader.ReadUInt64();
-
-                // Read date/time
-                int year = reader.ReadInt32();
-                int month = reader.ReadInt32();
-                int day = reader.ReadInt32();
-                int hour = reader.ReadInt32();
-
-                // Read speed and pause state
-                int speed = reader.ReadInt32();
-                bool paused = reader.ReadBoolean();
-
-                // Read accumulator
-                FixedPoint64 accumulator = SerializationHelper.ReadFixedPoint64(reader);
-
-                // Restore state (need to add setter to TimeManager)
-                time.LoadState(tick, year, month, day, hour, speed, paused, accumulator);
-            }
-        }
-
-        /// <summary>
-        /// Save ResourceSystem data to save file
-        /// Saves: maxCountries, resource storage arrays
-        /// Skips: resourceDefinitions (will be re-registered by GAME layer on load)
-        /// </summary>
-        private void SaveResourceSystem(SaveGameData saveData)
-        {
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
-            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
-            {
-                var resources = gameState.Resources;
-
-                // Write capacity
-                writer.Write(resources.MaxCountries);
-
-                // Write resource count
-                var resourceIds = new System.Collections.Generic.List<ushort>(resources.GetAllResourceIds());
-                writer.Write(resourceIds.Count);
-
-                // Write each resource's data
-                foreach (ushort resourceId in resourceIds)
-                {
-                    writer.Write(resourceId);
-
-                    // Write resource values for all countries
-                    for (int countryId = 0; countryId < resources.MaxCountries; countryId++)
-                    {
-                        FixedPoint64 value = resources.GetResource((ushort)countryId, resourceId);
-                        SerializationHelper.WriteFixedPoint64(writer, value);
-                    }
-                }
-
-                // Store in save data
-                saveData.SetSystemData("ResourceSystem", stream.ToArray());
-            }
-        }
-
-        /// <summary>
-        /// Load ResourceSystem data from save file
-        /// Assumes ResourceSystem is already initialized with resource definitions from GAME layer
-        /// </summary>
-        private void LoadResourceSystem(SaveGameData saveData)
-        {
-            byte[] data = saveData.GetSystemData<byte[]>("ResourceSystem");
-            if (data == null)
-            {
-                ArchonLogger.LogWarning("SaveManager: No ResourceSystem data found in save file");
-                return;
-            }
-
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
-            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
-            {
-                var resources = gameState.Resources;
-
-                // Read capacity
-                int savedMaxCountries = reader.ReadInt32();
-
-                // Verify capacity matches (resources should already be initialized)
-                if (savedMaxCountries != resources.MaxCountries)
-                {
-                    ArchonLogger.LogWarning($"SaveManager: Resource capacity mismatch (saved: {savedMaxCountries}, current: {resources.MaxCountries})");
-                }
-
-                // Read resource count
-                int resourceCount = reader.ReadInt32();
-
-                // Read each resource's data
-                for (int i = 0; i < resourceCount; i++)
-                {
-                    ushort resourceId = reader.ReadUInt16();
-
-                    // Read resource values for all countries
-                    for (int countryId = 0; countryId < savedMaxCountries; countryId++)
-                    {
-                        FixedPoint64 value = SerializationHelper.ReadFixedPoint64(reader);
-
-                        // Only set if resource is registered and country ID is valid
-                        if (countryId < resources.MaxCountries && resources.IsResourceRegistered(resourceId))
-                        {
-                            resources.SetResource((ushort)countryId, resourceId, value);
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Save ProvinceSystem data to save file
-        /// Saves: capacity, province states (8 bytes each), id mappings, active province list
-        /// Uses raw memory copy for ProvinceState array (blittable struct)
-        /// </summary>
-        private void SaveProvinceSystem(SaveGameData saveData)
-        {
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
-            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
-            {
-                var provinces = gameState.Provinces;
-
-                // Delegate to ProvinceSystem.SaveState
-                provinces.SaveState(writer);
-
-                // Store in save data
-                saveData.SetSystemData("ProvinceSystem", stream.ToArray());
-            }
-        }
-
-        /// <summary>
-        /// Load ProvinceSystem data from save file
-        /// Restores province states, mappings, and syncs double buffers
-        /// </summary>
-        private void LoadProvinceSystem(SaveGameData saveData)
-        {
-            byte[] data = saveData.GetSystemData<byte[]>("ProvinceSystem");
-            if (data == null)
-            {
-                ArchonLogger.LogWarning("SaveManager: No ProvinceSystem data found in save file");
-                return;
-            }
-
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
-            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
-            {
-                var provinces = gameState.Provinces;
-
-                // Delegate to ProvinceSystem.LoadState
-                provinces.LoadState(reader);
-            }
-        }
-
-        /// <summary>
-        /// Save ModifierSystem data to save file
-        /// Saves: capacities, global scope, country scopes, province scopes
-        /// Only saves local modifiers - cachedModifierSet will be rebuilt on load
-        /// </summary>
-        private void SaveModifierSystem(SaveGameData saveData)
-        {
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
-            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
-            {
-                var modifiers = gameState.Modifiers;
-
-                // Delegate to ModifierSystem.SaveState
-                modifiers.SaveState(writer);
-
-                // Store in save data
-                saveData.SetSystemData("ModifierSystem", stream.ToArray());
-            }
-        }
-
-        /// <summary>
-        /// Load ModifierSystem data from save file
-        /// Restores modifiers and marks caches as dirty to force rebuild
-        /// </summary>
-        private void LoadModifierSystem(SaveGameData saveData)
-        {
-            byte[] data = saveData.GetSystemData<byte[]>("ModifierSystem");
-            if (data == null)
-            {
-                ArchonLogger.LogWarning("SaveManager: No ModifierSystem data found in save file");
-                return;
-            }
-
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
-            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
-            {
-                var modifiers = gameState.Modifiers;
-
-                // Delegate to ModifierSystem.LoadState
-                modifiers.LoadState(reader);
-            }
-        }
-
-        /// <summary>
-        /// Save CountrySystem data to save file
-        /// Saves: capacity, hot data arrays, id mappings, tags, cold data cache
-        /// </summary>
-        private void SaveCountrySystem(SaveGameData saveData)
-        {
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
-            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
-            {
-                var countries = gameState.Countries;
-
-                // Delegate to CountrySystem.SaveState
-                countries.SaveState(writer);
-
-                // Store in save data
-                saveData.SetSystemData("CountrySystem", stream.ToArray());
-            }
-        }
-
-        /// <summary>
-        /// Load CountrySystem data from save file
-        /// Restores hot/cold data, id mappings, and tags
-        /// </summary>
-        private void LoadCountrySystem(SaveGameData saveData)
-        {
-            byte[] data = saveData.GetSystemData<byte[]>("CountrySystem");
-            if (data == null)
-            {
-                ArchonLogger.LogWarning("SaveManager: No CountrySystem data found in save file");
-                return;
-            }
-
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
-            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
-            {
-                var countries = gameState.Countries;
-
-                // Delegate to CountrySystem.LoadState
-                countries.LoadState(reader);
-            }
-        }
-
-        /// <summary>
-        /// Save UnitSystem data to save file
-        /// Saves: unit hot data, sparse mappings (province→units, country→units), cold data
-        /// </summary>
-        private void SaveUnitSystem(SaveGameData saveData)
-        {
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
-            using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream))
-            {
-                var units = gameState.Units;
-
-                // Delegate to UnitSystem.SaveState
-                units.SaveState(writer);
-
-                // Store in save data
-                saveData.SetSystemData("UnitSystem", stream.ToArray());
-            }
-        }
-
-        /// <summary>
-        /// Load UnitSystem data from save file
-        /// Restores all units, sparse mappings, and cold data
-        /// </summary>
-        private void LoadUnitSystem(SaveGameData saveData)
-        {
-            byte[] data = saveData.GetSystemData<byte[]>("UnitSystem");
-            if (data == null)
-            {
-                ArchonLogger.LogWarning("SaveManager: No UnitSystem data found in save file");
-                return;
-            }
-
-            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(data))
-            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
-            {
-                var units = gameState.Units;
-
-                // Delegate to UnitSystem.LoadState
-                units.LoadState(reader);
-            }
-        }
-
-        private void SerializeToDisk(SaveGameData saveData, string filePath)
-        {
-            // Atomic write: write to temp file, then rename
-            string tempPath = filePath + ".tmp";
-
-            using (FileStream stream = new FileStream(tempPath, FileMode.Create, FileAccess.Write))
-            using (BinaryWriter writer = new BinaryWriter(stream))
-            {
-                // Write header (magic bytes for file type validation)
-                writer.Write("HGSV".ToCharArray()); // Hegemon Save
-
-                // Write metadata
-                SerializationHelper.WriteString(writer, saveData.gameVersion);
-                writer.Write(saveData.saveFormatVersion);
-                SerializationHelper.WriteString(writer, saveData.saveName);
-                writer.Write(saveData.saveDateTicks);
-                writer.Write(saveData.currentTick);
-                writer.Write(saveData.gameSpeed);
-                SerializationHelper.WriteString(writer, saveData.scenarioName);
-
-                // Write system data count
-                writer.Write(saveData.systemData.Count);
-
-                // Write each system's data
-                foreach (var kvp in saveData.systemData)
-                {
-                    SerializationHelper.WriteString(writer, kvp.Key); // System name
-
-                    // Serialize system data as byte array
-                    if (kvp.Value is byte[] bytes)
-                    {
-                        writer.Write(bytes.Length);
-                        writer.Write(bytes);
-                    }
-                    else
-                    {
-                        // For now, skip non-byte-array data
-                        // TODO: Add support for other serialization formats
-                        writer.Write(0);
-                    }
-                }
-
-                // Write command log (for verification)
-                writer.Write(saveData.commandLog.Count);
-                foreach (var commandBytes in saveData.commandLog)
-                {
-                    writer.Write(commandBytes.Length);
-                    writer.Write(commandBytes);
-                }
-
-                // Write checksum
-                writer.Write(saveData.expectedChecksum);
-            }
-
-            // Atomic rename (overwrites existing file)
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-            File.Move(tempPath, filePath);
-        }
-
-        private SaveGameData DeserializeFromDisk(string filePath)
-        {
-            using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-            using (BinaryReader reader = new BinaryReader(stream))
-            {
-                // Read and verify header
-                char[] magic = reader.ReadChars(4);
-                string magicStr = new string(magic);
-                if (magicStr != "HGSV")
-                {
-                    throw new Exception($"Invalid save file format (expected 'HGSV', got '{magicStr}')");
-                }
-
-                SaveGameData data = new SaveGameData();
-
-                // Read metadata
-                data.gameVersion = SerializationHelper.ReadString(reader);
-                data.saveFormatVersion = reader.ReadInt32();
-                data.saveName = SerializationHelper.ReadString(reader);
-                data.saveDateTicks = reader.ReadInt64();
-                data.currentTick = reader.ReadInt32();
-                data.gameSpeed = reader.ReadInt32();
-                data.scenarioName = SerializationHelper.ReadString(reader);
-
-                // Read system data
-                int systemDataCount = reader.ReadInt32();
-                for (int i = 0; i < systemDataCount; i++)
-                {
-                    string systemName = SerializationHelper.ReadString(reader);
-                    int dataLength = reader.ReadInt32();
-
-                    if (dataLength > 0)
-                    {
-                        byte[] systemBytes = reader.ReadBytes(dataLength);
-                        data.systemData[systemName] = systemBytes;
-                    }
-                }
-
-                // Read command log
-                int commandCount = reader.ReadInt32();
-                for (int i = 0; i < commandCount; i++)
-                {
-                    int commandLength = reader.ReadInt32();
-                    byte[] commandBytes = reader.ReadBytes(commandLength);
-                    data.commandLog.Add(commandBytes);
-                }
-
-                // Read checksum
-                data.expectedChecksum = reader.ReadUInt32();
-
-                return data;
-            }
-        }
-
-        private bool VerifyVersionCompatibility(SaveGameData saveData)
-        {
-            if (!saveData.IsCompatibleVersion(Application.version))
-            {
-                ArchonLogger.LogWarning($"SaveManager: Save file version mismatch (save: {saveData.gameVersion}, current: {Application.version})");
-                // For now, allow loading anyway (no migration yet)
-                // TODO: Implement version migration
-                return true;
-            }
-
-            return true;
-        }
 
         private string GetSaveFilePath(string saveName)
         {
