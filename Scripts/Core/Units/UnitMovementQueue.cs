@@ -49,6 +49,7 @@ namespace Core.Units
         // === State ===
 
         private Dictionary<ushort, MovementState> movingUnits;
+        private Dictionary<ushort, System.Collections.Generic.Queue<ushort>> unitPaths; // Remaining waypoints for multi-hop paths
         private UnitSystem unitSystem;
         private EventBus eventBus;
 
@@ -59,6 +60,7 @@ namespace Core.Units
             this.unitSystem = unitSystem;
             this.eventBus = eventBus;
             this.movingUnits = new Dictionary<ushort, MovementState>();
+            this.unitPaths = new Dictionary<ushort, System.Collections.Generic.Queue<ushort>>();
 
             ArchonLogger.Log("[UnitMovementQueue] Initialized");
         }
@@ -67,8 +69,13 @@ namespace Core.Units
 
         /// <summary>
         /// Start a unit moving toward a destination
+        /// Supports multi-hop paths for pathfinding
         /// </summary>
-        public void StartMovement(ushort unitID, ushort destinationProvinceID, int movementDays)
+        /// <param name="unitID">Unit to move</param>
+        /// <param name="destinationProvinceID">Next waypoint</param>
+        /// <param name="movementDays">Days to reach next waypoint</param>
+        /// <param name="fullPath">Optional: Full path including all waypoints (for multi-hop movement)</param>
+        public void StartMovement(ushort unitID, ushort destinationProvinceID, int movementDays, System.Collections.Generic.List<ushort> fullPath = null)
         {
             if (!unitSystem.HasUnit(unitID))
             {
@@ -84,6 +91,24 @@ namespace Core.Units
                 ArchonLogger.LogWarning($"[UnitMovementQueue] Unit {unitID} is already moving - cancelling previous movement");
                 CancelMovement(unitID);
             }
+
+            // Store path if provided (for multi-hop movement)
+            if (fullPath != null && fullPath.Count > 2)
+            {
+                // Store remaining waypoints (excluding current province and next hop)
+                var pathQueue = new System.Collections.Generic.Queue<ushort>();
+                for (int i = 2; i < fullPath.Count; i++) // Start at index 2 (skip current and next)
+                {
+                    pathQueue.Enqueue(fullPath[i]);
+                }
+                unitPaths[unitID] = pathQueue;
+
+                ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} multi-hop path: {fullPath.Count} provinces total, {pathQueue.Count} waypoints remaining");
+            }
+            // Note: We don't clear the path here if fullPath is null, because:
+            // - If this is a continuation of multi-hop journey (from CompleteMovement), we want to keep the path
+            // - If this is a new movement over an existing one, CancelMovement() already cleared the path
+            // So there's no need to clear here!
 
             // Add to moving units
             var movementState = new MovementState(unit.provinceID, destinationProvinceID, movementDays);
@@ -115,6 +140,12 @@ namespace Core.Units
             }
 
             movingUnits.Remove(unitID);
+
+            // Clear any remaining path
+            if (unitPaths.ContainsKey(unitID))
+            {
+                unitPaths.Remove(unitID);
+            }
 
             ArchonLogger.Log($"[UnitMovementQueue] Cancelled movement for unit {unitID}");
 
@@ -178,6 +209,7 @@ namespace Core.Units
 
         /// <summary>
         /// Complete a unit's movement (teleport to destination)
+        /// Checks for multi-hop paths and automatically continues to next waypoint
         /// </summary>
         private void CompleteMovement(ushort unitID)
         {
@@ -204,6 +236,24 @@ namespace Core.Units
                     DestinationProvinceID = movementState.destinationProvinceID
                 });
             }
+
+            // Check if unit has more waypoints to visit (multi-hop pathfinding)
+            if (unitPaths.TryGetValue(unitID, out var pathQueue) && pathQueue.Count > 0)
+            {
+                ushort nextWaypoint = pathQueue.Dequeue();
+                ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} continuing journey to {nextWaypoint} ({pathQueue.Count} waypoints remaining)");
+
+                // Start movement to next waypoint (use default movement days - should be passed from original command)
+                // Note: We use 2 days as default, but this could be improved by storing movement speed with the path
+                StartMovement(unitID, nextWaypoint, 2);
+
+                // If no more waypoints after this, remove path
+                if (pathQueue.Count == 0)
+                {
+                    unitPaths.Remove(unitID);
+                    ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} completed multi-hop journey");
+                }
+            }
         }
 
         // === Queries ===
@@ -226,6 +276,26 @@ namespace Core.Units
         /// <summary>Get all moving unit IDs</summary>
         public IEnumerable<ushort> GetMovingUnits() => movingUnits.Keys;
 
+        /// <summary>Get remaining path for a unit (for UI visualization)</summary>
+        public System.Collections.Generic.List<ushort> GetRemainingPath(ushort unitID)
+        {
+            var path = new System.Collections.Generic.List<ushort>();
+
+            // Add current destination if moving
+            if (movingUnits.TryGetValue(unitID, out var movementState))
+            {
+                path.Add(movementState.destinationProvinceID);
+            }
+
+            // Add remaining waypoints
+            if (unitPaths.TryGetValue(unitID, out var pathQueue))
+            {
+                path.AddRange(pathQueue);
+            }
+
+            return path;
+        }
+
         // === Save/Load ===
 
         public void SaveState(System.IO.BinaryWriter writer)
@@ -241,12 +311,25 @@ namespace Core.Units
                 writer.Write(kvp.Value.totalDays);
             }
 
-            ArchonLogger.Log($"[UnitMovementQueue] Saved {movingUnits.Count} moving units");
+            // Save paths for multi-hop movement
+            writer.Write(unitPaths.Count);
+            foreach (var kvp in unitPaths)
+            {
+                writer.Write(kvp.Key); // unitID
+                writer.Write(kvp.Value.Count); // path length
+                foreach (ushort provinceID in kvp.Value)
+                {
+                    writer.Write(provinceID);
+                }
+            }
+
+            ArchonLogger.Log($"[UnitMovementQueue] Saved {movingUnits.Count} moving units, {unitPaths.Count} multi-hop paths");
         }
 
         public void LoadState(System.IO.BinaryReader reader)
         {
             movingUnits.Clear();
+            unitPaths.Clear();
 
             int count = reader.ReadInt32();
 
@@ -264,7 +347,23 @@ namespace Core.Units
                 movingUnits[unitID] = state;
             }
 
-            ArchonLogger.Log($"[UnitMovementQueue] Loaded {movingUnits.Count} moving units");
+            // Load paths for multi-hop movement
+            int pathCount = reader.ReadInt32();
+            for (int i = 0; i < pathCount; i++)
+            {
+                ushort unitID = reader.ReadUInt16();
+                int pathLength = reader.ReadInt32();
+
+                var pathQueue = new System.Collections.Generic.Queue<ushort>();
+                for (int j = 0; j < pathLength; j++)
+                {
+                    pathQueue.Enqueue(reader.ReadUInt16());
+                }
+
+                unitPaths[unitID] = pathQueue;
+            }
+
+            ArchonLogger.Log($"[UnitMovementQueue] Loaded {movingUnits.Count} moving units, {unitPaths.Count} multi-hop paths");
         }
     }
 

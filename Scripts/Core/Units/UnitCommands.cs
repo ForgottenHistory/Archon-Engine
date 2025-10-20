@@ -241,32 +241,36 @@ namespace Core.Units
 
     /// <summary>
     /// Command to move a unit to a new province using time-based movement (EU4-style).
+    /// Supports pathfinding for multi-province journeys.
     ///
     /// VALIDATION:
     /// - Unit must exist
     /// - Unit must be owned by the executing country
-    /// - Target province must be adjacent
-    /// - Unit must not already be moving
+    /// - Pathfinding system must be initialized
+    /// - Unit must not already be moving (warning, but allowed)
     ///
     /// EXECUTION:
-    /// - Add unit to movement queue with destination and travel time
-    /// - Unit will arrive after X daily ticks
+    /// - Calculate path using PathfindingSystem
+    /// - Add unit to movement queue with full path
+    /// - Unit will automatically hop through waypoints
     /// - Emit UnitMovementStartedEvent
     /// </summary>
     public class MoveUnitCommand : BaseCommand
     {
         private readonly UnitSystem unitSystem;
+        private readonly Core.Systems.PathfindingSystem pathfindingSystem;
         private readonly ushort unitID;
         private readonly ushort targetProvinceID;
         private readonly ushort countryID;  // For validation
-        private readonly int movementDays;  // How many days the movement takes
+        private readonly int movementDays;  // How many days per province hop
 
         private ushort oldProvinceID;  // For undo
         private bool wasMoving;  // Was unit already moving before this command?
 
-        public MoveUnitCommand(UnitSystem unitSystem, ushort unitID, ushort targetProvinceID, ushort countryID, int movementDays = 2)
+        public MoveUnitCommand(UnitSystem unitSystem, Core.Systems.PathfindingSystem pathfindingSystem, ushort unitID, ushort targetProvinceID, ushort countryID, int movementDays = 2)
         {
             this.unitSystem = unitSystem;
+            this.pathfindingSystem = pathfindingSystem;
             this.unitID = unitID;
             this.targetProvinceID = targetProvinceID;
             this.countryID = countryID;
@@ -282,6 +286,12 @@ namespace Core.Units
                 return false;
             }
 
+            if (pathfindingSystem == null || !pathfindingSystem.IsInitialized)
+            {
+                ArchonLogger.LogGameError("[MoveUnitCommand] PathfindingSystem not initialized");
+                return false;
+            }
+
             if (!unitSystem.HasUnit(unitID))
             {
                 ArchonLogger.LogGameError($"[MoveUnitCommand] Unit {unitID} does not exist");
@@ -294,19 +304,6 @@ namespace Core.Units
             if (unit.countryID != countryID)
             {
                 ArchonLogger.LogGameError($"[MoveUnitCommand] Unit {unitID} is owned by country {unit.countryID}, not {countryID}");
-                return false;
-            }
-
-            // Check if target province is adjacent to current province
-            if (gameState.Adjacencies == null || !gameState.Adjacencies.IsInitialized)
-            {
-                ArchonLogger.LogGameError("[MoveUnitCommand] Adjacency system not initialized");
-                return false;
-            }
-
-            if (!gameState.Adjacencies.IsAdjacent(unit.provinceID, targetProvinceID))
-            {
-                ArchonLogger.LogGameError($"[MoveUnitCommand] Province {targetProvinceID} is not adjacent to {unit.provinceID}");
                 return false;
             }
 
@@ -326,8 +323,39 @@ namespace Core.Units
             oldProvinceID = unit.provinceID;
             wasMoving = unitSystem.MovementQueue.IsUnitMoving(unitID);
 
-            // Start time-based movement (EU4-style)
-            unitSystem.MovementQueue.StartMovement(unitID, targetProvinceID, movementDays);
+            // Calculate path using pathfinding
+            var path = pathfindingSystem.FindPath(unit.provinceID, targetProvinceID);
+
+            if (path == null || path.Count == 0)
+            {
+                ArchonLogger.LogGameWarning($"[MoveUnitCommand] No path found from province {unit.provinceID} to {targetProvinceID}");
+                return; // Cannot move - no path exists
+            }
+
+            if (path.Count == 1)
+            {
+                // Already at destination
+                ArchonLogger.LogGameWarning($"[MoveUnitCommand] Unit {unitID} is already at destination province {targetProvinceID}");
+                return;
+            }
+
+            // Calculate total journey time
+            int totalHops = path.Count - 1;
+            int totalDays = totalHops * movementDays;
+
+            ArchonLogger.Log($"[MoveUnitCommand] Unit {unitID} pathfinding {unit.provinceID} → {targetProvinceID}: {path.Count} provinces, {totalDays} days total");
+
+            // Start time-based movement with full path (EU4-style with pathfinding)
+            if (path.Count == 2)
+            {
+                // Adjacent provinces - simple single-hop movement
+                unitSystem.MovementQueue.StartMovement(unitID, path[1], movementDays);
+            }
+            else
+            {
+                // Multi-hop journey - pass full path to movement queue
+                unitSystem.MovementQueue.StartMovement(unitID, path[1], movementDays, path);
+            }
         }
 
         public override void Undo(GameState gameState)

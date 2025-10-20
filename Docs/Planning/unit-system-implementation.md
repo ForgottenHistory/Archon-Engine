@@ -349,9 +349,34 @@ if (settings.Use3DUnits) {
 - Cancel mid-movement: unit stays at origin (no partial movement)
 
 **Not Implemented:**
-- Visual progress bar for moving units
+- Visual progress bar for moving units (✅ added in later session)
 - Terrain-based movement modifiers (mountains slower, etc.)
 - Movement arrow on map showing path
+
+### Phase 2C: Pathfinding for Multi-Province Movement ✅ Complete (2025-10-20)
+
+**Implemented:**
+- ✅ `PathfindingSystem` - A* pathfinding for multi-province paths
+- ✅ Multi-hop movement with automatic waypoint progression
+- ✅ Units can move to any province in one click (not just adjacent)
+- ✅ Path queue system (Dictionary<ushort, Queue<ushort>>)
+- ✅ Automatic continuation through intermediate provinces
+- ✅ Save/load preserves multi-hop journeys
+- ✅ Architecture designed for future terrain costs and movement blocking
+
+**Design:**
+- A* algorithm with h=0 (Dijkstra mode) for MVP (guaranteed optimal paths)
+- MVP uses uniform costs (all provinces = 1)
+- Future extension points: GetMovementCost(), IsPassable() methods ready for terrain
+- MoveUnitCommand calculates full path and stores waypoints
+- UnitMovementQueue auto-continues to next waypoint on arrival
+- Path only cleared by CancelMovement() or journey completion
+
+**Not Implemented:**
+- Visual path preview on map
+- Terrain-based movement costs (placeholder in code)
+- Movement blocking/ZOC (placeholder in code)
+- Distance heuristic for A* speedup (optional optimization)
 
 ### Phase 3: Combat (Future)
 
@@ -392,6 +417,9 @@ Assets/Archon-Engine/Scripts/Core/
     UnitEvents.cs                   ← UnitCreatedEvent, UnitDestroyedEvent
     UnitColdData.cs                 ← Rare unit data (name, history)
     UnitMovementQueue.cs            ← Time-based movement tracking (✅ Phase 2B)
+
+  Systems/
+    PathfindingSystem.cs            ← A* pathfinding for multi-province movement (✅ Phase 2C)
 
 Assets/Game/
   Data/
@@ -546,9 +574,15 @@ Assets/Game/
 - Implemented: UnitMovementQueue, time-based movement, daily tick progression
 - Result: Units take X days to move (EU4-style), save/load preserves in-transit state
 
+**2025-10-20 - Phase 2C Complete:**
+- Session 3: [3-pathfinding-multi-province-movement.md](../Docs/Log/2025-10/20/3-pathfinding-multi-province-movement.md)
+- Implemented: PathfindingSystem (A*), multi-hop movement with auto-continuation
+- Result: Units can pathfind to any province in one click, automatic waypoint progression
+
 **Outstanding:**
-- Phase 2B+: Visual progress indicators for moving units
-- Phase 2B+: Terrain-based movement costs (mountains slower)
+- Phase 2C+: Visual path preview on map
+- Phase 2C+: Terrain-based movement costs (mountains slower)
+- Phase 2C+: Movement blocking/ZOC
 - Phase 3: Combat system (battle resolution)
 - Phase 4 Polish: GPU instancing, 3D models, formations
 
@@ -556,5 +590,5 @@ Assets/Game/
 
 *Planning Document Created: 2025-10-19*
 *Last Updated: 2025-10-20*
-*Priority: ENGINE validation - Military Pillar Phase 1 & 2B*
-*Status: Movement system complete (time-based), ready for combat + visual polish*
+*Priority: ENGINE validation - Military Pillar Phase 1 & 2C*
+*Status: Movement system complete (pathfinding + time-based), ready for combat + visual polish*

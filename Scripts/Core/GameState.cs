@@ -35,6 +35,7 @@ namespace Core
         public ResourceSystem Resources { get; private set; }
         public UnitSystem Units { get; private set; }
         public AdjacencySystem Adjacencies { get; private set; }
+        public PathfindingSystem Pathfinding { get; private set; }
 
         // Query Interfaces - These provide optimized data access
         public ProvinceQueries ProvinceQueries { get; private set; }
@@ -182,7 +183,10 @@ namespace Core
             // 6. Adjacency system (Populated during map initialization)
             Adjacencies = new AdjacencySystem();
 
-            // 7. Query interfaces
+            // 7. Pathfinding system (Initialized after AdjacencySystem is populated)
+            Pathfinding = new PathfindingSystem();
+
+            // 8. Query interfaces
             ProvinceQueries = new ProvinceQueries(Provinces, Countries);
             CountryQueries = new CountryQueries(Countries, Provinces);
 
