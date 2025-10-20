@@ -197,7 +197,6 @@
 
 ## Session Statistics
 
-**Duration:** [Hours]
 **Files Changed:** [Count]
 **Lines Added/Removed:** [+X/-Y]
 **Tests Added:** [Count]

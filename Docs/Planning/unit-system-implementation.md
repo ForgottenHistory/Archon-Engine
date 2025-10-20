@@ -1,8 +1,8 @@
 # Unit System Implementation Plan
-**Date:** 2025-10-19
+**Date:** 2025-10-19 (Updated: 2025-10-20)
 **Type:** ENGINE Feature Implementation
 **Scope:** Military Pillar - Phase 1 (Unit System)
-**Status:** 📋 Planning
+**Status:** ✅ Complete (Phases 1, 2A, 4)
 
 ---
 
@@ -319,13 +319,39 @@ if (settings.Use3DUnits) {
 - Sparse collection scales (80KB for 10k units, not 5MB)
 - Province counter shows correct counts
 
-### Phase 2: Movement (Future)
+### Phase 2A: Basic Movement ✅ Complete (2025-10-19)
 
-**Not in this implementation:**
-- `MoveUnitCommand`
-- Pathfinding (A* on province adjacency)
-- Movement queue (deterministic ordering)
-- Movement visualization
+**Implemented:**
+- ✅ `MoveUnitCommand` - Move units between adjacent provinces
+- ✅ Adjacency validation (can't move to non-adjacent)
+- ✅ UI integration ("Select Units" button + click destination)
+- ✅ Event-driven updates (UnitMovedEvent)
+
+**Not Implemented (Phase 2B+):**
+- Pathfinding (can only move to directly adjacent provinces)
+- Terrain-based movement costs
+
+### Phase 2B: Time-Based Movement ✅ Complete (2025-10-20)
+
+**Implemented:**
+- ✅ `UnitMovementQueue` - Tracks units in transit
+- ✅ Time-based movement (EU4-style: units take X days to move)
+- ✅ Daily tick progression (ProcessDailyTick decrements timer)
+- ✅ Movement cancellation (right-click or undo)
+- ✅ Save/load preserves in-transit units
+- ✅ Movement speed from unit definitions (infantry: 2 days, cavalry: 1 day, artillery: 3 days)
+- ✅ Event-driven updates (UnitMovementStartedEvent, UnitMovementCompletedEvent, UnitMovementCancelledEvent)
+
+**Design:**
+- Units enter movement queue when commanded to move
+- Each daily tick decrements daysRemaining counter
+- When counter reaches 0, unit teleports to destination
+- Cancel mid-movement: unit stays at origin (no partial movement)
+
+**Not Implemented:**
+- Visual progress bar for moving units
+- Terrain-based movement modifiers (mountains slower, etc.)
+- Movement arrow on map showing path
 
 ### Phase 3: Combat (Future)
 
@@ -335,14 +361,23 @@ if (settings.Use3DUnits) {
 - Morale breaks and retreats
 - Combat modifiers
 
-### Phase 4: 3D Visualization (Future)
+### Phase 4: 3D Visualization ✅ Complete (2025-10-20)
 
-**Not in this implementation:**
-- `UnitModel3DRenderer`
-- Billboard sprites or 3D models
-- GPU instancing
-- LOD system
-- Formation positioning
+**Implemented:**
+- ✅ `UnitVisualizationSystem` - Event-driven visual manager
+- ✅ `UnitStackVisual` - 3D cube primitives + TextMeshPro count badges
+- ✅ `ProvinceCenterLookup` - Pixel data → world position conversion
+- ✅ Aggregate display (one visual per province with units)
+- ✅ Object pooling (100 pre-allocated visuals)
+- ✅ Billboard text (X-axis rotation for top-down camera)
+- ✅ Country-colored cubes
+- ✅ Right-click movement integration
+
+**Not Implemented:**
+- GPU instancing material (using material instances currently)
+- 3D models (using primitives)
+- LOD system (single detail level)
+- Formation positioning (single point at province center)
 
 ---
 
@@ -353,9 +388,10 @@ Assets/Archon-Engine/Scripts/Core/
   Units/
     UnitState.cs                    ← 8-byte struct
     UnitSystem.cs                   ← NativeArray manager
-    UnitCommands.cs                 ← CreateUnit, DisbandUnit
+    UnitCommands.cs                 ← CreateUnit, DisbandUnit, MoveUnit
     UnitEvents.cs                   ← UnitCreatedEvent, UnitDestroyedEvent
     UnitColdData.cs                 ← Rare unit data (name, history)
+    UnitMovementQueue.cs            ← Time-based movement tracking (✅ Phase 2B)
 
 Assets/Game/
   Data/
@@ -372,9 +408,14 @@ Assets/Game/
     DisbandUnitCommandFactory.cs    ← Console command factory
 
   Visualization/
-    IUnitRenderer.cs                ← Interface
-    ProvinceCounterRenderer.cs      ← Simple implementation
-    UnitModel3DRenderer.cs          ← 3D implementation (Phase 4)
+    UnitVisualizationSystem.cs      ← Event-driven visual manager (✅ Phase 4)
+    UnitStackVisual.cs              ← Cube + count badge component (✅ Phase 4)
+
+  Systems/
+    UnitsDailyTickHandler.cs        ← Daily tick for movement progression (✅ Phase 2B)
+
+  Utils/
+    ProvinceCenterLookup.cs         ← Province ID → world position (✅ Phase 4)
 
   UI/
     UnitListPanel.cs                ← Show units in selected province
@@ -449,10 +490,27 @@ Assets/Game/
 - ✅ 10k units perform well
 - ✅ Tests pass for UnitSystem
 
-**Future Phase Readiness:**
-- ✅ UnitDefinition.Visual has all needed fields
-- ✅ IUnitRenderer interface supports all operations
-- ✅ No engine code knows about rendering
+**Phase 2A Movement Complete When:**
+- ✅ Units can move to adjacent provinces via command
+- ✅ UI provides "Select Units" → click destination workflow
+- ✅ Movement respects adjacency rules
+- ✅ Visuals update when units move
+
+**Phase 2B Time-Based Movement Complete When:**
+- ✅ Units enter movement queue when commanded to move
+- ✅ Daily ticks decrement movement timer
+- ✅ Units arrive at destination after X days (based on unit type)
+- ✅ Save/load preserves in-transit units
+- ✅ Can cancel movement mid-transit
+- ✅ Movement speed varies by unit type (cavalry faster than infantry)
+
+**Phase 4 Visualization Complete When:**
+- ✅ Units appear as 3D cubes at province centers
+- ✅ Count badges show number of units per province
+- ✅ Visuals update instantly on create/move/destroy
+- ✅ Billboard text stays readable from camera
+- ✅ Right-click moves units when in movement mode
+- ✅ Object pooling prevents GC allocations
 
 ---
 
@@ -471,6 +529,32 @@ Assets/Game/
 
 ---
 
+## IMPLEMENTATION HISTORY
+
+**2025-10-19 - Phase 1 + Phase 2A Complete:**
+- Session 4: [4-unit-system-and-movement.md](../Docs/Log/2025-10/19/4-unit-system-and-movement.md)
+- Implemented: UnitSystem, commands, save/load, basic movement
+- Result: Units functional, can create/move/disband via console + UI
+
+**2025-10-20 - Phase 4 Complete:**
+- Session 1: [1-unit-visualization-system.md](../Docs/Log/2025-10/20/1-unit-visualization-system.md)
+- Implemented: UnitVisualizationSystem, 3D cubes, right-click movement
+- Result: Units visible on map, real-time visual feedback
+
+**2025-10-20 - Phase 2B Complete:**
+- Session 2: [2-eu4-style-time-based-movement.md](../Docs/Log/2025-10/20/2-eu4-style-time-based-movement.md)
+- Implemented: UnitMovementQueue, time-based movement, daily tick progression
+- Result: Units take X days to move (EU4-style), save/load preserves in-transit state
+
+**Outstanding:**
+- Phase 2B+: Visual progress indicators for moving units
+- Phase 2B+: Terrain-based movement costs (mountains slower)
+- Phase 3: Combat system (battle resolution)
+- Phase 4 Polish: GPU instancing, 3D models, formations
+
+---
+
 *Planning Document Created: 2025-10-19*
-*Priority: ENGINE validation - Military Pillar Phase 1*
-*Note: 3D visualization architecture included but deferred to future phase*
+*Last Updated: 2025-10-20*
+*Priority: ENGINE validation - Military Pillar Phase 1 & 2B*
+*Status: Movement system complete (time-based), ready for combat + visual polish*

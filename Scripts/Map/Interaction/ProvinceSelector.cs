@@ -19,6 +19,7 @@ namespace Map.Interaction
 
         // Events for Game layer to subscribe to
         public event Action<ushort> OnProvinceClicked;
+        public event Action<ushort> OnProvinceRightClicked;
         public event Action<ushort> OnProvinceHovered;
         public event Action OnSelectionCleared;
 
@@ -64,7 +65,7 @@ namespace Map.Interaction
                 }
             }
 
-            // Handle click detection
+            // Handle left-click detection
             // Skip if clicking on UI elements
             if (Input.GetMouseButtonDown(0) && !IsPointerOverUI())
             {
@@ -98,6 +99,28 @@ namespace Map.Interaction
                     if (logSelectionDebug)
                     {
                         ArchonLogger.Log("ProvinceSelector: Selection cleared (clicked outside provinces)");
+                    }
+                }
+            }
+
+            // Handle right-click detection (for unit movement)
+            if (Input.GetMouseButtonDown(1) && !IsPointerOverUI())
+            {
+                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit) && hit.transform == mapQuadTransform)
+                {
+                    Vector2 uv = hit.textureCoord;
+                    int x = Mathf.FloorToInt(uv.x * textureManager.MapWidth);
+                    int y = Mathf.FloorToInt(uv.y * textureManager.MapHeight);
+                    x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
+                    y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
+                    ushort clickedProvince = textureManager.GetProvinceID(x, y);
+
+                    if (clickedProvince != 0)
+                    {
+                        OnProvinceRightClicked?.Invoke(clickedProvince);
                     }
                 }
             }

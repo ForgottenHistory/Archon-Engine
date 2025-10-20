@@ -240,19 +240,18 @@ namespace Core.Units
     }
 
     /// <summary>
-    /// Command to move a unit to a new province.
-    /// NOTE: Phase 1 just updates location. Phase 2 will add pathfinding, movement time, etc.
+    /// Command to move a unit to a new province using time-based movement (EU4-style).
     ///
     /// VALIDATION:
     /// - Unit must exist
     /// - Unit must be owned by the executing country
-    /// - Target province must be valid
-    /// - Phase 2: Check adjacency, movement points, etc.
+    /// - Target province must be adjacent
+    /// - Unit must not already be moving
     ///
     /// EXECUTION:
-    /// - Update unit's provinceID
-    /// - Update sparse mappings (province → units)
-    /// - Emit UnitMovedEvent
+    /// - Add unit to movement queue with destination and travel time
+    /// - Unit will arrive after X daily ticks
+    /// - Emit UnitMovementStartedEvent
     /// </summary>
     public class MoveUnitCommand : BaseCommand
     {
@@ -260,15 +259,19 @@ namespace Core.Units
         private readonly ushort unitID;
         private readonly ushort targetProvinceID;
         private readonly ushort countryID;  // For validation
+        private readonly int movementDays;  // How many days the movement takes
 
         private ushort oldProvinceID;  // For undo
+        private bool wasMoving;  // Was unit already moving before this command?
 
-        public MoveUnitCommand(UnitSystem unitSystem, ushort unitID, ushort targetProvinceID, ushort countryID)
+        public MoveUnitCommand(UnitSystem unitSystem, ushort unitID, ushort targetProvinceID, ushort countryID, int movementDays = 2)
         {
             this.unitSystem = unitSystem;
             this.unitID = unitID;
             this.targetProvinceID = targetProvinceID;
             this.countryID = countryID;
+            this.movementDays = movementDays;
+            this.wasMoving = false;
         }
 
         public override bool Validate(GameState gameState)
@@ -307,7 +310,12 @@ namespace Core.Units
                 return false;
             }
 
-            // Phase 2B TODO: Check movement points, terrain costs, etc.
+            // Check if unit is already moving
+            if (unitSystem.MovementQueue.IsUnitMoving(unitID))
+            {
+                ArchonLogger.LogGameWarning($"[MoveUnitCommand] Unit {unitID} is already moving - will cancel previous movement");
+                // Allow command to proceed - it will cancel the old movement
+            }
 
             return true;
         }
@@ -316,15 +324,19 @@ namespace Core.Units
         {
             UnitState unit = unitSystem.GetUnit(unitID);
             oldProvinceID = unit.provinceID;
+            wasMoving = unitSystem.MovementQueue.IsUnitMoving(unitID);
 
-            // Move unit
-            unitSystem.MoveUnit(unitID, targetProvinceID);
+            // Start time-based movement (EU4-style)
+            unitSystem.MovementQueue.StartMovement(unitID, targetProvinceID, movementDays);
         }
 
         public override void Undo(GameState gameState)
         {
-            // Move back to old province
-            unitSystem.MoveUnit(unitID, oldProvinceID);
+            // Cancel the movement
+            unitSystem.MovementQueue.CancelMovement(unitID);
+
+            // If unit wasn't moving before, it stays at origin
+            // If it was moving before, it's now stationary (we don't restore old movement)
         }
 
         public override void Serialize(System.IO.BinaryWriter writer)

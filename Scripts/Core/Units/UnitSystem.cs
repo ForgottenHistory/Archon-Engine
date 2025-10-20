@@ -13,9 +13,11 @@ namespace Core.Units
     /// - Hot data: NativeArray of UnitState (8 bytes each)
     /// - Sparse mapping: Province → Unit IDs (scales with actual units, not possible units)
     /// - Cold data: Dictionary for rare data (custom names, history, etc.)
+    /// - Movement data: Separate NativeArray for movement points (2 bytes per unit)
     ///
     /// PERFORMANCE:
     /// - 10k units × 8 bytes = 80KB hot data
+    /// - 10k units × 2 bytes = 20KB movement data
     /// - Sparse collections scale with usage (not possibility)
     /// - GetUnitsInProvince() is O(m) where m = units in province (typically 1-10)
     ///
@@ -31,6 +33,10 @@ namespace Core.Units
         private NativeArray<UnitState> units;
         private int unitCount;
         private int capacity;
+
+        // === Movement Queue (Time-Based Movement) ===
+
+        private UnitMovementQueue movementQueue;
 
         // === Sparse Mappings (Scale with Usage) ===
 
@@ -63,6 +69,9 @@ namespace Core.Units
 
             // Allocate hot data
             units = new NativeArray<UnitState>(capacity, Allocator.Persistent);
+
+            // Initialize movement queue
+            movementQueue = new UnitMovementQueue(this, eventBus);
 
             // Initialize sparse collections
             provinceUnits = new SparseCollectionManager<ushort, ushort>();
@@ -236,6 +245,11 @@ namespace Core.Units
 
         /// <summary>Get total unit count in the game</summary>
         public int GetUnitCount() => unitCount;
+
+        // === Movement Queue Access ===
+
+        /// <summary>Get the movement queue for time-based movement</summary>
+        public UnitMovementQueue MovementQueue => movementQueue;
 
         // === Modification ===
 
@@ -412,6 +426,9 @@ namespace Core.Units
                 SaveUnitColdData(writer, kvp.Value);
             }
 
+            // Write movement queue
+            movementQueue.SaveState(writer);
+
             UnityEngine.Debug.Log($"[UnitSystem] Saved {unitCount} units");
         }
 
@@ -462,6 +479,9 @@ namespace Core.Units
                 UnitColdData coldData = LoadUnitColdData(reader);
                 unitColdData[unitID] = coldData;
             }
+
+            // Read movement queue
+            movementQueue.LoadState(reader);
 
             // Restore internal state
             RestoreUnitCount(savedUnitCount);
