@@ -10,11 +10,11 @@
 
 Grand strategy games have **four core pillars:**
 1. ✅ **Economy** - Resource management, production, trade
-2. ❌ **Military** - Units, movement, combat
+2. 🔄 **Military** - Units, movement, combat (units + movement ✅, combat pending)
 3. ❌ **Diplomacy** - Relations, treaties, alliances
 4. ❌ **AI** - Decision-making, opponents, challenge
 
-**Current Status:** Economy pillar complete. Need to implement Military, Diplomacy, AI.
+**Current Status:** Economy pillar complete. Military pillar in progress (units, movement, pathfinding complete; combat pending). Need to implement Diplomacy, AI.
 
 **Goal:** Validate Archon-Engine architecture with all four pillars working together.
 
@@ -37,19 +37,17 @@ Grand strategy games have **four core pillars:**
 
 ---
 
-## PILLAR 2: MILITARY (Next Priority)
+## PILLAR 2: MILITARY (In Progress)
 
-### 2.1 Unit System
+### 2.1 Unit System ✅ COMPLETE
 
-**ENGINE Components:**
-- UnitSystem - Manages all units (NativeArray<UnitState>)
-- UnitState - 8-byte struct (provinceID, countryID, type, strength, morale)
-- UnitRegistry - Unit type definitions (infantry, cavalry, artillery)
-- UnitCommands - CreateUnit, MoveUnit, DisbandUnit, MergeUnits
-
-**GAME Components:**
-- UnitDefinition - JSON5 definitions (cost, speed, combat stats)
-- UnitType enum - Infantry, Cavalry, Artillery
+**Implemented Components:**
+- ✅ UnitSystem - Manages all units (NativeArray<UnitState>)
+- ✅ UnitState - 8-byte struct (provinceID, countryID, type, strength, morale)
+- ✅ UnitRegistry - Unit type definitions (infantry, cavalry, artillery)
+- ✅ UnitCommands - CreateUnit, MoveUnit, DisbandUnit
+- ✅ UnitVisualizationSystem - 3D cube visuals with count badges
+- ✅ Save/Load support with round-trip validation
 
 **Data Structure:**
 ```csharp
@@ -63,32 +61,35 @@ struct UnitState {
 }
 ```
 
-**Validation:**
-- Create 10k units, verify <100ms creation time
-- Move 1k units simultaneously, verify deterministic
-- Save/Load with units, verify round-trip
+**Status:** Core unit system complete. Units can be created, disbanded, moved, and saved/loaded. 3D visualization working with aggregate display per province.
 
-### 2.2 Movement System
+**See:** [unit-system-implementation.md](unit-system-implementation.md) for detailed documentation.
 
-**ENGINE Components:**
-- MovementSystem - Processes move orders each tick
-- PathfindingCache - Pre-computed adjacency graph
-- MovementQueue - Orders executed in deterministic order
+### 2.2 Movement System ✅ COMPLETE
 
-**Movement Rules:**
-- Units move 1 province per day (configurable by terrain/unit type)
-- Multiple units can stack in same province
-- Movement costs morale (long marches = tired troops)
+**Implemented Components:**
+- ✅ PathfindingSystem - A* pathfinding for multi-province paths
+- ✅ UnitMovementQueue - Time-based movement with daily tick progression
+- ✅ Multi-hop movement - Automatic waypoint progression
+- ✅ MoveUnitCommand - Pathfinding integration
+- ✅ Save/Load mid-journey support
+
+**Movement Features:**
+- Units take X days to move (configurable by unit type: cavalry 1 day, infantry 2 days, artillery 3 days)
+- A* pathfinding allows moving to any province in one click
+- Automatic waypoint hopping through intermediate provinces
+- Movement queue tracks in-transit units with progress tracking
+- Visual progress bars show movement status on map
 
 **Pathfinding:**
-- A* pathfinding using province adjacency
-- Cached paths (recalculate only when provinces change owner)
-- Terrain movement costs (plains fast, mountains slow)
+- A* algorithm with h=0 (Dijkstra mode) for MVP
+- MVP uses uniform costs (all provinces = 1)
+- Future-ready for terrain movement costs
+- Future-ready for movement blocking (ZOC, borders, military access)
 
-**Validation:**
-- 100 units moving across map, verify pathfinding <5ms
-- Save/Load mid-movement, verify units continue correctly
-- Deterministic movement (same seed = same paths)
+**Status:** Movement system complete with pathfinding. Units can move across entire map in one click with automatic multi-hop progression.
+
+**See:** [unit-system-implementation.md](unit-system-implementation.md) - Phases 2A, 2B, 2C for detailed documentation.
 
 ### 2.3 Combat System
 
@@ -301,8 +302,8 @@ float score =
 
 | Phase | Pillar | Feature | Status |
 |-------|--------|---------|--------|
-| 1 | Military | Unit System | 📋 Planned |
-| 2 | Military | Movement System | 📋 Planned |
+| 1 | Military | Unit System | ✅ Complete |
+| 2 | Military | Movement System | ✅ Complete |
 | 3 | Military | Combat System | 📋 Planned |
 | 4 | Diplomacy | Relations System | 📋 Planned |
 | 5 | Diplomacy | Treaty System | 📋 Planned |
@@ -376,13 +377,15 @@ This plan validates that Archon-Engine can handle:
 
 ## NEXT IMMEDIATE STEPS
 
-1. **Approve this plan** - Confirm priority: Military → Diplomacy → AI
-2. **Create Unit System spec** - Detail UnitState struct, commands, validation
-3. **Implement Week 1** - UnitSystem foundation
-4. **Session log** - Document implementation (like previous refactor logs)
+1. **Combat System** - Next priority after movement completion
+2. **Combat validation** - 100 simultaneous battles, deterministic resolution
+3. **Diplomacy System** - Relations, treaties after combat complete
+4. **AI System** - Final pillar, requires military + diplomacy complete
 
 ---
 
 *Planning Document Created: 2025-10-19*
+*Last Updated: 2025-10-20*
 *Priority: ENGINE validation - complete the four pillars*
+*Status: Military units + movement ✅, combat system next*
 *Note: Time estimates intentionally omitted - focus on implementation order and validation criteria*

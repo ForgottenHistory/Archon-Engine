@@ -328,7 +328,6 @@ if (settings.Use3DUnits) {
 - ✅ Event-driven updates (UnitMovedEvent)
 
 **Not Implemented (Phase 2B+):**
-- Pathfinding (can only move to directly adjacent provinces)
 - Terrain-based movement costs
 
 ### Phase 2B: Time-Based Movement ✅ Complete (2025-10-20)
