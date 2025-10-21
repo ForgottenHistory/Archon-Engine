@@ -276,6 +276,7 @@ namespace Core
                 Modifiers?.Dispose();
                 Resources?.Shutdown();
                 Units?.Dispose();
+                Pathfinding?.Dispose();  // Dispose NativeList<ushort> neighborBuffer
                 EventBus?.Dispose();
 
                 Instance = null;

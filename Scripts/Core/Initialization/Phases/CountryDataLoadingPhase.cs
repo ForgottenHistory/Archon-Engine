@@ -54,6 +54,10 @@ namespace Core.Initialization.Phases
             // Initialize CountrySystem with loaded data
             context.CountrySystem.InitializeFromCountryData(countryDataResult);
 
+            // Dispose countryDataResult immediately after use (data already copied into CountrySystem)
+            // This frees the NativeArray (CountryDataCollection.hotDataArray) allocated with Allocator.Persistent
+            countryDataResult.Dispose();
+
             context.ReportProgress(60f, "Country phase complete");
 
             // Emit country data ready event

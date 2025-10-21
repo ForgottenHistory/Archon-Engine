@@ -148,6 +148,10 @@ namespace Core
             provinceInitialStates = initContext.ProvinceInitialStates;
             provinceDefinitions = initContext.ProvinceDefinitions;
 
+            // Dispose provinceInitialStates immediately after use (data already copied into ProvinceSystem)
+            // This frees the NativeArray allocated with Allocator.Persistent
+            provinceInitialStates.Dispose();
+
             // Phase 4: Load Country Data (40-60%) - NEW: Using phase-based architecture
             SetPhase(LoadingPhase.LoadingCountries, 40f, "Loading countries...");
             yield return StartCoroutine(ExecuteNewPhase(new CountryDataLoadingPhase()));
