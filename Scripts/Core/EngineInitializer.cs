@@ -148,9 +148,8 @@ namespace Core
             provinceInitialStates = initContext.ProvinceInitialStates;
             provinceDefinitions = initContext.ProvinceDefinitions;
 
-            // Dispose provinceInitialStates immediately after use (data already copied into ProvinceSystem)
-            // This frees the NativeArray allocated with Allocator.Persistent
-            provinceInitialStates.Dispose();
+            // NOTE: Do NOT dispose provinceInitialStates here - ReferenceLinkingPhase still needs it!
+            // It will be disposed at the end of ReferenceLinkingPhase (line 203)
 
             // Phase 4: Load Country Data (40-60%) - NEW: Using phase-based architecture
             SetPhase(LoadingPhase.LoadingCountries, 40f, "Loading countries...");

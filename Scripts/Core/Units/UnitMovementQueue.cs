@@ -290,6 +290,37 @@ namespace Core.Units
         /// <summary>Get all moving unit IDs</summary>
         public IEnumerable<ushort> GetMovingUnits() => movingUnits.Keys;
 
+        /// <summary>
+        /// Get full movement path for visualization (current position + all waypoints)
+        /// Returns empty list if unit is not moving
+        /// </summary>
+        public System.Collections.Generic.List<ushort> GetFullPath(ushort unitID)
+        {
+            var path = new System.Collections.Generic.List<ushort>();
+
+            if (!unitSystem.HasUnit(unitID))
+                return path;
+
+            var unit = unitSystem.GetUnit(unitID);
+
+            // Add current position (start of arrow)
+            path.Add(unit.provinceID);
+
+            // Add current destination if moving
+            if (movingUnits.TryGetValue(unitID, out var movementState))
+            {
+                path.Add(movementState.destinationProvinceID);
+            }
+
+            // Add remaining waypoints
+            if (unitPaths.TryGetValue(unitID, out var pathQueue))
+            {
+                path.AddRange(pathQueue);
+            }
+
+            return path;
+        }
+
         /// <summary>Get remaining path for a unit (for UI visualization)</summary>
         public System.Collections.Generic.List<ushort> GetRemainingPath(ushort unitID)
         {
