@@ -97,6 +97,16 @@ namespace Core.Queries
             return provinceSystem.GetCountryProvinces(countryId, allocator);
         }
 
+        /// <summary>
+        /// Get all provinces owned by a specific country (fills existing NativeList)
+        /// Zero-allocation overload for hot paths (monthly tick, etc.)
+        /// Performance target: <5ms for 10k provinces
+        /// </summary>
+        public void GetCountryProvinces(ushort countryId, NativeList<ushort> resultBuffer)
+        {
+            provinceSystem.GetCountryProvinces(countryId, resultBuffer);
+        }
+
         // REMOVED: GetCountryTotalDevelopment() - game-specific, moved to Game layer
 
         /// <summary>

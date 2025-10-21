@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.Data;
 
 namespace Core.Units
 {
@@ -17,6 +18,7 @@ namespace Core.Units
     /// - Sparse storage: Only tracks moving units (not all units)
     /// - Daily tick processes O(n) where n = units currently moving
     /// - Typically 10-100 units moving at once (not 10k)
+    /// - ZERO ALLOCATIONS: Pre-allocated buffers for daily tick processing
     /// </summary>
     public class UnitMovementQueue
     {
@@ -38,7 +40,10 @@ namespace Core.Units
                 this.totalDays = days;
             }
 
-            /// <summary>Get movement progress as 0-1 value</summary>
+            /// <summary>
+            /// Get movement progress as 0-1 value
+            /// This is presentation-only (for UI progress bars), doesn't need FixedPoint64 determinism
+            /// </summary>
             public float GetProgress()
             {
                 if (totalDays == 0) return 1f;
@@ -53,6 +58,10 @@ namespace Core.Units
         private UnitSystem unitSystem;
         private EventBus eventBus;
 
+        // Pre-allocated buffers for ProcessDailyTick() (zero allocations)
+        private List<ushort> arrivedUnitsBuffer;
+        private List<KeyValuePair<ushort, MovementState>> updatedStatesBuffer;
+
         // === Initialization ===
 
         public UnitMovementQueue(UnitSystem unitSystem, EventBus eventBus = null)
@@ -62,7 +71,11 @@ namespace Core.Units
             this.movingUnits = new Dictionary<ushort, MovementState>();
             this.unitPaths = new Dictionary<ushort, System.Collections.Generic.Queue<ushort>>();
 
-            ArchonLogger.Log("[UnitMovementQueue] Initialized");
+            // Pre-allocate buffers (worst-case: all moving units arrive same day)
+            this.arrivedUnitsBuffer = new List<ushort>(100);
+            this.updatedStatesBuffer = new List<KeyValuePair<ushort, MovementState>>(100);
+
+            ArchonLogger.Log("[UnitMovementQueue] Initialized (zero-allocation mode)");
         }
 
         // === Movement Control ===
@@ -164,15 +177,16 @@ namespace Core.Units
         /// <summary>
         /// Process daily tick - advance all movements
         /// Called by TimeManager on daily tick
+        /// ZERO ALLOCATIONS: Uses pre-allocated buffers
         /// </summary>
         public void ProcessDailyTick()
         {
             if (movingUnits.Count == 0)
                 return;
 
-            // Collect units that arrive this tick and updated states (can't modify dict during iteration)
-            List<ushort> arrivedUnits = new List<ushort>();
-            List<KeyValuePair<ushort, MovementState>> updatedStates = new List<KeyValuePair<ushort, MovementState>>();
+            // CLEAR pre-allocated buffers (zero allocations!)
+            arrivedUnitsBuffer.Clear();
+            updatedStatesBuffer.Clear();
 
             // Decrement days remaining for all moving units
             foreach (var kvp in movingUnits)
@@ -185,23 +199,23 @@ namespace Core.Units
                 // Check if unit arrived
                 if (state.daysRemaining <= 0)
                 {
-                    arrivedUnits.Add(unitID);
+                    arrivedUnitsBuffer.Add(unitID);
                 }
                 else
                 {
                     // Collect updated state to apply after iteration
-                    updatedStates.Add(new KeyValuePair<ushort, MovementState>(unitID, state));
+                    updatedStatesBuffer.Add(new KeyValuePair<ushort, MovementState>(unitID, state));
                 }
             }
 
             // Apply updated states
-            foreach (var kvp in updatedStates)
+            foreach (var kvp in updatedStatesBuffer)
             {
                 movingUnits[kvp.Key] = kvp.Value;
             }
 
             // Process arrivals
-            foreach (ushort unitID in arrivedUnits)
+            foreach (ushort unitID in arrivedUnitsBuffer)
             {
                 CompleteMovement(unitID);
             }

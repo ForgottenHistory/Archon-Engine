@@ -1,5 +1,6 @@
 using System;
 using Unity.Collections;
+using Core.Data;
 
 namespace Core.Modifiers
 {
@@ -114,7 +115,7 @@ namespace Core.Modifiers
                 for (ushort i = 0; i < ModifierSet.MAX_MODIFIER_TYPES; i++)
                 {
                     var parentMod = parentSet.Get(i);
-                    if (parentMod.Additive != 0 || parentMod.Multiplicative != 0)
+                    if (parentMod.Additive != FixedPoint64.Zero || parentMod.Multiplicative != FixedPoint64.Zero)
                     {
                         cachedModifierSet.Add(i, parentMod.Additive, false);
                         cachedModifierSet.Add(i, parentMod.Multiplicative, true);
@@ -140,7 +141,7 @@ namespace Core.Modifiers
         /// <summary>
         /// Apply modifier to a base value (rebuilds if dirty)
         /// </summary>
-        public float ApplyModifier(ushort modifierTypeId, float baseValue, ScopedModifierContainer? parentScope = null)
+        public FixedPoint64 ApplyModifier(ushort modifierTypeId, FixedPoint64 baseValue, ScopedModifierContainer? parentScope = null)
         {
             RebuildIfDirty(parentScope);
             return cachedModifierSet.ApplyModifier(modifierTypeId, baseValue);

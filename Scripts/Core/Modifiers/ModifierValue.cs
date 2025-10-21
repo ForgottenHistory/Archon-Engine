@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using Core.Data;
 
 namespace Core.Modifiers
 {
@@ -8,20 +9,22 @@ namespace Core.Modifiers
     ///
     /// Formula: (base + additive) * (1 + multiplicative)
     /// Example: base=10, additive=+5, multiplicative=+0.5 → (10+5)*(1+0.5) = 22.5
+    ///
+    /// DETERMINISM: Uses FixedPoint64 for cross-platform multiplayer compatibility
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct ModifierValue
     {
-        public float Additive;           // Flat bonus (e.g., +5 production)
-        public float Multiplicative;     // Percentage bonus (e.g., +50% = 0.5)
+        public FixedPoint64 Additive;           // Flat bonus (e.g., +5 production)
+        public FixedPoint64 Multiplicative;     // Percentage bonus (e.g., +50% = 0.5)
 
         /// <summary>
         /// Apply this modifier to a base value
         /// Formula: (base + additive) * (1 + multiplicative)
         /// </summary>
-        public float Apply(float baseValue)
+        public FixedPoint64 Apply(FixedPoint64 baseValue)
         {
-            return (baseValue + Additive) * (1.0f + Multiplicative);
+            return (baseValue + Additive) * (FixedPoint64.One + Multiplicative);
         }
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace Core.Modifiers
 
         public override string ToString()
         {
-            return $"[Add: {Additive:+0.0;-0.0}, Mult: {Multiplicative:+0.0%;-0.0%}]";
+            return $"[Add: {Additive.ToFloat():+0.0;-0.0}, Mult: {Multiplicative.ToFloat():+0.0%;-0.0%}]";
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using Core.Data;
 
 namespace Core.Modifiers
 {
@@ -6,9 +7,10 @@ namespace Core.Modifiers
     /// ENGINE: Fixed-size modifier storage (cache-friendly, deterministic)
     /// Uses fixed arrays for zero allocations and cache locality
     ///
-    /// Performance: O(1) lookup, 4KB per instance (512 types × 2 floats × 4 bytes)
+    /// Performance: O(1) lookup, 8KB per instance (512 types × 2 longs × 8 bytes)
     /// Memory layout: Contiguous arrays for additive and multiplicative values
     ///
+    /// DETERMINISM: Stores FixedPoint64.RawValue (long) for cross-platform compatibility
     /// Pattern used by: EU4 (modifier system), CK3 (character modifiers), Stellaris (empire modifiers)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
@@ -18,8 +20,9 @@ namespace Core.Modifiers
 
         // Separate arrays for additive and multiplicative modifiers
         // Using fixed-size arrays for cache locality and zero allocations
-        private fixed float additive[MAX_MODIFIER_TYPES];
-        private fixed float multiplicative[MAX_MODIFIER_TYPES];
+        // Store as long (FixedPoint64.RawValue) for determinism
+        private fixed long additive[MAX_MODIFIER_TYPES];
+        private fixed long multiplicative[MAX_MODIFIER_TYPES];
 
         /// <summary>
         /// Get accumulated modifier value
@@ -31,51 +34,51 @@ namespace Core.Modifiers
 
             return new ModifierValue
             {
-                Additive = additive[modifierTypeId],
-                Multiplicative = multiplicative[modifierTypeId]
+                Additive = FixedPoint64.FromRaw(additive[modifierTypeId]),
+                Multiplicative = FixedPoint64.FromRaw(multiplicative[modifierTypeId])
             };
         }
 
         /// <summary>
         /// Add a modifier (stacks with existing)
         /// </summary>
-        public void Add(ushort modifierTypeId, float value, bool isMultiplicative)
+        public void Add(ushort modifierTypeId, FixedPoint64 value, bool isMultiplicative)
         {
             if (modifierTypeId >= MAX_MODIFIER_TYPES)
                 return;
 
             if (isMultiplicative)
-                multiplicative[modifierTypeId] += value;
+                multiplicative[modifierTypeId] += value.RawValue;
             else
-                additive[modifierTypeId] += value;
+                additive[modifierTypeId] += value.RawValue;
         }
 
         /// <summary>
         /// Remove a modifier (for temporary effects)
         /// </summary>
-        public void Remove(ushort modifierTypeId, float value, bool isMultiplicative)
+        public void Remove(ushort modifierTypeId, FixedPoint64 value, bool isMultiplicative)
         {
             if (modifierTypeId >= MAX_MODIFIER_TYPES)
                 return;
 
             if (isMultiplicative)
-                multiplicative[modifierTypeId] -= value;
+                multiplicative[modifierTypeId] -= value.RawValue;
             else
-                additive[modifierTypeId] -= value;
+                additive[modifierTypeId] -= value.RawValue;
         }
 
         /// <summary>
         /// Set modifier to exact value (replaces existing)
         /// </summary>
-        public void Set(ushort modifierTypeId, float value, bool isMultiplicative)
+        public void Set(ushort modifierTypeId, FixedPoint64 value, bool isMultiplicative)
         {
             if (modifierTypeId >= MAX_MODIFIER_TYPES)
                 return;
 
             if (isMultiplicative)
-                multiplicative[modifierTypeId] = value;
+                multiplicative[modifierTypeId] = value.RawValue;
             else
-                additive[modifierTypeId] = value;
+                additive[modifierTypeId] = value.RawValue;
         }
 
         /// <summary>
@@ -84,13 +87,13 @@ namespace Core.Modifiers
         /// </summary>
         public void Clear()
         {
-            fixed (float* add = additive, mult = multiplicative)
+            fixed (long* add = additive, mult = multiplicative)
             {
                 // Zero out both arrays
                 for (int i = 0; i < MAX_MODIFIER_TYPES; i++)
                 {
-                    add[i] = 0f;
-                    mult[i] = 0f;
+                    add[i] = 0L;
+                    mult[i] = 0L;
                 }
             }
         }
@@ -99,7 +102,7 @@ namespace Core.Modifiers
         /// Apply modifier to base value
         /// Formula: (base + additive) * (1 + multiplicative)
         /// </summary>
-        public float ApplyModifier(ushort modifierTypeId, float baseValue)
+        public FixedPoint64 ApplyModifier(ushort modifierTypeId, FixedPoint64 baseValue)
         {
             var mod = Get(modifierTypeId);
             return mod.Apply(baseValue);

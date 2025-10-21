@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Collections;
+using Core.Data;
 
 namespace Core.Systems
 {
@@ -22,14 +23,26 @@ namespace Core.Systems
     /// - A* with uniform costs = Dijkstra mode
     /// - ~O(E log V) where E = adjacencies, V = provinces
     /// - For 13k provinces with ~6 neighbors avg: very fast (<1ms typical)
+    /// - ZERO ALLOCATIONS: Pre-allocated collections, reused across pathfinding calls
     /// </summary>
-    public class PathfindingSystem
+    public class PathfindingSystem : System.IDisposable
     {
         private AdjacencySystem adjacencySystem;
         private bool isInitialized = false;
 
+        // Pre-allocated collections (cleared and reused for each pathfinding call)
+        // Worst-case capacity for 13k provinces with ~6 neighbors
+        private List<PathNode> openSet;                         // Max open set size (~256 typical)
+        private HashSet<ushort> closedSet;                      // Max provinces explored (~1024 typical)
+        private Dictionary<ushort, ushort> cameFrom;            // Parent tracking (~1024)
+        private Dictionary<ushort, FixedPoint64> gScore;        // Cost from start (~1024)
+        private Dictionary<ushort, FixedPoint64> fScore;        // Estimated total cost (~1024)
+        private List<ushort> pathResult;                        // Reusable result buffer (~64 max path length)
+        private NativeList<ushort> neighborBuffer;              // Reusable neighbor buffer (~16 max neighbors)
+
         /// <summary>
         /// Initialize pathfinding system with adjacency data
+        /// Pre-allocates all collections for zero-allocation pathfinding
         /// </summary>
         public void Initialize(AdjacencySystem adjacencies)
         {
@@ -40,9 +53,19 @@ namespace Core.Systems
             }
 
             this.adjacencySystem = adjacencies;
+
+            // Pre-allocate collections (worst-case capacity)
+            openSet = new List<PathNode>(256);          // Max open set size
+            closedSet = new HashSet<ushort>(1024);      // Max provinces explored
+            cameFrom = new Dictionary<ushort, ushort>(1024);
+            gScore = new Dictionary<ushort, FixedPoint64>(1024);
+            fScore = new Dictionary<ushort, FixedPoint64>(1024);
+            pathResult = new List<ushort>(64);          // Max path length
+            neighborBuffer = new NativeList<ushort>(16, Allocator.Persistent);  // Max neighbors per province
+
             this.isInitialized = true;
 
-            ArchonLogger.Log("PathfindingSystem: Initialized");
+            ArchonLogger.Log("PathfindingSystem: Initialized (zero-allocation mode)");
         }
 
         /// <summary>
@@ -70,15 +93,16 @@ namespace Core.Systems
                 return new List<ushort>();
             }
 
-            // A* pathfinding
-            var openSet = new List<PathNode>(); // Provinces to explore (priority queue)
-            var closedSet = new HashSet<ushort>(); // Already explored
-            var cameFrom = new Dictionary<ushort, ushort>(); // Parent tracking for path reconstruction
-            var gScore = new Dictionary<ushort, float>(); // Cost from start
-            var fScore = new Dictionary<ushort, float>(); // Estimated total cost (g + h)
+            // CLEAR pre-allocated collections (zero allocations!)
+            openSet.Clear();
+            closedSet.Clear();
+            cameFrom.Clear();
+            gScore.Clear();
+            fScore.Clear();
+            pathResult.Clear();
 
             // Initialize start node
-            gScore[start] = 0f;
+            gScore[start] = FixedPoint64.Zero;
             fScore[start] = GetHeuristic(start, goal);
             openSet.Add(new PathNode { provinceID = start, fScore = fScore[start] });
 
@@ -91,17 +115,19 @@ namespace Core.Systems
                 // Goal reached - reconstruct path
                 if (current.provinceID == goal)
                 {
-                    return ReconstructPath(cameFrom, current.provinceID);
+                    ReconstructPath(cameFrom, current.provinceID, pathResult);
+                    // Return copy (caller owns this allocation)
+                    return new List<ushort>(pathResult);
                 }
 
                 closedSet.Add(current.provinceID);
 
-                // Explore neighbors
-                var neighbors = adjacencySystem.GetNeighbors(current.provinceID, Allocator.Temp);
+                // Explore neighbors (reuse pre-allocated buffer - zero allocations!)
+                adjacencySystem.GetNeighbors(current.provinceID, neighborBuffer);
 
-                for (int i = 0; i < neighbors.Length; i++)
+                for (int i = 0; i < neighborBuffer.Length; i++)
                 {
-                    ushort neighbor = neighbors[i];
+                    ushort neighbor = neighborBuffer[i];
 
                     if (closedSet.Contains(neighbor))
                         continue; // Already explored
@@ -110,8 +136,8 @@ namespace Core.Systems
                     // if (!IsPassable(neighbor, unitType, ownerCountry)) continue;
 
                     // Calculate tentative gScore
-                    float movementCost = GetMovementCost(current.provinceID, neighbor);
-                    float tentativeG = gScore[current.provinceID] + movementCost;
+                    FixedPoint64 movementCost = GetMovementCost(current.provinceID, neighbor);
+                    FixedPoint64 tentativeG = gScore[current.provinceID] + movementCost;
 
                     // If this path to neighbor is better than previous, record it
                     if (!gScore.ContainsKey(neighbor) || tentativeG < gScore[neighbor])
@@ -127,8 +153,6 @@ namespace Core.Systems
                         }
                     }
                 }
-
-                neighbors.Dispose();
             }
 
             // No path found
@@ -140,11 +164,12 @@ namespace Core.Systems
         /// Get movement cost between two adjacent provinces
         /// MVP: Always returns 1 (uniform cost)
         /// TODO: Add terrain-based costs
+        /// DETERMINISM: Uses FixedPoint64 for cross-platform compatibility
         /// </summary>
-        private float GetMovementCost(ushort fromProvince, ushort toProvince)
+        private FixedPoint64 GetMovementCost(ushort fromProvince, ushort toProvince)
         {
             // MVP: Uniform cost
-            return 1f;
+            return FixedPoint64.One;
 
             // TODO: Future implementation
             // var terrainFrom = provinceSystem.GetTerrain(fromProvince);
@@ -156,16 +181,17 @@ namespace Core.Systems
         /// Heuristic function for A* (estimated cost to goal)
         /// MVP: Returns 0 (Dijkstra mode - finds optimal path)
         /// TODO: Add straight-line distance heuristic for performance
+        /// DETERMINISM: Uses FixedPoint64 for cross-platform compatibility
         /// </summary>
-        private float GetHeuristic(ushort from, ushort to)
+        private FixedPoint64 GetHeuristic(ushort from, ushort to)
         {
             // MVP: Dijkstra mode (h=0 guarantees optimal path)
-            return 0f;
+            return FixedPoint64.Zero;
 
             // TODO: Future optimization with province positions
             // Vector2 fromPos = provinceSystem.GetPosition(from);
             // Vector2 toPos = provinceSystem.GetPosition(to);
-            // return Vector2.Distance(fromPos, toPos) / avgProvinceDistance;
+            // return FixedPoint64.FromFloat(Vector2.Distance(fromPos, toPos) / avgProvinceDistance);
         }
 
         /// <summary>
@@ -186,19 +212,17 @@ namespace Core.Systems
         }
 
         /// <summary>
-        /// Reconstruct path from parent tracking
+        /// Reconstruct path from parent tracking into pre-allocated buffer (zero allocations)
         /// </summary>
-        private List<ushort> ReconstructPath(Dictionary<ushort, ushort> cameFrom, ushort current)
+        private void ReconstructPath(Dictionary<ushort, ushort> cameFrom, ushort current, List<ushort> result)
         {
-            var path = new List<ushort> { current };
+            result.Add(current);
 
             while (cameFrom.ContainsKey(current))
             {
                 current = cameFrom[current];
-                path.Insert(0, current); // Prepend to build path from start to goal
+                result.Insert(0, current); // Prepend to build path from start to goal
             }
-
-            return path;
         }
 
         /// <summary>
@@ -237,12 +261,26 @@ namespace Core.Systems
         public bool IsInitialized => isInitialized;
 
         /// <summary>
+        /// Dispose native collections
+        /// </summary>
+        public void Dispose()
+        {
+            if (neighborBuffer.IsCreated)
+            {
+                neighborBuffer.Dispose();
+            }
+
+            isInitialized = false;
+        }
+
+        /// <summary>
         /// Node for A* pathfinding
+        /// DETERMINISM: Uses FixedPoint64 for cross-platform compatibility
         /// </summary>
         private struct PathNode
         {
             public ushort provinceID;
-            public float fScore; // g + h
+            public FixedPoint64 fScore; // g + h (deterministic)
         }
     }
 }

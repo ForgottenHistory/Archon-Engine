@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using Core.Data;
 
 namespace Core.Modifiers
 {
@@ -29,14 +30,14 @@ namespace Core.Modifiers
         public SourceType Type;          // What kind of source (1 byte)
         public uint SourceID;            // ID of the source (building ID, tech ID, etc.) (4 bytes)
         public ushort ModifierTypeId;    // Which modifier type this applies to (2 bytes)
-        public float Value;              // Modifier value (4 bytes)
+        public FixedPoint64 Value;       // Modifier value (8 bytes, deterministic)
         public bool IsMultiplicative;    // Additive or multiplicative (1 byte)
 
         // For temporary modifiers
         public bool IsTemporary;         // Does this modifier expire? (1 byte)
         public int ExpirationTick;       // Game tick when this expires (4 bytes, 0 = permanent)
 
-        // Total size: 17 bytes (will pad to 20 bytes for alignment)
+        // Total size: 21 bytes (will pad to 24 bytes for alignment)
 
         /// <summary>
         /// Create a permanent modifier source
@@ -45,7 +46,7 @@ namespace Core.Modifiers
             SourceType type,
             uint sourceId,
             ushort modifierTypeId,
-            float value,
+            FixedPoint64 value,
             bool isMultiplicative)
         {
             return new ModifierSource
@@ -67,7 +68,7 @@ namespace Core.Modifiers
             SourceType type,
             uint sourceId,
             ushort modifierTypeId,
-            float value,
+            FixedPoint64 value,
             bool isMultiplicative,
             int expirationTick)
         {

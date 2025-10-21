@@ -109,6 +109,26 @@ namespace Core.Systems
         }
 
         /// <summary>
+        /// Get all neighbors for a province, filling an existing NativeList (zero allocations)
+        /// Clears the list before filling it with neighbors
+        /// Used by PathfindingSystem for allocation-free pathfinding
+        /// </summary>
+        public void GetNeighbors(ushort provinceId, NativeList<ushort> resultBuffer)
+        {
+            resultBuffer.Clear();
+
+            if (!adjacencies.TryGetValue(provinceId, out HashSet<ushort> neighbors))
+            {
+                return; // No neighbors, buffer remains empty
+            }
+
+            foreach (ushort neighbor in neighbors)
+            {
+                resultBuffer.Add(neighbor);
+            }
+        }
+
+        /// <summary>
         /// Get neighbor count for a province
         /// </summary>
         public int GetNeighborCount(ushort provinceId)

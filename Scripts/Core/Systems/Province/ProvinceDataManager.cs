@@ -216,6 +216,23 @@ namespace Core.Systems.Province
         }
 
         /// <summary>
+        /// Get all provinces owned by country (fills existing NativeList, zero-allocation)
+        /// </summary>
+        public void GetCountryProvinces(ushort countryId, NativeList<ushort> resultBuffer)
+        {
+            resultBuffer.Clear();
+            var states = snapshot.GetProvinceWriteBuffer();
+
+            for (int i = 0; i < provinceCount; i++)
+            {
+                if (states[i].ownerID == countryId)
+                {
+                    resultBuffer.Add(activeProvinceIds[i]);
+                }
+            }
+        }
+
+        /// <summary>
         /// Get all active province IDs
         /// </summary>
         public NativeArray<ushort> GetAllProvinceIds(Allocator allocator = Allocator.TempJob)

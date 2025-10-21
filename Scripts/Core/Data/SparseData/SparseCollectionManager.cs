@@ -173,6 +173,28 @@ namespace Core.Data.SparseData
         }
 
         /// <summary>
+        /// Get all values for a key (fills existing NativeList, zero-allocation)
+        ///
+        /// Performance: O(n) where n = values for this key
+        /// Use case: Hot paths that need to avoid allocations (monthly tick, etc.)
+        /// </summary>
+        public void Get(TKey key, NativeList<TValue> resultBuffer)
+        {
+            ValidateInitialized();
+            resultBuffer.Clear();
+
+            // Collect all values
+            if (data.TryGetFirstValue(key, out TValue value, out var iterator))
+            {
+                resultBuffer.Add(value);
+                while (data.TryGetNextValue(out value, ref iterator))
+                {
+                    resultBuffer.Add(value);
+                }
+            }
+        }
+
+        /// <summary>
         /// Get count of values for a key
         ///
         /// Performance: O(1)
@@ -289,6 +311,25 @@ namespace Core.Data.SparseData
         {
             ValidateInitialized();
             return data.GetKeyArray(allocator);
+        }
+
+        /// <summary>
+        /// Get all unique keys (fills existing NativeList, zero-allocation)
+        ///
+        /// Performance: O(n) where n = number of unique keys
+        /// Use case: Hot paths that need to avoid allocations (monthly tick, etc.)
+        /// </summary>
+        public void GetKeys(NativeList<TKey> resultBuffer)
+        {
+            ValidateInitialized();
+            resultBuffer.Clear();
+
+            var keys = data.GetKeyArray(Allocator.Temp);
+            for (int i = 0; i < keys.Length; i++)
+            {
+                resultBuffer.Add(keys[i]);
+            }
+            keys.Dispose();
         }
 
         #endregion

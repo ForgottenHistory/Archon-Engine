@@ -1,6 +1,7 @@
 using System;
 using Unity.Collections;
 using UnityEngine;
+using Core.Data;
 
 namespace Core.Modifiers
 {
@@ -208,7 +209,7 @@ namespace Core.Modifiers
         /// Get province modifier value with full scope inheritance
         /// Province Final = Province Local + Country + Global
         /// </summary>
-        public float GetProvinceModifier(ushort provinceId, ushort countryId, ushort modifierTypeId, float baseValue)
+        public FixedPoint64 GetProvinceModifier(ushort provinceId, ushort countryId, ushort modifierTypeId, FixedPoint64 baseValue)
         {
             if (provinceId >= maxProvinces)
                 return baseValue;
@@ -233,7 +234,7 @@ namespace Core.Modifiers
         /// Get country modifier value with global inheritance
         /// Country Final = Country Local + Global
         /// </summary>
-        public float GetCountryModifier(ushort countryId, ushort modifierTypeId, float baseValue)
+        public FixedPoint64 GetCountryModifier(ushort countryId, ushort modifierTypeId, FixedPoint64 baseValue)
         {
             if (countryId >= maxCountries)
                 return baseValue;
@@ -245,7 +246,7 @@ namespace Core.Modifiers
         /// <summary>
         /// Get global modifier value
         /// </summary>
-        public float GetGlobalModifier(ushort modifierTypeId, float baseValue)
+        public FixedPoint64 GetGlobalModifier(ushort modifierTypeId, FixedPoint64 baseValue)
         {
             return globalScope.ApplyModifier(modifierTypeId, baseValue);
         }
@@ -429,7 +430,7 @@ namespace Core.Modifiers
                 writer.Write((byte)modifier.Type);
                 writer.Write(modifier.SourceID);
                 writer.Write(modifier.ModifierTypeId);
-                writer.Write(modifier.Value);
+                writer.Write(modifier.Value.RawValue);  // FixedPoint64: save as long
                 writer.Write(modifier.IsMultiplicative);
                 writer.Write(modifier.IsTemporary);
                 writer.Write(modifier.ExpirationTick);
@@ -468,7 +469,7 @@ namespace Core.Modifiers
                     Type = (ModifierSource.SourceType)reader.ReadByte(),
                     SourceID = reader.ReadUInt32(),
                     ModifierTypeId = reader.ReadUInt16(),
-                    Value = reader.ReadSingle(),
+                    Value = FixedPoint64.FromRaw(reader.ReadInt64()),  // FixedPoint64: load from long
                     IsMultiplicative = reader.ReadBoolean(),
                     IsTemporary = reader.ReadBoolean(),
                     ExpirationTick = reader.ReadInt32()
