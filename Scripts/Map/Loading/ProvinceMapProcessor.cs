@@ -285,6 +285,9 @@ namespace Map.Loading
                 }
             }
 
+            // Dispose temporary UniqueProvinceIDs array (data now copied to definitions)
+            parseResult.UniqueProvinceIDs.Dispose();
+
             return new ProvinceDefinitions { AllDefinitions = definitions };
         }
     }
