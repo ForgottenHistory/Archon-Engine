@@ -84,7 +84,7 @@ namespace Map.Integration
                 }
             }
 
-            ArchonLogger.Log("ProvinceMetadataManager: Updated coastal flags based on neighbor detection");
+            ArchonLogger.LogMapRendering("ProvinceMetadataManager: Updated coastal flags based on neighbor detection");
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Map.Integration
                 }
             }
 
-            ArchonLogger.Log("ProvinceMetadataManager: Updated terrain flags based on metadata generation");
+            ArchonLogger.LogMapRendering("ProvinceMetadataManager: Updated terrain flags based on metadata generation");
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Map.Integration
         {
             if (!neighborResult.Success)
             {
-                ArchonLogger.LogWarning("ProvinceMetadataManager: Neighbor data not available");
+                ArchonLogger.LogMapRenderingWarning("ProvinceMetadataManager: Neighbor data not available");
                 return new HashSet<ushort>();
             }
 
@@ -156,7 +156,7 @@ namespace Map.Integration
         {
             if (!metadataResult.Success)
             {
-                ArchonLogger.LogWarning("ProvinceMetadataManager: Metadata not available");
+                ArchonLogger.LogMapRenderingWarning("ProvinceMetadataManager: Metadata not available");
                 return default;
             }
 
@@ -197,7 +197,7 @@ namespace Map.Integration
             // Query metadata result instead of ProvinceData (which doesn't have terrainType field)
             if (!metadataResult.Success)
             {
-                ArchonLogger.LogWarning("ProvinceMetadataManager: Cannot query by terrain - metadata not available");
+                ArchonLogger.LogMapRenderingWarning("ProvinceMetadataManager: Cannot query by terrain - metadata not available");
                 return provinces;
             }
 

@@ -35,13 +35,13 @@ namespace Core.Initialization.Phases
                 }
                 else
                 {
-                    ArchonLogger.LogWarning($"Scenario file not found: {scenarioPath}, using default");
+                    ArchonLogger.LogCoreDataLoadingWarning($"Scenario file not found: {scenarioPath}, using default");
                     scenarioResult = ScenarioLoader.CreateDefaultScenario();
                 }
             }
             else
             {
-                ArchonLogger.Log("No scenario directory specified, using default scenario");
+                ArchonLogger.LogCoreDataLoading("No scenario directory specified, using default scenario");
                 scenarioResult = ScenarioLoader.CreateDefaultScenario();
             }
 
@@ -50,7 +50,7 @@ namespace Core.Initialization.Phases
 
             if (!scenarioResult.Success)
             {
-                ArchonLogger.LogWarning($"Scenario loading failed: {scenarioResult.ErrorMessage}, using default");
+                ArchonLogger.LogCoreDataLoadingWarning($"Scenario loading failed: {scenarioResult.ErrorMessage}, using default");
                 scenarioResult = ScenarioLoader.CreateDefaultScenario();
             }
 
@@ -58,10 +58,10 @@ namespace Core.Initialization.Phases
             var validationIssues = ScenarioLoader.ValidateScenario(scenarioResult.Data, context.GameState);
             if (validationIssues.Count > 0)
             {
-                ArchonLogger.LogWarning($"Scenario validation found {validationIssues.Count} issues");
+                ArchonLogger.LogCoreDataLoadingWarning($"Scenario validation found {validationIssues.Count} issues");
                 foreach (var issue in validationIssues)
                 {
-                    ArchonLogger.LogWarning($"  - {issue}");
+                    ArchonLogger.LogCoreDataLoadingWarning($"  - {issue}");
                 }
             }
 
@@ -72,7 +72,7 @@ namespace Core.Initialization.Phases
             bool applySuccess = ScenarioLoader.ApplyScenario(scenarioResult.Data, context.GameState);
             if (!applySuccess)
             {
-                ArchonLogger.LogError("Failed to apply scenario");
+                ArchonLogger.LogCoreDataLoadingError("Failed to apply scenario");
                 context.ReportError("Scenario application failed");
                 yield break;
             }
@@ -85,14 +85,14 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.Log($"Phase complete: Applied scenario: {scenarioResult.Data.Name}");
+                ArchonLogger.LogCoreDataLoading($"Phase complete: Applied scenario: {scenarioResult.Data.Name}");
             }
         }
 
         public void Rollback(InitializationContext context)
         {
             // Scenario data is part of GameState - on failure, entire GameState is recreated
-            ArchonLogger.Log("Rolling back scenario loading phase");
+            ArchonLogger.LogCoreDataLoading("Rolling back scenario loading phase");
         }
     }
 }

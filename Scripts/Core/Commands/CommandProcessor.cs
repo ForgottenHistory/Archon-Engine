@@ -126,7 +126,7 @@ namespace Core.Commands
                 else
                 {
                     // Command is too late - reject it
-                    ArchonLogger.LogWarning($"Rejecting late command: {command} (current tick: {currentTick})");
+                    ArchonLogger.LogCoreCommandsWarning($"Rejecting late command: {command} (current tick: {currentTick})");
                     command.Dispose();
                     result.CommandsRejected++;
                 }
@@ -191,7 +191,7 @@ namespace Core.Commands
                 }
                 catch (Exception ex)
                 {
-                    ArchonLogger.LogError($"Command execution failed: {ex}");
+                    ArchonLogger.LogCoreCommandsError($"Command execution failed: {ex}");
                     result.CommandsRejected++;
                     commandsRejected++;
                 }
@@ -214,7 +214,7 @@ namespace Core.Commands
             var validationResult = command.Validate(simulation);
             if (!validationResult.IsValid)
             {
-                ArchonLogger.LogWarning($"Command validation failed at execution time: {validationResult.ErrorMessage}");
+                ArchonLogger.LogCoreCommandsWarning($"Command validation failed at execution time: {validationResult.ErrorMessage}");
                 return new CommandExecutionResult { Success = false };
             }
 

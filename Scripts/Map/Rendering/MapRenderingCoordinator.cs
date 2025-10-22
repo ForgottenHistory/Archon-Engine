@@ -87,7 +87,7 @@ namespace Map.Rendering
                     }
                     else
                     {
-                        ArchonLogger.LogError("MapRenderingCoordinator: MapCore shader not found. Make sure the shader is in the project.");
+                        ArchonLogger.LogMapRenderingError("MapRenderingCoordinator: MapCore shader not found. Make sure the shader is in the project.");
                         return;
                     }
                 }

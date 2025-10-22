@@ -42,7 +42,7 @@ namespace Map.Interaction
 
             if (logSelectionDebug)
             {
-                ArchonLogger.Log("ProvinceSelector: Initialized with texture manager and map quad");
+                ArchonLogger.LogMapInteraction("ProvinceSelector: Initialized with texture manager and map quad");
             }
         }
 
@@ -98,7 +98,7 @@ namespace Map.Interaction
 
                     if (logSelectionDebug)
                     {
-                        ArchonLogger.Log("ProvinceSelector: Selection cleared (clicked outside provinces)");
+                        ArchonLogger.LogMapInteraction("ProvinceSelector: Selection cleared (clicked outside provinces)");
                     }
                 }
             }
@@ -159,7 +159,7 @@ namespace Map.Interaction
             {
                 if (logSelectionDebug)
                 {
-                    ArchonLogger.LogWarning("ProvinceSelector: Cannot get province - missing dependencies");
+                    ArchonLogger.LogMapInteractionWarning("ProvinceSelector: Cannot get province - missing dependencies");
                 }
                 return 0;
             }
@@ -207,7 +207,7 @@ namespace Map.Interaction
             {
                 if (logSelectionDebug)
                 {
-                    ArchonLogger.LogWarning("ProvinceSelector: Cannot convert screen position - no camera provided");
+                    ArchonLogger.LogMapInteractionWarning("ProvinceSelector: Cannot convert screen position - no camera provided");
                 }
                 return 0;
             }

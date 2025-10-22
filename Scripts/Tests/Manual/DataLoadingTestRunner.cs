@@ -272,7 +272,7 @@ namespace Tests.Manual
             if (statusText != null)
                 statusText.text = status;
 
-            ArchonLogger.Log($"[DataLoadingTest] {status}");
+            ArchonLogger.LogCoreSimulation($"[DataLoadingTest] {status}");
         }
 
         void UpdateResults(string results)
@@ -343,7 +343,7 @@ namespace Tests.Manual
             var testRunner = new GameObject("DataLoadingTestRunner");
             testRunner.AddComponent<DataLoadingTestRunner>();
 
-            ArchonLogger.Log("Created Data Loading Test Scene");
+            ArchonLogger.LogCoreSimulation("Created Data Loading Test Scene");
         }
         #endif
     }

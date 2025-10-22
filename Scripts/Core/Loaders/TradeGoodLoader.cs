@@ -21,13 +21,13 @@ namespace Core.Loaders
 
             if (!Directory.Exists(tradeGoodsPath))
             {
-                ArchonLogger.LogWarning($"Trade goods directory not found: {tradeGoodsPath}");
+                ArchonLogger.LogCoreDataLoadingWarning($"Trade goods directory not found: {tradeGoodsPath}");
                 CreateDefaultTradeGoods(tradeGoodRegistry);
                 return;
             }
 
             var tradeGoodFiles = Directory.GetFiles(tradeGoodsPath, "*.txt");
-            ArchonLogger.Log($"TradeGoodLoader: Found {tradeGoodFiles.Length} trade good files in {tradeGoodsPath}");
+            ArchonLogger.LogCoreDataLoading($"TradeGoodLoader: Found {tradeGoodFiles.Length} trade good files in {tradeGoodsPath}");
 
             int loaded = 0;
             foreach (var file in tradeGoodFiles)
@@ -39,16 +39,16 @@ namespace Core.Loaders
                 }
                 catch (System.Exception e)
                 {
-                    ArchonLogger.LogError($"TradeGoodLoader: Failed to load {file}: {e.Message}");
+                    ArchonLogger.LogCoreDataLoadingError($"TradeGoodLoader: Failed to load {file}: {e.Message}");
                 }
             }
 
-            ArchonLogger.Log($"TradeGoodLoader: Loaded {loaded}/{tradeGoodFiles.Length} trade good files, {tradeGoodRegistry.Count} trade goods registered");
+            ArchonLogger.LogCoreDataLoading($"TradeGoodLoader: Loaded {loaded}/{tradeGoodFiles.Length} trade good files, {tradeGoodRegistry.Count} trade goods registered");
 
             // If no trade goods loaded, create defaults
             if (tradeGoodRegistry.Count == 0)
             {
-                ArchonLogger.LogWarning("TradeGoodLoader: No trade goods loaded, creating defaults");
+                ArchonLogger.LogCoreDataLoadingWarning("TradeGoodLoader: No trade goods loaded, creating defaults");
                 CreateDefaultTradeGoods(tradeGoodRegistry);
             }
         }
@@ -146,7 +146,7 @@ namespace Core.Loaders
                 tradeGoodRegistry.Register(key, tradeGood);
             }
 
-            ArchonLogger.Log($"TradeGoodLoader: Created {defaultTradeGoods.Length} default trade goods");
+            ArchonLogger.LogCoreDataLoading($"TradeGoodLoader: Created {defaultTradeGoods.Length} default trade goods");
         }
     }
 }

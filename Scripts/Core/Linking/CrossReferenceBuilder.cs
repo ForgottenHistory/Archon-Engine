@@ -172,13 +172,13 @@ namespace Core.Linking
                     var province = registries.Provinces.GetByRuntime(provinceId);
                     if (province == null)
                     {
-                        ArchonLogger.LogError($"Country {country.Tag} claims to own invalid province {provinceId}");
+                        ArchonLogger.LogDataLinkingError($"Country {country.Tag} claims to own invalid province {provinceId}");
                         country.OwnedProvinces.Remove(provinceId);
                         validationErrors++;
                     }
                     else if (province.OwnerId != country.Id)
                     {
-                        ArchonLogger.LogError($"Country {country.Tag} claims to own province {province.DefinitionId}, but province owner is {province.OwnerId}");
+                        ArchonLogger.LogDataLinkingError($"Country {country.Tag} claims to own province {province.DefinitionId}, but province owner is {province.OwnerId}");
                         country.OwnedProvinces.Remove(provinceId);
                         validationErrors++;
                     }
@@ -190,13 +190,13 @@ namespace Core.Linking
                     var province = registries.Provinces.GetByRuntime(provinceId);
                     if (province == null)
                     {
-                        ArchonLogger.LogError($"Country {country.Tag} claims to control invalid province {provinceId}");
+                        ArchonLogger.LogDataLinkingError($"Country {country.Tag} claims to control invalid province {provinceId}");
                         country.ControlledProvinces.Remove(provinceId);
                         validationErrors++;
                     }
                     else if (province.ControllerId != country.Id)
                     {
-                        ArchonLogger.LogError($"Country {country.Tag} claims to control province {province.DefinitionId}, but province controller is {province.ControllerId}");
+                        ArchonLogger.LogDataLinkingError($"Country {country.Tag} claims to control province {province.DefinitionId}, but province controller is {province.ControllerId}");
                         country.ControlledProvinces.Remove(provinceId);
                         validationErrors++;
                     }

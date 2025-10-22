@@ -27,12 +27,12 @@ namespace Core.Systems.Country
         {
             if (!countryDataResult.Success)
             {
-                ArchonLogger.LogError($"Cannot initialize from failed country data: {countryDataResult.ErrorMessage}");
+                ArchonLogger.LogCoreSimulationError($"Cannot initialize from failed country data: {countryDataResult.ErrorMessage}");
                 return;
             }
 
             var countryData = countryDataResult.Countries;
-            ArchonLogger.Log($"Initializing {countryData.Count} countries from data");
+            ArchonLogger.LogCoreSimulation($"Initializing {countryData.Count} countries from data");
 
             // Clear existing data
             dataManager.Clear();
@@ -58,7 +58,7 @@ namespace Core.Systems.Country
                     // Don't increment nextCountryId - reuse this slot for next non-duplicate
                     if (i < 50)
                     {
-                        ArchonLogger.Log($"CountrySystem: Skipping duplicate tag '{tag}' at index {i}");
+                        ArchonLogger.LogCoreSimulation($"CountrySystem: Skipping duplicate tag '{tag}' at index {i}");
                     }
                     continue;
                 }
@@ -67,7 +67,7 @@ namespace Core.Systems.Country
                 if (nextCountryId < 5)
                 {
                     var color = hotData.Color;
-                    ArchonLogger.Log($"CountrySystem: Country index {i} tag={tag} → ID {nextCountryId}, hotData color R={color.r} G={color.g} B={color.b}");
+                    ArchonLogger.LogCoreSimulation($"CountrySystem: Country index {i} tag={tag} → ID {nextCountryId}, hotData color R={color.r} G={color.g} B={color.b}");
                 }
 
                 // Add country to system
@@ -76,12 +76,12 @@ namespace Core.Systems.Country
 
                 if (nextCountryId >= initialCapacity)
                 {
-                    ArchonLogger.LogWarning($"Country capacity exceeded: {nextCountryId}/{initialCapacity}");
+                    ArchonLogger.LogCoreSimulationWarning($"Country capacity exceeded: {nextCountryId}/{initialCapacity}");
                     break;
                 }
             }
 
-            ArchonLogger.Log($"CountrySystem initialized with {dataManager.CountryCount} countries");
+            ArchonLogger.LogCoreSimulation($"CountrySystem initialized with {dataManager.CountryCount} countries");
 
             // Emit initialization complete event
             eventBus?.Emit(new CountrySystemInitializedEvent

@@ -72,7 +72,7 @@ namespace Map.MapModes
         {
             if (isInitialized)
             {
-                ArchonLogger.LogWarning("MapModeManager: Already initialized, skipping");
+                ArchonLogger.LogMapModesWarning("MapModeManager: Already initialized, skipping");
                 return;
             }
 
@@ -85,19 +85,19 @@ namespace Map.MapModes
             // Validate required dependencies
             if (gameState == null)
             {
-                ArchonLogger.LogError("MapModeManager: GameState is null - cannot initialize");
+                ArchonLogger.LogMapModesError("MapModeManager: GameState is null - cannot initialize");
                 return;
             }
 
             if (mapMaterial == null)
             {
-                ArchonLogger.LogError("MapModeManager: Material is null - cannot initialize");
+                ArchonLogger.LogMapModesError("MapModeManager: Material is null - cannot initialize");
                 return;
             }
 
             if (provinceMapping == null)
             {
-                ArchonLogger.LogError("MapModeManager: ProvinceMapping is null - cannot initialize");
+                ArchonLogger.LogMapModesError("MapModeManager: ProvinceMapping is null - cannot initialize");
                 return;
             }
 
@@ -117,7 +117,7 @@ namespace Map.MapModes
             var textureManager = Object.FindFirstObjectByType<MapTextureManager>();
             if (textureManager == null)
             {
-                ArchonLogger.LogError("MapModeManager: MapTextureManager not found");
+                ArchonLogger.LogMapModesError("MapModeManager: MapTextureManager not found");
                 return;
             }
 
@@ -172,7 +172,7 @@ namespace Map.MapModes
 
             if (!modeHandlers.TryGetValue(mode, out var newHandler))
             {
-                ArchonLogger.LogError($"No handler for map mode: {mode}");
+                ArchonLogger.LogMapModesError($"No handler for map mode: {mode}");
                 return;
             }
 
@@ -250,13 +250,13 @@ namespace Map.MapModes
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogWarning("MapModeManager: Cannot update material - not initialized");
+                ArchonLogger.LogMapModesWarning("MapModeManager: Cannot update material - not initialized");
                 return;
             }
 
             if (newMaterial == null)
             {
-                ArchonLogger.LogError("MapModeManager: Cannot update to null material");
+                ArchonLogger.LogMapModesError("MapModeManager: Cannot update to null material");
                 return;
             }
 

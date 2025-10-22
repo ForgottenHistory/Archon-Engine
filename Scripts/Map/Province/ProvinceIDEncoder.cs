@@ -117,7 +117,7 @@ namespace Map.Province
             // Don't count ocean (ID 0) as a province
             result.ProvinceCount = reserveOceanID ? result.ColorToID.Count - 1 : result.ColorToID.Count;
 
-            ArchonLogger.Log($"Province ID encoding complete: {result.ProvinceCount} provinces encoded");
+            ArchonLogger.LogMapTextures($"Province ID encoding complete: {result.ProvinceCount} provinces encoded");
             return result;
         }
 
@@ -177,13 +177,13 @@ namespace Map.Province
             {
                 if (!idToColor.ContainsKey(kvp.Value))
                 {
-                    ArchonLogger.LogError($"Missing reverse mapping for color {kvp.Key} -> ID {kvp.Value}");
+                    ArchonLogger.LogMapTexturesError($"Missing reverse mapping for color {kvp.Key} -> ID {kvp.Value}");
                     return false;
                 }
 
                 if (!idToColor[kvp.Value].Equals(kvp.Key))
                 {
-                    ArchonLogger.LogError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {idToColor[kvp.Value]}");
+                    ArchonLogger.LogMapTexturesError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {idToColor[kvp.Value]}");
                     return false;
                 }
             }
@@ -193,13 +193,13 @@ namespace Map.Province
             {
                 if (!colorToID.ContainsKey(kvp.Value))
                 {
-                    ArchonLogger.LogError($"Missing forward mapping for ID {kvp.Key} -> color {kvp.Value}");
+                    ArchonLogger.LogMapTexturesError($"Missing forward mapping for ID {kvp.Key} -> color {kvp.Value}");
                     return false;
                 }
 
                 if (colorToID[kvp.Value] != kvp.Key)
                 {
-                    ArchonLogger.LogError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {colorToID[kvp.Value]}");
+                    ArchonLogger.LogMapTexturesError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {colorToID[kvp.Value]}");
                     return false;
                 }
             }
@@ -280,7 +280,7 @@ namespace Map.Province
         {
             if (idToColor.Count == 0)
             {
-                ArchonLogger.Log("No province IDs to analyze");
+                ArchonLogger.LogMapTextures("No province IDs to analyze");
                 return;
             }
 
@@ -294,26 +294,26 @@ namespace Map.Province
                 maxID = math.max(maxID, kvp.Key);
             }
 
-            ArchonLogger.Log($"Province ID Distribution Analysis:");
-            ArchonLogger.Log($"  Total Provinces: {totalIDs}");
-            ArchonLogger.Log($"  ID Range: {minID} to {maxID}");
-            ArchonLogger.Log($"  ID Span: {maxID - minID + 1}");
-            ArchonLogger.Log($"  Efficiency: {(float)totalIDs / (maxID - minID + 1) * 100f:F1}%");
+            ArchonLogger.LogMapTextures($"Province ID Distribution Analysis:");
+            ArchonLogger.LogMapTextures($"  Total Provinces: {totalIDs}");
+            ArchonLogger.LogMapTextures($"  ID Range: {minID} to {maxID}");
+            ArchonLogger.LogMapTextures($"  ID Span: {maxID - minID + 1}");
+            ArchonLogger.LogMapTextures($"  Efficiency: {(float)totalIDs / (maxID - minID + 1) * 100f:F1}%");
 
             // Check for ID 0 (ocean)
             if (idToColor.ContainsKey(0))
             {
-                ArchonLogger.Log($"  Ocean Color: {idToColor[0]}");
+                ArchonLogger.LogMapTextures($"  Ocean Color: {idToColor[0]}");
             }
 
             // Sample some province colors
             int sampleCount = math.min(5, totalIDs);
-            ArchonLogger.Log($"  Sample Province Colors:");
+            ArchonLogger.LogMapTextures($"  Sample Province Colors:");
             int samples = 0;
             foreach (var kvp in idToColor)
             {
                 if (samples >= sampleCount) break;
-                ArchonLogger.Log($"    ID {kvp.Key}: {kvp.Value}");
+                ArchonLogger.LogMapTextures($"    ID {kvp.Key}: {kvp.Value}");
                 samples++;
             }
         }

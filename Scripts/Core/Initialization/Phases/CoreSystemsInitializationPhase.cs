@@ -57,7 +57,7 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.Log("Phase complete: Core systems initialized successfully");
+                ArchonLogger.LogCoreDataLoading("Phase complete: Core systems initialized successfully");
             }
         }
 

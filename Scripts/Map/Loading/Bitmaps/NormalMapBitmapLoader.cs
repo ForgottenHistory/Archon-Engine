@@ -18,7 +18,7 @@ namespace Map.Loading.Bitmaps
         {
             if (textureManager == null || textureManager.NormalMapTexture == null)
             {
-                ArchonLogger.LogError("NormalMapBitmapLoader: Cannot populate - texture manager or normal map texture not available");
+                ArchonLogger.LogMapInitError("NormalMapBitmapLoader: Cannot populate - texture manager or normal map texture not available");
                 return;
             }
 

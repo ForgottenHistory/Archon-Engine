@@ -18,7 +18,7 @@ namespace Map.Loading.Bitmaps
         {
             if (textureManager == null || textureManager.ProvinceTerrainTexture == null)
             {
-                ArchonLogger.LogError("TerrainBitmapLoader: Cannot populate - texture manager or terrain texture not available");
+                ArchonLogger.LogMapInitError("TerrainBitmapLoader: Cannot populate - texture manager or terrain texture not available");
                 return;
             }
 

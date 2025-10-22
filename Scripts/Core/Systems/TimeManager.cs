@@ -98,7 +98,7 @@ namespace Core.Systems
 
             isInitialized = true;
 
-            ArchonLogger.Log($"TimeManager initialized - Starting date: {GetCurrentGameTime()}, Speed: {gameSpeedLevel}");
+            ArchonLogger.LogCoreTime($"TimeManager initialized - Starting date: {GetCurrentGameTime()}, Speed: {gameSpeedLevel}");
 
             if (autoStart && !isPaused)
             {
@@ -234,7 +234,7 @@ namespace Core.Systems
                 isPaused = false;
                 OnPauseStateChanged?.Invoke(false);
                 eventBus?.Emit(new TimeStateChangedEvent { IsPaused = false, GameSpeed = gameSpeedLevel });
-                ArchonLogger.Log("Time progression started");
+                ArchonLogger.LogCoreTime("Time progression started");
             }
         }
 
@@ -248,7 +248,7 @@ namespace Core.Systems
                 isPaused = true;
                 OnPauseStateChanged?.Invoke(true);
                 eventBus?.Emit(new TimeStateChangedEvent { IsPaused = true, GameSpeed = gameSpeedLevel });
-                ArchonLogger.Log("Time progression paused");
+                ArchonLogger.LogCoreTime("Time progression paused");
             }
         }
 
@@ -272,7 +272,7 @@ namespace Core.Systems
         {
             if (newSpeedLevel < 0 || newSpeedLevel > 8)
             {
-                ArchonLogger.LogWarning($"Invalid speed level: {newSpeedLevel} (must be 0-8)");
+                ArchonLogger.LogCoreTimeWarning($"Invalid speed level: {newSpeedLevel} (must be 0-8)");
                 return;
             }
 
@@ -292,7 +292,7 @@ namespace Core.Systems
             OnSpeedChanged?.Invoke(gameSpeedLevel);
             eventBus?.Emit(new TimeStateChangedEvent { IsPaused = isPaused, GameSpeed = gameSpeedLevel });
 
-            ArchonLogger.Log($"Game speed changed to level {gameSpeedLevel}");
+            ArchonLogger.LogCoreTime($"Game speed changed to level {gameSpeedLevel}");
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Core.Systems
             accumulator = FixedPoint64.Zero;
 
             eventBus?.Emit(new TimeChangedEvent { GameTime = GetCurrentGameTime() });
-            ArchonLogger.Log($"Game time set to: {GetCurrentGameTime()}");
+            ArchonLogger.LogCoreTime($"Game time set to: {GetCurrentGameTime()}");
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Core.Systems
         {
             if (targetTick < currentTick)
             {
-                ArchonLogger.LogWarning($"Cannot synchronize backwards: current={currentTick}, target={targetTick}");
+                ArchonLogger.LogCoreTimeWarning($"Cannot synchronize backwards: current={currentTick}, target={targetTick}");
                 return;
             }
 
@@ -336,7 +336,7 @@ namespace Core.Systems
                 AdvanceHour();
             }
 
-            ArchonLogger.Log($"Synchronized to tick {currentTick}");
+            ArchonLogger.LogCoreTime($"Synchronized to tick {currentTick}");
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Core.Systems
             isPaused = paused;
             accumulator = newAccumulator;
 
-            ArchonLogger.Log($"TimeManager state loaded: {GetCurrentGameTime()}, Tick: {currentTick}, Speed: {gameSpeedLevel}, Paused: {isPaused}");
+            ArchonLogger.LogCoreTime($"TimeManager state loaded: {GetCurrentGameTime()}, Tick: {currentTick}, Speed: {gameSpeedLevel}, Paused: {isPaused}");
         }
 
         // Old OnGUI debug UI removed - replaced by Game.DebugTools.TimeDebugPanel (UI Toolkit)

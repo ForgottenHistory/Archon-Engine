@@ -74,13 +74,13 @@ namespace Map.Integration
         {
             if (textureManager == null)
             {
-                ArchonLogger.LogError("MapTextureManager not found! Please assign or ensure one exists in scene.");
+                ArchonLogger.LogMapRenderingError("MapTextureManager not found! Please assign or ensure one exists in scene.");
                 return false;
             }
 
             if (mapRenderer == null)
             {
-                ArchonLogger.LogError("MapRenderer not found! Please assign or ensure one exists in scene.");
+                ArchonLogger.LogMapRenderingError("MapRenderer not found! Please assign or ensure one exists in scene.");
                 return false;
             }
 
@@ -94,11 +94,11 @@ namespace Map.Integration
         {
             if (isInitialized)
             {
-                ArchonLogger.LogWarning("Map data already initialized!");
+                ArchonLogger.LogMapRenderingWarning("Map data already initialized!");
                 return;
             }
 
-            ArchonLogger.Log("Initializing map data integration...");
+            ArchonLogger.LogMapRendering("Initializing map data integration...");
 
             // Load province bitmap using optimized ProvinceMapProcessor (via compatibility layer)
             var loadResult = ProvinceMapLoader.LoadProvinceMap(
@@ -108,18 +108,18 @@ namespace Map.Integration
 
             if (!loadResult.Success)
             {
-                ArchonLogger.LogError($"Failed to load province bitmap: {loadResult.ErrorMessage}");
+                ArchonLogger.LogMapRenderingError($"Failed to load province bitmap: {loadResult.ErrorMessage}");
 
                 // Create error texture as fallback
                 var errorTexture = ProvinceMapLoader.CreateErrorTexture(textureManager.MapWidth, textureManager.MapHeight);
-                ArchonLogger.LogWarning("Created error texture as fallback");
+                ArchonLogger.LogMapRenderingWarning("Created error texture as fallback");
                 return;
             }
 
             // Resize texture manager if needed
             if (loadResult.Width != textureManager.MapWidth || loadResult.Height != textureManager.MapHeight)
             {
-                ArchonLogger.Log($"Resizing textures to match bitmap: {loadResult.Width}x{loadResult.Height}");
+                ArchonLogger.LogMapRendering($"Resizing textures to match bitmap: {loadResult.Width}x{loadResult.Height}");
                 textureManager.ResizeTextures(loadResult.Width, loadResult.Height);
             }
 
@@ -132,7 +132,7 @@ namespace Map.Integration
             // Detect province neighbors if enabled
             if (detectNeighbors)
             {
-                ArchonLogger.Log("Detecting province neighbors...");
+                ArchonLogger.LogMapRendering("Detecting province neighbors...");
                 var neighborResult = ProvinceNeighborDetector.DetectNeighbors(loadResult, includeOceanNeighbors);
 
                 if (neighborResult.Success)
@@ -144,26 +144,26 @@ namespace Map.Integration
                 }
                 else
                 {
-                    ArchonLogger.LogError($"Neighbor detection failed: {neighborResult.ErrorMessage}");
+                    ArchonLogger.LogMapRenderingError($"Neighbor detection failed: {neighborResult.ErrorMessage}");
                 }
             }
 
             // Generate province metadata if enabled
             if (generateMetadata)
             {
-                ArchonLogger.Log("Generating province metadata...");
+                ArchonLogger.LogMapRendering("Generating province metadata...");
                 var metadataResult = ProvinceMetadataGenerator.GenerateMetadata(loadResult, metadataManager.NeighborResult, generateConvexHulls);
 
                 if (metadataResult.Success)
                 {
-                    ArchonLogger.Log($"Province metadata generation complete for {metadataResult.ProvinceMetadata.Count} provinces");
+                    ArchonLogger.LogMapRendering($"Province metadata generation complete for {metadataResult.ProvinceMetadata.Count} provinces");
 
                     // Update metadata manager with metadata results (automatically updates terrain flags)
                     metadataManager.SetMetadataResult(metadataResult);
                 }
                 else
                 {
-                    ArchonLogger.LogError($"Metadata generation failed: {metadataResult.ErrorMessage}");
+                    ArchonLogger.LogMapRenderingError($"Metadata generation failed: {metadataResult.ErrorMessage}");
                 }
             }
 
@@ -177,7 +177,7 @@ namespace Map.Integration
             loadResult.Dispose();
 
             isInitialized = true;
-            ArchonLogger.Log($"Map data integration complete! {dataManager.ProvinceCount} provinces loaded.");
+            ArchonLogger.LogMapRendering($"Map data integration complete! {dataManager.ProvinceCount} provinces loaded.");
         }
 
 
@@ -217,7 +217,7 @@ namespace Map.Integration
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("Map data not initialized!");
+                ArchonLogger.LogMapRenderingError("Map data not initialized!");
                 return;
             }
 
@@ -238,7 +238,7 @@ namespace Map.Integration
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("Map data not initialized!");
+                ArchonLogger.LogMapRenderingError("Map data not initialized!");
                 return;
             }
 
@@ -259,7 +259,7 @@ namespace Map.Integration
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("Map data not initialized!");
+                ArchonLogger.LogMapRenderingError("Map data not initialized!");
                 return;
             }
 
@@ -308,9 +308,9 @@ namespace Map.Integration
         {
             if (!isInitialized) return;
 
-            ArchonLogger.Log("Performing full data-to-texture sync...");
+            ArchonLogger.LogMapRendering("Performing full data-to-texture sync...");
             textureSynchronizer.SyncAllProvinces(syncOwner: false, syncColor: true, syncDevelopment: false);
-            ArchonLogger.Log("Full sync complete!");
+            ArchonLogger.LogMapRendering("Full sync complete!");
         }
 
         /// <summary>
@@ -483,13 +483,13 @@ namespace Map.Integration
         {
             if (!isInitialized)
             {
-                ArchonLogger.Log("Map data integration not initialized.");
+                ArchonLogger.LogMapRendering("Map data integration not initialized.");
                 return;
             }
 
             var (totalBytes, provinceBytes, lookupBytes) = dataManager.GetMemoryUsage();
 
-            ArchonLogger.Log($"Map Data Integration Statistics:\n" +
+            ArchonLogger.LogMapRendering($"Map Data Integration Statistics:\n" +
                      $"Initialized: {isInitialized}\n" +
                      $"Provinces: {dataManager.ProvinceCount}\n" +
                      $"Texture Size: {textureManager.MapWidth}x{textureManager.MapHeight}\n" +

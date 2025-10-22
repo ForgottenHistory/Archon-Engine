@@ -48,7 +48,7 @@ namespace Core.Systems
         {
             if (adjacencies == null || !adjacencies.IsInitialized)
             {
-                ArchonLogger.LogError("PathfindingSystem: Cannot initialize with null or uninitialized AdjacencySystem");
+                ArchonLogger.LogCoreSimulationError("PathfindingSystem: Cannot initialize with null or uninitialized AdjacencySystem");
                 return;
             }
 
@@ -65,7 +65,7 @@ namespace Core.Systems
 
             this.isInitialized = true;
 
-            ArchonLogger.Log("PathfindingSystem: Initialized (zero-allocation mode)");
+            ArchonLogger.LogCoreSimulation("PathfindingSystem: Initialized (zero-allocation mode)");
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("PathfindingSystem: Not initialized");
+                ArchonLogger.LogCoreSimulationError("PathfindingSystem: Not initialized");
                 return new List<ushort>();
             }
 
@@ -89,7 +89,7 @@ namespace Core.Systems
 
             if (start == 0 || goal == 0)
             {
-                ArchonLogger.LogWarning($"PathfindingSystem: Invalid province ID (start={start}, goal={goal})");
+                ArchonLogger.LogCoreSimulationWarning($"PathfindingSystem: Invalid province ID (start={start}, goal={goal})");
                 return new List<ushort>();
             }
 
@@ -156,7 +156,7 @@ namespace Core.Systems
             }
 
             // No path found
-            ArchonLogger.LogWarning($"PathfindingSystem: No path from {start} to {goal}");
+            ArchonLogger.LogCoreSimulationWarning($"PathfindingSystem: No path from {start} to {goal}");
             return new List<ushort>();
         }
 

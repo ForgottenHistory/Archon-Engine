@@ -92,18 +92,18 @@ namespace Core
         {
             if (isLoading)
             {
-                ArchonLogger.LogWarning("Game initialization already in progress!");
+                ArchonLogger.LogCoreSimulationWarning("Game initialization already in progress!");
                 return;
             }
 
             if (gameSettings == null)
             {
-                ArchonLogger.LogError("GameSettings not assigned! Cannot initialize game.");
+                ArchonLogger.LogCoreSimulationError("GameSettings not assigned! Cannot initialize game.");
                 ReportError("Missing GameSettings configuration");
                 return;
             }
 
-            ArchonLogger.Log("Starting game initialization...");
+            ArchonLogger.LogCoreSimulation("Starting game initialization...");
             StartCoroutine(InitializeGameCoroutine());
         }
 
@@ -185,7 +185,7 @@ namespace Core
         {
             if (enableDetailedLogging)
             {
-                ArchonLogger.Log($"Starting phase: {phase.PhaseName}");
+                ArchonLogger.LogCoreSimulation($"Starting phase: {phase.PhaseName}");
             }
 
             yield return StartCoroutine(phase.ExecuteAsync(initContext));
@@ -211,7 +211,7 @@ namespace Core
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"Critical error creating initialization phase: {e.Message}");
+                ArchonLogger.LogCoreSimulationError($"Critical error creating initialization phase: {e.Message}");
                 Debug.LogException(e);
                 ReportError($"Phase creation failed: {e.Message}");
                 yield break;
@@ -235,7 +235,7 @@ namespace Core
             // Handle any errors that occurred
             if (hasError)
             {
-                ArchonLogger.LogError($"Error during initialization phase: {errorMessage}");
+                ArchonLogger.LogCoreSimulationError($"Error during initialization phase: {errorMessage}");
                 ReportError($"Phase failed: {errorMessage}");
             }
         }
@@ -279,7 +279,7 @@ namespace Core
             currentProgress = 100f;
             currentStatus = "Game ready!";
 
-            ArchonLogger.Log($"Game initialization complete in {totalTime:F2} seconds");
+            ArchonLogger.LogCoreSimulation($"Game initialization complete in {totalTime:F2} seconds");
 
             // Emit the main simulation data ready event for presentation layer
             var simulationEvent = new SimulationDataReadyEvent
@@ -290,7 +290,7 @@ namespace Core
                 TimeStamp = Time.time
             };
 
-            ArchonLogger.Log($"Emitting SimulationDataReadyEvent: {simulationEvent.ProvinceCount} provinces, {simulationEvent.CountryCount} countries");
+            ArchonLogger.LogCoreSimulation($"Emitting SimulationDataReadyEvent: {simulationEvent.ProvinceCount} provinces, {simulationEvent.CountryCount} countries");
             gameState.EventBus.Emit(simulationEvent);
 
             // Process events immediately to ensure MapGenerator receives the event
@@ -308,7 +308,7 @@ namespace Core
             currentPhase = LoadingPhase.Error;
             currentStatus = $"Error: {error}";
 
-            ArchonLogger.LogError($"Game initialization failed: {error}");
+            ArchonLogger.LogCoreSimulationError($"Game initialization failed: {error}");
 
             // Emit error event
             OnLoadingComplete?.Invoke(false, error);
@@ -325,7 +325,7 @@ namespace Core
 
             if (enableDetailedLogging)
             {
-                ArchonLogger.Log($"[{phase}] {status} ({progress:F1}%)");
+                ArchonLogger.LogCoreSimulation($"[{phase}] {status} ({progress:F1}%)");
             }
 
             OnLoadingProgress?.Invoke(phase, progress, status);
@@ -349,7 +349,7 @@ namespace Core
         {
             if (enableDetailedLogging)
             {
-                ArchonLogger.Log($"[{currentPhase}] Complete: {message}");
+                ArchonLogger.LogCoreSimulation($"[{currentPhase}] Complete: {message}");
             }
         }
 

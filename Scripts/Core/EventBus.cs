@@ -43,7 +43,7 @@ namespace Core
         {
             eventQueues = new Dictionary<Type, IEventQueue>(INITIAL_CAPACITY);
             IsActive = true;
-            ArchonLogger.Log("EventBus initialized (zero-allocation mode)");
+            ArchonLogger.LogCoreEvents("EventBus initialized (zero-allocation mode)");
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Core
             #if UNITY_EDITOR
             if (eventsProcessedThisFrame > 1000)
             {
-                ArchonLogger.LogWarning($"EventBus processed {eventsProcessedThisFrame} events this frame");
+                ArchonLogger.LogCoreEventsWarning($"EventBus processed {eventsProcessedThisFrame} events this frame");
             }
             #endif
         }
@@ -149,14 +149,14 @@ namespace Core
             }
 
             eventQueues.Clear();
-            ArchonLogger.Log("EventBus cleared");
+            ArchonLogger.LogCoreEvents("EventBus cleared");
         }
 
         public void Dispose()
         {
             IsActive = false;
             Clear();
-            ArchonLogger.Log("EventBus disposed");
+            ArchonLogger.LogCoreEvents("EventBus disposed");
         }
 
         #if UNITY_EDITOR
@@ -251,7 +251,7 @@ namespace Core
                     }
                     catch (Exception e)
                     {
-                        ArchonLogger.LogError($"Error processing event {typeof(T).Name}: {e.Message}\n{e.StackTrace}");
+                        ArchonLogger.LogCoreEventsError($"Error processing event {typeof(T).Name}: {e.Message}\n{e.StackTrace}");
                     }
                 }
 

@@ -168,7 +168,7 @@ namespace Map.Core
         {
             if (!hasSimulationData)
             {
-                ArchonLogger.LogError("MapInitializer: StartMapInitialization called but no simulation data cached!");
+                ArchonLogger.LogCoreSimulationError("MapInitializer: StartMapInitialization called but no simulation data cached!");
                 return;
             }
 
@@ -211,7 +211,7 @@ namespace Map.Core
             }
             else
             {
-                ArchonLogger.LogError("MapInitializer: GameSettings not assigned - cannot proceed with map generation");
+                ArchonLogger.LogCoreSimulationError("MapInitializer: GameSettings not assigned - cannot proceed with map generation");
             }
         }
 
@@ -459,7 +459,7 @@ namespace Map.Core
                 }
                 if (mapCamera == null)
                 {
-                    ArchonLogger.LogError("MapInitializer: No camera found for map rendering");
+                    ArchonLogger.LogCoreSimulationError("MapInitializer: No camera found for map rendering");
                 }
                 else if (logInitializationProgress)
                 {

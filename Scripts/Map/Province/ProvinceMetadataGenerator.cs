@@ -108,7 +108,7 @@ namespace Map.Province
                 return result;
             }
 
-            ArchonLogger.Log($"Generating metadata for {loadResult.ProvinceCount} provinces...");
+            ArchonLogger.LogMapTextures($"Generating metadata for {loadResult.ProvinceCount} provinces...");
 
             try
             {
@@ -557,19 +557,19 @@ namespace Map.Province
 
             avgCompactness /= totalProvinces;
 
-            ArchonLogger.Log($"Province Metadata Statistics:");
-            ArchonLogger.Log($"  Total Provinces: {totalProvinces}");
-            ArchonLogger.Log($"  Total Pixels: {totalPixels}");
-            ArchonLogger.Log($"  Average Province Size: {(float)totalPixels / totalProvinces:F1} pixels");
-            ArchonLogger.Log($"  Disconnected Provinces: {disconnectedProvinces} ({(float)disconnectedProvinces / totalProvinces * 100f:F1}%)");
-            ArchonLogger.Log($"  Coastal Provinces: {coastalProvinces} ({(float)coastalProvinces / totalProvinces * 100f:F1}%)");
-            ArchonLogger.Log($"  Compactness Range: {minCompactness:F3} - {maxCompactness:F3} (avg: {avgCompactness:F3})");
+            ArchonLogger.LogMapTextures($"Province Metadata Statistics:");
+            ArchonLogger.LogMapTextures($"  Total Provinces: {totalProvinces}");
+            ArchonLogger.LogMapTextures($"  Total Pixels: {totalPixels}");
+            ArchonLogger.LogMapTextures($"  Average Province Size: {(float)totalPixels / totalProvinces:F1} pixels");
+            ArchonLogger.LogMapTextures($"  Disconnected Provinces: {disconnectedProvinces} ({(float)disconnectedProvinces / totalProvinces * 100f:F1}%)");
+            ArchonLogger.LogMapTextures($"  Coastal Provinces: {coastalProvinces} ({(float)coastalProvinces / totalProvinces * 100f:F1}%)");
+            ArchonLogger.LogMapTextures($"  Compactness Range: {minCompactness:F3} - {maxCompactness:F3} (avg: {avgCompactness:F3})");
 
-            ArchonLogger.Log($"  Terrain Distribution:");
+            ArchonLogger.LogMapTextures($"  Terrain Distribution:");
             foreach (var terrainCount in terrainCounts)
             {
                 float percent = (float)terrainCount.Value / totalProvinces * 100f;
-                ArchonLogger.Log($"    {terrainCount.Key}: {terrainCount.Value} ({percent:F1}%)");
+                ArchonLogger.LogMapTextures($"    {terrainCount.Key}: {terrainCount.Value} ({percent:F1}%)");
             }
         }
 

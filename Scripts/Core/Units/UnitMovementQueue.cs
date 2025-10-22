@@ -75,7 +75,7 @@ namespace Core.Units
             this.arrivedUnitsBuffer = new List<ushort>(100);
             this.updatedStatesBuffer = new List<KeyValuePair<ushort, MovementState>>(100);
 
-            ArchonLogger.Log("[UnitMovementQueue] Initialized (zero-allocation mode)");
+            ArchonLogger.LogCoreSimulation("[UnitMovementQueue] Initialized (zero-allocation mode)");
         }
 
         // === Movement Control ===
@@ -92,7 +92,7 @@ namespace Core.Units
         {
             if (!unitSystem.HasUnit(unitID))
             {
-                ArchonLogger.LogWarning($"[UnitMovementQueue] Cannot start movement for non-existent unit {unitID}");
+                ArchonLogger.LogCoreSimulationWarning($"[UnitMovementQueue] Cannot start movement for non-existent unit {unitID}");
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace Core.Units
             // Cancel existing movement if any
             if (movingUnits.ContainsKey(unitID))
             {
-                ArchonLogger.LogWarning($"[UnitMovementQueue] Unit {unitID} is already moving - cancelling previous movement");
+                ArchonLogger.LogCoreSimulationWarning($"[UnitMovementQueue] Unit {unitID} is already moving - cancelling previous movement");
                 CancelMovement(unitID);
             }
 
@@ -116,7 +116,7 @@ namespace Core.Units
                 }
                 unitPaths[unitID] = pathQueue;
 
-                ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} multi-hop path: {fullPath.Count} provinces total, {pathQueue.Count} waypoints remaining");
+                ArchonLogger.LogCoreSimulation($"[UnitMovementQueue] Unit {unitID} multi-hop path: {fullPath.Count} provinces total, {pathQueue.Count} waypoints remaining");
             }
             // Note: We don't clear the path here if fullPath is null, because:
             // - If this is a continuation of multi-hop journey (from CompleteMovement), we want to keep the path
@@ -127,7 +127,7 @@ namespace Core.Units
             var movementState = new MovementState(unit.provinceID, destinationProvinceID, movementDays);
             movingUnits[unitID] = movementState;
 
-            ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} started moving {unit.provinceID} → {destinationProvinceID} ({movementDays} days)");
+            ArchonLogger.LogCoreSimulation($"[UnitMovementQueue] Unit {unitID} started moving {unit.provinceID} → {destinationProvinceID} ({movementDays} days)");
 
             // Emit event (for UI updates)
             if (eventBus != null)
@@ -160,7 +160,7 @@ namespace Core.Units
                 unitPaths.Remove(unitID);
             }
 
-            ArchonLogger.Log($"[UnitMovementQueue] Cancelled movement for unit {unitID}");
+            ArchonLogger.LogCoreSimulation($"[UnitMovementQueue] Cancelled movement for unit {unitID}");
 
             // Emit event
             if (eventBus != null)
@@ -238,7 +238,7 @@ namespace Core.Units
             // Teleport unit to destination
             unitSystem.MoveUnit(unitID, movementState.destinationProvinceID);
 
-            ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} arrived at province {movementState.destinationProvinceID}");
+            ArchonLogger.LogCoreSimulation($"[UnitMovementQueue] Unit {unitID} arrived at province {movementState.destinationProvinceID}");
 
             // Emit event (for UI updates) - Note: UnitMovedEvent already emitted by UnitSystem.MoveUnit()
             if (eventBus != null)
@@ -255,7 +255,7 @@ namespace Core.Units
             if (unitPaths.TryGetValue(unitID, out var pathQueue) && pathQueue.Count > 0)
             {
                 ushort nextWaypoint = pathQueue.Dequeue();
-                ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} continuing journey to {nextWaypoint} ({pathQueue.Count} waypoints remaining)");
+                ArchonLogger.LogCoreSimulation($"[UnitMovementQueue] Unit {unitID} continuing journey to {nextWaypoint} ({pathQueue.Count} waypoints remaining)");
 
                 // Start movement to next waypoint (use default movement days - should be passed from original command)
                 // Note: We use 2 days as default, but this could be improved by storing movement speed with the path
@@ -265,7 +265,7 @@ namespace Core.Units
                 if (pathQueue.Count == 0)
                 {
                     unitPaths.Remove(unitID);
-                    ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} completed multi-hop journey");
+                    ArchonLogger.LogCoreSimulation($"[UnitMovementQueue] Unit {unitID} completed multi-hop journey");
                 }
             }
         }
@@ -368,7 +368,7 @@ namespace Core.Units
                 }
             }
 
-            ArchonLogger.Log($"[UnitMovementQueue] Saved {movingUnits.Count} moving units, {unitPaths.Count} multi-hop paths");
+            ArchonLogger.LogCoreSimulation($"[UnitMovementQueue] Saved {movingUnits.Count} moving units, {unitPaths.Count} multi-hop paths");
         }
 
         public void LoadState(System.IO.BinaryReader reader)
@@ -408,7 +408,7 @@ namespace Core.Units
                 unitPaths[unitID] = pathQueue;
             }
 
-            ArchonLogger.Log($"[UnitMovementQueue] Loaded {movingUnits.Count} moving units, {unitPaths.Count} multi-hop paths");
+            ArchonLogger.LogCoreSimulation($"[UnitMovementQueue] Loaded {movingUnits.Count} moving units, {unitPaths.Count} multi-hop paths");
         }
     }
 

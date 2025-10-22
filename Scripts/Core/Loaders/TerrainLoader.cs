@@ -21,7 +21,7 @@ namespace Core.Loaders
 
             if (!File.Exists(terrainFilePath))
             {
-                ArchonLogger.LogWarning($"Terrain file not found: {terrainFilePath}");
+                ArchonLogger.LogCoreDataLoadingWarning($"Terrain file not found: {terrainFilePath}");
                 CreateDefaultTerrains(terrainRegistry);
                 return;
             }
@@ -29,18 +29,18 @@ namespace Core.Loaders
             try
             {
                 LoadTerrainFile(terrainRegistry, terrainFilePath);
-                ArchonLogger.Log($"TerrainLoader: Loaded terrain file, {terrainRegistry.Count} terrains registered");
+                ArchonLogger.LogCoreDataLoading($"TerrainLoader: Loaded terrain file, {terrainRegistry.Count} terrains registered");
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"TerrainLoader: Failed to load {terrainFilePath}: {e.Message}");
+                ArchonLogger.LogCoreDataLoadingError($"TerrainLoader: Failed to load {terrainFilePath}: {e.Message}");
                 CreateDefaultTerrains(terrainRegistry);
             }
 
             // If no terrains loaded, create defaults
             if (terrainRegistry.Count == 0)
             {
-                ArchonLogger.LogWarning("TerrainLoader: No terrains loaded, creating defaults");
+                ArchonLogger.LogCoreDataLoadingWarning("TerrainLoader: No terrains loaded, creating defaults");
                 CreateDefaultTerrains(terrainRegistry);
             }
         }
@@ -125,7 +125,7 @@ namespace Core.Loaders
                 terrainRegistry.Register(key, terrain);
             }
 
-            ArchonLogger.Log($"TerrainLoader: Created {defaultTerrains.Length} default terrains");
+            ArchonLogger.LogCoreDataLoading($"TerrainLoader: Created {defaultTerrains.Length} default terrains");
         }
     }
 }

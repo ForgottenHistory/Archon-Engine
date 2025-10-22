@@ -83,7 +83,7 @@ namespace Core.SaveLoad
         {
             if (!saveData.IsCompatibleVersion(currentVersion))
             {
-                ArchonLogger.LogWarning($"SaveFileSerializer: Save file version mismatch (save: {saveData.gameVersion}, current: {currentVersion})");
+                ArchonLogger.LogCoreSaveLoadWarning($"SaveFileSerializer: Save file version mismatch (save: {saveData.gameVersion}, current: {currentVersion})");
                 // For now, allow loading anyway (no migration yet)
                 // TODO: Implement version migration
                 return true;

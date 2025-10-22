@@ -72,7 +72,7 @@ namespace Map.Interaction
 
                 if (highlightCompute == null)
                 {
-                    ArchonLogger.LogWarning("ProvinceHighlighter: Highlight compute shader not assigned. Highlighting will not work.");
+                    ArchonLogger.LogMapInteractionWarning("ProvinceHighlighter: Highlight compute shader not assigned. Highlighting will not work.");
                     return;
                 }
             }
@@ -116,7 +116,7 @@ namespace Map.Interaction
             {
                 if (logOperations)
                 {
-                    ArchonLogger.LogWarning("ProvinceHighlighter: Compute shader not loaded. Cannot highlight.");
+                    ArchonLogger.LogMapInteractionWarning("ProvinceHighlighter: Compute shader not loaded. Cannot highlight.");
                 }
                 return;
             }
@@ -126,7 +126,7 @@ namespace Map.Interaction
                 textureManager = FindFirstObjectByType<MapTextureManager>();
                 if (textureManager == null)
                 {
-                    ArchonLogger.LogError("ProvinceHighlighter: MapTextureManager not found!");
+                    ArchonLogger.LogMapInteractionError("ProvinceHighlighter: MapTextureManager not found!");
                     return;
                 }
             }
@@ -168,7 +168,7 @@ namespace Map.Interaction
 
             if (logOperations)
             {
-                ArchonLogger.Log($"ProvinceHighlighter: Highlighted province {provinceID} in {mode} mode with color {color}");
+                ArchonLogger.LogMapInteraction($"ProvinceHighlighter: Highlighted province {provinceID} in {mode} mode with color {color}");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Map.Interaction
             {
                 if (logOperations)
                 {
-                    ArchonLogger.LogWarning("ProvinceHighlighter: Compute shader not loaded. Cannot highlight country.");
+                    ArchonLogger.LogMapInteractionWarning("ProvinceHighlighter: Compute shader not loaded. Cannot highlight country.");
                 }
                 return;
             }
@@ -202,7 +202,7 @@ namespace Map.Interaction
                 textureManager = FindFirstObjectByType<MapTextureManager>();
                 if (textureManager == null)
                 {
-                    ArchonLogger.LogError("ProvinceHighlighter: MapTextureManager not found!");
+                    ArchonLogger.LogMapInteractionError("ProvinceHighlighter: MapTextureManager not found!");
                     return;
                 }
             }
@@ -235,7 +235,7 @@ namespace Map.Interaction
 
             if (logOperations)
             {
-                ArchonLogger.Log($"ProvinceHighlighter: Highlighted country {countryID} with color {color}");
+                ArchonLogger.LogMapInteraction($"ProvinceHighlighter: Highlighted country {countryID} with color {color}");
             }
         }
 
@@ -267,7 +267,7 @@ namespace Map.Interaction
 
             if (logOperations)
             {
-                ArchonLogger.Log("ProvinceHighlighter: Cleared all highlights");
+                ArchonLogger.LogMapInteraction("ProvinceHighlighter: Cleared all highlights");
             }
         }
 
@@ -325,7 +325,7 @@ namespace Map.Interaction
             );
 
             HighlightProvince(randomProvince, randomColor);
-            ArchonLogger.Log($"ProvinceHighlighter: Debug highlighted province {randomProvince}");
+            ArchonLogger.LogMapInteraction($"ProvinceHighlighter: Debug highlighted province {randomProvince}");
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Map.Interaction
                 HighlightProvince(currentHighlightedProvince, currentHighlightColor, highlightMode);
             }
 
-            ArchonLogger.Log($"ProvinceHighlighter: Toggled to {highlightMode} mode");
+            ArchonLogger.LogMapInteraction($"ProvinceHighlighter: Toggled to {highlightMode} mode");
         }
         #endif
     }

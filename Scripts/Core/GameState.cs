@@ -67,7 +67,7 @@ namespace Core
             // Singleton pattern
             if (Instance != null && Instance != this)
             {
-                ArchonLogger.LogError("Multiple GameState instances detected! Destroying duplicate.");
+                ArchonLogger.LogCoreSimulationError("Multiple GameState instances detected! Destroying duplicate.");
                 Destroy(gameObject);
                 return;
             }
@@ -85,7 +85,7 @@ namespace Core
         public void SetRegistries(GameRegistries registries)
         {
             Registries = registries;
-            ArchonLogger.Log("GameState: Registries set");
+            ArchonLogger.LogCoreSimulation("GameState: Registries set");
         }
 
         /// <summary>
@@ -97,18 +97,18 @@ namespace Core
         {
             if (system == null)
             {
-                ArchonLogger.LogWarning($"GameState: Attempted to register null system of type {typeof(T).Name}");
+                ArchonLogger.LogCoreSimulationWarning($"GameState: Attempted to register null system of type {typeof(T).Name}");
                 return;
             }
 
             Type systemType = typeof(T);
             if (registeredGameSystems.ContainsKey(systemType))
             {
-                ArchonLogger.LogWarning($"GameState: System {systemType.Name} already registered, replacing");
+                ArchonLogger.LogCoreSimulationWarning($"GameState: System {systemType.Name} already registered, replacing");
             }
 
             registeredGameSystems[systemType] = system;
-            ArchonLogger.Log($"GameState: Registered Game layer system {systemType.Name}");
+            ArchonLogger.LogCoreSimulation($"GameState: Registered Game layer system {systemType.Name}");
         }
 
         /// <summary>
@@ -155,11 +155,11 @@ namespace Core
         {
             if (IsInitialized)
             {
-                ArchonLogger.LogWarning("GameState already initialized");
+                ArchonLogger.LogCoreSimulationWarning("GameState already initialized");
                 return;
             }
 
-            ArchonLogger.Log("Initializing GameState systems...");
+            ArchonLogger.LogCoreSimulation("Initializing GameState systems...");
 
             // 1. Core infrastructure first
             EventBus = new EventBus();
@@ -196,7 +196,7 @@ namespace Core
             Time.Initialize(EventBus, Provinces); // Pass ProvinceSystem for buffer swapping
 
             IsInitialized = true;
-            ArchonLogger.Log("GameState initialization complete");
+            ArchonLogger.LogCoreSimulation("GameState initialization complete");
 
             // Emit initialization complete event
             EventBus.Emit(new GameStateInitializedEvent());
@@ -210,14 +210,14 @@ namespace Core
         {
             if (!IsInitialized)
             {
-                ArchonLogger.LogError("Cannot execute command - GameState not initialized");
+                ArchonLogger.LogCoreSimulationError("Cannot execute command - GameState not initialized");
                 return false;
             }
 
             // Validate command
             if (!command.Validate(this))
             {
-                ArchonLogger.LogWarning($"Command validation failed: {command.GetType().Name}");
+                ArchonLogger.LogCoreSimulationWarning($"Command validation failed: {command.GetType().Name}");
                 return false;
             }
 
@@ -233,7 +233,7 @@ namespace Core
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"Command execution failed: {command.GetType().Name} - {e.Message}");
+                ArchonLogger.LogCoreSimulationError($"Command execution failed: {command.GetType().Name} - {e.Message}");
                 EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), Success = false, Error = e.Message });
                 return false;
             }

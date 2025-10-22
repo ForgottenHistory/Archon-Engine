@@ -55,7 +55,7 @@ namespace ProvinceSystem
         {
             if (provinceMap == null)
             {
-                ArchonLogger.LogError("No province map assigned!");
+                ArchonLogger.LogMapRenderingError("No province map assigned!");
                 return null;
             }
 
@@ -69,8 +69,8 @@ namespace ProvinceSystem
             // (13350 provinces * avg 6 neighbors / 2 for bidirectional = ~40k, but let's use 100k for safety)
             int estimatedAdjacencies = 100000;
 
-            ArchonLogger.Log($"Scanning {width}x{height} bitmap for province adjacencies...");
-            ArchonLogger.Log($"Allocating hash set with capacity for {estimatedAdjacencies} adjacency pairs");
+            ArchonLogger.LogMapRendering($"Scanning {width}x{height} bitmap for province adjacencies...");
+            ArchonLogger.LogMapRendering($"Allocating hash set with capacity for {estimatedAdjacencies} adjacency pairs");
 
             // Use native collections for job
             var nativePixels = new NativeArray<Color32>(pixels, Allocator.TempJob);
@@ -133,12 +133,12 @@ namespace ProvinceSystem
 
             if (showDebugInfo)
             {
-                ArchonLogger.Log($"Adjacency scan complete in {lastScanTime:F3} seconds\n" +
+                ArchonLogger.LogMapRendering($"Adjacency scan complete in {lastScanTime:F3} seconds\n" +
                         $"Found {result.provinceCount} provinces with {result.connectionCount} unique adjacency pairs");
 
                 if (pairCount > estimatedAdjacencies * 0.8f)
                 {
-                    ArchonLogger.LogWarning($"Adjacency pairs ({pairCount}) approaching capacity ({estimatedAdjacencies}). " +
+                    ArchonLogger.LogMapRenderingWarning($"Adjacency pairs ({pairCount}) approaching capacity ({estimatedAdjacencies}). " +
                                 "Consider increasing estimatedAdjacencies for safety.");
                 }
             }
@@ -184,7 +184,7 @@ namespace ProvinceSystem
                 }
             }
 
-            ArchonLogger.Log($"Converted {idAdjacencies.Count} color adjacencies to ID adjacencies");
+            ArchonLogger.LogMapRendering($"Converted {idAdjacencies.Count} color adjacencies to ID adjacencies");
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace ProvinceSystem
         {
             if (idAdjacencies == null || idAdjacencies.Count == 0)
             {
-                ArchonLogger.LogWarning("No ID adjacencies to export! Convert color adjacencies first.");
+                ArchonLogger.LogMapRenderingWarning("No ID adjacencies to export! Convert color adjacencies first.");
                 return;
             }
 
@@ -247,7 +247,7 @@ namespace ProvinceSystem
 
             string path = "Assets/adjacencies.csv";
             System.IO.File.WriteAllText(path, sb.ToString());
-            ArchonLogger.Log($"Exported adjacencies to: {path}");
+            ArchonLogger.LogMapRendering($"Exported adjacencies to: {path}");
 
 #if UNITY_EDITOR
             UnityEditor.AssetDatabase.Refresh();

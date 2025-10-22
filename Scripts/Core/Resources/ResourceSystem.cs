@@ -52,13 +52,13 @@ namespace Core.Resources
         {
             if (isInitialized)
             {
-                ArchonLogger.LogWarning("ResourceSystem: Already initialized");
+                ArchonLogger.LogCoreSimulationWarning("ResourceSystem: Already initialized");
                 return;
             }
 
             if (countryCapacity <= 0)
             {
-                ArchonLogger.LogError($"ResourceSystem: Invalid country capacity {countryCapacity}");
+                ArchonLogger.LogCoreSimulationError($"ResourceSystem: Invalid country capacity {countryCapacity}");
                 return;
             }
 
@@ -68,7 +68,7 @@ namespace Core.Resources
 
             isInitialized = true;
 
-            ArchonLogger.Log($"ResourceSystem: Initialized for {maxCountries} countries");
+            ArchonLogger.LogCoreSimulation($"ResourceSystem: Initialized for {maxCountries} countries");
         }
 
         /// <summary>
@@ -79,27 +79,27 @@ namespace Core.Resources
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("ResourceSystem: Not initialized, call Initialize() first");
+                ArchonLogger.LogCoreSimulationError("ResourceSystem: Not initialized, call Initialize() first");
                 return;
             }
 
             if (definition == null)
             {
-                ArchonLogger.LogError($"ResourceSystem: Cannot register null resource definition");
+                ArchonLogger.LogCoreSimulationError($"ResourceSystem: Cannot register null resource definition");
                 return;
             }
 
             // Validate definition
             if (!definition.Validate(out string errorMessage))
             {
-                ArchonLogger.LogError($"ResourceSystem: Invalid resource definition '{definition.id}': {errorMessage}");
+                ArchonLogger.LogCoreSimulationError($"ResourceSystem: Invalid resource definition '{definition.id}': {errorMessage}");
                 return;
             }
 
             // Check if already registered
             if (resourceDefinitions.ContainsKey(resourceId))
             {
-                ArchonLogger.LogWarning($"ResourceSystem: Resource {resourceId} already registered, overwriting");
+                ArchonLogger.LogCoreSimulationWarning($"ResourceSystem: Resource {resourceId} already registered, overwriting");
             }
 
             // Create storage array for this resource
@@ -116,7 +116,7 @@ namespace Core.Resources
             resourceStorageByType[resourceId] = countryValues;
             resourceDefinitions[resourceId] = definition;
 
-            ArchonLogger.Log($"ResourceSystem: Registered resource '{definition.id}' (ID: {resourceId}) with starting amount {startingAmount.ToString("F1")}");
+            ArchonLogger.LogCoreSimulation($"ResourceSystem: Registered resource '{definition.id}' (ID: {resourceId}) with starting amount {startingAmount.ToString("F1")}");
         }
 
         #region Resource Operations
@@ -146,7 +146,7 @@ namespace Core.Resources
 
             if (amount < FixedPoint64.Zero)
             {
-                ArchonLogger.LogWarning($"ResourceSystem: Attempted to add negative amount ({amount}), use RemoveResource instead");
+                ArchonLogger.LogCoreSimulationWarning($"ResourceSystem: Attempted to add negative amount ({amount}), use RemoveResource instead");
                 return;
             }
 
@@ -179,7 +179,7 @@ namespace Core.Resources
 
             if (amount < FixedPoint64.Zero)
             {
-                ArchonLogger.LogWarning($"ResourceSystem: Attempted to remove negative amount ({amount}), use AddResource instead");
+                ArchonLogger.LogCoreSimulationWarning($"ResourceSystem: Attempted to remove negative amount ({amount}), use AddResource instead");
                 return false;
             }
 
@@ -257,19 +257,19 @@ namespace Core.Resources
 
             if (!isInitialized)
             {
-                ArchonLogger.LogError("ResourceSystem: Not initialized");
+                ArchonLogger.LogCoreSimulationError("ResourceSystem: Not initialized");
                 return false;
             }
 
             if (countryId >= maxCountries)
             {
-                ArchonLogger.LogError($"ResourceSystem: Invalid countryId {countryId} (max: {maxCountries})");
+                ArchonLogger.LogCoreSimulationError($"ResourceSystem: Invalid countryId {countryId} (max: {maxCountries})");
                 return false;
             }
 
             if (!resourceStorageByType.TryGetValue(resourceId, out storage))
             {
-                ArchonLogger.LogError($"ResourceSystem: Unknown resource ID {resourceId} (not registered)");
+                ArchonLogger.LogCoreSimulationError($"ResourceSystem: Unknown resource ID {resourceId} (not registered)");
                 return false;
             }
 
@@ -371,7 +371,7 @@ namespace Core.Resources
 
             isInitialized = false;
 
-            ArchonLogger.Log("ResourceSystem: Shutdown complete");
+            ArchonLogger.LogCoreSimulation("ResourceSystem: Shutdown complete");
         }
 
         #endregion

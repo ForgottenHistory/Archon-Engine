@@ -60,7 +60,7 @@ namespace Map.Loading
             var gameState = Object.FindFirstObjectByType<GameState>();
             if (gameState == null)
             {
-                ArchonLogger.LogError("MapDataLoader: Could not find GameState to access simulation data");
+                ArchonLogger.LogMapInitError("MapDataLoader: Could not find GameState to access simulation data");
                 return null;
             }
 
@@ -70,7 +70,7 @@ namespace Map.Loading
                 // simulation data from Core systems rather than parsing it ourselves
                 if (string.IsNullOrEmpty(bitmapPath))
                 {
-                    ArchonLogger.LogError("MapDataLoader: Province bitmap path not set");
+                    ArchonLogger.LogMapInitError("MapDataLoader: Province bitmap path not set");
                     return null;
                 }
 
@@ -90,7 +90,7 @@ namespace Map.Loading
 
                 if (!provinceResult.Success)
                 {
-                    ArchonLogger.LogError($"MapDataLoader: Failed to load province bitmap: {provinceResult.ErrorMessage}");
+                    ArchonLogger.LogMapInitError($"MapDataLoader: Failed to load province bitmap: {provinceResult.ErrorMessage}");
                     return null;
                 }
 
@@ -113,7 +113,7 @@ namespace Map.Loading
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"MapDataLoader: Exception during simulation-driven map loading: {e.Message}\n{e.StackTrace}");
+                ArchonLogger.LogMapInitError($"MapDataLoader: Exception during simulation-driven map loading: {e.Message}\n{e.StackTrace}");
                 return null;
             }
         }
@@ -126,7 +126,7 @@ namespace Map.Loading
         {
             if (string.IsNullOrEmpty(bitmapPath))
             {
-                ArchonLogger.LogError("MapDataLoader: Province bitmap path not set");
+                ArchonLogger.LogMapInitError("MapDataLoader: Province bitmap path not set");
                 return null;
             }
 
@@ -152,7 +152,7 @@ namespace Map.Loading
 
                 if (!provinceResult.Success)
                 {
-                    ArchonLogger.LogError($"MapDataLoader: Failed to load province map: {provinceResult.ErrorMessage}");
+                    ArchonLogger.LogMapInitError($"MapDataLoader: Failed to load province map: {provinceResult.ErrorMessage}");
                     return null;
                 }
 
@@ -180,7 +180,7 @@ namespace Map.Loading
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"MapDataLoader: Exception during province map loading: {e.Message}\n{e.StackTrace}");
+                ArchonLogger.LogMapInitError($"MapDataLoader: Exception during province map loading: {e.Message}\n{e.StackTrace}");
                 return null;
             }
         }

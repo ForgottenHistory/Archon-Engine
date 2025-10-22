@@ -30,7 +30,7 @@ namespace Core.Loaders
 
             if (!File.Exists(definitionPath))
             {
-                ArchonLogger.LogError($"DefinitionLoader: definition.csv not found at {definitionPath}");
+                ArchonLogger.LogCoreDataLoadingError($"DefinitionLoader: definition.csv not found at {definitionPath}");
                 return new List<DefinitionEntry>();
             }
 
@@ -74,16 +74,16 @@ namespace Core.Loaders
                     }
                     catch (Exception e)
                     {
-                        ArchonLogger.LogWarning($"DefinitionLoader: Failed to parse line {lineNumber}: {e.Message}");
+                        ArchonLogger.LogCoreDataLoadingWarning($"DefinitionLoader: Failed to parse line {lineNumber}: {e.Message}");
                         skippedLines++;
                     }
                 }
 
-                ArchonLogger.Log($"DefinitionLoader: Loaded {entries.Count} province definitions from definition.csv ({skippedLines} lines skipped)");
+                ArchonLogger.LogCoreDataLoading($"DefinitionLoader: Loaded {entries.Count} province definitions from definition.csv ({skippedLines} lines skipped)");
             }
             catch (Exception e)
             {
-                ArchonLogger.LogError($"DefinitionLoader: Failed to read definition.csv: {e.Message}");
+                ArchonLogger.LogCoreDataLoadingError($"DefinitionLoader: Failed to read definition.csv: {e.Message}");
             }
 
             return entries;
@@ -111,7 +111,7 @@ namespace Core.Loaders
                 !byte.TryParse(parts[2].Trim(), out byte g) ||
                 !byte.TryParse(parts[3].Trim(), out byte b))
             {
-                ArchonLogger.LogWarning($"DefinitionLoader: Invalid RGB values on line {lineNumber}");
+                ArchonLogger.LogCoreDataLoadingWarning($"DefinitionLoader: Invalid RGB values on line {lineNumber}");
                 return new DefinitionEntry { ProvinceID = 0 }; // Invalid
             }
 
@@ -173,11 +173,11 @@ namespace Core.Loaders
                 }
                 catch (Exception e)
                 {
-                    ArchonLogger.LogWarning($"DefinitionLoader: Failed to register province {def.ProvinceID}: {e.Message}");
+                    ArchonLogger.LogCoreDataLoadingWarning($"DefinitionLoader: Failed to register province {def.ProvinceID}: {e.Message}");
                 }
             }
 
-            ArchonLogger.Log($"DefinitionLoader: Registered {registered} default provinces from definitions (total registry size: {registry.Count})");
+            ArchonLogger.LogCoreDataLoading($"DefinitionLoader: Registered {registered} default provinces from definitions (total registry size: {registry.Count})");
         }
     }
 }

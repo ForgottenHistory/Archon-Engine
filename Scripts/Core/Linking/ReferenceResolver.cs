@@ -257,7 +257,7 @@ namespace Core.Linking
         private void AddError(string message)
         {
             errors.Add(message);
-            ArchonLogger.LogError($"Reference Resolution Error: {message}");
+            ArchonLogger.LogDataLinkingError($"Reference Resolution Error: {message}");
         }
 
         /// <summary>

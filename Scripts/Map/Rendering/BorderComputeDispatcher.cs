@@ -71,7 +71,7 @@ namespace Map.Rendering
 
                 if (borderDetectionCompute == null)
                 {
-                    ArchonLogger.LogWarning("BorderComputeDispatcher: Border detection compute shader not assigned. Borders will not be generated.");
+                    ArchonLogger.LogMapRenderingWarning("BorderComputeDispatcher: Border detection compute shader not assigned. Borders will not be generated.");
                     return;
                 }
             }
@@ -106,7 +106,7 @@ namespace Map.Rendering
         {
             if (borderDetectionCompute == null)
             {
-                ArchonLogger.LogWarning("BorderComputeDispatcher: Compute shader not loaded. Skipping border detection.");
+                ArchonLogger.LogMapRenderingWarning("BorderComputeDispatcher: Compute shader not loaded. Skipping border detection.");
                 return;
             }
 
@@ -115,7 +115,7 @@ namespace Map.Rendering
                 textureManager = GetComponent<MapTextureManager>();
                 if (textureManager == null)
                 {
-                    ArchonLogger.LogError("BorderComputeDispatcher: MapTextureManager not found!");
+                    ArchonLogger.LogMapRenderingError("BorderComputeDispatcher: MapTextureManager not found!");
                     return;
                 }
             }
@@ -188,7 +188,7 @@ namespace Map.Rendering
             if (logPerformance)
             {
                 float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                ArchonLogger.Log($"BorderComputeDispatcher: Border detection completed in {elapsedMs:F2}ms " +
+                ArchonLogger.LogMapRendering($"BorderComputeDispatcher: Border detection completed in {elapsedMs:F2}ms " +
                     $"({textureManager.MapWidth}x{textureManager.MapHeight} pixels, {threadGroupsX}x{threadGroupsY} thread groups)");
             }
         }
@@ -206,7 +206,7 @@ namespace Map.Rendering
             GL.Clear(true, true, Color.white);
             RenderTexture.active = null;
 
-            ArchonLogger.Log("BorderComputeDispatcher: Filled border texture with white for debugging");
+            ArchonLogger.LogMapRendering("BorderComputeDispatcher: Filled border texture with white for debugging");
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Map.Rendering
 
             if (logPerformance)
             {
-                ArchonLogger.Log("BorderComputeDispatcher: Borders cleared");
+                ArchonLogger.LogMapRendering("BorderComputeDispatcher: Borders cleared");
             }
         }
 
@@ -285,7 +285,7 @@ namespace Map.Rendering
         public void ForceEnableBorders()
         {
             SetBorderMode(BorderMode.Province);
-            ArchonLogger.Log($"BorderComputeDispatcher: Forced border mode to {borderMode}");
+            ArchonLogger.LogMapRendering($"BorderComputeDispatcher: Forced border mode to {borderMode}");
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Map.Rendering
         {
             borderMode = (BorderMode)(((int)borderMode + 1) % 5);
             DetectBorders();
-            ArchonLogger.Log($"BorderComputeDispatcher: Toggled to border mode: {borderMode}");
+            ArchonLogger.LogMapRendering($"BorderComputeDispatcher: Toggled to border mode: {borderMode}");
         }
 
         /// <summary>
@@ -359,12 +359,12 @@ namespace Map.Rendering
         {
             if (textureManager == null)
             {
-                ArchonLogger.LogError("Cannot benchmark without texture manager");
+                ArchonLogger.LogMapRenderingError("Cannot benchmark without texture manager");
                 return;
             }
 
-            ArchonLogger.Log("=== Border Detection Benchmark ===");
-            ArchonLogger.Log($"Map Size: {textureManager.MapWidth}x{textureManager.MapHeight}");
+            ArchonLogger.LogMapRendering("=== Border Detection Benchmark ===");
+            ArchonLogger.LogMapRendering($"Map Size: {textureManager.MapWidth}x{textureManager.MapHeight}");
 
             // Test each mode
             var modes = new[] { BorderMode.Province, BorderMode.Country, BorderMode.Thick };
@@ -387,10 +387,10 @@ namespace Map.Rendering
                 }
 
                 float avgMs = (totalTime / iterations) * 1000f;
-                ArchonLogger.Log($"{mode} Mode: {avgMs:F2}ms average ({iterations} iterations)");
+                ArchonLogger.LogMapRendering($"{mode} Mode: {avgMs:F2}ms average ({iterations} iterations)");
             }
 
-            ArchonLogger.Log("=== Benchmark Complete ===");
+            ArchonLogger.LogMapRendering("=== Benchmark Complete ===");
         }
 #endif
     }

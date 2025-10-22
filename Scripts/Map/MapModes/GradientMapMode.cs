@@ -132,7 +132,7 @@ namespace Map.MapModes
 
             if (dataTextures?.ProvinceDevelopmentTexture == null)
             {
-                ArchonLogger.LogError($"{Name}: Development texture not available");
+                ArchonLogger.LogMapModesError($"{Name}: Development texture not available");
                 return;
             }
 
@@ -143,7 +143,7 @@ namespace Map.MapModes
 
             if (allProvinces.Length == 0)
             {
-                ArchonLogger.LogWarning($"{Name}: No provinces available");
+                ArchonLogger.LogMapModesWarning($"{Name}: No provinces available");
                 return;
             }
 
@@ -152,7 +152,7 @@ namespace Map.MapModes
 
             if (stats.ValidProvinces == 0)
             {
-                ArchonLogger.LogWarning($"{Name}: No valid provinces with data");
+                ArchonLogger.LogMapModesWarning($"{Name}: No valid provinces with data");
                 return;
             }
 
@@ -165,7 +165,7 @@ namespace Map.MapModes
 
             var elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
 
-            ArchonLogger.Log($"{Name}: Updated {stats.ValidProvinces} provinces in {elapsed:F2}ms " +
+            ArchonLogger.LogMapModes($"{Name}: Updated {stats.ValidProvinces} provinces in {elapsed:F2}ms " +
                            $"[Range: {stats.MinValue:F1}-{stats.MaxValue:F1}, Avg: {stats.AvgValue:F1}]");
         }
 
@@ -218,7 +218,7 @@ namespace Map.MapModes
             var texture = dataTextures.ProvinceDevelopmentTexture;
             if (texture == null)
             {
-                ArchonLogger.LogError($"{Name}: ProvinceDevelopmentTexture is null");
+                ArchonLogger.LogMapModesError($"{Name}: ProvinceDevelopmentTexture is null");
                 return;
             }
 
@@ -312,7 +312,7 @@ namespace Map.MapModes
         /// </summary>
         protected void LogActivation(string message)
         {
-            ArchonLogger.Log($"{Name}: {message}");
+            ArchonLogger.LogMapModes($"{Name}: {message}");
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Map.MapModes
         /// </summary>
         protected void LogDeactivation(string message = null)
         {
-            ArchonLogger.Log($"{Name}: Deactivated{(message != null ? " - " + message : "")}");
+            ArchonLogger.LogMapModes($"{Name}: Deactivated{(message != null ? " - " + message : "")}");
         }
 
         /// <summary>

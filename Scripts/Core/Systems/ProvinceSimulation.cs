@@ -62,7 +62,7 @@ namespace Core.Systems
                 provinces[i] = defaultState;
             }
 
-            ArchonLogger.Log($"ProvinceSimulation initialized with capacity for {capacity} provinces " +
+            ArchonLogger.LogCoreSimulation($"ProvinceSimulation initialized with capacity for {capacity} provinces " +
                      $"({capacity * 8} bytes hot data)");
         }
 
@@ -73,25 +73,25 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("ProvinceSimulation not initialized");
+                ArchonLogger.LogCoreSimulationError("ProvinceSimulation not initialized");
                 return false;
             }
 
             if (provinceID == 0)
             {
-                ArchonLogger.LogError("Province ID 0 is reserved for ocean");
+                ArchonLogger.LogCoreSimulationError("Province ID 0 is reserved for ocean");
                 return false;
             }
 
             if (provinceCount >= provinces.Length)
             {
-                ArchonLogger.LogError($"Province capacity exceeded ({provinces.Length})");
+                ArchonLogger.LogCoreSimulationError($"Province capacity exceeded ({provinces.Length})");
                 return false;
             }
 
             if (idToIndex.ContainsKey(provinceID))
             {
-                ArchonLogger.LogWarning($"Province {provinceID} already exists");
+                ArchonLogger.LogCoreSimulationWarning($"Province {provinceID} already exists");
                 return false;
             }
 
@@ -374,7 +374,7 @@ namespace Core.Systems
         {
             var (totalBytes, hotBytes, coldBytes) = GetMemoryUsage();
 
-            ArchonLogger.Log($"Province Simulation Statistics:\n" +
+            ArchonLogger.LogCoreSimulation($"Province Simulation Statistics:\n" +
                      $"Provinces: {provinceCount}/{provinces.Length}\n" +
                      $"Memory Usage: {totalBytes / 1024f:F1} KB total\n" +
                      $"  - Hot Data: {hotBytes / 1024f:F1} KB ({hotBytes} bytes)\n" +

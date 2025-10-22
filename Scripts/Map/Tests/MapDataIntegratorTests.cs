@@ -99,10 +99,10 @@ namespace Map.Tests
                     {
                         Assert.IsTrue(metadataResult.Success, "Metadata generation should succeed");
 
-                        ArchonLogger.Log($"Integration test successful:");
-                        ArchonLogger.Log($"  - Loaded {loadResult.ProvinceCount} provinces");
-                        ArchonLogger.Log($"  - Found {neighborResult.TotalNeighborPairs} neighbor pairs");
-                        ArchonLogger.Log($"  - Generated metadata for {metadataResult.ProvinceMetadata.Count} provinces");
+                        ArchonLogger.LogMapRendering($"Integration test successful:");
+                        ArchonLogger.LogMapRendering($"  - Loaded {loadResult.ProvinceCount} provinces");
+                        ArchonLogger.LogMapRendering($"  - Found {neighborResult.TotalNeighborPairs} neighbor pairs");
+                        ArchonLogger.LogMapRendering($"  - Generated metadata for {metadataResult.ProvinceMetadata.Count} provinces");
                     }
                     finally
                     {
@@ -154,7 +154,7 @@ namespace Map.Tests
             {
                 if (result.Success)
                 {
-                    ArchonLogger.Log($"Complete map loading took {stopwatch.ElapsedMilliseconds}ms for {result.ProvinceCount} provinces");
+                    ArchonLogger.LogMapRendering($"Complete map loading took {stopwatch.ElapsedMilliseconds}ms for {result.ProvinceCount} provinces");
 
                     // Performance expectations based on map size
                     if (result.ProvinceCount < 1000)
@@ -176,7 +176,7 @@ namespace Map.Tests
                     System.GC.WaitForPendingFinalizers();
                     long memoryAfter = System.GC.GetTotalMemory(true);
 
-                    ArchonLogger.Log($"Estimated memory impact: {(memoryAfter - memoryBefore) / (1024 * 1024)}MB");
+                    ArchonLogger.LogMapRendering($"Estimated memory impact: {(memoryAfter - memoryBefore) / (1024 * 1024)}MB");
                 }
             }
             finally
@@ -233,7 +233,7 @@ namespace Map.Tests
 
                 Assert.Greater(validPixels, 0, "Should have at least some non-ocean pixels");
 
-                ArchonLogger.Log($"Data consistency checks passed: {validPixels} valid province pixels");
+                ArchonLogger.LogMapRendering($"Data consistency checks passed: {validPixels} valid province pixels");
             }
             finally
             {
@@ -263,7 +263,7 @@ namespace Map.Tests
                 // This is more about documenting expected behavior
             }
 
-            ArchonLogger.Log("Memory management test completed - multiple load/dispose cycles successful");
+            ArchonLogger.LogMapRendering("Memory management test completed - multiple load/dispose cycles successful");
         }
 
         [Test]
@@ -288,7 +288,7 @@ namespace Map.Tests
                 if (!result.Success)
                 {
                     Assert.IsNotEmpty(result.ErrorMessage, "Failed result should have error message");
-                    ArchonLogger.Log($"Expected partial failure: {result.ErrorMessage}");
+                    ArchonLogger.LogMapRendering($"Expected partial failure: {result.ErrorMessage}");
                 }
 
                 // The integrator should clean up any partially allocated data
@@ -312,7 +312,7 @@ namespace Map.Tests
                 var smallResult = ProvinceMapLoader.LoadProvinceMap(smallMapPath, textureManager);
                 try
                 {
-                    ArchonLogger.Log($"Small map test: Success={smallResult.Success}, Provinces={smallResult.ProvinceCount}");
+                    ArchonLogger.LogMapRendering($"Small map test: Success={smallResult.Success}, Provinces={smallResult.ProvinceCount}");
                 }
                 finally
                 {
@@ -350,12 +350,12 @@ namespace Map.Tests
                             if (kvp.Value < 5) smallProvinces++;
                         }
 
-                        ArchonLogger.Log($"Found {smallProvinces} very small provinces (< 5 pixels) out of {provincePixelCounts.Count} total");
+                        ArchonLogger.LogMapRendering($"Found {smallProvinces} very small provinces (< 5 pixels) out of {provincePixelCounts.Count} total");
 
                         // This is acceptable but worth noting for performance
                         if (smallProvinces > provincePixelCounts.Count * 0.1f)
                         {
-                            ArchonLogger.LogWarning($"High ratio of small provinces: {smallProvinces}/{provincePixelCounts.Count}");
+                            ArchonLogger.LogMapRenderingWarning($"High ratio of small provinces: {smallProvinces}/{provincePixelCounts.Count}");
                         }
                     }
                 }

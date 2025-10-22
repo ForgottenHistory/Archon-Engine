@@ -282,19 +282,19 @@ namespace Core.Units
         {
             if (unitSystem == null)
             {
-                ArchonLogger.LogGameError("[MoveUnitCommand] UnitSystem is null");
+                ArchonLogger.LogCoreSimulationError("[MoveUnitCommand] UnitSystem is null");
                 return false;
             }
 
             if (pathfindingSystem == null || !pathfindingSystem.IsInitialized)
             {
-                ArchonLogger.LogGameError("[MoveUnitCommand] PathfindingSystem not initialized");
+                ArchonLogger.LogCoreSimulationError("[MoveUnitCommand] PathfindingSystem not initialized");
                 return false;
             }
 
             if (!unitSystem.HasUnit(unitID))
             {
-                ArchonLogger.LogGameError($"[MoveUnitCommand] Unit {unitID} does not exist");
+                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] Unit {unitID} does not exist");
                 return false;
             }
 
@@ -303,14 +303,14 @@ namespace Core.Units
             // Verify ownership
             if (unit.countryID != countryID)
             {
-                ArchonLogger.LogGameError($"[MoveUnitCommand] Unit {unitID} is owned by country {unit.countryID}, not {countryID}");
+                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] Unit {unitID} is owned by country {unit.countryID}, not {countryID}");
                 return false;
             }
 
             // Check if unit is already moving
             if (unitSystem.MovementQueue.IsUnitMoving(unitID))
             {
-                ArchonLogger.LogGameWarning($"[MoveUnitCommand] Unit {unitID} is already moving - will cancel previous movement");
+                ArchonLogger.LogCoreSimulationWarning($"[MoveUnitCommand] Unit {unitID} is already moving - will cancel previous movement");
                 // Allow command to proceed - it will cancel the old movement
             }
 
@@ -328,14 +328,14 @@ namespace Core.Units
 
             if (path == null || path.Count == 0)
             {
-                ArchonLogger.LogGameWarning($"[MoveUnitCommand] No path found from province {unit.provinceID} to {targetProvinceID}");
+                ArchonLogger.LogCoreSimulationWarning($"[MoveUnitCommand] No path found from province {unit.provinceID} to {targetProvinceID}");
                 return; // Cannot move - no path exists
             }
 
             if (path.Count == 1)
             {
                 // Already at destination
-                ArchonLogger.LogGameWarning($"[MoveUnitCommand] Unit {unitID} is already at destination province {targetProvinceID}");
+                ArchonLogger.LogCoreSimulationWarning($"[MoveUnitCommand] Unit {unitID} is already at destination province {targetProvinceID}");
                 return;
             }
 
@@ -343,7 +343,7 @@ namespace Core.Units
             int totalHops = path.Count - 1;
             int totalDays = totalHops * movementDays;
 
-            ArchonLogger.Log($"[MoveUnitCommand] Unit {unitID} pathfinding {unit.provinceID} → {targetProvinceID}: {path.Count} provinces, {totalDays} days total");
+            ArchonLogger.LogCoreSimulation($"[MoveUnitCommand] Unit {unitID} pathfinding {unit.provinceID} → {targetProvinceID}: {path.Count} provinces, {totalDays} days total");
 
             // Start time-based movement with full path (EU4-style with pathfinding)
             if (path.Count == 2)

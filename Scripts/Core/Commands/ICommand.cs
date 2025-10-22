@@ -99,7 +99,7 @@ namespace Core.Commands
         protected void LogExecution(string action)
         {
             #if UNITY_EDITOR
-            ArchonLogger.Log($"Command {CommandId}: {action}");
+            ArchonLogger.LogCoreCommands($"Command {CommandId}: {action}");
             #endif
         }
     }

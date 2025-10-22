@@ -42,7 +42,7 @@ namespace Map.Rendering
         {
             if (isInitialized)
             {
-                ArchonLogger.LogWarning("FogOfWarSystem: Already initialized!");
+                ArchonLogger.LogMapRenderingWarning("FogOfWarSystem: Already initialized!");
                 return;
             }
 
@@ -58,7 +58,7 @@ namespace Map.Rendering
 
             if (fogOfWarTexture == null)
             {
-                ArchonLogger.LogError("FogOfWarSystem: FogOfWarTexture is null!");
+                ArchonLogger.LogMapRenderingError("FogOfWarSystem: FogOfWarTexture is null!");
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace Map.Rendering
             }
 
             isInitialized = true;
-            ArchonLogger.Log($"FogOfWarSystem: Initialized for {provinceCount} provinces (fog disabled until player selection)");
+            ArchonLogger.LogMapRendering($"FogOfWarSystem: Initialized for {provinceCount} provinces (fog disabled until player selection)");
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Map.Rendering
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("FogOfWarSystem: Not initialized!");
+                ArchonLogger.LogMapRenderingError("FogOfWarSystem: Not initialized!");
                 return;
             }
 
@@ -102,13 +102,13 @@ namespace Map.Rendering
                 fogEnabled = true;
                 if (logVisibilityUpdates)
                 {
-                    ArchonLogger.Log("FogOfWarSystem: Fog of war enabled");
+                    ArchonLogger.LogMapRendering("FogOfWarSystem: Fog of war enabled");
                 }
             }
 
             if (logVisibilityUpdates)
             {
-                ArchonLogger.Log($"FogOfWarSystem: Player country set to {countryID}");
+                ArchonLogger.LogMapRendering($"FogOfWarSystem: Player country set to {countryID}");
             }
 
             // Update visibility based on new player country
@@ -170,7 +170,7 @@ namespace Map.Rendering
 
             if (logVisibilityUpdates)
             {
-                ArchonLogger.Log($"FogOfWarSystem: Visibility updated - {visibleCount} visible, {exploredCount} explored");
+                ArchonLogger.LogMapRendering($"FogOfWarSystem: Visibility updated - {visibleCount} visible, {exploredCount} explored");
             }
         }
 
@@ -190,7 +190,7 @@ namespace Map.Rendering
                 fogOfWarCompute = Resources.Load<ComputeShader>("PopulateFogOfWarTexture");
                 if (fogOfWarCompute == null)
                 {
-                    ArchonLogger.LogError("FogOfWarSystem: PopulateFogOfWarTexture.compute not found in Resources!");
+                    ArchonLogger.LogMapRenderingError("FogOfWarSystem: PopulateFogOfWarTexture.compute not found in Resources!");
                     return;
                 }
             }
@@ -198,7 +198,7 @@ namespace Map.Rendering
             RenderTexture provinceIDTex = textureManager.ProvinceIDTexture;
             if (provinceIDTex == null)
             {
-                ArchonLogger.LogError("FogOfWarSystem: ProvinceIDTexture is null!");
+                ArchonLogger.LogMapRenderingError("FogOfWarSystem: ProvinceIDTexture is null!");
                 return;
             }
 
@@ -228,7 +228,7 @@ namespace Map.Rendering
 
             if (logVisibilityUpdates)
             {
-                ArchonLogger.Log("FogOfWarSystem: Fog texture updated via compute shader");
+                ArchonLogger.LogMapRendering("FogOfWarSystem: Fog texture updated via compute shader");
             }
         }
 

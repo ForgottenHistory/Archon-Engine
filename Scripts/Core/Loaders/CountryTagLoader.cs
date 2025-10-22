@@ -21,7 +21,7 @@ namespace Core.Loaders
             var loader = new CountryTagLoader();
             var manifestPath = Path.Combine(dataPath, "common", "country_tags", "00_countries.txt");
 
-            ArchonLogger.Log($"CountryTagLoader: Loading country tags from {manifestPath}");
+            ArchonLogger.LogCoreDataLoading($"CountryTagLoader: Loading country tags from {manifestPath}");
 
             var result = loader.LoadManifest(manifestPath);
 
@@ -44,7 +44,7 @@ namespace Core.Loaders
                 {
                     var warning = $"Country tag '{tag}' is not 3 characters, skipping";
                     errors.Add(warning);
-                    ArchonLogger.LogWarning(warning);
+                    ArchonLogger.LogCoreDataLoadingWarning(warning);
                     continue;
                 }
 
@@ -53,14 +53,14 @@ namespace Core.Loaders
                 {
                     var warning = $"Country tag '{tag}' has empty file path, skipping";
                     errors.Add(warning);
-                    ArchonLogger.LogWarning(warning);
+                    ArchonLogger.LogCoreDataLoadingWarning(warning);
                     continue;
                 }
 
                 validTags[tag] = filePath;
             }
 
-            ArchonLogger.Log($"CountryTagLoader: Loaded {validTags.Count} valid country tags");
+            ArchonLogger.LogCoreDataLoading($"CountryTagLoader: Loaded {validTags.Count} valid country tags");
 
             return CountryTagLoadResult.CreateSuccess(validTags, errors);
         }

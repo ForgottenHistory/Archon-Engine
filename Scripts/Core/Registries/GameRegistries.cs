@@ -59,19 +59,19 @@ namespace Core.Registries
             // Check that static data is loaded
             if (Religions.Count == 0)
             {
-                ArchonLogger.LogError("GameRegistries validation failed: No religions loaded");
+                ArchonLogger.LogCoreDataLoadingError("GameRegistries validation failed: No religions loaded");
                 isValid = false;
             }
 
             if (Cultures.Count == 0)
             {
-                ArchonLogger.LogError("GameRegistries validation failed: No cultures loaded");
+                ArchonLogger.LogCoreDataLoadingError("GameRegistries validation failed: No cultures loaded");
                 isValid = false;
             }
 
             if (TradeGoods.Count == 0)
             {
-                ArchonLogger.LogError("GameRegistries validation failed: No trade goods loaded");
+                ArchonLogger.LogCoreDataLoadingError("GameRegistries validation failed: No trade goods loaded");
                 isValid = false;
             }
 

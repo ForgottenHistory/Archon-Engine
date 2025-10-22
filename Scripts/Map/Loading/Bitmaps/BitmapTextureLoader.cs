@@ -40,7 +40,7 @@ namespace Map.Loading.Bitmaps
             {
                 if (logProgress)
                 {
-                    ArchonLogger.LogWarning($"{GetLoaderName()}: Bitmap not found at {bitmapPath}, using defaults");
+                    ArchonLogger.LogMapInitWarning($"{GetLoaderName()}: Bitmap not found at {bitmapPath}, using defaults");
                 }
                 return;
             }
@@ -57,7 +57,7 @@ namespace Map.Loading.Bitmaps
 
                 if (!bitmapResult.Success)
                 {
-                    ArchonLogger.LogWarning($"{GetLoaderName()}: Failed to load bitmap: {bitmapResult.ErrorMessage}");
+                    ArchonLogger.LogMapInitWarning($"{GetLoaderName()}: Failed to load bitmap: {bitmapResult.ErrorMessage}");
                     return;
                 }
 
@@ -82,7 +82,7 @@ namespace Map.Loading.Bitmaps
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"{GetLoaderName()}: Exception loading bitmap: {e.Message}");
+                ArchonLogger.LogMapInitError($"{GetLoaderName()}: Exception loading bitmap: {e.Message}");
             }
         }
 
@@ -119,7 +119,7 @@ namespace Map.Loading.Bitmaps
                     textureManager.BindTexturesToMaterial(runtimeMaterial);
                     if (logProgress)
                     {
-                        ArchonLogger.Log($"{GetLoaderName()}: Rebound textures to runtime material {runtimeMaterial.GetInstanceID()}");
+                        ArchonLogger.LogMapInit($"{GetLoaderName()}: Rebound textures to runtime material {runtimeMaterial.GetInstanceID()}");
                     }
                 }
             }
@@ -137,7 +137,7 @@ namespace Map.Loading.Bitmaps
                     mapModeManager.RebindTextures();
                     if (logProgress)
                     {
-                        ArchonLogger.Log($"{GetLoaderName()}: Rebound map mode textures after texture update");
+                        ArchonLogger.LogMapInit($"{GetLoaderName()}: Rebound map mode textures after texture update");
                     }
                 }
             }

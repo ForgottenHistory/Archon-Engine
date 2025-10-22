@@ -88,7 +88,7 @@ namespace Map.Rendering
         {
             if (colors.Length != 256)
             {
-                ArchonLogger.LogError($"PaletteTextureManager: Palette colors must be exactly 256 elements, got {colors.Length}");
+                ArchonLogger.LogMapRenderingError($"PaletteTextureManager: Palette colors must be exactly 256 elements, got {colors.Length}");
                 return;
             }
 

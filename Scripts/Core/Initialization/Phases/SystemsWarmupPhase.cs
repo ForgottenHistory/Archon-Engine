@@ -40,14 +40,14 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.Log("Phase complete: All systems ready");
+                ArchonLogger.LogCoreDataLoading("Phase complete: All systems ready");
             }
         }
 
         public void Rollback(InitializationContext context)
         {
             // No specific cleanup needed - GameState handles all state
-            ArchonLogger.Log("Rolling back systems warmup phase");
+            ArchonLogger.LogCoreDataLoading("Rolling back systems warmup phase");
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Core.Initialization.Phases
             var provinceCount = context.GameState.ProvinceQueries.GetTotalProvinceCount();
             var countryCount = context.GameState.CountryQueries.GetTotalCountryCount();
 
-            ArchonLogger.Log($"Cache warm-up complete: {provinceCount} provinces, {countryCount} countries");
+            ArchonLogger.LogCoreDataLoading($"Cache warm-up complete: {provinceCount} provinces, {countryCount} countries");
         }
 
         /// <summary>
@@ -72,24 +72,24 @@ namespace Core.Initialization.Phases
             // Validate province system
             if (!context.ProvinceSystem.IsInitialized)
             {
-                ArchonLogger.LogError("ProvinceSystem not properly initialized!");
+                ArchonLogger.LogCoreDataLoadingError("ProvinceSystem not properly initialized!");
                 issues++;
             }
 
             // Validate country system
             if (!context.CountrySystem.IsInitialized)
             {
-                ArchonLogger.LogError("CountrySystem not properly initialized!");
+                ArchonLogger.LogCoreDataLoadingError("CountrySystem not properly initialized!");
                 issues++;
             }
 
             if (issues > 0)
             {
-                ArchonLogger.LogWarning($"Data validation found {issues} issues");
+                ArchonLogger.LogCoreDataLoadingWarning($"Data validation found {issues} issues");
             }
             else
             {
-                ArchonLogger.Log("Data validation passed");
+                ArchonLogger.LogCoreDataLoading("Data validation passed");
             }
         }
     }

@@ -18,7 +18,7 @@ namespace Map.Loading.Bitmaps
         {
             if (textureManager == null || textureManager.HeightmapTexture == null)
             {
-                ArchonLogger.LogError("HeightmapBitmapLoader: Cannot populate - texture manager or heightmap texture not available");
+                ArchonLogger.LogMapInitError("HeightmapBitmapLoader: Cannot populate - texture manager or heightmap texture not available");
                 return;
             }
 

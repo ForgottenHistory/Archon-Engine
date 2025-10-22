@@ -99,7 +99,7 @@ namespace Core.Commands
                 // Check if we need to rollback
                 if (serverTick <= confirmedTick)
                 {
-                    ArchonLogger.LogWarning($"Received command for tick {serverTick} but already confirmed up to {confirmedTick}");
+                    ArchonLogger.LogCoreCommandsWarning($"Received command for tick {serverTick} but already confirmed up to {confirmedTick}");
                     return CommandBufferResult.CreateSuccess(); // Ignore old commands
                 }
 
@@ -236,7 +236,7 @@ namespace Core.Commands
                     currentProcessorTick++;
                 }
 
-                ArchonLogger.Log($"Performed rollback to tick {rollbackToTick}, re-simulated {predictedTick - rollbackToTick} frames");
+                ArchonLogger.LogCoreCommands($"Performed rollback to tick {rollbackToTick}, re-simulated {predictedTick - rollbackToTick} frames");
                 return CommandBufferResult.CreateSuccess();
             }
             catch (Exception ex)
@@ -275,7 +275,7 @@ namespace Core.Commands
             }
             catch (Exception ex)
             {
-                ArchonLogger.LogError($"Failed to save state snapshot: {ex}");
+                ArchonLogger.LogCoreCommandsError($"Failed to save state snapshot: {ex}");
             }
         }
 
@@ -304,7 +304,7 @@ namespace Core.Commands
             // For now, this is a placeholder that would need to be implemented based on
             // the specific needs of the simulation system
 
-            ArchonLogger.LogWarning("RestoreStateSnapshot is not fully implemented - would restore complete simulation state");
+            ArchonLogger.LogCoreCommandsWarning("RestoreStateSnapshot is not fully implemented - would restore complete simulation state");
 
             // Reset processor tick to match snapshot
             // Note: This would require additional CommandProcessor API to support state restoration

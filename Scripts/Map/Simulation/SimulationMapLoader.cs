@@ -89,9 +89,9 @@ namespace Map.Simulation
 
             bool useDefinitionCsv = !string.IsNullOrEmpty(definitionCsvPath) && File.Exists(definitionCsvPath);
 
-            ArchonLogger.Log($"Loading simulation from bitmap: {bmpFilePath}");
+            ArchonLogger.LogMapRendering($"Loading simulation from bitmap: {bmpFilePath}");
             if (useDefinitionCsv)
-                ArchonLogger.Log($"Using definition CSV: {definitionCsvPath}");
+                ArchonLogger.LogMapRendering($"Using definition CSV: {definitionCsvPath}");
 
             try
             {
@@ -122,7 +122,7 @@ namespace Map.Simulation
             catch (Exception e)
             {
                 result.ErrorMessage = $"Failed to load bitmap: {e.Message}";
-                ArchonLogger.LogError($"SimulationMapLoader error: {e}");
+                ArchonLogger.LogMapRenderingError($"SimulationMapLoader error: {e}");
             }
 
             return result;
@@ -170,8 +170,8 @@ namespace Map.Simulation
                 result.Success = true;
                 uniqueProvinces.Dispose();
 
-                ArchonLogger.Log($"Simulation loaded with {result.Simulation.ProvinceCount} provinces");
-                ArchonLogger.Log($"Memory usage: {result.Simulation.GetMemoryUsage().totalBytes / 1024f:F1} KB");
+                ArchonLogger.LogMapRendering($"Simulation loaded with {result.Simulation.ProvinceCount} provinces");
+                ArchonLogger.LogMapRendering($"Memory usage: {result.Simulation.GetMemoryUsage().totalBytes / 1024f:F1} KB");
             }
             finally
             {
@@ -222,7 +222,7 @@ namespace Map.Simulation
                     result.MapData = CreateMapDataFromPixelData(pixelData, colorMapping);
                     result.Success = true;
 
-                    ArchonLogger.Log($"Simulation loaded with {result.Simulation.ProvinceCount} provinces (no CSV)");
+                    ArchonLogger.LogMapRendering($"Simulation loaded with {result.Simulation.ProvinceCount} provinces (no CSV)");
                 }
                 finally
                 {
@@ -298,7 +298,7 @@ namespace Map.Simulation
                 return false;
             }
 
-            ArchonLogger.Log($"Province count validation passed: {provinceCount} provinces, {hotMemoryBytes / 1024f:F1}KB hot memory");
+            ArchonLogger.LogMapRendering($"Province count validation passed: {provinceCount} provinces, {hotMemoryBytes / 1024f:F1}KB hot memory");
             return true;
         }
 
@@ -332,7 +332,7 @@ namespace Map.Simulation
                 simulation.AddProvince((ushort)id, terrain);
             }
 
-            ArchonLogger.Log($"Created simulation with {simulation.ProvinceCount} provinces, capacity {capacity}");
+            ArchonLogger.LogMapRendering($"Created simulation with {simulation.ProvinceCount} provinces, capacity {capacity}");
             return simulation;
         }
 
@@ -404,7 +404,7 @@ namespace Map.Simulation
                 }
                 else
                 {
-                    ArchonLogger.LogWarning($"Invalid stats for province {provinceID}");
+                    ArchonLogger.LogMapRenderingWarning($"Invalid stats for province {provinceID}");
                 }
             }
 

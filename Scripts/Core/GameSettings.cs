@@ -230,14 +230,14 @@ namespace Core
         /// </summary>
         public void LogConfiguration()
         {
-            ArchonLogger.Log($"GameSettings Configuration:");
-            ArchonLogger.Log($"  Data Directory: {DataDirectory}");
-            ArchonLogger.Log($"  Expected Provinces: {ExpectedProvinceCount}");
-            ArchonLogger.Log($"  Expected Countries: {ExpectedCountryCount}");
-            ArchonLogger.Log($"  Target Loading Time: {TargetLoadingTime}s");
-            ArchonLogger.Log($"  Target Memory: {TargetMaxMemoryMB}MB");
-            ArchonLogger.Log($"  Parallel Loading: {EnableParallelLoading}");
-            ArchonLogger.Log($"  Data Validation: {EnableDataValidation}");
+            ArchonLogger.LogCoreSimulation($"GameSettings Configuration:");
+            ArchonLogger.LogCoreSimulation($"  Data Directory: {DataDirectory}");
+            ArchonLogger.LogCoreSimulation($"  Expected Provinces: {ExpectedProvinceCount}");
+            ArchonLogger.LogCoreSimulation($"  Expected Countries: {ExpectedCountryCount}");
+            ArchonLogger.LogCoreSimulation($"  Target Loading Time: {TargetLoadingTime}s");
+            ArchonLogger.LogCoreSimulation($"  Target Memory: {TargetMaxMemoryMB}MB");
+            ArchonLogger.LogCoreSimulation($"  Parallel Loading: {EnableParallelLoading}");
+            ArchonLogger.LogCoreSimulation($"  Data Validation: {EnableDataValidation}");
         }
 
         #if UNITY_EDITOR

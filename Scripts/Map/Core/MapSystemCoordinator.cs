@@ -75,7 +75,7 @@ namespace Map.Core
                 var provinceResult = await dataLoader.LoadFromFilesAsync(bitmapPath, csvPath, useDefinition);
                 if (!provinceResult.HasValue)
                 {
-                    ArchonLogger.LogError("MapSystemCoordinator: Failed to load province data from files");
+                    ArchonLogger.LogCoreSimulationError("MapSystemCoordinator: Failed to load province data from files");
                     return false;
                 }
 
@@ -95,7 +95,7 @@ namespace Map.Core
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"MapSystemCoordinator: Exception during file-based generation: {e.Message}");
+                ArchonLogger.LogCoreSimulationError($"MapSystemCoordinator: Exception during file-based generation: {e.Message}");
                 return false;
             }
         }
@@ -112,7 +112,7 @@ namespace Map.Core
                 var provinceResult = await dataLoader.LoadFromSimulationAsync(simulationData, bitmapPath, csvPath, useDefinition);
                 if (!provinceResult.HasValue)
                 {
-                    ArchonLogger.LogError("MapSystemCoordinator: Failed to load province data from simulation");
+                    ArchonLogger.LogCoreSimulationError("MapSystemCoordinator: Failed to load province data from simulation");
                     return false;
                 }
 
@@ -152,7 +152,7 @@ namespace Map.Core
                 }
                 else if (logSystemProgress)
                 {
-                    ArchonLogger.LogWarning("MapSystemCoordinator: TextureUpdateBridge not available - runtime texture updates disabled");
+                    ArchonLogger.LogCoreSimulationWarning("MapSystemCoordinator: TextureUpdateBridge not available - runtime texture updates disabled");
                 }
 
                 OnGenerationProgress?.Invoke(100f, "Map generation complete");
@@ -161,7 +161,7 @@ namespace Map.Core
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"MapSystemCoordinator: Exception during simulation-based generation: {e.Message}\n{e.StackTrace}");
+                ArchonLogger.LogCoreSimulationError($"MapSystemCoordinator: Exception during simulation-based generation: {e.Message}\n{e.StackTrace}");
                 return false;
             }
         }
@@ -196,7 +196,7 @@ namespace Map.Core
             var initializer = GetComponent<MapInitializer>();
             if (initializer == null)
             {
-                ArchonLogger.LogError("MapSystemCoordinator: MapInitializer not found - cannot proceed");
+                ArchonLogger.LogCoreSimulationError("MapSystemCoordinator: MapInitializer not found - cannot proceed");
                 return;
             }
 
@@ -222,7 +222,7 @@ namespace Map.Core
 
             if (meshRenderer == null)
             {
-                ArchonLogger.LogError("MapSystemCoordinator: MeshRenderer reference not found from MapInitializer");
+                ArchonLogger.LogCoreSimulationError("MapSystemCoordinator: MeshRenderer reference not found from MapInitializer");
                 return;
             }
 

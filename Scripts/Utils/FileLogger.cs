@@ -4,11 +4,40 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-    /// <summary>
-    /// File-based logging system that captures all ArchonLogger.Log messages
-    /// </summary>
-    public class FileLogger : MonoBehaviour
-    {
+
+/// <summary>
+/// File-based logging system that captures all ArchonLogger.Log messages
+///
+/// Subsystem-based routing creates separate log files by architecture layer:
+///
+/// CORE LAYER (Archon-Engine deterministic simulation):
+///   - core_simulation.log      -> ProvinceSystem, CountrySystem, state changes
+///   - core_commands.log         -> CommandProcessor, command execution, validation
+///   - core_time.log             -> TimeManager, tick events, time progression
+///   - core_data_loading.log     -> All loaders (Scenario, Province, Country, Burst)
+///   - core_data_linking.log     -> CrossReferenceBuilder, ReferenceResolver
+///   - core_saveload.log         -> SaveManager, serialization, load/save
+///   - core_events.log           -> EventBus, event dispatching (optional)
+///
+/// MAP LAYER (GPU-accelerated presentation):
+///   - map_rendering.log         -> MapRenderer, texture updates, GPU operations
+///   - map_textures.log          -> MapTextureManager, texture sets, palette
+///   - map_initialization.log    -> MapInitializer, system setup
+///   - map_interaction.log       -> ProvinceSelector, mouse input, selection
+///   - map_modes.log             -> MapModeManager, mode switching
+///
+/// GAME LAYER (Hegemon-specific gameplay):
+///   - game_hegemon.log          -> General gameplay (economy, buildings, units)
+///   - game_ui.log               -> UI interactions, panels, tooltips
+///   - game_systems.log          -> EconomySystem, BuildingConstructionSystem, etc.
+///
+/// Usage:
+///   ArchonLogger.LogCoreSimulation("Province 123 owner changed");
+///   ArchonLogger.LogMapRendering("Border texture updated");
+///   ArchonLogger.LogGameUI("Tooltip displayed for province 456");
+/// </summary>
+public class FileLogger : MonoBehaviour
+{
         private static FileLogger instance;
         private static bool isQuitting = false;
 
@@ -101,7 +130,7 @@ using UnityEngine;
             }
             catch (Exception e)
             {
-                ArchonLogger.LogError($"Failed to initialize FileLogger: {e.Message}");
+                ArchonLogger.LogCoreSimulationError($"Failed to initialize FileLogger: {e.Message}");
             }
         }
 

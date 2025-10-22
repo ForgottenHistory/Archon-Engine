@@ -298,10 +298,10 @@ namespace Core.Linking
         {
             if (errors.Count > 0)
             {
-                ArchonLogger.LogError($"DataValidator: {errors.Count} validation errors found:");
+                ArchonLogger.LogDataLinkingError($"DataValidator: {errors.Count} validation errors found:");
                 foreach (var error in errors)
                 {
-                    ArchonLogger.LogError($"  [{error.Category}] {error.Message}");
+                    ArchonLogger.LogDataLinkingError($"  [{error.Category}] {error.Message}");
                 }
             }
 

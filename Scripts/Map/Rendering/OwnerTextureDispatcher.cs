@@ -57,7 +57,7 @@ namespace Map.Rendering
 
                 if (populateOwnerCompute == null)
                 {
-                    ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not assigned. Owner texture population will not work.");
+                    ArchonLogger.LogMapRenderingWarning("OwnerTextureDispatcher: Compute shader not assigned. Owner texture population will not work.");
                     return;
                 }
             }
@@ -91,7 +91,7 @@ namespace Map.Rendering
 
             if (populateOwnerCompute == null)
             {
-                ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not loaded. Skipping owner texture population.");
+                ArchonLogger.LogMapRenderingWarning("OwnerTextureDispatcher: Compute shader not loaded. Skipping owner texture population.");
                 return;
             }
 
@@ -100,14 +100,14 @@ namespace Map.Rendering
                 textureManager = GetComponent<MapTextureManager>();
                 if (textureManager == null)
                 {
-                    ArchonLogger.LogError("OwnerTextureDispatcher: MapTextureManager not found!");
+                    ArchonLogger.LogMapRenderingError("OwnerTextureDispatcher: MapTextureManager not found!");
                     return;
                 }
             }
 
             if (provinceQueries == null)
             {
-                ArchonLogger.LogError("OwnerTextureDispatcher: ProvinceQueries is null!");
+                ArchonLogger.LogMapRenderingError("OwnerTextureDispatcher: ProvinceQueries is null!");
                 return;
             }
 
@@ -120,7 +120,7 @@ namespace Map.Rendering
 
             if (provinceCount == 0)
             {
-                ArchonLogger.LogWarning("OwnerTextureDispatcher: No provinces available from ProvinceQueries");
+                ArchonLogger.LogMapRenderingWarning("OwnerTextureDispatcher: No provinces available from ProvinceQueries");
                 return;
             }
 
@@ -162,7 +162,7 @@ namespace Map.Rendering
                 {
                     if (populatedCount < 5)
                     {
-                        ArchonLogger.LogWarning($"OwnerTextureDispatcher: Province ID {provinceId} exceeds buffer capacity {bufferCapacity}");
+                        ArchonLogger.LogMapRenderingWarning($"OwnerTextureDispatcher: Province ID {provinceId} exceeds buffer capacity {bufferCapacity}");
                     }
                     continue;
                 }
@@ -272,19 +272,19 @@ namespace Map.Rendering
         {
             if (textureManager == null)
             {
-                ArchonLogger.LogError("Cannot benchmark without texture manager");
+                ArchonLogger.LogMapRenderingError("Cannot benchmark without texture manager");
                 return;
             }
 
             var gameState = FindFirstObjectByType<global::Core.GameState>();
             if (gameState == null || gameState.ProvinceQueries == null)
             {
-                ArchonLogger.LogError("Cannot benchmark without GameState and ProvinceQueries");
+                ArchonLogger.LogMapRenderingError("Cannot benchmark without GameState and ProvinceQueries");
                 return;
             }
 
-            ArchonLogger.Log("=== Owner Texture Population Benchmark ===");
-            ArchonLogger.Log($"Map Size: {textureManager.MapWidth}x{textureManager.MapHeight}");
+            ArchonLogger.LogMapRendering("=== Owner Texture Population Benchmark ===");
+            ArchonLogger.LogMapRendering($"Map Size: {textureManager.MapWidth}x{textureManager.MapHeight}");
 
             var provinceQueries = gameState.ProvinceQueries;
 
@@ -303,8 +303,8 @@ namespace Map.Rendering
             }
 
             float avgMs = (totalTime / iterations) * 1000f;
-            ArchonLogger.Log($"Average: {avgMs:F2}ms per population ({iterations} iterations)");
-            ArchonLogger.Log("=== Benchmark Complete ===");
+            ArchonLogger.LogMapRendering($"Average: {avgMs:F2}ms per population ({iterations} iterations)");
+            ArchonLogger.LogMapRendering("=== Benchmark Complete ===");
         }
 #endif
     }

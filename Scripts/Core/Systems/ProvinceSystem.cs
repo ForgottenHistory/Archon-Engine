@@ -64,7 +64,7 @@ namespace Core.Systems
             stateLoader = new ProvinceStateLoader(dataManager, eventBus, historyDatabase);
 
             isInitialized = true;
-            ArchonLogger.Log($"ProvinceSystem initialized with capacity {initialCapacity} (double-buffered: {initialCapacity * 8 * 2 / 1024}KB total)");
+            ArchonLogger.LogCoreSimulation($"ProvinceSystem initialized with capacity {initialCapacity} (double-buffered: {initialCapacity * 8 * 2 / 1024}KB total)");
 
             // Validate ProvinceState is exactly 8 bytes
             ValidateProvinceStateSize();
@@ -77,17 +77,17 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
+                ArchonLogger.LogCoreSimulationError("ProvinceSystem not initialized - call Initialize() first");
                 return;
             }
 
             if (!loadResult.Success)
             {
-                ArchonLogger.LogError($"Cannot initialize from failed load result: {loadResult.ErrorMessage}");
+                ArchonLogger.LogCoreSimulationError($"Cannot initialize from failed load result: {loadResult.ErrorMessage}");
                 return;
             }
 
-            ArchonLogger.Log($"Initializing {loadResult.LoadedCount} provinces from JSON5 + Burst data");
+            ArchonLogger.LogCoreSimulation($"Initializing {loadResult.LoadedCount} provinces from JSON5 + Burst data");
 
             // Clear existing data
             dataManager.Clear();
@@ -109,7 +109,7 @@ namespace Core.Systems
                 // The actual ownership and other data will be applied after reference resolution
             }
 
-            ArchonLogger.Log($"ProvinceSystem initialized with {ProvinceCount} provinces (ownership will be resolved in linking phase)");
+            ArchonLogger.LogCoreSimulation($"ProvinceSystem initialized with {ProvinceCount} provinces (ownership will be resolved in linking phase)");
 
             // Emit initialization complete event
             eventBus?.Emit(new ProvinceSystemInitializedEvent
@@ -138,7 +138,7 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
+                ArchonLogger.LogCoreSimulationError("ProvinceSystem not initialized - call Initialize() first");
                 return;
             }
             stateLoader.LoadProvinceInitialStates(dataDirectory);
@@ -148,7 +148,7 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first");
+                ArchonLogger.LogCoreSimulationError("ProvinceSystem not initialized - call Initialize() first");
                 return ProvinceInitialStateLoadResult.Failed("ProvinceSystem not initialized");
             }
             return stateLoader.LoadProvinceInitialStatesForLinking(dataDirectory);
@@ -174,11 +174,11 @@ namespace Core.Systems
             int actualSize = UnsafeUtility.SizeOf<ProvinceState>();
             if (actualSize != 8)
             {
-                ArchonLogger.LogError($"ProvinceState size validation failed: expected 8 bytes, got {actualSize} bytes");
+                ArchonLogger.LogCoreSimulationError($"ProvinceState size validation failed: expected 8 bytes, got {actualSize} bytes");
             }
             else
             {
-                ArchonLogger.Log("ProvinceState size validation passed: 8 bytes");
+                ArchonLogger.LogCoreSimulation("ProvinceState size validation passed: 8 bytes");
             }
         }
 
@@ -216,7 +216,7 @@ namespace Core.Systems
         {
             if (!isInitialized || snapshot == null)
             {
-                ArchonLogger.LogWarning("ProvinceSystem: Cannot sync buffers, not initialized");
+                ArchonLogger.LogCoreSimulationWarning("ProvinceSystem: Cannot sync buffers, not initialized");
                 return;
             }
             snapshot.SyncBuffersAfterLoad();
@@ -234,7 +234,7 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("ProvinceSystem: Cannot save state - not initialized");
+                ArchonLogger.LogCoreSimulationError("ProvinceSystem: Cannot save state - not initialized");
                 return;
             }
 
@@ -263,7 +263,7 @@ namespace Core.Systems
                 writer.Write(activeProvinceIds[i]);
             }
 
-            ArchonLogger.Log($"ProvinceSystem: Saved {ProvinceCount} provinces ({snapshot.Capacity} capacity)");
+            ArchonLogger.LogCoreSimulation($"ProvinceSystem: Saved {ProvinceCount} provinces ({snapshot.Capacity} capacity)");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("ProvinceSystem: Cannot load state - not initialized");
+                ArchonLogger.LogCoreSimulationError("ProvinceSystem: Cannot load state - not initialized");
                 return;
             }
 
@@ -285,7 +285,7 @@ namespace Core.Systems
             // Verify capacity matches (should match since we initialized with same capacity)
             if (savedCapacity != snapshot.Capacity)
             {
-                ArchonLogger.LogWarning($"ProvinceSystem: Capacity mismatch (saved: {savedCapacity}, current: {snapshot.Capacity})");
+                ArchonLogger.LogCoreSimulationWarning($"ProvinceSystem: Capacity mismatch (saved: {savedCapacity}, current: {snapshot.Capacity})");
             }
 
             // Read province count
@@ -324,7 +324,7 @@ namespace Core.Systems
             // Sync both buffers so UI doesn't read stale data on first tick
             snapshot.SyncBuffersAfterLoad();
 
-            ArchonLogger.Log($"ProvinceSystem: Loaded {savedProvinceCount} provinces (capacity: {savedCapacity})");
+            ArchonLogger.LogCoreSimulation($"ProvinceSystem: Loaded {savedProvinceCount} provinces (capacity: {savedCapacity})");
         }
 
         public void Dispose()
@@ -336,7 +336,7 @@ namespace Core.Systems
             historyDatabase?.Dispose();
 
             isInitialized = false;
-            ArchonLogger.Log("ProvinceSystem disposed");
+            ArchonLogger.LogCoreSimulation("ProvinceSystem disposed");
         }
 
         void OnDestroy()

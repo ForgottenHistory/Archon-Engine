@@ -31,7 +31,7 @@ namespace Map.Rendering
         {
             if (textureManager == null || mapping == null || gameState == null)
             {
-                ArchonLogger.LogError("MapTexturePopulator: Cannot populate textures - missing dependencies");
+                ArchonLogger.LogMapRenderingError("MapTexturePopulator: Cannot populate textures - missing dependencies");
                 return;
             }
 
@@ -176,7 +176,7 @@ namespace Map.Rendering
         {
             if (textureManager == null || mapping == null)
             {
-                ArchonLogger.LogError("MapTexturePopulator: Cannot populate textures - missing dependencies");
+                ArchonLogger.LogMapRenderingError("MapTexturePopulator: Cannot populate textures - missing dependencies");
                 return;
             }
 
@@ -244,7 +244,7 @@ namespace Map.Rendering
         {
             if (textureManager == null || mapping == null || gameState == null || changedProvinces == null)
             {
-                ArchonLogger.LogError("MapTexturePopulator: Cannot update simulation data - missing dependencies");
+                ArchonLogger.LogMapRenderingError("MapTexturePopulator: Cannot update simulation data - missing dependencies");
                 return;
             }
 
@@ -268,7 +268,7 @@ namespace Map.Rendering
             }
             else
             {
-                ArchonLogger.LogError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot update owner texture!");
+                ArchonLogger.LogMapRenderingError("MapTexturePopulator: OwnerTextureDispatcher not found - cannot update owner texture!");
             }
         }
 
@@ -293,7 +293,7 @@ namespace Map.Rendering
 
                 if (populateProvinceIDCompute == null)
                 {
-                    ArchonLogger.LogError("MapTexturePopulator: PopulateProvinceIDTexture compute shader not found! Falling back to Graphics.Blit");
+                    ArchonLogger.LogMapRenderingError("MapTexturePopulator: PopulateProvinceIDTexture compute shader not found! Falling back to Graphics.Blit");
                     PopulateProvinceIDTextureGPU_Fallback(textureManager, width, height, pixels);
                     return;
                 }

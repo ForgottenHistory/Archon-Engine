@@ -40,7 +40,7 @@ namespace Core.SaveLoad
             {
                 if (logOperations)
                 {
-                    ArchonLogger.LogWarning($"SystemSerializer: Skipping save for null system '{systemName}'");
+                    ArchonLogger.LogCoreSaveLoadWarning($"SystemSerializer: Skipping save for null system '{systemName}'");
                 }
                 return;
             }
@@ -58,13 +58,13 @@ namespace Core.SaveLoad
 
                     if (logOperations)
                     {
-                        ArchonLogger.Log($"SystemSerializer: Saved {systemName} ({stream.Length} bytes)");
+                        ArchonLogger.LogCoreSaveLoad($"SystemSerializer: Saved {systemName} ({stream.Length} bytes)");
                     }
                 }
             }
             catch (Exception ex)
             {
-                ArchonLogger.LogError($"SystemSerializer: Failed to save {systemName} - {ex.Message}\n{ex.StackTrace}");
+                ArchonLogger.LogCoreSaveLoadError($"SystemSerializer: Failed to save {systemName} - {ex.Message}\n{ex.StackTrace}");
                 throw;
             }
         }
@@ -79,7 +79,7 @@ namespace Core.SaveLoad
             {
                 if (logOperations)
                 {
-                    ArchonLogger.LogWarning($"SystemSerializer: Skipping load for null system '{systemName}'");
+                    ArchonLogger.LogCoreSaveLoadWarning($"SystemSerializer: Skipping load for null system '{systemName}'");
                 }
                 return;
             }
@@ -87,7 +87,7 @@ namespace Core.SaveLoad
             byte[] data = saveData.GetSystemData<byte[]>(systemName);
             if (data == null)
             {
-                ArchonLogger.LogWarning($"SystemSerializer: No {systemName} data found in save file");
+                ArchonLogger.LogCoreSaveLoadWarning($"SystemSerializer: No {systemName} data found in save file");
                 return;
             }
 
@@ -101,13 +101,13 @@ namespace Core.SaveLoad
 
                     if (logOperations)
                     {
-                        ArchonLogger.Log($"SystemSerializer: Loaded {systemName} ({data.Length} bytes)");
+                        ArchonLogger.LogCoreSaveLoad($"SystemSerializer: Loaded {systemName} ({data.Length} bytes)");
                     }
                 }
             }
             catch (Exception ex)
             {
-                ArchonLogger.LogError($"SystemSerializer: Failed to load {systemName} - {ex.Message}\n{ex.StackTrace}");
+                ArchonLogger.LogCoreSaveLoadError($"SystemSerializer: Failed to load {systemName} - {ex.Message}\n{ex.StackTrace}");
                 throw;
             }
         }

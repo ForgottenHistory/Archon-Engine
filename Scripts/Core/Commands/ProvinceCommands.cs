@@ -22,14 +22,14 @@ namespace Core.Commands
             // Check if province exists
             if (!ValidateProvinceId(gameState, ProvinceId))
             {
-                ArchonLogger.LogWarning($"Invalid province ID: {ProvinceId}");
+                ArchonLogger.LogCoreCommandsWarning($"Invalid province ID: {ProvinceId}");
                 return false;
             }
 
             // Check if new owner exists
             if (!ValidateCountryId(gameState, NewOwner))
             {
-                ArchonLogger.LogWarning($"Invalid country ID: {NewOwner}");
+                ArchonLogger.LogCoreCommandsWarning($"Invalid country ID: {NewOwner}");
                 return false;
             }
 
@@ -37,7 +37,7 @@ namespace Core.Commands
             ushort currentOwner = gameState.Provinces.GetProvinceOwner(ProvinceId);
             if (currentOwner == NewOwner)
             {
-                ArchonLogger.LogWarning($"Province {ProvinceId} already owned by country {NewOwner}");
+                ArchonLogger.LogCoreCommandsWarning($"Province {ProvinceId} already owned by country {NewOwner}");
                 return false;
             }
 
@@ -100,14 +100,14 @@ namespace Core.Commands
         {
             if (ProvinceIds == null || ProvinceIds.Length == 0)
             {
-                ArchonLogger.LogWarning("No provinces specified for transfer");
+                ArchonLogger.LogCoreCommandsWarning("No provinces specified for transfer");
                 return false;
             }
 
             // Check if new owner exists
             if (!ValidateCountryId(gameState, NewOwner))
             {
-                ArchonLogger.LogWarning($"Invalid country ID: {NewOwner}");
+                ArchonLogger.LogCoreCommandsWarning($"Invalid country ID: {NewOwner}");
                 return false;
             }
 
@@ -117,7 +117,7 @@ namespace Core.Commands
             {
                 if (!ValidateProvinceId(gameState, ProvinceIds[i]))
                 {
-                    ArchonLogger.LogWarning($"Invalid province ID in batch: {ProvinceIds[i]}");
+                    ArchonLogger.LogCoreCommandsWarning($"Invalid province ID in batch: {ProvinceIds[i]}");
                     return false;
                 }
 

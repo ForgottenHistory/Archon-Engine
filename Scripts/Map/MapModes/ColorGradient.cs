@@ -33,7 +33,7 @@ namespace Map.MapModes
         {
             if (stops == null || stops.Length < 2)
             {
-                ArchonLogger.LogError("ColorGradient: At least 2 color stops required");
+                ArchonLogger.LogMapModesError("ColorGradient: At least 2 color stops required");
                 // Fallback to grayscale
                 colorStops = new Color32[] { Color.black, Color.white };
                 stopCount = 2;

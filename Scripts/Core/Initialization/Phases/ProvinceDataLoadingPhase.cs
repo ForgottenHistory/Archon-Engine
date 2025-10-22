@@ -31,7 +31,7 @@ namespace Core.Initialization.Phases
                 yield break;
             }
 
-            ArchonLogger.Log($"Loaded {context.ProvinceDefinitions.Count} province definitions from definition.csv");
+            ArchonLogger.LogCoreDataLoading($"Loaded {context.ProvinceDefinitions.Count} province definitions from definition.csv");
 
             // Step 2: Load province initial states from JSON5 files (history data)
             context.ReportProgress(20f, "Loading province JSON5 files...");
@@ -45,7 +45,7 @@ namespace Core.Initialization.Phases
                 yield break;
             }
 
-            ArchonLogger.Log($"Province loading complete: {context.ProvinceInitialStates.LoadedCount} provinces loaded, {context.ProvinceInitialStates.FailedCount} failed");
+            ArchonLogger.LogCoreDataLoading($"Province loading complete: {context.ProvinceInitialStates.LoadedCount} provinces loaded, {context.ProvinceInitialStates.FailedCount} failed");
 
             context.ReportProgress(32f, "Initializing province system...");
             yield return null;
@@ -67,7 +67,7 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.Log($"Phase complete: Loaded {context.ProvinceInitialStates.LoadedCount} provinces from JSON5 (ready for reference linking)");
+                ArchonLogger.LogCoreDataLoading($"Phase complete: Loaded {context.ProvinceInitialStates.LoadedCount} provinces from JSON5 (ready for reference linking)");
             }
         }
 
@@ -81,7 +81,7 @@ namespace Core.Initialization.Phases
 
             context.ProvinceDefinitions?.Clear();
 
-            ArchonLogger.Log("Rolling back province data loading phase");
+            ArchonLogger.LogCoreDataLoading("Rolling back province data loading phase");
         }
     }
 

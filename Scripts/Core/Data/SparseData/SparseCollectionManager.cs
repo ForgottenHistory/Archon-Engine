@@ -77,7 +77,7 @@ namespace Core.Data.SparseData
         {
             if (isInitialized)
             {
-                ArchonLogger.LogWarning($"SparseCollection '{collectionName}' already initialized");
+                ArchonLogger.LogCoreSimulationWarning($"SparseCollection '{collectionName}' already initialized");
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace Core.Data.SparseData
             int entrySize = UnsafeUtility.SizeOf<TKey>() + UnsafeUtility.SizeOf<TValue>();
             int memoryKB = (capacity * entrySize) / 1024;
 
-            ArchonLogger.Log($"SparseCollection '{name}' initialized: {capacity} capacity, ~{memoryKB} KB pre-allocated");
+            ArchonLogger.LogCoreSimulation($"SparseCollection '{name}' initialized: {capacity} capacity, ~{memoryKB} KB pre-allocated");
         }
 
         #region Query APIs
@@ -383,7 +383,7 @@ namespace Core.Data.SparseData
                 data.Dispose();
 
             isInitialized = false;
-            ArchonLogger.Log($"SparseCollection '{name}' disposed");
+            ArchonLogger.LogCoreSimulation($"SparseCollection '{name}' disposed");
         }
 
         #endregion
@@ -405,13 +405,13 @@ namespace Core.Data.SparseData
             // Critical threshold (95%)
             if (usage >= CRITICAL_THRESHOLD && !hasLoggedCritical)
             {
-                ArchonLogger.LogWarning($"SparseCollection '{name}' CRITICAL: {usage:P1} capacity used ({Count}/{capacity}). Consider increasing capacity!");
+                ArchonLogger.LogCoreSimulationWarning($"SparseCollection '{name}' CRITICAL: {usage:P1} capacity used ({Count}/{capacity}). Consider increasing capacity!");
                 hasLoggedCritical = true;
             }
             // Warning threshold (80%)
             else if (usage >= WARNING_THRESHOLD && !hasLoggedWarning)
             {
-                ArchonLogger.LogWarning($"SparseCollection '{name}' WARNING: {usage:P1} capacity used ({Count}/{capacity})");
+                ArchonLogger.LogCoreSimulationWarning($"SparseCollection '{name}' WARNING: {usage:P1} capacity used ({Count}/{capacity})");
                 hasLoggedWarning = true;
             }
         }

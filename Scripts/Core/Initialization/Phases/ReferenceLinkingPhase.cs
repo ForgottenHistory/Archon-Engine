@@ -28,13 +28,13 @@ namespace Core.Initialization.Phases
 
             if (!countryTagResult.Success)
             {
-                ArchonLogger.LogError($"Failed to load country tags: {countryTagResult.ErrorMessage}");
+                ArchonLogger.LogCoreDataLoadingError($"Failed to load country tags: {countryTagResult.ErrorMessage}");
                 // Continue with limited functionality
             }
 
             // Register countries using actual tags from CountrySystem
             var countryIds = context.CountrySystem.GetAllCountryIds();
-            ArchonLogger.Log($"Country registration: Found {countryIds.Length} countries to register");
+            ArchonLogger.LogCoreDataLoading($"Country registration: Found {countryIds.Length} countries to register");
 
             var tagToIdMapping = new Dictionary<string, ushort>();
             var registeredCount = 0;
@@ -72,13 +72,13 @@ namespace Core.Initialization.Phases
                 }
             }
 
-            ArchonLogger.Log($"Country registration complete: {context.Registries.Countries.Count} countries registered with real tags");
+            ArchonLogger.LogCoreDataLoading($"Country registration complete: {context.Registries.Countries.Count} countries registered with real tags");
 
             context.ReportProgress(62f, "Registering provinces with JSON5 history data...");
             yield return null;
 
             // STEP 1: Register provinces that have JSON5 history files (full data)
-            ArchonLogger.Log($"Province processing: Found {context.ProvinceInitialStates.LoadedCount} provinces with JSON5 history files");
+            ArchonLogger.LogCoreDataLoading($"Province processing: Found {context.ProvinceInitialStates.LoadedCount} provinces with JSON5 history files");
 
             for (int i = 0; i < context.ProvinceInitialStates.InitialStates.Length; i++)
             {
@@ -110,11 +110,11 @@ namespace Core.Initialization.Phases
                 }
                 catch (System.Exception e)
                 {
-                    ArchonLogger.LogWarning($"Failed to register province {initialState.ProvinceID}: {e.Message}");
+                    ArchonLogger.LogCoreDataLoadingWarning($"Failed to register province {initialState.ProvinceID}: {e.Message}");
                 }
             }
 
-            ArchonLogger.Log($"Province registration (JSON5): {context.Registries.Provinces.Count} provinces registered with historical data");
+            ArchonLogger.LogCoreDataLoading($"Province registration (JSON5): {context.Registries.Provinces.Count} provinces registered with historical data");
 
             context.ReportProgress(63f, "Filling in missing provinces from definition.csv...");
             yield return null;
@@ -123,7 +123,7 @@ namespace Core.Initialization.Phases
             // RegisterDefinitions() automatically skips provinces already registered in step 1
             DefinitionLoader.RegisterDefinitions(context.ProvinceDefinitions, context.Registries.Provinces);
 
-            ArchonLogger.Log($"Province registration complete: {context.Registries.Provinces.Count} total provinces (JSON5 + definition.csv)");
+            ArchonLogger.LogCoreDataLoading($"Province registration complete: {context.Registries.Provinces.Count} total provinces (JSON5 + definition.csv)");
 
             context.ReportProgress(63f, "Resolving province references...");
             yield return null;
@@ -196,7 +196,7 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.Log($"Phase complete: Linked references: {context.Registries.Countries.Count} countries, {context.Registries.Provinces.Count} provinces");
+                ArchonLogger.LogCoreDataLoading($"Phase complete: Linked references: {context.Registries.Countries.Count} countries, {context.Registries.Provinces.Count} provinces");
             }
 
             // Clean up - reuse the local copy we already have
@@ -206,7 +206,7 @@ namespace Core.Initialization.Phases
         public void Rollback(InitializationContext context)
         {
             // Registries don't have rollback - on failure, entire GameState is recreated
-            ArchonLogger.Log("Rolling back reference linking phase");
+            ArchonLogger.LogCoreDataLoading("Rolling back reference linking phase");
         }
     }
 

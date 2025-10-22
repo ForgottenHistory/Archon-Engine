@@ -45,24 +45,24 @@ namespace Core.Systems
         {
             if (system == null)
             {
-                ArchonLogger.LogError("SystemRegistry: Cannot register null system");
+                ArchonLogger.LogCoreSimulationError("SystemRegistry: Cannot register null system");
                 return;
             }
 
             if (isInitialized)
             {
-                ArchonLogger.LogError($"SystemRegistry: Cannot register '{system.SystemName}' after initialization");
+                ArchonLogger.LogCoreSimulationError($"SystemRegistry: Cannot register '{system.SystemName}' after initialization");
                 return;
             }
 
             if (systems.Contains(system))
             {
-                ArchonLogger.LogWarning($"SystemRegistry: System '{system.SystemName}' already registered");
+                ArchonLogger.LogCoreSimulationWarning($"SystemRegistry: System '{system.SystemName}' already registered");
                 return;
             }
 
             systems.Add(system);
-            ArchonLogger.Log($"SystemRegistry: Registered system '{system.SystemName}'");
+            ArchonLogger.LogCoreSimulation($"SystemRegistry: Registered system '{system.SystemName}'");
         }
 
         /// <summary>
@@ -73,24 +73,24 @@ namespace Core.Systems
         {
             if (isInitialized)
             {
-                ArchonLogger.LogWarning("SystemRegistry: Already initialized");
+                ArchonLogger.LogCoreSimulationWarning("SystemRegistry: Already initialized");
                 return;
             }
 
             if (systems.Count == 0)
             {
-                ArchonLogger.LogWarning("SystemRegistry: No systems registered");
+                ArchonLogger.LogCoreSimulationWarning("SystemRegistry: No systems registered");
                 return;
             }
 
-            ArchonLogger.Log($"SystemRegistry: Initializing {systems.Count} systems...");
+            ArchonLogger.LogCoreSimulation($"SystemRegistry: Initializing {systems.Count} systems...");
 
             // Compute initialization order via topological sort
             var initializationOrder = TopologicalSort(systems);
 
             if (initializationOrder == null)
             {
-                ArchonLogger.LogError("SystemRegistry: Circular dependency detected - cannot initialize systems");
+                ArchonLogger.LogCoreSimulationError("SystemRegistry: Circular dependency detected - cannot initialize systems");
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace Core.Systems
             }
 
             isInitialized = true;
-            ArchonLogger.Log($"SystemRegistry: All {systems.Count} systems initialized successfully");
+            ArchonLogger.LogCoreSimulation($"SystemRegistry: All {systems.Count} systems initialized successfully");
         }
 
         /// <summary>
@@ -111,11 +111,11 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogWarning("SystemRegistry: Cannot shutdown - not initialized");
+                ArchonLogger.LogCoreSimulationWarning("SystemRegistry: Cannot shutdown - not initialized");
                 return;
             }
 
-            ArchonLogger.Log($"SystemRegistry: Shutting down {systems.Count} systems...");
+            ArchonLogger.LogCoreSimulation($"SystemRegistry: Shutting down {systems.Count} systems...");
 
             // Shutdown in reverse order
             for (int i = systems.Count - 1; i >= 0; i--)
@@ -124,7 +124,7 @@ namespace Core.Systems
             }
 
             isInitialized = false;
-            ArchonLogger.Log("SystemRegistry: All systems shutdown");
+            ArchonLogger.LogCoreSimulation("SystemRegistry: All systems shutdown");
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Core.Systems
             if (visiting.Contains(system))
             {
                 // Circular dependency detected!
-                ArchonLogger.LogError($"SystemRegistry: Circular dependency detected involving '{system.SystemName}'");
+                ArchonLogger.LogCoreSimulationError($"SystemRegistry: Circular dependency detected involving '{system.SystemName}'");
                 return false;
             }
 
@@ -197,7 +197,7 @@ namespace Core.Systems
                 {
                     if (dependency == null)
                     {
-                        ArchonLogger.LogError($"SystemRegistry: System '{system.SystemName}' has null dependency");
+                        ArchonLogger.LogCoreSimulationError($"SystemRegistry: System '{system.SystemName}' has null dependency");
                         return false;
                     }
 

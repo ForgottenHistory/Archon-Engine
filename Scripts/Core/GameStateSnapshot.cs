@@ -41,7 +41,7 @@ namespace Core
         {
             if (isInitialized)
             {
-                ArchonLogger.LogWarning("GameStateSnapshot already initialized");
+                ArchonLogger.LogCoreSimulationWarning("GameStateSnapshot already initialized");
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace Core
             currentWriteBuffer = 0; // Start with buffer A for writing
 
             isInitialized = true;
-            ArchonLogger.Log($"GameStateSnapshot initialized: {provinceCapacity} provinces, {provinceCapacity * 8 * 2} bytes (double-buffered)");
+            ArchonLogger.LogCoreSimulation($"GameStateSnapshot initialized: {provinceCapacity} provinces, {provinceCapacity * 8 * 2} bytes (double-buffered)");
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Core
             // Copy all province states from write buffer to read buffer
             NativeArray<ProvinceState>.Copy(writeBuffer, readBuffer, writeBuffer.Length);
 
-            ArchonLogger.Log($"GameStateSnapshot: Synced buffers after scenario load ({writeBuffer.Length} provinces copied)");
+            ArchonLogger.LogCoreSimulation($"GameStateSnapshot: Synced buffers after scenario load ({writeBuffer.Length} provinces copied)");
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Core
                 provinceBufferB.Dispose();
 
             isInitialized = false;
-            ArchonLogger.Log("GameStateSnapshot disposed");
+            ArchonLogger.LogCoreSimulation("GameStateSnapshot disposed");
         }
 
         private void ValidateInitialized()

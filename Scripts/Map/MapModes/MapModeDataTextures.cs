@@ -61,13 +61,13 @@ namespace Map.MapModes
         {
             if (isInitialized)
             {
-                ArchonLogger.LogWarning("MapModeDataTextures already initialized");
+                ArchonLogger.LogMapModesWarning("MapModeDataTextures already initialized");
                 return;
             }
 
             if (textureManager == null)
             {
-                ArchonLogger.LogError("MapModeDataTextures: Cannot initialize without MapTextureManager");
+                ArchonLogger.LogMapModesError("MapModeDataTextures: Cannot initialize without MapTextureManager");
                 return;
             }
 
@@ -287,7 +287,7 @@ namespace Map.MapModes
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogError("MapModeDataTextures not initialized");
+                ArchonLogger.LogMapModesError("MapModeDataTextures not initialized");
                 return;
             }
 
@@ -320,7 +320,7 @@ namespace Map.MapModes
         {
             if (texture == null)
             {
-                ArchonLogger.LogError("Cannot update null texture");
+                ArchonLogger.LogMapModesError("Cannot update null texture");
                 return;
             }
 
@@ -335,7 +335,7 @@ namespace Map.MapModes
         {
             if (palette == null)
             {
-                ArchonLogger.LogError("Cannot update null palette");
+                ArchonLogger.LogMapModesError("Cannot update null palette");
                 return;
             }
 
@@ -372,7 +372,7 @@ namespace Map.MapModes
             if (TerrainColorPalette != null) Object.DestroyImmediate(TerrainColorPalette);
 
             isInitialized = false;
-            ArchonLogger.Log("MapModeDataTextures disposed");
+            ArchonLogger.LogMapModes("MapModeDataTextures disposed");
         }
     }
 }

@@ -104,7 +104,7 @@ namespace Core.Systems.Country
         {
             if (countryId >= countryHotData.Length)
             {
-                ArchonLogger.LogError($"Country ID {countryId} exceeds capacity {countryHotData.Length}");
+                ArchonLogger.LogCoreSimulationError($"Country ID {countryId} exceeds capacity {countryHotData.Length}");
                 return;
             }
 
@@ -223,7 +223,7 @@ namespace Core.Systems.Country
 
             // If not cached and caching is disabled, we need to load it
             // For now, return null - in full implementation, this would trigger loading
-            ArchonLogger.LogWarning($"Cold data for country {countryId} not cached and lazy loading not implemented");
+            ArchonLogger.LogCoreSimulationWarning($"Cold data for country {countryId} not cached and lazy loading not implemented");
             return null;
         }
 

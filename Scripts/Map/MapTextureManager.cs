@@ -224,7 +224,7 @@ namespace Map.Rendering
             totalMemory += pixelCount * 2; // Border (RG16)
             totalMemory += pixelCount * 4; // Highlight (ARGB32)
 
-            ArchonLogger.Log($"Map texture memory usage: {totalMemory / 1024f / 1024f:F2} MB");
+            ArchonLogger.LogMapRendering($"Map texture memory usage: {totalMemory / 1024f / 1024f:F2} MB");
         }
 #endif
     }
