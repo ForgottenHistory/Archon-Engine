@@ -72,6 +72,9 @@ namespace Core.Initialization.Phases
                 }
             }
 
+            // CRITICAL: Dispose NativeArray to prevent memory leak
+            countryIds.Dispose();
+
             ArchonLogger.LogCoreDataLoading($"Country registration complete: {context.Registries.Countries.Count} countries registered with real tags");
 
             context.ReportProgress(62f, "Registering provinces with JSON5 history data...");
