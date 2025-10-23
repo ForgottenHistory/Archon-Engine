@@ -1,11 +1,11 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2025-10-19
-**Version:** 1.3 (Save/Load System Complete)
+**Last Updated:** 2025-10-23
+**Version:** 1.4 (Diplomacy System Phase 1 Complete)
 
 This document lists all implemented features in the Archon Engine. Features are organized by category with brief descriptions.
 
-**Recent:** Save/Load system complete (hybrid snapshot + command log, all core systems serialize/deserialize)
+**Recent:** Diplomacy system Phase 1 complete (war/peace, opinion modifiers, decay system, stress tested at 52k modifiers in 1ms)
 
 ---
 
@@ -108,6 +108,20 @@ This document lists all implemented features in the Archon Engine. Features are 
 - **Country Cold Data** - Extended country information (name, government, etc.)
 - **Country Queries** - High-performance queries with caching for expensive calculations
 - **Country Events** - Event system for country state changes
+
+---
+
+## Diplomacy System (NEW - 2025-10-23)
+
+- **RelationData (16 bytes)** - Hot data for diplomatic relationships (country pairs, war state, base opinion)
+- **DiplomacyColdData** - Opinion modifier lists, interaction history (separate from hot data)
+- **OpinionModifier** - Time-decaying modifiers with linear decay formula
+- **DiplomacySystem** - Sparse storage for active relationships (Dictionary O(1) lookups)
+- **War/Peace Commands** - DeclareWarCommand, MakePeaceCommand with validation
+- **Opinion System** - Stackable modifiers clamped to [-200, +200] range
+- **Monthly Decay** - Automatic removal of fully decayed modifiers
+- **Performance** - 1ms for 52,500 modifiers (20× faster than 20ms target), <0.001ms GetOpinion queries
+- **Memory** - 82 KB hot data for 5,250 relationships, sparse storage scales with active pairs only
 
 ---
 
@@ -396,6 +410,7 @@ This document lists all implemented features in the Archon Engine. Features are 
 **Planning Docs (Planning/):**
 - ✅ save-load-hybrid-architecture.md - SUPERSEDED by save-load-architecture.md (implemented)
 - ✅ core-pillars-implementation.md - Military/Diplomacy/AI roadmap
+- ✅ diplomacy-system-implementation.md - Phase 1 complete, performance validated
 - ❌ ai-design.md - Not implemented
 - ❌ multiplayer-design.md - Not implemented
 - ❌ modding-design.md - Not implemented
@@ -405,6 +420,7 @@ This document lists all implemented features in the Archon Engine. Features are 
 - ✅ 15/ - Paradox infrastructure (load balancing, double-buffer, sparse data)
 - ✅ 18/ - Architecture refactor (modifier system, GameSystem lifecycle, command abstraction, resource system, performance optimization)
 - ✅ 19/ - Save/Load system (hybrid snapshot, post-finalization, UI refresh events)
+- ✅ 23/ - Diplomacy system Phase 1 (war/peace, opinion modifiers, stress testing at 52k modifiers)
 
 **File Registries:**
 - ✅ Scripts/Core/FILE_REGISTRY.md - Updated with sparse data files
