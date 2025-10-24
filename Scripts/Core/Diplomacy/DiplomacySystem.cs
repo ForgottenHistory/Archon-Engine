@@ -34,6 +34,9 @@ namespace Core.Diplomacy
     {
         public override string SystemName => "Diplomacy";
 
+        // Reference to GameState (for EventBus access)
+        private GameState gameState;
+
         // ========== HOT DATA (Frequent Access) ==========
 
         /// <summary>
@@ -90,6 +93,9 @@ namespace Core.Diplomacy
         protected override void OnInitialize()
         {
             ArchonLogger.LogCoreDiplomacy("DiplomacySystem: Initializing...");
+
+            // Get GameState reference for EventBus access
+            gameState = GetComponent<GameState>();
 
             // Clear all data structures
             relations.Clear();
@@ -291,6 +297,10 @@ namespace Core.Diplomacy
             AddToWarIndex(defenderID, attackerID);
 
             ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Country {attackerID} declared war on {defenderID}");
+
+            // Emit event (Phase 2)
+            var evt = new DiplomacyWarDeclaredEvent(attackerID, defenderID, currentTick);
+            gameState.EventBus.Emit(evt);
         }
 
         /// <summary>
@@ -320,6 +330,343 @@ namespace Core.Diplomacy
             RemoveFromWarIndex(country2, country1);
 
             ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Peace made between {country1} and {country2}");
+
+            // Emit event (Phase 2)
+            var evt = new DiplomacyPeaceMadeEvent(country1, country2, currentTick);
+            gameState.EventBus.Emit(evt);
+        }
+
+        // ========== QUERIES: TREATIES ==========
+
+        /// <summary>
+        /// Check if two countries have an alliance
+        /// </summary>
+        public bool AreAllied(ushort country1, ushort country2)
+        {
+            var key = GetKey(country1, country2);
+            if (!relations.TryGetValue(key, out var rel)) return false;
+            return (rel.treatyFlags & (byte)TreatyFlags.Alliance) != 0;
+        }
+
+        /// <summary>
+        /// Check if two countries have a non-aggression pact
+        /// </summary>
+        public bool HasNonAggressionPact(ushort country1, ushort country2)
+        {
+            var key = GetKey(country1, country2);
+            if (!relations.TryGetValue(key, out var rel)) return false;
+            return (rel.treatyFlags & (byte)TreatyFlags.NonAggressionPact) != 0;
+        }
+
+        /// <summary>
+        /// Check if guarantor country guarantees guaranteed country's independence
+        /// Directional check
+        /// </summary>
+        public bool IsGuaranteeing(ushort guarantor, ushort guaranteed)
+        {
+            var key = GetKey(guarantor, guaranteed);
+            if (!relations.TryGetValue(key, out var rel)) return false;
+
+            // Check direction
+            if (guarantor == key.Item1)
+                return (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom1To2) != 0;
+            else
+                return (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom2To1) != 0;
+        }
+
+        /// <summary>
+        /// Check if granter grants military access to recipient
+        /// Directional check
+        /// </summary>
+        public bool HasMilitaryAccess(ushort granter, ushort recipient)
+        {
+            var key = GetKey(granter, recipient);
+            if (!relations.TryGetValue(key, out var rel)) return false;
+
+            // Check direction
+            if (granter == key.Item1)
+                return (rel.treatyFlags & (byte)TreatyFlags.MilitaryAccessFrom1To2) != 0;
+            else
+                return (rel.treatyFlags & (byte)TreatyFlags.MilitaryAccessFrom2To1) != 0;
+        }
+
+        /// <summary>
+        /// Get all allies of a country
+        /// Returns list of country IDs that have alliance with given country
+        /// </summary>
+        public List<ushort> GetAllies(ushort countryID)
+        {
+            var result = new List<ushort>();
+
+            foreach (var kvp in relations)
+            {
+                var key = kvp.Key;
+                var rel = kvp.Value;
+
+                if (!rel.InvolvesCountry(countryID)) continue;
+                if ((rel.treatyFlags & (byte)TreatyFlags.Alliance) == 0) continue;
+
+                result.Add(rel.GetOtherCountry(countryID));
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get all allies recursively (alliance chain A→B→C)
+        /// Uses BFS traversal to find all connected allies
+        /// CRITICAL for war declaration validation and auto-join
+        /// </summary>
+        public HashSet<ushort> GetAlliesRecursive(ushort countryID)
+        {
+            var visited = new HashSet<ushort>();
+            var toVisit = new Queue<ushort>();
+
+            toVisit.Enqueue(countryID);
+            visited.Add(countryID);
+
+            while (toVisit.Count > 0)
+            {
+                ushort current = toVisit.Dequeue();
+                var allies = GetAllies(current);
+
+                foreach (var ally in allies)
+                {
+                    if (!visited.Contains(ally))
+                    {
+                        visited.Add(ally);
+                        toVisit.Enqueue(ally);
+                    }
+                }
+            }
+
+            visited.Remove(countryID);  // Don't include self
+            return visited;
+        }
+
+        /// <summary>
+        /// Get all countries that this country guarantees
+        /// </summary>
+        public List<ushort> GetGuaranteeing(ushort guarantorID)
+        {
+            var result = new List<ushort>();
+
+            foreach (var kvp in relations)
+            {
+                var key = kvp.Key;
+                var rel = kvp.Value;
+
+                if (!rel.InvolvesCountry(guarantorID)) continue;
+
+                // Check if guarantorID is guaranteeing the other country
+                if (guarantorID == key.Item1 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom1To2) != 0)
+                {
+                    result.Add(key.Item2);
+                }
+                else if (guarantorID == key.Item2 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom2To1) != 0)
+                {
+                    result.Add(key.Item1);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get all countries that guarantee this country
+        /// </summary>
+        public List<ushort> GetGuaranteedBy(ushort guaranteedID)
+        {
+            var result = new List<ushort>();
+
+            foreach (var kvp in relations)
+            {
+                var key = kvp.Key;
+                var rel = kvp.Value;
+
+                if (!rel.InvolvesCountry(guaranteedID)) continue;
+
+                // Check if the other country is guaranteeing guaranteedID
+                if (guaranteedID == key.Item2 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom1To2) != 0)
+                {
+                    result.Add(key.Item1);
+                }
+                else if (guaranteedID == key.Item1 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom2To1) != 0)
+                {
+                    result.Add(key.Item2);
+                }
+            }
+
+            return result;
+        }
+
+        // ========== STATE CHANGES: TREATIES ==========
+
+        /// <summary>
+        /// Form alliance between two countries
+        /// Called by FormAllianceCommand after validation
+        /// </summary>
+        public void FormAlliance(ushort country1, ushort country2, int currentTick)
+        {
+            var key = GetKey(country1, country2);
+
+            // Ensure relationship exists
+            if (!relations.ContainsKey(key))
+            {
+                relations[key] = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+            }
+
+            // Set alliance flag
+            var rel = relations[key];
+            rel.treatyFlags |= (byte)TreatyFlags.Alliance;
+            relations[key] = rel;
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Alliance formed between {country1} and {country2}");
+        }
+
+        /// <summary>
+        /// Break alliance between two countries
+        /// </summary>
+        public void BreakAlliance(ushort country1, ushort country2, int currentTick)
+        {
+            var key = GetKey(country1, country2);
+
+            if (!relations.ContainsKey(key)) return;
+
+            var rel = relations[key];
+            rel.treatyFlags &= (byte)~TreatyFlags.Alliance;  // Clear alliance bit
+            relations[key] = rel;
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Alliance broken between {country1} and {country2}");
+        }
+
+        /// <summary>
+        /// Form non-aggression pact between two countries
+        /// </summary>
+        public void FormNonAggressionPact(ushort country1, ushort country2, int currentTick)
+        {
+            var key = GetKey(country1, country2);
+
+            if (!relations.ContainsKey(key))
+            {
+                relations[key] = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+            }
+
+            var rel = relations[key];
+            rel.treatyFlags |= (byte)TreatyFlags.NonAggressionPact;
+            relations[key] = rel;
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Non-aggression pact formed between {country1} and {country2}");
+        }
+
+        /// <summary>
+        /// Break non-aggression pact between two countries
+        /// </summary>
+        public void BreakNonAggressionPact(ushort country1, ushort country2, int currentTick)
+        {
+            var key = GetKey(country1, country2);
+
+            if (!relations.ContainsKey(key)) return;
+
+            var rel = relations[key];
+            rel.treatyFlags &= (byte)~TreatyFlags.NonAggressionPact;
+            relations[key] = rel;
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Non-aggression pact broken between {country1} and {country2}");
+        }
+
+        /// <summary>
+        /// Guarantor guarantees guaranteed country's independence (directional)
+        /// </summary>
+        public void GuaranteeIndependence(ushort guarantor, ushort guaranteed, int currentTick)
+        {
+            var key = GetKey(guarantor, guaranteed);
+
+            if (!relations.ContainsKey(key))
+            {
+                relations[key] = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+            }
+
+            var rel = relations[key];
+
+            // Set directional guarantee bit
+            if (guarantor == key.Item1)
+                rel.treatyFlags |= (byte)TreatyFlags.GuaranteeFrom1To2;
+            else
+                rel.treatyFlags |= (byte)TreatyFlags.GuaranteeFrom2To1;
+
+            relations[key] = rel;
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: {guarantor} now guarantees {guaranteed}'s independence");
+        }
+
+        /// <summary>
+        /// Revoke guarantee of independence
+        /// </summary>
+        public void RevokeGuarantee(ushort guarantor, ushort guaranteed, int currentTick)
+        {
+            var key = GetKey(guarantor, guaranteed);
+
+            if (!relations.ContainsKey(key)) return;
+
+            var rel = relations[key];
+
+            // Clear directional guarantee bit
+            if (guarantor == key.Item1)
+                rel.treatyFlags &= (byte)~TreatyFlags.GuaranteeFrom1To2;
+            else
+                rel.treatyFlags &= (byte)~TreatyFlags.GuaranteeFrom2To1;
+
+            relations[key] = rel;
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: {guarantor} revoked guarantee of {guaranteed}");
+        }
+
+        /// <summary>
+        /// Grant military access (directional)
+        /// </summary>
+        public void GrantMilitaryAccess(ushort granter, ushort recipient, int currentTick)
+        {
+            var key = GetKey(granter, recipient);
+
+            if (!relations.ContainsKey(key))
+            {
+                relations[key] = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+            }
+
+            var rel = relations[key];
+
+            // Set directional access bit
+            if (granter == key.Item1)
+                rel.treatyFlags |= (byte)TreatyFlags.MilitaryAccessFrom1To2;
+            else
+                rel.treatyFlags |= (byte)TreatyFlags.MilitaryAccessFrom2To1;
+
+            relations[key] = rel;
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: {granter} granted military access to {recipient}");
+        }
+
+        /// <summary>
+        /// Revoke military access
+        /// </summary>
+        public void RevokeMilitaryAccess(ushort granter, ushort recipient, int currentTick)
+        {
+            var key = GetKey(granter, recipient);
+
+            if (!relations.ContainsKey(key)) return;
+
+            var rel = relations[key];
+
+            // Clear directional access bit
+            if (granter == key.Item1)
+                rel.treatyFlags &= (byte)~TreatyFlags.MilitaryAccessFrom1To2;
+            else
+                rel.treatyFlags &= (byte)~TreatyFlags.MilitaryAccessFrom2To1;
+
+            relations[key] = rel;
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: {granter} revoked military access from {recipient}");
         }
 
         // ========== STATE CHANGES: OPINION MODIFIERS ==========

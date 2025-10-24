@@ -60,8 +60,19 @@ namespace Core.Diplomacy
                 return false;
             }
 
-            // TODO: Check for alliance restrictions (Phase 2)
-            // if (diplomacy.AreAllied(AttackerID, DefenderID)) return false;
+            // Phase 2: Check for Non-Aggression Pact
+            if (diplomacy.HasNonAggressionPact(AttackerID, DefenderID))
+            {
+                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: Cannot declare war - Non-Aggression Pact exists ({AttackerID} vs {DefenderID})");
+                return false;
+            }
+
+            // Phase 2: Check for Alliance (cannot attack allies)
+            if (diplomacy.AreAllied(AttackerID, DefenderID))
+            {
+                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: Cannot declare war - countries are allied ({AttackerID} and {DefenderID})");
+                return false;
+            }
 
             return true;
         }

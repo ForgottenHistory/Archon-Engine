@@ -4,6 +4,23 @@ using Core.Data;
 namespace Core.Diplomacy
 {
     /// <summary>
+    /// Treaty type bitfield flags
+    /// Used in RelationData.treatyFlags to track active treaties
+    /// </summary>
+    [Flags]
+    public enum TreatyFlags : byte
+    {
+        None = 0,
+        Alliance = 1 << 0,                  // Bit 0: Defensive alliance (bidirectional)
+        NonAggressionPact = 1 << 1,         // Bit 1: NAP (bidirectional)
+        GuaranteeFrom1To2 = 1 << 2,         // Bit 2: country1 guarantees country2
+        GuaranteeFrom2To1 = 1 << 3,         // Bit 3: country2 guarantees country1
+        MilitaryAccessFrom1To2 = 1 << 4,    // Bit 4: country1 grants access to country2
+        MilitaryAccessFrom2To1 = 1 << 5,    // Bit 5: country2 grants access to country1
+        // Bits 6-7 reserved for future treaties
+    }
+
+    /// <summary>
     /// ENGINE LAYER - Hot data for diplomatic relations between two countries
     ///
     /// Architecture:
@@ -48,9 +65,10 @@ namespace Core.Diplomacy
         public bool atWar;
 
         /// <summary>
-        /// Padding for alignment (unused)
+        /// Treaty flags (bitfield for 8 treaty types)
+        /// Phase 2: Alliance, NAP, Guarantee×2, MilitaryAccess×2
         /// </summary>
-        private byte padding;
+        public byte treatyFlags;
 
         /// <summary>
         /// Create relationship with base opinion
@@ -71,7 +89,7 @@ namespace Core.Diplomacy
                 country2 = countryB,
                 baseOpinion = baseOpinion,
                 atWar = false,
-                padding = 0
+                treatyFlags = (byte)TreatyFlags.None
             };
         }
 
