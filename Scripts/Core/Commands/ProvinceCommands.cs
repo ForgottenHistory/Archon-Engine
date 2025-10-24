@@ -14,6 +14,7 @@ namespace Core.Commands
 
         // For undo support
         private ushort oldOwner;
+        private string lastValidationError = null;
 
         public override int Priority => 100; // High priority for ownership changes
 
@@ -22,14 +23,16 @@ namespace Core.Commands
             // Check if province exists
             if (!ValidateProvinceId(gameState, ProvinceId))
             {
-                ArchonLogger.LogCoreCommandsWarning($"Invalid province ID: {ProvinceId}");
+                lastValidationError = $"Invalid province ID: {ProvinceId}";
+                ArchonLogger.LogCoreCommandsWarning($"ChangeProvinceOwnerCommand: {lastValidationError}");
                 return false;
             }
 
             // Check if new owner exists
             if (!ValidateCountryId(gameState, NewOwner))
             {
-                ArchonLogger.LogCoreCommandsWarning($"Invalid country ID: {NewOwner}");
+                lastValidationError = $"Invalid country ID: {NewOwner}";
+                ArchonLogger.LogCoreCommandsWarning($"ChangeProvinceOwnerCommand: {lastValidationError}");
                 return false;
             }
 
@@ -37,14 +40,26 @@ namespace Core.Commands
             ushort currentOwner = gameState.Provinces.GetProvinceOwner(ProvinceId);
             if (currentOwner == NewOwner)
             {
-                ArchonLogger.LogCoreCommandsWarning($"Province {ProvinceId} already owned by country {NewOwner}");
+                lastValidationError = $"Province {ProvinceId} already owned by Country {NewOwner}";
+                ArchonLogger.LogCoreCommandsWarning($"ChangeProvinceOwnerCommand: {lastValidationError}");
                 return false;
             }
 
             // Store old owner for undo
             oldOwner = currentOwner;
+            lastValidationError = null;
 
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Province ownership change failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Province {ProvinceId} ownership changed from Country {oldOwner} to Country {NewOwner}";
         }
 
         public override void Execute(GameState gameState)
@@ -93,6 +108,7 @@ namespace Core.Commands
 
         // For undo support
         private ushort[] oldOwners;
+        private string lastValidationError = null;
 
         public override int Priority => 90; // High priority for mass transfers
 
@@ -100,14 +116,16 @@ namespace Core.Commands
         {
             if (ProvinceIds == null || ProvinceIds.Length == 0)
             {
-                ArchonLogger.LogCoreCommandsWarning("No provinces specified for transfer");
+                lastValidationError = "No provinces specified for transfer";
+                ArchonLogger.LogCoreCommandsWarning($"TransferProvincesCommand: {lastValidationError}");
                 return false;
             }
 
             // Check if new owner exists
             if (!ValidateCountryId(gameState, NewOwner))
             {
-                ArchonLogger.LogCoreCommandsWarning($"Invalid country ID: {NewOwner}");
+                lastValidationError = $"Invalid country ID: {NewOwner}";
+                ArchonLogger.LogCoreCommandsWarning($"TransferProvincesCommand: {lastValidationError}");
                 return false;
             }
 
@@ -117,14 +135,26 @@ namespace Core.Commands
             {
                 if (!ValidateProvinceId(gameState, ProvinceIds[i]))
                 {
-                    ArchonLogger.LogCoreCommandsWarning($"Invalid province ID in batch: {ProvinceIds[i]}");
+                    lastValidationError = $"Invalid province ID in batch: {ProvinceIds[i]}";
+                    ArchonLogger.LogCoreCommandsWarning($"TransferProvincesCommand: {lastValidationError}");
                     return false;
                 }
 
                 oldOwners[i] = gameState.Provinces.GetProvinceOwner(ProvinceIds[i]);
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Province transfer failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Transferred {ProvinceIds.Length} province(s) to Country {NewOwner}";
         }
 
         public override void Execute(GameState gameState)

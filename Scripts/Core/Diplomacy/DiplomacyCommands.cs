@@ -28,6 +28,9 @@ namespace Core.Diplomacy
         public FixedPoint64 DeclaredWarModifierValue { get; set; } = FixedPoint64.FromInt(-50);
         public int DeclaredWarDecayTicks { get; set; } = 3600;  // 10 years
 
+        // For user feedback
+        private string lastValidationError = null;
+
         public override int Priority => 90;  // High priority for war declarations
 
         public override bool Validate(GameState gameState)
@@ -35,20 +38,23 @@ namespace Core.Diplomacy
             // Check if countries exist
             if (!ValidateCountryId(gameState, AttackerID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: Invalid attacker ID {AttackerID}");
+                lastValidationError = $"Invalid attacker ID: {AttackerID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, DefenderID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: Invalid defender ID {DefenderID}");
+                lastValidationError = $"Invalid defender ID: {DefenderID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
                 return false;
             }
 
             // Cannot declare war on self
             if (AttackerID == DefenderID)
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: Cannot declare war on self ({AttackerID})");
+                lastValidationError = $"Cannot declare war on self (Country {AttackerID})";
+                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
                 return false;
             }
 
@@ -56,25 +62,45 @@ namespace Core.Diplomacy
             var diplomacy = gameState.GetComponent<DiplomacySystem>();
             if (diplomacy.IsAtWar(AttackerID, DefenderID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: Already at war ({AttackerID} vs {DefenderID})");
+                lastValidationError = $"Already at war (Country {AttackerID} vs {DefenderID})";
+                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
                 return false;
             }
 
             // Phase 2: Check for Non-Aggression Pact
             if (diplomacy.HasNonAggressionPact(AttackerID, DefenderID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: Cannot declare war - Non-Aggression Pact exists ({AttackerID} vs {DefenderID})");
+                lastValidationError = $"Cannot declare war - Non-Aggression Pact exists between {AttackerID} and {DefenderID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
                 return false;
             }
 
             // Phase 2: Check for Alliance (cannot attack allies)
             if (diplomacy.AreAllied(AttackerID, DefenderID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: Cannot declare war - countries are allied ({AttackerID} and {DefenderID})");
+                lastValidationError = $"Cannot declare war - countries {AttackerID} and {DefenderID} are allied";
+                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        /// <summary>
+        /// Get user-friendly validation error message (called by GameState)
+        /// </summary>
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "War declaration failed validation";
+        }
+
+        /// <summary>
+        /// Get user-friendly success message (called by GameState)
+        /// </summary>
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Country {AttackerID} declared war on Country {DefenderID}";
         }
 
         public override void Execute(GameState gameState)
@@ -148,6 +174,8 @@ namespace Core.Diplomacy
         public FixedPoint64 MadePeaceModifierValue { get; set; } = FixedPoint64.FromInt(10);
         public int MadePeaceDecayTicks { get; set; } = 720;  // 2 years
 
+        private string lastValidationError = null;
+
         public override int Priority => 90;  // High priority for peace
 
         public override bool Validate(GameState gameState)
@@ -155,13 +183,15 @@ namespace Core.Diplomacy
             // Check if countries exist
             if (!ValidateCountryId(gameState, Country1))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"MakePeaceCommand: Invalid country ID {Country1}");
+                lastValidationError = $"Invalid country ID: {Country1}";
+                ArchonLogger.LogCoreDiplomacyWarning($"MakePeaceCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"MakePeaceCommand: Invalid country ID {Country2}");
+                lastValidationError = $"Invalid country ID: {Country2}";
+                ArchonLogger.LogCoreDiplomacyWarning($"MakePeaceCommand: {lastValidationError}");
                 return false;
             }
 
@@ -169,11 +199,23 @@ namespace Core.Diplomacy
             var diplomacy = gameState.GetComponent<DiplomacySystem>();
             if (!diplomacy.IsAtWar(Country1, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"MakePeaceCommand: Not at war ({Country1} vs {Country2})");
+                lastValidationError = $"Not at war (Countries {Country1} and {Country2})";
+                ArchonLogger.LogCoreDiplomacyWarning($"MakePeaceCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Peace treaty failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Peace treaty signed between Countries {Country1} and {Country2}";
         }
 
         public override void Execute(GameState gameState)
@@ -255,6 +297,8 @@ namespace Core.Diplomacy
         public FixedPoint64 ImproveRelationsModifierValue { get; set; } = FixedPoint64.FromInt(5);
         public int ImproveRelationsDecayTicks { get; set; } = 360;  // 1 year
 
+        private string lastValidationError = null;
+
         public override int Priority => 50;  // Medium priority
 
         public override bool Validate(GameState gameState)
@@ -262,20 +306,23 @@ namespace Core.Diplomacy
             // Check if countries exist
             if (!ValidateCountryId(gameState, SourceCountry))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: Invalid source country {SourceCountry}");
+                lastValidationError = $"Invalid source country ID: {SourceCountry}";
+                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, TargetCountry))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: Invalid target country {TargetCountry}");
+                lastValidationError = $"Invalid target country ID: {TargetCountry}";
+                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
                 return false;
             }
 
             // Cannot improve relations with self
             if (SourceCountry == TargetCountry)
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: Cannot improve relations with self ({SourceCountry})");
+                lastValidationError = $"Cannot improve relations with self (Country {SourceCountry})";
+                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
                 return false;
             }
 
@@ -283,7 +330,8 @@ namespace Core.Diplomacy
             var diplomacy = gameState.GetComponent<DiplomacySystem>();
             if (diplomacy.IsAtWar(SourceCountry, TargetCountry))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: Cannot improve relations during war ({SourceCountry} vs {TargetCountry})");
+                lastValidationError = $"Cannot improve relations during war (Countries {SourceCountry} vs {TargetCountry})";
+                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
                 return false;
             }
 
@@ -294,12 +342,28 @@ namespace Core.Diplomacy
                 FixedPoint64 currentAmount = resources.GetResource(SourceCountry, ResourceId);
                 if (currentAmount < ResourceCost)
                 {
-                    ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: Insufficient resources ({currentAmount} < {ResourceCost})");
+                    lastValidationError = $"Insufficient resources (has {currentAmount.ToString("F1")}, needs {ResourceCost.ToString("F1")})";
+                    ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
                     return false;
                 }
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Improve relations failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            if (ResourceCost > FixedPoint64.Zero)
+            {
+                return $"Country {SourceCountry} improved relations with Country {TargetCountry} (cost: {ResourceCost.ToString("F1")})";
+            }
+            return $"Country {SourceCountry} improved relations with Country {TargetCountry}";
         }
 
         public override void Execute(GameState gameState)

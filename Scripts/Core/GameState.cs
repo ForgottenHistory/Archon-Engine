@@ -208,8 +208,17 @@ namespace Core
         /// </summary>
         public bool TryExecuteCommand<T>(T command) where T : ICommand
         {
+            return TryExecuteCommand(command, out _);
+        }
+
+        /// <summary>
+        /// Execute a command with detailed result message (for console/UI feedback)
+        /// </summary>
+        public bool TryExecuteCommand<T>(T command, out string resultMessage) where T : ICommand
+        {
             if (!IsInitialized)
             {
+                resultMessage = "GameState not initialized";
                 ArchonLogger.LogCoreSimulationError("Cannot execute command - GameState not initialized");
                 return false;
             }
@@ -217,6 +226,8 @@ namespace Core
             // Validate command
             if (!command.Validate(this))
             {
+                // Try to get a detailed validation error from the command
+                resultMessage = GetCommandValidationError(command);
                 ArchonLogger.LogCoreSimulationWarning($"Command validation failed: {command.GetType().Name}");
                 return false;
             }
@@ -226,6 +237,9 @@ namespace Core
             {
                 command.Execute(this);
 
+                // Get success message from command
+                resultMessage = GetCommandSuccessMessage(command);
+
                 // Emit command executed event for systems that need to react
                 EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), Success = true });
 
@@ -233,10 +247,43 @@ namespace Core
             }
             catch (System.Exception e)
             {
+                resultMessage = $"Execution error: {e.Message}";
                 ArchonLogger.LogCoreSimulationError($"Command execution failed: {command.GetType().Name} - {e.Message}");
                 EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), Success = false, Error = e.Message });
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Get a user-friendly validation error message from a command
+        /// </summary>
+        private string GetCommandValidationError<T>(T command) where T : ICommand
+        {
+            // Check if command has a GetValidationError method (via reflection for now)
+            var method = command.GetType().GetMethod("GetValidationError");
+            if (method != null && method.ReturnType == typeof(string))
+            {
+                return (string)method.Invoke(command, new object[] { this });
+            }
+
+            // Fallback to generic message
+            return $"{command.GetType().Name} failed validation";
+        }
+
+        /// <summary>
+        /// Get a user-friendly success message from a command
+        /// </summary>
+        private string GetCommandSuccessMessage<T>(T command) where T : ICommand
+        {
+            // Check if command has a GetSuccessMessage method (via reflection for now)
+            var method = command.GetType().GetMethod("GetSuccessMessage");
+            if (method != null && method.ReturnType == typeof(string))
+            {
+                return (string)method.Invoke(command, new object[] { this });
+            }
+
+            // Fallback to generic message
+            return $"{command.GetType().Name} executed successfully";
         }
 
         /// <summary>

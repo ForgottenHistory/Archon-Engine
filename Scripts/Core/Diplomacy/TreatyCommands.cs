@@ -21,6 +21,8 @@ namespace Core.Diplomacy
         public ushort Country1 { get; set; }
         public ushort Country2 { get; set; }
 
+        private string lastValidationError = null;
+
         public override int Priority => 80;  // High priority for diplomatic actions
 
         public override bool Validate(GameState gameState)
@@ -28,20 +30,23 @@ namespace Core.Diplomacy
             // Check if countries exist
             if (!ValidateCountryId(gameState, Country1))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: Invalid country ID {Country1}");
+                lastValidationError = $"Invalid country ID: {Country1}";
+                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: Invalid country ID {Country2}");
+                lastValidationError = $"Invalid country ID: {Country2}";
+                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
                 return false;
             }
 
             // Cannot ally with self
             if (Country1 == Country2)
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: Cannot ally with self ({Country1})");
+                lastValidationError = $"Cannot form alliance with self (Country {Country1})";
+                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
                 return false;
             }
 
@@ -50,18 +55,31 @@ namespace Core.Diplomacy
             // Check if already allied
             if (diplomacy.AreAllied(Country1, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: Already allied ({Country1} and {Country2})");
+                lastValidationError = $"Already allied (Countries {Country1} and {Country2})";
+                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
                 return false;
             }
 
             // Cannot ally during war
             if (diplomacy.IsAtWar(Country1, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: Cannot ally during war ({Country1} vs {Country2})");
+                lastValidationError = $"Cannot form alliance during war (Countries {Country1} vs {Country2})";
+                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Alliance formation failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Alliance formed between Countries {Country1} and {Country2}";
         }
 
         public override void Execute(GameState gameState)
@@ -101,19 +119,23 @@ namespace Core.Diplomacy
         public ushort Country1 { get; set; }
         public ushort Country2 { get; set; }
 
+        private string lastValidationError = null;
+
         public override int Priority => 80;
 
         public override bool Validate(GameState gameState)
         {
             if (!ValidateCountryId(gameState, Country1))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakAllianceCommand: Invalid country ID {Country1}");
+                lastValidationError = $"Invalid country ID: {Country1}";
+                ArchonLogger.LogCoreDiplomacyWarning($"BreakAllianceCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakAllianceCommand: Invalid country ID {Country2}");
+                lastValidationError = $"Invalid country ID: {Country2}";
+                ArchonLogger.LogCoreDiplomacyWarning($"BreakAllianceCommand: {lastValidationError}");
                 return false;
             }
 
@@ -122,11 +144,23 @@ namespace Core.Diplomacy
             // Check if actually allied
             if (!diplomacy.AreAllied(Country1, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakAllianceCommand: Not allied ({Country1} and {Country2})");
+                lastValidationError = $"Not allied (Countries {Country1} and {Country2})";
+                ArchonLogger.LogCoreDiplomacyWarning($"BreakAllianceCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Alliance breaking failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Alliance broken between Countries {Country1} and {Country2}";
         }
 
         public override void Execute(GameState gameState)
@@ -166,25 +200,30 @@ namespace Core.Diplomacy
         public ushort Country1 { get; set; }
         public ushort Country2 { get; set; }
 
+        private string lastValidationError = null;
+
         public override int Priority => 80;
 
         public override bool Validate(GameState gameState)
         {
             if (!ValidateCountryId(gameState, Country1))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: Invalid country ID {Country1}");
+                lastValidationError = $"Invalid country ID: {Country1}";
+                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: Invalid country ID {Country2}");
+                lastValidationError = $"Invalid country ID: {Country2}";
+                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: {lastValidationError}");
                 return false;
             }
 
             if (Country1 == Country2)
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: Cannot form NAP with self ({Country1})");
+                lastValidationError = $"Cannot form Non-Aggression Pact with self (Country {Country1})";
+                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: {lastValidationError}");
                 return false;
             }
 
@@ -192,11 +231,23 @@ namespace Core.Diplomacy
 
             if (diplomacy.HasNonAggressionPact(Country1, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: NAP already exists ({Country1} and {Country2})");
+                lastValidationError = $"Non-Aggression Pact already exists (Countries {Country1} and {Country2})";
+                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Non-Aggression Pact formation failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Non-Aggression Pact formed between Countries {Country1} and {Country2}";
         }
 
         public override void Execute(GameState gameState)
@@ -236,19 +287,23 @@ namespace Core.Diplomacy
         public ushort Country1 { get; set; }
         public ushort Country2 { get; set; }
 
+        private string lastValidationError = null;
+
         public override int Priority => 80;
 
         public override bool Validate(GameState gameState)
         {
             if (!ValidateCountryId(gameState, Country1))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakNonAggressionPactCommand: Invalid country ID {Country1}");
+                lastValidationError = $"Invalid country ID: {Country1}";
+                ArchonLogger.LogCoreDiplomacyWarning($"BreakNonAggressionPactCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakNonAggressionPactCommand: Invalid country ID {Country2}");
+                lastValidationError = $"Invalid country ID: {Country2}";
+                ArchonLogger.LogCoreDiplomacyWarning($"BreakNonAggressionPactCommand: {lastValidationError}");
                 return false;
             }
 
@@ -256,11 +311,23 @@ namespace Core.Diplomacy
 
             if (!diplomacy.HasNonAggressionPact(Country1, Country2))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakNonAggressionPactCommand: NAP does not exist ({Country1} and {Country2})");
+                lastValidationError = $"Non-Aggression Pact does not exist (Countries {Country1} and {Country2})";
+                ArchonLogger.LogCoreDiplomacyWarning($"BreakNonAggressionPactCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Non-Aggression Pact breaking failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Non-Aggression Pact broken between Countries {Country1} and {Country2}";
         }
 
         public override void Execute(GameState gameState)
@@ -300,25 +367,30 @@ namespace Core.Diplomacy
         public ushort GuarantorID { get; set; }
         public ushort GuaranteedID { get; set; }
 
+        private string lastValidationError = null;
+
         public override int Priority => 80;
 
         public override bool Validate(GameState gameState)
         {
             if (!ValidateCountryId(gameState, GuarantorID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: Invalid guarantor ID {GuarantorID}");
+                lastValidationError = $"Invalid guarantor ID: {GuarantorID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, GuaranteedID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: Invalid guaranteed ID {GuaranteedID}");
+                lastValidationError = $"Invalid guaranteed ID: {GuaranteedID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: {lastValidationError}");
                 return false;
             }
 
             if (GuarantorID == GuaranteedID)
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: Cannot guarantee self ({GuarantorID})");
+                lastValidationError = $"Cannot guarantee independence of self (Country {GuarantorID})";
+                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: {lastValidationError}");
                 return false;
             }
 
@@ -326,11 +398,23 @@ namespace Core.Diplomacy
 
             if (diplomacy.IsGuaranteeing(GuarantorID, GuaranteedID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: Already guaranteeing ({GuarantorID} → {GuaranteedID})");
+                lastValidationError = $"Already guaranteeing independence (Country {GuarantorID} → Country {GuaranteedID})";
+                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Independence guarantee failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Country {GuarantorID} now guarantees independence of Country {GuaranteedID}";
         }
 
         public override void Execute(GameState gameState)
@@ -370,19 +454,23 @@ namespace Core.Diplomacy
         public ushort GuarantorID { get; set; }
         public ushort GuaranteedID { get; set; }
 
+        private string lastValidationError = null;
+
         public override int Priority => 80;
 
         public override bool Validate(GameState gameState)
         {
             if (!ValidateCountryId(gameState, GuarantorID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeGuaranteeCommand: Invalid guarantor ID {GuarantorID}");
+                lastValidationError = $"Invalid guarantor ID: {GuarantorID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"RevokeGuaranteeCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, GuaranteedID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeGuaranteeCommand: Invalid guaranteed ID {GuaranteedID}");
+                lastValidationError = $"Invalid guaranteed ID: {GuaranteedID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"RevokeGuaranteeCommand: {lastValidationError}");
                 return false;
             }
 
@@ -390,11 +478,23 @@ namespace Core.Diplomacy
 
             if (!diplomacy.IsGuaranteeing(GuarantorID, GuaranteedID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeGuaranteeCommand: Not guaranteeing ({GuarantorID} → {GuaranteedID})");
+                lastValidationError = $"Not guaranteeing independence (Country {GuarantorID} → Country {GuaranteedID})";
+                ArchonLogger.LogCoreDiplomacyWarning($"RevokeGuaranteeCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Independence guarantee revocation failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Country {GuarantorID} revoked independence guarantee of Country {GuaranteedID}";
         }
 
         public override void Execute(GameState gameState)
@@ -434,25 +534,30 @@ namespace Core.Diplomacy
         public ushort GranterID { get; set; }
         public ushort RecipientID { get; set; }
 
+        private string lastValidationError = null;
+
         public override int Priority => 80;
 
         public override bool Validate(GameState gameState)
         {
             if (!ValidateCountryId(gameState, GranterID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: Invalid granter ID {GranterID}");
+                lastValidationError = $"Invalid granter ID: {GranterID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, RecipientID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: Invalid recipient ID {RecipientID}");
+                lastValidationError = $"Invalid recipient ID: {RecipientID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: {lastValidationError}");
                 return false;
             }
 
             if (GranterID == RecipientID)
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: Cannot grant access to self ({GranterID})");
+                lastValidationError = $"Cannot grant military access to self (Country {GranterID})";
+                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: {lastValidationError}");
                 return false;
             }
 
@@ -460,11 +565,23 @@ namespace Core.Diplomacy
 
             if (diplomacy.HasMilitaryAccess(GranterID, RecipientID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: Access already granted ({GranterID} → {RecipientID})");
+                lastValidationError = $"Military access already granted (Country {GranterID} → Country {RecipientID})";
+                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Military access grant failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Country {GranterID} granted military access to Country {RecipientID}";
         }
 
         public override void Execute(GameState gameState)
@@ -504,19 +621,23 @@ namespace Core.Diplomacy
         public ushort GranterID { get; set; }
         public ushort RecipientID { get; set; }
 
+        private string lastValidationError = null;
+
         public override int Priority => 80;
 
         public override bool Validate(GameState gameState)
         {
             if (!ValidateCountryId(gameState, GranterID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeMilitaryAccessCommand: Invalid granter ID {GranterID}");
+                lastValidationError = $"Invalid granter ID: {GranterID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"RevokeMilitaryAccessCommand: {lastValidationError}");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, RecipientID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeMilitaryAccessCommand: Invalid recipient ID {RecipientID}");
+                lastValidationError = $"Invalid recipient ID: {RecipientID}";
+                ArchonLogger.LogCoreDiplomacyWarning($"RevokeMilitaryAccessCommand: {lastValidationError}");
                 return false;
             }
 
@@ -524,11 +645,23 @@ namespace Core.Diplomacy
 
             if (!diplomacy.HasMilitaryAccess(GranterID, RecipientID))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeMilitaryAccessCommand: Access not granted ({GranterID} → {RecipientID})");
+                lastValidationError = $"Military access not granted (Country {GranterID} → Country {RecipientID})";
+                ArchonLogger.LogCoreDiplomacyWarning($"RevokeMilitaryAccessCommand: {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Military access revocation failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Country {GranterID} revoked military access from Country {RecipientID}";
         }
 
         public override void Execute(GameState gameState)

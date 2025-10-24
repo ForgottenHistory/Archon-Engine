@@ -23,6 +23,7 @@ namespace Core.Units
         private readonly ushort unitTypeID;
 
         private ushort createdUnitID;  // Stored after execution for undo
+        private string lastValidationError = null;
 
         public CreateUnitCommand(UnitSystem unitSystem, ushort provinceID, ushort countryID, ushort unitTypeID)
         {
@@ -38,29 +39,44 @@ namespace Core.Units
             // Basic validation - game layer handles resource checks
             if (unitSystem == null)
             {
-                UnityEngine.Debug.LogError("[CreateUnitCommand] UnitSystem is null");
+                lastValidationError = "UnitSystem is null";
+                ArchonLogger.LogCoreSimulationError($"[CreateUnitCommand] {lastValidationError}");
                 return false;
             }
 
             if (provinceID == 0)
             {
-                UnityEngine.Debug.LogError("[CreateUnitCommand] Invalid province ID");
+                lastValidationError = "Invalid province ID";
+                ArchonLogger.LogCoreSimulationError($"[CreateUnitCommand] {lastValidationError}");
                 return false;
             }
 
             if (countryID == 0)
             {
-                UnityEngine.Debug.LogError("[CreateUnitCommand] Invalid country ID");
+                lastValidationError = "Invalid country ID";
+                ArchonLogger.LogCoreSimulationError($"[CreateUnitCommand] {lastValidationError}");
                 return false;
             }
 
             if (unitTypeID == 0)
             {
-                UnityEngine.Debug.LogError("[CreateUnitCommand] Invalid unit type ID");
+                lastValidationError = "Invalid unit type ID";
+                ArchonLogger.LogCoreSimulationError($"[CreateUnitCommand] {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Create unit failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Unit created in Province {provinceID} (Unit ID: {createdUnitID})";
         }
 
         public override void Execute(GameState gameState)
@@ -139,6 +155,7 @@ namespace Core.Units
 
         private UnitState savedUnitState;  // For undo
         private bool wasExecuted;
+        private string lastValidationError = null;
 
         public DisbandUnitCommand(UnitSystem unitSystem, ushort unitID, ushort countryID)
         {
@@ -152,13 +169,15 @@ namespace Core.Units
         {
             if (unitSystem == null)
             {
-                UnityEngine.Debug.LogError("[DisbandUnitCommand] UnitSystem is null");
+                lastValidationError = "UnitSystem is null";
+                ArchonLogger.LogCoreSimulationError($"[DisbandUnitCommand] {lastValidationError}");
                 return false;
             }
 
             if (!unitSystem.HasUnit(unitID))
             {
-                UnityEngine.Debug.LogError($"[DisbandUnitCommand] Unit {unitID} does not exist");
+                lastValidationError = $"Unit {unitID} does not exist";
+                ArchonLogger.LogCoreSimulationError($"[DisbandUnitCommand] {lastValidationError}");
                 return false;
             }
 
@@ -166,11 +185,23 @@ namespace Core.Units
             UnitState unit = unitSystem.GetUnit(unitID);
             if (unit.countryID != countryID)
             {
-                UnityEngine.Debug.LogError($"[DisbandUnitCommand] Unit {unitID} is owned by country {unit.countryID}, not {countryID}");
+                lastValidationError = $"Unit {unitID} is owned by Country {unit.countryID}, not Country {countryID}";
+                ArchonLogger.LogCoreSimulationError($"[DisbandUnitCommand] {lastValidationError}");
                 return false;
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Disband unit failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Unit {unitID} disbanded";
         }
 
         public override void Execute(GameState gameState)
@@ -266,6 +297,7 @@ namespace Core.Units
 
         private ushort oldProvinceID;  // For undo
         private bool wasMoving;  // Was unit already moving before this command?
+        private string lastValidationError = null;
 
         public MoveUnitCommand(UnitSystem unitSystem, Core.Systems.PathfindingSystem pathfindingSystem, ushort unitID, ushort targetProvinceID, ushort countryID, int movementDays = 2)
         {
@@ -282,19 +314,22 @@ namespace Core.Units
         {
             if (unitSystem == null)
             {
-                ArchonLogger.LogCoreSimulationError("[MoveUnitCommand] UnitSystem is null");
+                lastValidationError = "UnitSystem is null";
+                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] {lastValidationError}");
                 return false;
             }
 
             if (pathfindingSystem == null || !pathfindingSystem.IsInitialized)
             {
-                ArchonLogger.LogCoreSimulationError("[MoveUnitCommand] PathfindingSystem not initialized");
+                lastValidationError = "PathfindingSystem not initialized";
+                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] {lastValidationError}");
                 return false;
             }
 
             if (!unitSystem.HasUnit(unitID))
             {
-                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] Unit {unitID} does not exist");
+                lastValidationError = $"Unit {unitID} does not exist";
+                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] {lastValidationError}");
                 return false;
             }
 
@@ -303,7 +338,8 @@ namespace Core.Units
             // Verify ownership
             if (unit.countryID != countryID)
             {
-                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] Unit {unitID} is owned by country {unit.countryID}, not {countryID}");
+                lastValidationError = $"Unit {unitID} is owned by Country {unit.countryID}, not Country {countryID}";
+                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] {lastValidationError}");
                 return false;
             }
 
@@ -314,7 +350,18 @@ namespace Core.Units
                 // Allow command to proceed - it will cancel the old movement
             }
 
+            lastValidationError = null;
             return true;
+        }
+
+        public string GetValidationError(GameState gameState)
+        {
+            return lastValidationError ?? "Move unit failed validation";
+        }
+
+        public string GetSuccessMessage(GameState gameState)
+        {
+            return $"Unit {unitID} moving to Province {targetProvinceID}";
         }
 
         public override void Execute(GameState gameState)
