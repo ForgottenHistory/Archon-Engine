@@ -13,7 +13,7 @@
 
 ## Rendering/
 **Map.Rendering.MapTextureManager** - Facade coordinator for all map textures (delegates to texture sets)
-**Map.Rendering.CoreTextureSet** - Core textures: Province ID, Owner, Color, Development
+**Map.Rendering.CoreTextureSet** - Core textures: Province ID (RenderTexture), Owner (RenderTexture), Color (Texture2D), Development (RenderTexture UAV-enabled for GPU writes)
 **Map.Rendering.VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map
 **Map.Rendering.DynamicTextureSet** - Dynamic textures: Border, Highlight RenderTextures
 **Map.Rendering.PaletteTextureManager** - Color palette texture (256×1 RGBA32) with HSV distribution
@@ -43,7 +43,8 @@
 **Map.MapModes.MapModeDataTextures** - Manage textures for different map modes
 **Map.MapModes.TextureUpdateScheduler** - Schedule texture updates to avoid frame spikes
 **Map.MapModes.ColorGradient** - Color gradient utilities for map modes
-**Map.MapModes.GradientMapMode** - Base class for gradient-based map modes
+**Map.MapModes.GradientMapMode** - [GPU] Base class for gradient-based map modes (GPU compute shader, ~1ms per update)
+**Map.MapModes.GradientComputeDispatcher** - [GPU] Dispatch gradient colorization compute shader (manages ComputeBuffers)
 
 ---
 

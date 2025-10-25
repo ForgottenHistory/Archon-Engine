@@ -22,7 +22,7 @@ namespace Map.MapModes
         // Mode-specific data textures (created on demand)
         public RenderTexture ProvinceOwnerTexture { get; private set; }    // RG16: Owner nation ID (UAV for compute shader)
         public Texture2D ProvinceTerrainTexture { get; private set; }  // R8: Terrain type ID
-        public Texture2D ProvinceDevelopmentTexture { get; private set; } // R8: Development level (0-255)
+        public RenderTexture ProvinceDevelopmentTexture { get; private set; } // RGBA32: Development/gradient data (UAV for compute shader)
         public Texture2D ProvinceCultureTexture { get; private set; }  // R16: Culture ID
         public Texture2D ProvinceReligionTexture { get; private set; } // R16: Religion ID
         public Texture2D ProvinceTradeValueTexture { get; private set; } // R16: Trade value

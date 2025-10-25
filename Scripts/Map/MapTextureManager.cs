@@ -32,7 +32,7 @@ namespace Map.Rendering
         public RenderTexture ProvinceIDTexture => coreTextures?.ProvinceIDTexture;
         public RenderTexture ProvinceOwnerTexture => coreTextures?.ProvinceOwnerTexture;
         public Texture2D ProvinceColorTexture => coreTextures?.ProvinceColorTexture;
-        public Texture2D ProvinceDevelopmentTexture => coreTextures?.ProvinceDevelopmentTexture;
+        public RenderTexture ProvinceDevelopmentTexture => coreTextures?.ProvinceDevelopmentTexture;
         public Texture2D ProvinceTerrainTexture => visualTextures?.ProvinceTerrainTexture;
         public Texture2D HeightmapTexture => visualTextures?.HeightmapTexture;
         public Texture2D NormalMapTexture => visualTextures?.NormalMapTexture;
@@ -106,12 +106,9 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Update province development at coordinates (delegate to core textures)
+        /// NOTE: SetProvinceDevelopment removed - ProvinceDevelopmentTexture is now a RenderTexture
+        /// updated by GPU compute shaders. Use GradientMapMode for gradient-based colorization.
         /// </summary>
-        public void SetProvinceDevelopment(int x, int y, Color32 developmentColor)
-        {
-            coreTextures?.SetProvinceDevelopment(x, y, developmentColor);
-        }
 
         /// <summary>
         /// Update palette color (delegate to palette manager)

@@ -243,6 +243,16 @@ namespace Map.MapModes
         }
 
         /// <summary>
+        /// Get a specific map mode handler (for GAME layer to mark dirty)
+        /// Returns null if handler not registered
+        /// </summary>
+        public IMapModeHandler GetHandler(MapMode mode)
+        {
+            if (modeHandlers == null) return null;
+            return modeHandlers.TryGetValue(mode, out var handler) ? handler : null;
+        }
+
+        /// <summary>
         /// Update material reference when material is swapped
         /// Called by GAME layer (VisualStyleManager) when material changes
         /// </summary>

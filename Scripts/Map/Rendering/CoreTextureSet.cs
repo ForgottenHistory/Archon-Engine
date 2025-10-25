@@ -18,7 +18,7 @@ namespace Map.Rendering
         private RenderTexture provinceIDTexture;
         private RenderTexture provinceOwnerTexture;
         private Texture2D provinceColorTexture;
-        private Texture2D provinceDevelopmentTexture;
+        private RenderTexture provinceDevelopmentTexture;
 
         // Shader property IDs
         private static readonly int ProvinceIDTexID = Shader.PropertyToID("_ProvinceIDTexture");
@@ -29,7 +29,7 @@ namespace Map.Rendering
         public RenderTexture ProvinceIDTexture => provinceIDTexture;
         public RenderTexture ProvinceOwnerTexture => provinceOwnerTexture;
         public Texture2D ProvinceColorTexture => provinceColorTexture;
-        public Texture2D ProvinceDevelopmentTexture => provinceDevelopmentTexture;
+        public RenderTexture ProvinceDevelopmentTexture => provinceDevelopmentTexture;
 
         public CoreTextureSet(int width, int height, bool logCreation = true)
         {
@@ -135,30 +135,49 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Create province development texture in RGBA32 format
+        /// Create province development texture as RenderTexture for GPU compute shader access
+        /// Uses explicit GraphicsFormat.R8G8B8A8_UNorm to prevent TYPELESS format
+        /// Required for gradient map mode GPU colorization
         /// </summary>
         private void CreateProvinceDevelopmentTexture()
         {
-            provinceDevelopmentTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false);
-            provinceDevelopmentTexture.name = "ProvinceDevelopment_Texture";
+            var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight,
+                UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, 0);
+            descriptor.enableRandomWrite = true;  // Required for compute shader UAV access
+            descriptor.useMipMap = false;
+            descriptor.autoGenerateMips = false;
+
+            provinceDevelopmentTexture = new RenderTexture(descriptor);
+            provinceDevelopmentTexture.name = "ProvinceDevelopment_RenderTexture";
             provinceDevelopmentTexture.filterMode = FilterMode.Point;
             provinceDevelopmentTexture.wrapMode = TextureWrapMode.Clamp;
             provinceDevelopmentTexture.anisoLevel = 0;
+            provinceDevelopmentTexture.Create();
 
-            // Initialize with ocean color
+            // Initialize with ocean color using Graphics.Blit
+            // RenderTextures can't use SetPixels32, need to use GPU operations
+            var tempTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false);
             var pixels = new Color32[mapWidth * mapHeight];
             Color32 oceanColor = new Color32(25, 25, 112, 255);
             for (int i = 0; i < pixels.Length; i++)
             {
                 pixels[i] = oceanColor;
             }
+            tempTexture.SetPixels32(pixels);
+            tempTexture.Apply(false);
 
-            provinceDevelopmentTexture.SetPixels32(pixels);
-            provinceDevelopmentTexture.Apply(false);
+            // Copy to RenderTexture
+            RenderTexture oldRT = RenderTexture.active;
+            RenderTexture.active = provinceDevelopmentTexture;
+            Graphics.Blit(tempTexture, provinceDevelopmentTexture);
+            RenderTexture.active = oldRT;
+
+            // Clean up temporary texture
+            Object.DestroyImmediate(tempTexture);
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"CoreTextureSet: Created Province Development texture {mapWidth}x{mapHeight} RGBA32");
+                ArchonLogger.LogMapInit($"CoreTextureSet: Created Province Development RenderTexture {mapWidth}x{mapHeight} R8G8B8A8_UNorm (UAV-enabled)");
             }
         }
 
@@ -190,21 +209,18 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Update province development at coordinates
+        /// NOTE: SetProvinceDevelopment removed - ProvinceDevelopmentTexture is now a RenderTexture
+        /// updated by GPU compute shaders. Use GradientMapMode for gradient-based colorization.
         /// </summary>
-        public void SetProvinceDevelopment(int x, int y, Color32 color)
-        {
-            if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return;
-            provinceDevelopmentTexture.SetPixel(x, y, color);
-        }
 
         /// <summary>
         /// Apply texture changes (call after batch updates)
+        /// NOTE: Only applies to provinceColorTexture - provinceDevelopmentTexture is GPU-managed
         /// </summary>
         public void ApplyChanges()
         {
             provinceColorTexture.Apply(false);
-            provinceDevelopmentTexture.Apply(false);
+            // provinceDevelopmentTexture is a RenderTexture updated by GPU - no Apply() needed
         }
 
         /// <summary>
