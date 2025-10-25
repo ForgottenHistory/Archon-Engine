@@ -370,8 +370,8 @@ namespace Core.Units
             oldProvinceID = unit.provinceID;
             wasMoving = unitSystem.MovementQueue.IsUnitMoving(unitID);
 
-            // Calculate path using pathfinding
-            var path = pathfindingSystem.FindPath(unit.provinceID, targetProvinceID);
+            // Calculate path using pathfinding (with unit owner and type for movement validation)
+            var path = pathfindingSystem.FindPath(unit.provinceID, targetProvinceID, unit.countryID, unit.unitTypeID);
 
             if (path == null || path.Count == 0)
             {

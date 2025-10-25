@@ -25,9 +25,17 @@ namespace Core.Systems
     /// - For 13k provinces with ~6 neighbors avg: very fast (<1ms typical)
     /// - ZERO ALLOCATIONS: Pre-allocated collections, reused across pathfinding calls
     /// </summary>
+    /// <summary>
+    /// Delegate for validating province traversability (GAME POLICY injection)
+    /// Parameters: provinceID, unitOwnerCountryID, unitTypeID
+    /// Returns: true if unit can move through province
+    /// </summary>
+    public delegate bool MovementValidator(ushort provinceID, ushort unitOwnerCountryID, ushort unitTypeID);
+
     public class PathfindingSystem : System.IDisposable
     {
         private AdjacencySystem adjacencySystem;
+        private MovementValidator movementValidator;  // Optional GAME POLICY validator
         private bool isInitialized = false;
 
         // Pre-allocated collections (cleared and reused for each pathfinding call)
@@ -44,7 +52,9 @@ namespace Core.Systems
         /// Initialize pathfinding system with adjacency data
         /// Pre-allocates all collections for zero-allocation pathfinding
         /// </summary>
-        public void Initialize(AdjacencySystem adjacencies)
+        /// <param name="adjacencies">Adjacency system for neighbor lookup</param>
+        /// <param name="validator">Optional GAME POLICY validator for movement rules (null = all provinces passable)</param>
+        public void Initialize(AdjacencySystem adjacencies, MovementValidator validator = null)
         {
             if (adjacencies == null || !adjacencies.IsInitialized)
             {
@@ -53,6 +63,7 @@ namespace Core.Systems
             }
 
             this.adjacencySystem = adjacencies;
+            this.movementValidator = validator;
 
             // Pre-allocate collections (worst-case capacity)
             openSet = new List<PathNode>(256);          // Max open set size
@@ -65,7 +76,8 @@ namespace Core.Systems
 
             this.isInitialized = true;
 
-            ArchonLogger.LogCoreSimulation("PathfindingSystem: Initialized (zero-allocation mode)");
+            string validatorInfo = validator != null ? " with movement validator" : " (all provinces passable)";
+            ArchonLogger.LogCoreSimulation($"PathfindingSystem: Initialized{validatorInfo} (zero-allocation mode)");
         }
 
         /// <summary>
@@ -73,7 +85,11 @@ namespace Core.Systems
         /// Returns full path including start and goal provinces
         /// Returns empty list if no path exists
         /// </summary>
-        public List<ushort> FindPath(ushort start, ushort goal)
+        /// <param name="start">Starting province ID</param>
+        /// <param name="goal">Goal province ID</param>
+        /// <param name="unitOwnerCountryID">Country that owns the moving unit (for movement validation)</param>
+        /// <param name="unitTypeID">Unit type ID (for future naval/land differentiation)</param>
+        public List<ushort> FindPath(ushort start, ushort goal, ushort unitOwnerCountryID = 0, ushort unitTypeID = 0)
         {
             if (!isInitialized)
             {
@@ -132,8 +148,9 @@ namespace Core.Systems
                     if (closedSet.Contains(neighbor))
                         continue; // Already explored
 
-                    // TODO: Add movement blocking check
-                    // if (!IsPassable(neighbor, unitType, ownerCountry)) continue;
+                    // GAME POLICY: Check if movement through this province is allowed
+                    if (movementValidator != null && !movementValidator(neighbor, unitOwnerCountryID, unitTypeID))
+                        continue; // Blocked by GAME policy (ownership, military access, etc.)
 
                     // Calculate tentative gScore
                     FixedPoint64 movementCost = GetMovementCost(current.provinceID, neighbor);
@@ -194,22 +211,6 @@ namespace Core.Systems
             // return FixedPoint64.FromFloat(Vector2.Distance(fromPos, toPos) / avgProvinceDistance);
         }
 
-        /// <summary>
-        /// Check if movement through a province is allowed
-        /// MVP: Always returns true
-        /// TODO: Add movement blocking (ZOC, borders, military access)
-        /// </summary>
-        private bool IsPassable(ushort province, ushort unitType, ushort ownerCountry)
-        {
-            // MVP: All provinces passable
-            return true;
-
-            // TODO: Future implementation
-            // if (HasEnemyZOC(province, ownerCountry)) return false;
-            // if (IsHostileTerritory(province, ownerCountry) && !HasMilitaryAccess(province, ownerCountry)) return false;
-            // if (unitType.isNaval && !province.isWater) return false;
-            // return true;
-        }
 
         /// <summary>
         /// Reconstruct path from parent tracking into pre-allocated buffer (zero allocations)

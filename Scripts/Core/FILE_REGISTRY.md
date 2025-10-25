@@ -10,7 +10,7 @@
 **Core.Systems.SystemRegistry** - Type-based system registry with dependency ordering
 **Core.Systems.TimeManager** - Tick-based time, game speed, 360-day calendar, emits tick events
 **Core.Systems.AdjacencySystem** - Province neighbor management with sparse collections
-**Core.Systems.PathfindingSystem** - A* pathfinding for unit movement
+**Core.Systems.PathfindingSystem** - A* pathfinding with optional GAME POLICY validator delegate for movement rules (ownership, military access, ZOC)
 **Core.Systems.ProvinceSystem** - Facade for province data (delegates to DataManager, StateLoader, HistoryDatabase)
 **Core.Systems.ProvinceSimulation** - Province-level simulation logic (development, economy)
 **Core.Systems.CountrySystem** - Facade for country data (delegates to DataManager, StateLoader)
