@@ -61,6 +61,7 @@ public static class ArchonLogger
         public const string CoreSaveLoad = "core_saveload";          // SaveManager, serialization, load/save
         public const string CoreEvents = "core_events";              // EventBus, event dispatching (optional, can be noisy)
         public const string CoreDiplomacy = "core_diplomacy";        // DiplomacySystem, relations, wars, opinion modifiers
+        public const string CoreAI = "core_ai";                      // AISystem, goal evaluation, AI decisions
 
         // === MAP LAYER (Archon-Engine/Scripts/Map/) ===
         // GPU-accelerated presentation - textures, rendering, interaction
@@ -119,6 +120,11 @@ public static class ArchonLogger
     public static void LogCoreDiplomacy(string message) => Log(message, Systems.CoreDiplomacy);
     public static void LogCoreDiplomacyWarning(string message) => LogWarning(message, Systems.CoreDiplomacy);
     public static void LogCoreDiplomacyError(string message) => LogError(message, Systems.CoreDiplomacy);
+
+    // Core AI (AISystem, goal evaluation, AI decisions)
+    public static void LogCoreAI(string message) => Log(message, Systems.CoreAI);
+    public static void LogCoreAIWarning(string message) => LogWarning(message, Systems.CoreAI);
+    public static void LogCoreAIError(string message) => LogError(message, Systems.CoreAI);
 
     // === MAP LAYER CONVENIENCE METHODS ===
 

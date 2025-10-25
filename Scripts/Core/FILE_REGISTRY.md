@@ -89,6 +89,15 @@
 
 ---
 
+## AI/
+**Core.AI.AISystem** - Manages AI for all countries (bucketing, scheduling, goal registry)
+**Core.AI.AIState** - 8-byte struct per country: countryID, bucket, flags, activeGoalID
+**Core.AI.AIGoal** - Base class for AI goals (Evaluate/Execute pattern, extensible)
+**Core.AI.AIScheduler** - Goal evaluation scheduler (pick best goal, execute)
+**Core.AI.AIGoalRegistry** - Plug-and-play goal registration system
+
+---
+
 ## Modifiers/
 **Core.Modifiers.ModifierSystem** - Generic modifier system for gameplay bonuses/penalties
 **Core.Modifiers.ModifierValue** - Modifier value with FixedPoint64 (Additive/Multiplicative)
@@ -212,6 +221,7 @@
 **Deterministic random?** → DeterministicRandom with seed
 **Fixed-point math?** → FixedPoint64 (32.32 format)
 **Optional/rare data?** → SparseCollectionManager<TKey, TValue>
+**Add AI goal?** → Implement AIGoal in GAME layer → Register in GameSystemInitializer
 
 ---
 

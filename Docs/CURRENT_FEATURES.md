@@ -1,7 +1,7 @@
 # Archon Engine - Current Features
 
 **Last Updated:** 2025-10-25
-**Version:** 1.5 (Units System + Diplomacy Phase 2 Complete)
+**Version:** 1.6 (AI System Phase 1 MVP Complete)
 
 This document lists all implemented features in the Archon Engine organized by category.
 
@@ -96,6 +96,22 @@ This document lists all implemented features in the Archon Engine organized by c
 **FindPath** - A* algorithm with province graph traversal
 **GetReachableProvinces** - Calculate movement range for units
 **Distance Caching** - Cached distance matrix for performance
+
+---
+
+## AI System
+
+**AISystem** - Central AI manager with bucketing scheduler for 979 countries
+**AIState (8 bytes)** - Fixed-size hot state: countryID, bucket, flags, activeGoalID
+**AIGoal** - Abstract base class for goal-oriented decision making (Evaluate/Execute pattern)
+**AIScheduler** - Goal evaluation and execution scheduler (picks best goal, executes it)
+**AIGoalRegistry** - Plug-and-play goal registration system (extensible without refactoring)
+**Bucketing Strategy** - 979 countries / 30 days = ~33 AI per day (spread load across month)
+**Two-Phase Initialization** - Phase 1: System startup (register goals), Phase 2: Player selection (activate AI states)
+**Zero Allocations** - Pre-allocated NativeArray with Allocator.Persistent
+**Deterministic Scoring** - FixedPoint64 goal scores with ordered evaluation
+**Command Pattern Integration** - AI uses player commands (DeclareWarCommand, BuildBuildingCommand)
+**Performance** - <5ms per frame target with bucketing (10 AI × 0.5ms each)
 
 ---
 
@@ -335,8 +351,8 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ## Quick Stats
 
-**Engine Code** - 114 Core scripts + 57 Map scripts
-**Systems** - TimeManager, ProvinceSystem, CountrySystem, DiplomacySystem, UnitSystem, PathfindingSystem, AdjacencySystem, ResourceSystem, ModifierSystem
+**Engine Code** - 119 Core scripts (5 AI) + 57 Map scripts
+**Systems** - TimeManager, ProvinceSystem, CountrySystem, DiplomacySystem, UnitSystem, PathfindingSystem, AdjacencySystem, ResourceSystem, ModifierSystem, AISystem
 **Documentation** - 13 architecture docs + session logs + file registries
 
 ---
