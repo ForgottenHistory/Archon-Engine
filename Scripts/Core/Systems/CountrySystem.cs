@@ -49,6 +49,7 @@ namespace Core.Systems
         public int CountryCount => dataManager?.CountryCount ?? 0;
         public int Capacity => countryHotData.IsCreated ? countryHotData.Length : 0;
         public bool IsInitialized => isInitialized;
+        public NativeList<ushort> ActiveCountryIds => activeCountryIds;
 
         /// <summary>
         /// Initialize the country system with event bus
