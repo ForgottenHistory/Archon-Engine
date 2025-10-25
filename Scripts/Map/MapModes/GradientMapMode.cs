@@ -159,15 +159,15 @@ namespace Map.MapModes
             // Phase 1: Analyze value distribution
             var stats = AnalyzeValueDistribution(allProvinces, provinceQueries, gameProvinceSystem);
 
-            if (stats.ValidProvinces == 0)
-            {
-                ArchonLogger.LogMapModesWarning($"{Name}: No valid provinces with data");
-                return;
-            }
-
             // Phase 2: Update texture with gradient colors
+            // Note: Always update even with 0 valid provinces to clear texture properly
             UpdateGradientTexture(dataTextures, allProvinces, provinceQueries, provinceMapping,
                                  gameProvinceSystem, stats);
+
+            if (stats.ValidProvinces == 0)
+            {
+                ArchonLogger.LogMapModes($"{Name}: No valid provinces with data - texture cleared");
+            }
 
             // Clear dirty flag - data is now up to date
             isDirty = false;
