@@ -298,6 +298,104 @@ When converting existing uGUI:
 - `Assets/Game/UI/LoadingScreenUI.cs` - Fullscreen overlay with progress bar
 - `Assets/Game/UI/CountrySelectionUI.cs` - Fullscreen overlay with button
 
+## UI Presenter Pattern for Complex Panels
+
+**Status**: Production Standard (2025-10-25)
+**Use For**: Interactive panels with actions, events, and complex display logic
+**Decision Doc**: `Docs/Log/decisions/ui-presenter-pattern-for-panels.md`
+
+### When to Use
+
+**Use UI Presenter Pattern When**:
+- Panel exceeds 500 lines
+- Multiple user actions (3+ button handlers)
+- Complex display logic (conditional visibility, formatting)
+- Event-driven updates (monthly tick, resource changes)
+- Need testability (separate logic from UI)
+
+**Don't Use When**:
+- Simple display panels (<200 lines)
+- Read-only information
+- Single action or no actions
+- Temporary/debug UI
+
+### Architecture
+
+**Four-Component Structure**:
+
+1. **View (MonoBehaviour)** - Pure view coordination
+   - UI Toolkit element creation
+   - Show/hide panel
+   - Route button clicks to handler
+   - Delegate display updates to presenter
+   - Manage event subscriber lifecycle
+
+2. **Presenter (Static Class)** - Stateless presentation logic
+   - Query game state for display data
+   - Format data (strings, colors, visibility)
+   - Determine button states
+   - Update UI element properties
+   - All methods static (no state)
+
+3. **ActionHandler (Static Class)** - Stateless user actions
+   - Validate user actions
+   - Execute commands
+   - Return success/failure
+   - All methods static (no state)
+
+4. **EventSubscriber (Class)** - Event lifecycle management
+   - Subscribe to all events
+   - Unsubscribe on destroy
+   - Route events to callbacks
+   - Owned by view
+
+### Benefits
+
+**Scalability**:
+- View remains stable (~200 lines for UI creation)
+- Presenter grows linearly with display complexity
+- Handler grows linearly with action complexity
+- Grand strategy games have tons of UI - pattern scales
+
+**Testability**:
+- Presenter: Pass data, verify formatted output
+- Handler: Mock dependencies, verify commands
+- View: Test UI creation separately
+- Stateless components trivial to test
+
+**Maintainability**:
+- Each file has single responsibility
+- Clear separation: display vs actions vs events
+- Easy to find logic (focused files)
+- Pattern consistency across all panels
+
+### Pattern vs Facade
+
+**UI Presenter (for panels)**:
+- View delegates to stateless helpers
+- MonoBehaviour view owns UI state
+- Focused on display and user interaction
+
+**Facade (for systems)**:
+- Facade owns runtime state
+- Delegates operations to managers
+- Focused on gameplay logic
+
+**Key Difference**: UI is stateless helpers, Systems have stateful facades
+
+### Examples
+
+**Production Implementation**:
+- `Assets/Game/UI/ProvinceInfoPanel.cs` (553 lines) - View
+- `Assets/Game/UI/ProvinceInfoPresenter.cs` (304 lines) - Presenter
+- `Assets/Game/UI/ProvinceActionHandler.cs` (296 lines) - Handler
+- `Assets/Game/UI/ProvinceEventSubscriber.cs` (116 lines) - Subscriber
+
+**Future Candidates**:
+- CountryInfoPanel (similar complexity)
+- DiplomacyPanel (when implemented)
+- Any interactive panel >500 lines
+
 ## Future Considerations
 
 ### When to Consider USS Stylesheets
