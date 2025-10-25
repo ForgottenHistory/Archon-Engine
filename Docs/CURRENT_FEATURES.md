@@ -300,7 +300,6 @@ This document lists all implemented features in the Archon Engine organized by c
 **Texture Infrastructure Tests** - GPU texture creation and binding
 **Command System Tests** - Command execution validation
 **Integration Tests** - Full pipeline texture→simulation→GPU
-**Stress Tests** - 10k provinces, 400 years, allocation monitoring
 **Determinism Tests** - Cross-platform checksum validation
 
 ---

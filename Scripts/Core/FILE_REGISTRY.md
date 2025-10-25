@@ -71,14 +71,21 @@
 
 ---
 
-## Diplomacy/
-**Core.Diplomacy.DiplomacySystem** - Diplomatic relations (opinion, treaties, actions) with hot/cold data
-**Core.Diplomacy.RelationData** - 8-byte hot relation state: opinion, treaties, lastContact, flags
-**Core.Diplomacy.DiplomacyColdData** - Cold relation data: OpinionModifiers, TreatyDetails, History
-**Core.Diplomacy.OpinionModifier** - Opinion modifier with value, duration, decay rate
-**Core.Diplomacy.DiplomacyCommands** - Commands: DeclareWar, MakePeace, ImproveRelations
-**Core.Diplomacy.TreatyCommands** - Commands: FormAlliance, BreakAlliance, GrantMilitaryAccess, etc.
-**Core.Diplomacy.DiplomacyEvents** - Events: WarDeclared, PeaceMade, OpinionChanged, TreatyFormed, TreatyBroken
+## Diplomacy/ [FACADE_PATTERN]
+**Core.Diplomacy.DiplomacySystem** - Facade for diplomatic relations (284 lines, delegates to managers)
+**Core.Diplomacy.DiplomacyRelationManager** - Opinion calculations and modifiers (stateless, 255 lines)
+**Core.Diplomacy.DiplomacyWarManager** - War state management (stateless, 226 lines)
+**Core.Diplomacy.DiplomacyTreatyManager** - Treaty management (stateless, 423 lines)
+**Core.Diplomacy.DiplomacyModifierProcessor** - Burst-compiled modifier decay (stateless, 126 lines)
+**Core.Diplomacy.DiplomacySaveLoadHandler** - Save/load serialization (stateless, 204 lines)
+**Core.Diplomacy.DiplomacyKeyHelper** - Key packing/unpacking utilities (46 lines)
+**Core.Diplomacy.RelationData** - Hot relation state: baseOpinion, atWar, treatyFlags
+**Core.Diplomacy.OpinionModifier** - Time-decaying modifier with FixedPoint64 value
+**Core.Diplomacy.ModifierWithKey** - Flat storage struct (modifier + relationshipKey for Burst)
+**Core.Diplomacy.DecayModifiersJob** - Burst IJobParallelFor for parallel decay processing
+**Core.Diplomacy.DiplomacyCommands** - Commands: DeclareWar, MakePeace
+**Core.Diplomacy.TreatyCommands** - Commands: ProposeTreaty, AcceptTreaty, BreakTreaty
+**Core.Diplomacy.DiplomacyEvents** - Events: WarDeclared, PeaceMade, OpinionChanged
 
 ---
 

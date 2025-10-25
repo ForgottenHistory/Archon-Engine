@@ -11,10 +11,10 @@
 Grand strategy games have **four core pillars:**
 1. ✅ **Economy** - Resource management, production, trade
 2. 🔄 **Military** - Units, movement, combat (units + movement ✅, combat pending)
-3. ❌ **Diplomacy** - Relations, treaties, alliances
+3. 🔄 **Diplomacy** - Relations, treaties, alliances (relations + treaties ✅, AI integration pending)
 4. ❌ **AI** - Decision-making, opponents, challenge
 
-**Current Status:** Economy pillar complete. Military pillar in progress (units, movement, pathfinding complete; combat pending). Need to implement Diplomacy, AI.
+**Current Status:** Economy pillar complete. Military pillar in progress (units, movement, pathfinding complete; combat pending). Diplomacy pillar in progress (relations + treaties complete, AI integration pending). Need to implement AI.
 
 **Goal:** Validate Archon-Engine architecture with all four pillars working together.
 
@@ -117,63 +117,95 @@ struct UnitState {
 
 ---
 
-## PILLAR 3: DIPLOMACY
+## PILLAR 3: DIPLOMACY (In Progress)
 
-### 3.1 Relations System
+### 3.1 Relations System ✅ COMPLETE
 
-**ENGINE Components:**
-- DiplomacySystem - Manages relations between countries
-- RelationState - Opinion values (-200 to +200)
-- RelationModifiers - Recent events affecting opinion
-- OpinionCalculator - Computes total opinion from modifiers
+**Implemented Components:**
+- ✅ DiplomacySystem - Manages bilateral relations between countries
+- ✅ RelationState - Opinion values (FixedPoint64, -200 to +200 range)
+- ✅ OpinionModifier - Time-decaying modifiers for recent actions
+- ✅ Flat Storage Architecture - Burst-optimized with NativeList<ModifierWithKey>
+- ✅ Save/Load support with full modifier persistence
 
-**Relations Storage:**
+**Data Structure:**
 ```csharp
-// Sparse storage: Dictionary<(ushort, ushort), RelationData>
-struct RelationData {
+// Flat storage for Burst compatibility
+NativeList<ModifierWithKey> allModifiers;  // All modifiers tagged with relationshipKey
+NativeParallelHashMap<ulong, int> modifierCache;  // O(1) lookup by relationship
+
+struct RelationState {
     FixedPoint64 baseOpinion;
-    List<OpinionModifier> modifiers; // "Stole province", "Alliance", etc
+    // Modifiers stored separately in flat array
+}
+
+struct OpinionModifier {
+    ushort modifierTypeID;
+    int startTick;
+    FixedPoint64 decayRate;
+    FixedPoint64 magnitude;
 }
 ```
 
-**Opinion Modifiers:**
-- Base relations (cultural similarity, religion, etc.)
-- Recent actions (declared war = -100, trade = +10)
-- Time decay (modifiers fade over time)
+**Opinion System Features:**
+- Base relations (configurable per country pair)
+- Timed modifiers (wars, alliances, insults, rivalries)
+- Automatic decay over time (linear decay to zero)
+- Clamped total opinion (-200 to +200)
+- Burst-compiled parallel decay processing
 
-**Validation:**
-- 100 countries with relations, verify <5ms opinion calculation
-- Save/Load relations, verify modifiers persist
-- Deterministic opinion changes
+**Performance:**
+- 610,750 modifiers (extreme stress test) processed in 3ms
+- 87% improvement from Burst optimization
+- O(1) cache lookup for GetOpinion queries
+- Deterministic fixed-point math for multiplayer
 
-### 3.2 Treaty System
+**Status:** Relations system complete with production-ready performance. Can handle 61k relationships with 10 modifiers each.
 
-**ENGINE Components:**
-- TreatySystem - Active treaties between countries
-- TreatyDefinition - Alliance, Trade Agreement, Non-Aggression Pact
-- TreatyCommands - ProposeAlliance, AcceptTreaty, BreakTreaty
+**See:** [diplomacy-system-implementation.md](diplomacy-system-implementation.md) for detailed documentation.
+
+### 3.2 Treaty System ✅ COMPLETE
+
+**Implemented Components:**
+- ✅ TreatySystem - Active treaties between countries
+- ✅ TreatyDefinition - Treaty type metadata (Alliance, Guarantee, Military Access, Non-Aggression Pact)
+- ✅ TreatyState - Runtime treaty instances with expiration tracking
+- ✅ TreatyCommands - ProposeTreatyCommand, AcceptTreatyCommand, BreakTreatyCommand
+- ✅ Treaty evaluation - Opinion-based acceptance logic
+- ✅ Save/Load with treaty persistence
 
 **Treaty Types:**
-- Alliance (join defensive wars, opinion bonus)
-- Trade Agreement (economic bonuses, opinion bonus)
-- Non-Aggression Pact (cannot declare war, opinion bonus)
-- Vassalization (future - subject pays tribute)
+- Alliance (mutual defense, +50 opinion)
+- Guarantee Independence (defensive pact, +30 opinion)
+- Military Access (troop movement rights, +20 opinion)
+- Non-Aggression Pact (cannot declare war, +10 opinion)
 
 **Treaty Storage:**
 ```csharp
-struct Treaty {
+struct TreatyState {
     ushort country1;
     ushort country2;
-    ushort treatyType;
+    ushort treatyTypeID;
     int startTick;
     int expirationTick; // 0 = permanent
 }
 ```
 
-**Validation:**
-- 50 active alliances, verify war declarations respect treaties
-- Save/Load treaties, verify expiration dates correct
-- Break treaty, verify opinion penalties apply
+**Treaty System Features:**
+- Opinion-based acceptance (requires minimum opinion threshold)
+- Opinion modifiers on treaty creation/breaking
+- Expiration handling (timed vs permanent treaties)
+- Policy-driven definitions (GAME layer)
+- Sparse storage (only active treaties stored)
+
+**Performance:**
+- Stress tested with 36,912 simultaneous treaty proposals (all possible pairs)
+- Sub-millisecond treaty evaluation
+- Scales to 350 countries (maximum capacity test)
+
+**Status:** Treaty system complete with full lifecycle (propose, accept, expire, break). Ready for AI integration.
+
+**See:** [diplomacy-system-implementation.md](diplomacy-system-implementation.md) Phase 2 for detailed documentation.
 
 ---
 
@@ -304,9 +336,9 @@ float score =
 |-------|--------|---------|--------|
 | 1 | Military | Unit System | ✅ Complete |
 | 2 | Military | Movement System | ✅ Complete |
-| 3 | Military | Combat System | 📋 Planned |
-| 4 | Diplomacy | Relations System | 📋 Planned |
-| 5 | Diplomacy | Treaty System | 📋 Planned |
+| 3 | Diplomacy | Relations System | ✅ Complete |
+| 4 | Diplomacy | Treaty System | ✅ Complete |
+| 5 | Military | Combat System | 📋 Planned |
 | 6 | AI | AI Framework | 📋 Planned |
 | 7 | AI | AI Evaluators | 📋 Planned |
 | 8 | AI | AI Personality | 📋 Planned |
@@ -317,18 +349,23 @@ float score =
 ## SUCCESS METRICS
 
 **Military Pillar:**
-- ✅ Can create 10k units in <100ms
-- ✅ Can move 1k units simultaneously
-- ✅ Combat resolves 100 battles in <20ms
-- ✅ Deterministic (same seed = same battles)
-- ✅ Save/Load with units mid-movement/battle
+- ✅ 10k units created and managed in NativeArray
+- ✅ Multi-province pathfinding with A* algorithm
+- ✅ Time-based movement with automatic waypoint progression
+- ✅ Movement queue with save/load mid-journey
+- ✅ 3D visualization with aggregate unit display
+- ✅ Deterministic movement (same seed = same paths)
+- ⏳ Combat system (planned next after diplomacy complete)
 
 **Diplomacy Pillar:**
-- ✅ 100 countries with relations in <5ms opinion calculation
-- ✅ Treaties respected (allies join wars)
-- ✅ Opinion modifiers decay over time
-- ✅ Deterministic diplomatic actions
-- ✅ Save/Load with active treaties
+- ✅ 350 countries with 61k relationships (extreme stress test)
+- ✅ 610,750 opinion modifiers processed in 3ms (Burst-optimized)
+- ✅ Opinion modifiers decay over time (deterministic fixed-point)
+- ✅ 36,912 treaty proposals evaluated (maximum capacity test)
+- ✅ Treaty lifecycle complete (propose, accept, expire, break)
+- ✅ Save/Load with modifiers and treaties
+- ⏳ AI treaty evaluation integration (pending AI pillar)
+- ⏳ War declaration treaty enforcement (pending combat system)
 
 **AI Pillar:**
 - ✅ 20 AI countries making decisions in <10ms
@@ -377,15 +414,23 @@ This plan validates that Archon-Engine can handle:
 
 ## NEXT IMMEDIATE STEPS
 
-1. **Combat System** - Next priority after movement completion
+1. **Combat System** - Next priority (Military pillar completion)
 2. **Combat validation** - 100 simultaneous battles, deterministic resolution
-3. **Diplomacy System** - Relations, treaties after combat complete
-4. **AI System** - Final pillar, requires military + diplomacy complete
+3. **AI Framework** - Decision-making system (requires military + diplomacy)
+4. **AI Integration** - Connect AI to diplomacy and military systems
+
+**Progress Summary:**
+- ✅ Economy Pillar: Complete
+- 🔄 Military Pillar: Units + Movement complete, Combat pending
+- 🔄 Diplomacy Pillar: Relations + Treaties complete, AI integration pending
+- ❌ AI Pillar: Not started (requires military + diplomacy foundation)
+
+**Key Achievement:** Diplomacy system Burst-optimized to 3ms for 610k modifiers (87% improvement), validating flat storage architecture pattern for future systems.
 
 ---
 
 *Planning Document Created: 2025-10-19*
-*Last Updated: 2025-10-20*
+*Last Updated: 2025-10-25*
 *Priority: ENGINE validation - complete the four pillars*
-*Status: Military units + movement ✅, combat system next*
+*Status: Military units + movement ✅, Diplomacy relations + treaties ✅, Combat system next*
 *Note: Time estimates intentionally omitted - focus on implementation order and validation criteria*
