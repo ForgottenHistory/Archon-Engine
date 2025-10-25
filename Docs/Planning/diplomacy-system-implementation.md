@@ -879,12 +879,65 @@ public enum TreatyFlags : byte {
 
 ## NEXT STEPS AFTER PHASE 2
 
-### Phase 3: Diplomacy UI
-- Relations Panel showing country opinions
-- Treaty status display (allied, NAP, guaranteed)
-- Alliance chain visualization
-- Propose treaty buttons
-- Diplomatic notifications (war declared, peace offered, treaty formed/broken)
+### Phase 3: Diplomacy UI ✅ COMPLETE (2025-10-25)
+
+**Status:** ✅ COMPLETE
+**Scope:** CountryInfoPanel UI for diplomacy features
+**Pattern:** UI Presenter Pattern (5-component architecture)
+
+**Implemented Components:**
+- ✅ CountryInfoPanel - Displays country information and diplomacy status (503 lines)
+- ✅ CountryInfoPresenter - Data formatting and diplomacy display logic (258 lines)
+- ✅ CountryActionHandler - Diplomacy action handlers (declare war, propose alliance, improve relations) (147 lines)
+- ✅ CountryEventSubscriber - Event lifecycle management via EventBus (186 lines)
+- ✅ CountryUIBuilder - UI element creation with explicit styling (217 lines)
+
+**Features:**
+- ✅ Opinion display with descriptive labels (Excellent/Good/Neutral/Poor/Bad/Hostile)
+- ✅ War status display (at war with X countries / at peace)
+- ✅ Alliance status display (allied with X countries)
+- ✅ Treaty status display (treaty count)
+- ✅ Declare war button (validates not at war, not allied, not NAP)
+- ✅ Propose alliance button (requires +50 opinion)
+- ✅ Improve relations button (costs 50 gold, +5 opinion)
+- ✅ Real-time updates via EventBus (WarDeclared, PeaceMade, AllianceFormed, AllianceBroken, OpinionChanged)
+- ✅ Mutual exclusion with ProvinceInfoPanel
+
+**Architecture:**
+- **Pattern:** UI Presenter Pattern with 5 components
+- **Why 5 components:** UI creation exceeded 150 lines (217 lines in UIBuilder)
+- **Benefits:** View stays focused (~500 lines), scalable for future diplomacy features
+- **Event Integration:** Uses EventBus pattern (NOT C# events) for system event subscriptions
+
+**Files Created (5):**
+1. `Assets/Game/UI/CountryInfoPresenter.cs` - Stateless presentation logic
+2. `Assets/Game/UI/CountryActionHandler.cs` - Diplomacy action handlers
+3. `Assets/Game/UI/CountryEventSubscriber.cs` - EventBus subscription management
+4. `Assets/Game/UI/CountryUIBuilder.cs` - UI element creation with styling
+
+**Files Modified (1):**
+1. `Assets/Game/UI/CountryInfoPanel.cs` - Refactored to pure view (466→503 lines)
+
+**Architecture Documentation Updated:**
+- `CLAUDE.md` - Added Pattern 19 (UI Presenter), enhanced Pattern 3 (EventBus)
+- `ui-presenter-pattern-for-panels.md` - Added 5-component pattern, 4 vs 5 guidelines
+- `ui-architecture.md` - Added 5-component structure, CountryInfoPanel example
+- `FILE_REGISTRY.md` - Added CountryInfoPanel 5-component structure
+
+**Session Log:**
+- See: `Assets/Archon-Engine/Docs/Log/2025-10/25/4-ui-presenter-pattern-diplomacy-ui.md`
+
+**Key Technical Details:**
+- EventBus pattern: `gameState.EventBus.Subscribe<EventType>(handler)` (NOT C# events)
+- Commands: Property initialization `new Command { Prop = val }` (NOT constructor parameters)
+- GetOpinion: Requires `currentTick` parameter for deterministic temporal queries
+- UpdateCountryID: EventSubscriber tracks displayed country to filter relevant events
+
+**Next Steps:**
+- ✅ Diplomacy UI complete
+- 📋 Consider: Diplomatic map mode (show alliances, wars visually)
+- 📋 Consider: Treaty proposal UI (more detailed acceptance feedback)
+- 📋 Consider: Alliance chain visualization (tree view)
 
 ### Phase 4: Economic Treaties
 - Trade Agreements (opinion bonuses, income effects)

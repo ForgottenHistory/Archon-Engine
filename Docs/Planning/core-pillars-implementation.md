@@ -14,7 +14,7 @@ Grand strategy games have **four core pillars:**
 3. 🔄 **Diplomacy** - Relations, treaties, alliances (relations + treaties ✅, AI integration pending)
 4. ❌ **AI** - Decision-making, opponents, challenge
 
-**Current Status:** Economy pillar complete. Military pillar in progress (units, movement, pathfinding complete; combat pending). Diplomacy pillar in progress (relations + treaties complete, AI integration pending). Need to implement AI.
+**Current Status:** Economy pillar ✅ complete. Military pillar 🔄 in progress (units, movement, pathfinding ✅ complete; combat ⏳ pending). Diplomacy pillar ✅ complete (relations + treaties + UI). AI pillar ⏳ not started.
 
 **Goal:** Validate Archon-Engine architecture with all four pillars working together.
 
@@ -117,7 +117,7 @@ struct UnitState {
 
 ---
 
-## PILLAR 3: DIPLOMACY (In Progress)
+## PILLAR 3: DIPLOMACY ✅ COMPLETE
 
 ### 3.1 Relations System ✅ COMPLETE
 
@@ -206,6 +206,41 @@ struct TreatyState {
 **Status:** Treaty system complete with full lifecycle (propose, accept, expire, break). Ready for AI integration.
 
 **See:** [diplomacy-system-implementation.md](diplomacy-system-implementation.md) Phase 2 for detailed documentation.
+
+### 3.3 Diplomacy UI ✅ COMPLETE (2025-10-25)
+
+**Implemented Components:**
+- ✅ CountryInfoPanel - Country information and diplomacy display (5-component UI Presenter)
+- ✅ CountryInfoPresenter - Stateless presentation logic (258 lines)
+- ✅ CountryActionHandler - Diplomacy actions (declare war, propose alliance, improve relations) (147 lines)
+- ✅ CountryEventSubscriber - EventBus subscription management (186 lines)
+- ✅ CountryUIBuilder - UI element creation with explicit styling (217 lines)
+
+**Features:**
+- Opinion display with descriptive labels (Excellent/Good/Neutral/Poor/Bad/Hostile)
+- War status (at war with X countries / at peace)
+- Alliance status (allied with X countries)
+- Treaty status (treaty count)
+- Declare war button (validates treaty requirements)
+- Propose alliance button (requires +50 opinion)
+- Improve relations button (costs 50 gold, +5 opinion)
+- Real-time updates via EventBus (war, peace, alliance, opinion changes)
+
+**Architecture:**
+- **Pattern:** UI Presenter Pattern with 5 components (View + Presenter + ActionHandler + EventSubscriber + UIBuilder)
+- **Why 5 components:** UI creation exceeded 150 lines (proactive scalability)
+- **Event Integration:** EventBus pattern for system events (NOT C# events)
+- **Scalability:** View stays ~500 lines, ready for future diplomacy features
+
+**Key Technical Details:**
+- EventBus: `gameState.EventBus.Subscribe<EventType>(handler)` (zero-allocation)
+- Commands: Property initialization pattern `new Command { Prop = val }`
+- GetOpinion: Requires `currentTick` for deterministic temporal queries
+- UpdateCountryID: EventSubscriber filters events for displayed country
+
+**Status:** Diplomacy UI complete. Player can view diplomatic status and perform diplomacy actions (declare war, form alliances, improve relations).
+
+**See:** [diplomacy-system-implementation.md](diplomacy-system-implementation.md) Phase 3 and Session Log `4-ui-presenter-pattern-diplomacy-ui.md` for detailed documentation.
 
 ---
 
@@ -338,11 +373,12 @@ float score =
 | 2 | Military | Movement System | ✅ Complete |
 | 3 | Diplomacy | Relations System | ✅ Complete |
 | 4 | Diplomacy | Treaty System | ✅ Complete |
-| 5 | Military | Combat System | 📋 Planned |
-| 6 | AI | AI Framework | 📋 Planned |
-| 7 | AI | AI Evaluators | 📋 Planned |
-| 8 | AI | AI Personality | 📋 Planned |
-| 9 | Integration | All Pillars Together | 📋 Planned |
+| 5 | Diplomacy | Diplomacy UI | ✅ Complete |
+| 6 | Military | Combat System | 📋 Planned |
+| 7 | AI | AI Framework | 📋 Planned |
+| 8 | AI | AI Evaluators | 📋 Planned |
+| 9 | AI | AI Personality | 📋 Planned |
+| 10 | Integration | All Pillars Together | 📋 Planned |
 
 ---
 
@@ -364,6 +400,8 @@ float score =
 - ✅ 36,912 treaty proposals evaluated (maximum capacity test)
 - ✅ Treaty lifecycle complete (propose, accept, expire, break)
 - ✅ Save/Load with modifiers and treaties
+- ✅ Diplomacy UI with CountryInfoPanel (5-component UI Presenter)
+- ✅ Real-time updates via EventBus (war, peace, alliance, opinion changes)
 - ⏳ AI treaty evaluation integration (pending AI pillar)
 - ⏳ War declaration treaty enforcement (pending combat system)
 
@@ -422,7 +460,7 @@ This plan validates that Archon-Engine can handle:
 **Progress Summary:**
 - ✅ Economy Pillar: Complete
 - 🔄 Military Pillar: Units + Movement complete, Combat pending
-- 🔄 Diplomacy Pillar: Relations + Treaties complete, AI integration pending
+- ✅ Diplomacy Pillar: Complete (Relations + Treaties + UI)
 - ❌ AI Pillar: Not started (requires military + diplomacy foundation)
 
 **Key Achievement:** Diplomacy system Burst-optimized to 3ms for 610k modifiers (87% improvement), validating flat storage architecture pattern for future systems.
@@ -432,5 +470,5 @@ This plan validates that Archon-Engine can handle:
 *Planning Document Created: 2025-10-19*
 *Last Updated: 2025-10-25*
 *Priority: ENGINE validation - complete the four pillars*
-*Status: Military units + movement ✅, Diplomacy relations + treaties ✅, Combat system next*
+*Status: Military units + movement ✅, Diplomacy complete ✅ (relations + treaties + UI), Combat system next*
 *Note: Time estimates intentionally omitted - focus on implementation order and validation criteria*

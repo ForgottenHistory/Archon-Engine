@@ -321,10 +321,10 @@ When converting existing uGUI:
 
 ### Architecture
 
-**Four-Component Structure**:
+**Four-Component Structure** (simple panels):
 
 1. **View (MonoBehaviour)** - Pure view coordination
-   - UI Toolkit element creation
+   - UI Toolkit element creation (~150 lines inline)
    - Show/hide panel
    - Route button clicks to handler
    - Delegate display updates to presenter
@@ -348,6 +348,25 @@ When converting existing uGUI:
    - Unsubscribe on destroy
    - Route events to callbacks
    - Owned by view
+
+**Five-Component Structure** (complex panels with >150 lines UI creation):
+
+1. **View (MonoBehaviour)** - Pure view coordination
+   - Minimal UI initialization (~40 lines delegates to UIBuilder)
+   - Show/hide panel
+   - Route button clicks to handler
+   - Delegate display updates to presenter
+   - Manage event subscriber lifecycle
+
+2-4. **Presenter/Handler/Subscriber** - Same as 4-component
+
+5. **UIBuilder (Static Class)** - UI element creation
+   - Static BuildUI() method returns UIElements container
+   - Creates all UI Toolkit elements programmatically
+   - Applies styling from StyleConfig struct
+   - Wires up button callbacks
+   - Keeps view clean and focused
+   - Use when UI creation exceeds 150 lines
 
 ### Benefits
 
@@ -385,16 +404,23 @@ When converting existing uGUI:
 
 ### Examples
 
-**Production Implementation**:
+**Production Implementation (4 components)**:
 - `Assets/Game/UI/ProvinceInfoPanel.cs` (553 lines) - View
 - `Assets/Game/UI/ProvinceInfoPresenter.cs` (304 lines) - Presenter
 - `Assets/Game/UI/ProvinceActionHandler.cs` (296 lines) - Handler
 - `Assets/Game/UI/ProvinceEventSubscriber.cs` (116 lines) - Subscriber
 
+**Production Implementation (5 components)**:
+- `Assets/Game/UI/CountryInfoPanel.cs` (503 lines) - View
+- `Assets/Game/UI/CountryInfoPresenter.cs` (258 lines) - Presenter
+- `Assets/Game/UI/CountryActionHandler.cs` (147 lines) - Handler
+- `Assets/Game/UI/CountryEventSubscriber.cs` (186 lines) - Subscriber
+- `Assets/Game/UI/CountryUIBuilder.cs` (217 lines) - UIBuilder
+
 **Future Candidates**:
-- CountryInfoPanel (similar complexity)
-- DiplomacyPanel (when implemented)
-- Any interactive panel >500 lines
+- DiplomacyPanel (when implemented) → 5-component pattern
+- Any interactive panel >500 lines → Use UI Presenter pattern
+- Any panel with >150 lines UI creation → Consider UIBuilder (5-component)
 
 ## Future Considerations
 

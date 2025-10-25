@@ -60,10 +60,12 @@ ProvinceInfoPanel.cs (1,047 lines)
 
 **Architecture:** View delegates to Presenter for display, Handler for actions, Subscriber for events
 
-### ProvinceInfoPanel Structure:
+**Evolution Note (2025-10-25):** CountryInfoPanel extended pattern to 5 components by adding UIBuilder for UI element creation. This is now the **recommended pattern** for panels with >150 lines of UI creation code.
+
+### ProvinceInfoPanel Structure (4 components):
 ```
 ProvinceInfoPanel.cs (553 lines) - PURE VIEW
-  - UI creation (UI Toolkit programmatic)
+  - UI creation (UI Toolkit programmatic) - ~150 lines
   - Show/hide panel
   - Route button clicks to action handler
   - Delegate display updates to presenter
@@ -89,6 +91,39 @@ ProvinceEventSubscriber.cs (116 lines) - EVENT MANAGEMENT
   - Subscribe() / Unsubscribe() lifecycle
   - Routes events to callbacks (panel owns callbacks)
   - Clean separation of event sources from view
+```
+
+### CountryInfoPanel Structure (5 components - Enhanced Pattern):
+```
+CountryInfoPanel.cs (503 lines) - PURE VIEW
+  - Minimal UI creation (~40 lines delegates to UIBuilder)
+  - Show/hide panel
+  - Route button clicks to action handler
+  - Delegate display updates to presenter
+  - Minimal logic (only coordination)
+
+CountryInfoPresenter.cs (258 lines) - PRESENTATION LOGIC (STATELESS)
+  - UpdateBasicCountryData() - tag, name, color
+  - UpdateProvinceStatistics() - provinces, development
+  - UpdateEconomyInfo() - income, treasury
+  - UpdateDiplomacyInfo() - opinion, wars, alliances, treaties
+
+CountryActionHandler.cs (147 lines) - USER ACTIONS (STATELESS)
+  - TryDeclareWar() - validate and declare war
+  - TryProposeAlliance() - validate and form alliance
+  - TryImproveRelations() - spend gold to improve opinion
+
+CountryEventSubscriber.cs (186 lines) - EVENT MANAGEMENT
+  - Treasury changed, game loaded events
+  - Diplomacy events (war, peace, alliance, opinion)
+  - Routes events to callbacks (panel owns callbacks)
+
+CountryUIBuilder.cs (217 lines) - UI ELEMENT CREATION (STATELESS) ⭐ NEW
+  - Static BuildUI() method returns UIElements container
+  - Creates all UI Toolkit elements programmatically
+  - Applies styling from StyleConfig
+  - Wires up button callbacks
+  - Keeps view clean (~40 lines vs ~150 lines inline)
 ```
 
 ---
@@ -119,6 +154,14 @@ ProvinceEventSubscriber.cs (116 lines) - EVENT MANAGEMENT
 - Lifecycle management (subscribe in Initialize, unsubscribe in OnDestroy)
 - Single place to see all event dependencies
 - Easier to debug event-related issues
+
+**Why Separate UIBuilder (5-component enhancement):**
+- UI creation code can be 150+ lines (boilerplate heavy)
+- Separating reduces view size by ~30% (553→503 lines for CountryInfoPanel)
+- Styling configuration becomes explicit (StyleConfig struct)
+- Testable UI creation (pass config, verify element structure)
+- Reusable pattern for all panels (consistent API)
+- View focuses on coordination, not construction
 
 ---
 
@@ -180,6 +223,29 @@ ProvinceEventSubscriber.cs (116 lines) - EVENT MANAGEMENT
 
 ---
 
+## Pattern: 4 Components vs 5 Components
+
+**Use 4-Component Pattern (View/Presenter/Handler/Subscriber) When:**
+- UI creation code is <150 lines
+- Simple UI structure (few elements)
+- Inline UI creation is acceptable
+- Example: ProvinceInfoPanel (553 lines total, ~150 lines UI creation)
+
+**Use 5-Component Pattern (+ UIBuilder) When:**
+- UI creation code is >150 lines
+- Complex UI structure (many sections, buttons)
+- View would exceed 500 lines with inline UI creation
+- Want explicit styling configuration
+- Example: CountryInfoPanel (503 lines view, 217 lines UIBuilder)
+
+**Trade-off:**
+- 4 components: Simpler (fewer files), UI creation visible in view
+- 5 components: More files, but view stays focused on coordination
+
+**Recommendation:** Start with 4 components. Extract UIBuilder when UI creation exceeds 150 lines or view approaches 500 lines.
+
+---
+
 ## Pattern: When to Use UI Presenter
 
 **Use UI Presenter When:**
@@ -226,7 +292,7 @@ ProvinceEventSubscriber.cs (116 lines) - EVENT MANAGEMENT
 ## Pattern: UI Presenter Components
 
 **View (MonoBehaviour):**
-- UI Toolkit creation (programmatic)
+- UI Toolkit creation (programmatic) OR delegate to UIBuilder
 - Show/hide panel
 - Route clicks to handler
 - Delegate display to presenter
@@ -252,21 +318,33 @@ ProvinceEventSubscriber.cs (116 lines) - EVENT MANAGEMENT
 - Route events to callbacks
 - Owned by view
 
+**UIBuilder (Static Class - Optional 5th component):**
+- Static BuildUI() returns UIElements container
+- Creates all UI Toolkit elements
+- Applies styling from StyleConfig
+- Wires up button callbacks
+- Keeps view clean and focused
+- Use when UI creation >150 lines
+
 ---
 
 ## Consistency Across Codebase
 
 **Panels Using UI Presenter Pattern:**
-- ✅ ProvinceInfoPanel - Session 3 refactor (first implementation)
-- 🔄 CountryInfoPanel - Next candidate (similar complexity)
+- ✅ ProvinceInfoPanel - 4 components (553 lines view, first implementation)
+- ✅ CountryInfoPanel - 5 components (503 lines view, enhanced with UIBuilder)
+
+**Pattern Evolution:**
+- **Session 3 (2025-10-25)**: ProvinceInfoPanel → 4 components (View/Presenter/Handler/Subscriber)
+- **Session 3 (2025-10-25)**: CountryInfoPanel → 5 components (+ UIBuilder for >150 lines UI creation)
 
 **Future Applications:**
-- DiplomacyPanel (when implemented)
-- TradePanel (when implemented)
-- MilitaryPanel (when implemented)
-- Any panel >500 lines or with complex actions
+- DiplomacyPanel (when implemented) → Use 5-component pattern (complex UI expected)
+- TradePanel (when implemented) → Start with 4, add UIBuilder if UI creation >150 lines
+- MilitaryPanel (when implemented) → Start with 4, add UIBuilder if UI creation >150 lines
+- Any panel >500 lines or with complex actions → Use UI Presenter pattern
 
-**Goal:** All interactive UI panels use UI Presenter pattern
+**Goal:** All interactive UI panels use UI Presenter pattern (4 or 5 components based on complexity)
 
 ---
 
@@ -291,7 +369,14 @@ ProvinceEventSubscriber.cs (116 lines) - EVENT MANAGEMENT
 - Pattern designed for "tons of UI" (user's words)
 - Adding new action = add method to Handler
 - Adding new display = add method to Presenter
-- View remains stable (~200 lines for UI creation)
+- View remains stable (~200 lines coordination, or ~40 lines with UIBuilder)
+
+**UIBuilder Extension (CountryInfoPanel enhancement):**
+- Extracting UI creation to separate builder reduces view by ~30%
+- StyleConfig pattern makes styling explicit and testable
+- UIElements container pattern provides clean API
+- View focuses purely on coordination logic
+- Proactive scalability: extract UIBuilder before view exceeds 500 lines
 
 ---
 
