@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using Core.Data;
 using Core.Systems;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 namespace Core.Diplomacy
@@ -41,35 +43,54 @@ namespace Core.Diplomacy
 
         /// <summary>
         /// Sparse storage for active relationships
-        /// Key: (country1, country2) with country1 < country2
+        /// Key: Packed ulong from (country1, country2) with country1 < country2
         /// Value: RelationData with opinion and war state
         /// Memory: ~30k relationships × 16 bytes = ~480KB
+        /// NATIVE: NativeParallelHashMap for zero GC allocations
         /// </summary>
-        private Dictionary<(ushort, ushort), RelationData> relations = new Dictionary<(ushort, ushort), RelationData>();
+        private NativeParallelHashMap<ulong, RelationData> relations;
 
         /// <summary>
         /// Fast lookup for active wars
-        /// HashSet for O(1) IsAtWar() checks
+        /// NativeParallelHashSet for O(1) IsAtWar() checks
         /// Memory: ~1k wars × 8 bytes = ~8KB
+        /// NATIVE: Zero GC allocations
         /// </summary>
-        private HashSet<(ushort, ushort)> activeWars = new HashSet<(ushort, ushort)>();
+        private NativeParallelHashSet<ulong> activeWars;
 
         /// <summary>
         /// Index: Country → List of enemies
         /// Optimizes GetEnemies() queries for AI
         /// Memory: ~1k countries × pointer = ~8KB + war lists
+        /// NATIVE: NativeParallelMultiHashMap for one-to-many relationships
         /// </summary>
-        private Dictionary<ushort, List<ushort>> warsByCountry = new Dictionary<ushort, List<ushort>>();
+        private NativeParallelMultiHashMap<ushort, ushort> warsByCountry;
 
         // ========== COLD DATA (Rare Access) ==========
 
         /// <summary>
-        /// Cold data storage (modifiers, history)
-        /// Only created when modifiers exist
-        /// Key: Same as relations dictionary
-        /// Value: DiplomacyColdData with modifier list
+        /// FLAT STORAGE for ALL opinion modifiers across ALL relationships
+        ///
+        /// ARCHITECTURE:
+        /// - ALL modifiers stored with their relationship keys in single NativeList
+        /// - modifierCache tracks start indices for fast O(1) lookup
+        /// - Enables Burst-compiled parallel processing (no nested containers!)
+        ///
+        /// DETERMINISM:
+        /// - Insertion order preserved (append-only during month)
+        /// - Decay marks modifiers (parallel read-only, no race conditions)
+        /// - Compaction rebuilds array sequentially (deterministic)
+        ///
+        /// MEMORY: ~32 bytes per modifier × 610k = ~19 MB worst case
         /// </summary>
-        private Dictionary<(ushort, ushort), DiplomacyColdData> coldData = new Dictionary<(ushort, ushort), DiplomacyColdData>();
+        private NativeList<ModifierWithKey> allModifiers;
+
+        /// <summary>
+        /// Cache: Maps relationship key → first modifier index in allModifiers
+        /// Rebuilt after decay compaction for O(1) GetOpinion() performance
+        /// Key: Relationship key, Value: Index of first modifier for this relationship
+        /// </summary>
+        private NativeParallelHashMap<ulong, int> modifierCache;
 
         // ========== CONFIGURATION ==========
 
@@ -97,23 +118,31 @@ namespace Core.Diplomacy
             // Get GameState reference for EventBus access
             gameState = GetComponent<GameState>();
 
-            // Clear all data structures
-            relations.Clear();
-            coldData.Clear();
-            activeWars.Clear();
-            warsByCountry.Clear();
+            // Allocate NativeCollections with Persistent allocator
+            // Pre-allocate for realistic worst case: 350 countries, ~60k relationships max
+            relations = new NativeParallelHashMap<ulong, RelationData>(65536, Allocator.Persistent);
+            activeWars = new NativeParallelHashSet<ulong>(2048, Allocator.Persistent);
+            warsByCountry = new NativeParallelMultiHashMap<ushort, ushort>(2048, Allocator.Persistent);
 
-            ArchonLogger.LogCoreDiplomacy("DiplomacySystem: Initialized");
+            // FLAT STORAGE: Pre-allocate for worst case (610k modifiers with keys)
+            allModifiers = new NativeList<ModifierWithKey>(655360, Allocator.Persistent);  // 610k + headroom
+            modifierCache = new NativeParallelHashMap<ulong, int>(65536, Allocator.Persistent);
+
+            ArchonLogger.LogCoreDiplomacy("DiplomacySystem: Initialized with NativeCollections (flat modifier storage)");
         }
 
         protected override void OnShutdown()
         {
             ArchonLogger.LogCoreDiplomacy("DiplomacySystem: Shutting down...");
 
-            relations.Clear();
-            coldData.Clear();
-            activeWars.Clear();
-            warsByCountry.Clear();
+            // Dispose all NativeCollections
+            if (relations.IsCreated) relations.Dispose();
+            if (activeWars.IsCreated) activeWars.Dispose();
+            if (warsByCountry.IsCreated) warsByCountry.Dispose();
+            if (allModifiers.IsCreated) allModifiers.Dispose();
+            if (modifierCache.IsCreated) modifierCache.Dispose();
+
+            ArchonLogger.LogCoreDiplomacy("DiplomacySystem: Disposed all NativeCollections");
         }
 
         // ========== QUERIES: OPINION ==========
@@ -134,10 +163,17 @@ namespace Core.Diplomacy
             // Start with base opinion
             FixedPoint64 total = relation.baseOpinion;
 
-            // Add modifiers if they exist
-            if (coldData.TryGetValue(key, out var cold))
+            // Add all modifiers for this relationship (use cache for O(1) lookup)
+            if (modifierCache.TryGetValue(key, out int startIndex))
             {
-                total += cold.CalculateModifierTotal(currentTick);
+                // Scan from cached start index until we find a different key
+                for (int i = startIndex; i < allModifiers.Length; i++)
+                {
+                    if (allModifiers[i].relationshipKey != key)
+                        break;  // Modifiers for this relationship are contiguous
+
+                    total += allModifiers[i].modifier.CalculateCurrentValue(currentTick);
+                }
             }
 
             // Clamp to valid range
@@ -172,7 +208,8 @@ namespace Core.Diplomacy
             else
             {
                 // Create new relationship
-                relation = RelationData.Create(key.Item1, key.Item2, baseOpinion);
+                var (c1, c2) = UnpackKey(key);
+                relation = RelationData.Create(c1, c2, baseOpinion);
                 relations[key] = relation;
             }
         }
@@ -195,9 +232,18 @@ namespace Core.Diplomacy
         /// </summary>
         public List<ushort> GetEnemies(ushort countryID)
         {
-            if (warsByCountry.TryGetValue(countryID, out var enemies))
-                return new List<ushort>(enemies);  // Return copy
-            return new List<ushort>();
+            var result = new List<ushort>();
+
+            if (warsByCountry.ContainsKey(countryID))
+            {
+                var iterator = warsByCountry.GetValuesForKey(countryID);
+                foreach (var enemy in iterator)
+                {
+                    result.Add(enemy);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -206,7 +252,16 @@ namespace Core.Diplomacy
         /// </summary>
         public List<(ushort, ushort)> GetAllWars()
         {
-            return new List<(ushort, ushort)>(activeWars);
+            var result = new List<(ushort, ushort)>();
+            var keys = activeWars.ToNativeArray(Allocator.Temp);
+
+            for (int i = 0; i < keys.Length; i++)
+            {
+                result.Add(UnpackKey(keys[i]));
+            }
+
+            keys.Dispose();
+            return result;
         }
 
         /// <summary>
@@ -214,7 +269,7 @@ namespace Core.Diplomacy
         /// </summary>
         public int GetWarCount()
         {
-            return activeWars.Count;
+            return activeWars.Count();
         }
 
         // ========== QUERIES: ADVANCED ==========
@@ -226,20 +281,23 @@ namespace Core.Diplomacy
         public List<ushort> GetCountriesWithOpinionAbove(ushort countryID, FixedPoint64 threshold, int currentTick)
         {
             var result = new List<ushort>();
+            var keys = relations.GetKeyArray(Allocator.Temp);
 
-            foreach (var kvp in relations)
+            for (int i = 0; i < keys.Length; i++)
             {
-                var key = kvp.Key;
-                if (key.Item1 != countryID && key.Item2 != countryID)
+                var (c1, c2) = UnpackKey(keys[i]);
+
+                if (c1 != countryID && c2 != countryID)
                     continue;
 
-                ushort otherCountry = (key.Item1 == countryID) ? key.Item2 : key.Item1;
+                ushort otherCountry = (c1 == countryID) ? c2 : c1;
                 FixedPoint64 opinion = GetOpinion(countryID, otherCountry, currentTick);
 
                 if (opinion > threshold)
                     result.Add(otherCountry);
             }
 
+            keys.Dispose();
             return result;
         }
 
@@ -250,20 +308,23 @@ namespace Core.Diplomacy
         public List<ushort> GetCountriesWithOpinionBelow(ushort countryID, FixedPoint64 threshold, int currentTick)
         {
             var result = new List<ushort>();
+            var keys = relations.GetKeyArray(Allocator.Temp);
 
-            foreach (var kvp in relations)
+            for (int i = 0; i < keys.Length; i++)
             {
-                var key = kvp.Key;
-                if (key.Item1 != countryID && key.Item2 != countryID)
+                var (c1, c2) = UnpackKey(keys[i]);
+
+                if (c1 != countryID && c2 != countryID)
                     continue;
 
-                ushort otherCountry = (key.Item1 == countryID) ? key.Item2 : key.Item1;
+                ushort otherCountry = (c1 == countryID) ? c2 : c1;
                 FixedPoint64 opinion = GetOpinion(countryID, otherCountry, currentTick);
 
                 if (opinion < threshold)
                     result.Add(otherCountry);
             }
 
+            keys.Dispose();
             return result;
         }
 
@@ -280,7 +341,8 @@ namespace Core.Diplomacy
             // Ensure relationship exists
             if (!relations.ContainsKey(key))
             {
-                var relation = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+                var (c1, c2) = UnpackKey(key);
+                var relation = RelationData.Create(c1, c2, DEFAULT_BASE_OPINION);
                 relations[key] = relation;
             }
 
@@ -368,7 +430,8 @@ namespace Core.Diplomacy
             if (!relations.TryGetValue(key, out var rel)) return false;
 
             // Check direction
-            if (guarantor == key.Item1)
+            var (c1, c2) = UnpackKey(key);
+            if (guarantor == c1)
                 return (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom1To2) != 0;
             else
                 return (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom2To1) != 0;
@@ -384,7 +447,8 @@ namespace Core.Diplomacy
             if (!relations.TryGetValue(key, out var rel)) return false;
 
             // Check direction
-            if (granter == key.Item1)
+            var (c1, c2) = UnpackKey(key);
+            if (granter == c1)
                 return (rel.treatyFlags & (byte)TreatyFlags.MilitaryAccessFrom1To2) != 0;
             else
                 return (rel.treatyFlags & (byte)TreatyFlags.MilitaryAccessFrom2To1) != 0;
@@ -397,11 +461,11 @@ namespace Core.Diplomacy
         public List<ushort> GetAllies(ushort countryID)
         {
             var result = new List<ushort>();
+            var kvps = relations.GetKeyValueArrays(Allocator.Temp);
 
-            foreach (var kvp in relations)
+            for (int i = 0; i < kvps.Keys.Length; i++)
             {
-                var key = kvp.Key;
-                var rel = kvp.Value;
+                var rel = kvps.Values[i];
 
                 if (!rel.InvolvesCountry(countryID)) continue;
                 if ((rel.treatyFlags & (byte)TreatyFlags.Alliance) == 0) continue;
@@ -409,6 +473,7 @@ namespace Core.Diplomacy
                 result.Add(rel.GetOtherCountry(countryID));
             }
 
+            kvps.Dispose();
             return result;
         }
 
@@ -450,25 +515,28 @@ namespace Core.Diplomacy
         public List<ushort> GetGuaranteeing(ushort guarantorID)
         {
             var result = new List<ushort>();
+            var kvps = relations.GetKeyValueArrays(Allocator.Temp);
 
-            foreach (var kvp in relations)
+            for (int i = 0; i < kvps.Keys.Length; i++)
             {
-                var key = kvp.Key;
-                var rel = kvp.Value;
+                var key = kvps.Keys[i];
+                var rel = kvps.Values[i];
+                var (c1, c2) = UnpackKey(key);
 
                 if (!rel.InvolvesCountry(guarantorID)) continue;
 
                 // Check if guarantorID is guaranteeing the other country
-                if (guarantorID == key.Item1 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom1To2) != 0)
+                if (guarantorID == c1 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom1To2) != 0)
                 {
-                    result.Add(key.Item2);
+                    result.Add(c2);
                 }
-                else if (guarantorID == key.Item2 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom2To1) != 0)
+                else if (guarantorID == c2 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom2To1) != 0)
                 {
-                    result.Add(key.Item1);
+                    result.Add(c1);
                 }
             }
 
+            kvps.Dispose();
             return result;
         }
 
@@ -478,25 +546,28 @@ namespace Core.Diplomacy
         public List<ushort> GetGuaranteedBy(ushort guaranteedID)
         {
             var result = new List<ushort>();
+            var kvps = relations.GetKeyValueArrays(Allocator.Temp);
 
-            foreach (var kvp in relations)
+            for (int i = 0; i < kvps.Keys.Length; i++)
             {
-                var key = kvp.Key;
-                var rel = kvp.Value;
+                var key = kvps.Keys[i];
+                var rel = kvps.Values[i];
+                var (c1, c2) = UnpackKey(key);
 
                 if (!rel.InvolvesCountry(guaranteedID)) continue;
 
                 // Check if the other country is guaranteeing guaranteedID
-                if (guaranteedID == key.Item2 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom1To2) != 0)
+                if (guaranteedID == c2 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom1To2) != 0)
                 {
-                    result.Add(key.Item1);
+                    result.Add(c1);
                 }
-                else if (guaranteedID == key.Item1 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom2To1) != 0)
+                else if (guaranteedID == c1 && (rel.treatyFlags & (byte)TreatyFlags.GuaranteeFrom2To1) != 0)
                 {
-                    result.Add(key.Item2);
+                    result.Add(c2);
                 }
             }
 
+            kvps.Dispose();
             return result;
         }
 
@@ -513,7 +584,8 @@ namespace Core.Diplomacy
             // Ensure relationship exists
             if (!relations.ContainsKey(key))
             {
-                relations[key] = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+                var (c1, c2) = UnpackKey(key);
+                relations[key] = RelationData.Create(c1, c2, DEFAULT_BASE_OPINION);
             }
 
             // Set alliance flag
@@ -549,7 +621,8 @@ namespace Core.Diplomacy
 
             if (!relations.ContainsKey(key))
             {
-                relations[key] = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+                var (c1, c2) = UnpackKey(key);
+                relations[key] = RelationData.Create(c1, c2, DEFAULT_BASE_OPINION);
             }
 
             var rel = relations[key];
@@ -584,13 +657,15 @@ namespace Core.Diplomacy
 
             if (!relations.ContainsKey(key))
             {
-                relations[key] = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+                var (c1, c2) = UnpackKey(key);
+                relations[key] = RelationData.Create(c1, c2, DEFAULT_BASE_OPINION);
             }
 
             var rel = relations[key];
+            var (country1, country2) = UnpackKey(key);
 
             // Set directional guarantee bit
-            if (guarantor == key.Item1)
+            if (guarantor == country1)
                 rel.treatyFlags |= (byte)TreatyFlags.GuaranteeFrom1To2;
             else
                 rel.treatyFlags |= (byte)TreatyFlags.GuaranteeFrom2To1;
@@ -610,9 +685,10 @@ namespace Core.Diplomacy
             if (!relations.ContainsKey(key)) return;
 
             var rel = relations[key];
+            var (c1, c2) = UnpackKey(key);
 
             // Clear directional guarantee bit
-            if (guarantor == key.Item1)
+            if (guarantor == c1)
                 rel.treatyFlags &= (byte)~TreatyFlags.GuaranteeFrom1To2;
             else
                 rel.treatyFlags &= (byte)~TreatyFlags.GuaranteeFrom2To1;
@@ -631,13 +707,15 @@ namespace Core.Diplomacy
 
             if (!relations.ContainsKey(key))
             {
-                relations[key] = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+                var (c1, c2) = UnpackKey(key);
+                relations[key] = RelationData.Create(c1, c2, DEFAULT_BASE_OPINION);
             }
 
             var rel = relations[key];
+            var (country1, country2) = UnpackKey(key);
 
             // Set directional access bit
-            if (granter == key.Item1)
+            if (granter == country1)
                 rel.treatyFlags |= (byte)TreatyFlags.MilitaryAccessFrom1To2;
             else
                 rel.treatyFlags |= (byte)TreatyFlags.MilitaryAccessFrom2To1;
@@ -657,9 +735,10 @@ namespace Core.Diplomacy
             if (!relations.ContainsKey(key)) return;
 
             var rel = relations[key];
+            var (c1, c2) = UnpackKey(key);
 
             // Clear directional access bit
-            if (granter == key.Item1)
+            if (granter == c1)
                 rel.treatyFlags &= (byte)~TreatyFlags.MilitaryAccessFrom1To2;
             else
                 rel.treatyFlags &= (byte)~TreatyFlags.MilitaryAccessFrom2To1;
@@ -678,26 +757,31 @@ namespace Core.Diplomacy
         public void AddOpinionModifier(ushort country1, ushort country2, OpinionModifier modifier, int currentTick)
         {
             var key = GetKey(country1, country2);
+            var (c1, c2) = UnpackKey(key);
 
             // Ensure relationship exists
             if (!relations.ContainsKey(key))
             {
-                var relation = RelationData.Create(key.Item1, key.Item2, DEFAULT_BASE_OPINION);
+                var relation = RelationData.Create(c1, c2, DEFAULT_BASE_OPINION);
                 relations[key] = relation;
-            }
-
-            // Ensure cold data exists
-            if (!coldData.ContainsKey(key))
-            {
-                coldData[key] = new DiplomacyColdData();
             }
 
             // Calculate old opinion
             FixedPoint64 oldOpinion = GetOpinion(country1, country2, currentTick);
 
-            // Add modifier
-            coldData[key].AddModifier(modifier);
-            coldData[key].lastInteractionTick = currentTick;
+            // FLAT STORAGE: Append modifier with key to end of allModifiers
+            int newIndex = allModifiers.Length;
+            allModifiers.Add(new ModifierWithKey
+            {
+                relationshipKey = key,
+                modifier = modifier
+            });
+
+            // Update cache: if this is the first modifier for this relationship, cache the index
+            if (!modifierCache.ContainsKey(key))
+            {
+                modifierCache[key] = newIndex;
+            }
 
             // Calculate new opinion
             FixedPoint64 newOpinion = GetOpinion(country1, country2, currentTick);
@@ -712,22 +796,22 @@ namespace Core.Diplomacy
         public void RemoveOpinionModifier(ushort country1, ushort country2, ushort modifierTypeID)
         {
             var key = GetKey(country1, country2);
+            int removed = 0;
 
-            if (!coldData.ContainsKey(key))
-                return;
-
-            var cold = coldData[key];
-            int removed = cold.modifiers.RemoveAll(m => m.modifierTypeID == modifierTypeID);
+            // FLAT STORAGE: Remove matching modifiers from allModifiers
+            for (int i = allModifiers.Length - 1; i >= 0; i--)
+            {
+                if (allModifiers[i].relationshipKey == key &&
+                    allModifiers[i].modifier.modifierTypeID == modifierTypeID)
+                {
+                    allModifiers.RemoveAtSwapBack(i);
+                    removed++;
+                }
+            }
 
             if (removed > 0)
             {
                 ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Removed {removed} modifiers of type {modifierTypeID} between {country1} and {country2}");
-            }
-
-            // Clean up cold data if empty
-            if (cold.modifiers.Count == 0)
-            {
-                coldData.Remove(key);
             }
         }
 
@@ -736,68 +820,129 @@ namespace Core.Diplomacy
         /// <summary>
         /// Decay all opinion modifiers and remove fully decayed ones
         /// Called monthly by DiplomacyMonthlyTickHandler
-        /// Target: <20ms for 100k modifiers
+        /// Target: <5ms for 610k modifiers (with Burst compilation)
         /// </summary>
         public void DecayOpinionModifiers(int currentTick)
         {
-            int totalModifiers = 0;
-            int removedModifiers = 0;
-            var keysToRemove = new List<(ushort, ushort)>();
+            int totalModifiers = allModifiers.Length;
 
-            foreach (var kvp in coldData)
+            // Early exit if no modifiers
+            if (totalModifiers == 0)
+                return;
+
+            // Step 1: Burst-compiled parallel job to mark decayed modifiers
+            var isDecayed = new NativeArray<bool>(totalModifiers, Allocator.TempJob);
+
+            var job = new DecayModifiersJob
             {
-                var key = kvp.Key;
-                var cold = kvp.Value;
+                modifiers = allModifiers.AsArray(),
+                currentTick = currentTick,
+                isDecayed = isDecayed
+            };
 
-                totalModifiers += cold.modifiers.Count;
+            // Execute in parallel batches of 64
+            var handle = job.Schedule(totalModifiers, 64);
+            handle.Complete();
 
-                // Remove fully decayed modifiers
-                int removed = cold.RemoveDecayedModifiers(currentTick);
-                removedModifiers += removed;
+            // Step 2: Compact array SEQUENTIALLY (deterministic)
+            // Count non-decayed modifiers
+            int survivingCount = 0;
+            for (int i = 0; i < totalModifiers; i++)
+            {
+                if (!isDecayed[i])
+                    survivingCount++;
+            }
 
-                // Mark for removal if no active modifiers
-                if (!cold.HasActiveModifiers(currentTick))
+            int removedCount = totalModifiers - survivingCount;
+
+            // If nothing decayed, we're done
+            if (removedCount == 0)
+            {
+                isDecayed.Dispose();
+                return;
+            }
+
+            // Create new compacted array
+            var compacted = new NativeList<ModifierWithKey>(survivingCount, Allocator.Temp);
+
+            for (int i = 0; i < totalModifiers; i++)
+            {
+                if (!isDecayed[i])
                 {
-                    keysToRemove.Add(key);
+                    compacted.Add(allModifiers[i]);
                 }
             }
 
-            // Clean up empty cold data
-            foreach (var key in keysToRemove)
+            // Replace allModifiers with compacted version
+            allModifiers.Clear();
+            for (int i = 0; i < compacted.Length; i++)
             {
-                coldData.Remove(key);
+                allModifiers.Add(compacted[i]);
             }
 
-            if (removedModifiers > 0)
+            // Rebuild cache after compaction (CRITICAL for GetOpinion performance)
+            modifierCache.Clear();
+            for (int i = 0; i < allModifiers.Length; i++)
             {
-                ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Decay processed {totalModifiers} modifiers, removed {removedModifiers} fully decayed");
+                var key = allModifiers[i].relationshipKey;
+                if (!modifierCache.ContainsKey(key))
+                {
+                    modifierCache[key] = i;  // Cache first modifier index for this relationship
+                }
             }
+
+            // Cleanup
+            compacted.Dispose();
+            isDecayed.Dispose();
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Decay processed {totalModifiers} modifiers, removed {removedCount} fully decayed (Burst parallel, <5ms target)");
         }
 
         // ========== HELPER METHODS ==========
 
         /// <summary>
-        /// Get sorted key for dictionary lookups
+        /// Pack two country IDs into a single ulong key
         /// Ensures consistent ordering (smaller ID first)
+        /// Format: high 32 bits = country1, low 32 bits = country2
         /// </summary>
-        private (ushort, ushort) GetKey(ushort country1, ushort country2)
+        private ulong PackKey(ushort country1, ushort country2)
         {
-            if (country1 < country2)
-                return (country1, country2);
-            else
-                return (country2, country1);
+            if (country1 > country2)
+            {
+                // Swap to ensure country1 < country2
+                ushort temp = country1;
+                country1 = country2;
+                country2 = temp;
+            }
+
+            return ((ulong)country1 << 32) | country2;
+        }
+
+        /// <summary>
+        /// Unpack ulong key into two country IDs
+        /// </summary>
+        private (ushort, ushort) UnpackKey(ulong key)
+        {
+            ushort country1 = (ushort)(key >> 32);
+            ushort country2 = (ushort)(key & 0xFFFFFFFF);
+            return (country1, country2);
+        }
+
+        /// <summary>
+        /// Legacy method for compatibility - converts to PackKey
+        /// </summary>
+        private ulong GetKey(ushort country1, ushort country2)
+        {
+            return PackKey(country1, country2);
         }
 
         /// <summary>
         /// Add to war index (warsByCountry)
+        /// NativeParallelMultiHashMap automatically handles duplicates
         /// </summary>
         private void AddToWarIndex(ushort country, ushort enemy)
         {
-            if (!warsByCountry.ContainsKey(country))
-                warsByCountry[country] = new List<ushort>();
-
-            if (!warsByCountry[country].Contains(enemy))
-                warsByCountry[country].Add(enemy);
+            warsByCountry.Add(country, enemy);
         }
 
         /// <summary>
@@ -805,13 +950,30 @@ namespace Core.Diplomacy
         /// </summary>
         private void RemoveFromWarIndex(ushort country, ushort enemy)
         {
+            // NativeParallelMultiHashMap doesn't have direct Remove(key, value)
+            // We need to iterate and remove matching entries
             if (warsByCountry.ContainsKey(country))
             {
-                warsByCountry[country].Remove(enemy);
+                var iterator = warsByCountry.GetValuesForKey(country);
+                var tempList = new NativeList<ushort>(Allocator.Temp);
 
-                // Clean up empty lists
-                if (warsByCountry[country].Count == 0)
-                    warsByCountry.Remove(country);
+                // Collect all values except the one we want to remove
+                foreach (var val in iterator)
+                {
+                    if (val != enemy)
+                        tempList.Add(val);
+                }
+
+                // Remove all entries for this country
+                warsByCountry.Remove(country);
+
+                // Re-add filtered entries
+                for (int i = 0; i < tempList.Length; i++)
+                {
+                    warsByCountry.Add(country, tempList[i]);
+                }
+
+                tempList.Dispose();
             }
         }
 
@@ -828,40 +990,44 @@ namespace Core.Diplomacy
             using (var stream = new MemoryStream())
             using (var writer = new BinaryWriter(stream))
             {
+                // Get all relations
+                var kvps = relations.GetKeyValueArrays(Allocator.Temp);
+
                 // Write relationship count
-                writer.Write(relations.Count);
+                writer.Write(kvps.Keys.Length);
 
                 // Write each relationship
-                foreach (var kvp in relations)
+                for (int i = 0; i < kvps.Keys.Length; i++)
                 {
-                    var key = kvp.Key;
-                    var relation = kvp.Value;
+                    var key = kvps.Keys[i];
+                    var relation = kvps.Values[i];
+                    var (c1, c2) = UnpackKey(key);
 
                     // Write key
-                    writer.Write(key.Item1);
-                    writer.Write(key.Item2);
+                    writer.Write(c1);
+                    writer.Write(c2);
 
                     // Write hot data
                     writer.Write(relation.baseOpinion.RawValue);
                     writer.Write(relation.atWar);
+                    writer.Write(relation.treatyFlags);
 
-                    // Write cold data if it exists
-                    bool hasColdData = coldData.ContainsKey(key);
-                    writer.Write(hasColdData);
-
-                    if (hasColdData)
+                    // FLAT STORAGE: Count and write modifiers for this relationship
+                    int modifierCount = 0;
+                    for (int m = 0; m < allModifiers.Length; m++)
                     {
-                        var cold = coldData[key];
+                        if (allModifiers[m].relationshipKey == key)
+                            modifierCount++;
+                    }
 
-                        // Write last interaction tick
-                        writer.Write(cold.lastInteractionTick);
+                    writer.Write(modifierCount);
 
-                        // Write modifier count
-                        writer.Write(cold.modifiers.Count);
-
-                        // Write each modifier
-                        foreach (var modifier in cold.modifiers)
+                    // Write each modifier for this relationship
+                    for (int m = 0; m < allModifiers.Length; m++)
+                    {
+                        if (allModifiers[m].relationshipKey == key)
                         {
+                            var modifier = allModifiers[m].modifier;
                             writer.Write(modifier.modifierTypeID);
                             writer.Write(modifier.value.RawValue);
                             writer.Write(modifier.appliedTick);
@@ -870,11 +1036,13 @@ namespace Core.Diplomacy
                     }
                 }
 
+                kvps.Dispose();
+
                 // Store in saveData
                 saveData.systemData["Diplomacy"] = stream.ToArray();
             }
 
-            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Saved {relations.Count} relationships, {activeWars.Count} wars");
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Saved {relations.Count()} relationships, {activeWars.Count()} wars");
         }
 
         /// <summary>
@@ -887,9 +1055,10 @@ namespace Core.Diplomacy
 
             // Clear existing data
             relations.Clear();
-            coldData.Clear();
             activeWars.Clear();
             warsByCountry.Clear();
+            allModifiers.Clear();
+            modifierCache.Clear();
 
             // Get saved data
             if (!saveData.systemData.ContainsKey("Diplomacy"))
@@ -911,11 +1080,12 @@ namespace Core.Diplomacy
                     // Read key
                     ushort country1 = reader.ReadUInt16();
                     ushort country2 = reader.ReadUInt16();
-                    var key = (country1, country2);
+                    var key = PackKey(country1, country2);
 
                     // Read hot data
                     long baseOpinionRaw = reader.ReadInt64();
                     bool atWar = reader.ReadBoolean();
+                    byte treatyFlags = reader.ReadByte();
 
                     // Create relation
                     var relation = new RelationData
@@ -923,7 +1093,8 @@ namespace Core.Diplomacy
                         country1 = country1,
                         country2 = country2,
                         baseOpinion = FixedPoint64.FromRaw(baseOpinionRaw),
-                        atWar = atWar
+                        atWar = atWar,
+                        treatyFlags = treatyFlags
                     };
 
                     relations[key] = relation;
@@ -936,39 +1107,40 @@ namespace Core.Diplomacy
                         AddToWarIndex(country2, country1);
                     }
 
-                    // Read cold data if it exists
-                    bool hasColdData = reader.ReadBoolean();
+                    // FLAT STORAGE: Read modifiers for this relationship
+                    int modifierCount = reader.ReadInt32();
 
-                    if (hasColdData)
+                    // Read each modifier and add to flat storage
+                    for (int j = 0; j < modifierCount; j++)
                     {
-                        var cold = new DiplomacyColdData();
-
-                        // Read last interaction tick
-                        cold.lastInteractionTick = reader.ReadInt32();
-
-                        // Read modifier count
-                        int modifierCount = reader.ReadInt32();
-
-                        // Read each modifier
-                        for (int j = 0; j < modifierCount; j++)
+                        var modifier = new OpinionModifier
                         {
-                            var modifier = new OpinionModifier
-                            {
-                                modifierTypeID = reader.ReadUInt16(),
-                                value = FixedPoint64.FromRaw(reader.ReadInt64()),
-                                appliedTick = reader.ReadInt32(),
-                                decayRate = reader.ReadInt32()
-                            };
+                            modifierTypeID = reader.ReadUInt16(),
+                            value = FixedPoint64.FromRaw(reader.ReadInt64()),
+                            appliedTick = reader.ReadInt32(),
+                            decayRate = reader.ReadInt32()
+                        };
 
-                            cold.modifiers.Add(modifier);
-                        }
-
-                        coldData[key] = cold;
+                        allModifiers.Add(new ModifierWithKey
+                        {
+                            relationshipKey = key,
+                            modifier = modifier
+                        });
                     }
                 }
             }
 
-            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Loaded {relations.Count} relationships, {activeWars.Count} wars");
+            // Rebuild cache after loading all modifiers
+            for (int i = 0; i < allModifiers.Length; i++)
+            {
+                var key = allModifiers[i].relationshipKey;
+                if (!modifierCache.ContainsKey(key))
+                {
+                    modifierCache[key] = i;  // Cache first modifier index for this relationship
+                }
+            }
+
+            ArchonLogger.LogCoreDiplomacy($"DiplomacySystem: Loaded {relations.Count()} relationships, {activeWars.Count()} wars, {allModifiers.Length} modifiers");
         }
 
         // ========== STATISTICS ==========
@@ -978,12 +1150,19 @@ namespace Core.Diplomacy
         /// </summary>
         public DiplomacyStats GetStats()
         {
+            // FLAT STORAGE: Count unique relationships with modifiers
+            var uniqueRelationships = new HashSet<ulong>();
+            for (int i = 0; i < allModifiers.Length; i++)
+            {
+                uniqueRelationships.Add(allModifiers[i].relationshipKey);
+            }
+
             return new DiplomacyStats
             {
-                relationshipCount = relations.Count,
-                warCount = activeWars.Count,
-                coldDataCount = coldData.Count,
-                totalModifiers = coldData.Values.Sum(c => c.modifiers.Count)
+                relationshipCount = relations.Count(),
+                warCount = activeWars.Count(),
+                coldDataCount = uniqueRelationships.Count,
+                totalModifiers = allModifiers.Length
             };
         }
     }

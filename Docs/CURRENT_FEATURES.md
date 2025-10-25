@@ -1,431 +1,345 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2025-10-23
-**Version:** 1.4 (Diplomacy System Phase 1 Complete)
+**Last Updated:** 2025-10-25
+**Version:** 1.5 (Units System + Diplomacy Phase 2 Complete)
 
-This document lists all implemented features in the Archon Engine. Features are organized by category with brief descriptions.
-
-**Recent:** Diplomacy system Phase 1 complete (war/peace, opinion modifiers, decay system, stress tested at 52k modifiers in 1ms)
+This document lists all implemented features in the Archon Engine organized by category.
 
 ---
 
 ## Core Architecture
 
-- **Dual-Layer Architecture** - Separation of deterministic simulation (CPU) and high-performance presentation (GPU)
-- **8-Byte Province Struct** - Fixed-size ProvinceState enables 10k provinces in 80KB with cache-friendly access
-- **Fixed-Point Math (FixedPoint64)** - Deterministic 32.32 fixed-point arithmetic for multiplayer-ready simulation
-- **Hot/Cold Data Separation** - Performance optimization separating frequently-accessed from rarely-accessed data
-- **Command Pattern** - All state changes through commands for validation, networking, and replay support
-- **Zero-Allocation EventBus** - Frame-coherent event system with 99.99% allocation reduction (EventQueue<T> pattern)
-- **GameStateSnapshot (Double-Buffer)** - Zero-blocking UI reads via O(1) pointer swap (240KB at 10k provinces, Victoria 3 lesson)
-- **NativeArray Storage** - Contiguous memory layout for optimal cache performance
-- **Deterministic Simulation** - Identical results across platforms for multiplayer compatibility
-- **Engine-Game Separation** - ProvinceState = ENGINE (8 bytes), game-specific data in GAME layer slot
+**Dual-Layer Architecture** - Separation of deterministic simulation (CPU) and high-performance presentation (GPU)
+**8-Byte Province Struct** - Fixed-size ProvinceState enables 10k provinces in 80KB with cache-friendly access
+**Fixed-Point Math (FixedPoint64)** - Deterministic 32.32 fixed-point arithmetic for multiplayer-ready simulation
+**Hot/Cold Data Separation** - Performance optimization separating frequently-accessed from rarely-accessed data
+**Command Pattern** - All state changes through commands for validation, networking, and replay support
+**Zero-Allocation EventBus** - Frame-coherent event system with 99.99% allocation reduction (EventQueue<T> pattern)
+**GameStateSnapshot (Double-Buffer)** - Zero-blocking UI reads via O(1) pointer swap (240KB at 10k provinces)
+**NativeArray Storage** - Contiguous memory layout for optimal cache performance
+**Deterministic Simulation** - Identical results across platforms for multiplayer compatibility
+**Engine-Game Separation** - ProvinceState = ENGINE (8 bytes), game-specific data in GAME layer slot
 
 ---
 
-## Modifier System (NEW - 2025-10-18)
+## System Infrastructure
 
-- **ModifierValue** - Single modifier with base/additive/multiplicative bonuses
-- **ModifierSet** - Fixed-size array of 512 modifier types (4KB, zero allocations)
-- **ModifierSource** - Tracks modifier origin for tooltips and removal
-- **ActiveModifierList** - Maintains active modifiers with expiration support
-- **ScopedModifierContainer** - Province/Country/Global scope hierarchy
-- **ModifierSystem** - Central manager with scope inheritance (Province ← Country ← Global)
-- **Formula** - (base + additive) × (1 + multiplicative)
-- **Performance** - <0.1ms lookup, <20MB for 10k provinces, zero allocations
-
----
-
-## GameSystem Lifecycle (NEW - 2025-10-18)
-
-- **GameSystem Base Class** - Abstract base for all game systems with standard lifecycle
-- **SystemRegistry** - Manages registration and initialization order
-- **Topological Sort** - Automatic dependency ordering via reflection
-- **Property Injection** - Dependencies injected via properties (MonoBehaviour compatible)
-- **Lifecycle Hooks** - Initialize/Shutdown/OnSaveGame/OnLoadGame
-- **Circular Dependency Detection** - Fail-fast validation at startup
-
----
-
-## Command System Enhancements (NEW - 2025-10-18)
-
-- **CommandRegistry** - Reflection-based command auto-discovery
-- **CommandMetadataAttribute** - Declarative command metadata (name, aliases, description, usage)
-- **ICommandFactory** - Interface for argument parsing and command creation
-- **Auto-Registration** - Commands auto-discover via reflection, zero manual registration
-- **Self-Documenting** - Metadata generates help text automatically
-
----
-
-## Resource System Foundation (NEW - 2025-10-18)
-
-- **ResourceSystem** - Generic multi-resource storage (Dictionary<ushort, FixedPoint64[]>)
-- **ResourceDefinition** - Data structure for resource properties
-- **Resource Query API** - GetResource/AddResource/RemoveResource for any resource type
-- **Event System** - OnResourceChanged events for UI updates
-- **Unlimited Types** - Support for any number of resource types (gold, manpower, prestige, etc.)
-
----
-
-## Save/Load System (NEW - 2025-10-19)
-
-- **SaveManager** - Orchestrates save/load across all systems with layer separation via callbacks
-- **SaveGameData** - Binary save file structure (header + metadata + system data dictionary)
-- **SerializationHelper** - Binary serialization utilities (FixedPoint64, NativeArray, strings)
-- **Hybrid Architecture** - Snapshot for speed + command log for verification (determinism validation)
-- **Atomic Writes** - Temp file → rename pattern prevents corruption on crash
-- **Hot Data Serialization** - All core systems implement SaveState/LoadState
-- **Double Buffer Sync** - GameStateSnapshot.SyncBuffersAfterLoad() prevents stale UI reads
-- **Post-Load Finalization** - SaveLoadGameCoordinator rebuilds derived data (MAP textures, economy cache)
-- **GameLoadedEvent** - Event broadcast after load for UI refresh
-- **Quicksave/Quickload** - F6/F7 hotkeys for rapid save/load iteration
-- **Systems Supported** - TimeManager, ResourceSystem, ProvinceSystem, ModifierSystem, CountrySystem
-- **PlayerState Serialization** - 2-byte country selection persists across save/load
+**GameSystem Base Class** - Abstract base for all game systems with standard lifecycle hooks
+**SystemRegistry** - Manages system registration and initialization with dependency ordering
+**Topological Sort** - Automatic dependency ordering via reflection
+**Property Injection** - Dependencies injected via properties (MonoBehaviour compatible)
+**Lifecycle Hooks** - Initialize/Shutdown/OnSaveGame/OnLoadGame
+**Circular Dependency Detection** - Fail-fast validation at startup
 
 ---
 
 ## Province System
 
-- **Province Management** - Efficient management of 10,000+ provinces
-- **Province Ownership Tracking** - Fast owner lookup with bidirectional mapping (province→owner, owner→provinces)
-- **Province Development** - Economic development levels per province
-- **Province Terrain System** - Terrain type tracking and modifiers
-- **Province History Database** - Bounded history storage with ring buffers (prevents unbounded growth)
-- **Province State Serialization** - Network-safe serialization for multiplayer
-- **Province Cold Data** - Separate storage for names, colors, bounds, and metadata
-- **Province Queries** - Read-only query API with frame-coherent caching
-- **Province ID System** - Strongly-typed IDs preventing type confusion
+**Province Management** - Efficient management of 10,000+ provinces
+**Province Ownership Tracking** - Fast owner lookup with bidirectional mapping (province→owner, owner→provinces)
+**Province Development** - Economic development levels per province
+**Province Terrain System** - Terrain type tracking and modifiers
+**Province History Database** - Bounded history storage with ring buffers
+**Province State Serialization** - Network-safe serialization for multiplayer
+**Province Cold Data** - Separate storage for names, colors, bounds, and metadata
+**Province Queries** - Read-only query API with frame-coherent caching
+**Province ID System** - Strongly-typed IDs preventing type confusion
 
 ---
 
 ## Country System
 
-- **Country Management** - Country data with hot/cold separation pattern
-- **Country Color System** - Color palette management with HSV golden angle distribution
-- **Country Tag System** - String tag to numeric ID mapping (e.g., "ENG" → CountryId)
-- **Country Hot Data** - 8-byte country state for cache efficiency
-- **Country Cold Data** - Extended country information (name, government, etc.)
-- **Country Queries** - High-performance queries with caching for expensive calculations
-- **Country Events** - Event system for country state changes
+**Country Management** - Country data with hot/cold separation pattern
+**Country Color System** - Color palette management with HSV golden angle distribution
+**Country Tag System** - String tag to numeric ID mapping (e.g., "ENG" → CountryId)
+**Country Hot Data** - 8-byte country state for cache efficiency
+**Country Cold Data** - Extended country information (name, government, etc.)
+**Country Queries** - High-performance queries with caching for expensive calculations
+**Country Events** - Event system for country state changes
 
 ---
 
-## Diplomacy System (NEW - 2025-10-23)
+## Diplomacy System
 
-- **RelationData (16 bytes)** - Hot data for diplomatic relationships (country pairs, war state, base opinion)
-- **DiplomacyColdData** - Opinion modifier lists, interaction history (separate from hot data)
-- **OpinionModifier** - Time-decaying modifiers with linear decay formula
-- **DiplomacySystem** - Sparse storage for active relationships (Dictionary O(1) lookups)
-- **War/Peace Commands** - DeclareWarCommand, MakePeaceCommand with validation
-- **Opinion System** - Stackable modifiers clamped to [-200, +200] range
-- **Monthly Decay** - Automatic removal of fully decayed modifiers
-- **Performance** - 1ms for 52,500 modifiers (20× faster than 20ms target), <0.001ms GetOpinion queries
-- **Memory** - 82 KB hot data for 5,250 relationships, sparse storage scales with active pairs only
-
----
-
-## Map Rendering System
-
-- **Texture-Based Rendering** - Single draw call for entire map via texture-based approach
-- **GPU Compute Shaders** - All visual processing on GPU for maximum performance
-- **Dual Border System** - Country and province borders in single compute pass (RG16 texture)
-- **Province Selection** - Sub-millisecond province selection via texture lookup (no raycasting)
-- **Map Texture Management** - Coordinated texture system (~60MB VRAM for 5632×2048 map)
-- **Border Thickness Control** - Configurable border width and anti-aliasing
-- **Heightmap Support** - 8-bit grayscale heightmap rendering
-- **Normal Map Support** - RGB24 normal map for terrain lighting
-- **Point Filtering** - Pixel-perfect province ID lookup without interpolation
-- **Single Draw Call Optimization** - Entire map rendered in one draw call
+**RelationData (8 bytes)** - Hot data for diplomatic relationships (opinion, treaties, lastContact, flags)
+**DiplomacyColdData** - Flat modifier storage with relationship keys (Burst-compatible)
+**OpinionModifier** - Time-decaying modifiers with linear decay formula
+**DiplomacySystem** - Sparse storage for active relationships (NativeParallelHashMap O(1) lookups)
+**War/Peace Commands** - DeclareWarCommand, MakePeaceCommand with validation
+**Treaty Commands** - FormAlliance, BreakAlliance, GrantMilitaryAccess, GuaranteeIndependence, etc.
+**Opinion System** - Stackable modifiers clamped to [-200, +200] range
+**Monthly Decay** - Burst-compiled parallel decay processing (IJobParallelFor)
+**Treaty Validation** - Mutual existence checks, war state validation
+**Performance** - 3ms for 610,750 modifiers (350 countries, 100% density) with Burst compilation, <0.0001ms GetOpinion queries
+**Memory** - 954 KB hot data + 19 MB flat modifier storage for 61,075 relationships (all possible pairs), scales linearly with modifier count
 
 ---
 
-## Map Modes
+## Units System
 
-- **Political Map Mode** - Country ownership visualization with color palette
-- **Terrain Map Mode** - Terrain type visualization from terrain.bmp
-- **Debug Map Modes** - Heightmap and normal map debug visualization
-- **Map Mode Interface** - Extensible IMapModeHandler for custom modes
-- **Map Mode Manager** - Runtime switching between visualization modes
-- **GradientMapMode Base Class (NEW - 2025-10-18)** - Reusable gradient engine for numeric province data
-- **ColorGradient (NEW - 2025-10-18)** - Configurable color interpolation (red-to-yellow, etc.)
-- **Dirty Flag Optimization (NEW - 2025-10-18)** - Skip texture updates when data unchanged
+**UnitSystem** - Military unit management with movement, combat, organization
+**UnitState (16 bytes)** - Fixed-size hot state: unitID, ownerID, provinceID, typeID, organization, morale, strength, movementQueue
+**UnitColdData** - Cold unit data: Name, Experience, CombatHistory, Equipment
+**Unit Commands** - CreateUnit, MoveUnit, DisbandUnit with validation
+**Unit Movement Queue** - Fixed-size circular buffer for pathfinding waypoints
+**Unit Events** - UnitCreated, UnitMoved, UnitDisbanded, CombatResolved
+**Sparse Collections** - Province-to-units mapping with NativeParallelMultiHashMap
+**Hot/Cold Separation** - Frequently-accessed data separate from detailed information
 
 ---
 
-## Visual Styles System
+## Pathfinding System
 
-- **Visual Style Configuration** - ScriptableObject-based style definitions
-- **Material Ownership** - Complete material+shader ownership in game layer
-- **Runtime Style Switching** - Hot-swap visual styles without restart
-- **EU3 Classic Style** - Implemented reference style with clean borders
-- **Border Configuration** - Per-style border colors, thickness, and anti-aliasing
-- **Development Gradients** - Configurable 5-tier color progressions
-- **Engine-Game Separation** - Engine provides infrastructure, game defines visuals
+**AdjacencySystem** - Province neighbor management with sparse collections
+**PathfindingSystem** - A* pathfinding for unit movement
+**GetNeighbors** - O(1) neighbor lookup with sparse storage
+**FindPath** - A* algorithm with province graph traversal
+**GetReachableProvinces** - Calculate movement range for units
+**Distance Caching** - Cached distance matrix for performance
+
+---
+
+## Modifier System
+
+**ModifierValue** - Single modifier with base/additive/multiplicative bonuses
+**ModifierSet** - Fixed-size array of 512 modifier types (4KB, zero allocations)
+**ModifierSource** - Tracks modifier origin for tooltips and removal
+**ActiveModifierList** - Maintains active modifiers with expiration support
+**ScopedModifierContainer** - Province/Country/Global scope hierarchy
+**ModifierSystem** - Central manager with scope inheritance (Province ← Country ← Global)
+**Formula** - (base + additive) × (1 + multiplicative)
+**Performance** - <0.1ms lookup, <20MB for 10k provinces, zero allocations
+
+---
+
+## Resource System
+
+**ResourceSystem** - Multi-resource treasury management with FixedPoint64 values
+**ResourceDefinition** - Data structure for resource properties
+**Resource Query API** - GetResource/AddResource/RemoveResource for any resource type
+**Event System** - OnResourceChanged events for UI updates
+**Unlimited Types** - Support for any number of resource types (gold, manpower, prestige, etc.)
+
+---
+
+## Command System
+
+**ICommand Interface** - Base command interface: Execute, Validate, GetChecksum, Dispose
+**CommandRegistry** - Reflection-based command auto-discovery
+**CommandMetadataAttribute** - Declarative command metadata (name, aliases, description, usage)
+**ICommandFactory** - Interface for argument parsing and command creation
+**CommandProcessor** - Deterministic command validation and execution
+**Auto-Registration** - Commands auto-discover via reflection, zero manual registration
+**Self-Documenting** - Metadata generates help text automatically
+
+---
+
+## Save/Load System
+
+**SaveManager** - Orchestrates save/load across all systems with layer separation via callbacks
+**SaveGameData** - Binary save file structure (header + metadata + system data dictionary)
+**SerializationHelper** - Binary serialization utilities (FixedPoint64, NativeArray, strings)
+**Hybrid Architecture** - Snapshot for speed + command log for verification
+**Atomic Writes** - Temp file → rename pattern prevents corruption on crash
+**Hot Data Serialization** - All core systems implement SaveState/LoadState
+**Double Buffer Sync** - GameStateSnapshot.SyncBuffersAfterLoad() prevents stale UI reads
+**Post-Load Finalization** - SaveLoadGameCoordinator rebuilds derived data
+**GameLoadedEvent** - Event broadcast after load for UI refresh
+**Quicksave/Quickload** - F6/F7 hotkeys for rapid save/load iteration
+**Systems Supported** - TimeManager, ResourceSystem, ProvinceSystem, ModifierSystem, CountrySystem, DiplomacySystem, UnitSystem
 
 ---
 
 ## Time System
 
-- **Tick-Based Progression** - Frame-independent game time with fixed timesteps
-- **360-Day Calendar** - Consistent calendar system (12 months × 30 days)
-- **Layered Update Frequencies** - Hourly, daily, weekly, monthly, yearly tick events
-- **Game Speed Controls** - Pause, slow, normal, fast, very fast speeds
-- **Time Events** - EventBus integration for time-based system updates
-- **Dirty Flag Integration** - Only update systems when state changes
+**Tick-Based Progression** - Frame-independent game time with fixed timesteps
+**360-Day Calendar** - Consistent calendar system (12 months × 30 days)
+**Layered Update Frequencies** - Hourly, daily, weekly, monthly, yearly tick events
+**Game Speed Controls** - Pause, slow, normal, fast, very fast speeds
+**Time Events** - EventBus integration for time-based system updates
+**Dirty Flag Integration** - Only update systems when state changes
+
+---
+
+## Map Rendering System
+
+**Texture-Based Rendering** - Single draw call for entire map via texture-based approach
+**GPU Compute Shaders** - All visual processing on GPU for maximum performance
+**Dual Border System** - Country and province borders in single compute pass (RG16 texture)
+**Province Selection** - Sub-millisecond province selection via texture lookup (no raycasting)
+**Map Texture Management** - Coordinated texture system (~60MB VRAM for 5632×2048 map)
+**Border Thickness Control** - Configurable border width and anti-aliasing
+**Heightmap Support** - 8-bit grayscale heightmap rendering
+**Normal Map Support** - RGB24 normal map for terrain lighting
+**Point Filtering** - Pixel-perfect province ID lookup without interpolation
+**Single Draw Call Optimization** - Entire map rendered in one draw call
+**ProvinceHighlighter** - Province highlighting for selection feedback
+
+---
+
+## Map Rendering Infrastructure
+
+**MapTextureManager** - Facade coordinator for all map textures
+**CoreTextureSet** - Core textures: Province ID, Owner, Color, Development
+**VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map
+**DynamicTextureSet** - Dynamic textures: Border, Highlight RenderTextures
+**PaletteTextureManager** - Color palette texture with HSV distribution
+**BorderComputeDispatcher** - GPU border generation dispatch
+**TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
+
+---
+
+## Map Modes
+
+**Political Map Mode** - Country ownership visualization with color palette
+**Terrain Map Mode** - Terrain type visualization from terrain.bmp
+**Debug Map Modes** - Heightmap and normal map debug visualization
+**IMapModeHandler Interface** - Extensible interface for custom modes
+**MapModeManager** - Runtime switching between visualization modes
+**GradientMapMode Base Class** - Reusable gradient engine for numeric province data
+**ColorGradient** - Configurable color interpolation (red-to-yellow, etc.)
+**Dirty Flag Optimization** - Skip texture updates when data unchanged
+
+---
+
+## Billboard Rendering
+
+**BillboardAtlasGenerator** - Generate texture atlases for billboard rendering
+**InstancedBillboardRenderer** - Instanced rendering for billboards (units, buildings)
+**FogOfWarSystem** - Fog of war rendering system
+
+---
+
+## Visual Styles System
+
+**Visual Style Configuration** - ScriptableObject-based style definitions
+**Material Ownership** - Complete material+shader ownership in game layer
+**Runtime Style Switching** - Hot-swap visual styles without restart
+**Border Configuration** - Per-style border colors, thickness, and anti-aliasing
+**Development Gradients** - Configurable 5-tier color progressions
+**Engine-Game Separation** - Engine provides infrastructure, game defines visuals
 
 ---
 
 ## Data Loading System
 
-- **JSON5 Support** - JSON5 file parsing for game data
-- **Burst Province Loading** - Parallel province history loading with Burst compilation
-- **Burst Country Loading** - Optimized country data loading
-- **Bitmap Map Loading** - Load provinces.bmp, terrain.bmp, heightmap.bmp, normal maps
-- **Definition.csv Support** - Complete province definitions (handles 4941 provinces)
-- **Reference Resolution** - String→ID resolution (e.g., "ENG" → CountryId)
-- **Cross-Reference Builder** - Automated data linking and validation
-- **Data Validation** - Integrity checks after loading
-- **Phase-Based Initialization** - 7-phase startup with progress tracking
+**JSON5 Support** - JSON5 file parsing for game data
+**Burst Province Loading** - Parallel province history loading with Burst compilation
+**Burst Country Loading** - Optimized country data loading
+**Bitmap Map Loading** - Load provinces.bmp, terrain.bmp, heightmap.bmp, normal maps
+**Definition.csv Support** - Complete province definitions (handles 4941 provinces)
+**Reference Resolution** - String→ID resolution (e.g., "ENG" → CountryId)
+**Cross-Reference Builder** - Automated data linking and validation
+**Data Validation** - Integrity checks after loading
+**Phase-Based Initialization** - 7-phase startup with progress tracking
 
 ---
 
 ## Performance Optimizations
 
-- **Load Balancing (LoadBalancedScheduler)** - Victoria 3 pattern: cost-based job scheduling prevents thread starvation (24.9% improvement at 10k provinces)
-- **Zero-Blocking UI Reads** - Double-buffer pattern eliminates lock contention (Victoria 3's profiler "waiting bars" lesson)
-- **Pre-Allocation Policy (Principle 4)** - Zero runtime allocations prevents malloc lock contention (HOI4's parallelism lesson)
-- **Zero Allocations** - No runtime allocations during gameplay loop
-- **Frame-Coherent Caching** - Per-frame cache invalidation for expensive queries
-- **Ring Buffers** - Bounded history storage preventing memory growth
-- **Dirty Flag Systems** - Update-only-what-changed architecture
-- **Memory Stability** - Stable memory over 400+ simulated years
-- **GPU Border Generation** - 2ms for 10k provinces via compute shader
-- **Structure of Arrays** - Cache-friendly memory layout for country colors
-- **Array of Structures** - Optimal for province queries accessing multiple fields
+**Load Balancing (LoadBalancedScheduler)** - Victoria 3 pattern: cost-based job scheduling (24.9% improvement)
+**Zero-Blocking UI Reads** - Double-buffer pattern eliminates lock contention
+**Pre-Allocation Policy** - Zero runtime allocations prevents malloc lock contention
+**Zero Allocations** - No runtime allocations during gameplay loop
+**Frame-Coherent Caching** - Per-frame cache invalidation for expensive queries
+**Ring Buffers** - Bounded history storage preventing memory growth
+**Dirty Flag Systems** - Update-only-what-changed architecture
+**Memory Stability** - Stable memory over 400+ simulated years
+**GPU Border Generation** - 2ms for 10k provinces via compute shader
+**Structure of Arrays** - Cache-friendly memory layout for country colors
+**Array of Structures** - Optimal for province queries accessing multiple fields
 
 ---
 
-## Performance Targets
+## Sparse Data Infrastructure
 
-- **Single-Player FPS** - 200+ FPS with 10,000 provinces
-- **Province Selection** - <1ms response time
-- **Map Updates** - <5ms for full update
-- **Memory Footprint** - <100MB total (80KB simulation + <60MB GPU)
-- **EventBus Performance** - 0.85ms for 10k events, zero allocations
-- **Fixed-Point Math** - 0.13ms for 10k calculations
-
----
-
-## Engine-Game Separation
-
-- **Mechanism vs Policy** - Engine provides how, game defines what
-- **Extension Interfaces** - IGameSystem, IMapModeHandler, ICommand
-- **Clean Dependencies** - No circular dependencies between layers
-- **Namespace Separation** - ArchonEngine.Core, ArchonEngine.Map, Game
-- **Package Exportable** - Engine as reusable Unity package
-- **Zero Game Logic** - No game-specific code in engine layer
-
----
-
-## Development Infrastructure
-
-- **File Registries** - Complete catalogs for Core (69 files) and Map (51 files) layers
-- **Phase-Based Initialization** - 7 initialization phases with rollback support
-- **Session Logging** - Development journal with TEMPLATE.md for tracking work
-- **Architecture Documentation** - 10 engine docs + 5 planning docs
-- **Stress Test Framework** - Automated tests for 10k provinces, 400 years
-- **Memory Profiling** - Built-in tracking for allocation detection
+**IDefinition** - Base interface for all definitions (buildings, modifiers, trade goods)
+**ISparseCollection** - Non-generic interface for polymorphic management
+**SparseCollectionManager<TKey, TValue>** - Generic sparse storage with NativeParallelMultiHashMap
+**One-to-Many Relationships** - Province → BuildingIDs with O(1) to O(m) queries
+**Pre-Allocation** - Allocator.Persistent with capacity warnings at 80%/95%
+**Memory Scaling** - 96% memory reduction vs dense approach at mod scale
+**Zero Allocation Iteration** - ProcessValues API for zero-allocation iteration
 
 ---
 
 ## Utility Systems
 
-- **ArchonLogger** - Categorized logging system
-- **DeterministicRandom** - Seeded xorshift128+ RNG for deterministic gameplay
-- **Strongly-Typed IDs** - Type-safe wrappers (ProvinceId, CountryId, etc.)
-- **Registry System** - Fast lookup for static game data
-- **CircularBuffer** - Bounded buffers for history and event storage
+**ArchonLogger** - Categorized logging system with subsystems
+**DeterministicRandom** - Seeded xorshift128+ RNG for deterministic gameplay
+**Strongly-Typed IDs** - Type-safe wrappers (ProvinceId, CountryId, BuildingId, etc.)
+**Registry System** - Fast lookup for static game data
+**CircularBuffer** - Bounded buffers for history and event storage
 
 ---
 
 ## Interaction Systems
 
-- **Paradox-Style Camera** - Pan, zoom, edge scrolling controls
-- **Province Selector** - Texture-based selection with <1ms performance
-- **Map Initialization** - Automated setup of map subsystems
-- **Border Compute Dispatcher** - GPU border generation with multiple modes
+**ProvinceSelector** - Texture-based selection with <1ms performance
+**MapInitializer** - Automated setup of map subsystems
+**MapSystemCoordinator** - Coordinate map subsystems
+**FastAdjacencyScanner** - Fast province adjacency scanning
 
 ---
 
 ## Data Structures
 
-- **ProvinceState (8 bytes)** - ownerID(2), controllerID(2), terrainType(2), gameDataSlot(2) - ENGINE struct only
-- **ProvinceColdData** - Name, color, bounds, history, modifiers
-- **CountryHotData** - Compact country state for cache efficiency
-- **CountryColdData** - Extended country metadata
-- **FixedPoint64** - 32.32 fixed-point for deterministic math
-- **FixedPoint32** - 16.16 fixed-point for compact storage
-- **FixedPoint2** - 2D vector with fixed-point components
-
----
-
-## Sparse Data Infrastructure (NEW - 2025-10-15)
-
-**Purpose:** Prevents HOI4's 30→500 equipment disaster (16x slowdown with mods)
-
-**Pattern:** Three-layer architecture (Definitions → Storage → Access)
-
-**Key Components:**
-- **IDefinition** - Base interface for all definitions (buildings, modifiers, trade goods)
-  - ID: Runtime-assigned ushort (0-65535)
-  - StringID: Stable string for save/load compatibility ("farm", "gold_mine")
-  - Version: Definition compatibility checks
-- **ISparseCollection** - Non-generic interface for polymorphic management
-  - Unified memory monitoring and disposal across all sparse collections
-  - SparseCollectionStats struct for profiling
-- **SparseCollectionManager<TKey, TValue>** - Generic sparse storage (381 lines)
-  - NativeParallelMultiHashMap for one-to-many relationships (Collections 2.1+)
-  - Pre-allocation with Allocator.Persistent (Principle 4)
-  - Capacity warnings at 80%/95% thresholds
-  - Query APIs: Has/HasAny/Get/GetCount (O(1) to O(m) where m = items per key)
-  - Modification APIs: Add/Remove/RemoveAll
-  - Iteration APIs: ProcessValues (zero allocation), GetKeys
-
-**Memory Scaling:**
-- Dense approach: 10k entities × 500 types = 5 MB (must iterate all)
-- Sparse approach: 10k entities × 5 actual = 200 KB (iterate only actual)
-- Savings: 96% memory reduction at mod scale
-
-**Status:** Phase 1 & 2 complete (foundation ready for buildings/modifiers systems)
+**ProvinceState (8 bytes)** - ownerID(2), controllerID(2), terrainType(2), gameDataSlot(2)
+**ProvinceColdData** - Name, color, bounds, history, modifiers
+**CountryHotData** - Compact country state for cache efficiency
+**CountryColdData** - Extended country metadata
+**FixedPoint64** - 32.32 fixed-point for deterministic math
+**FixedPoint32** - 16.16 fixed-point for compact storage
+**FixedPoint2** - 2D vector with fixed-point components
 
 ---
 
 ## Testing & Validation
 
-- **Province State Tests** - Validation of 8-byte struct operations
-- **Texture Infrastructure Tests** - GPU texture creation and binding
-- **Command System Tests** - Command execution validation
-- **Integration Tests** - Full pipeline texture→simulation→GPU
-- **Stress Tests** - 10k provinces, 400 years, allocation monitoring
-- **Determinism Tests** - Cross-platform checksum validation
+**Province State Tests** - Validation of 8-byte struct operations
+**Texture Infrastructure Tests** - GPU texture creation and binding
+**Command System Tests** - Command execution validation
+**Integration Tests** - Full pipeline texture→simulation→GPU
+**Stress Tests** - 10k provinces, 400 years, allocation monitoring
+**Determinism Tests** - Cross-platform checksum validation
 
 ---
 
 ## Shader Infrastructure
 
-- **BorderDetection.compute** - Dual border generation (country + province)
-- **MapFallback.shader** - Pink fallback for missing visual styles
-- **EU3MapShader.shader** - Complete map visualization shader
-- **MapModeCommon.hlsl** - Shared utilities (ID decoding, sampling)
-- **MapModePolitical.hlsl** - Political map mode visualization
-- **MapModeTerrain.hlsl** - Terrain map mode visualization
-- **MapModeDevelopment.hlsl** - Development gradient visualization
+**BorderDetection.compute** - Dual border generation (country + province)
+**MapFallback.shader** - Pink fallback for missing visual styles
+**MapModeCommon.hlsl** - Shared utilities (ID decoding, sampling)
 
 ---
 
 ## Unity Integration
 
-- **URP Support** - Universal Render Pipeline compatibility
-- **Burst Compilation** - Optimized code generation for hot paths
-- **Job System** - Parallel processing for data loading
-- **IL2CPP Backend** - Ahead-of-time compilation support
-- **Linear Color Space** - Modern color workflow
-- **Compute Shader Coordination** - CPU-GPU synchronization patterns
+**URP Support** - Universal Render Pipeline compatibility
+**Burst Compilation** - Optimized code generation for hot paths
+**Job System** - Parallel processing for data loading
+**IL2CPP Backend** - Ahead-of-time compilation support
+**Linear Color Space** - Modern color workflow
+**Compute Shader Coordination** - CPU-GPU synchronization patterns
 
 ---
 
 ## Multiplayer-Ready Features
 
-- **Deterministic Math** - FixedPoint64 for identical results across platforms
-- **Command Checksums** - Validation for state consistency
-- **State Serialization** - 80KB for complete 10k province state
-- **Command Pattern** - Network-friendly state changes
-- **Rollback Support** - Command buffer for client prediction (designed, not implemented)
-
----
-
-## Features NOT Implemented (See Planning/ Docs)
-
-- AI System
-- Multiplayer Networking
-- Modding System
-- Error Recovery System
-- Localization System
+**Deterministic Math** - FixedPoint64 for identical results across platforms
+**Command Checksums** - Validation for state consistency
+**State Serialization** - 80KB for complete 10k province state
+**Command Pattern** - Network-friendly state changes
+**Rollback Support** - Command buffer for client prediction (designed, not implemented)
 
 ---
 
 ## Quick Stats
 
-- **Engine Code:** ~29,000 lines (Core + Map layers)
-- **Documentation:** 12 engine docs + session logs
-- **Systems:** 75+ Core scripts, 51 Map scripts
-- **Max File Size:** All files under 500 lines
-- **Provinces Tested:** 10,000 provinces with load balancing
-- **Performance:** 200+ FPS achieved
-- **Architecture:** Modifier system, GameSystem lifecycle, command auto-registration, resource foundation complete
+**Engine Code** - 114 Core scripts + 57 Map scripts
+**Systems** - TimeManager, ProvinceSystem, CountrySystem, DiplomacySystem, UnitSystem, PathfindingSystem, AdjacencySystem, ResourceSystem, ModifierSystem
+**Documentation** - 13 architecture docs + session logs + file registries
 
 ---
 
-## Architecture Compliance
-
-**Enforced Rules:**
-- ✅ 8-byte ProvinceState (never larger)
-- ✅ Fixed-point math only (no floats in simulation)
-- ✅ GPU compute shaders for visual processing
-- ✅ Single draw call for map rendering
-- ✅ Zero allocations during gameplay
-- ✅ NativeArray for contiguous memory
-- ✅ Point filtering on province textures
-- ✅ All files under 500 lines
-
-**Prevented Anti-Patterns:**
-- ❌ GameObjects per province
-- ❌ CPU pixel processing
-- ❌ Float operations in simulation
-- ❌ Unbounded data growth
-- ❌ Mixed hot/cold data
-- ❌ Multiple draw calls
-- ❌ Texture filtering on IDs
-
----
-
-## Documentation Status
-
-**Architecture Docs (Engine/):**
-- ✅ ARCHITECTURE_OVERVIEW.md - Quick reference
-- ✅ master-architecture-document.md - Complete architecture
-- ✅ map-system-architecture.md - Map rendering
-- ✅ visual-styles-architecture.md - Visual system
-- ✅ core-data-access-guide.md - Data access patterns
-- ✅ data-linking-architecture.md - Reference resolution
-- ✅ data-flow-architecture.md - System communication
-- ✅ data-loading-architecture.md - JSON5 + Burst loading
-- ✅ time-system-architecture.md - Tick system
-- ✅ performance-architecture-guide.md - Optimization patterns (updated: Principle 4 - Pre-allocation)
-- ✅ engine-game-separation.md - Layer separation
-- ✅ sparse-data-structures-design.md - Sparse collections architecture (503 lines, prevents HOI4's 16x disaster)
-- ✅ save-load-architecture.md - Hybrid snapshot + command log, serialization patterns, layer separation
-
-**Planning Docs (Planning/):**
-- ✅ save-load-hybrid-architecture.md - SUPERSEDED by save-load-architecture.md (implemented)
-- ✅ core-pillars-implementation.md - Military/Diplomacy/AI roadmap
-- ✅ diplomacy-system-implementation.md - Phase 1 complete, performance validated
-- ❌ ai-design.md - Not implemented
-- ❌ multiplayer-design.md - Not implemented
-- ❌ modding-design.md - Not implemented
-- ❌ error-recovery-design.md - Not implemented
-
-**Session Logs (Log/2025-10/):**
-- ✅ 15/ - Paradox infrastructure (load balancing, double-buffer, sparse data)
-- ✅ 18/ - Architecture refactor (modifier system, GameSystem lifecycle, command abstraction, resource system, performance optimization)
-- ✅ 19/ - Save/Load system (hybrid snapshot, post-finalization, UI refresh events)
-- ✅ 23/ - Diplomacy system Phase 1 (war/peace, opinion modifiers, stress testing at 52k modifiers)
-
-**File Registries:**
-- ✅ Scripts/Core/FILE_REGISTRY.md - Updated with sparse data files
-- ✅ Scripts/Map/FILE_REGISTRY.md - 51 files cataloged
-
----
-
-*For detailed implementation information, see individual architecture documents in Docs/Engine/*
+*Updated: 2025-10-25*
