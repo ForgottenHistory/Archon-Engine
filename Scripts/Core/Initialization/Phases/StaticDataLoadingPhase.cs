@@ -73,8 +73,8 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.LogCoreDataLoading($"Phase complete: Static data loaded - {context.Registries.Religions.Count} religions, " +
-                                $"{context.Registries.Cultures.Count} cultures, {context.Registries.TradeGoods.Count} trade goods");
+                ArchonLogger.Log($"Phase complete: Static data loaded - {context.Registries.Religions.Count} religions, " +
+                                $"{context.Registries.Cultures.Count} cultures, {context.Registries.TradeGoods.Count} trade goods", "core_data_loading");
             }
         }
 
@@ -82,7 +82,7 @@ namespace Core.Initialization.Phases
         {
             // Note: Registries don't have Clear() method - they're immutable once loaded
             // On failure, entire GameState is recreated anyway
-            ArchonLogger.LogCoreDataLoading("Rolling back static data loading phase");
+            ArchonLogger.Log("Rolling back static data loading phase", "core_data_loading");
         }
     }
 

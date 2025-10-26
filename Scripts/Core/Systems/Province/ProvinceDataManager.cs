@@ -42,14 +42,14 @@ namespace Core.Systems.Province
         {
             if (provinceCount >= snapshot.Capacity)
             {
-                ArchonLogger.LogCoreSimulationError($"Province capacity exceeded: {provinceCount}/{snapshot.Capacity}");
+                ArchonLogger.LogError($"Province capacity exceeded: {provinceCount}/{snapshot.Capacity}", "core_simulation");
                 return;
             }
 
             // Check for duplicate province ID
             if (idToIndex.ContainsKey(provinceId))
             {
-                ArchonLogger.LogCoreSimulationWarning($"Province {provinceId} already exists, skipping");
+                ArchonLogger.LogWarning($"Province {provinceId} already exists, skipping", "core_simulation");
                 return;
             }
 
@@ -108,7 +108,7 @@ namespace Core.Systems.Province
         {
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
             {
-                ArchonLogger.LogCoreSimulationWarning($"Cannot set owner for invalid province {provinceId}");
+                ArchonLogger.LogWarning($"Cannot set owner for invalid province {provinceId}", "core_simulation");
                 return;
             }
 

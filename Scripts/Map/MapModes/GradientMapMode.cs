@@ -141,7 +141,7 @@ namespace Map.MapModes
 
             if (dataTextures?.ProvinceDevelopmentTexture == null)
             {
-                ArchonLogger.LogMapModesError($"{Name}: Development texture not available");
+                ArchonLogger.LogError($"{Name}: Development texture not available", "map_modes");
                 return;
             }
 
@@ -152,7 +152,7 @@ namespace Map.MapModes
 
             if (allProvinces.Length == 0)
             {
-                ArchonLogger.LogMapModesWarning($"{Name}: No provinces available");
+                ArchonLogger.LogWarning($"{Name}: No provinces available", "map_modes");
                 return;
             }
 
@@ -166,7 +166,7 @@ namespace Map.MapModes
 
             if (stats.ValidProvinces == 0)
             {
-                ArchonLogger.LogMapModes($"{Name}: No valid provinces with data - texture cleared");
+                ArchonLogger.Log($"{Name}: No valid provinces with data - texture cleared", "map_modes");
             }
 
             // Clear dirty flag - data is now up to date
@@ -174,8 +174,8 @@ namespace Map.MapModes
 
             var elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
 
-            ArchonLogger.LogMapModes($"{Name}: Updated {stats.ValidProvinces} provinces in {elapsed:F2}ms " +
-                           $"[Range: {stats.MinValue:F1}-{stats.MaxValue:F1}, Avg: {stats.AvgValue:F1}]");
+            ArchonLogger.Log($"{Name}: Updated {stats.ValidProvinces} provinces in {elapsed:F2}ms " +
+                           $"[Range: {stats.MinValue:F1}-{stats.MaxValue:F1}, Avg: {stats.AvgValue:F1}]", "map_modes");
         }
 
         /// <summary>
@@ -228,14 +228,14 @@ namespace Map.MapModes
             var texture = dataTextures.ProvinceDevelopmentTexture;
             if (texture == null)
             {
-                ArchonLogger.LogMapModesError($"{Name}: ProvinceDevelopmentTexture is null");
+                ArchonLogger.LogError($"{Name}: ProvinceDevelopmentTexture is null", "map_modes");
                 return;
             }
 
             // Check GPU compute dispatcher is available
             if (computeDispatcher == null || !computeDispatcher.IsInitialized)
             {
-                ArchonLogger.LogMapModesError($"{Name}: GPU compute dispatcher not initialized!");
+                ArchonLogger.LogError($"{Name}: GPU compute dispatcher not initialized!", "map_modes");
                 return;
             }
 
@@ -282,14 +282,14 @@ namespace Map.MapModes
             var provinceIDTexture = dataTextures.ProvinceIDTexture as RenderTexture;
             if (provinceIDTexture == null)
             {
-                ArchonLogger.LogMapModesError($"{Name}: ProvinceIDTexture is not a RenderTexture!");
+                ArchonLogger.LogError($"{Name}: ProvinceIDTexture is not a RenderTexture!", "map_modes");
                 return;
             }
 
             var outputTexture = texture as RenderTexture;
             if (outputTexture == null)
             {
-                ArchonLogger.LogMapModesError($"{Name}: ProvinceDevelopmentTexture is not a RenderTexture!");
+                ArchonLogger.LogError($"{Name}: ProvinceDevelopmentTexture is not a RenderTexture!", "map_modes");
                 return;
             }
 
@@ -334,7 +334,7 @@ namespace Map.MapModes
         /// </summary>
         protected void LogActivation(string message)
         {
-            ArchonLogger.LogMapModes($"{Name}: {message}");
+            ArchonLogger.Log($"{Name}: {message}", "map_modes");
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Map.MapModes
         /// </summary>
         protected void LogDeactivation(string message = null)
         {
-            ArchonLogger.LogMapModes($"{Name}: Deactivated{(message != null ? " - " + message : "")}");
+            ArchonLogger.Log($"{Name}: Deactivated{(message != null ? " - " + message : "")}", "map_modes");
         }
 
         /// <summary>

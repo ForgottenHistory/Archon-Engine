@@ -40,7 +40,7 @@ namespace Map.Loading.Bitmaps
             {
                 if (logProgress)
                 {
-                    ArchonLogger.LogMapInitWarning($"{GetLoaderName()}: Bitmap not found at {bitmapPath}, using defaults");
+                    ArchonLogger.LogWarning($"{GetLoaderName()}: Bitmap not found at {bitmapPath}, using defaults", "map_initialization");
                 }
                 return;
             }
@@ -49,7 +49,7 @@ namespace Map.Loading.Bitmaps
             {
                 if (logProgress)
                 {
-                    ArchonLogger.LogMapInit($"{GetLoaderName()}: Loading bitmap: {bitmapPath}");
+                    ArchonLogger.Log($"{GetLoaderName()}: Loading bitmap: {bitmapPath}", "map_initialization");
                 }
 
                 // Load bitmap using Burst-compiled loader
@@ -57,13 +57,13 @@ namespace Map.Loading.Bitmaps
 
                 if (!bitmapResult.Success)
                 {
-                    ArchonLogger.LogMapInitWarning($"{GetLoaderName()}: Failed to load bitmap: {bitmapResult.ErrorMessage}");
+                    ArchonLogger.LogWarning($"{GetLoaderName()}: Failed to load bitmap: {bitmapResult.ErrorMessage}", "map_initialization");
                     return;
                 }
 
                 if (logProgress)
                 {
-                    ArchonLogger.LogMapInit($"{GetLoaderName()}: Successfully loaded {bitmapResult.Width}x{bitmapResult.Height} bitmap, {bitmapResult.BitsPerPixel} bpp");
+                    ArchonLogger.Log($"{GetLoaderName()}: Successfully loaded {bitmapResult.Width}x{bitmapResult.Height} bitmap, {bitmapResult.BitsPerPixel} bpp", "map_initialization");
                 }
 
                 // Populate texture with bitmap data (implemented by derived class)
@@ -71,7 +71,7 @@ namespace Map.Loading.Bitmaps
 
                 if (logProgress)
                 {
-                    ArchonLogger.LogMapInit($"{GetLoaderName()}: Populated texture with bitmap data");
+                    ArchonLogger.Log($"{GetLoaderName()}: Populated texture with bitmap data", "map_initialization");
                 }
 
                 // Dispose bitmap result to free memory
@@ -82,7 +82,7 @@ namespace Map.Loading.Bitmaps
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogMapInitError($"{GetLoaderName()}: Exception loading bitmap: {e.Message}");
+                ArchonLogger.LogError($"{GetLoaderName()}: Exception loading bitmap: {e.Message}", "map_initialization");
             }
         }
 
@@ -119,7 +119,7 @@ namespace Map.Loading.Bitmaps
                     textureManager.BindTexturesToMaterial(runtimeMaterial);
                     if (logProgress)
                     {
-                        ArchonLogger.LogMapInit($"{GetLoaderName()}: Rebound textures to runtime material {runtimeMaterial.GetInstanceID()}");
+                        ArchonLogger.Log($"{GetLoaderName()}: Rebound textures to runtime material {runtimeMaterial.GetInstanceID()}", "map_initialization");
                     }
                 }
             }
@@ -137,7 +137,7 @@ namespace Map.Loading.Bitmaps
                     mapModeManager.RebindTextures();
                     if (logProgress)
                     {
-                        ArchonLogger.LogMapInit($"{GetLoaderName()}: Rebound map mode textures after texture update");
+                        ArchonLogger.Log($"{GetLoaderName()}: Rebound map mode textures after texture update", "map_initialization");
                     }
                 }
             }
@@ -156,7 +156,7 @@ namespace Map.Loading.Bitmaps
 
             if (logProgress)
             {
-                ArchonLogger.LogMapInit($"{GetLoaderName()}: Applied texture changes and forced GPU sync on {texture.GetInstanceID()}");
+                ArchonLogger.Log($"{GetLoaderName()}: Applied texture changes and forced GPU sync on {texture.GetInstanceID()}", "map_initialization");
             }
         }
     }

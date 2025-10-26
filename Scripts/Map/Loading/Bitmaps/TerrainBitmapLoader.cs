@@ -18,7 +18,7 @@ namespace Map.Loading.Bitmaps
         {
             if (textureManager == null || textureManager.ProvinceTerrainTexture == null)
             {
-                ArchonLogger.LogMapInitError("TerrainBitmapLoader: Cannot populate - texture manager or terrain texture not available");
+                ArchonLogger.LogError("TerrainBitmapLoader: Cannot populate - texture manager or terrain texture not available", "map_initialization");
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace Map.Loading.Bitmaps
 
             if (logProgress)
             {
-                ArchonLogger.LogMapInit($"TerrainBitmapLoader: Processing {terrainData.Width}x{terrainData.Height}, {terrainData.BitsPerPixel}bpp");
+                ArchonLogger.Log($"TerrainBitmapLoader: Processing {terrainData.Width}x{terrainData.Height}, {terrainData.BitsPerPixel}bpp", "map_initialization");
             }
 
             int successfulReads = 0;
@@ -89,13 +89,13 @@ namespace Map.Loading.Bitmaps
 
             if (logProgress)
             {
-                ArchonLogger.LogMapInit($"TerrainBitmapLoader: Read stats - Success: {successfulReads}, Failed: {failedReads}");
+                ArchonLogger.Log($"TerrainBitmapLoader: Read stats - Success: {successfulReads}, Failed: {failedReads}", "map_initialization");
 
                 // Sample some terrain colors to verify
                 Color32 sample1 = pixels[width * height / 4];
                 Color32 sample2 = pixels[width * height / 2];
                 Color32 sample3 = pixels[width * height * 3 / 4];
-                ArchonLogger.LogMapInit($"TerrainBitmapLoader: Texture samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]");
+                ArchonLogger.Log($"TerrainBitmapLoader: Texture samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]", "map_initialization");
             }
 
             // Apply terrain colors to texture

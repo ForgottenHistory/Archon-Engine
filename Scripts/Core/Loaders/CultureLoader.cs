@@ -21,13 +21,13 @@ namespace Core.Loaders
 
             if (!Directory.Exists(culturesPath))
             {
-                ArchonLogger.LogCoreDataLoadingWarning($"Cultures directory not found: {culturesPath}");
+                ArchonLogger.LogWarning($"Cultures directory not found: {culturesPath}", "core_data_loading");
                 CreateDefaultCultures(cultureRegistry);
                 return;
             }
 
             var cultureFiles = Directory.GetFiles(culturesPath, "*.txt");
-            ArchonLogger.LogCoreDataLoading($"CultureLoader: Found {cultureFiles.Length} culture files in {culturesPath}");
+            ArchonLogger.Log($"CultureLoader: Found {cultureFiles.Length} culture files in {culturesPath}", "core_data_loading");
 
             int loaded = 0;
             foreach (var file in cultureFiles)
@@ -39,16 +39,16 @@ namespace Core.Loaders
                 }
                 catch (System.Exception e)
                 {
-                    ArchonLogger.LogCoreDataLoadingError($"CultureLoader: Failed to load {file}: {e.Message}");
+                    ArchonLogger.LogError($"CultureLoader: Failed to load {file}: {e.Message}", "core_data_loading");
                 }
             }
 
-            ArchonLogger.LogCoreDataLoading($"CultureLoader: Loaded {loaded}/{cultureFiles.Length} culture files, {cultureRegistry.Count} cultures registered");
+            ArchonLogger.Log($"CultureLoader: Loaded {loaded}/{cultureFiles.Length} culture files, {cultureRegistry.Count} cultures registered", "core_data_loading");
 
             // If no cultures loaded, create defaults
             if (cultureRegistry.Count == 0)
             {
-                ArchonLogger.LogCoreDataLoadingWarning("CultureLoader: No cultures loaded, creating defaults");
+                ArchonLogger.LogWarning("CultureLoader: No cultures loaded, creating defaults", "core_data_loading");
                 CreateDefaultCultures(cultureRegistry);
             }
         }
@@ -149,7 +149,7 @@ namespace Core.Loaders
                 cultureRegistry.Register(key, culture);
             }
 
-            ArchonLogger.LogCoreDataLoading($"CultureLoader: Created {defaultCultures.Length} default cultures");
+            ArchonLogger.Log($"CultureLoader: Created {defaultCultures.Length} default cultures", "core_data_loading");
         }
     }
 }

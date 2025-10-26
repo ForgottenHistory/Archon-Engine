@@ -77,7 +77,7 @@ namespace Core.Data.SparseData
         {
             if (isInitialized)
             {
-                ArchonLogger.LogCoreSimulationWarning($"SparseCollection '{collectionName}' already initialized");
+                ArchonLogger.LogWarning($"SparseCollection '{collectionName}' already initialized", "core_simulation");
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace Core.Data.SparseData
             int entrySize = UnsafeUtility.SizeOf<TKey>() + UnsafeUtility.SizeOf<TValue>();
             int memoryKB = (capacity * entrySize) / 1024;
 
-            ArchonLogger.LogCoreSimulation($"SparseCollection '{name}' initialized: {capacity} capacity, ~{memoryKB} KB pre-allocated");
+            ArchonLogger.Log($"SparseCollection '{name}' initialized: {capacity} capacity, ~{memoryKB} KB pre-allocated", "core_simulation");
         }
 
         #region Query APIs
@@ -383,7 +383,7 @@ namespace Core.Data.SparseData
                 data.Dispose();
 
             isInitialized = false;
-            ArchonLogger.LogCoreSimulation($"SparseCollection '{name}' disposed");
+            ArchonLogger.Log($"SparseCollection '{name}' disposed", "core_simulation");
         }
 
         #endregion
@@ -405,13 +405,13 @@ namespace Core.Data.SparseData
             // Critical threshold (95%)
             if (usage >= CRITICAL_THRESHOLD && !hasLoggedCritical)
             {
-                ArchonLogger.LogCoreSimulationWarning($"SparseCollection '{name}' CRITICAL: {usage:P1} capacity used ({Count}/{capacity}). Consider increasing capacity!");
+                ArchonLogger.LogWarning($"SparseCollection '{name}' CRITICAL: {usage:P1} capacity used ({Count}/{capacity}). Consider increasing capacity!", "core_simulation");
                 hasLoggedCritical = true;
             }
             // Warning threshold (80%)
             else if (usage >= WARNING_THRESHOLD && !hasLoggedWarning)
             {
-                ArchonLogger.LogCoreSimulationWarning($"SparseCollection '{name}' WARNING: {usage:P1} capacity used ({Count}/{capacity})");
+                ArchonLogger.LogWarning($"SparseCollection '{name}' WARNING: {usage:P1} capacity used ({Count}/{capacity})", "core_simulation");
                 hasLoggedWarning = true;
             }
         }

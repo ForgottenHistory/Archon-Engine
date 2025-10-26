@@ -53,7 +53,7 @@ namespace Core.Diplomacy
 
         protected override void OnInitialize()
         {
-            ArchonLogger.LogCoreDiplomacy("DiplomacySystem: Initializing...");
+            ArchonLogger.Log("DiplomacySystem: Initializing...", "core_diplomacy");
 
             // Get GameState reference for EventBus access
             gameState = GetComponent<GameState>();
@@ -68,12 +68,12 @@ namespace Core.Diplomacy
             allModifiers = new NativeList<ModifierWithKey>(655360, Allocator.Persistent);  // 610k + headroom
             modifierCache = new NativeParallelHashMap<ulong, int>(65536, Allocator.Persistent);
 
-            ArchonLogger.LogCoreDiplomacy("DiplomacySystem: Initialized (facade pattern with specialized managers)");
+            ArchonLogger.Log("DiplomacySystem: Initialized (facade pattern with specialized managers)", "core_diplomacy");
         }
 
         protected override void OnShutdown()
         {
-            ArchonLogger.LogCoreDiplomacy("DiplomacySystem: Shutting down...");
+            ArchonLogger.Log("DiplomacySystem: Shutting down...", "core_diplomacy");
 
             // Dispose all NativeCollections
             if (relations.IsCreated) relations.Dispose();
@@ -82,7 +82,7 @@ namespace Core.Diplomacy
             if (allModifiers.IsCreated) allModifiers.Dispose();
             if (modifierCache.IsCreated) modifierCache.Dispose();
 
-            ArchonLogger.LogCoreDiplomacy("DiplomacySystem: Disposed all NativeCollections");
+            ArchonLogger.Log("DiplomacySystem: Disposed all NativeCollections", "core_diplomacy");
         }
 
         // ========== OPINION QUERIES (Delegate to DiplomacyRelationManager) ==========

@@ -23,7 +23,7 @@ namespace Core.Loaders
         /// <param name="tagMapping">Optional mapping of filenames to country tags from 00_countries.txt</param>
         public static CountryDataLoadResult LoadAllCountries(string dataDirectory, Dictionary<string, string> tagMapping = null)
         {
-            ArchonLogger.LogCoreDataLoading("Starting hybrid JSON5 + Burst country loading...");
+            ArchonLogger.Log("Starting hybrid JSON5 + Burst country loading...", "core_data_loading");
 
             try
             {
@@ -35,7 +35,7 @@ namespace Core.Loaders
                     return CountryDataLoadResult.CreateFailure($"JSON5 loading failed: {json5Result.errorMessage}");
                 }
 
-                ArchonLogger.LogCoreDataLoading($"JSON5 loading complete: {json5Result.loadedCount} countries loaded");
+                ArchonLogger.Log($"JSON5 loading complete: {json5Result.loadedCount} countries loaded", "core_data_loading");
 
                 // Phase 2: Process structs with burst jobs (multi-threaded)
                 var burstResult = ProcessCountriesWithBurstJobs(json5Result);
@@ -46,7 +46,7 @@ namespace Core.Loaders
                     return CountryDataLoadResult.CreateFailure($"Burst processing failed: {burstResult.errorMessage}");
                 }
 
-                ArchonLogger.LogCoreDataLoading($"Burst processing complete: {burstResult.processedCount} countries processed");
+                ArchonLogger.Log($"Burst processing complete: {burstResult.processedCount} countries processed", "core_data_loading");
 
                 // Convert to final result format (needs both burst result and JSON5 data)
                 var countryCollection = CreateCountryCollectionFromResults(burstResult, json5Result);
@@ -112,7 +112,7 @@ namespace Core.Loaders
                 var jobHandle = processingJob.Schedule(json5Result.rawData.Length, 32);
                 jobHandle.Complete();
 
-                ArchonLogger.LogCoreDataLoading($"Burst job completed: processed {json5Result.rawData.Length} countries");
+                ArchonLogger.Log($"Burst job completed: processed {json5Result.rawData.Length} countries", "core_data_loading");
 
                 return CountryProcessingResult.Success(processedHotData, json5Result.rawData.Length);
             }

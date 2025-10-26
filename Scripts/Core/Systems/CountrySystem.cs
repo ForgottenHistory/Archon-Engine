@@ -87,7 +87,7 @@ namespace Core.Systems
             stateLoader = new CountryStateLoader(dataManager, eventBus, initialCapacity);
 
             isInitialized = true;
-            ArchonLogger.LogCoreSimulation($"CountrySystem initialized with capacity {initialCapacity}");
+            ArchonLogger.Log($"CountrySystem initialized with capacity {initialCapacity}", "core_simulation");
 
             // Validate CountryHotData size
             ValidateCountryHotDataSize();
@@ -99,7 +99,7 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogCoreSimulationError("CountrySystem not initialized - call Initialize() first");
+                ArchonLogger.LogError("CountrySystem not initialized - call Initialize() first", "core_simulation");
                 return;
             }
             stateLoader.InitializeFromCountryData(countryDataResult);
@@ -135,11 +135,11 @@ namespace Core.Systems
             int actualSize = UnsafeUtility.SizeOf<CountryHotData>();
             if (actualSize != 8)
             {
-                ArchonLogger.LogCoreSimulationError($"CountryHotData size validation failed: expected 8 bytes, got {actualSize} bytes");
+                ArchonLogger.LogError($"CountryHotData size validation failed: expected 8 bytes, got {actualSize} bytes", "core_simulation");
             }
             else
             {
-                ArchonLogger.LogCoreSimulation("CountryHotData size validation passed: 8 bytes");
+                ArchonLogger.Log("CountryHotData size validation passed: 8 bytes", "core_simulation");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogCoreSimulationError("CountrySystem: Cannot save state - not initialized");
+                ArchonLogger.LogError("CountrySystem: Cannot save state - not initialized", "core_simulation");
                 return;
             }
 
@@ -218,7 +218,7 @@ namespace Core.Systems
                 SaveCountryColdData(writer, kvp.Value);
             }
 
-            ArchonLogger.LogCoreSimulation($"CountrySystem: Saved {CountryCount} countries ({initialCapacity} capacity)");
+            ArchonLogger.Log($"CountrySystem: Saved {CountryCount} countries ({initialCapacity} capacity)", "core_simulation");
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogCoreSimulationError("CountrySystem: Cannot load state - not initialized");
+                ArchonLogger.LogError("CountrySystem: Cannot load state - not initialized", "core_simulation");
                 return;
             }
 
@@ -240,7 +240,7 @@ namespace Core.Systems
             // Verify capacity matches
             if (savedCapacity != initialCapacity)
             {
-                ArchonLogger.LogCoreSimulationWarning($"CountrySystem: Capacity mismatch (saved: {savedCapacity}, current: {initialCapacity})");
+                ArchonLogger.LogWarning($"CountrySystem: Capacity mismatch (saved: {savedCapacity}, current: {initialCapacity})", "core_simulation");
             }
 
             // Read country count
@@ -311,7 +311,7 @@ namespace Core.Systems
             // CRITICAL: Restore countryCount (dataManager.Clear() set it to 0)
             dataManager.RestoreCountryCount(savedCountryCount);
 
-            ArchonLogger.LogCoreSimulation($"CountrySystem: Loaded {savedCountryCount} countries (capacity: {savedCapacity})");
+            ArchonLogger.Log($"CountrySystem: Loaded {savedCountryCount} countries (capacity: {savedCapacity})", "core_simulation");
         }
 
         /// <summary>
@@ -438,7 +438,7 @@ namespace Core.Systems
             usedTags?.Clear();
 
             isInitialized = false;
-            ArchonLogger.LogCoreSimulation("CountrySystem disposed");
+            ArchonLogger.Log("CountrySystem disposed", "core_simulation");
         }
 
         void OnDestroy()

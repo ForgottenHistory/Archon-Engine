@@ -21,13 +21,13 @@ namespace Core.Loaders
 
             if (!Directory.Exists(religionsPath))
             {
-                ArchonLogger.LogCoreDataLoadingWarning($"Religions directory not found: {religionsPath}");
+                ArchonLogger.LogWarning($"Religions directory not found: {religionsPath}", "core_data_loading");
                 CreateDefaultReligions(religionRegistry);
                 return;
             }
 
             var religionFiles = Directory.GetFiles(religionsPath, "*.txt");
-            ArchonLogger.LogCoreDataLoading($"ReligionLoader: Found {religionFiles.Length} religion files in {religionsPath}");
+            ArchonLogger.Log($"ReligionLoader: Found {religionFiles.Length} religion files in {religionsPath}", "core_data_loading");
 
             int loaded = 0;
             foreach (var file in religionFiles)
@@ -39,16 +39,16 @@ namespace Core.Loaders
                 }
                 catch (System.Exception e)
                 {
-                    ArchonLogger.LogCoreDataLoadingError($"ReligionLoader: Failed to load {file}: {e.Message}");
+                    ArchonLogger.LogError($"ReligionLoader: Failed to load {file}: {e.Message}", "core_data_loading");
                 }
             }
 
-            ArchonLogger.LogCoreDataLoading($"ReligionLoader: Loaded {loaded}/{religionFiles.Length} religion files, {religionRegistry.Count} religions registered");
+            ArchonLogger.Log($"ReligionLoader: Loaded {loaded}/{religionFiles.Length} religion files, {religionRegistry.Count} religions registered", "core_data_loading");
 
             // If no religions loaded, create defaults
             if (religionRegistry.Count == 0)
             {
-                ArchonLogger.LogCoreDataLoadingWarning("ReligionLoader: No religions loaded, creating defaults");
+                ArchonLogger.LogWarning("ReligionLoader: No religions loaded, creating defaults", "core_data_loading");
                 CreateDefaultReligions(religionRegistry);
             }
         }
@@ -135,7 +135,7 @@ namespace Core.Loaders
                 religionRegistry.Register(key, religion);
             }
 
-            ArchonLogger.LogCoreDataLoading($"ReligionLoader: Created {defaultReligions.Length} default religions");
+            ArchonLogger.Log($"ReligionLoader: Created {defaultReligions.Length} default religions", "core_data_loading");
         }
     }
 }

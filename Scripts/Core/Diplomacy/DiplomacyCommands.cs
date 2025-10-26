@@ -39,14 +39,14 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, AttackerID))
             {
                 lastValidationError = $"Invalid attacker ID: {AttackerID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"DeclareWarCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, DefenderID))
             {
                 lastValidationError = $"Invalid defender ID: {DefenderID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"DeclareWarCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -54,7 +54,7 @@ namespace Core.Diplomacy
             if (AttackerID == DefenderID)
             {
                 lastValidationError = $"Cannot declare war on self (Country {AttackerID})";
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"DeclareWarCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -63,7 +63,7 @@ namespace Core.Diplomacy
             if (diplomacy.IsAtWar(AttackerID, DefenderID))
             {
                 lastValidationError = $"Already at war (Country {AttackerID} vs {DefenderID})";
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"DeclareWarCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -71,7 +71,7 @@ namespace Core.Diplomacy
             if (diplomacy.HasNonAggressionPact(AttackerID, DefenderID))
             {
                 lastValidationError = $"Cannot declare war - Non-Aggression Pact exists between {AttackerID} and {DefenderID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"DeclareWarCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -79,7 +79,7 @@ namespace Core.Diplomacy
             if (diplomacy.AreAllied(AttackerID, DefenderID))
             {
                 lastValidationError = $"Cannot declare war - countries {AttackerID} and {DefenderID} are allied";
-                ArchonLogger.LogCoreDiplomacyWarning($"DeclareWarCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"DeclareWarCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -130,7 +130,7 @@ namespace Core.Diplomacy
         {
             // Undo not implemented for diplomacy commands
             // War declarations have lasting consequences
-            ArchonLogger.LogCoreDiplomacyWarning("DeclareWarCommand: Undo not supported");
+            ArchonLogger.LogWarning("DeclareWarCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)
@@ -184,14 +184,14 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, Country1))
             {
                 lastValidationError = $"Invalid country ID: {Country1}";
-                ArchonLogger.LogCoreDiplomacyWarning($"MakePeaceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"MakePeaceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
                 lastValidationError = $"Invalid country ID: {Country2}";
-                ArchonLogger.LogCoreDiplomacyWarning($"MakePeaceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"MakePeaceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -200,7 +200,7 @@ namespace Core.Diplomacy
             if (!diplomacy.IsAtWar(Country1, Country2))
             {
                 lastValidationError = $"Not at war (Countries {Country1} and {Country2})";
-                ArchonLogger.LogCoreDiplomacyWarning($"MakePeaceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"MakePeaceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -244,7 +244,7 @@ namespace Core.Diplomacy
         public override void Undo(GameState gameState)
         {
             // Undo not implemented for diplomacy commands
-            ArchonLogger.LogCoreDiplomacyWarning("MakePeaceCommand: Undo not supported");
+            ArchonLogger.LogWarning("MakePeaceCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)
@@ -307,14 +307,14 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, SourceCountry))
             {
                 lastValidationError = $"Invalid source country ID: {SourceCountry}";
-                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"ImproveRelationsCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, TargetCountry))
             {
                 lastValidationError = $"Invalid target country ID: {TargetCountry}";
-                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"ImproveRelationsCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -322,7 +322,7 @@ namespace Core.Diplomacy
             if (SourceCountry == TargetCountry)
             {
                 lastValidationError = $"Cannot improve relations with self (Country {SourceCountry})";
-                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"ImproveRelationsCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -331,7 +331,7 @@ namespace Core.Diplomacy
             if (diplomacy.IsAtWar(SourceCountry, TargetCountry))
             {
                 lastValidationError = $"Cannot improve relations during war (Countries {SourceCountry} vs {TargetCountry})";
-                ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"ImproveRelationsCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -343,7 +343,7 @@ namespace Core.Diplomacy
                 if (currentAmount < ResourceCost)
                 {
                     lastValidationError = $"Insufficient resources (has {currentAmount.ToString("F1")}, needs {ResourceCost.ToString("F1")})";
-                    ArchonLogger.LogCoreDiplomacyWarning($"ImproveRelationsCommand: {lastValidationError}");
+                    ArchonLogger.LogWarning($"ImproveRelationsCommand: {lastValidationError}", "core_diplomacy");
                     return false;
                 }
             }
@@ -397,7 +397,7 @@ namespace Core.Diplomacy
         public override void Undo(GameState gameState)
         {
             // Undo not implemented for diplomacy commands
-            ArchonLogger.LogCoreDiplomacyWarning("ImproveRelationsCommand: Undo not supported");
+            ArchonLogger.LogWarning("ImproveRelationsCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)

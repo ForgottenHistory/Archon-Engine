@@ -67,7 +67,7 @@ namespace Core
             // Singleton pattern
             if (Instance != null && Instance != this)
             {
-                ArchonLogger.LogCoreSimulationError("Multiple GameState instances detected! Destroying duplicate.");
+                ArchonLogger.LogError("Multiple GameState instances detected! Destroying duplicate.", "core_simulation");
                 Destroy(gameObject);
                 return;
             }
@@ -85,7 +85,7 @@ namespace Core
         public void SetRegistries(GameRegistries registries)
         {
             Registries = registries;
-            ArchonLogger.LogCoreSimulation("GameState: Registries set");
+            ArchonLogger.Log("GameState: Registries set", "core_simulation");
         }
 
         /// <summary>
@@ -97,18 +97,18 @@ namespace Core
         {
             if (system == null)
             {
-                ArchonLogger.LogCoreSimulationWarning($"GameState: Attempted to register null system of type {typeof(T).Name}");
+                ArchonLogger.LogWarning($"GameState: Attempted to register null system of type {typeof(T).Name}", "core_simulation");
                 return;
             }
 
             Type systemType = typeof(T);
             if (registeredGameSystems.ContainsKey(systemType))
             {
-                ArchonLogger.LogCoreSimulationWarning($"GameState: System {systemType.Name} already registered, replacing");
+                ArchonLogger.LogWarning($"GameState: System {systemType.Name} already registered, replacing", "core_simulation");
             }
 
             registeredGameSystems[systemType] = system;
-            ArchonLogger.LogCoreSimulation($"GameState: Registered Game layer system {systemType.Name}");
+            ArchonLogger.Log($"GameState: Registered Game layer system {systemType.Name}", "core_simulation");
         }
 
         /// <summary>
@@ -155,11 +155,11 @@ namespace Core
         {
             if (IsInitialized)
             {
-                ArchonLogger.LogCoreSimulationWarning("GameState already initialized");
+                ArchonLogger.LogWarning("GameState already initialized", "core_simulation");
                 return;
             }
 
-            ArchonLogger.LogCoreSimulation("Initializing GameState systems...");
+            ArchonLogger.Log("Initializing GameState systems...", "core_simulation");
 
             // 1. Core infrastructure first
             EventBus = new EventBus();
@@ -196,7 +196,7 @@ namespace Core
             Time.Initialize(EventBus, Provinces); // Pass ProvinceSystem for buffer swapping
 
             IsInitialized = true;
-            ArchonLogger.LogCoreSimulation("GameState initialization complete");
+            ArchonLogger.Log("GameState initialization complete", "core_simulation");
 
             // Emit initialization complete event
             EventBus.Emit(new GameStateInitializedEvent());
@@ -219,7 +219,7 @@ namespace Core
             if (!IsInitialized)
             {
                 resultMessage = "GameState not initialized";
-                ArchonLogger.LogCoreSimulationError("Cannot execute command - GameState not initialized");
+                ArchonLogger.LogError("Cannot execute command - GameState not initialized", "core_simulation");
                 return false;
             }
 
@@ -228,7 +228,7 @@ namespace Core
             {
                 // Try to get a detailed validation error from the command
                 resultMessage = GetCommandValidationError(command);
-                ArchonLogger.LogCoreSimulationWarning($"Command validation failed: {command.GetType().Name}");
+                ArchonLogger.LogWarning($"Command validation failed: {command.GetType().Name}", "core_simulation");
                 return false;
             }
 
@@ -248,7 +248,7 @@ namespace Core
             catch (System.Exception e)
             {
                 resultMessage = $"Execution error: {e.Message}";
-                ArchonLogger.LogCoreSimulationError($"Command execution failed: {command.GetType().Name} - {e.Message}");
+                ArchonLogger.LogError($"Command execution failed: {command.GetType().Name} - {e.Message}", "core_simulation");
                 EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), Success = false, Error = e.Message });
                 return false;
             }

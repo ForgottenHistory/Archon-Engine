@@ -157,7 +157,7 @@ namespace Map.Province
             idToArrayIndex = new NativeHashMap<ushort, int>(capacity, Allocator.Persistent);
             provinceCount = 0;
 
-            ArchonLogger.LogMapTextures($"ProvinceDataManager initialized with capacity for {capacity} provinces");
+            ArchonLogger.Log($"ProvinceDataManager initialized with capacity for {capacity} provinces", "map_textures");
         }
 
         /// <summary>
@@ -167,13 +167,13 @@ namespace Map.Province
         {
             if (provinceCount >= provinces.Length)
             {
-                ArchonLogger.LogMapTexturesError("Province capacity exceeded!");
+                ArchonLogger.LogError("Province capacity exceeded!", "map_textures");
                 return false;
             }
 
             if (colorToID.ContainsKey(identifierColor))
             {
-                ArchonLogger.LogMapTexturesWarning($"Province color {identifierColor} already exists!");
+                ArchonLogger.LogWarning($"Province color {identifierColor} already exists!", "map_textures");
                 return false;
             }
 
@@ -355,12 +355,12 @@ namespace Map.Province
         {
             var (totalBytes, provinceBytes, lookupBytes) = GetMemoryUsage();
 
-            ArchonLogger.LogMapTextures($"Province Data Manager Statistics:\n" +
+            ArchonLogger.Log($"Province Data Manager Statistics:\n" +
                      $"Provinces: {provinceCount}/{provinces.Length}\n" +
                      $"Memory Usage: {totalBytes / 1024f:F1} KB total\n" +
                      $"  - Province Data: {provinceBytes / 1024f:F1} KB\n" +
                      $"  - Lookup Tables: {lookupBytes / 1024f:F1} KB\n" +
-                     $"Average bytes per province: {(provinceCount > 0 ? totalBytes / provinceCount : 0)} bytes");
+                     $"Average bytes per province: {(provinceCount > 0 ? totalBytes / provinceCount : 0)} bytes", "map_textures");
         }
 #endif
     }

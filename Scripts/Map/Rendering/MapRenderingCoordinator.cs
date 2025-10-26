@@ -39,7 +39,7 @@ namespace Map.Rendering
         {
             if (logRenderingProgress)
             {
-                ArchonLogger.LogMapInit("MapRenderingCoordinator: Setting up map rendering system...");
+                ArchonLogger.Log("MapRenderingCoordinator: Setting up map rendering system...", "map_initialization");
             }
 
             // Set up material
@@ -50,7 +50,7 @@ namespace Map.Rendering
 
             if (logRenderingProgress)
             {
-                ArchonLogger.LogMapInit("MapRenderingCoordinator: Map rendering setup complete");
+                ArchonLogger.Log("MapRenderingCoordinator: Map rendering setup complete", "map_initialization");
             }
         }
 
@@ -66,7 +66,7 @@ namespace Map.Rendering
                 runtimeMaterial = meshRenderer.material;
                 if (logRenderingProgress)
                 {
-                    ArchonLogger.LogMapInit($"MapRenderingCoordinator: Using existing material '{runtimeMaterial.shader.name}' from GAME layer");
+                    ArchonLogger.Log($"MapRenderingCoordinator: Using existing material '{runtimeMaterial.shader.name}' from GAME layer", "map_initialization");
                 }
             }
             else
@@ -82,12 +82,12 @@ namespace Map.Rendering
                         mapMaterial.name = "MapRenderingCoordinator_Material";
                         if (logRenderingProgress)
                         {
-                            ArchonLogger.LogMapInit("MapRenderingCoordinator: Created fallback material with MapCore shader");
+                            ArchonLogger.Log("MapRenderingCoordinator: Created fallback material with MapCore shader", "map_initialization");
                         }
                     }
                     else
                     {
-                        ArchonLogger.LogMapRenderingError("MapRenderingCoordinator: MapCore shader not found. Make sure the shader is in the project.");
+                        ArchonLogger.LogError("MapRenderingCoordinator: MapCore shader not found. Make sure the shader is in the project.", "map_rendering");
                         return;
                     }
                 }
@@ -104,7 +104,7 @@ namespace Map.Rendering
             // ENGINE provides mechanism, GAME controls initialization flow and initial mode
             if (mapModeManager != null && logRenderingProgress)
             {
-                ArchonLogger.LogMapInit("MapRenderingCoordinator: MapModeManager ready for GAME initialization");
+                ArchonLogger.Log("MapRenderingCoordinator: MapModeManager ready for GAME initialization", "map_initialization");
             }
 
             // Set general material properties not handled by mapmodes
@@ -115,7 +115,7 @@ namespace Map.Rendering
 
             if (logRenderingProgress)
             {
-                ArchonLogger.LogMapInit("MapRenderingCoordinator: Material setup complete with all map textures bound");
+                ArchonLogger.Log("MapRenderingCoordinator: Material setup complete with all map textures bound", "map_initialization");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Map.Rendering
 
             if (logRenderingProgress)
             {
-                ArchonLogger.LogMapInit($"MapRenderingCoordinator: Camera positioned for {textureManager.MapWidth}x{textureManager.MapHeight} map");
+                ArchonLogger.Log($"MapRenderingCoordinator: Camera positioned for {textureManager.MapWidth}x{textureManager.MapHeight} map", "map_initialization");
             }
         }
 

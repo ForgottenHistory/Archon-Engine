@@ -83,7 +83,7 @@ namespace Map.Province
             bool verboseLogging = loadResult.ProvinceCount < 1000;
 
             if (verboseLogging)
-                ArchonLogger.LogMapTextures($"Detecting neighbors for {loadResult.ProvinceCount} provinces...");
+                ArchonLogger.Log($"Detecting neighbors for {loadResult.ProvinceCount} provinces...", "map_textures");
 
             // Initialize data structures
             var neighborPairs = new NativeHashSet<NeighborPair>(loadResult.ProvincePixels.Length / 4, Allocator.TempJob);
@@ -97,27 +97,27 @@ namespace Map.Province
             {
                 // Perform horizontal scanline pass
                 if (verboseLogging)
-                    ArchonLogger.LogMapTextures("Performing horizontal neighbor detection...");
+                    ArchonLogger.Log("Performing horizontal neighbor detection...", "map_textures");
                 DetectHorizontalNeighbors(pixelLookup, neighborPairs, loadResult.Width, loadResult.Height, includeOceanNeighbors);
 
                 // Perform vertical scanline pass
                 if (verboseLogging)
-                    ArchonLogger.LogMapTextures("Performing vertical neighbor detection...");
+                    ArchonLogger.Log("Performing vertical neighbor detection...", "map_textures");
                 DetectVerticalNeighbors(pixelLookup, neighborPairs, loadResult.Width, loadResult.Height, includeOceanNeighbors);
 
                 // Calculate bounding boxes
                 if (verboseLogging)
-                    ArchonLogger.LogMapTextures("Calculating province bounding boxes...");
+                    ArchonLogger.Log("Calculating province bounding boxes...", "map_textures");
                 CalculateBoundingBoxes(loadResult.ProvincePixels, provinceBounds);
 
                 // Identify coastal provinces
                 if (verboseLogging)
-                    ArchonLogger.LogMapTextures("Identifying coastal provinces...");
+                    ArchonLogger.Log("Identifying coastal provinces...", "map_textures");
                 IdentifyCoastalProvinces(neighborPairs, coastalProvinces);
 
                 // Convert neighbor pairs to per-province neighbor lists
                 if (verboseLogging)
-                    ArchonLogger.LogMapTextures("Building neighbor lists...");
+                    ArchonLogger.Log("Building neighbor lists...", "map_textures");
                 var provinceNeighbors = BuildNeighborLists(neighborPairs, loadResult.ProvinceCount);
 
                 // Mark coastal flags in neighbor data
@@ -131,10 +131,10 @@ namespace Map.Province
 
                 if (verboseLogging)
                 {
-                    ArchonLogger.LogMapTextures($"Neighbor detection complete:");
-                    ArchonLogger.LogMapTextures($"  - Neighbor pairs: {result.TotalNeighborPairs}");
-                    ArchonLogger.LogMapTextures($"  - Coastal provinces: {coastalProvinces.Count}");
-                    ArchonLogger.LogMapTextures($"  - Provinces with bounds: {provinceBounds.Count}");
+                    ArchonLogger.Log($"Neighbor detection complete:", "map_textures");
+                    ArchonLogger.Log($"  - Neighbor pairs: {result.TotalNeighborPairs}", "map_textures");
+                    ArchonLogger.Log($"  - Coastal provinces: {coastalProvinces.Count}", "map_textures");
+                    ArchonLogger.Log($"  - Provinces with bounds: {provinceBounds.Count}", "map_textures");
                 }
 
             }
@@ -526,13 +526,13 @@ namespace Map.Province
 
             float avgNeighbors = provinceCount > 0 ? (float)totalNeighbors / provinceCount : 0f;
 
-            ArchonLogger.LogMapTextures($"Province Neighbor Statistics:");
-            ArchonLogger.LogMapTextures($"  Provinces analyzed: {provinceCount}");
-            ArchonLogger.LogMapTextures($"  Total neighbor relationships: {totalNeighbors}");
-            ArchonLogger.LogMapTextures($"  Unique neighbor pairs: {result.TotalNeighborPairs}");
-            ArchonLogger.LogMapTextures($"  Average neighbors per province: {avgNeighbors:F1}");
-            ArchonLogger.LogMapTextures($"  Min/Max neighbors: {minNeighbors}/{maxNeighbors}");
-            ArchonLogger.LogMapTextures($"  Coastal provinces: {result.CoastalProvinces.Count} ({(float)result.CoastalProvinces.Count / provinceCount * 100f:F1}%)");
+            ArchonLogger.Log($"Province Neighbor Statistics:", "map_textures");
+            ArchonLogger.Log($"  Provinces analyzed: {provinceCount}", "map_textures");
+            ArchonLogger.Log($"  Total neighbor relationships: {totalNeighbors}", "map_textures");
+            ArchonLogger.Log($"  Unique neighbor pairs: {result.TotalNeighborPairs}", "map_textures");
+            ArchonLogger.Log($"  Average neighbors per province: {avgNeighbors:F1}", "map_textures");
+            ArchonLogger.Log($"  Min/Max neighbors: {minNeighbors}/{maxNeighbors}", "map_textures");
+            ArchonLogger.Log($"  Coastal provinces: {result.CoastalProvinces.Count} ({(float)result.CoastalProvinces.Count / provinceCount * 100f:F1}%)", "map_textures");
         }
     }
 }

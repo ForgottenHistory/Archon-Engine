@@ -24,7 +24,7 @@ namespace Map.Province
             s_computeShader = Resources.Load<ComputeShader>(COMPUTE_SHADER_PATH);
             if (s_computeShader == null)
             {
-                ArchonLogger.LogMapTexturesError($"Failed to load compute shader at {COMPUTE_SHADER_PATH}");
+                ArchonLogger.LogError($"Failed to load compute shader at {COMPUTE_SHADER_PATH}", "map_textures");
             }
         }
 
@@ -52,7 +52,7 @@ namespace Map.Province
             int width = provinceIDTexture.width;
             int height = provinceIDTexture.height;
 
-            ArchonLogger.LogMapTextures($"[GPU] Detecting neighbors for {provinceCount} provinces on {width}x{height} texture");
+            ArchonLogger.Log($"[GPU] Detecting neighbors for {provinceCount} provinces on {width}x{height} texture", "map_textures");
 
             // Create GPU buffers
             int maxNeighborPairs = provinceCount * 10; // Estimate max pairs
@@ -113,7 +113,7 @@ namespace Map.Province
                 coastalProvinceCountBuffer.GetData(coastalCountData);
                 int actualCoastalCount = Mathf.Min(coastalCountData[0], maxCoastalProvinces);
 
-                ArchonLogger.LogMapTextures($"[GPU] Found {actualPairCount} neighbor pairs and {actualCoastalCount} coastal provinces");
+                ArchonLogger.Log($"[GPU] Found {actualPairCount} neighbor pairs and {actualCoastalCount} coastal provinces", "map_textures");
 
                 // Read neighbor pairs
                 var neighborPairsData = new uint2[actualPairCount];
@@ -136,7 +136,7 @@ namespace Map.Province
                 // Convert to result format
                 result = ConvertToResult(neighborPairsData, coastalProvincesData, boundsData, provinceCount);
 
-                ArchonLogger.LogMapTextures($"[GPU] Neighbor detection complete in ~{Time.deltaTime * 1000:F2}ms");
+                ArchonLogger.Log($"[GPU] Neighbor detection complete in ~{Time.deltaTime * 1000:F2}ms", "map_textures");
             }
             finally
             {

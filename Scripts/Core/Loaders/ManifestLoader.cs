@@ -35,13 +35,13 @@ namespace Core.Loaders
 
             try
             {
-                ArchonLogger.LogCoreDataLoading($"ManifestLoader: Loading manifest from {manifestFilePath}");
+                ArchonLogger.Log($"ManifestLoader: Loading manifest from {manifestFilePath}", "core_data_loading");
 
                 // Read and parse file content directly (simple approach for small manifest files)
                 var lines = File.ReadAllLines(manifestFilePath);
                 ParseManifestLines(lines);
 
-                ArchonLogger.LogCoreDataLoading($"ManifestLoader: Loaded {manifest.Count} entries from manifest");
+                ArchonLogger.Log($"ManifestLoader: Loaded {manifest.Count} entries from manifest", "core_data_loading");
 
                 return ManifestLoadResult.CreateSuccess(manifest, errors);
             }
@@ -49,7 +49,7 @@ namespace Core.Loaders
             {
                 var error = $"Failed to load manifest {manifestFilePath}: {e.Message}";
                 errors.Add(error);
-                ArchonLogger.LogCoreDataLoadingError(error);
+                ArchonLogger.LogError(error, "core_data_loading");
                 return ManifestLoadResult.CreateFailed(error);
             }
         }
@@ -108,7 +108,7 @@ namespace Core.Loaders
                     {
                         var warning = $"Duplicate key in manifest: {key}";
                         errors.Add(warning);
-                        ArchonLogger.LogCoreDataLoadingWarning(warning);
+                        ArchonLogger.LogWarning(warning, "core_data_loading");
                     }
                 }
             }

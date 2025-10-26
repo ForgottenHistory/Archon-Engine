@@ -71,14 +71,14 @@ namespace Core.Loaders
                 _cachedTerrainCategories = terrainData;
                 _dataLoaded = true;
 
-                ArchonLogger.LogCoreDataLoading($"WaterProvinceLoader: Loaded water provinces - {waterData.SeaProvinces.Count} sea, {waterData.LakeProvinces.Count} lakes, {waterData.OceanProvinces.Count} ocean provinces");
-                ArchonLogger.LogCoreDataLoading($"WaterProvinceLoader: Loaded {terrainData.Count} terrain categories from terrain.json5");
+                ArchonLogger.Log($"WaterProvinceLoader: Loaded water provinces - {waterData.SeaProvinces.Count} sea, {waterData.LakeProvinces.Count} lakes, {waterData.OceanProvinces.Count} ocean provinces", "core_data_loading");
+                ArchonLogger.Log($"WaterProvinceLoader: Loaded {terrainData.Count} terrain categories from terrain.json5", "core_data_loading");
 
                 return _cachedWaterData;
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogCoreDataLoadingError($"WaterProvinceLoader: Failed to load water province data: {e.Message}");
+                ArchonLogger.LogError($"WaterProvinceLoader: Failed to load water province data: {e.Message}", "core_data_loading");
                 return CreateDefaultWaterData();
             }
         }
@@ -95,7 +95,7 @@ namespace Core.Loaders
                 return LoadDefaultMapJson5(defaultMapPath);
             }
 
-            ArchonLogger.LogCoreDataLoadingWarning("WaterProvinceLoader: default.json5 not found, using defaults");
+            ArchonLogger.LogWarning("WaterProvinceLoader: default.json5 not found, using defaults", "core_data_loading");
             return CreateDefaultWaterData();
         }
 
@@ -166,7 +166,7 @@ namespace Core.Loaders
 
             if (!File.Exists(terrainPath))
             {
-                ArchonLogger.LogCoreDataLoadingWarning($"TerrainLoader: terrain.json5 not found at {terrainPath}");
+                ArchonLogger.LogWarning($"TerrainLoader: terrain.json5 not found at {terrainPath}", "core_data_loading");
                 return terrainCategories;
             }
 
@@ -175,7 +175,7 @@ namespace Core.Loaders
 
             if (categories == null)
             {
-                ArchonLogger.LogCoreDataLoadingWarning("TerrainLoader: No 'categories' section found in terrain.json5");
+                ArchonLogger.LogWarning("TerrainLoader: No 'categories' section found in terrain.json5", "core_data_loading");
                 return terrainCategories;
             }
 

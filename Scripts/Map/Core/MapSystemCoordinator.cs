@@ -52,7 +52,7 @@ namespace Map.Core
 
             if (logSystemProgress)
             {
-                ArchonLogger.LogMapInit("MapSystemCoordinator: Initializing complete map system...");
+                ArchonLogger.Log("MapSystemCoordinator: Initializing complete map system...", "map_initialization");
             }
 
             InitializeAllComponents();
@@ -60,7 +60,7 @@ namespace Map.Core
 
             if (logSystemProgress)
             {
-                ArchonLogger.LogMapInit("MapSystemCoordinator: Map system initialization complete");
+                ArchonLogger.Log("MapSystemCoordinator: Map system initialization complete", "map_initialization");
             }
         }
 
@@ -75,7 +75,7 @@ namespace Map.Core
                 var provinceResult = await dataLoader.LoadFromFilesAsync(bitmapPath, csvPath, useDefinition);
                 if (!provinceResult.HasValue)
                 {
-                    ArchonLogger.LogCoreSimulationError("MapSystemCoordinator: Failed to load province data from files");
+                    ArchonLogger.LogError("MapSystemCoordinator: Failed to load province data from files", "core_simulation");
                     return false;
                 }
 
@@ -95,7 +95,7 @@ namespace Map.Core
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogCoreSimulationError($"MapSystemCoordinator: Exception during file-based generation: {e.Message}");
+                ArchonLogger.LogError($"MapSystemCoordinator: Exception during file-based generation: {e.Message}", "core_simulation");
                 return false;
             }
         }
@@ -112,7 +112,7 @@ namespace Map.Core
                 var provinceResult = await dataLoader.LoadFromSimulationAsync(simulationData, bitmapPath, csvPath, useDefinition);
                 if (!provinceResult.HasValue)
                 {
-                    ArchonLogger.LogCoreSimulationError("MapSystemCoordinator: Failed to load province data from simulation");
+                    ArchonLogger.LogError("MapSystemCoordinator: Failed to load province data from simulation", "core_simulation");
                     return false;
                 }
 
@@ -147,12 +147,12 @@ namespace Map.Core
 
                     if (logSystemProgress)
                     {
-                        ArchonLogger.LogMapInit("MapSystemCoordinator: Initialized TextureUpdateBridge for runtime updates");
+                        ArchonLogger.Log("MapSystemCoordinator: Initialized TextureUpdateBridge for runtime updates", "map_initialization");
                     }
                 }
                 else if (logSystemProgress)
                 {
-                    ArchonLogger.LogCoreSimulationWarning("MapSystemCoordinator: TextureUpdateBridge not available - runtime texture updates disabled");
+                    ArchonLogger.LogWarning("MapSystemCoordinator: TextureUpdateBridge not available - runtime texture updates disabled", "core_simulation");
                 }
 
                 OnGenerationProgress?.Invoke(100f, "Map generation complete");
@@ -161,7 +161,7 @@ namespace Map.Core
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogCoreSimulationError($"MapSystemCoordinator: Exception during simulation-based generation: {e.Message}\n{e.StackTrace}");
+                ArchonLogger.LogError($"MapSystemCoordinator: Exception during simulation-based generation: {e.Message}\n{e.StackTrace}", "core_simulation");
                 return false;
             }
         }
@@ -189,14 +189,14 @@ namespace Map.Core
         {
             if (logSystemProgress)
             {
-                ArchonLogger.LogMapInit($"MapSystemCoordinator: Handling simulation ready with {simulationData.ProvinceCount} provinces");
+                ArchonLogger.Log($"MapSystemCoordinator: Handling simulation ready with {simulationData.ProvinceCount} provinces", "map_initialization");
             }
 
             // Get components from MapInitializer (which already initialized them)
             var initializer = GetComponent<MapInitializer>();
             if (initializer == null)
             {
-                ArchonLogger.LogCoreSimulationError("MapSystemCoordinator: MapInitializer not found - cannot proceed");
+                ArchonLogger.LogError("MapSystemCoordinator: MapInitializer not found - cannot proceed", "core_simulation");
                 return;
             }
 
@@ -216,13 +216,13 @@ namespace Map.Core
 
             if (logSystemProgress)
             {
-                ArchonLogger.LogMapInit($"MapSystemCoordinator: Received camera reference: {(mapCamera != null ? mapCamera.name : "null")}");
-                ArchonLogger.LogMapInit($"MapSystemCoordinator: Received meshRenderer reference: {(meshRenderer != null ? meshRenderer.name : "null")}");
+                ArchonLogger.Log($"MapSystemCoordinator: Received camera reference: {(mapCamera != null ? mapCamera.name : "null")}", "map_initialization");
+                ArchonLogger.Log($"MapSystemCoordinator: Received meshRenderer reference: {(meshRenderer != null ? meshRenderer.name : "null")}", "map_initialization");
             }
 
             if (meshRenderer == null)
             {
-                ArchonLogger.LogCoreSimulationError("MapSystemCoordinator: MeshRenderer reference not found from MapInitializer");
+                ArchonLogger.LogError("MapSystemCoordinator: MeshRenderer reference not found from MapInitializer", "core_simulation");
                 return;
             }
 
@@ -231,7 +231,7 @@ namespace Map.Core
 
             if (success && logSystemProgress)
             {
-                ArchonLogger.LogMapInit($"MapSystemCoordinator: Map generation complete. Rendering {simulationData.ProvinceCount} provinces.");
+                ArchonLogger.Log($"MapSystemCoordinator: Map generation complete. Rendering {simulationData.ProvinceCount} provinces.", "map_initialization");
             }
 
             // Notify MapInitializer that initialization is complete
@@ -275,7 +275,7 @@ namespace Map.Core
                 component = gameObject.AddComponent<T>();
                 if (logSystemProgress)
                 {
-                    ArchonLogger.LogMapInit($"MapSystemCoordinator: Created {typeof(T).Name} component");
+                    ArchonLogger.Log($"MapSystemCoordinator: Created {typeof(T).Name} component", "map_initialization");
                 }
             }
             return component;
@@ -320,7 +320,7 @@ namespace Map.Core
             var provinceRegistry = gameState.Registries?.Provinces;
             if (provinceRegistry == null)
             {
-                ArchonLogger.LogMapInitError("MapSystemCoordinator: GameState.Registries not set! Cannot validate provinces.");
+                ArchonLogger.LogError("MapSystemCoordinator: GameState.Registries not set! Cannot validate provinces.", "map_initialization");
                 return null;
             }
 
@@ -353,12 +353,12 @@ namespace Map.Core
                     // Log first few skipped provinces for debugging
                     if (skippedProvinces <= 10)
                     {
-                        ArchonLogger.LogMapInit($"MapSystemCoordinator: Skipping province {bitmapProvinceID} RGB({r},{g},{b}) - not in registry");
+                        ArchonLogger.Log($"MapSystemCoordinator: Skipping province {bitmapProvinceID} RGB({r},{g},{b}) - not in registry", "map_initialization");
                     }
                 }
             }
 
-            ArchonLogger.LogMapInit($"MapSystemCoordinator: Province mapping complete - {totalBitmapProvinces} in bitmap, {validatedProvinces} validated, {skippedProvinces} skipped");
+            ArchonLogger.Log($"MapSystemCoordinator: Province mapping complete - {totalBitmapProvinces} in bitmap, {validatedProvinces} validated, {skippedProvinces} skipped", "map_initialization");
             return mapping;
         }
     }

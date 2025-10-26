@@ -20,7 +20,7 @@ namespace Core.Loaders
         /// </summary>
         public static ProvinceInitialStateLoadResult LoadProvinceInitialStates(string dataDirectory)
         {
-            ArchonLogger.LogCoreDataLoading("Starting hybrid JSON5 + Burst province loading...");
+            ArchonLogger.Log("Starting hybrid JSON5 + Burst province loading...", "core_data_loading");
 
             try
             {
@@ -32,7 +32,7 @@ namespace Core.Loaders
                     return ProvinceInitialStateLoadResult.Failed($"JSON5 loading failed: {json5Result.errorMessage}");
                 }
 
-                ArchonLogger.LogCoreDataLoading($"JSON5 loading complete: {json5Result.loadedCount} provinces loaded");
+                ArchonLogger.Log($"JSON5 loading complete: {json5Result.loadedCount} provinces loaded", "core_data_loading");
 
                 // Phase 2: Process structs with burst jobs (multi-threaded)
                 var burstResult = ProcessProvincesWithBurstJobs(json5Result);
@@ -45,7 +45,7 @@ namespace Core.Loaders
                     return ProvinceInitialStateLoadResult.Failed($"Burst processing failed: {burstResult.errorMessage}");
                 }
 
-                ArchonLogger.LogCoreDataLoading($"Burst processing complete: {burstResult.processedCount} provinces processed");
+                ArchonLogger.Log($"Burst processing complete: {burstResult.processedCount} provinces processed", "core_data_loading");
 
                 // Convert to final result format
                 return ProvinceInitialStateLoadResult.Successful(burstResult.provinces, json5Result.failedCount);
@@ -86,7 +86,7 @@ namespace Core.Loaders
                 var jobHandle = processingJob.Schedule(json5Result.rawData.Length, 32);
                 jobHandle.Complete();
 
-                ArchonLogger.LogCoreDataLoading($"Burst job completed: processed {json5Result.rawData.Length} provinces");
+                ArchonLogger.Log($"Burst job completed: processed {json5Result.rawData.Length} provinces", "core_data_loading");
 
                 return ProvinceProcessingResult.Success(processedProvinces, json5Result.rawData.Length);
             }

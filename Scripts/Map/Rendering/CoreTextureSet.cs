@@ -74,7 +74,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"CoreTextureSet: Created Province ID texture {mapWidth}x{mapHeight} ARGB32 RenderTexture");
+                ArchonLogger.Log($"CoreTextureSet: Created Province ID texture {mapWidth}x{mapHeight} ARGB32 RenderTexture", "map_initialization");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"CoreTextureSet: Created Province Owner RenderTexture {mapWidth}x{mapHeight} R32_SFloat");
+                ArchonLogger.Log($"CoreTextureSet: Created Province Owner RenderTexture {mapWidth}x{mapHeight} R32_SFloat", "map_initialization");
             }
         }
 
@@ -130,7 +130,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"CoreTextureSet: Created Province Color texture {mapWidth}x{mapHeight} RGBA32");
+                ArchonLogger.Log($"CoreTextureSet: Created Province Color texture {mapWidth}x{mapHeight} RGBA32", "map_initialization");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"CoreTextureSet: Created Province Development RenderTexture {mapWidth}x{mapHeight} R8G8B8A8_UNorm (UAV-enabled)");
+                ArchonLogger.Log($"CoreTextureSet: Created Province Development RenderTexture {mapWidth}x{mapHeight} R8G8B8A8_UNorm (UAV-enabled)", "map_initialization");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit("CoreTextureSet: Bound core textures to material");
+                ArchonLogger.Log("CoreTextureSet: Bound core textures to material", "map_initialization");
             }
         }
 

@@ -66,7 +66,7 @@ namespace Map.Rendering
 
             if (textureManager == null)
             {
-                ArchonLogger.LogMapRenderingError("MapTextureManager is required for texture streaming");
+                ArchonLogger.LogError("MapTextureManager is required for texture streaming", "map_rendering");
                 return;
             }
 
@@ -81,7 +81,7 @@ namespace Map.Rendering
             if (!streamingRequired)
             {
                 if (logStreamingEvents)
-                    ArchonLogger.LogMapRendering($"Texture streaming disabled - map size {estimatedMemoryMB}MB is within budget");
+                    ArchonLogger.Log($"Texture streaming disabled - map size {estimatedMemoryMB}MB is within budget", "map_rendering");
                 return;
             }
 
@@ -90,9 +90,9 @@ namespace Map.Rendering
 
             if (logStreamingEvents)
             {
-                ArchonLogger.LogMapRendering($"Texture streaming initialized - Map: {mapWidth}x{mapHeight}, " +
+                ArchonLogger.Log($"Texture streaming initialized - Map: {mapWidth}x{mapHeight}, " +
                          $"Tiles: {tilesX}x{tilesY} ({totalTiles} total), " +
-                         $"Estimated memory: {estimatedMemoryMB}MB");
+                         $"Estimated memory: {estimatedMemoryMB}MB", "map_rendering");
             }
         }
 
@@ -265,7 +265,7 @@ namespace Map.Rendering
 
             if (logStreamingEvents)
             {
-                ArchonLogger.LogMapRendering($"Started loading tile ({tileCoord.x}, {tileCoord.y})");
+                ArchonLogger.Log($"Started loading tile ({tileCoord.x}, {tileCoord.y})", "map_rendering");
             }
         }
 
@@ -284,7 +284,7 @@ namespace Map.Rendering
 
                 if (logStreamingEvents)
                 {
-                    ArchonLogger.LogMapRendering($"Unloaded tile ({tileCoord.x}, {tileCoord.y})");
+                    ArchonLogger.Log($"Unloaded tile ({tileCoord.x}, {tileCoord.y})", "map_rendering");
                 }
             }
         }
@@ -312,7 +312,7 @@ namespace Map.Rendering
 
                 if (logStreamingEvents)
                 {
-                    ArchonLogger.LogMapRendering($"Completed loading tile ({tileCoord.x}, {tileCoord.y})");
+                    ArchonLogger.Log($"Completed loading tile ({tileCoord.x}, {tileCoord.y})", "map_rendering");
                 }
             }
         }
@@ -336,8 +336,8 @@ namespace Map.Rendering
             // For now, just log the tile bounds
             if (logStreamingEvents)
             {
-                ArchonLogger.LogMapRendering($"Loading data for tile ({tileCoord.x}, {tileCoord.y}): " +
-                         $"region ({startX}, {startY}) to ({endX}, {endY})");
+                ArchonLogger.Log($"Loading data for tile ({tileCoord.x}, {tileCoord.y}): " +
+                         $"region ({startX}, {startY}) to ({endX}, {endY})", "map_rendering");
             }
         }
 
@@ -465,7 +465,7 @@ namespace Map.Rendering
         [ContextMenu("Log Streaming Stats")]
         private void EditorLogStats()
         {
-            ArchonLogger.LogMapRendering($"Texture Streaming Stats: {GetStreamingStatistics()}");
+            ArchonLogger.Log($"Texture Streaming Stats: {GetStreamingStatistics()}", "map_rendering");
         }
         #endif
     }

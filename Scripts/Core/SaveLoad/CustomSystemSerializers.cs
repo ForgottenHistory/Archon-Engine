@@ -118,7 +118,7 @@ namespace Core.SaveLoad
             // Verify capacity matches (resources should already be initialized)
             if (savedMaxCountries != resourceSystem.MaxCountries)
             {
-                ArchonLogger.LogCoreSaveLoadWarning($"CustomSystemSerializers: Resource capacity mismatch (saved: {savedMaxCountries}, current: {resourceSystem.MaxCountries})");
+                ArchonLogger.LogWarning($"CustomSystemSerializers: Resource capacity mismatch (saved: {savedMaxCountries}, current: {resourceSystem.MaxCountries})", "core_saveload");
             }
 
             // Read resource count

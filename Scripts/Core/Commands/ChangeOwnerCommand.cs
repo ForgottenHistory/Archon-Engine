@@ -101,7 +101,7 @@ namespace Core.Commands
                     result.AffectedProvinces.Dispose();
 
                 // In a real implementation, log the exception
-                ArchonLogger.LogCoreCommandsError($"Command execution failed: {ex.Message}");
+                ArchonLogger.LogError($"Command execution failed: {ex.Message}", "core_commands");
                 return result;
             }
         }

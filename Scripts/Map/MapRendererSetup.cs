@@ -39,7 +39,7 @@ namespace Map.Setup
             // Set layer to Default (can be changed later if needed)
             mapRendererObject.layer = 0;
 
-            ArchonLogger.LogMapRendering($"MapRenderer created with size {mapSize} at position {mapRendererObject.transform.position}");
+            ArchonLogger.Log($"MapRenderer created with size {mapSize} at position {mapRendererObject.transform.position}", "map_rendering");
 
             return mapRendererObject;
         }
@@ -53,43 +53,43 @@ namespace Map.Setup
         {
             if (gameObject == null)
             {
-                ArchonLogger.LogMapRenderingError("MapRenderer GameObject is null");
+                ArchonLogger.LogError("MapRenderer GameObject is null", "map_rendering");
                 return false;
             }
 
             MapRenderer mapRenderer = gameObject.GetComponent<MapRenderer>();
             if (mapRenderer == null)
             {
-                ArchonLogger.LogMapRenderingError("GameObject missing MapRenderer component");
+                ArchonLogger.LogError("GameObject missing MapRenderer component", "map_rendering");
                 return false;
             }
 
             MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
             if (meshFilter == null || meshFilter.mesh == null)
             {
-                ArchonLogger.LogMapRenderingError("MapRenderer missing MeshFilter or mesh");
+                ArchonLogger.LogError("MapRenderer missing MeshFilter or mesh", "map_rendering");
                 return false;
             }
 
             MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
             if (meshRenderer == null)
             {
-                ArchonLogger.LogMapRenderingError("MapRenderer missing MeshRenderer component");
+                ArchonLogger.LogError("MapRenderer missing MeshRenderer component", "map_rendering");
                 return false;
             }
 
             // Validate URP settings
             if (meshRenderer.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.Off)
             {
-                ArchonLogger.LogMapRenderingWarning("MapRenderer should have shadow casting disabled for performance");
+                ArchonLogger.LogWarning("MapRenderer should have shadow casting disabled for performance", "map_rendering");
             }
 
             if (meshRenderer.receiveShadows)
             {
-                ArchonLogger.LogMapRenderingWarning("MapRenderer should have receive shadows disabled for performance");
+                ArchonLogger.LogWarning("MapRenderer should have receive shadows disabled for performance", "map_rendering");
             }
 
-            ArchonLogger.LogMapRendering("MapRenderer validation passed");
+            ArchonLogger.Log("MapRenderer validation passed", "map_rendering");
             return true;
         }
 

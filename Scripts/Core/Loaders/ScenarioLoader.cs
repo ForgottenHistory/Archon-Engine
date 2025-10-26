@@ -194,17 +194,17 @@ namespace Core.Loaders
         {
             if (scenario == null)
             {
-                ArchonLogger.LogCoreDataLoadingError("Cannot apply null scenario");
+                ArchonLogger.LogError("Cannot apply null scenario", "core_data_loading");
                 return false;
             }
 
             if (gameState == null)
             {
-                ArchonLogger.LogCoreDataLoadingError("Cannot apply scenario to null game state");
+                ArchonLogger.LogError("Cannot apply scenario to null game state", "core_data_loading");
                 return false;
             }
 
-            ArchonLogger.LogCoreDataLoading($"Applying scenario: {scenario.Name}");
+            ArchonLogger.Log($"Applying scenario: {scenario.Name}", "core_data_loading");
 
             try
             {
@@ -217,12 +217,12 @@ namespace Core.Loaders
                 // Apply diplomatic relations
                 ApplyDiplomaticRelations(scenario.DiplomaticRelations, gameState);
 
-                ArchonLogger.LogCoreDataLoading($"Scenario '{scenario.Name}' applied successfully");
+                ArchonLogger.Log($"Scenario '{scenario.Name}' applied successfully", "core_data_loading");
                 return true;
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogCoreDataLoadingError($"Failed to apply scenario: {e.Message}");
+                ArchonLogger.LogError($"Failed to apply scenario: {e.Message}", "core_data_loading");
                 return false;
             }
         }
@@ -239,7 +239,7 @@ namespace Core.Loaders
                 // Validate province exists
                 if (!gameState.ProvinceQueries.Exists(setup.ProvinceId))
                 {
-                    ArchonLogger.LogCoreDataLoadingWarning($"Scenario references non-existent province: {setup.ProvinceId}");
+                    ArchonLogger.LogWarning($"Scenario references non-existent province: {setup.ProvinceId}", "core_data_loading");
                     continue;
                 }
 
@@ -254,7 +254,7 @@ namespace Core.Loaders
                 // TODO: Set terrain when terrain command exists
             }
 
-            ArchonLogger.LogCoreDataLoading($"Applied {setups.Count} province setups");
+            ArchonLogger.Log($"Applied {setups.Count} province setups", "core_data_loading");
         }
 
         /// <summary>
@@ -269,15 +269,15 @@ namespace Core.Loaders
                 // Validate country exists
                 if (!gameState.CountryQueries.Exists(setup.CountryId))
                 {
-                    ArchonLogger.LogCoreDataLoadingWarning($"Scenario references non-existent country: {setup.CountryId} ({setup.Tag})");
+                    ArchonLogger.LogWarning($"Scenario references non-existent country: {setup.CountryId} ({setup.Tag})", "core_data_loading");
                     continue;
                 }
 
                 // TODO: Set treasury, technology, government when those systems exist
-                ArchonLogger.LogCoreDataLoading($"Country setup for {setup.Tag}: Treasury={setup.Treasury}, Capital={setup.Capital}");
+                ArchonLogger.Log($"Country setup for {setup.Tag}: Treasury={setup.Treasury}, Capital={setup.Capital}", "core_data_loading");
             }
 
-            ArchonLogger.LogCoreDataLoading($"Applied {setups.Count} country setups");
+            ArchonLogger.Log($"Applied {setups.Count} country setups", "core_data_loading");
         }
 
         /// <summary>
@@ -290,10 +290,10 @@ namespace Core.Loaders
             foreach (var relation in relations)
             {
                 // TODO: Apply diplomatic relations when diplomacy system exists
-                ArchonLogger.LogCoreDataLoading($"Diplomatic relation: {relation.Country1} {relation.Type} {relation.Country2} ({relation.Value})");
+                ArchonLogger.Log($"Diplomatic relation: {relation.Country1} {relation.Type} {relation.Country2} ({relation.Value})", "core_data_loading");
             }
 
-            ArchonLogger.LogCoreDataLoading($"Applied {relations.Count} diplomatic relations");
+            ArchonLogger.Log($"Applied {relations.Count} diplomatic relations", "core_data_loading");
         }
 
         /// <summary>

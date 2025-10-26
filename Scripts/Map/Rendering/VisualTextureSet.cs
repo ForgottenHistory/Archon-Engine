@@ -70,7 +70,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"VisualTextureSet: Created Province Terrain texture {mapWidth}x{mapHeight} RGBA32");
+                ArchonLogger.Log($"VisualTextureSet: Created Province Terrain texture {mapWidth}x{mapHeight} RGBA32", "map_initialization");
             }
         }
 
@@ -99,7 +99,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"VisualTextureSet: Created Heightmap texture {mapWidth}x{mapHeight} R8 (bilinear)");
+                ArchonLogger.Log($"VisualTextureSet: Created Heightmap texture {mapWidth}x{mapHeight} R8 (bilinear)", "map_initialization");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"VisualTextureSet: Created Normal Map texture {normalMapWidth}x{normalMapHeight} RGB24 (bilinear)");
+                ArchonLogger.Log($"VisualTextureSet: Created Normal Map texture {normalMapWidth}x{normalMapHeight} RGB24 (bilinear)", "map_initialization");
             }
         }
 
@@ -149,11 +149,11 @@ namespace Map.Rendering
                 var retrievedTexture = material.GetTexture(ProvinceTerrainTexID);
                 if (retrievedTexture == provinceTerrainTexture)
                 {
-                    ArchonLogger.LogMapInit("VisualTextureSet: Successfully verified terrain texture binding");
+                    ArchonLogger.Log("VisualTextureSet: Successfully verified terrain texture binding", "map_initialization");
                 }
                 else
                 {
-                    ArchonLogger.LogMapInitError($"VisualTextureSet: Terrain texture binding FAILED");
+                    ArchonLogger.LogError($"VisualTextureSet: Terrain texture binding FAILED", "map_initialization");
                 }
             }
         }

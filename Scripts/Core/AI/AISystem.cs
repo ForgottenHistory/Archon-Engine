@@ -60,14 +60,14 @@ namespace Core.AI
         {
             if (isInitialized)
             {
-                ArchonLogger.LogCoreAIWarning("AISystem already initialized");
+                ArchonLogger.LogWarning("AISystem already initialized", "core_ai");
                 return;
             }
 
             // Create goal registry (goals registered externally by GAME layer)
             goalRegistry = new AIGoalRegistry();
 
-            ArchonLogger.LogCoreAI("AISystem initialized (goals pending registration)");
+            ArchonLogger.Log("AISystem initialized (goals pending registration)", "core_ai");
             isInitialized = true;
         }
 
@@ -85,7 +85,7 @@ namespace Core.AI
         {
             if (aiStates.IsCreated)
             {
-                ArchonLogger.LogCoreAIWarning("AIState array already created");
+                ArchonLogger.LogWarning("AIState array already created", "core_ai");
                 return;
             }
 
@@ -106,7 +106,7 @@ namespace Core.AI
             // Create scheduler (needs goal registry)
             scheduler = new AIScheduler(goalRegistry);
 
-            ArchonLogger.LogCoreAI($"Initialized AI for {countryCount} countries ({goalRegistry.GoalCount} goals registered)");
+            ArchonLogger.Log($"Initialized AI for {countryCount} countries ({goalRegistry.GoalCount} goals registered)", "core_ai");
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Core.AI
         {
             if (goalRegistry == null)
             {
-                ArchonLogger.LogCoreAIWarning("Cannot register goal before AISystem.Initialize()");
+                ArchonLogger.LogWarning("Cannot register goal before AISystem.Initialize()", "core_ai");
                 return;
             }
 
@@ -132,7 +132,7 @@ namespace Core.AI
         {
             if (!isInitialized || !aiStates.IsCreated)
             {
-                ArchonLogger.LogCoreAIWarning("Cannot process AI before initialization");
+                ArchonLogger.LogWarning("Cannot process AI before initialization", "core_ai");
                 return;
             }
 
@@ -146,7 +146,7 @@ namespace Core.AI
         {
             if (countryID >= aiStates.Length)
             {
-                ArchonLogger.LogCoreAIWarning($"Invalid country ID: {countryID}");
+                ArchonLogger.LogWarning($"Invalid country ID: {countryID}", "core_ai");
                 return;
             }
 
@@ -154,7 +154,7 @@ namespace Core.AI
             state.IsActive = isActive;
             aiStates[countryID] = state;
 
-            ArchonLogger.LogCoreAI($"AI for country {countryID} set to: {(isActive ? "active" : "inactive")}");
+            ArchonLogger.Log($"AI for country {countryID} set to: {(isActive ? "active" : "inactive")}", "core_ai");
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Core.AI
         {
             if (countryID >= aiStates.Length)
             {
-                ArchonLogger.LogCoreAIWarning($"Invalid country ID: {countryID}");
+                ArchonLogger.LogWarning($"Invalid country ID: {countryID}", "core_ai");
                 return default;
             }
 
@@ -191,7 +191,7 @@ namespace Core.AI
 
             goalRegistry?.Dispose();
 
-            ArchonLogger.LogCoreAI("AISystem disposed");
+            ArchonLogger.Log("AISystem disposed", "core_ai");
         }
     }
 }

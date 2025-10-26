@@ -45,7 +45,7 @@ namespace Core.Systems
         {
             if (scanResults == null)
             {
-                ArchonLogger.LogCoreSimulationError("AdjacencySystem: Cannot set null adjacency data");
+                ArchonLogger.LogError("AdjacencySystem: Cannot set null adjacency data", "core_simulation");
                 return;
             }
 
@@ -69,7 +69,7 @@ namespace Core.Systems
             // Divide by 2 since each adjacency is counted twice (A→B and B→A)
             totalAdjacencyPairs /= 2;
 
-            ArchonLogger.LogCoreSimulation($"AdjacencySystem: Initialized with {adjacencies.Count} provinces, {totalAdjacencyPairs} adjacency pairs");
+            ArchonLogger.Log($"AdjacencySystem: Initialized with {adjacencies.Count} provinces, {totalAdjacencyPairs} adjacency pairs", "core_simulation");
         }
 
         /// <summary>

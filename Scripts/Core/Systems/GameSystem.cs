@@ -75,7 +75,7 @@ namespace Core.Systems
         {
             if (IsInitialized)
             {
-                ArchonLogger.LogCoreSimulationWarning($"{SystemName}: Already initialized, skipping");
+                ArchonLogger.LogWarning($"{SystemName}: Already initialized, skipping", "core_simulation");
                 return;
             }
 
@@ -85,13 +85,13 @@ namespace Core.Systems
             {
                 if (dependency == null)
                 {
-                    ArchonLogger.LogCoreSimulationError($"{SystemName}: Missing dependency (null reference)");
+                    ArchonLogger.LogError($"{SystemName}: Missing dependency (null reference)", "core_simulation");
                     return;
                 }
 
                 if (!dependency.IsInitialized)
                 {
-                    ArchonLogger.LogCoreSimulationError($"{SystemName}: Dependency '{dependency.SystemName}' not initialized yet");
+                    ArchonLogger.LogError($"{SystemName}: Dependency '{dependency.SystemName}' not initialized yet", "core_simulation");
                     return;
                 }
             }
@@ -100,7 +100,7 @@ namespace Core.Systems
             OnInitialize();
 
             IsInitialized = true;
-            ArchonLogger.LogCoreSimulation($"{SystemName}: System initialized successfully");
+            ArchonLogger.Log($"{SystemName}: System initialized successfully", "core_simulation");
         }
 
         /// <summary>
@@ -119,13 +119,13 @@ namespace Core.Systems
         {
             if (!IsInitialized)
             {
-                ArchonLogger.LogCoreSimulationWarning($"{SystemName}: Cannot shutdown - not initialized");
+                ArchonLogger.LogWarning($"{SystemName}: Cannot shutdown - not initialized", "core_simulation");
                 return;
             }
 
             OnShutdown();
             IsInitialized = false;
-            ArchonLogger.LogCoreSimulation($"{SystemName}: System shutdown");
+            ArchonLogger.Log($"{SystemName}: System shutdown", "core_simulation");
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Core.Systems
         {
             if (!IsInitialized)
             {
-                ArchonLogger.LogCoreSimulationError($"{SystemName}: System not initialized - cannot perform operation");
+                ArchonLogger.LogError($"{SystemName}: System not initialized - cannot perform operation", "core_simulation");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Core.Systems
         /// </summary>
         protected void LogSystem(string message)
         {
-            ArchonLogger.LogCoreSimulation($"{SystemName}: {message}");
+            ArchonLogger.Log($"{SystemName}: {message}", "core_simulation");
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Core.Systems
         /// </summary>
         protected void LogSystemWarning(string message)
         {
-            ArchonLogger.LogCoreSimulationWarning($"{SystemName}: {message}");
+            ArchonLogger.LogWarning($"{SystemName}: {message}", "core_simulation");
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Core.Systems
         /// </summary>
         protected void LogSystemError(string message)
         {
-            ArchonLogger.LogCoreSimulationError($"{SystemName}: {message}");
+            ArchonLogger.LogError($"{SystemName}: {message}", "core_simulation");
         }
     }
 }

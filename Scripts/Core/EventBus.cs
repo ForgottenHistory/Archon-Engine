@@ -43,7 +43,7 @@ namespace Core
         {
             eventQueues = new Dictionary<Type, IEventQueue>(INITIAL_CAPACITY);
             IsActive = true;
-            ArchonLogger.LogCoreEvents("EventBus initialized (zero-allocation mode)");
+            ArchonLogger.Log("EventBus initialized (zero-allocation mode)", "core_events");
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Core
             #if UNITY_EDITOR
             if (eventsProcessedThisFrame > 1000)
             {
-                ArchonLogger.LogCoreEventsWarning($"EventBus processed {eventsProcessedThisFrame} events this frame");
+                ArchonLogger.LogWarning($"EventBus processed {eventsProcessedThisFrame} events this frame", "core_events");
             }
             #endif
         }
@@ -149,14 +149,14 @@ namespace Core
             }
 
             eventQueues.Clear();
-            ArchonLogger.LogCoreEvents("EventBus cleared");
+            ArchonLogger.Log("EventBus cleared", "core_events");
         }
 
         public void Dispose()
         {
             IsActive = false;
             Clear();
-            ArchonLogger.LogCoreEvents("EventBus disposed");
+            ArchonLogger.Log("EventBus disposed", "core_events");
         }
 
         #if UNITY_EDITOR
@@ -165,12 +165,12 @@ namespace Core
         /// </summary>
         public void LogDebugInfo()
         {
-            ArchonLogger.LogDataLinking($"EventBus Status:\n" +
+            ArchonLogger.Log($"EventBus Status:\n" +
                       $"- Active: {IsActive}\n" +
                       $"- Events in queue: {EventsInQueue}\n" +
                       $"- Event types registered: {eventQueues.Count}\n" +
                       $"- Total events processed: {totalEventsProcessed}\n" +
-                      $"- Events this frame: {eventsProcessedThisFrame}");
+                      $"- Events this frame: {eventsProcessedThisFrame}", "core_data_linking");
         }
         #endif
 
@@ -251,7 +251,7 @@ namespace Core
                     }
                     catch (Exception e)
                     {
-                        ArchonLogger.LogCoreEventsError($"Error processing event {typeof(T).Name}: {e.Message}\n{e.StackTrace}");
+                        ArchonLogger.LogError($"Error processing event {typeof(T).Name}: {e.Message}\n{e.StackTrace}", "core_events");
                     }
                 }
 

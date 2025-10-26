@@ -244,7 +244,7 @@ namespace Core.Diplomacy
             rel.treatyFlags |= (byte)TreatyFlags.Alliance;
             relations[key] = rel;
 
-            ArchonLogger.LogCoreDiplomacy($"Alliance formed: {country1} and {country2}");
+            ArchonLogger.Log($"Alliance formed: {country1} and {country2}", "core_diplomacy");
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Core.Diplomacy
             rel.treatyFlags &= (byte)~TreatyFlags.Alliance;  // Clear alliance bit
             relations[key] = rel;
 
-            ArchonLogger.LogCoreDiplomacy($"Alliance broken: {country1} and {country2}");
+            ArchonLogger.Log($"Alliance broken: {country1} and {country2}", "core_diplomacy");
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Core.Diplomacy
             rel.treatyFlags |= (byte)TreatyFlags.NonAggressionPact;
             relations[key] = rel;
 
-            ArchonLogger.LogCoreDiplomacy($"Non-aggression pact formed: {country1} and {country2}");
+            ArchonLogger.Log($"Non-aggression pact formed: {country1} and {country2}", "core_diplomacy");
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Core.Diplomacy
             rel.treatyFlags &= (byte)~TreatyFlags.NonAggressionPact;
             relations[key] = rel;
 
-            ArchonLogger.LogCoreDiplomacy($"Non-aggression pact broken: {country1} and {country2}");
+            ArchonLogger.Log($"Non-aggression pact broken: {country1} and {country2}", "core_diplomacy");
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Core.Diplomacy
 
             relations[key] = rel;
 
-            ArchonLogger.LogCoreDiplomacy($"{guarantor} now guarantees {guaranteed}'s independence");
+            ArchonLogger.Log($"{guarantor} now guarantees {guaranteed}'s independence", "core_diplomacy");
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Core.Diplomacy
 
             relations[key] = rel;
 
-            ArchonLogger.LogCoreDiplomacy($"{guarantor} revoked guarantee of {guaranteed}");
+            ArchonLogger.Log($"{guarantor} revoked guarantee of {guaranteed}", "core_diplomacy");
         }
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace Core.Diplomacy
 
             relations[key] = rel;
 
-            ArchonLogger.LogCoreDiplomacy($"{granter} granted military access to {recipient}");
+            ArchonLogger.Log($"{granter} granted military access to {recipient}", "core_diplomacy");
         }
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace Core.Diplomacy
 
             relations[key] = rel;
 
-            ArchonLogger.LogCoreDiplomacy($"{granter} revoked military access from {recipient}");
+            ArchonLogger.Log($"{granter} revoked military access from {recipient}", "core_diplomacy");
         }
     }
 }

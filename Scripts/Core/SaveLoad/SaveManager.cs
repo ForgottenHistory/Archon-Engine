@@ -65,11 +65,11 @@ namespace Core.SaveLoad
             if (!Directory.Exists(saveDirectory))
             {
                 Directory.CreateDirectory(saveDirectory);
-                ArchonLogger.LogCoreSaveLoad($"SaveManager: Created save directory at {saveDirectory}");
+                ArchonLogger.Log($"SaveManager: Created save directory at {saveDirectory}", "core_saveload");
             }
             else if (logSaveLoadOperations)
             {
-                ArchonLogger.LogCoreSaveLoad($"SaveManager: Using save directory {saveDirectory}");
+                ArchonLogger.Log($"SaveManager: Using save directory {saveDirectory}", "core_saveload");
             }
         }
 
@@ -78,14 +78,14 @@ namespace Core.SaveLoad
             // F6 - Quicksave
             if (Input.GetKeyDown(KeyCode.F6))
             {
-                ArchonLogger.LogCoreSaveLoad("SaveManager: F6 pressed - Quicksaving...");
+                ArchonLogger.Log("SaveManager: F6 pressed - Quicksaving...", "core_saveload");
                 QuickSave();
             }
 
             // F7 - Quickload
             if (Input.GetKeyDown(KeyCode.F7))
             {
-                ArchonLogger.LogCoreSaveLoad("SaveManager: F7 pressed - Quickloading...");
+                ArchonLogger.Log("SaveManager: F7 pressed - Quickloading...", "core_saveload");
                 QuickLoad();
             }
         }
@@ -106,13 +106,13 @@ namespace Core.SaveLoad
         {
             if (string.IsNullOrEmpty(saveName))
             {
-                ArchonLogger.LogCoreSaveLoadError("SaveManager: Save name cannot be null or empty");
+                ArchonLogger.LogError("SaveManager: Save name cannot be null or empty", "core_saveload");
                 return false;
             }
 
             if (gameState == null)
             {
-                ArchonLogger.LogCoreSaveLoadError("SaveManager: GameState not assigned");
+                ArchonLogger.LogError("SaveManager: GameState not assigned", "core_saveload");
                 return false;
             }
 
@@ -120,7 +120,7 @@ namespace Core.SaveLoad
             {
                 if (logSaveLoadOperations)
                 {
-                    ArchonLogger.LogCoreSaveLoad($"SaveManager: Starting save '{saveName}'...");
+                    ArchonLogger.Log($"SaveManager: Starting save '{saveName}'...", "core_saveload");
                 }
 
                 // Create save data container
@@ -135,14 +135,14 @@ namespace Core.SaveLoad
 
                 if (logSaveLoadOperations)
                 {
-                    ArchonLogger.LogCoreSaveLoad($"SaveManager: ✓ Save completed - {filePath}");
+                    ArchonLogger.Log($"SaveManager: ✓ Save completed - {filePath}", "core_saveload");
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                ArchonLogger.LogCoreSaveLoadError($"SaveManager: Save failed - {ex.Message}\n{ex.StackTrace}");
+                ArchonLogger.LogError($"SaveManager: Save failed - {ex.Message}\n{ex.StackTrace}", "core_saveload");
                 return false;
             }
         }
@@ -155,7 +155,7 @@ namespace Core.SaveLoad
         {
             if (logSaveLoadOperations)
             {
-                ArchonLogger.LogCoreSaveLoad("SaveManager: Finalizing after load...");
+                ArchonLogger.Log("SaveManager: Finalizing after load...", "core_saveload");
             }
 
             // Step 1: Sync double buffers (ENGINE layer only - safe)
@@ -167,7 +167,7 @@ namespace Core.SaveLoad
 
             if (logSaveLoadOperations)
             {
-                ArchonLogger.LogCoreSaveLoad("SaveManager: ✓ Post-load finalization complete");
+                ArchonLogger.Log("SaveManager: ✓ Post-load finalization complete", "core_saveload");
             }
         }
 
@@ -181,7 +181,7 @@ namespace Core.SaveLoad
                 gameState.Provinces.SyncBuffersAfterLoad();
                 if (logSaveLoadOperations)
                 {
-                    ArchonLogger.LogCoreSaveLoad("SaveManager: ✓ Province buffers synced");
+                    ArchonLogger.Log("SaveManager: ✓ Province buffers synced", "core_saveload");
                 }
             }
         }
@@ -193,13 +193,13 @@ namespace Core.SaveLoad
         {
             if (string.IsNullOrEmpty(saveName))
             {
-                ArchonLogger.LogCoreSaveLoadError("SaveManager: Save name cannot be null or empty");
+                ArchonLogger.LogError("SaveManager: Save name cannot be null or empty", "core_saveload");
                 return false;
             }
 
             if (gameState == null)
             {
-                ArchonLogger.LogCoreSaveLoadError("SaveManager: GameState not assigned");
+                ArchonLogger.LogError("SaveManager: GameState not assigned", "core_saveload");
                 return false;
             }
 
@@ -207,14 +207,14 @@ namespace Core.SaveLoad
             {
                 if (logSaveLoadOperations)
                 {
-                    ArchonLogger.LogCoreSaveLoad($"SaveManager: Starting load '{saveName}'...");
+                    ArchonLogger.Log($"SaveManager: Starting load '{saveName}'...", "core_saveload");
                 }
 
                 // Check if file exists
                 string filePath = GetSaveFilePath(saveName);
                 if (!File.Exists(filePath))
                 {
-                    ArchonLogger.LogCoreSaveLoadError($"SaveManager: Save file not found - {filePath}");
+                    ArchonLogger.LogError($"SaveManager: Save file not found - {filePath}", "core_saveload");
                     return false;
                 }
 
@@ -235,14 +235,14 @@ namespace Core.SaveLoad
 
                 if (logSaveLoadOperations)
                 {
-                    ArchonLogger.LogCoreSaveLoad($"SaveManager: ✓ Load completed - {filePath}");
+                    ArchonLogger.Log($"SaveManager: ✓ Load completed - {filePath}", "core_saveload");
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                ArchonLogger.LogCoreSaveLoadError($"SaveManager: Load failed - {ex.Message}\n{ex.StackTrace}");
+                ArchonLogger.LogError($"SaveManager: Load failed - {ex.Message}\n{ex.StackTrace}", "core_saveload");
                 return false;
             }
         }
@@ -297,7 +297,7 @@ namespace Core.SaveLoad
                     File.Delete(filePath);
                     if (logSaveLoadOperations)
                     {
-                        ArchonLogger.LogCoreSaveLoad($"SaveManager: Deleted save '{saveName}'");
+                        ArchonLogger.Log($"SaveManager: Deleted save '{saveName}'", "core_saveload");
                     }
                     return true;
                 }
@@ -305,7 +305,7 @@ namespace Core.SaveLoad
             }
             catch (Exception ex)
             {
-                ArchonLogger.LogCoreSaveLoadError($"SaveManager: Failed to delete save - {ex.Message}");
+                ArchonLogger.LogError($"SaveManager: Failed to delete save - {ex.Message}", "core_saveload");
                 return false;
             }
         }
@@ -377,7 +377,7 @@ namespace Core.SaveLoad
                     saveData.SetSystemData("PlayerState", playerStateData);
                     if (logSaveLoadOperations)
                     {
-                        ArchonLogger.LogCoreSaveLoad("SaveManager: Saved PlayerState");
+                        ArchonLogger.Log("SaveManager: Saved PlayerState", "core_saveload");
                     }
                 }
             }
@@ -390,14 +390,14 @@ namespace Core.SaveLoad
                 {
                     if (logSaveLoadOperations)
                     {
-                        ArchonLogger.LogCoreSaveLoadWarning($"SaveManager: Skipping uninitialized system '{gameSystem.SystemName}'");
+                        ArchonLogger.LogWarning($"SaveManager: Skipping uninitialized system '{gameSystem.SystemName}'", "core_saveload");
                     }
                     continue;
                 }
 
                 if (logSaveLoadOperations)
                 {
-                    ArchonLogger.LogCoreSaveLoad($"SaveManager: Saving {gameSystem.SystemName}...");
+                    ArchonLogger.Log($"SaveManager: Saving {gameSystem.SystemName}...", "core_saveload");
                 }
 
                 // Call OnSave (uses reflection to call protected method)
@@ -410,7 +410,7 @@ namespace Core.SaveLoad
                 }
                 else if (logSaveLoadOperations)
                 {
-                    ArchonLogger.LogCoreSaveLoadWarning($"SaveManager: {gameSystem.SystemName} does not implement OnSave");
+                    ArchonLogger.LogWarning($"SaveManager: {gameSystem.SystemName} does not implement OnSave", "core_saveload");
                 }
             }
         }
@@ -459,7 +459,7 @@ namespace Core.SaveLoad
                     OnDeserializePlayerState(playerStateData);
                     if (logSaveLoadOperations)
                     {
-                        ArchonLogger.LogCoreSaveLoad("SaveManager: Loaded PlayerState");
+                        ArchonLogger.Log("SaveManager: Loaded PlayerState", "core_saveload");
                     }
                 }
             }
@@ -472,14 +472,14 @@ namespace Core.SaveLoad
                 {
                     if (logSaveLoadOperations)
                     {
-                        ArchonLogger.LogCoreSaveLoadWarning($"SaveManager: Skipping uninitialized system '{gameSystem.SystemName}'");
+                        ArchonLogger.LogWarning($"SaveManager: Skipping uninitialized system '{gameSystem.SystemName}'", "core_saveload");
                     }
                     continue;
                 }
 
                 if (logSaveLoadOperations)
                 {
-                    ArchonLogger.LogCoreSaveLoad($"SaveManager: Loading {gameSystem.SystemName}...");
+                    ArchonLogger.Log($"SaveManager: Loading {gameSystem.SystemName}...", "core_saveload");
                 }
 
                 // Call OnLoad (uses reflection to call protected method)
@@ -492,7 +492,7 @@ namespace Core.SaveLoad
                 }
                 else if (logSaveLoadOperations)
                 {
-                    ArchonLogger.LogCoreSaveLoadWarning($"SaveManager: {gameSystem.SystemName} does not implement OnLoad");
+                    ArchonLogger.LogWarning($"SaveManager: {gameSystem.SystemName} does not implement OnLoad", "core_saveload");
                 }
             }
         }

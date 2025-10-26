@@ -42,7 +42,7 @@ namespace Core.AI
         {
             if (goal == null)
             {
-                ArchonLogger.LogCoreAIWarning("Cannot register null goal");
+                ArchonLogger.LogWarning("Cannot register null goal", "core_ai");
                 return;
             }
 
@@ -57,7 +57,7 @@ namespace Core.AI
             goalsByID[goal.GoalID] = goal;
             goalsByName[goal.GoalName] = goal;
 
-            ArchonLogger.LogCoreAI($"Registered AI goal: {goal.GoalName} (ID: {goal.GoalID})");
+            ArchonLogger.Log($"Registered AI goal: {goal.GoalName} (ID: {goal.GoalID})", "core_ai");
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Core.AI
             goalsByID.Clear();
             goalsByName.Clear();
 
-            ArchonLogger.LogCoreAI("AIGoalRegistry disposed");
+            ArchonLogger.Log("AIGoalRegistry disposed", "core_ai");
         }
     }
 }

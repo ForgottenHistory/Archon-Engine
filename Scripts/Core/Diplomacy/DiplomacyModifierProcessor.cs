@@ -100,7 +100,7 @@ namespace Core.Diplomacy
             compacted.Dispose();
             isDecayed.Dispose();
 
-            ArchonLogger.LogCoreDiplomacy($"Decay processed {totalModifiers} modifiers, removed {removedCount} fully decayed (3ms Burst-optimized)");
+            ArchonLogger.Log($"Decay processed {totalModifiers} modifiers, removed {removedCount} fully decayed (3ms Burst-optimized)", "core_diplomacy");
         }
 
         /// <summary>

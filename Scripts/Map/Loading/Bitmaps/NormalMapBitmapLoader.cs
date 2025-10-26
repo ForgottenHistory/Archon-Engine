@@ -18,7 +18,7 @@ namespace Map.Loading.Bitmaps
         {
             if (textureManager == null || textureManager.NormalMapTexture == null)
             {
-                ArchonLogger.LogMapInitError("NormalMapBitmapLoader: Cannot populate - texture manager or normal map texture not available");
+                ArchonLogger.LogError("NormalMapBitmapLoader: Cannot populate - texture manager or normal map texture not available", "map_initialization");
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace Map.Loading.Bitmaps
 
             if (logProgress)
             {
-                ArchonLogger.LogMapInit($"NormalMapBitmapLoader: Processing {normalMapData.Width}x{normalMapData.Height}, {normalMapData.BitsPerPixel}bpp");
+                ArchonLogger.Log($"NormalMapBitmapLoader: Processing {normalMapData.Width}x{normalMapData.Height}, {normalMapData.BitsPerPixel}bpp", "map_initialization");
             }
 
             int successfulReads = 0;
@@ -64,7 +64,7 @@ namespace Map.Loading.Bitmaps
 
             if (logProgress)
             {
-                ArchonLogger.LogMapInit($"NormalMapBitmapLoader: Read stats - Success: {successfulReads}, Failed: {failedReads}");
+                ArchonLogger.Log($"NormalMapBitmapLoader: Read stats - Success: {successfulReads}, Failed: {failedReads}", "map_initialization");
 
                 // Sample some normal values to verify data
                 if (successfulReads > 0)
@@ -72,7 +72,7 @@ namespace Map.Loading.Bitmaps
                     var n1 = pixels[width * height / 4];
                     var n2 = pixels[width * height / 2];
                     var n3 = pixels[width * height * 3 / 4];
-                    ArchonLogger.LogMapInit($"NormalMapBitmapLoader: Normal samples - RGB[{n1.r},{n1.g},{n1.b}] RGB[{n2.r},{n2.g},{n2.b}] RGB[{n3.r},{n3.g},{n3.b}]");
+                    ArchonLogger.Log($"NormalMapBitmapLoader: Normal samples - RGB[{n1.r},{n1.g},{n1.b}] RGB[{n2.r},{n2.g},{n2.b}] RGB[{n3.r},{n3.g},{n3.b}]", "map_initialization");
                 }
             }
 

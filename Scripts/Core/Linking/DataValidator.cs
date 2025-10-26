@@ -22,7 +22,7 @@ namespace Core.Linking
         public DataValidator(GameRegistries registries)
         {
             this.registries = registries ?? throw new System.ArgumentNullException(nameof(registries));
-            ArchonLogger.LogDataLinking("DataValidator initialized");
+            ArchonLogger.Log("DataValidator initialized", "core_data_linking");
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Core.Linking
         /// </summary>
         public bool ValidateGameData()
         {
-            ArchonLogger.LogDataLinking("DataValidator: Starting comprehensive game data validation");
+            ArchonLogger.Log("DataValidator: Starting comprehensive game data validation", "core_data_linking");
 
             ClearValidationResults();
 
@@ -42,7 +42,7 @@ namespace Core.Linking
             LogValidationResults();
 
             bool isValid = errors.Count == 0;
-            ArchonLogger.LogDataLinking($"DataValidator: Validation {(isValid ? "PASSED" : "FAILED")} - {errors.Count} errors, {warnings.Count} warnings");
+            ArchonLogger.Log($"DataValidator: Validation {(isValid ? "PASSED" : "FAILED")} - {errors.Count} errors, {warnings.Count} warnings", "core_data_linking");
 
             return isValid;
         }
@@ -73,7 +73,7 @@ namespace Core.Linking
                 AddError("No terrain types loaded", "Static Data");
             }
 
-            ArchonLogger.LogDataLinking($"DataValidator: Static data validation complete - {registries.Religions.Count} religions, {registries.Cultures.Count} cultures, {registries.TradeGoods.Count} trade goods");
+            ArchonLogger.Log($"DataValidator: Static data validation complete - {registries.Religions.Count} religions, {registries.Cultures.Count} cultures, {registries.TradeGoods.Count} trade goods", "core_data_linking");
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Core.Linking
                 }
             }
 
-            ArchonLogger.LogDataLinking($"DataValidator: Country validation complete - {registries.Countries.Count} countries validated");
+            ArchonLogger.Log($"DataValidator: Country validation complete - {registries.Countries.Count} countries validated", "core_data_linking");
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Core.Linking
                 }
             }
 
-            ArchonLogger.LogDataLinking($"DataValidator: Province validation complete - {registries.Provinces.Count} provinces validated");
+            ArchonLogger.Log($"DataValidator: Province validation complete - {registries.Provinces.Count} provinces validated", "core_data_linking");
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Core.Linking
                 AddError("No provinces are owned by any country", "Gameplay");
             }
 
-            ArchonLogger.LogDataLinking($"DataValidator: Gameplay validation complete - {playableCountries} playable countries, {landProvinces} land provinces, {ownedProvinces} owned provinces");
+            ArchonLogger.Log($"DataValidator: Gameplay validation complete - {playableCountries} playable countries, {landProvinces} land provinces, {ownedProvinces} owned provinces", "core_data_linking");
         }
 
         /// <summary>
@@ -298,16 +298,16 @@ namespace Core.Linking
         {
             if (errors.Count > 0)
             {
-                ArchonLogger.LogDataLinkingError($"DataValidator: {errors.Count} validation errors found:");
+                ArchonLogger.LogError($"DataValidator: {errors.Count} validation errors found:", "core_data_linking");
                 foreach (var error in errors)
                 {
-                    ArchonLogger.LogDataLinkingError($"  [{error.Category}] {error.Message}");
+                    ArchonLogger.LogError($"  [{error.Category}] {error.Message}", "core_data_linking");
                 }
             }
 
             if (warnings.Count > 0)
             {
-                ArchonLogger.LogDataLinkingWarning($"DataValidator: {warnings.Count} validation warnings found:");
+                ArchonLogger.LogWarning($"DataValidator: {warnings.Count} validation warnings found:", "core_data_linking");
             }
         }
 

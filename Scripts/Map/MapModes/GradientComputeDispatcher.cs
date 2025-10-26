@@ -44,14 +44,14 @@ namespace Map.MapModes
                 {
                     string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
                     gradientCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    ArchonLogger.LogMapInit($"GradientComputeDispatcher: Found compute shader at {path}");
+                    ArchonLogger.Log($"GradientComputeDispatcher: Found compute shader at {path}", "map_initialization");
                 }
             }
             #endif
 
             if (gradientCompute == null)
             {
-                ArchonLogger.LogMapModesError("GradientComputeDispatcher: GradientMapMode compute shader not found!");
+                ArchonLogger.LogError("GradientComputeDispatcher: GradientMapMode compute shader not found!", "map_modes");
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace Map.MapModes
             colorizeKernel = gradientCompute.FindKernel("ColorizeGradient");
             isInitialized = true;
 
-            ArchonLogger.LogMapInit("GradientComputeDispatcher: Initialized with GPU compute shader");
+            ArchonLogger.Log("GradientComputeDispatcher: Initialized with GPU compute shader", "map_initialization");
         }
 
         /// <summary>
@@ -79,13 +79,13 @@ namespace Map.MapModes
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogMapModesError("GradientComputeDispatcher: Not initialized!");
+                ArchonLogger.LogError("GradientComputeDispatcher: Not initialized!", "map_modes");
                 return;
             }
 
             if (provinceIDTexture == null || outputTexture == null)
             {
-                ArchonLogger.LogMapModesError("GradientComputeDispatcher: Null textures provided!");
+                ArchonLogger.LogError("GradientComputeDispatcher: Null textures provided!", "map_modes");
                 return;
             }
 
@@ -117,7 +117,7 @@ namespace Map.MapModes
             gradientCompute.Dispatch(colorizeKernel, threadGroupsX, threadGroupsY, 1);
 
             float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
-            ArchonLogger.LogMapModes($"GradientComputeDispatcher: GPU colorization completed in {elapsed:F2}ms");
+            ArchonLogger.Log($"GradientComputeDispatcher: GPU colorization completed in {elapsed:F2}ms", "map_modes");
         }
 
         private void UpdateComputeBuffers(float[] provinceValues, ColorGradient gradient)
@@ -163,7 +163,7 @@ namespace Map.MapModes
             gradientColorsBuffer?.Release();
             gradientColorsBuffer = null;
 
-            ArchonLogger.LogMapModes("GradientComputeDispatcher: Disposed compute buffers");
+            ArchonLogger.Log("GradientComputeDispatcher: Disposed compute buffers", "map_modes");
         }
     }
 }

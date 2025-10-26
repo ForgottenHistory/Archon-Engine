@@ -44,7 +44,7 @@ namespace Core.Diplomacy
             NativeList<ModifierWithKey> allModifiers,
             NativeParallelHashSet<ulong> activeWars)
         {
-            ArchonLogger.LogCoreDiplomacy("Saving diplomacy state...");
+            ArchonLogger.Log("Saving diplomacy state...", "core_diplomacy");
 
             using (var stream = new MemoryStream())
             using (var writer = new BinaryWriter(stream))
@@ -101,7 +101,7 @@ namespace Core.Diplomacy
                 saveData.systemData["Diplomacy"] = stream.ToArray();
             }
 
-            ArchonLogger.LogCoreDiplomacy($"Saved {relations.Count()} relationships, {activeWars.Count()} wars");
+            ArchonLogger.Log($"Saved {relations.Count()} relationships, {activeWars.Count()} wars", "core_diplomacy");
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Core.Diplomacy
             NativeList<ModifierWithKey> allModifiers,
             NativeParallelHashMap<ulong, int> modifierCache)
         {
-            ArchonLogger.LogCoreDiplomacy("Loading diplomacy state...");
+            ArchonLogger.Log("Loading diplomacy state...", "core_diplomacy");
 
             // Clear existing data
             relations.Clear();
@@ -128,7 +128,7 @@ namespace Core.Diplomacy
             // Get saved data
             if (!saveData.systemData.ContainsKey("Diplomacy"))
             {
-                ArchonLogger.LogCoreDiplomacyWarning("No save data found - starting fresh");
+                ArchonLogger.LogWarning("No save data found - starting fresh", "core_diplomacy");
                 return;
             }
 
@@ -198,7 +198,7 @@ namespace Core.Diplomacy
             // Rebuild cache after loading all modifiers
             DiplomacyModifierProcessor.RebuildModifierCache(allModifiers, modifierCache);
 
-            ArchonLogger.LogCoreDiplomacy($"Loaded {relations.Count()} relationships, {activeWars.Count()} wars, {allModifiers.Length} modifiers");
+            ArchonLogger.Log($"Loaded {relations.Count()} relationships, {activeWars.Count()} wars, {allModifiers.Length} modifiers", "core_diplomacy");
         }
     }
 }

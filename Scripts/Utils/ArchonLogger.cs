@@ -1,8 +1,14 @@
 using UnityEngine;
 
 /// <summary>
-/// Static helper class for easy logging throughout the Archon project
-/// Provides a unified logging interface with direct file logging
+/// Unified logging for both ENGINE and GAME layers
+///
+/// Usage:
+///   ArchonLogger.Log("Message", "subsystem_name");
+///   ArchonLogger.LogWarning("Warning", "subsystem_name");
+///   ArchonLogger.LogError("Error", "subsystem_name");
+///
+/// Subsystem constants available in ArchonLogger.Systems for autocomplete
 /// </summary>
 public static class ArchonLogger
 {
@@ -46,9 +52,8 @@ public static class ArchonLogger
         Log(formattedMessage);
     }
 
-    // System-specific subsystem constants - ENGINE LAYER ONLY
-    // NOTE: GAME layer logging constants must be defined in Game/GameLogger.cs
-    // to maintain ENGINE-GAME separation
+    // System-specific subsystem constants - ALL LAYERS
+    // Use ArchonLogger.Log(message, ArchonLogger.Systems.XXX) throughout codebase
     public static class Systems
     {
         // === CORE LAYER (Archon-Engine/Scripts/Core/) ===
@@ -71,6 +76,14 @@ public static class ArchonLogger
         public const string MapInteraction = "map_interaction";      // ProvinceSelector, mouse input, selection
         public const string MapModes = "map_modes";                  // MapModeManager, mode switching
 
+        // === GAME LAYER (Assets/Game/) ===
+        // Hegemon-specific gameplay systems
+        public const string GameHegemon = "game_hegemon";            // General Hegemon gameplay (economy, buildings, units)
+        public const string GameUI = "game_ui";                      // UI interactions, panels, tooltips
+        public const string GameSystems = "game_systems";            // EconomySystem, BuildingConstructionSystem, etc.
+        public const string GameInitialization = "game_initialization"; // Game startup, scenario loading
+        public const string GameAI = "game_ai";                      // AI goals (BuildEconomy, ExpandTerritory)
+
         // === LEGACY (for backward compatibility, will migrate) ===
         public const string Provinces = "provinces";                 // LEGACY - use CoreSimulation
         public const string Countries = "countries";                 // LEGACY - use CoreSimulation
@@ -78,84 +91,6 @@ public static class ArchonLogger
         public const string Performance = "performance";             // Cross-cutting concern
         public const string Network = "network";                     // Cross-cutting concern (future multiplayer)
     }
-
-    // === CORE LAYER CONVENIENCE METHODS ===
-
-    // Core Simulation (ProvinceSystem, CountrySystem, state changes)
-    public static void LogCoreSimulation(string message) => Log(message, Systems.CoreSimulation);
-    public static void LogCoreSimulationWarning(string message) => LogWarning(message, Systems.CoreSimulation);
-    public static void LogCoreSimulationError(string message) => LogError(message, Systems.CoreSimulation);
-
-    // Core Commands (CommandProcessor, command execution)
-    public static void LogCoreCommands(string message) => Log(message, Systems.CoreCommands);
-    public static void LogCoreCommandsWarning(string message) => LogWarning(message, Systems.CoreCommands);
-    public static void LogCoreCommandsError(string message) => LogError(message, Systems.CoreCommands);
-
-    // Core Time (TimeManager, tick events)
-    public static void LogCoreTime(string message) => Log(message, Systems.CoreTime);
-    public static void LogCoreTimeWarning(string message) => LogWarning(message, Systems.CoreTime);
-    public static void LogCoreTimeError(string message) => LogError(message, Systems.CoreTime);
-
-    // Core Data Loading (all loaders)
-    public static void LogCoreDataLoading(string message) => Log(message, Systems.CoreDataLoading);
-    public static void LogCoreDataLoadingWarning(string message) => LogWarning(message, Systems.CoreDataLoading);
-    public static void LogCoreDataLoadingError(string message) => LogError(message, Systems.CoreDataLoading);
-
-    // Core Data Linking (cross-references, string→ID resolution)
-    public static void LogDataLinking(string message) => Log(message, Systems.CoreDataLinking);
-    public static void LogDataLinkingWarning(string message) => LogWarning(message, Systems.CoreDataLinking);
-    public static void LogDataLinkingError(string message) => LogError(message, Systems.CoreDataLinking);
-
-    // Core Save/Load (SaveManager, serialization)
-    public static void LogCoreSaveLoad(string message) => Log(message, Systems.CoreSaveLoad);
-    public static void LogCoreSaveLoadWarning(string message) => LogWarning(message, Systems.CoreSaveLoad);
-    public static void LogCoreSaveLoadError(string message) => LogError(message, Systems.CoreSaveLoad);
-
-    // Core Events (EventBus - use sparingly, can be noisy)
-    public static void LogCoreEvents(string message) => Log(message, Systems.CoreEvents);
-    public static void LogCoreEventsWarning(string message) => LogWarning(message, Systems.CoreEvents);
-    public static void LogCoreEventsError(string message) => LogError(message, Systems.CoreEvents);
-
-    // Core Diplomacy (DiplomacySystem, relations, wars, opinion modifiers)
-    public static void LogCoreDiplomacy(string message) => Log(message, Systems.CoreDiplomacy);
-    public static void LogCoreDiplomacyWarning(string message) => LogWarning(message, Systems.CoreDiplomacy);
-    public static void LogCoreDiplomacyError(string message) => LogError(message, Systems.CoreDiplomacy);
-
-    // Core AI (AISystem, goal evaluation, AI decisions)
-    public static void LogCoreAI(string message) => Log(message, Systems.CoreAI);
-    public static void LogCoreAIWarning(string message) => LogWarning(message, Systems.CoreAI);
-    public static void LogCoreAIError(string message) => LogError(message, Systems.CoreAI);
-
-    // === MAP LAYER CONVENIENCE METHODS ===
-
-    // Map Rendering (MapRenderer, texture updates, GPU)
-    public static void LogMapRendering(string message) => Log(message, Systems.MapRendering);
-    public static void LogMapRenderingWarning(string message) => LogWarning(message, Systems.MapRendering);
-    public static void LogMapRenderingError(string message) => LogError(message, Systems.MapRendering);
-
-    // Map Textures (MapTextureManager, texture sets)
-    public static void LogMapTextures(string message) => Log(message, Systems.MapTextures);
-    public static void LogMapTexturesWarning(string message) => LogWarning(message, Systems.MapTextures);
-    public static void LogMapTexturesError(string message) => LogError(message, Systems.MapTextures);
-
-    // Map Initialization (MapInitializer, system setup)
-    public static void LogMapInit(string message) => Log(message, Systems.MapInitialization);
-    public static void LogMapInitWarning(string message) => LogWarning(message, Systems.MapInitialization);
-    public static void LogMapInitError(string message) => LogError(message, Systems.MapInitialization);
-
-    // Map Interaction (ProvinceSelector, mouse input)
-    public static void LogMapInteraction(string message) => Log(message, Systems.MapInteraction);
-    public static void LogMapInteractionWarning(string message) => LogWarning(message, Systems.MapInteraction);
-    public static void LogMapInteractionError(string message) => LogError(message, Systems.MapInteraction);
-
-    // Map Modes (MapModeManager, mode switching)
-    public static void LogMapModes(string message) => Log(message, Systems.MapModes);
-    public static void LogMapModesWarning(string message) => LogWarning(message, Systems.MapModes);
-    public static void LogMapModesError(string message) => LogError(message, Systems.MapModes);
-
-    // === GAME LAYER LOGGING ===
-    // NOTE: GAME layer should use GameLogger.cs (in Assets/Game/)
-    // to maintain ENGINE-GAME separation. ArchonLogger is ENGINE ONLY.
 
     // Configuration methods
     public static void SetConsoleLogging(bool enabled) => logToConsole = enabled;

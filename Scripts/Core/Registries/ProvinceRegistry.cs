@@ -23,7 +23,7 @@ namespace Core.Registries
             // Reserve index 0 for "none/invalid"
             provinces.Add(null);
 
-            ArchonLogger.LogDataLinking("ProvinceRegistry initialized");
+            ArchonLogger.Log("ProvinceRegistry initialized", "core_data_linking");
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Core.Registries
             province.RuntimeId = runtimeId;
             province.DefinitionId = definitionId;
 
-            ArchonLogger.LogDataLinking($"Registered province {definitionId} with runtime ID {runtimeId}");
+            ArchonLogger.Log($"Registered province {definitionId} with runtime ID {runtimeId}", "core_data_linking");
             return runtimeId;
         }
 

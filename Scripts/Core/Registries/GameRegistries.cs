@@ -29,7 +29,7 @@ namespace Core.Registries
             Countries = new CountryRegistry(this);
             Provinces = new ProvinceRegistry();
 
-            ArchonLogger.LogDataLinking("GameRegistries initialized with all entity registries");
+            ArchonLogger.Log("GameRegistries initialized with all entity registries", "core_data_linking");
         }
 
         /// <summary>
@@ -59,24 +59,24 @@ namespace Core.Registries
             // Check that static data is loaded
             if (Religions.Count == 0)
             {
-                ArchonLogger.LogCoreDataLoadingError("GameRegistries validation failed: No religions loaded");
+                ArchonLogger.LogError("GameRegistries validation failed: No religions loaded", "core_data_loading");
                 isValid = false;
             }
 
             if (Cultures.Count == 0)
             {
-                ArchonLogger.LogCoreDataLoadingError("GameRegistries validation failed: No cultures loaded");
+                ArchonLogger.LogError("GameRegistries validation failed: No cultures loaded", "core_data_loading");
                 isValid = false;
             }
 
             if (TradeGoods.Count == 0)
             {
-                ArchonLogger.LogCoreDataLoadingError("GameRegistries validation failed: No trade goods loaded");
+                ArchonLogger.LogError("GameRegistries validation failed: No trade goods loaded", "core_data_loading");
                 isValid = false;
             }
 
             // Countries and provinces can be empty initially
-            ArchonLogger.LogDataLinking($"GameRegistries validation: {(isValid ? "PASSED" : "FAILED")}");
+            ArchonLogger.Log($"GameRegistries validation: {(isValid ? "PASSED" : "FAILED")}", "core_data_linking");
             return isValid;
         }
     }

@@ -23,7 +23,7 @@ namespace Map.Integration
         {
             if (!loadResult.Success || dataManager == null)
             {
-                ArchonLogger.LogMapRenderingError("ProvinceDataConverter: Invalid parameters - loadResult or dataManager is null");
+                ArchonLogger.LogError("ProvinceDataConverter: Invalid parameters - loadResult or dataManager is null", "map_rendering");
                 return;
             }
 
@@ -53,7 +53,7 @@ namespace Map.Integration
                 pixels.Dispose();
             }
 
-            ArchonLogger.LogMapRendering($"ProvinceDataConverter: Converted {provincePixelGroups.Count} provinces to data manager");
+            ArchonLogger.Log($"ProvinceDataConverter: Converted {provincePixelGroups.Count} provinces to data manager", "map_rendering");
         }
 
         /// <summary>

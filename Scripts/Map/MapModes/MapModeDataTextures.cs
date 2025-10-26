@@ -61,13 +61,13 @@ namespace Map.MapModes
         {
             if (isInitialized)
             {
-                ArchonLogger.LogMapModesWarning("MapModeDataTextures already initialized");
+                ArchonLogger.LogWarning("MapModeDataTextures already initialized", "map_modes");
                 return;
             }
 
             if (textureManager == null)
             {
-                ArchonLogger.LogMapModesError("MapModeDataTextures: Cannot initialize without MapTextureManager");
+                ArchonLogger.LogError("MapModeDataTextures: Cannot initialize without MapTextureManager", "map_modes");
                 return;
             }
 
@@ -89,7 +89,7 @@ namespace Map.MapModes
             CreateColorPalettes();
 
             isInitialized = true;
-            ArchonLogger.LogMapInit($"MapModeDataTextures initialized: {MapWidth}x{MapHeight} - using existing texture system");
+            ArchonLogger.Log($"MapModeDataTextures initialized: {MapWidth}x{MapHeight} - using existing texture system", "map_initialization");
         }
 
         // REMOVED: CreateDataTextures method
@@ -287,7 +287,7 @@ namespace Map.MapModes
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogMapModesError("MapModeDataTextures not initialized");
+                ArchonLogger.LogError("MapModeDataTextures not initialized", "map_modes");
                 return;
             }
 
@@ -310,7 +310,7 @@ namespace Map.MapModes
 
             // Debug: Verify binding
             var boundTexture = material.GetTexture(CountryColorPaletteID);
-            ArchonLogger.LogMapInit($"MapModeDataTextures: Bound _CountryColorPalette - Expected: {CountryColorPalette?.GetInstanceID()}, Got: {boundTexture?.GetInstanceID()}");
+            ArchonLogger.Log($"MapModeDataTextures: Bound _CountryColorPalette - Expected: {CountryColorPalette?.GetInstanceID()}, Got: {boundTexture?.GetInstanceID()}", "map_initialization");
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Map.MapModes
         {
             if (texture == null)
             {
-                ArchonLogger.LogMapModesError("Cannot update null texture");
+                ArchonLogger.LogError("Cannot update null texture", "map_modes");
                 return;
             }
 
@@ -335,7 +335,7 @@ namespace Map.MapModes
         {
             if (palette == null)
             {
-                ArchonLogger.LogMapModesError("Cannot update null palette");
+                ArchonLogger.LogError("Cannot update null palette", "map_modes");
                 return;
             }
 
@@ -372,7 +372,7 @@ namespace Map.MapModes
             if (TerrainColorPalette != null) Object.DestroyImmediate(TerrainColorPalette);
 
             isInitialized = false;
-            ArchonLogger.LogMapModes("MapModeDataTextures disposed");
+            ArchonLogger.Log("MapModeDataTextures disposed", "map_modes");
         }
     }
 }

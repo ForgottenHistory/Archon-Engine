@@ -18,7 +18,7 @@ namespace Map.Loading.Bitmaps
         {
             if (textureManager == null || textureManager.HeightmapTexture == null)
             {
-                ArchonLogger.LogMapInitError("HeightmapBitmapLoader: Cannot populate - texture manager or heightmap texture not available");
+                ArchonLogger.LogError("HeightmapBitmapLoader: Cannot populate - texture manager or heightmap texture not available", "map_initialization");
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace Map.Loading.Bitmaps
 
             if (logProgress)
             {
-                ArchonLogger.LogMapInit($"HeightmapBitmapLoader: Processing {heightmapData.Width}x{heightmapData.Height}, {heightmapData.BitsPerPixel}bpp");
+                ArchonLogger.Log($"HeightmapBitmapLoader: Processing {heightmapData.Width}x{heightmapData.Height}, {heightmapData.BitsPerPixel}bpp", "map_initialization");
             }
 
             int successfulReads = 0;
@@ -65,7 +65,7 @@ namespace Map.Loading.Bitmaps
 
             if (logProgress)
             {
-                ArchonLogger.LogMapInit($"HeightmapBitmapLoader: Read stats - Success: {successfulReads}, Failed: {failedReads}");
+                ArchonLogger.Log($"HeightmapBitmapLoader: Read stats - Success: {successfulReads}, Failed: {failedReads}", "map_initialization");
 
                 // Sample some height values to verify data
                 if (successfulReads > 0)
@@ -73,7 +73,7 @@ namespace Map.Loading.Bitmaps
                     float h1 = pixels[width * height / 4].r;
                     float h2 = pixels[width * height / 2].r;
                     float h3 = pixels[width * height * 3 / 4].r;
-                    ArchonLogger.LogMapInit($"HeightmapBitmapLoader: Height samples - [{h1:F3}] [{h2:F3}] [{h3:F3}] (0.0=low, 1.0=high)");
+                    ArchonLogger.Log($"HeightmapBitmapLoader: Height samples - [{h1:F3}] [{h2:F3}] [{h3:F3}] (0.0=low, 1.0=high)", "map_initialization");
                 }
             }
 

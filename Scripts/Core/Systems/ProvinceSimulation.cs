@@ -62,8 +62,8 @@ namespace Core.Systems
                 provinces[i] = defaultState;
             }
 
-            ArchonLogger.LogCoreSimulation($"ProvinceSimulation initialized with capacity for {capacity} provinces " +
-                     $"({capacity * 8} bytes hot data)");
+            ArchonLogger.Log($"ProvinceSimulation initialized with capacity for {capacity} provinces " +
+                     $"({capacity * 8} bytes hot data)", "core_simulation");
         }
 
         /// <summary>
@@ -73,25 +73,25 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogCoreSimulationError("ProvinceSimulation not initialized");
+                ArchonLogger.LogError("ProvinceSimulation not initialized", "core_simulation");
                 return false;
             }
 
             if (provinceID == 0)
             {
-                ArchonLogger.LogCoreSimulationError("Province ID 0 is reserved for ocean");
+                ArchonLogger.LogError("Province ID 0 is reserved for ocean", "core_simulation");
                 return false;
             }
 
             if (provinceCount >= provinces.Length)
             {
-                ArchonLogger.LogCoreSimulationError($"Province capacity exceeded ({provinces.Length})");
+                ArchonLogger.LogError($"Province capacity exceeded ({provinces.Length})", "core_simulation");
                 return false;
             }
 
             if (idToIndex.ContainsKey(provinceID))
             {
-                ArchonLogger.LogCoreSimulationWarning($"Province {provinceID} already exists");
+                ArchonLogger.LogWarning($"Province {provinceID} already exists", "core_simulation");
                 return false;
             }
 
@@ -374,14 +374,14 @@ namespace Core.Systems
         {
             var (totalBytes, hotBytes, coldBytes) = GetMemoryUsage();
 
-            ArchonLogger.LogCoreSimulation($"Province Simulation Statistics:\n" +
+            ArchonLogger.Log($"Province Simulation Statistics:\n" +
                      $"Provinces: {provinceCount}/{provinces.Length}\n" +
                      $"Memory Usage: {totalBytes / 1024f:F1} KB total\n" +
                      $"  - Hot Data: {hotBytes / 1024f:F1} KB ({hotBytes} bytes)\n" +
                      $"  - Cold Data: {coldBytes / 1024f:F1} KB (estimated)\n" +
                      $"State Version: {stateVersion}\n" +
                      $"Dirty Provinces: {dirtyIndices.Count}\n" +
-                     $"Hot bytes per province: {hotBytes / math.max(provinceCount, 1)} bytes");
+                     $"Hot bytes per province: {hotBytes / math.max(provinceCount, 1)} bytes", "core_simulation");
         }
 #endif
     }

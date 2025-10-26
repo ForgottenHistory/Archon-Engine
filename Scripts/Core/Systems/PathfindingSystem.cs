@@ -58,7 +58,7 @@ namespace Core.Systems
         {
             if (adjacencies == null || !adjacencies.IsInitialized)
             {
-                ArchonLogger.LogCoreSimulationError("PathfindingSystem: Cannot initialize with null or uninitialized AdjacencySystem");
+                ArchonLogger.LogError("PathfindingSystem: Cannot initialize with null or uninitialized AdjacencySystem", "core_simulation");
                 return;
             }
 
@@ -77,7 +77,7 @@ namespace Core.Systems
             this.isInitialized = true;
 
             string validatorInfo = validator != null ? " with movement validator" : " (all provinces passable)";
-            ArchonLogger.LogCoreSimulation($"PathfindingSystem: Initialized{validatorInfo} (zero-allocation mode)");
+            ArchonLogger.Log($"PathfindingSystem: Initialized{validatorInfo} (zero-allocation mode)", "core_simulation");
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Core.Systems
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogCoreSimulationError("PathfindingSystem: Not initialized");
+                ArchonLogger.LogError("PathfindingSystem: Not initialized", "core_simulation");
                 return new List<ushort>();
             }
 
@@ -105,7 +105,7 @@ namespace Core.Systems
 
             if (start == 0 || goal == 0)
             {
-                ArchonLogger.LogCoreSimulationWarning($"PathfindingSystem: Invalid province ID (start={start}, goal={goal})");
+                ArchonLogger.LogWarning($"PathfindingSystem: Invalid province ID (start={start}, goal={goal})", "core_simulation");
                 return new List<ushort>();
             }
 
@@ -173,7 +173,7 @@ namespace Core.Systems
             }
 
             // No path found
-            ArchonLogger.LogCoreSimulationWarning($"PathfindingSystem: No path from {start} to {goal}");
+            ArchonLogger.LogWarning($"PathfindingSystem: No path from {start} to {goal}", "core_simulation");
             return new List<ushort>();
         }
 

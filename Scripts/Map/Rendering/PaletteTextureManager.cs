@@ -47,7 +47,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit("PaletteTextureManager: Created Province Color Palette 256×1 RGBA32");
+                ArchonLogger.Log("PaletteTextureManager: Created Province Color Palette 256×1 RGBA32", "map_initialization");
             }
         }
 
@@ -88,7 +88,7 @@ namespace Map.Rendering
         {
             if (colors.Length != 256)
             {
-                ArchonLogger.LogMapRenderingError($"PaletteTextureManager: Palette colors must be exactly 256 elements, got {colors.Length}");
+                ArchonLogger.LogError($"PaletteTextureManager: Palette colors must be exactly 256 elements, got {colors.Length}", "map_rendering");
                 return;
             }
 
@@ -114,7 +114,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit("PaletteTextureManager: Bound palette texture to material");
+                ArchonLogger.Log("PaletteTextureManager: Bound palette texture to material", "map_initialization");
             }
         }
 

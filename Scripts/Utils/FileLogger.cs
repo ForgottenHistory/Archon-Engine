@@ -32,8 +32,8 @@ using UnityEngine;
 ///   - game_systems.log          -> EconomySystem, BuildingConstructionSystem, etc.
 ///
 /// Usage:
-///   ArchonLogger.LogCoreSimulation("Province 123 owner changed");
-///   ArchonLogger.LogMapRendering("Border texture updated");
+///   ArchonLogger.Log("Province 123 owner changed", "core_simulation");
+///   ArchonLogger.Log("Border texture updated", "map_rendering");
 ///   ArchonLogger.LogGameUI("Tooltip displayed for province 456");
 /// </summary>
 public class FileLogger : MonoBehaviour
@@ -130,7 +130,7 @@ public class FileLogger : MonoBehaviour
             }
             catch (Exception e)
             {
-                ArchonLogger.LogCoreSimulationError($"Failed to initialize FileLogger: {e.Message}");
+                ArchonLogger.LogError($"Failed to initialize FileLogger: {e.Message}", "core_simulation");
             }
         }
 

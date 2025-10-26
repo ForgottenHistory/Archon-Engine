@@ -53,14 +53,14 @@ namespace Map.Loading
         {
             if (logLoadingProgress)
             {
-                ArchonLogger.LogMapInit("MapDataLoader: Getting province data from Core simulation systems...");
+                ArchonLogger.Log("MapDataLoader: Getting province data from Core simulation systems...", "map_initialization");
             }
 
             // Get GameState to access simulation data
             var gameState = Object.FindFirstObjectByType<GameState>();
             if (gameState == null)
             {
-                ArchonLogger.LogMapInitError("MapDataLoader: Could not find GameState to access simulation data");
+                ArchonLogger.LogError("MapDataLoader: Could not find GameState to access simulation data", "map_initialization");
                 return null;
             }
 
@@ -70,7 +70,7 @@ namespace Map.Loading
                 // simulation data from Core systems rather than parsing it ourselves
                 if (string.IsNullOrEmpty(bitmapPath))
                 {
-                    ArchonLogger.LogMapInitError("MapDataLoader: Province bitmap path not set");
+                    ArchonLogger.LogError("MapDataLoader: Province bitmap path not set", "map_initialization");
                     return null;
                 }
 
@@ -82,7 +82,7 @@ namespace Map.Loading
 
                 if (logLoadingProgress)
                 {
-                    ArchonLogger.LogMapInit($"MapDataLoader: Loading province bitmap for rendering: {bmpPath}");
+                    ArchonLogger.Log($"MapDataLoader: Loading province bitmap for rendering: {bmpPath}", "map_initialization");
                 }
 
                 // Load province map for visual data only (Core already has the simulation data)
@@ -90,13 +90,13 @@ namespace Map.Loading
 
                 if (!provinceResult.Success)
                 {
-                    ArchonLogger.LogMapInitError($"MapDataLoader: Failed to load province bitmap: {provinceResult.ErrorMessage}");
+                    ArchonLogger.LogError($"MapDataLoader: Failed to load province bitmap: {provinceResult.ErrorMessage}", "map_initialization");
                     return null;
                 }
 
                 if (logLoadingProgress)
                 {
-                    ArchonLogger.LogMapInit($"MapDataLoader: Successfully loaded province bitmap with {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height} pixels");
+                    ArchonLogger.Log($"MapDataLoader: Successfully loaded province bitmap with {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height} pixels", "map_initialization");
                 }
 
                 // Load supplementary bitmaps in parallel using specialized loaders
@@ -113,7 +113,7 @@ namespace Map.Loading
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogMapInitError($"MapDataLoader: Exception during simulation-driven map loading: {e.Message}\n{e.StackTrace}");
+                ArchonLogger.LogError($"MapDataLoader: Exception during simulation-driven map loading: {e.Message}\n{e.StackTrace}", "map_initialization");
                 return null;
             }
         }
@@ -126,7 +126,7 @@ namespace Map.Loading
         {
             if (string.IsNullOrEmpty(bitmapPath))
             {
-                ArchonLogger.LogMapInitError("MapDataLoader: Province bitmap path not set");
+                ArchonLogger.LogError("MapDataLoader: Province bitmap path not set", "map_initialization");
                 return null;
             }
 
@@ -138,10 +138,10 @@ namespace Map.Loading
 
             if (logLoadingProgress)
             {
-                ArchonLogger.LogMapInit($"MapDataLoader: Loading province map from: {bmpPath}");
+                ArchonLogger.Log($"MapDataLoader: Loading province map from: {bmpPath}", "map_initialization");
                 if (definitionPath != null)
                 {
-                    ArchonLogger.LogMapInit($"MapDataLoader: Using definition file: {definitionPath}");
+                    ArchonLogger.Log($"MapDataLoader: Using definition file: {definitionPath}", "map_initialization");
                 }
             }
 
@@ -152,17 +152,17 @@ namespace Map.Loading
 
                 if (!provinceResult.Success)
                 {
-                    ArchonLogger.LogMapInitError($"MapDataLoader: Failed to load province map: {provinceResult.ErrorMessage}");
+                    ArchonLogger.LogError($"MapDataLoader: Failed to load province map: {provinceResult.ErrorMessage}", "map_initialization");
                     return null;
                 }
 
                 if (logLoadingProgress)
                 {
-                    ArchonLogger.LogMapInit($"MapDataLoader: Successfully processed province colors from bitmap");
-                    ArchonLogger.LogMapInit($"MapDataLoader: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}");
+                    ArchonLogger.Log($"MapDataLoader: Successfully processed province colors from bitmap", "map_initialization");
+                    ArchonLogger.Log($"MapDataLoader: Image size: {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height}", "map_initialization");
                     if (provinceResult.HasDefinitions)
                     {
-                        ArchonLogger.LogMapInit($"MapDataLoader: Loaded {provinceResult.Definitions.AllDefinitions.Length} province definitions");
+                        ArchonLogger.Log($"MapDataLoader: Loaded {provinceResult.Definitions.AllDefinitions.Length} province definitions", "map_initialization");
                     }
                 }
 
@@ -180,7 +180,7 @@ namespace Map.Loading
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogMapInitError($"MapDataLoader: Exception during province map loading: {e.Message}\n{e.StackTrace}");
+                ArchonLogger.LogError($"MapDataLoader: Exception during province map loading: {e.Message}\n{e.StackTrace}", "map_initialization");
                 return null;
             }
         }
@@ -196,12 +196,12 @@ namespace Map.Loading
                 // ENGINE only initializes the border system, GAME decides what borders to show
                 if (logLoadingProgress)
                 {
-                    ArchonLogger.LogMapInit("MapDataLoader: Border system ready (mode will be set by GAME layer)");
+                    ArchonLogger.Log("MapDataLoader: Border system ready (mode will be set by GAME layer)", "map_initialization");
                 }
             }
             else
             {
-                ArchonLogger.LogMapInitError("MapDataLoader: BorderComputeDispatcher is NULL - borders will not be generated!");
+                ArchonLogger.LogError("MapDataLoader: BorderComputeDispatcher is NULL - borders will not be generated!", "map_initialization");
             }
         }
     }

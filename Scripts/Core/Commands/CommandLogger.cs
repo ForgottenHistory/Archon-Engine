@@ -44,7 +44,7 @@ namespace Core.Commands
         {
             if (command == null)
             {
-                ArchonLogger.LogCoreCommandsWarning("CommandLogger: Cannot log null command");
+                ArchonLogger.LogWarning("CommandLogger: Cannot log null command", "core_commands");
                 return;
             }
 
@@ -68,12 +68,12 @@ namespace Core.Commands
 
                 if (logCommandExecution)
                 {
-                    ArchonLogger.LogCoreCommands($"CommandLogger: Logged {command.GetType().Name} ({commandBytes.Length} bytes)");
+                    ArchonLogger.Log($"CommandLogger: Logged {command.GetType().Name} ({commandBytes.Length} bytes)", "core_commands");
                 }
             }
             catch (System.Exception ex)
             {
-                ArchonLogger.LogCoreCommandsError($"CommandLogger: Failed to serialize command - {ex.Message}");
+                ArchonLogger.LogError($"CommandLogger: Failed to serialize command - {ex.Message}", "core_commands");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Core.Commands
 
             if (logCommandExecution)
             {
-                ArchonLogger.LogCoreCommands("CommandLogger: Command history cleared");
+                ArchonLogger.Log("CommandLogger: Command history cleared", "core_commands");
             }
         }
 
@@ -208,11 +208,11 @@ namespace Core.Commands
         private void ShowStatistics()
         {
             var stats = GetStatistics();
-            ArchonLogger.LogCoreCommands($"CommandLogger Statistics:");
-            ArchonLogger.LogCoreCommands($"  Total Commands Logged: {stats.totalCommands}");
-            ArchonLogger.LogCoreCommands($"  Total Bytes Logged: {stats.totalBytes:N0}");
-            ArchonLogger.LogCoreCommands($"  Current Buffer Size: {stats.currentBufferSize}");
-            ArchonLogger.LogCoreCommands($"  Average Command Size: {(stats.totalCommands > 0 ? stats.totalBytes / stats.totalCommands : 0)} bytes");
+            ArchonLogger.Log($"CommandLogger Statistics:", "core_commands");
+            ArchonLogger.Log($"  Total Commands Logged: {stats.totalCommands}", "core_commands");
+            ArchonLogger.Log($"  Total Bytes Logged: {stats.totalBytes:N0}", "core_commands");
+            ArchonLogger.Log($"  Current Buffer Size: {stats.currentBufferSize}", "core_commands");
+            ArchonLogger.Log($"  Average Command Size: {(stats.totalCommands > 0 ? stats.totalBytes / stats.totalCommands : 0)} bytes", "core_commands");
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Core.Commands
         private void ClearHistoryContextMenu()
         {
             ClearHistory();
-            ArchonLogger.LogCoreCommands("CommandLogger: History cleared via context menu");
+            ArchonLogger.Log("CommandLogger: History cleared via context menu", "core_commands");
         }
         #endif
     }

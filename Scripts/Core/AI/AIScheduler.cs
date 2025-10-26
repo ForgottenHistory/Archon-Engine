@@ -63,7 +63,7 @@ namespace Core.AI
                 aiStates[i] = state;
             }
 
-            ArchonLogger.LogCoreAI($"Processed AI bucket {bucketToProcess} (day {currentDay})");
+            ArchonLogger.Log($"Processed AI bucket {bucketToProcess} (day {currentDay})", "core_ai");
         }
 
         /// <summary>
@@ -107,13 +107,13 @@ namespace Core.AI
                 bestGoal.Execute(countryID, gameState);
                 state.activeGoalID = bestGoal.GoalID;
 
-                ArchonLogger.LogCoreAI($"Country {countryID}: Executing goal '{bestGoal.GoalName}' (score: {bestScore})");
+                ArchonLogger.Log($"Country {countryID}: Executing goal '{bestGoal.GoalName}' (score: {bestScore})", "core_ai");
             }
             else
             {
                 // No valid goals
                 state.activeGoalID = 0;
-                ArchonLogger.LogCoreAI($"Country {countryID}: No valid goals");
+                ArchonLogger.Log($"Country {countryID}: No valid goals", "core_ai");
             }
         }
 

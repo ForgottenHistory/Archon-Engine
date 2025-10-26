@@ -71,7 +71,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"DynamicTextureSet: Created Border RenderTexture {mapWidth}x{mapHeight} R16G16_UNorm");
+                ArchonLogger.Log($"DynamicTextureSet: Created Border RenderTexture {mapWidth}x{mapHeight} R16G16_UNorm", "map_initialization");
             }
         }
 
@@ -100,7 +100,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"DynamicTextureSet: Created Highlight RenderTexture {mapWidth}x{mapHeight} R8G8B8A8_UNorm");
+                ArchonLogger.Log($"DynamicTextureSet: Created Highlight RenderTexture {mapWidth}x{mapHeight} R8G8B8A8_UNorm", "map_initialization");
             }
         }
 
@@ -130,7 +130,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit($"DynamicTextureSet: Created FogOfWar RenderTexture {mapWidth}x{mapHeight} R8_UNorm");
+                ArchonLogger.Log($"DynamicTextureSet: Created FogOfWar RenderTexture {mapWidth}x{mapHeight} R8_UNorm", "map_initialization");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.LogMapInit("DynamicTextureSet: Bound dynamic textures to material");
+                ArchonLogger.Log("DynamicTextureSet: Bound dynamic textures to material", "map_initialization");
             }
         }
 

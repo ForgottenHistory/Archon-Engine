@@ -48,12 +48,12 @@ namespace Map.Rendering
 
                 if (logUpdates)
                 {
-                    ArchonLogger.LogMapRendering("TextureUpdateBridge: Initialized and subscribed to province events");
+                    ArchonLogger.Log("TextureUpdateBridge: Initialized and subscribed to province events", "map_rendering");
                 }
             }
             else
             {
-                ArchonLogger.LogMapRenderingError("TextureUpdateBridge: GameState or EventBus not available");
+                ArchonLogger.LogError("TextureUpdateBridge: GameState or EventBus not available", "map_rendering");
             }
         }
 
@@ -80,7 +80,7 @@ namespace Map.Rendering
 
             if (logUpdates)
             {
-                ArchonLogger.LogMapRendering($"TextureUpdateBridge: Province {ownershipEvent.ProvinceId} ownership changed: {ownershipEvent.OldOwner} → {ownershipEvent.NewOwner}");
+                ArchonLogger.Log($"TextureUpdateBridge: Province {ownershipEvent.ProvinceId} ownership changed: {ownershipEvent.OldOwner} → {ownershipEvent.NewOwner}", "map_rendering");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Map.Rendering
 
             if (logUpdates)
             {
-                ArchonLogger.LogMapRendering($"TextureUpdateBridge: Updated {changedProvinces.Length} provinces in {updateTime:F2}ms");
+                ArchonLogger.Log($"TextureUpdateBridge: Updated {changedProvinces.Length} provinces in {updateTime:F2}ms", "map_rendering");
             }
         }
 

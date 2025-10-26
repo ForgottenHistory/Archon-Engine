@@ -26,11 +26,11 @@ namespace Core.Initialization.Phases
             if (countryTagResult.Success)
             {
                 tagMapping = countryTagResult.CountryTags;
-                ArchonLogger.LogCoreDataLoading($"Loaded {tagMapping.Count} country tag mappings");
+                ArchonLogger.Log($"Loaded {tagMapping.Count} country tag mappings", "core_data_loading");
             }
             else
             {
-                ArchonLogger.LogCoreDataLoadingWarning($"Failed to load country tags: {countryTagResult.ErrorMessage}. Tags will be extracted from filenames.");
+                ArchonLogger.LogWarning($"Failed to load country tags: {countryTagResult.ErrorMessage}. Tags will be extracted from filenames.", "core_data_loading");
             }
 
             context.ReportProgress(50f, "Loading country JSON5 files...");
@@ -46,7 +46,7 @@ namespace Core.Initialization.Phases
                 yield break;
             }
 
-            ArchonLogger.LogCoreDataLoading($"Country loading complete: {countryDataResult.Statistics.FilesProcessed} countries loaded, {countryDataResult.Statistics.FilesSkipped} failed");
+            ArchonLogger.Log($"Country loading complete: {countryDataResult.Statistics.FilesProcessed} countries loaded, {countryDataResult.Statistics.FilesSkipped} failed", "core_data_loading");
 
             context.ReportProgress(55f, "Initializing country system...");
             yield return null;
@@ -71,14 +71,14 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.LogCoreDataLoading($"Phase complete: Loaded {countryDataResult.Statistics.FilesProcessed} countries from JSON5 (ready for reference linking)");
+                ArchonLogger.Log($"Phase complete: Loaded {countryDataResult.Statistics.FilesProcessed} countries from JSON5 (ready for reference linking)", "core_data_loading");
             }
         }
 
         public void Rollback(InitializationContext context)
         {
             // CountrySystem doesn't have cleanup method - on failure, entire GameState is recreated
-            ArchonLogger.LogCoreDataLoading("Rolling back country data loading phase");
+            ArchonLogger.Log("Rolling back country data loading phase", "core_data_loading");
         }
     }
 

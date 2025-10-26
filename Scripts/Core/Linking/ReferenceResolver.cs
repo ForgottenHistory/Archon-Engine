@@ -25,7 +25,7 @@ namespace Core.Linking
         public ReferenceResolver(GameRegistries registries)
         {
             this.registries = registries ?? throw new ArgumentNullException(nameof(registries));
-            ArchonLogger.LogDataLinking("ReferenceResolver initialized");
+            ArchonLogger.Log("ReferenceResolver initialized", "core_data_linking");
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Core.Linking
             rawData.ControllerID = (ushort)provinceData.ControllerId;
             rawData.Terrain = provinceData.Terrain;
 
-            ArchonLogger.LogDataLinking($"Resolved references for {context}: Owner={provinceData.OwnerId}, Culture={provinceData.CultureId}, Religion={provinceData.ReligionId}");
+            ArchonLogger.Log($"Resolved references for {context}: Owner={provinceData.OwnerId}, Culture={provinceData.CultureId}, Religion={provinceData.ReligionId}", "core_data_linking");
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Core.Linking
                 }
             }
 
-            ArchonLogger.LogDataLinking($"Resolved references for {context}: Culture={countryData.PrimaryCultureId}, Religion={countryData.ReligionId}");
+            ArchonLogger.Log($"Resolved references for {context}: Culture={countryData.PrimaryCultureId}, Religion={countryData.ReligionId}", "core_data_linking");
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Core.Linking
         /// </summary>
         public void ResolveDeferredReferences()
         {
-            ArchonLogger.LogDataLinking($"ReferenceResolver: Executing {deferredResolutions.Count} deferred resolutions");
+            ArchonLogger.Log($"ReferenceResolver: Executing {deferredResolutions.Count} deferred resolutions", "core_data_linking");
 
             foreach (var resolution in deferredResolutions)
             {
@@ -228,7 +228,7 @@ namespace Core.Linking
             }
 
             deferredResolutions.Clear();
-            ArchonLogger.LogDataLinking("ReferenceResolver: Deferred resolutions complete");
+            ArchonLogger.Log("ReferenceResolver: Deferred resolutions complete", "core_data_linking");
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Core.Linking
         private void AddError(string message)
         {
             errors.Add(message);
-            ArchonLogger.LogDataLinkingError($"Reference Resolution Error: {message}");
+            ArchonLogger.LogError($"Reference Resolution Error: {message}", "core_data_linking");
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Core.Linking
         private void AddWarning(string message)
         {
             warnings.Add(message);
-            ArchonLogger.LogDataLinkingWarning($"Reference Resolution Warning: {message}");
+            ArchonLogger.LogWarning($"Reference Resolution Warning: {message}", "core_data_linking");
         }
 
         /// <summary>

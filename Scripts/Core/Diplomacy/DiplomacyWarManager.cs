@@ -127,7 +127,7 @@ namespace Core.Diplomacy
             AddToWarIndex(attackerID, defenderID, warsByCountry);
             AddToWarIndex(defenderID, attackerID, warsByCountry);
 
-            ArchonLogger.LogCoreDiplomacy($"War declared: {attackerID} vs {defenderID}");
+            ArchonLogger.Log($"War declared: {attackerID} vs {defenderID}", "core_diplomacy");
 
             // Emit event
             var evt = new DiplomacyWarDeclaredEvent(attackerID, defenderID, currentTick);
@@ -151,7 +151,7 @@ namespace Core.Diplomacy
 
             if (!relations.ContainsKey(key))
             {
-                ArchonLogger.LogCoreDiplomacyWarning($"Cannot make peace - no relationship exists between {country1} and {country2}");
+                ArchonLogger.LogWarning($"Cannot make peace - no relationship exists between {country1} and {country2}", "core_diplomacy");
                 return;
             }
 
@@ -167,7 +167,7 @@ namespace Core.Diplomacy
             RemoveFromWarIndex(country1, country2, warsByCountry);
             RemoveFromWarIndex(country2, country1, warsByCountry);
 
-            ArchonLogger.LogCoreDiplomacy($"Peace made: {country1} and {country2}");
+            ArchonLogger.Log($"Peace made: {country1} and {country2}", "core_diplomacy");
 
             // Emit event
             var evt = new DiplomacyPeaceMadeEvent(country1, country2, currentTick);

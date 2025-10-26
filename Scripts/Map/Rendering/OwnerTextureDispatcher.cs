@@ -51,13 +51,13 @@ namespace Map.Rendering
                 {
                     string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
                     populateOwnerCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Found compute shader at {path}");
+                    ArchonLogger.Log($"OwnerTextureDispatcher: Found compute shader at {path}", "map_initialization");
                 }
                 #endif
 
                 if (populateOwnerCompute == null)
                 {
-                    ArchonLogger.LogMapRenderingWarning("OwnerTextureDispatcher: Compute shader not assigned. Owner texture population will not work.");
+                    ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not assigned. Owner texture population will not work.", "map_rendering");
                     return;
                 }
             }
@@ -67,7 +67,7 @@ namespace Map.Rendering
 
             if (logPerformance)
             {
-                ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Initialized with kernel index {populateOwnersKernel}");
+                ArchonLogger.Log($"OwnerTextureDispatcher: Initialized with kernel index {populateOwnersKernel}", "map_initialization");
             }
         }
 
@@ -87,11 +87,11 @@ namespace Map.Rendering
         [ContextMenu("Populate Owner Texture")]
         public void PopulateOwnerTexture(ProvinceQueries provinceQueries)
         {
-            ArchonLogger.LogMapInit("OwnerTextureDispatcher: PopulateOwnerTexture() called");
+            ArchonLogger.Log("OwnerTextureDispatcher: PopulateOwnerTexture() called", "map_initialization");
 
             if (populateOwnerCompute == null)
             {
-                ArchonLogger.LogMapRenderingWarning("OwnerTextureDispatcher: Compute shader not loaded. Skipping owner texture population.");
+                ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not loaded. Skipping owner texture population.", "map_rendering");
                 return;
             }
 
@@ -100,14 +100,14 @@ namespace Map.Rendering
                 textureManager = GetComponent<MapTextureManager>();
                 if (textureManager == null)
                 {
-                    ArchonLogger.LogMapRenderingError("OwnerTextureDispatcher: MapTextureManager not found!");
+                    ArchonLogger.LogError("OwnerTextureDispatcher: MapTextureManager not found!", "map_rendering");
                     return;
                 }
             }
 
             if (provinceQueries == null)
             {
-                ArchonLogger.LogMapRenderingError("OwnerTextureDispatcher: ProvinceQueries is null!");
+                ArchonLogger.LogError("OwnerTextureDispatcher: ProvinceQueries is null!", "map_rendering");
                 return;
             }
 
@@ -120,7 +120,7 @@ namespace Map.Rendering
 
             if (provinceCount == 0)
             {
-                ArchonLogger.LogMapRenderingWarning("OwnerTextureDispatcher: No provinces available from ProvinceQueries");
+                ArchonLogger.LogWarning("OwnerTextureDispatcher: No provinces available from ProvinceQueries", "map_rendering");
                 return;
             }
 
@@ -137,7 +137,7 @@ namespace Map.Rendering
 
                 if (logPerformance)
                 {
-                    ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Created GPU buffer for {bufferCapacity} provinces");
+                    ArchonLogger.Log($"OwnerTextureDispatcher: Created GPU buffer for {bufferCapacity} provinces", "map_initialization");
                 }
             }
 
@@ -162,7 +162,7 @@ namespace Map.Rendering
                 {
                     if (populatedCount < 5)
                     {
-                        ArchonLogger.LogMapRenderingWarning($"OwnerTextureDispatcher: Province ID {provinceId} exceeds buffer capacity {bufferCapacity}");
+                        ArchonLogger.LogWarning($"OwnerTextureDispatcher: Province ID {provinceId} exceeds buffer capacity {bufferCapacity}", "map_rendering");
                     }
                     continue;
                 }
@@ -178,16 +178,16 @@ namespace Map.Rendering
                     // Log first few non-zero owners
                     if (nonZeroOwners <= 10)
                     {
-                        ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Province {provinceId} → Owner {ownerId}");
+                        ArchonLogger.Log($"OwnerTextureDispatcher: Province {provinceId} → Owner {ownerId}", "map_initialization");
                     }
                 }
             }
 
-            ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Populated {populatedCount} provinces, {nonZeroOwners} have non-zero owners");
+            ArchonLogger.Log($"OwnerTextureDispatcher: Populated {populatedCount} provinces, {nonZeroOwners} have non-zero owners", "map_initialization");
 
             // DEBUG: Check specific test provinces before uploading to GPU
-            ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Buffer at index 2751 (Castile) = {ownerData[2751]} (expected 151)");
-            ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Buffer at index 817 (Inca) = {ownerData[817]} (expected 731)");
+            ArchonLogger.Log($"OwnerTextureDispatcher: Buffer at index 2751 (Castile) = {ownerData[2751]} (expected 151)", "map_initialization");
+            ArchonLogger.Log($"OwnerTextureDispatcher: Buffer at index 817 (Inca) = {ownerData[817]} (expected 731)", "map_initialization");
 
             // Upload to GPU
             provinceOwnerBuffer.SetData(ownerData);
@@ -201,8 +201,8 @@ namespace Map.Rendering
             populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
 
             // DEBUG: Verify texture binding
-            ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Bound ProvinceIDTexture ({provinceIDTex?.GetInstanceID()}, {provinceIDTex?.format}) directly to compute shader");
-            ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Compute shader will write to ProvinceOwnerTexture instance {textureManager.ProvinceOwnerTexture?.GetInstanceID()}");
+            ArchonLogger.Log($"OwnerTextureDispatcher: Bound ProvinceIDTexture ({provinceIDTex?.GetInstanceID()}, {provinceIDTex?.format}) directly to compute shader", "map_initialization");
+            ArchonLogger.Log($"OwnerTextureDispatcher: Compute shader will write to ProvinceOwnerTexture instance {textureManager.ProvinceOwnerTexture?.GetInstanceID()}", "map_initialization");
 
             // Set dimensions
             populateOwnerCompute.SetInt("MapWidth", textureManager.MapWidth);
@@ -213,7 +213,7 @@ namespace Map.Rendering
 
             if (debugWriteProvinceIDs)
             {
-                ArchonLogger.LogMapInit("OwnerTextureDispatcher: DEBUG MODE - Writing province IDs instead of owner IDs to ProvinceOwnerTexture");
+                ArchonLogger.Log("OwnerTextureDispatcher: DEBUG MODE - Writing province IDs instead of owner IDs to ProvinceOwnerTexture", "map_initialization");
             }
 
             // Calculate thread groups (round up division)
@@ -239,20 +239,20 @@ namespace Map.Rendering
 
             if (debugWriteProvinceIDs)
             {
-                ArchonLogger.LogMapInit($"OwnerTextureDispatcher: DEBUG - ProvinceOwnerTexture at pixel (2767,711) contains province ID {decodedValue} (expected 2751 for Castile if coordinates match)");
+                ArchonLogger.Log($"OwnerTextureDispatcher: DEBUG - ProvinceOwnerTexture at pixel (2767,711) contains province ID {decodedValue} (expected 2751 for Castile if coordinates match)", "map_initialization");
             }
             else
             {
-                ArchonLogger.LogMapInit($"OwnerTextureDispatcher: ProvinceOwnerTexture at pixel (2767,711) contains owner ID {decodedValue} (expected 151 for Castile)");
+                ArchonLogger.Log($"OwnerTextureDispatcher: ProvinceOwnerTexture at pixel (2767,711) contains owner ID {decodedValue} (expected 151 for Castile)", "map_initialization");
             }
 
             // Log performance
             if (logPerformance)
             {
                 float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                ArchonLogger.LogMapInit($"OwnerTextureDispatcher: Owner texture populated in {elapsedMs:F2}ms " +
+                ArchonLogger.Log($"OwnerTextureDispatcher: Owner texture populated in {elapsedMs:F2}ms " +
                     $"({populatedCount} provinces, {textureManager.MapWidth}x{textureManager.MapHeight} pixels, " +
-                    $"{threadGroupsX}x{threadGroupsY} thread groups)");
+                    $"{threadGroupsX}x{threadGroupsY} thread groups)", "map_initialization");
             }
         }
 
@@ -272,19 +272,19 @@ namespace Map.Rendering
         {
             if (textureManager == null)
             {
-                ArchonLogger.LogMapRenderingError("Cannot benchmark without texture manager");
+                ArchonLogger.LogError("Cannot benchmark without texture manager", "map_rendering");
                 return;
             }
 
             var gameState = FindFirstObjectByType<global::Core.GameState>();
             if (gameState == null || gameState.ProvinceQueries == null)
             {
-                ArchonLogger.LogMapRenderingError("Cannot benchmark without GameState and ProvinceQueries");
+                ArchonLogger.LogError("Cannot benchmark without GameState and ProvinceQueries", "map_rendering");
                 return;
             }
 
-            ArchonLogger.LogMapRendering("=== Owner Texture Population Benchmark ===");
-            ArchonLogger.LogMapRendering($"Map Size: {textureManager.MapWidth}x{textureManager.MapHeight}");
+            ArchonLogger.Log("=== Owner Texture Population Benchmark ===", "map_rendering");
+            ArchonLogger.Log($"Map Size: {textureManager.MapWidth}x{textureManager.MapHeight}", "map_rendering");
 
             var provinceQueries = gameState.ProvinceQueries;
 
@@ -303,8 +303,8 @@ namespace Map.Rendering
             }
 
             float avgMs = (totalTime / iterations) * 1000f;
-            ArchonLogger.LogMapRendering($"Average: {avgMs:F2}ms per population ({iterations} iterations)");
-            ArchonLogger.LogMapRendering("=== Benchmark Complete ===");
+            ArchonLogger.Log($"Average: {avgMs:F2}ms per population ({iterations} iterations)", "map_rendering");
+            ArchonLogger.Log("=== Benchmark Complete ===", "map_rendering");
         }
 #endif
     }

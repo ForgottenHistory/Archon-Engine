@@ -248,7 +248,7 @@ namespace Core.Diplomacy
             // (DiplomacySystem will call RebuildModifierCache after batch removals)
             if (removed > 0)
             {
-                ArchonLogger.LogCoreDiplomacy($"Removed {removed} modifiers of type {modifierTypeID} from relationship {key}");
+                ArchonLogger.Log($"Removed {removed} modifiers of type {modifierTypeID} from relationship {key}", "core_diplomacy");
             }
         }
     }

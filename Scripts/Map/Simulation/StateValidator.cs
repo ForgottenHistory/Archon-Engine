@@ -58,7 +58,7 @@ namespace Map.Simulation
             }
             catch (Exception ex)
             {
-                ArchonLogger.LogMapRenderingError($"Failed to calculate state checksum: {ex}");
+                ArchonLogger.LogError($"Failed to calculate state checksum: {ex}", "map_rendering");
                 return StateChecksum.Invalid();
             }
         }

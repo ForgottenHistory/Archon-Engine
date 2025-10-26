@@ -24,7 +24,7 @@ namespace Core.Commands
             if (!ValidateProvinceId(gameState, ProvinceId))
             {
                 lastValidationError = $"Invalid province ID: {ProvinceId}";
-                ArchonLogger.LogCoreCommandsWarning($"ChangeProvinceOwnerCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"ChangeProvinceOwnerCommand: {lastValidationError}", "core_commands");
                 return false;
             }
 
@@ -32,7 +32,7 @@ namespace Core.Commands
             if (!ValidateCountryId(gameState, NewOwner))
             {
                 lastValidationError = $"Invalid country ID: {NewOwner}";
-                ArchonLogger.LogCoreCommandsWarning($"ChangeProvinceOwnerCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"ChangeProvinceOwnerCommand: {lastValidationError}", "core_commands");
                 return false;
             }
 
@@ -41,7 +41,7 @@ namespace Core.Commands
             if (currentOwner == NewOwner)
             {
                 lastValidationError = $"Province {ProvinceId} already owned by Country {NewOwner}";
-                ArchonLogger.LogCoreCommandsWarning($"ChangeProvinceOwnerCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"ChangeProvinceOwnerCommand: {lastValidationError}", "core_commands");
                 return false;
             }
 
@@ -117,7 +117,7 @@ namespace Core.Commands
             if (ProvinceIds == null || ProvinceIds.Length == 0)
             {
                 lastValidationError = "No provinces specified for transfer";
-                ArchonLogger.LogCoreCommandsWarning($"TransferProvincesCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"TransferProvincesCommand: {lastValidationError}", "core_commands");
                 return false;
             }
 
@@ -125,7 +125,7 @@ namespace Core.Commands
             if (!ValidateCountryId(gameState, NewOwner))
             {
                 lastValidationError = $"Invalid country ID: {NewOwner}";
-                ArchonLogger.LogCoreCommandsWarning($"TransferProvincesCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"TransferProvincesCommand: {lastValidationError}", "core_commands");
                 return false;
             }
 
@@ -136,7 +136,7 @@ namespace Core.Commands
                 if (!ValidateProvinceId(gameState, ProvinceIds[i]))
                 {
                     lastValidationError = $"Invalid province ID in batch: {ProvinceIds[i]}";
-                    ArchonLogger.LogCoreCommandsWarning($"TransferProvincesCommand: {lastValidationError}");
+                    ArchonLogger.LogWarning($"TransferProvincesCommand: {lastValidationError}", "core_commands");
                     return false;
                 }
 

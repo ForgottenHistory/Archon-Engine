@@ -72,7 +72,7 @@ namespace Map.MapModes
         {
             if (isInitialized)
             {
-                ArchonLogger.LogMapModesWarning("MapModeManager: Already initialized, skipping");
+                ArchonLogger.LogWarning("MapModeManager: Already initialized, skipping", "map_modes");
                 return;
             }
 
@@ -85,19 +85,19 @@ namespace Map.MapModes
             // Validate required dependencies
             if (gameState == null)
             {
-                ArchonLogger.LogMapModesError("MapModeManager: GameState is null - cannot initialize");
+                ArchonLogger.LogError("MapModeManager: GameState is null - cannot initialize", "map_modes");
                 return;
             }
 
             if (mapMaterial == null)
             {
-                ArchonLogger.LogMapModesError("MapModeManager: Material is null - cannot initialize");
+                ArchonLogger.LogError("MapModeManager: Material is null - cannot initialize", "map_modes");
                 return;
             }
 
             if (provinceMapping == null)
             {
-                ArchonLogger.LogMapModesError("MapModeManager: ProvinceMapping is null - cannot initialize");
+                ArchonLogger.LogError("MapModeManager: ProvinceMapping is null - cannot initialize", "map_modes");
                 return;
             }
 
@@ -108,7 +108,7 @@ namespace Map.MapModes
 
             isInitialized = true;
 
-            ArchonLogger.LogMapInit("MapModeManager initialized - ready for GAME to register handlers and set mode");
+            ArchonLogger.Log("MapModeManager initialized - ready for GAME to register handlers and set mode", "map_initialization");
         }
 
         private void InitializeTextures()
@@ -117,7 +117,7 @@ namespace Map.MapModes
             var textureManager = Object.FindFirstObjectByType<MapTextureManager>();
             if (textureManager == null)
             {
-                ArchonLogger.LogMapModesError("MapModeManager: MapTextureManager not found");
+                ArchonLogger.LogError("MapModeManager: MapTextureManager not found", "map_modes");
                 return;
             }
 
@@ -157,7 +157,7 @@ namespace Map.MapModes
                 });
             }
 
-            ArchonLogger.LogMapInit($"MapModeManager: Registered handler for {mode} mode");
+            ArchonLogger.Log($"MapModeManager: Registered handler for {mode} mode", "map_initialization");
         }
 
         private void InitializeUpdateScheduler()
@@ -172,7 +172,7 @@ namespace Map.MapModes
 
             if (!modeHandlers.TryGetValue(mode, out var newHandler))
             {
-                ArchonLogger.LogMapModesError($"No handler for map mode: {mode}");
+                ArchonLogger.LogError($"No handler for map mode: {mode}", "map_modes");
                 return;
             }
 
@@ -197,22 +197,22 @@ namespace Map.MapModes
 
             // DEBUG: Verify which texture is actually bound to the material after update
             var boundPalette = mapMaterial.GetTexture(Shader.PropertyToID("_CountryColorPalette"));
-            ArchonLogger.LogMapInit($"MapModeManager: After SetMapMode, material has CountryColorPalette instance {boundPalette?.GetInstanceID()} bound (dataTextures has instance {dataTextures?.CountryColorPalette?.GetInstanceID()})");
+            ArchonLogger.Log($"MapModeManager: After SetMapMode, material has CountryColorPalette instance {boundPalette?.GetInstanceID()} bound (dataTextures has instance {dataTextures?.CountryColorPalette?.GetInstanceID()})", "map_initialization");
             if (boundPalette != null && dataTextures?.CountryColorPalette != null)
             {
                 if (boundPalette.GetInstanceID() == dataTextures.CountryColorPalette.GetInstanceID())
                 {
-                    ArchonLogger.LogMapInit("MapModeManager: ✓ Material is bound to the CORRECT texture instance that we're updating");
+                    ArchonLogger.Log("MapModeManager: ✓ Material is bound to the CORRECT texture instance that we're updating", "map_initialization");
                 }
                 else
                 {
-                    ArchonLogger.LogMapInitError($"MapModeManager: ✗ Material is bound to WRONG texture! Material has {boundPalette.GetInstanceID()}, but we're updating {dataTextures.CountryColorPalette.GetInstanceID()}");
+                    ArchonLogger.LogError($"MapModeManager: ✗ Material is bound to WRONG texture! Material has {boundPalette.GetInstanceID()}, but we're updating {dataTextures.CountryColorPalette.GetInstanceID()}", "map_initialization");
                 }
             }
 
             if (logModeChanges)
             {
-                ArchonLogger.LogMapInit($"Switched to {currentMode} mode");
+                ArchonLogger.Log($"Switched to {currentMode} mode", "map_initialization");
             }
         }
 
@@ -238,7 +238,7 @@ namespace Map.MapModes
             if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
             {
                 currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
-                ArchonLogger.LogMapInit($"MapModeManager: Forced texture update for {currentMode} mode");
+                ArchonLogger.Log($"MapModeManager: Forced texture update for {currentMode} mode", "map_initialization");
             }
         }
 
@@ -260,13 +260,13 @@ namespace Map.MapModes
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogMapModesWarning("MapModeManager: Cannot update material - not initialized");
+                ArchonLogger.LogWarning("MapModeManager: Cannot update material - not initialized", "map_modes");
                 return;
             }
 
             if (newMaterial == null)
             {
-                ArchonLogger.LogMapModesError("MapModeManager: Cannot update to null material");
+                ArchonLogger.LogError("MapModeManager: Cannot update to null material", "map_modes");
                 return;
             }
 
@@ -287,7 +287,7 @@ namespace Map.MapModes
                 }
             }
 
-            ArchonLogger.LogMapInit($"MapModeManager: Updated material reference and re-applied {currentMode} mode");
+            ArchonLogger.Log($"MapModeManager: Updated material reference and re-applied {currentMode} mode", "map_initialization");
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Map.MapModes
             if (!isInitialized || dataTextures == null || mapMaterial == null) return;
 
             dataTextures.BindToMaterial(mapMaterial);
-            ArchonLogger.LogMapInit($"MapModeManager: Rebound map mode textures to material (CountryColorPalette, etc.)");
+            ArchonLogger.Log($"MapModeManager: Rebound map mode textures to material (CountryColorPalette, etc.)", "map_initialization");
         }
 
         void OnDestroy()

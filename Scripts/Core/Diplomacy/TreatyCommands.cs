@@ -31,14 +31,14 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, Country1))
             {
                 lastValidationError = $"Invalid country ID: {Country1}";
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"FormAllianceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
                 lastValidationError = $"Invalid country ID: {Country2}";
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"FormAllianceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -46,7 +46,7 @@ namespace Core.Diplomacy
             if (Country1 == Country2)
             {
                 lastValidationError = $"Cannot form alliance with self (Country {Country1})";
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"FormAllianceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -56,7 +56,7 @@ namespace Core.Diplomacy
             if (diplomacy.AreAllied(Country1, Country2))
             {
                 lastValidationError = $"Already allied (Countries {Country1} and {Country2})";
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"FormAllianceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -64,7 +64,7 @@ namespace Core.Diplomacy
             if (diplomacy.IsAtWar(Country1, Country2))
             {
                 lastValidationError = $"Cannot form alliance during war (Countries {Country1} vs {Country2})";
-                ArchonLogger.LogCoreDiplomacyWarning($"FormAllianceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"FormAllianceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -95,7 +95,7 @@ namespace Core.Diplomacy
 
         public override void Undo(GameState gameState)
         {
-            ArchonLogger.LogCoreDiplomacyWarning("FormAllianceCommand: Undo not supported");
+            ArchonLogger.LogWarning("FormAllianceCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)
@@ -128,14 +128,14 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, Country1))
             {
                 lastValidationError = $"Invalid country ID: {Country1}";
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakAllianceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"BreakAllianceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
                 lastValidationError = $"Invalid country ID: {Country2}";
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakAllianceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"BreakAllianceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -145,7 +145,7 @@ namespace Core.Diplomacy
             if (!diplomacy.AreAllied(Country1, Country2))
             {
                 lastValidationError = $"Not allied (Countries {Country1} and {Country2})";
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakAllianceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"BreakAllianceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -176,7 +176,7 @@ namespace Core.Diplomacy
 
         public override void Undo(GameState gameState)
         {
-            ArchonLogger.LogCoreDiplomacyWarning("BreakAllianceCommand: Undo not supported");
+            ArchonLogger.LogWarning("BreakAllianceCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)
@@ -209,21 +209,21 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, Country1))
             {
                 lastValidationError = $"Invalid country ID: {Country1}";
-                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"FormNonAggressionPactCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
                 lastValidationError = $"Invalid country ID: {Country2}";
-                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"FormNonAggressionPactCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (Country1 == Country2)
             {
                 lastValidationError = $"Cannot form Non-Aggression Pact with self (Country {Country1})";
-                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"FormNonAggressionPactCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -232,7 +232,7 @@ namespace Core.Diplomacy
             if (diplomacy.HasNonAggressionPact(Country1, Country2))
             {
                 lastValidationError = $"Non-Aggression Pact already exists (Countries {Country1} and {Country2})";
-                ArchonLogger.LogCoreDiplomacyWarning($"FormNonAggressionPactCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"FormNonAggressionPactCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -263,7 +263,7 @@ namespace Core.Diplomacy
 
         public override void Undo(GameState gameState)
         {
-            ArchonLogger.LogCoreDiplomacyWarning("FormNonAggressionPactCommand: Undo not supported");
+            ArchonLogger.LogWarning("FormNonAggressionPactCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)
@@ -296,14 +296,14 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, Country1))
             {
                 lastValidationError = $"Invalid country ID: {Country1}";
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakNonAggressionPactCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"BreakNonAggressionPactCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, Country2))
             {
                 lastValidationError = $"Invalid country ID: {Country2}";
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakNonAggressionPactCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"BreakNonAggressionPactCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -312,7 +312,7 @@ namespace Core.Diplomacy
             if (!diplomacy.HasNonAggressionPact(Country1, Country2))
             {
                 lastValidationError = $"Non-Aggression Pact does not exist (Countries {Country1} and {Country2})";
-                ArchonLogger.LogCoreDiplomacyWarning($"BreakNonAggressionPactCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"BreakNonAggressionPactCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -343,7 +343,7 @@ namespace Core.Diplomacy
 
         public override void Undo(GameState gameState)
         {
-            ArchonLogger.LogCoreDiplomacyWarning("BreakNonAggressionPactCommand: Undo not supported");
+            ArchonLogger.LogWarning("BreakNonAggressionPactCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)
@@ -376,21 +376,21 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, GuarantorID))
             {
                 lastValidationError = $"Invalid guarantor ID: {GuarantorID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"GuaranteeIndependenceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, GuaranteedID))
             {
                 lastValidationError = $"Invalid guaranteed ID: {GuaranteedID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"GuaranteeIndependenceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (GuarantorID == GuaranteedID)
             {
                 lastValidationError = $"Cannot guarantee independence of self (Country {GuarantorID})";
-                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"GuaranteeIndependenceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -399,7 +399,7 @@ namespace Core.Diplomacy
             if (diplomacy.IsGuaranteeing(GuarantorID, GuaranteedID))
             {
                 lastValidationError = $"Already guaranteeing independence (Country {GuarantorID} → Country {GuaranteedID})";
-                ArchonLogger.LogCoreDiplomacyWarning($"GuaranteeIndependenceCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"GuaranteeIndependenceCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -430,7 +430,7 @@ namespace Core.Diplomacy
 
         public override void Undo(GameState gameState)
         {
-            ArchonLogger.LogCoreDiplomacyWarning("GuaranteeIndependenceCommand: Undo not supported");
+            ArchonLogger.LogWarning("GuaranteeIndependenceCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)
@@ -463,14 +463,14 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, GuarantorID))
             {
                 lastValidationError = $"Invalid guarantor ID: {GuarantorID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeGuaranteeCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"RevokeGuaranteeCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, GuaranteedID))
             {
                 lastValidationError = $"Invalid guaranteed ID: {GuaranteedID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeGuaranteeCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"RevokeGuaranteeCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -479,7 +479,7 @@ namespace Core.Diplomacy
             if (!diplomacy.IsGuaranteeing(GuarantorID, GuaranteedID))
             {
                 lastValidationError = $"Not guaranteeing independence (Country {GuarantorID} → Country {GuaranteedID})";
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeGuaranteeCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"RevokeGuaranteeCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -510,7 +510,7 @@ namespace Core.Diplomacy
 
         public override void Undo(GameState gameState)
         {
-            ArchonLogger.LogCoreDiplomacyWarning("RevokeGuaranteeCommand: Undo not supported");
+            ArchonLogger.LogWarning("RevokeGuaranteeCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)
@@ -543,21 +543,21 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, GranterID))
             {
                 lastValidationError = $"Invalid granter ID: {GranterID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"GrantMilitaryAccessCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, RecipientID))
             {
                 lastValidationError = $"Invalid recipient ID: {RecipientID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"GrantMilitaryAccessCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (GranterID == RecipientID)
             {
                 lastValidationError = $"Cannot grant military access to self (Country {GranterID})";
-                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"GrantMilitaryAccessCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -566,7 +566,7 @@ namespace Core.Diplomacy
             if (diplomacy.HasMilitaryAccess(GranterID, RecipientID))
             {
                 lastValidationError = $"Military access already granted (Country {GranterID} → Country {RecipientID})";
-                ArchonLogger.LogCoreDiplomacyWarning($"GrantMilitaryAccessCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"GrantMilitaryAccessCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -597,7 +597,7 @@ namespace Core.Diplomacy
 
         public override void Undo(GameState gameState)
         {
-            ArchonLogger.LogCoreDiplomacyWarning("GrantMilitaryAccessCommand: Undo not supported");
+            ArchonLogger.LogWarning("GrantMilitaryAccessCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)
@@ -630,14 +630,14 @@ namespace Core.Diplomacy
             if (!ValidateCountryId(gameState, GranterID))
             {
                 lastValidationError = $"Invalid granter ID: {GranterID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeMilitaryAccessCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"RevokeMilitaryAccessCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
             if (!ValidateCountryId(gameState, RecipientID))
             {
                 lastValidationError = $"Invalid recipient ID: {RecipientID}";
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeMilitaryAccessCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"RevokeMilitaryAccessCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -646,7 +646,7 @@ namespace Core.Diplomacy
             if (!diplomacy.HasMilitaryAccess(GranterID, RecipientID))
             {
                 lastValidationError = $"Military access not granted (Country {GranterID} → Country {RecipientID})";
-                ArchonLogger.LogCoreDiplomacyWarning($"RevokeMilitaryAccessCommand: {lastValidationError}");
+                ArchonLogger.LogWarning($"RevokeMilitaryAccessCommand: {lastValidationError}", "core_diplomacy");
                 return false;
             }
 
@@ -677,7 +677,7 @@ namespace Core.Diplomacy
 
         public override void Undo(GameState gameState)
         {
-            ArchonLogger.LogCoreDiplomacyWarning("RevokeMilitaryAccessCommand: Undo not supported");
+            ArchonLogger.LogWarning("RevokeMilitaryAccessCommand: Undo not supported", "core_diplomacy");
         }
 
         public override void Serialize(BinaryWriter writer)

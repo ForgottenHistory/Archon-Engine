@@ -31,7 +31,7 @@ namespace Map.Integration
             var provinceData = dataManager.GetProvinceByID(provinceID);
             if (provinceData.id == 0)
             {
-                ArchonLogger.LogMapRenderingWarning($"ProvinceTextureSynchronizer: Cannot sync owner - province {provinceID} not found");
+                ArchonLogger.LogWarning($"ProvinceTextureSynchronizer: Cannot sync owner - province {provinceID} not found", "map_rendering");
                 return;
             }
 
@@ -39,7 +39,7 @@ namespace Map.Integration
             // For now, the CPU path is deprecated and commented out in MapDataIntegrator
             // GPU-based updates should be triggered through OwnerTextureDispatcher
 
-            ArchonLogger.LogMapRenderingWarning($"ProvinceTextureSynchronizer: Owner sync for province {provinceID} requires GPU compute shader implementation");
+            ArchonLogger.LogWarning($"ProvinceTextureSynchronizer: Owner sync for province {provinceID} requires GPU compute shader implementation", "map_rendering");
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Map.Integration
             var provinceData = dataManager.GetProvinceByID(provinceID);
             if (provinceData.id == 0)
             {
-                ArchonLogger.LogMapRenderingWarning($"ProvinceTextureSynchronizer: Cannot sync color - province {provinceID} not found");
+                ArchonLogger.LogWarning($"ProvinceTextureSynchronizer: Cannot sync color - province {provinceID} not found", "map_rendering");
                 return;
             }
 
@@ -84,7 +84,7 @@ namespace Map.Integration
             // Apply texture changes
             textureManager.ApplyTextureChanges();
 
-            ArchonLogger.LogMapRendering($"ProvinceTextureSynchronizer: Synced color for province {provinceID} ({updatedPixels} pixels updated)");
+            ArchonLogger.Log($"ProvinceTextureSynchronizer: Synced color for province {provinceID} ({updatedPixels} pixels updated)", "map_rendering");
         }
 
         /// <summary>
@@ -95,14 +95,14 @@ namespace Map.Integration
         {
             // TODO: Development field doesn't exist in ProvinceData
             // This would need to be stored separately if needed
-            ArchonLogger.LogMapRenderingWarning($"ProvinceTextureSynchronizer: Development sync not implemented - no development field in ProvinceData");
+            ArchonLogger.LogWarning($"ProvinceTextureSynchronizer: Development sync not implemented - no development field in ProvinceData", "map_rendering");
             return;
 
             /* Original implementation - development field doesn't exist
             var provinceData = dataManager.GetProvinceByID(provinceID);
             if (provinceData.id == 0)
             {
-                ArchonLogger.LogMapRenderingWarning($"ProvinceTextureSynchronizer: Cannot sync development - province {provinceID} not found");
+                ArchonLogger.LogWarning($"ProvinceTextureSynchronizer: Cannot sync development - province {provinceID} not found", "map_rendering");
                 return;
             }
 
@@ -167,7 +167,7 @@ namespace Map.Integration
             var provinces = dataManager.GetAllProvinces();
             int provinceCount = provinces.Length;
 
-            ArchonLogger.LogMapRendering($"ProvinceTextureSynchronizer: Starting batch sync of {provinceCount} provinces");
+            ArchonLogger.Log($"ProvinceTextureSynchronizer: Starting batch sync of {provinceCount} provinces", "map_rendering");
 
             foreach (var province in provinces)
             {
@@ -176,7 +176,7 @@ namespace Map.Integration
                 if (syncDevelopment) SyncProvinceDevelopment(province.id);
             }
 
-            ArchonLogger.LogMapRendering($"ProvinceTextureSynchronizer: Batch sync complete");
+            ArchonLogger.Log($"ProvinceTextureSynchronizer: Batch sync complete", "map_rendering");
         }
     }
 }

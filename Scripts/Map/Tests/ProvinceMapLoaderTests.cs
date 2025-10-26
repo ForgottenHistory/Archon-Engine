@@ -55,7 +55,7 @@ namespace Map.Tests
                 Assert.IsTrue(result.ColorToID.IsCreated, "ColorToID mapping should be created");
                 Assert.IsTrue(result.ProvincePixels.IsCreated, "Province pixels should be created");
 
-                ArchonLogger.LogMapRendering($"Loaded {result.ProvinceCount} provinces from {result.Width}x{result.Height} map");
+                ArchonLogger.Log($"Loaded {result.ProvinceCount} provinces from {result.Width}x{result.Height} map", "map_rendering");
             }
             finally
             {
@@ -213,7 +213,7 @@ namespace Map.Tests
             {
                 if (result.Success)
                 {
-                    ArchonLogger.LogMapRendering($"Loading {result.ProvinceCount} provinces took {stopwatch.ElapsedMilliseconds}ms");
+                    ArchonLogger.Log($"Loading {result.ProvinceCount} provinces took {stopwatch.ElapsedMilliseconds}ms", "map_rendering");
 
                     // Performance expectation: should load reasonably fast
                     // This is more of a benchmark than a strict test

@@ -65,7 +65,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                ArchonLogger.LogMapInit($"MapTextureManager initialized with {mapWidth}x{mapHeight} textures");
+                ArchonLogger.Log($"MapTextureManager initialized with {mapWidth}x{mapHeight} textures", "map_initialization");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                ArchonLogger.LogMapInit("MapTextureManager: Bound all textures to material");
+                ArchonLogger.Log("MapTextureManager: Bound all textures to material", "map_initialization");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Map.Rendering
             totalMemory += pixelCount * 2; // Border (RG16)
             totalMemory += pixelCount * 4; // Highlight (ARGB32)
 
-            ArchonLogger.LogMapRendering($"Map texture memory usage: {totalMemory / 1024f / 1024f:F2} MB");
+            ArchonLogger.Log($"Map texture memory usage: {totalMemory / 1024f / 1024f:F2} MB", "map_rendering");
         }
 #endif
     }

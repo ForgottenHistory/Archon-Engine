@@ -92,18 +92,18 @@ namespace Core
         {
             if (isLoading)
             {
-                ArchonLogger.LogCoreSimulationWarning("Game initialization already in progress!");
+                ArchonLogger.LogWarning("Game initialization already in progress!", "core_simulation");
                 return;
             }
 
             if (gameSettings == null)
             {
-                ArchonLogger.LogCoreSimulationError("GameSettings not assigned! Cannot initialize game.");
+                ArchonLogger.LogError("GameSettings not assigned! Cannot initialize game.", "core_simulation");
                 ReportError("Missing GameSettings configuration");
                 return;
             }
 
-            ArchonLogger.LogCoreSimulation("Starting game initialization...");
+            ArchonLogger.Log("Starting game initialization...", "core_simulation");
             StartCoroutine(InitializeGameCoroutine());
         }
 
@@ -185,7 +185,7 @@ namespace Core
         {
             if (enableDetailedLogging)
             {
-                ArchonLogger.LogCoreSimulation($"Starting phase: {phase.PhaseName}");
+                ArchonLogger.Log($"Starting phase: {phase.PhaseName}", "core_simulation");
             }
 
             yield return StartCoroutine(phase.ExecuteAsync(initContext));
@@ -211,7 +211,7 @@ namespace Core
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogCoreSimulationError($"Critical error creating initialization phase: {e.Message}");
+                ArchonLogger.LogError($"Critical error creating initialization phase: {e.Message}", "core_simulation");
                 Debug.LogException(e);
                 ReportError($"Phase creation failed: {e.Message}");
                 yield break;
@@ -235,7 +235,7 @@ namespace Core
             // Handle any errors that occurred
             if (hasError)
             {
-                ArchonLogger.LogCoreSimulationError($"Error during initialization phase: {errorMessage}");
+                ArchonLogger.LogError($"Error during initialization phase: {errorMessage}", "core_simulation");
                 ReportError($"Phase failed: {errorMessage}");
             }
         }
@@ -279,7 +279,7 @@ namespace Core
             currentProgress = 100f;
             currentStatus = "Game ready!";
 
-            ArchonLogger.LogCoreSimulation($"Game initialization complete in {totalTime:F2} seconds");
+            ArchonLogger.Log($"Game initialization complete in {totalTime:F2} seconds", "core_simulation");
 
             // Emit the main simulation data ready event for presentation layer
             var simulationEvent = new SimulationDataReadyEvent
@@ -290,7 +290,7 @@ namespace Core
                 TimeStamp = Time.time
             };
 
-            ArchonLogger.LogCoreSimulation($"Emitting SimulationDataReadyEvent: {simulationEvent.ProvinceCount} provinces, {simulationEvent.CountryCount} countries");
+            ArchonLogger.Log($"Emitting SimulationDataReadyEvent: {simulationEvent.ProvinceCount} provinces, {simulationEvent.CountryCount} countries", "core_simulation");
             gameState.EventBus.Emit(simulationEvent);
 
             // Process events immediately to ensure MapGenerator receives the event
@@ -308,7 +308,7 @@ namespace Core
             currentPhase = LoadingPhase.Error;
             currentStatus = $"Error: {error}";
 
-            ArchonLogger.LogCoreSimulationError($"Game initialization failed: {error}");
+            ArchonLogger.LogError($"Game initialization failed: {error}", "core_simulation");
 
             // Emit error event
             OnLoadingComplete?.Invoke(false, error);
@@ -325,7 +325,7 @@ namespace Core
 
             if (enableDetailedLogging)
             {
-                ArchonLogger.LogCoreSimulation($"[{phase}] {status} ({progress:F1}%)");
+                ArchonLogger.Log($"[{phase}] {status} ({progress:F1}%)", "core_simulation");
             }
 
             OnLoadingProgress?.Invoke(phase, progress, status);
@@ -349,7 +349,7 @@ namespace Core
         {
             if (enableDetailedLogging)
             {
-                ArchonLogger.LogCoreSimulation($"[{currentPhase}] Complete: {message}");
+                ArchonLogger.Log($"[{currentPhase}] Complete: {message}", "core_simulation");
             }
         }
 

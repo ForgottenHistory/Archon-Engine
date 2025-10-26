@@ -31,17 +31,17 @@ namespace Core.Systems.Province
         /// </summary>
         public void LoadProvinceInitialStates(string dataDirectory)
         {
-            ArchonLogger.LogCoreSimulation($"Loading province initial states from {dataDirectory} using Burst jobs");
+            ArchonLogger.Log($"Loading province initial states from {dataDirectory} using Burst jobs", "core_simulation");
 
             var result = BurstProvinceHistoryLoader.LoadProvinceInitialStates(dataDirectory);
 
             if (!result.Success)
             {
-                ArchonLogger.LogCoreSimulationError($"Failed to load province initial states: {result.ErrorMessage}");
+                ArchonLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}", "core_simulation");
                 return;
             }
 
-            ArchonLogger.LogCoreSimulation($"Province initial states loaded: {result.LoadedCount} successful, {result.FailedCount} failed");
+            ArchonLogger.Log($"Province initial states loaded: {result.LoadedCount} successful, {result.FailedCount} failed", "core_simulation");
 
             ApplyInitialStates(result.InitialStates);
 
@@ -60,17 +60,17 @@ namespace Core.Systems.Province
         /// </summary>
         public ProvinceInitialStateLoadResult LoadProvinceInitialStatesForLinking(string dataDirectory)
         {
-            ArchonLogger.LogCoreSimulation($"Loading province initial states for reference linking from {dataDirectory}");
+            ArchonLogger.Log($"Loading province initial states for reference linking from {dataDirectory}", "core_simulation");
 
             var result = BurstProvinceHistoryLoader.LoadProvinceInitialStates(dataDirectory);
 
             if (!result.Success)
             {
-                ArchonLogger.LogCoreSimulationError($"Failed to load province initial states: {result.ErrorMessage}");
+                ArchonLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}", "core_simulation");
                 return result;
             }
 
-            ArchonLogger.LogCoreSimulation($"Province initial states loaded for linking: {result.LoadedCount} successful, {result.FailedCount} failed");
+            ArchonLogger.Log($"Province initial states loaded for linking: {result.LoadedCount} successful, {result.FailedCount} failed", "core_simulation");
 
             // Return the raw data WITHOUT applying it - caller will resolve references first
             return result;
@@ -108,7 +108,7 @@ namespace Core.Systems.Province
 
                 if (!dataManager.HasProvince(provinceId))
                 {
-                    ArchonLogger.LogCoreSimulationWarning($"Province {initialState.ProvinceID} has initial state but doesn't exist in map data");
+                    ArchonLogger.LogWarning($"Province {initialState.ProvinceID} has initial state but doesn't exist in map data", "core_simulation");
                     continue;
                 }
 
@@ -116,7 +116,7 @@ namespace Core.Systems.Province
                 appliedCount++;
             }
 
-            ArchonLogger.LogCoreSimulation($"Applied initial state to {appliedCount} provinces");
+            ArchonLogger.Log($"Applied initial state to {appliedCount} provinces", "core_simulation");
         }
 
         /// <summary>

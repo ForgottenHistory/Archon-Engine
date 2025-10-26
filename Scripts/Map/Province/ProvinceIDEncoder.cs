@@ -117,7 +117,7 @@ namespace Map.Province
             // Don't count ocean (ID 0) as a province
             result.ProvinceCount = reserveOceanID ? result.ColorToID.Count - 1 : result.ColorToID.Count;
 
-            ArchonLogger.LogMapTextures($"Province ID encoding complete: {result.ProvinceCount} provinces encoded");
+            ArchonLogger.Log($"Province ID encoding complete: {result.ProvinceCount} provinces encoded", "map_textures");
             return result;
         }
 
@@ -177,13 +177,13 @@ namespace Map.Province
             {
                 if (!idToColor.ContainsKey(kvp.Value))
                 {
-                    ArchonLogger.LogMapTexturesError($"Missing reverse mapping for color {kvp.Key} -> ID {kvp.Value}");
+                    ArchonLogger.LogError($"Missing reverse mapping for color {kvp.Key} -> ID {kvp.Value}", "map_textures");
                     return false;
                 }
 
                 if (!idToColor[kvp.Value].Equals(kvp.Key))
                 {
-                    ArchonLogger.LogMapTexturesError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {idToColor[kvp.Value]}");
+                    ArchonLogger.LogError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {idToColor[kvp.Value]}", "map_textures");
                     return false;
                 }
             }
@@ -193,13 +193,13 @@ namespace Map.Province
             {
                 if (!colorToID.ContainsKey(kvp.Value))
                 {
-                    ArchonLogger.LogMapTexturesError($"Missing forward mapping for ID {kvp.Key} -> color {kvp.Value}");
+                    ArchonLogger.LogError($"Missing forward mapping for ID {kvp.Key} -> color {kvp.Value}", "map_textures");
                     return false;
                 }
 
                 if (colorToID[kvp.Value] != kvp.Key)
                 {
-                    ArchonLogger.LogMapTexturesError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {colorToID[kvp.Value]}");
+                    ArchonLogger.LogError($"Inconsistent mapping: {kvp.Key} -> {kvp.Value} -> {colorToID[kvp.Value]}", "map_textures");
                     return false;
                 }
             }
@@ -280,7 +280,7 @@ namespace Map.Province
         {
             if (idToColor.Count == 0)
             {
-                ArchonLogger.LogMapTextures("No province IDs to analyze");
+                ArchonLogger.Log("No province IDs to analyze", "map_textures");
                 return;
             }
 
@@ -294,26 +294,26 @@ namespace Map.Province
                 maxID = math.max(maxID, kvp.Key);
             }
 
-            ArchonLogger.LogMapTextures($"Province ID Distribution Analysis:");
-            ArchonLogger.LogMapTextures($"  Total Provinces: {totalIDs}");
-            ArchonLogger.LogMapTextures($"  ID Range: {minID} to {maxID}");
-            ArchonLogger.LogMapTextures($"  ID Span: {maxID - minID + 1}");
-            ArchonLogger.LogMapTextures($"  Efficiency: {(float)totalIDs / (maxID - minID + 1) * 100f:F1}%");
+            ArchonLogger.Log($"Province ID Distribution Analysis:", "map_textures");
+            ArchonLogger.Log($"  Total Provinces: {totalIDs}", "map_textures");
+            ArchonLogger.Log($"  ID Range: {minID} to {maxID}", "map_textures");
+            ArchonLogger.Log($"  ID Span: {maxID - minID + 1}", "map_textures");
+            ArchonLogger.Log($"  Efficiency: {(float)totalIDs / (maxID - minID + 1) * 100f:F1}%", "map_textures");
 
             // Check for ID 0 (ocean)
             if (idToColor.ContainsKey(0))
             {
-                ArchonLogger.LogMapTextures($"  Ocean Color: {idToColor[0]}");
+                ArchonLogger.Log($"  Ocean Color: {idToColor[0]}", "map_textures");
             }
 
             // Sample some province colors
             int sampleCount = math.min(5, totalIDs);
-            ArchonLogger.LogMapTextures($"  Sample Province Colors:");
+            ArchonLogger.Log($"  Sample Province Colors:", "map_textures");
             int samples = 0;
             foreach (var kvp in idToColor)
             {
                 if (samples >= sampleCount) break;
-                ArchonLogger.LogMapTextures($"    ID {kvp.Key}: {kvp.Value}");
+                ArchonLogger.Log($"    ID {kvp.Key}: {kvp.Value}", "map_textures");
                 samples++;
             }
         }

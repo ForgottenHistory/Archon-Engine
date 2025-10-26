@@ -59,7 +59,7 @@ namespace Core.Initialization
         {
             HasError = true;
             ErrorMessage = error;
-            ArchonLogger.LogCoreDataLoadingError($"Initialization Error: {error}");
+            ArchonLogger.LogError($"Initialization Error: {error}", "core_data_loading");
         }
     }
 }

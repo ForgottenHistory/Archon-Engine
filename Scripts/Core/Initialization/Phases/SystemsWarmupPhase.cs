@@ -40,14 +40,14 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.LogCoreDataLoading("Phase complete: All systems ready");
+                ArchonLogger.Log("Phase complete: All systems ready", "core_data_loading");
             }
         }
 
         public void Rollback(InitializationContext context)
         {
             // No specific cleanup needed - GameState handles all state
-            ArchonLogger.LogCoreDataLoading("Rolling back systems warmup phase");
+            ArchonLogger.Log("Rolling back systems warmup phase", "core_data_loading");
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Core.Initialization.Phases
             var provinceCount = context.GameState.ProvinceQueries.GetTotalProvinceCount();
             var countryCount = context.GameState.CountryQueries.GetTotalCountryCount();
 
-            ArchonLogger.LogCoreDataLoading($"Cache warm-up complete: {provinceCount} provinces, {countryCount} countries");
+            ArchonLogger.Log($"Cache warm-up complete: {provinceCount} provinces, {countryCount} countries", "core_data_loading");
         }
 
         /// <summary>
@@ -72,24 +72,24 @@ namespace Core.Initialization.Phases
             // Validate province system
             if (!context.ProvinceSystem.IsInitialized)
             {
-                ArchonLogger.LogCoreDataLoadingError("ProvinceSystem not properly initialized!");
+                ArchonLogger.LogError("ProvinceSystem not properly initialized!", "core_data_loading");
                 issues++;
             }
 
             // Validate country system
             if (!context.CountrySystem.IsInitialized)
             {
-                ArchonLogger.LogCoreDataLoadingError("CountrySystem not properly initialized!");
+                ArchonLogger.LogError("CountrySystem not properly initialized!", "core_data_loading");
                 issues++;
             }
 
             if (issues > 0)
             {
-                ArchonLogger.LogCoreDataLoadingWarning($"Data validation found {issues} issues");
+                ArchonLogger.LogWarning($"Data validation found {issues} issues", "core_data_loading");
             }
             else
             {
-                ArchonLogger.LogCoreDataLoading("Data validation passed");
+                ArchonLogger.Log("Data validation passed", "core_data_loading");
             }
         }
     }

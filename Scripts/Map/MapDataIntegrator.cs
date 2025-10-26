@@ -74,13 +74,13 @@ namespace Map.Integration
         {
             if (textureManager == null)
             {
-                ArchonLogger.LogMapRenderingError("MapTextureManager not found! Please assign or ensure one exists in scene.");
+                ArchonLogger.LogError("MapTextureManager not found! Please assign or ensure one exists in scene.", "map_rendering");
                 return false;
             }
 
             if (mapRenderer == null)
             {
-                ArchonLogger.LogMapRenderingError("MapRenderer not found! Please assign or ensure one exists in scene.");
+                ArchonLogger.LogError("MapRenderer not found! Please assign or ensure one exists in scene.", "map_rendering");
                 return false;
             }
 
@@ -94,11 +94,11 @@ namespace Map.Integration
         {
             if (isInitialized)
             {
-                ArchonLogger.LogMapRenderingWarning("Map data already initialized!");
+                ArchonLogger.LogWarning("Map data already initialized!", "map_rendering");
                 return;
             }
 
-            ArchonLogger.LogMapRendering("Initializing map data integration...");
+            ArchonLogger.Log("Initializing map data integration...", "map_rendering");
 
             // Load province bitmap using optimized ProvinceMapProcessor (via compatibility layer)
             var loadResult = ProvinceMapLoader.LoadProvinceMap(
@@ -108,18 +108,18 @@ namespace Map.Integration
 
             if (!loadResult.Success)
             {
-                ArchonLogger.LogMapRenderingError($"Failed to load province bitmap: {loadResult.ErrorMessage}");
+                ArchonLogger.LogError($"Failed to load province bitmap: {loadResult.ErrorMessage}", "map_rendering");
 
                 // Create error texture as fallback
                 var errorTexture = ProvinceMapLoader.CreateErrorTexture(textureManager.MapWidth, textureManager.MapHeight);
-                ArchonLogger.LogMapRenderingWarning("Created error texture as fallback");
+                ArchonLogger.LogWarning("Created error texture as fallback", "map_rendering");
                 return;
             }
 
             // Resize texture manager if needed
             if (loadResult.Width != textureManager.MapWidth || loadResult.Height != textureManager.MapHeight)
             {
-                ArchonLogger.LogMapRendering($"Resizing textures to match bitmap: {loadResult.Width}x{loadResult.Height}");
+                ArchonLogger.Log($"Resizing textures to match bitmap: {loadResult.Width}x{loadResult.Height}", "map_rendering");
                 textureManager.ResizeTextures(loadResult.Width, loadResult.Height);
             }
 
@@ -132,7 +132,7 @@ namespace Map.Integration
             // Detect province neighbors if enabled
             if (detectNeighbors)
             {
-                ArchonLogger.LogMapRendering("Detecting province neighbors...");
+                ArchonLogger.Log("Detecting province neighbors...", "map_rendering");
                 var neighborResult = ProvinceNeighborDetector.DetectNeighbors(loadResult, includeOceanNeighbors);
 
                 if (neighborResult.Success)
@@ -144,26 +144,26 @@ namespace Map.Integration
                 }
                 else
                 {
-                    ArchonLogger.LogMapRenderingError($"Neighbor detection failed: {neighborResult.ErrorMessage}");
+                    ArchonLogger.LogError($"Neighbor detection failed: {neighborResult.ErrorMessage}", "map_rendering");
                 }
             }
 
             // Generate province metadata if enabled
             if (generateMetadata)
             {
-                ArchonLogger.LogMapRendering("Generating province metadata...");
+                ArchonLogger.Log("Generating province metadata...", "map_rendering");
                 var metadataResult = ProvinceMetadataGenerator.GenerateMetadata(loadResult, metadataManager.NeighborResult, generateConvexHulls);
 
                 if (metadataResult.Success)
                 {
-                    ArchonLogger.LogMapRendering($"Province metadata generation complete for {metadataResult.ProvinceMetadata.Count} provinces");
+                    ArchonLogger.Log($"Province metadata generation complete for {metadataResult.ProvinceMetadata.Count} provinces", "map_rendering");
 
                     // Update metadata manager with metadata results (automatically updates terrain flags)
                     metadataManager.SetMetadataResult(metadataResult);
                 }
                 else
                 {
-                    ArchonLogger.LogMapRenderingError($"Metadata generation failed: {metadataResult.ErrorMessage}");
+                    ArchonLogger.LogError($"Metadata generation failed: {metadataResult.ErrorMessage}", "map_rendering");
                 }
             }
 
@@ -177,7 +177,7 @@ namespace Map.Integration
             loadResult.Dispose();
 
             isInitialized = true;
-            ArchonLogger.LogMapRendering($"Map data integration complete! {dataManager.ProvinceCount} provinces loaded.");
+            ArchonLogger.Log($"Map data integration complete! {dataManager.ProvinceCount} provinces loaded.", "map_rendering");
         }
 
 
@@ -217,7 +217,7 @@ namespace Map.Integration
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogMapRenderingError("Map data not initialized!");
+                ArchonLogger.LogError("Map data not initialized!", "map_rendering");
                 return;
             }
 
@@ -238,7 +238,7 @@ namespace Map.Integration
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogMapRenderingError("Map data not initialized!");
+                ArchonLogger.LogError("Map data not initialized!", "map_rendering");
                 return;
             }
 
@@ -259,7 +259,7 @@ namespace Map.Integration
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogMapRenderingError("Map data not initialized!");
+                ArchonLogger.LogError("Map data not initialized!", "map_rendering");
                 return;
             }
 
@@ -308,9 +308,9 @@ namespace Map.Integration
         {
             if (!isInitialized) return;
 
-            ArchonLogger.LogMapRendering("Performing full data-to-texture sync...");
+            ArchonLogger.Log("Performing full data-to-texture sync...", "map_rendering");
             textureSynchronizer.SyncAllProvinces(syncOwner: false, syncColor: true, syncDevelopment: false);
-            ArchonLogger.LogMapRendering("Full sync complete!");
+            ArchonLogger.Log("Full sync complete!", "map_rendering");
         }
 
         /// <summary>
@@ -483,18 +483,18 @@ namespace Map.Integration
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogMapRendering("Map data integration not initialized.");
+                ArchonLogger.Log("Map data integration not initialized.", "map_rendering");
                 return;
             }
 
             var (totalBytes, provinceBytes, lookupBytes) = dataManager.GetMemoryUsage();
 
-            ArchonLogger.LogMapRendering($"Map Data Integration Statistics:\n" +
+            ArchonLogger.Log($"Map Data Integration Statistics:\n" +
                      $"Initialized: {isInitialized}\n" +
                      $"Provinces: {dataManager.ProvinceCount}\n" +
                      $"Texture Size: {textureManager.MapWidth}x{textureManager.MapHeight}\n" +
                      $"Memory Usage: {totalBytes / 1024f:F1} KB\n" +
-                     $"Auto Sync: {autoSyncChanges}");
+                     $"Auto Sync: {autoSyncChanges}", "map_rendering");
         }
 #endif
     }

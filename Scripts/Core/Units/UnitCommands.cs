@@ -40,28 +40,28 @@ namespace Core.Units
             if (unitSystem == null)
             {
                 lastValidationError = "UnitSystem is null";
-                ArchonLogger.LogCoreSimulationError($"[CreateUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[CreateUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
             if (provinceID == 0)
             {
                 lastValidationError = "Invalid province ID";
-                ArchonLogger.LogCoreSimulationError($"[CreateUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[CreateUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
             if (countryID == 0)
             {
                 lastValidationError = "Invalid country ID";
-                ArchonLogger.LogCoreSimulationError($"[CreateUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[CreateUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
             if (unitTypeID == 0)
             {
                 lastValidationError = "Invalid unit type ID";
-                ArchonLogger.LogCoreSimulationError($"[CreateUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[CreateUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
@@ -170,14 +170,14 @@ namespace Core.Units
             if (unitSystem == null)
             {
                 lastValidationError = "UnitSystem is null";
-                ArchonLogger.LogCoreSimulationError($"[DisbandUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[DisbandUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
             if (!unitSystem.HasUnit(unitID))
             {
                 lastValidationError = $"Unit {unitID} does not exist";
-                ArchonLogger.LogCoreSimulationError($"[DisbandUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[DisbandUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
@@ -186,7 +186,7 @@ namespace Core.Units
             if (unit.countryID != countryID)
             {
                 lastValidationError = $"Unit {unitID} is owned by Country {unit.countryID}, not Country {countryID}";
-                ArchonLogger.LogCoreSimulationError($"[DisbandUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[DisbandUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
@@ -315,21 +315,21 @@ namespace Core.Units
             if (unitSystem == null)
             {
                 lastValidationError = "UnitSystem is null";
-                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[MoveUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
             if (pathfindingSystem == null || !pathfindingSystem.IsInitialized)
             {
                 lastValidationError = "PathfindingSystem not initialized";
-                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[MoveUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
             if (!unitSystem.HasUnit(unitID))
             {
                 lastValidationError = $"Unit {unitID} does not exist";
-                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[MoveUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
@@ -339,14 +339,14 @@ namespace Core.Units
             if (unit.countryID != countryID)
             {
                 lastValidationError = $"Unit {unitID} is owned by Country {unit.countryID}, not Country {countryID}";
-                ArchonLogger.LogCoreSimulationError($"[MoveUnitCommand] {lastValidationError}");
+                ArchonLogger.LogError($"[MoveUnitCommand] {lastValidationError}", "core_simulation");
                 return false;
             }
 
             // Check if unit is already moving
             if (unitSystem.MovementQueue.IsUnitMoving(unitID))
             {
-                ArchonLogger.LogCoreSimulationWarning($"[MoveUnitCommand] Unit {unitID} is already moving - will cancel previous movement");
+                ArchonLogger.LogWarning($"[MoveUnitCommand] Unit {unitID} is already moving - will cancel previous movement", "core_simulation");
                 // Allow command to proceed - it will cancel the old movement
             }
 
@@ -375,14 +375,14 @@ namespace Core.Units
 
             if (path == null || path.Count == 0)
             {
-                ArchonLogger.LogCoreSimulationWarning($"[MoveUnitCommand] No path found from province {unit.provinceID} to {targetProvinceID}");
+                ArchonLogger.LogWarning($"[MoveUnitCommand] No path found from province {unit.provinceID} to {targetProvinceID}", "core_simulation");
                 return; // Cannot move - no path exists
             }
 
             if (path.Count == 1)
             {
                 // Already at destination
-                ArchonLogger.LogCoreSimulationWarning($"[MoveUnitCommand] Unit {unitID} is already at destination province {targetProvinceID}");
+                ArchonLogger.LogWarning($"[MoveUnitCommand] Unit {unitID} is already at destination province {targetProvinceID}", "core_simulation");
                 return;
             }
 
@@ -390,7 +390,7 @@ namespace Core.Units
             int totalHops = path.Count - 1;
             int totalDays = totalHops * movementDays;
 
-            ArchonLogger.LogCoreSimulation($"[MoveUnitCommand] Unit {unitID} pathfinding {unit.provinceID} → {targetProvinceID}: {path.Count} provinces, {totalDays} days total");
+            ArchonLogger.Log($"[MoveUnitCommand] Unit {unitID} pathfinding {unit.provinceID} → {targetProvinceID}: {path.Count} provinces, {totalDays} days total", "core_simulation");
 
             // Start time-based movement with full path (EU4-style with pathfinding)
             if (path.Count == 2)
