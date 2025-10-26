@@ -46,6 +46,15 @@ namespace Core.AI
                 return;
             }
 
+            // Dispose old goal if re-registering to prevent NativeList leaks
+            if (goalsByName.TryGetValue(goal.GoalName, out var oldGoal))
+            {
+                oldGoal.Dispose();
+                goals.Remove(oldGoal);
+                goalsByID.Remove(oldGoal.GoalID);
+                ArchonLogger.LogWarning($"AIGoalRegistry: Disposed old goal '{goal.GoalName}' (re-registration)", "core_ai");
+            }
+
             // Assign sequential ID
             goal.GoalID = nextID++;
 

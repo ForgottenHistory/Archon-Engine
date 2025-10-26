@@ -143,6 +143,16 @@ namespace Map.MapModes
                 modeHandlers = new Dictionary<MapMode, IMapModeHandler>();
             }
 
+            // Dispose old handler if replacing to prevent ComputeBuffer leaks
+            if (modeHandlers.TryGetValue(mode, out var oldHandler))
+            {
+                if (oldHandler is System.IDisposable disposable)
+                {
+                    disposable.Dispose();
+                    ArchonLogger.Log($"MapModeManager: Disposed old handler for {mode} mode", "map_modes");
+                }
+            }
+
             modeHandlers[mode] = handler;
 
             // If scheduler exists, register the handler for updates
@@ -307,6 +317,19 @@ namespace Map.MapModes
             currentHandler?.OnDeactivate(mapMaterial);
             dataTextures?.Dispose();
             updateScheduler?.Dispose();
+
+            // Dispose all map mode handlers to prevent ComputeBuffer leaks
+            if (modeHandlers != null)
+            {
+                foreach (var handler in modeHandlers.Values)
+                {
+                    if (handler is System.IDisposable disposable)
+                    {
+                        disposable.Dispose();
+                    }
+                }
+                modeHandlers.Clear();
+            }
         }
     }
 }

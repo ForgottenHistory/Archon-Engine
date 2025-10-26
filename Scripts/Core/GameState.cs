@@ -317,7 +317,7 @@ namespace Core
         {
             if (Instance == this)
             {
-                // Clean up systems
+                // Clean up ENGINE layer systems
                 Provinces?.Dispose();
                 Countries?.Dispose();
                 Modifiers?.Dispose();
@@ -325,6 +325,19 @@ namespace Core
                 Units?.Dispose();
                 Pathfinding?.Dispose();  // Dispose NativeList<ushort> neighborBuffer
                 EventBus?.Dispose();
+
+                // Clean up GAME layer systems (AISystem, EconomySystem, etc.)
+                if (registeredGameSystems != null)
+                {
+                    foreach (var system in registeredGameSystems.Values)
+                    {
+                        if (system is System.IDisposable disposable)
+                        {
+                            disposable.Dispose();
+                        }
+                    }
+                    registeredGameSystems.Clear();
+                }
 
                 Instance = null;
             }
