@@ -15,11 +15,15 @@
 **Map.Rendering.MapTextureManager** - Facade coordinator for all map textures (delegates to texture sets)
 **Map.Rendering.CoreTextureSet** - Core textures: Province ID (RenderTexture), Owner (RenderTexture), Color (Texture2D), Development (RenderTexture UAV-enabled for GPU writes)
 **Map.Rendering.VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map
-**Map.Rendering.DynamicTextureSet** - Dynamic textures: Border, Highlight RenderTextures
+**Map.Rendering.DynamicTextureSet** - Dynamic textures: Border, BorderMask (R8 sparse mask), Highlight RenderTextures
 **Map.Rendering.PaletteTextureManager** - Color palette texture (256×1 RGBA32) with HSV distribution
 **Map.Rendering.MapRenderer** - Single draw call map rendering
 **Map.Rendering.MapRenderingCoordinator** - Coordinate rendering subsystems
-**Map.Rendering.BorderComputeDispatcher** - Dispatch compute shader for border generation
+**Map.Rendering.BorderComputeDispatcher** - Dispatch border detection and vector curve rendering
+**Map.Rendering.BorderCurveExtractor** - Extract border pixel chains from province pairs (uses AdjacencySystem)
+**Map.Rendering.BorderCurveCache** - Cache Bézier curve segments with metadata (type, provinces, colors)
+**Map.Rendering.BorderCurveRenderer** - Upload Bézier curves to GPU, manage curve buffers
+**Map.Rendering.SpatialHashGrid** - Spatial acceleration structure (88×32 grid, 64px cells) for O(nearby) curve lookup
 **Map.Rendering.OwnerTextureDispatcher** - Update owner texture from simulation state
 **Map.Rendering.TextureStreamingManager** - Stream texture LODs for memory optimization
 **Map.Rendering.TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus

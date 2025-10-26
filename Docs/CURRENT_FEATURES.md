@@ -1,7 +1,7 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2025-10-25
-**Version:** 1.6 (AI System Phase 1 MVP Complete)
+**Last Updated:** 2025-10-26
+**Version:** 1.7 (Vector Curve Border Rendering Complete)
 
 This document lists all implemented features in the Archon Engine organized by category.
 
@@ -181,7 +181,10 @@ This document lists all implemented features in the Archon Engine organized by c
 
 **Texture-Based Rendering** - Single draw call for entire map via texture-based approach
 **GPU Compute Shaders** - All visual processing on GPU for maximum performance
-**Dual Border System** - Country and province borders in single compute pass (RG16 texture)
+**Vector Curve Borders** - Resolution-independent smooth borders using parametric Bézier curves evaluated in fragment shader
+**Spatial Acceleration** - Uniform hash grid (88×32 cells, 64px) for O(nearby) curve lookup preventing GPU timeout
+**Border Classification** - Automatic country vs province border detection based on ownership
+**BorderMask Texture** - R8 sparse mask for early-out optimization (~90% of pixels skip curve testing)
 **Province Selection** - Sub-millisecond province selection via texture lookup (no raycasting)
 **Map Texture Management** - Coordinated texture system (~60MB VRAM for 5632×2048 map)
 **Border Thickness Control** - Configurable border width and anti-aliasing
@@ -190,6 +193,8 @@ This document lists all implemented features in the Archon Engine organized by c
 **Point Filtering** - Pixel-perfect province ID lookup without interpolation
 **Single Draw Call Optimization** - Entire map rendered in one draw call
 **ProvinceHighlighter** - Province highlighting for selection feedback
+**Performance** - 100-120 FPS with 583K Bézier segments at 50x debug speed, 200+ FPS at normal speeds
+**Memory Efficiency** - 720KB curve data vs 40MB rasterized (55x compression)
 
 ---
 
@@ -198,9 +203,13 @@ This document lists all implemented features in the Archon Engine organized by c
 **MapTextureManager** - Facade coordinator for all map textures
 **CoreTextureSet** - Core textures: Province ID, Owner, Color, Development
 **VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map
-**DynamicTextureSet** - Dynamic textures: Border, Highlight RenderTextures
+**DynamicTextureSet** - Dynamic textures: Border, BorderMask (R8 sparse), Highlight RenderTextures
 **PaletteTextureManager** - Color palette texture with HSV distribution
-**BorderComputeDispatcher** - GPU border generation dispatch
+**BorderComputeDispatcher** - Dispatch border detection and vector curve rendering
+**BorderCurveExtractor** - Extract border pixel chains from province pairs using AdjacencySystem
+**BorderCurveCache** - Cache Bézier curve segments with metadata (type, provinces, colors)
+**BorderCurveRenderer** - Upload Bézier curves to GPU and manage curve buffers
+**SpatialHashGrid** - Uniform grid spatial acceleration (88×32 cells, 64px) for O(nearby) curve lookup
 **TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
 
 ---
