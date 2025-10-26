@@ -1,0 +1,229 @@
+// Border Distance Field Generation using Jump Flooding Algorithm (JFA)
+// Modern Paradox-style smooth anti-aliased borders at any zoom level
+//
+// Algorithm:
+// 1. Edge Detection: Mark border pixels
+// 2. Jump Flooding: Propagate closest border distance across entire map
+// 3. Result: Distance field texture (0 = on border, higher = farther from border)
+//
+// Performance: O(log n) passes for n x n texture, very GPU-friendly
+
+#pragma kernel InitDistanceField
+#pragma kernel JumpFloodStep
+#pragma kernel FinalizeDistanceField
+
+// Input textures
+Texture2D<float4> ProvinceIDTexture;
+Texture2D<float4> ProvinceOwnerTexture;
+
+// Working textures (ping-pong buffers for JFA)
+RWTexture2D<float2> DistanceFieldA;  // Stores closest border pixel position
+RWTexture2D<float2> DistanceFieldB;  // Ping-pong buffer
+
+// Output textures
+RWTexture2D<float2> BorderDistanceTexture;  // R=country border distance, G=province border distance
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+// JFA step size (changes each pass: n/2, n/4, n/8, ...)
+int StepSize;
+
+// Border type for init pass (0 = country borders, 1 = province borders)
+int BorderType;
+
+// Output channel for finalize pass (0 = R channel, 1 = G channel)
+int OutputChannel;
+
+// Province ID decoding
+uint DecodeProvinceID(float2 encoded)
+{
+    uint r = (uint)(encoded.r * 255.0 + 0.5);
+    uint g = (uint)(encoded.g * 255.0 + 0.5);
+    return (g << 8) | r;
+}
+
+uint DecodeOwnerID(float encoded)
+{
+    // ProvinceOwnerTexture is R32_SFloat storing the owner ID directly as a float
+    // No encoding/decoding needed - just cast back to uint
+    return (uint)(encoded + 0.5);
+}
+
+// ============================================================================
+// KERNEL 1: Initialize Distance Field (Edge Detection)
+// ============================================================================
+[numthreads(8, 8, 1)]
+void InitDistanceField(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Sample current pixel
+    uint currentProvince = DecodeProvinceID(ProvinceIDTexture[id.xy].rg);
+    uint currentOwner = DecodeOwnerID(ProvinceOwnerTexture[id.xy].r);
+
+    bool isProvinceBorder = false;
+    bool isCountryBorder = false;
+
+    // Check 4-neighbors for borders
+    int2 offsets[4] = { int2(1,0), int2(-1,0), int2(0,1), int2(0,-1) };
+
+    for (int i = 0; i < 4; i++)
+    {
+        int2 neighborPos = id.xy + offsets[i];
+
+        // Bounds check
+        if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+            neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+            continue;
+
+        uint neighborProvince = DecodeProvinceID(ProvinceIDTexture[neighborPos].rg);
+
+        // Different province = province border
+        if (currentProvince != neighborProvince)
+        {
+            isProvinceBorder = true;
+
+            uint neighborOwner = DecodeOwnerID(ProvinceOwnerTexture[neighborPos].r);
+
+            // Different owner = country border
+            if (currentOwner != neighborOwner)
+            {
+                isCountryBorder = true;
+                break; // Found both types, no need to check more
+            }
+        }
+    }
+
+    // Initialize distance field based on BorderType parameter
+    // BorderType 0 = country borders (different owner)
+    // BorderType 1 = province borders (different province ID)
+
+    bool isBorder = false;
+    if (BorderType == 0)
+    {
+        // Country borders: different owner
+        isBorder = isCountryBorder;
+    }
+    else
+    {
+        // Province borders: different province ID (includes all borders)
+        isBorder = isProvinceBorder;
+    }
+
+    // Border pixels store their own position (starting seed)
+    // Non-border pixels store (-1, -1) (undefined/infinite distance)
+    float2 borderPos = isBorder ? float2(id.xy) : float2(-1, -1);
+
+    // Store in ping-pong buffer A (will be read in first JFA pass)
+    DistanceFieldA[id.xy] = borderPos;
+}
+
+// ============================================================================
+// KERNEL 2: Jump Flooding Step
+// ============================================================================
+[numthreads(8, 8, 1)]
+void JumpFloodStep(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    float2 currentPos = float2(id.xy);
+    float2 closestBorderPos = DistanceFieldA[id.xy];
+    float closestDist = 999999.0;
+
+    // If we already have a valid closest position, calculate its distance
+    if (closestBorderPos.x >= 0)
+    {
+        closestDist = distance(currentPos, closestBorderPos);
+    }
+
+    // Check 8 neighbors at StepSize distance (JFA pattern)
+    int2 offsets[8] = {
+        int2(-StepSize, -StepSize), int2(0, -StepSize), int2(StepSize, -StepSize),
+        int2(-StepSize, 0),                              int2(StepSize, 0),
+        int2(-StepSize, StepSize),  int2(0, StepSize),  int2(StepSize, StepSize)
+    };
+
+    for (int i = 0; i < 8; i++)
+    {
+        int2 samplePos = id.xy + offsets[i];
+
+        // Bounds check
+        if (samplePos.x < 0 || samplePos.x >= (int)MapWidth ||
+            samplePos.y < 0 || samplePos.y >= (int)MapHeight)
+            continue;
+
+        // Get neighbor's closest border position
+        float2 neighborBorderPos = DistanceFieldA[samplePos];
+
+        // Skip if neighbor has no valid border position
+        if (neighborBorderPos.x < 0)
+            continue;
+
+        // Calculate distance from current pixel to neighbor's closest border
+        float dist = distance(currentPos, neighborBorderPos);
+
+        // Update if this is closer
+        if (dist < closestDist)
+        {
+            closestDist = dist;
+            closestBorderPos = neighborBorderPos;
+        }
+    }
+
+    // Write to output buffer (ping-pong)
+    DistanceFieldB[id.xy] = closestBorderPos;
+}
+
+// ============================================================================
+// KERNEL 3: Finalize Distance Field (Convert positions to distances)
+// ============================================================================
+[numthreads(8, 8, 1)]
+void FinalizeDistanceField(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    float2 currentPos = float2(id.xy);
+    float2 closestBorderPos = DistanceFieldA[id.xy];
+
+    float borderDistance;
+
+    if (closestBorderPos.x < 0)
+    {
+        // No border found (shouldn't happen with proper JFA)
+        borderDistance = 999.0; // Large value
+    }
+    else
+    {
+        // Calculate distance to closest border (in pixels)
+        borderDistance = distance(currentPos, closestBorderPos);
+    }
+
+    // CRITICAL: BorderTexture is R16G16_UNorm format (values 0-1)
+    // We need to normalize distances to fit in [0, 1] range
+    // Max useful distance is ~32 pixels (beyond that, we don't care about smooth falloff)
+    float maxDistance = 32.0;
+    float normalizedDistance = saturate(borderDistance / maxDistance);
+
+    // Write to appropriate channel based on OutputChannel parameter
+    // OutputChannel 0 = R (country borders)
+    // OutputChannel 1 = G (province borders)
+
+    // Read current texture value
+    float2 currentValue = BorderDistanceTexture[id.xy];
+
+    if (OutputChannel == 0)
+    {
+        // Write to R channel, preserve G channel
+        BorderDistanceTexture[id.xy] = float2(normalizedDistance, currentValue.g);
+    }
+    else
+    {
+        // Write to G channel, preserve R channel
+        BorderDistanceTexture[id.xy] = float2(currentValue.r, normalizedDistance);
+    }
+}

@@ -233,8 +233,10 @@ namespace Map.Rendering
             singlePixel.Apply();
             RenderTexture.active = null;
 
-            float ownerNormalized = singlePixel.GetPixel(0, 0).r;
-            uint decodedValue = (uint)(ownerNormalized * 65535.0f + 0.5f);
+            float ownerRawFloat = singlePixel.GetPixel(0, 0).r;
+            // ProvinceOwnerTexture is R32_SFloat storing raw float values (151.0, not normalized)
+            // No multiplication needed - just cast to uint
+            uint decodedValue = (uint)(ownerRawFloat + 0.5f);
             Object.Destroy(singlePixel);
 
             if (debugWriteProvinceIDs)

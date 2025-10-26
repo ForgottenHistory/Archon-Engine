@@ -382,6 +382,17 @@ namespace Map.Rendering
         /// </summary>
         private void PopulateProvinceColorTextureGPU(MapTextureManager textureManager, int width, int height, Color32[] pixels)
         {
+            // Validate sizes before SetPixels32
+            int textureSize = textureManager.ProvinceColorTexture.width * textureManager.ProvinceColorTexture.height;
+            int arraySize = pixels.Length;
+            int expectedSize = width * height;
+
+            if (arraySize != textureSize)
+            {
+                ArchonLogger.LogError($"MapTexturePopulator: Size mismatch - Array: {arraySize}, Texture: {textureSize} ({textureManager.ProvinceColorTexture.width}x{textureManager.ProvinceColorTexture.height}), Expected: {expectedSize} ({width}x{height})", "map_initialization");
+                return;
+            }
+
             // ProvinceColorTexture is still a Texture2D, so we can use SetPixels32 directly
             textureManager.ProvinceColorTexture.SetPixels32(pixels);
             textureManager.ProvinceColorTexture.Apply(false);

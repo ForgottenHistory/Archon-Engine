@@ -1,0 +1,120 @@
+// Border Curve Rasterization Compute Shader
+// Draws smooth pre-computed curves into BorderTexture
+// Uses Bresenham-style line drawing for anti-aliased curves
+
+#pragma kernel RasterizeCurves
+
+// Output texture (CRITICAL: RWTexture2D for UAV binding, uses R8G8B8A8_UNorm for platform compatibility)
+// R channel = country borders, G channel = province borders, BA unused
+RWTexture2D<float4> BorderTexture;
+
+// Curve data
+StructuredBuffer<float2> CurvePoints;     // All curve points concatenated
+StructuredBuffer<int> CurveSegmentStarts; // Starting index for each curve segment
+StructuredBuffer<int> CurveSegmentCounts; // Point count for each curve segment
+StructuredBuffer<int> CurveTypes;         // 0=none, 1=province, 2=country
+StructuredBuffer<float> CurveThickness;   // Thickness for each curve
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+// Number of curve segments to process
+uint SegmentCount;
+
+// Draw anti-aliased line between two points
+// IMPORTANT: Must be declared before RasterizeCurves kernel (HLSL forward declaration requirement)
+void DrawLine(float2 p0, float2 p1, int borderType, float thickness)
+{
+    // Calculate line direction and length
+    float2 delta = p1 - p0;
+    float length = sqrt(delta.x * delta.x + delta.y * delta.y);
+
+    if (length < 0.01)
+        return;
+
+    // Normalize direction
+    float2 dir = delta / length;
+
+    // Perpendicular direction for thickness
+    float2 perp = float2(-dir.y, dir.x);
+
+    // Rasterize along the line with sub-pixel precision
+    // Use more steps for smoother lines (2x oversampling)
+    int steps = max(1, (int)ceil(length * 2.0));
+    for (int i = 0; i <= steps; i++)
+    {
+        float t = (float)i / (float)steps;
+        float2 pos = lerp(p0, p1, t);
+
+        // Draw thick line by sampling perpendicular offsets
+        int thickSteps = (int)ceil(thickness);
+        for (int j = -thickSteps; j <= thickSteps; j++)
+        {
+            float offset = (float)j * 0.5; // Sub-pixel offsets
+            float2 pixelPos = pos + perp * offset;
+
+            int x = (int)round(pixelPos.x);
+            int y = (int)round(pixelPos.y);
+
+            // Bounds check
+            if (x < 0 || x >= (int)MapWidth || y < 0 || y >= (int)MapHeight)
+                continue;
+
+            // Calculate distance from line center for anti-aliasing
+            float dist = abs(offset);
+            float alpha = 1.0 - smoothstep(thickness * 0.5 - 0.5, thickness * 0.5 + 0.5, dist);
+
+            if (alpha < 0.01)
+                continue;
+
+            // Write to border texture
+            // R channel = country border distance (0 = on border)
+            // G channel = province border distance (0 = on border)
+            // BA channels unused (always 0)
+            float4 currentValue = BorderTexture[uint2(x, y)];
+
+            if (borderType == 2) // Country border
+            {
+                // Write to R channel (set to 0 for country border)
+                BorderTexture[uint2(x, y)] = float4(0.0, currentValue.g, 0.0, 0.0);
+            }
+            else if (borderType == 1) // Province border
+            {
+                // Write to G channel (set to 0 for province border)
+                BorderTexture[uint2(x, y)] = float4(currentValue.r, 0.0, 0.0, 0.0);
+            }
+        }
+    }
+}
+
+// Thread group size: 64 threads per group
+[numthreads(64, 1, 1)]
+void RasterizeCurves(uint3 id : SV_DispatchThreadID)
+{
+    // Each thread processes one curve segment
+    uint segmentIndex = id.x;
+
+    // Bounds check
+    if (segmentIndex >= SegmentCount)
+        return;
+
+    // Get curve segment metadata
+    int startIdx = CurveSegmentStarts[segmentIndex];
+    int pointCount = CurveSegmentCounts[segmentIndex];
+    int curveType = CurveTypes[segmentIndex];
+    float thickness = CurveThickness[segmentIndex];
+
+    // Skip invalid curves
+    if (pointCount < 2 || curveType == 0)
+        return;
+
+    // Draw lines between consecutive points in this curve
+    for (int i = 0; i < pointCount - 1; i++)
+    {
+        float2 p0 = CurvePoints[startIdx + i];
+        float2 p1 = CurvePoints[startIdx + i + 1];
+
+        DrawLine(p0, p1, curveType, thickness);
+    }
+}

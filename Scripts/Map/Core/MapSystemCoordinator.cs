@@ -139,7 +139,7 @@ namespace Map.Core
                 // Note: MapModeManager initialization is controlled by GAME layer
                 // ENGINE provides mechanism, GAME controls initialization flow
 
-                // Initialize TextureUpdateBridge for runtime texture updates (95-100%)
+                // Initialize TextureUpdateBridge for runtime texture updates (95-97%)
                 OnGenerationProgress?.Invoke(95f, "Initializing texture updates...");
                 if (textureUpdateBridge != null && gameState != null)
                 {
@@ -154,6 +154,10 @@ namespace Map.Core
                 {
                     ArchonLogger.LogWarning("MapSystemCoordinator: TextureUpdateBridge not available - runtime texture updates disabled", "core_simulation");
                 }
+
+                // NOTE: Smooth border initialization moved to HegemonMapPhaseHandler
+                // Must be AFTER AdjacencySystem.SetAdjacencies() is called
+                // (AdjacencySystem instance exists but is empty at this point)
 
                 OnGenerationProgress?.Invoke(100f, "Map generation complete");
 

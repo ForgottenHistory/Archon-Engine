@@ -129,7 +129,7 @@ namespace Map.MapModes
         /// </summary>
         private Texture2D CreatePaletteTexture(string name, int size)
         {
-            var texture = new Texture2D(size, 1, TextureFormat.RGBA32, false);
+            var texture = new Texture2D(size, 1, TextureFormat.RGBA32, false, false);  // linear=false (sRGB)
             texture.name = name;
             texture.filterMode = FilterMode.Point;
             texture.wrapMode = TextureWrapMode.Clamp;

@@ -38,6 +38,7 @@ namespace Map.Rendering
         public Texture2D NormalMapTexture => visualTextures?.NormalMapTexture;
         public Texture2D ProvinceColorPalette => paletteManager?.ProvinceColorPalette;
         public RenderTexture BorderTexture => dynamicTextures?.BorderTexture;
+        public RenderTexture BorderMaskTexture => dynamicTextures?.BorderMaskTexture;
         public RenderTexture HighlightTexture => dynamicTextures?.HighlightTexture;
         public RenderTexture FogOfWarTexture => dynamicTextures?.FogOfWarTexture;
 
@@ -51,7 +52,8 @@ namespace Map.Rendering
         /// </summary>
         private void InitializeTextures()
         {
-            // Create specialized texture sets
+            // Clamp upscale factor
+            // Create specialized texture sets (all at base resolution)
             coreTextures = new CoreTextureSet(mapWidth, mapHeight, logTextureCreation);
             visualTextures = new VisualTextureSet(mapWidth, mapHeight, normalMapWidth, normalMapHeight, logTextureCreation);
             dynamicTextures = new DynamicTextureSet(mapWidth, mapHeight, logTextureCreation);
@@ -65,7 +67,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                ArchonLogger.Log($"MapTextureManager initialized with {mapWidth}x{mapHeight} textures", "map_initialization");
+                ArchonLogger.Log($"MapTextureManager initialized: {mapWidth}x{mapHeight}", "map_initialization");
             }
         }
 
@@ -78,8 +80,8 @@ namespace Map.Rendering
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return 0;
 
-            // Y-flip: UV coordinates are OpenGL style (0,0 = bottom-left)
-            // but RenderTexture.ReadPixels uses GPU coordinates (0,0 = top-left)
+            // Y-flip: UV coordinates from hit.textureCoord are OpenGL style (0,0 = bottom-left)
+            // But RenderTexture is GPU convention (0,0 = top-left), so flip Y
             int flippedY = mapHeight - 1 - y;
 
             // Read single pixel from RenderTexture

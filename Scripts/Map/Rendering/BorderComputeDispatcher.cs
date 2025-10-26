@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using Core.Systems;
+using ProvinceSystemType = Core.Systems.ProvinceSystem;
 
 namespace Map.Rendering
 {
@@ -7,11 +9,14 @@ namespace Map.Rendering
     /// Manages GPU compute shader for high-performance border detection.
     /// Processes entire map in parallel to detect province and country borders.
     /// Part of the texture-based map rendering system.
+    ///
+    /// Now includes smooth curve-based border rendering using pre-computed curves.
     /// </summary>
     public class BorderComputeDispatcher : MonoBehaviour
     {
-        [Header("Compute Shader")]
+        [Header("Compute Shaders")]
         [SerializeField] private ComputeShader borderDetectionCompute;
+        [SerializeField] private ComputeShader borderCurveRasterizerCompute;
 
         [Header("Border Settings")]
         [SerializeField] private BorderMode borderMode = BorderMode.Province;
@@ -30,12 +35,23 @@ namespace Map.Rendering
         private int detectBordersThickKernel;
         private int detectCountryBordersKernel;
         private int detectDualBordersKernel;
+        private int generateBorderMaskKernel;
+        private int copyBorderToMaskKernel;
 
         // Thread group sizes (must match compute shader)
         private const int THREAD_GROUP_SIZE = 8;
 
         // References
         private MapTextureManager textureManager;
+        private BorderDistanceFieldGenerator distanceFieldGenerator;
+        private ProvinceSystemType provinceSystem;
+        private CountrySystem countrySystem;
+
+        // Smooth curve border system components
+        private BorderCurveExtractor curveExtractor;
+        private BorderCurveCache curveCache;
+        private BorderCurveRenderer curveRenderer;
+        private bool smoothBordersInitialized = false;
 
         public enum BorderMode
         {
@@ -56,6 +72,7 @@ namespace Map.Rendering
         /// </summary>
         private void InitializeKernels()
         {
+            // Load BorderDetection compute shader
             if (borderDetectionCompute == null)
             {
                 // Try to find the compute shader in the project
@@ -65,7 +82,7 @@ namespace Map.Rendering
                 {
                     string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
                     borderDetectionCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    ArchonLogger.Log($"BorderComputeDispatcher: Found compute shader at {path}", "map_initialization");
+                    ArchonLogger.Log($"BorderComputeDispatcher: Found BorderDetection shader at {path}", "map_initialization");
                 }
                 #endif
 
@@ -76,17 +93,38 @@ namespace Map.Rendering
                 }
             }
 
-            // Get kernel indices
+            // Load BorderCurveRasterizer compute shader (for smooth curves)
+            if (borderCurveRasterizerCompute == null)
+            {
+                #if UNITY_EDITOR
+                string[] guids = UnityEditor.AssetDatabase.FindAssets("BorderCurveRasterizer t:ComputeShader");
+                if (guids.Length > 0)
+                {
+                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+                    borderCurveRasterizerCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
+                    ArchonLogger.Log($"BorderComputeDispatcher: Found BorderCurveRasterizer shader at {path}", "map_initialization");
+                }
+                #endif
+
+                if (borderCurveRasterizerCompute == null)
+                {
+                    ArchonLogger.LogWarning("BorderComputeDispatcher: BorderCurveRasterizer compute shader not found - smooth borders will not be available", "map_initialization");
+                }
+            }
+
+            // Get kernel indices for border detection
             detectBordersKernel = borderDetectionCompute.FindKernel("DetectBorders");
             detectBordersThickKernel = borderDetectionCompute.FindKernel("DetectBordersThick");
             detectCountryBordersKernel = borderDetectionCompute.FindKernel("DetectCountryBorders");
             detectDualBordersKernel = borderDetectionCompute.FindKernel("DetectDualBorders");
+            generateBorderMaskKernel = borderDetectionCompute.FindKernel("GenerateBorderMask");
+            copyBorderToMaskKernel = borderDetectionCompute.FindKernel("CopyBorderToMask");
 
             if (logPerformance)
             {
                 ArchonLogger.Log($"BorderComputeDispatcher: Initialized with kernels - " +
                     $"Borders: {detectBordersKernel}, Thick: {detectBordersThickKernel}, " +
-                    $"Country: {detectCountryBordersKernel}, Dual: {detectDualBordersKernel}", "map_initialization");
+                    $"Country: {detectCountryBordersKernel}, Dual: {detectDualBordersKernel}, Mask: {generateBorderMaskKernel}, CopyMask: {copyBorderToMaskKernel}", "map_initialization");
             }
         }
 
@@ -99,17 +137,189 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Initialize smooth curve-based border rendering system
+        /// MUST be called after AdjacencySystem, ProvinceSystem, and CountrySystem are ready
+        /// </summary>
+        public void InitializeSmoothBorders(AdjacencySystem adjacencySystem, ProvinceSystemType provinceSystem, CountrySystem countrySystem, ProvinceMapping provinceMapping)
+        {
+            if (textureManager == null)
+            {
+                ArchonLogger.LogError("BorderComputeDispatcher: Cannot initialize smooth borders - texture manager is null", "map_initialization");
+                return;
+            }
+
+            if (adjacencySystem == null || provinceSystem == null || countrySystem == null || provinceMapping == null)
+            {
+                ArchonLogger.LogError("BorderComputeDispatcher: Cannot initialize smooth borders - missing dependencies (adjacency/province/country/mapping)", "map_initialization");
+                return;
+            }
+
+            if (borderCurveRasterizerCompute == null)
+            {
+                ArchonLogger.LogWarning("BorderComputeDispatcher: Border curve rasterizer compute shader not assigned - smooth borders disabled", "map_initialization");
+                return;
+            }
+
+            float startTime = Time.realtimeSinceStartup;
+
+            // Initialize curve extractor with province pixel lists (efficient border extraction!)
+            curveExtractor = new BorderCurveExtractor(textureManager, adjacencySystem, provinceSystem, provinceMapping);
+
+            // Extract all border curves (CPU intensive, done once at startup)
+            ArchonLogger.Log("BorderComputeDispatcher: Extracting border curves...", "map_initialization");
+            var borderCurves = curveExtractor.ExtractAllBorders();
+
+            // Store systems for border style updates
+            this.provinceSystem = provinceSystem;
+            this.countrySystem = countrySystem;
+
+            // Initialize curve cache
+            curveCache = new BorderCurveCache();
+            curveCache.Initialize(borderCurves);
+
+            // Update border styles based on province ownership
+            ArchonLogger.Log("BorderComputeDispatcher: Classifying borders by ownership...", "map_initialization");
+            UpdateAllBorderStyles();
+
+            // Get or create distance field generator for smooth anti-aliasing
+            if (distanceFieldGenerator == null)
+            {
+                distanceFieldGenerator = GetComponent<BorderDistanceFieldGenerator>();
+                if (distanceFieldGenerator == null)
+                {
+                    distanceFieldGenerator = gameObject.AddComponent<BorderDistanceFieldGenerator>();
+                }
+                distanceFieldGenerator.SetTextureManager(textureManager);
+            }
+
+            // Initialize curve renderer with distance field generator
+            curveRenderer = new BorderCurveRenderer(borderCurveRasterizerCompute, textureManager, curveCache, distanceFieldGenerator);
+
+            // Upload curve data to GPU
+            ArchonLogger.Log("BorderComputeDispatcher: Uploading curve data to GPU...", "map_initialization");
+            curveRenderer.UploadCurveData();
+
+            // CRITICAL: GPU synchronization - Wait for curve data upload to complete
+            // Following unity-compute-shader-coordination.md pattern
+            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.BorderTexture);
+            syncRequest.WaitForCompletion();
+
+            smoothBordersInitialized = true;
+
+            float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
+            ArchonLogger.Log($"BorderComputeDispatcher: Smooth border system initialized in {elapsedMs:F0}ms ({curveCache.BorderCount} curves)", "map_initialization");
+        }
+
+        /// <summary>
+        /// Generate border mask for sparse shader-based detection
+        /// Marks pixels that are within 2-3 pixels of ANY border
+        /// This enables resolution-independent borders with minimal per-frame cost
+        /// IMPORTANT: Call ONCE at initialization after ProvinceIDTexture is populated
+        /// </summary>
+        public void GenerateBorderMask()
+        {
+            if (textureManager == null)
+            {
+                ArchonLogger.LogError("BorderComputeDispatcher: Cannot generate border mask - missing dependencies", "map_initialization");
+                return;
+            }
+
+            if (textureManager.BorderMaskTexture == null)
+            {
+                ArchonLogger.LogError("BorderComputeDispatcher: BorderMaskTexture not created!", "map_initialization");
+                return;
+            }
+
+            float startTime = Time.realtimeSinceStartup;
+
+            // Use smooth curve rendering if initialized, otherwise fallback to simple edge detection
+            if (smoothBordersInitialized && curveRenderer != null)
+            {
+                ArchonLogger.Log($"BorderComputeDispatcher: Rasterizing {curveCache.BorderCount} smooth curves to BorderMaskTexture", "map_initialization");
+
+                // Rasterize smooth curves to BorderMaskTexture
+                RasterizeCurvesToMask();
+
+                float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
+                ArchonLogger.Log($"BorderComputeDispatcher: Generated smooth curve mask in {elapsedMs:F1}ms ({curveCache.BorderCount} curves)", "map_initialization");
+            }
+            else
+            {
+                // Fallback: Simple edge detection (4-neighbor check)
+                if (borderDetectionCompute == null)
+                {
+                    ArchonLogger.LogError("BorderComputeDispatcher: Cannot generate border mask - compute shader missing", "map_initialization");
+                    return;
+                }
+
+                borderDetectionCompute.SetTexture(generateBorderMaskKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
+                borderDetectionCompute.SetTexture(generateBorderMaskKernel, "BorderMaskTexture", textureManager.BorderMaskTexture);
+                borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
+                borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
+
+                int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+                int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+
+                borderDetectionCompute.Dispatch(generateBorderMaskKernel, threadGroupsX, threadGroupsY, 1);
+
+                var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.BorderMaskTexture);
+                syncRequest.WaitForCompletion();
+
+                float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
+                ArchonLogger.Log($"BorderComputeDispatcher: Generated edge-detected mask in {elapsedMs:F1}ms (fallback mode)", "map_initialization");
+            }
+        }
+
+        /// <summary>
+        /// Rasterize smooth curves to BorderMaskTexture
+        /// Uses the smooth curves already rendered to BorderTexture
+        /// Copies BorderTexture data to BorderMaskTexture R channel
+        /// </summary>
+        private void RasterizeCurvesToMask()
+        {
+            if (textureManager.BorderTexture == null)
+            {
+                ArchonLogger.LogError("BorderComputeDispatcher: Cannot copy borders - BorderTexture is null", "map_rendering");
+                return;
+            }
+
+            // Use compute shader to copy BorderTexture (smooth curves) to BorderMaskTexture
+            // BorderTexture.R = country border distance, BorderTexture.G = province border distance
+            // BorderMaskTexture.R = combined border mask (1.0 = border, 0.0 = interior)
+
+            if (borderDetectionCompute == null)
+            {
+                ArchonLogger.LogError("BorderComputeDispatcher: Cannot copy borders - compute shader missing", "map_rendering");
+                return;
+            }
+
+            // Set textures
+            // Note: Use "BorderTextureFloat4" name to match kernel's local declaration
+            borderDetectionCompute.SetTexture(copyBorderToMaskKernel, "BorderTextureFloat4", textureManager.BorderTexture);
+            borderDetectionCompute.SetTexture(copyBorderToMaskKernel, "BorderMaskTexture", textureManager.BorderMaskTexture);
+            borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
+            borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
+
+            // Dispatch
+            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+
+            borderDetectionCompute.Dispatch(copyBorderToMaskKernel, threadGroupsX, threadGroupsY, 1);
+
+            // Force GPU sync
+            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.BorderMaskTexture);
+            syncRequest.WaitForCompletion();
+
+            ArchonLogger.Log($"BorderComputeDispatcher: Copied smooth curves from BorderTexture to BorderMaskTexture", "map_initialization");
+        }
+
+        /// <summary>
         /// Dispatch border detection on GPU
+        /// Uses smooth curves if available, otherwise falls back to distance field
         /// </summary>
         [ContextMenu("Detect Borders")]
         public void DetectBorders()
         {
-            if (borderDetectionCompute == null)
-            {
-                ArchonLogger.LogWarning("BorderComputeDispatcher: Compute shader not loaded. Skipping border detection.", "map_rendering");
-                return;
-            }
-
             if (textureManager == null)
             {
                 textureManager = GetComponent<MapTextureManager>();
@@ -129,67 +339,44 @@ namespace Map.Rendering
             // Start performance timing
             float startTime = Time.realtimeSinceStartup;
 
-            // Select kernel based on mode
-            int kernelToUse = detectBordersKernel;
-            switch (borderMode)
+            // Use smooth curve rendering if initialized
+            if (smoothBordersInitialized && curveRenderer != null)
             {
-                case BorderMode.Province:
-                    kernelToUse = detectBordersKernel;
-                    break;
-                case BorderMode.Country:
-                    kernelToUse = detectCountryBordersKernel;
-                    break;
-                case BorderMode.Thick:
-                    kernelToUse = detectBordersThickKernel;
-                    break;
-                case BorderMode.Dual:
-                    kernelToUse = detectDualBordersKernel;
-                    break;
-            }
+                ArchonLogger.Log($"BorderComputeDispatcher: Rasterizing {curveCache.BorderCount} smooth curves to BorderTexture", "map_rendering");
 
-            // Set textures
-            borderDetectionCompute.SetTexture(kernelToUse, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
+                // Rasterize pre-computed smooth curves
+                curveRenderer.RasterizeCurves();
 
-            // Dual mode uses DualBorderTexture, others use BorderTexture
-            if (borderMode == BorderMode.Dual)
-            {
-                borderDetectionCompute.SetTexture(kernelToUse, "DualBorderTexture", textureManager.BorderTexture);
+                if (logPerformance)
+                {
+                    float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
+                    ArchonLogger.Log($"BorderComputeDispatcher: Smooth curve border rendering completed in {elapsedMs:F2}ms " +
+                        $"({curveCache.BorderCount} curves)", "map_rendering");
+                }
             }
             else
             {
-                borderDetectionCompute.SetTexture(kernelToUse, "BorderTexture", textureManager.BorderTexture);
-            }
+                // Fallback to distance field approach (legacy)
+                // Get or create distance field generator
+                if (distanceFieldGenerator == null)
+                {
+                    distanceFieldGenerator = GetComponent<BorderDistanceFieldGenerator>();
+                    if (distanceFieldGenerator == null)
+                    {
+                        distanceFieldGenerator = gameObject.AddComponent<BorderDistanceFieldGenerator>();
+                    }
+                    distanceFieldGenerator.SetTextureManager(textureManager);
+                }
 
-            // Set dimensions
-            borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
-            borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
+                // Generate distance field
+                distanceFieldGenerator.GenerateDistanceField();
 
-            // Set border thickness (applies to all modes)
-            borderDetectionCompute.SetInt("CountryBorderThickness", countryBorderThickness);
-            borderDetectionCompute.SetInt("ProvinceBorderThickness", provinceBorderThickness);
-
-            // Set anti-aliasing
-            borderDetectionCompute.SetFloat("BorderAntiAliasing", borderAntiAliasing);
-
-            // Set additional parameters for specific modes
-            if (borderMode == BorderMode.Country || borderMode == BorderMode.Dual)
-            {
-                borderDetectionCompute.SetTexture(kernelToUse, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
-            }
-
-            // Calculate thread groups (round up division)
-            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-
-            // Dispatch compute shader
-            borderDetectionCompute.Dispatch(kernelToUse, threadGroupsX, threadGroupsY, 1);
-
-            // Log performance
-            if (logPerformance)
-            {
-                float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                ArchonLogger.Log($"BorderComputeDispatcher: Border detection completed in {elapsedMs:F2}ms " +
-                    $"({textureManager.MapWidth}x{textureManager.MapHeight} pixels, {threadGroupsX}x{threadGroupsY} thread groups)", "map_rendering");
+                if (logPerformance)
+                {
+                    float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
+                    ArchonLogger.Log($"BorderComputeDispatcher: Distance field border generation (fallback) completed in {elapsedMs:F2}ms " +
+                        $"({textureManager.MapWidth}x{textureManager.MapHeight} pixels)", "map_rendering");
+                }
             }
         }
 
@@ -262,6 +449,24 @@ namespace Map.Rendering
             borderAntiAliasing = Mathf.Clamp(antiAliasing, 0f, 2f);
 
             if (autoUpdateBorders)
+            {
+                DetectBorders();
+            }
+        }
+
+        /// <summary>
+        /// Set multiple border parameters at once without re-rendering each time
+        /// Use this instead of calling SetBorderMode/SetBorderThickness/SetBorderAntiAliasing separately
+        /// to avoid redundant DetectBorders() calls
+        /// </summary>
+        public void SetBorderParameters(BorderMode mode, int countryThickness, int provinceThickness, float antiAliasing, bool updateBorders = true)
+        {
+            borderMode = mode;
+            countryBorderThickness = Mathf.Clamp(countryThickness, 0, 5);
+            provinceBorderThickness = Mathf.Clamp(provinceThickness, 0, 5);
+            borderAntiAliasing = Mathf.Clamp(antiAliasing, 0f, 2f);
+
+            if (updateBorders && autoUpdateBorders)
             {
                 DetectBorders();
             }
@@ -353,7 +558,101 @@ namespace Map.Rendering
             }
         }
 
+        /// <summary>
+        /// DEBUG: Generate a texture showing extracted curve points as colored dots
+        /// RED = Country borders, GREEN = Province borders
+        /// This shows if the curve extraction algorithm is producing smooth points
+        /// </summary>
+        public Texture2D GenerateCurveDebugTexture()
+        {
+            if (curveRenderer == null)
+            {
+                ArchonLogger.LogWarning("BorderComputeDispatcher: Cannot generate curve debug - no renderer", "map_rendering");
+                return null;
+            }
+
+            return curveRenderer.RenderCurvePointsDebug(textureManager.MapWidth, textureManager.MapHeight);
+        }
+
+        /// <summary>
+        /// Update all border styles based on current province ownership
+        /// Should be called during initialization and when ownership changes
+        /// </summary>
+        private void UpdateAllBorderStyles()
+        {
+            if (curveCache == null || provinceSystem == null || countrySystem == null)
+                return;
+
+            // Get all unique provinces from province system
+            var provinceCount = provinceSystem.ProvinceCount;
+            int countryBorders = 0;
+            int provinceBorders = 0;
+
+            // Update border styles for each province
+            for (ushort provinceID = 1; provinceID < provinceCount; provinceID++)
+            {
+                var state = provinceSystem.GetProvinceState(provinceID);
+                ushort ownerID = state.ownerID;
+
+                curveCache.UpdateProvinceBorderStyles(
+                    provinceID,
+                    ownerID,
+                    (id) => provinceSystem.GetProvinceState(id).ownerID,  // getOwner delegate
+                    (id) => (Color)countrySystem.GetCountryColor(id)      // getCountryColor delegate (Color32 -> Color)
+                );
+            }
+
+            // Count border types for logging
+            foreach (var (_, style) in curveCache.GetAllBorderStyles())
+            {
+                if (style.type == BorderType.Country)
+                    countryBorders++;
+                else if (style.type == BorderType.Province)
+                    provinceBorders++;
+            }
+
+            ArchonLogger.Log($"BorderComputeDispatcher: Classified borders - Country: {countryBorders}, Province: {provinceBorders}", "map_initialization");
+        }
+
+        /// <summary>
+        /// Clean up GPU resources
+        /// </summary>
+        void OnDestroy()
+        {
+            if (curveRenderer != null)
+            {
+                curveRenderer.Dispose();
+            }
+
+            if (curveCache != null)
+            {
+                curveCache.Clear();
+            }
+        }
+
 #if UNITY_EDITOR
+        [ContextMenu("DEBUG: Save Curve Points Visualization")]
+        private void DebugSaveCurvePoints()
+        {
+            var debugTexture = GenerateCurveDebugTexture();
+            if (debugTexture == null)
+            {
+                ArchonLogger.LogError("Failed to generate curve debug texture", "map_rendering");
+                return;
+            }
+
+            // Save to project root
+            var bytes = debugTexture.EncodeToPNG();
+            string path = "D:/Stuff/My Games/Hegemon/curve_points_debug.png";
+            System.IO.File.WriteAllBytes(path, bytes);
+
+            ArchonLogger.Log($"Saved curve points debug visualization to {path}", "map_rendering");
+            ArchonLogger.Log("RED = Country borders, GREEN = Province borders", "map_rendering");
+            ArchonLogger.Log("Each dot = one curve point from Chaikin smoothing", "map_rendering");
+
+            Object.DestroyImmediate(debugTexture);
+        }
+
         [ContextMenu("Benchmark Border Detection")]
         private void BenchmarkBorderDetection()
         {

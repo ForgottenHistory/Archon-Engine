@@ -189,8 +189,10 @@ Shader "Archon/MapCore"
                 if (_MapMode == 100) // Border debug mode
                 {
                     float2 correctedUV = float2(input.uv.x, 1.0 - input.uv.y);
-                    float borderValue = SAMPLE_TEXTURE2D(_BorderTexture, sampler_BorderTexture, correctedUV).r;
-                    return float4(borderValue, borderValue, borderValue, 1.0);
+                    float2 borderValues = SAMPLE_TEXTURE2D(_BorderTexture, sampler_BorderTexture, correctedUV).rg;
+                    // R = country borders (red), G = province borders (green)
+                    // Show both: white = no borders, red = country, green = province, yellow = both
+                    return float4(borderValues.r, borderValues.g, 0.0, 1.0);
                 }
                 else if (_MapMode == 101) // Province ID debug mode
                 {

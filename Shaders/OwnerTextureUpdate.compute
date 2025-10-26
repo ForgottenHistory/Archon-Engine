@@ -1,0 +1,45 @@
+// Owner Texture GPU Update
+// Updates ProvinceOwnerTexture by painting all pixels of a province with its owner ID
+//
+// Architecture: GPU compute shader for efficient whole-province updates
+// - Reads ProvinceIDTexture to identify pixels belonging to target province
+// - Writes owner ID to all matching pixels in ProvinceOwnerTexture
+// - Single dispatch can update multiple provinces (batch mode)
+
+#pragma kernel UpdateProvinceOwner
+
+// Input textures
+Texture2D<float2> ProvinceIDTexture;  // RG = province ID (packed 16-bit)
+
+// Output texture
+RWTexture2D<float> ProvinceOwnerTexture;  // R32_SFloat = owner country ID
+
+// Parameters
+uint MapWidth;
+uint MapHeight;
+uint TargetProvinceID;  // Which province to update
+float OwnerID;          // Owner country ID (stored as float in R32_SFloat texture)
+
+// Province ID decoding (matches BorderDistanceField.compute)
+uint DecodeProvinceID(float2 encoded)
+{
+    uint r = (uint)(encoded.r * 255.0 + 0.5);
+    uint g = (uint)(encoded.g * 255.0 + 0.5);
+    return (g << 8) | r;
+}
+
+[numthreads(8, 8, 1)]
+void UpdateProvinceOwner(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Read province ID at this pixel
+    uint provinceID = DecodeProvinceID(ProvinceIDTexture[id.xy].rg);
+
+    // If this pixel belongs to the target province, update its owner
+    if (provinceID == TargetProvinceID)
+    {
+        ProvinceOwnerTexture[id.xy] = OwnerID;
+    }
+}

@@ -71,11 +71,12 @@ void PopulateOwners(uint3 id : SV_DispatchThreadID)
     if (DebugWriteProvinceIDs > 0)
     {
         // Debug mode: Write province ID instead of owner ID to verify texture reading
-        ProvinceOwnerTexture[writePos] = float(provinceID) / 65535.0;
+        ProvinceOwnerTexture[writePos] = float(provinceID);
     }
     else
     {
-        // Normal mode: Write owner ID
-        ProvinceOwnerTexture[writePos] = float(ownerID) / 65535.0;
+        // Normal mode: Write owner ID as raw float (R32_SFloat can store up to 16777216 exactly)
+        // BorderDistanceField.compute will read this as: (uint)(value + 0.5)
+        ProvinceOwnerTexture[writePos] = float(ownerID);
     }
 }

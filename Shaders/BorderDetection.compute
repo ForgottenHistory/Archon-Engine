@@ -391,3 +391,98 @@ void DetectDualBorders(uint3 id : SV_DispatchThreadID)
     // G channel = province borders (0.0-1.0 based on distance)
     DualBorderTexture[id.xy] = float2(countryStrength, provinceStrength);
 }
+
+// ============================================================================
+// Border Mask Generation - Creates sparse mask for shader-based detection
+// Marks pixels that are within 2-3 pixels of ANY border (province or country)
+// Output: R8G8B8A8_UNorm texture where R channel: 1.0 = near border, 0.0 = interior
+// Uses R8G8B8A8_UNorm for UAV compatibility (R8/R32 can become TYPELESS)
+// This enables resolution-independent borders with minimal per-frame cost
+// ============================================================================
+#pragma kernel GenerateBorderMask
+
+RWTexture2D<float4> BorderMaskTexture; // MUST match R8G8B8A8_UNorm format
+
+[numthreads(8, 8, 1)]
+void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Sample current pixel's province ID
+    float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
+    uint currentProvince = DecodeProvinceID(currentEncoded);
+
+    // Check 4-connected neighbors (up/down/left/right)
+    // If any neighbor has different province ID, mark as border
+    bool isBorder = false;
+
+    // Neighbor offsets: right, left, down, up
+    int2 offsets[4] = {
+        int2(1, 0),   // right
+        int2(-1, 0),  // left
+        int2(0, 1),   // down
+        int2(0, -1)   // up
+    };
+
+    for (int i = 0; i < 4; i++)
+    {
+        int2 neighborPos = int2(id.xy) + offsets[i];
+
+        // Bounds check
+        if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+            neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+            continue;
+
+        // Sample neighbor province ID
+        float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+        uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+        // Different province = border
+        if (neighborProvince != currentProvince)
+        {
+            isBorder = true;
+            break;
+        }
+    }
+
+    // Write mask to R channel: 1.0 = border pixel, 0.0 = interior pixel
+    // R8G8B8A8_UNorm stores in R channel, G/B/A unused (set to 0)
+    BorderMaskTexture[id.xy] = float4(isBorder ? 1.0 : 0.0, 0, 0, 0);
+}
+
+// ============================================================================
+// Copy BorderTexture to BorderMaskTexture
+// Converts smooth curve borders (from BorderTexture) into sparse mask
+// BorderTexture contains distance field for smooth curves
+// BorderMaskTexture contains 1.0 where borders are close, 0.0 elsewhere
+// Note: Must declare BorderTexture locally as float4 (global is float, incorrect)
+// ============================================================================
+#pragma kernel CopyBorderToMask
+
+// Local texture declarations for this kernel
+RWTexture2D<float4> BorderTextureFloat4;   // Actual BorderTexture format (R8G8B8A8)
+
+[numthreads(8, 8, 1)]
+void CopyBorderToMask(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Read border classification from BorderTexture
+    // BorderTexture.R = province border (1.0 = is border, 0.0 = not border)
+    // BorderTexture.G = country border (1.0 = is border, 0.0 = not border)
+    float2 borderValues = BorderTextureFloat4[id.xy].rg;
+
+    // Mark as border if EITHER country or province border exists
+    // Use threshold 0.1 to catch any non-zero border value
+    bool isProvinceBorder = borderValues.r > 0.1;
+    bool isCountryBorder = borderValues.g > 0.1;
+    bool nearBorder = isProvinceBorder || isCountryBorder;
+
+    // Write to mask: 1.0 = border region, 0.0 = interior
+    // This creates sparse mask for shader-based detection
+    BorderMaskTexture[id.xy] = float4(nearBorder ? 1.0 : 0.0, 0, 0, 0);
+}

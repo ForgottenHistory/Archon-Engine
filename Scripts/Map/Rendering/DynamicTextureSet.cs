@@ -16,15 +16,18 @@ namespace Map.Rendering
 
         // Dynamic render textures
         private RenderTexture borderTexture;
+        private RenderTexture borderMaskTexture;
         private RenderTexture highlightTexture;
         private RenderTexture fogOfWarTexture;
 
         // Shader property IDs
         private static readonly int BorderTexID = Shader.PropertyToID("_BorderTexture");
+        private static readonly int BorderMaskTexID = Shader.PropertyToID("_BorderMaskTexture");
         private static readonly int HighlightTexID = Shader.PropertyToID("_HighlightTexture");
         private static readonly int FogOfWarTexID = Shader.PropertyToID("_FogOfWarTexture");
 
         public RenderTexture BorderTexture => borderTexture;
+        public RenderTexture BorderMaskTexture => borderMaskTexture;
         public RenderTexture HighlightTexture => highlightTexture;
         public RenderTexture FogOfWarTexture => fogOfWarTexture;
 
@@ -41,26 +44,28 @@ namespace Map.Rendering
         public void CreateTextures()
         {
             CreateBorderTexture();
+            CreateBorderMaskTexture();
             CreateHighlightTexture();
             CreateFogOfWarTexture();
         }
 
         /// <summary>
-        /// Create border render texture in R16G16_UNorm format
+        /// Create border render texture in R8G8B8A8_UNorm format
         /// R channel = country borders, G channel = province borders
-        /// Uses explicit GraphicsFormat to prevent TYPELESS format
+        /// Uses R8G8B8A8_UNorm for maximum UAV compatibility across platforms
+        /// (R16G16_UNorm causes TYPELESS format on some platforms - see explicit-graphics-format.md)
         /// </summary>
         private void CreateBorderTexture()
         {
             var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight,
-                UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16_UNorm, 0);
-            descriptor.enableRandomWrite = true;
+                UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, 0);
+            descriptor.enableRandomWrite = true;  // UAV support for compute shader writes
             descriptor.useMipMap = false;
             descriptor.autoGenerateMips = false;
 
             borderTexture = new RenderTexture(descriptor);
             borderTexture.name = "Border_RenderTexture";
-            borderTexture.filterMode = FilterMode.Point;
+            borderTexture.filterMode = FilterMode.Bilinear; // CRITICAL: Bilinear filtering for smooth distance gradients
             borderTexture.wrapMode = TextureWrapMode.Clamp;
             borderTexture.Create();
 
@@ -71,7 +76,42 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.Log($"DynamicTextureSet: Created Border RenderTexture {mapWidth}x{mapHeight} R16G16_UNorm", "map_initialization");
+                ArchonLogger.Log($"DynamicTextureSet: Created Border RenderTexture {mapWidth}x{mapHeight} R8G8B8A8_UNorm (UAV-compatible)", "map_initialization");
+            }
+        }
+
+        /// <summary>
+        /// Create border mask texture - 1 byte per pixel indicating if pixel is near a border
+        /// 0 = interior pixel (far from borders), 255 = border pixel (within 2-3 pixels of border)
+        /// This enables sparse shader-based border detection (only process border pixels)
+        /// Memory: ~16MB for 8192x4096 map (R8G8B8A8 for UAV compatibility)
+        ///
+        /// IMPORTANT: Uses R8G8B8A8_UNorm instead of R8_UNorm to prevent TYPELESS format
+        /// R8_UNorm with enableRandomWrite becomes TYPELESS on some platforms
+        /// See: explicit-graphics-format.md decision doc
+        /// </summary>
+        private void CreateBorderMaskTexture()
+        {
+            var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight,
+                UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, 0);
+            descriptor.enableRandomWrite = true;  // UAV support for compute shader writes
+            descriptor.useMipMap = false;
+            descriptor.autoGenerateMips = false;
+
+            borderMaskTexture = new RenderTexture(descriptor);
+            borderMaskTexture.name = "BorderMask_RenderTexture";
+            borderMaskTexture.filterMode = FilterMode.Bilinear; // Bilinear filtering for smooth curves
+            borderMaskTexture.wrapMode = TextureWrapMode.Clamp;
+            borderMaskTexture.Create();
+
+            // Clear to black (no borders detected yet)
+            RenderTexture.active = borderMaskTexture;
+            GL.Clear(true, true, Color.black);
+            RenderTexture.active = null;
+
+            if (logCreation)
+            {
+                ArchonLogger.Log($"DynamicTextureSet: Created BorderMask RenderTexture {mapWidth}x{mapHeight} - Requested: R8G8B8A8_UNorm, Actual: {borderMaskTexture.graphicsFormat}", "map_initialization");
             }
         }
 
@@ -142,12 +182,13 @@ namespace Map.Rendering
             if (material == null) return;
 
             material.SetTexture(BorderTexID, borderTexture);
+            material.SetTexture(BorderMaskTexID, borderMaskTexture);
             material.SetTexture(HighlightTexID, highlightTexture);
             material.SetTexture(FogOfWarTexID, fogOfWarTexture);
 
             if (logCreation)
             {
-                ArchonLogger.Log("DynamicTextureSet: Bound dynamic textures to material", "map_initialization");
+                ArchonLogger.Log("DynamicTextureSet: Bound dynamic textures to material (including BorderMask)", "map_initialization");
             }
         }
 
@@ -171,6 +212,7 @@ namespace Map.Rendering
         public void Release()
         {
             if (borderTexture != null) borderTexture.Release();
+            if (borderMaskTexture != null) borderMaskTexture.Release();
             if (highlightTexture != null) highlightTexture.Release();
             if (fogOfWarTexture != null) fogOfWarTexture.Release();
         }

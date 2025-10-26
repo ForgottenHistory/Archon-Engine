@@ -183,15 +183,27 @@ private RenderTexture CreateProvinceIDTexture(int width, int height)
 
 ### Format Selection Guide
 
+**For UAV-Enabled Textures (enableRandomWrite = true):**
+```csharp
+GraphicsFormat.R8G8B8A8_UNorm    // ✅ ALWAYS use this - universal UAV support
+```
+
+**⚠️ WARNING: R16G16_UNorm UAV Compatibility Issue**
+- **Problem:** R16G16_UNorm with `enableRandomWrite = true` creates TYPELESS format on some platforms
+- **Symptom:** UAV writes from compute shaders fail silently
+- **Solution:** Always use R8G8B8A8_UNorm for UAV textures
+- **Discovered:** 2025-10-26 - BorderTexture TYPELESS issue
+- **Reference:** [4-smooth-borders-completion.md](../2025-10/26/4-smooth-borders-completion.md)
+
 **For Province/Entity IDs (Integer Data):**
 ```csharp
-GraphicsFormat.R8G8B8A8_UNorm    // 4x 8-bit unsigned [0,255] → [0,1]
-GraphicsFormat.R16G16_UNorm      // 2x 16-bit unsigned [0,65535] → [0,1]
+GraphicsFormat.R8G8B8A8_UNorm    // 4x 8-bit unsigned [0,255] → [0,1] - Best for UAV
+GraphicsFormat.R16G16_UNorm      // 2x 16-bit - ⚠️ AVOID for UAV (unreliable)
 ```
 
 **For Owner/Country IDs (Single Integer):**
 ```csharp
-GraphicsFormat.R16_UNorm         // 1x 16-bit unsigned
+GraphicsFormat.R16_UNorm         // 1x 16-bit unsigned (read-only)
 GraphicsFormat.R32_SFloat        // 1x 32-bit float (if needed)
 ```
 
