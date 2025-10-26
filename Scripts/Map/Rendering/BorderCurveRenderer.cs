@@ -133,52 +133,15 @@ namespace Map.Rendering
 
         /// <summary>
         /// Rasterize curves into BorderTexture
-        /// NOTE: This only marks border pixels as 0 (seed points)
-        /// A distance field pass is needed afterwards for smooth anti-aliased borders
+        /// DEPRECATED: This was for the old rasterization approach
+        /// Now using vector curve rendering in fragment shader instead
         /// </summary>
         public void RasterizeCurves()
         {
-            if (!buffersInitialized || rasterizerShader == null)
-            {
-                ArchonLogger.LogWarning("BorderCurveRenderer: Cannot rasterize - buffers not initialized", "map_rendering");
-                return;
-            }
-
-            // STEP 1: Clear border texture to maximum distance
-            ClearBorderTexture();
-
-            // STEP 2: Rasterize Bézier curves (evaluated in shader)
-            // Bind buffers to compute shader
-            rasterizerShader.SetBuffer(rasterizeKernel, "BezierSegments", curvePointsBuffer);
-            rasterizerShader.SetBuffer(rasterizeKernel, "CurveTypes", curveTypesBuffer);
-            rasterizerShader.SetBuffer(rasterizeKernel, "CurveThickness", curveThicknessBuffer);
-
-            // Bind output texture
-            rasterizerShader.SetTexture(rasterizeKernel, "BorderTexture", textureManager.BorderTexture);
-
-            // Set dimensions
-            rasterizerShader.SetInt("MapWidth", textureManager.MapWidth);
-            rasterizerShader.SetInt("MapHeight", textureManager.MapHeight);
-
-            int segmentCount = curvePointsBuffer.count;
-            rasterizerShader.SetInt("SegmentCount", segmentCount);
-
-            // DEBUG: Log dispatch details
-            int threadGroups = (segmentCount + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-            ArchonLogger.Log($"BorderCurveRenderer: Dispatching {threadGroups} thread groups for {segmentCount} Bézier segments", "map_rendering");
-
-            rasterizerShader.Dispatch(rasterizeKernel, threadGroups, 1, 1);
-
-            // CRITICAL: Force GPU synchronization to ensure rasterization completes
-            // Without this, subsequent clears might happen before rasterization finishes
-            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.BorderTexture);
-            syncRequest.WaitForCompletion();
-
-            // STEP 3: Skip distance field for EU5-style thin crisp borders
-            // Distance field creates thick smudgy gradients - we want thin sharp lines
-            // The rasterized curves are already smooth from Chaikin smoothing
-
-            ArchonLogger.Log($"BorderCurveRenderer: Rasterized {segmentCount} curve segments (GPU synced)", "map_rendering");
+            // DISABLED: Vector curve rendering happens in fragment shader
+            // This old rasterization approach is no longer used
+            // The Bézier segment buffer is bound to the material for runtime evaluation
+            ArchonLogger.Log("BorderCurveRenderer: RasterizeCurves() is deprecated - using vector curve fragment shader instead", "map_rendering");
         }
 
         /// <summary>
@@ -312,6 +275,31 @@ namespace Map.Rendering
             curveThicknessBuffer = null;
 
             buffersInitialized = false;
+        }
+
+        /// <summary>
+        /// Get the Bézier segments buffer for binding to shaders
+        /// Returns null if not initialized
+        /// </summary>
+        public ComputeBuffer GetBezierSegmentsBuffer()
+        {
+            return curvePointsBuffer;
+        }
+
+        /// <summary>
+        /// Get the count of Bézier segments in the buffer
+        /// </summary>
+        public int GetSegmentCount()
+        {
+            return curvePointsBuffer != null ? curvePointsBuffer.count : 0;
+        }
+
+        /// <summary>
+        /// Check if buffers are ready for rendering
+        /// </summary>
+        public bool IsInitialized()
+        {
+            return buffersInitialized;
         }
 
         /// <summary>

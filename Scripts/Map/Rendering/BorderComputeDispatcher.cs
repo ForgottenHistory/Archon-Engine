@@ -232,20 +232,11 @@ namespace Map.Rendering
 
             float startTime = Time.realtimeSinceStartup;
 
-            // Use smooth curve rendering if initialized, otherwise fallback to simple edge detection
-            if (smoothBordersInitialized && curveRenderer != null)
+            // ALWAYS use simple edge detection for BorderMask (curve rasterization is obsolete)
+            // Edge detection computes shader marks pixels where ProvinceID changes
+            // This is fast, simple, and works perfectly with shader-based border rendering
             {
-                ArchonLogger.Log($"BorderComputeDispatcher: Rasterizing {curveCache.BorderCount} smooth curves to BorderMaskTexture", "map_initialization");
-
-                // Rasterize smooth curves to BorderMaskTexture
-                RasterizeCurvesToMask();
-
-                float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                ArchonLogger.Log($"BorderComputeDispatcher: Generated smooth curve mask in {elapsedMs:F1}ms ({curveCache.BorderCount} curves)", "map_initialization");
-            }
-            else
-            {
-                // Fallback: Simple edge detection (4-neighbor check)
+                // Simple edge detection (4-neighbor check)
                 if (borderDetectionCompute == null)
                 {
                     ArchonLogger.LogError("BorderComputeDispatcher: Cannot generate border mask - compute shader missing", "map_initialization");
@@ -266,7 +257,7 @@ namespace Map.Rendering
                 syncRequest.WaitForCompletion();
 
                 float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                ArchonLogger.Log($"BorderComputeDispatcher: Generated edge-detected mask in {elapsedMs:F1}ms (fallback mode)", "map_initialization");
+                ArchonLogger.Log($"BorderComputeDispatcher: Generated edge-detected BorderMask in {elapsedMs:F1}ms", "map_initialization");
             }
         }
 
@@ -692,5 +683,34 @@ namespace Map.Rendering
             ArchonLogger.Log("=== Benchmark Complete ===", "map_rendering");
         }
 #endif
+
+        // ============================================================================
+        // PUBLIC API: Vector Curve Buffer Access
+        // ============================================================================
+
+        /// <summary>
+        /// Get the Bézier segments buffer for binding to shaders
+        /// Returns null if smooth borders not initialized
+        /// </summary>
+        public ComputeBuffer GetBezierSegmentsBuffer()
+        {
+            return curveRenderer?.GetBezierSegmentsBuffer();
+        }
+
+        /// <summary>
+        /// Get the count of Bézier segments
+        /// </summary>
+        public int GetBezierSegmentCount()
+        {
+            return curveRenderer?.GetSegmentCount() ?? 0;
+        }
+
+        /// <summary>
+        /// Check if vector curve rendering is available
+        /// </summary>
+        public bool IsVectorCurveRenderingAvailable()
+        {
+            return smoothBordersInitialized && curveRenderer != null && curveRenderer.IsInitialized();
+        }
     }
 }
