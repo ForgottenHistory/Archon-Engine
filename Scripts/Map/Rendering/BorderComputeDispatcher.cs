@@ -712,5 +712,37 @@ namespace Map.Rendering
         {
             return smoothBordersInitialized && curveRenderer != null && curveRenderer.IsInitialized();
         }
+
+        /// <summary>
+        /// Check if spatial grid acceleration is available
+        /// </summary>
+        public bool IsSpatialGridAvailable()
+        {
+            return smoothBordersInitialized && curveRenderer != null && curveRenderer.IsSpatialGridInitialized();
+        }
+
+        /// <summary>
+        /// Get spatial grid parameters (gridWidth, gridHeight, cellSize)
+        /// </summary>
+        public (int gridWidth, int gridHeight, int cellSize) GetSpatialGridParams()
+        {
+            return curveRenderer?.GetSpatialGridParams() ?? (0, 0, 0);
+        }
+
+        /// <summary>
+        /// Get spatial grid cell ranges buffer
+        /// </summary>
+        public ComputeBuffer GetGridCellRangesBuffer()
+        {
+            return curveRenderer?.GetGridCellRangesBuffer();
+        }
+
+        /// <summary>
+        /// Get spatial grid segment indices buffer
+        /// </summary>
+        public ComputeBuffer GetGridSegmentIndicesBuffer()
+        {
+            return curveRenderer?.GetGridSegmentIndicesBuffer();
+        }
     }
 }

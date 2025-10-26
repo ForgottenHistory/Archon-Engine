@@ -22,7 +22,13 @@ namespace Map.Rendering
         private ComputeBuffer curveTypesBuffer;
         private ComputeBuffer curveThicknessBuffer;
 
+        // Spatial acceleration buffers
+        private SpatialHashGrid spatialGrid;
+        private ComputeBuffer gridCellRangesBuffer;    // Per-cell (startIndex, count)
+        private ComputeBuffer gridSegmentIndicesBuffer; // Flat segment indices
+
         private bool buffersInitialized = false;
+        private bool spatialGridInitialized = false;
 
         public BorderCurveRenderer(ComputeShader shader, MapTextureManager textures, BorderCurveCache curveCache, BorderDistanceFieldGenerator distanceField)
         {
@@ -111,8 +117,9 @@ namespace Map.Rendering
             }
 
             // Create GPU buffers for Bézier segments
-            // BezierSegment struct size: 8 Vector2 fields (P0,P1,P2,P3) + 1 BorderType (4 bytes) + 2 ushort (4 bytes) = 72 bytes
-            int segmentStride = sizeof(float) * 8 + sizeof(int) + sizeof(ushort) * 2;
+            // BezierSegment struct size: 4 Vector2 (32 bytes) + 1 int borderType (4) + 2 uint provinceIDs (8) = 44 bytes
+            // CRITICAL: Must match BezierSegment C# struct layout (now uses uint not ushort for province IDs)
+            int segmentStride = sizeof(float) * 8 + sizeof(int) + sizeof(uint) * 2;
             curvePointsBuffer = new ComputeBuffer(allSegments.Count, segmentStride);
             curveTypesBuffer = new ComputeBuffer(allSegments.Count, sizeof(int));
             curveThicknessBuffer = new ComputeBuffer(allSegments.Count, sizeof(float));
@@ -129,6 +136,47 @@ namespace Map.Rendering
             buffersInitialized = true;
 
             ArchonLogger.Log($"BorderCurveRenderer: Uploaded {allSegments.Count} Bézier segments to GPU", "map_initialization");
+
+            // Build spatial acceleration structure
+            BuildSpatialGrid(allSegments);
+        }
+
+        /// <summary>
+        /// Build spatial hash grid for accelerating curve lookups
+        /// Divides map into uniform grid cells, each storing which segments intersect it
+        /// </summary>
+        private void BuildSpatialGrid(List<BezierSegment> allSegments)
+        {
+            float startTime = Time.realtimeSinceStartup;
+
+            // Create spatial grid (64px cells)
+            spatialGrid = new SpatialHashGrid(textureManager.MapWidth, textureManager.MapHeight, cellSize: 64);
+
+            // Add all segments to grid
+            for (int i = 0; i < allSegments.Count; i++)
+            {
+                spatialGrid.AddSegment((uint)i, allSegments[i]);
+            }
+
+            // Finalize grid (prepares GPU-ready data)
+            spatialGrid.Finalize();
+
+            // Upload to GPU buffers
+            var cellRanges = spatialGrid.GetCellRanges();
+            var segmentIndices = spatialGrid.GetFlatSegmentIndices();
+
+            // CellRange struct: 2 uints (startIndex, count) = 8 bytes
+            gridCellRangesBuffer = new ComputeBuffer(cellRanges.Length, sizeof(uint) * 2);
+            gridCellRangesBuffer.SetData(cellRanges);
+
+            // Segment indices: uint = 4 bytes (GPU alignment requirement)
+            gridSegmentIndicesBuffer = new ComputeBuffer(segmentIndices.Length, sizeof(uint));
+            gridSegmentIndicesBuffer.SetData(segmentIndices);
+
+            spatialGridInitialized = true;
+
+            float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
+            ArchonLogger.Log($"BorderCurveRenderer: Built spatial grid in {elapsedMs:F1}ms - {spatialGrid.GetCellCount()} cells, {spatialGrid.GetTotalSegmentReferences()} segment refs", "map_initialization");
         }
 
         /// <summary>
@@ -269,12 +317,17 @@ namespace Map.Rendering
             curvePointsBuffer?.Release();
             curveTypesBuffer?.Release();
             curveThicknessBuffer?.Release();
+            gridCellRangesBuffer?.Release();
+            gridSegmentIndicesBuffer?.Release();
 
             curvePointsBuffer = null;
             curveTypesBuffer = null;
             curveThicknessBuffer = null;
+            gridCellRangesBuffer = null;
+            gridSegmentIndicesBuffer = null;
 
             buffersInitialized = false;
+            spatialGridInitialized = false;
         }
 
         /// <summary>
@@ -300,6 +353,40 @@ namespace Map.Rendering
         public bool IsInitialized()
         {
             return buffersInitialized;
+        }
+
+        /// <summary>
+        /// Check if spatial grid is ready for accelerated rendering
+        /// </summary>
+        public bool IsSpatialGridInitialized()
+        {
+            return spatialGridInitialized;
+        }
+
+        /// <summary>
+        /// Get spatial grid parameters
+        /// </summary>
+        public (int gridWidth, int gridHeight, int cellSize) GetSpatialGridParams()
+        {
+            if (spatialGrid == null)
+                return (0, 0, 0);
+            return (spatialGrid.GridWidth, spatialGrid.GridHeight, spatialGrid.CellSize);
+        }
+
+        /// <summary>
+        /// Get spatial grid cell ranges buffer
+        /// </summary>
+        public ComputeBuffer GetGridCellRangesBuffer()
+        {
+            return gridCellRangesBuffer;
+        }
+
+        /// <summary>
+        /// Get spatial grid segment indices buffer
+        /// </summary>
+        public ComputeBuffer GetGridSegmentIndicesBuffer()
+        {
+            return gridSegmentIndicesBuffer;
         }
 
         /// <summary>

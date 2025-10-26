@@ -6,18 +6,23 @@ namespace Map.Rendering
     /// <summary>
     /// Bézier curve segment with 4 control points (cubic Bézier)
     /// Used for resolution-independent vector border rendering
+    ///
+    /// CRITICAL: Memory layout MUST match HLSL BezierSegment struct exactly!
+    /// HLSL expects: float2 P0-P3 (32 bytes), int borderType (4), uint provinceID1 (4), uint provinceID2 (4)
+    /// Total: 44 bytes
     /// </summary>
+    [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public struct BezierSegment
     {
-        public Vector2 P0;  // Start point
-        public Vector2 P1;  // First control point
-        public Vector2 P2;  // Second control point
-        public Vector2 P3;  // End point
+        public Vector2 P0;  // Start point (8 bytes, offset 0)
+        public Vector2 P1;  // First control point (8 bytes, offset 8)
+        public Vector2 P2;  // Second control point (8 bytes, offset 16)
+        public Vector2 P3;  // End point (8 bytes, offset 24)
 
         // Metadata for border classification
-        public BorderType borderType;
-        public ushort provinceID1;
-        public ushort provinceID2;
+        public BorderType borderType;  // 4 bytes (offset 32) - enum stored as int
+        public uint provinceID1;       // 4 bytes (offset 36) - MUST be uint to match HLSL
+        public uint provinceID2;       // 4 bytes (offset 40) - MUST be uint to match HLSL
 
         public BezierSegment(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, BorderType type = BorderType.None)
         {
