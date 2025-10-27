@@ -37,6 +37,9 @@ namespace Map.Rendering
         private int mapWidth;
         private int mapHeight;
 
+        // Junction detection: pixels where 3+ provinces meet
+        private Dictionary<Vector2, HashSet<ushort>> junctionPixels;
+
         public BorderCurveExtractor(MapTextureManager textures, AdjacencySystem adjacency, ProvinceSystemType provinces, ProvinceMapping mapping)
         {
             textureManager = textures;
@@ -76,6 +79,9 @@ namespace Map.Rendering
             float startTime = Time.realtimeSinceStartup;
 
             ArchonLogger.Log($"BorderCurveExtractor: Processing {allProvinceIds.Length} provinces (texture cached: {provinceIDPixels.Length} pixels)", "map_initialization");
+
+            // STEP 1: Detect all junction pixels (where 3+ provinces meet)
+            DetectJunctionPixels();
 
             // Process each province's neighbors
             for (int i = 0; i < allProvinceIds.Length; i++)
@@ -128,19 +134,11 @@ namespace Map.Rendering
                             if (orderedPath.Count < 3)
                                 continue; // Skip tiny chains (1-2 pixels are bitmap artifacts)
 
-                            // Smooth the pixel chain before curve fitting
-                            List<Vector2> smoothedPath;
-                            if (orderedPath.Count >= 5)
-                            {
-                                smoothedPath = SmoothCurve(orderedPath, smoothingIterations);
-                            }
-                            else
-                            {
-                                // Use raw chained path for very short borders
-                                smoothedPath = orderedPath;
-                            }
+                            // Skip Chaikin smoothing - Bézier curve fitter already creates smooth curves
+                            // Pre-smoothing creates artifacts and clumps with thin borders
+                            List<Vector2> smoothedPath = orderedPath;
 
-                            // Fit Bézier curves to smoothed path (VECTOR CURVE RENDERING!)
+                            // Fit Bézier curves to pixel path (curve fitter handles smoothing)
                             List<BezierSegment> curveSegments = BezierCurveFitter.FitCurve(smoothedPath, borderType);
                             allCurveSegments.AddRange(curveSegments);
                         }
@@ -215,13 +213,46 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Detect all junction pixels where 3 or more provinces meet
+        /// These pixels should be exact endpoints for all borders meeting at that junction
+        /// </summary>
+        private void DetectJunctionPixels()
+        {
+            junctionPixels = new Dictionary<Vector2, HashSet<ushort>>();
+            int junctionCount = 0;
+            float startTime = Time.realtimeSinceStartup;
+
+            // Scan all border pixels to find junctions
+            for (int y = 0; y < mapHeight; y++)
+            {
+                for (int x = 0; x < mapWidth; x++)
+                {
+                    // Get unique neighboring provinces at this pixel (includes self)
+                    HashSet<ushort> neighboringProvinces = GetNeighboringProvinces(x, y, provinceIDPixels, mapWidth, mapHeight);
+
+                    // If 3+ provinces meet here, it's a junction
+                    if (neighboringProvinces.Count >= 3)
+                    {
+                        Vector2 junctionPos = new Vector2(x, y);
+                        junctionPixels[junctionPos] = neighboringProvinces;
+                        junctionCount++;
+                    }
+                }
+            }
+
+            float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
+            ArchonLogger.Log($"BorderCurveExtractor: Detected {junctionCount} junction pixels (3+ provinces) in {elapsed:F0}ms", "map_initialization");
+        }
+
+        /// <summary>
         /// Snap curve endpoints that are within snap distance to a common point
         /// Uses spatial grid for O(n) performance instead of O(n²)
+        /// Checks neighboring cells to catch cross-boundary junctions
         /// </summary>
         private void SnapCurveEndpointsAtJunctions(Dictionary<(ushort, ushort), List<BezierSegment>> borderCurves)
         {
-            const float SNAP_DISTANCE = 1.5f;
-            const int GRID_CELL_SIZE = 3; // Grid cell size (snap distance * 2)
+            const float SNAP_DISTANCE = 10.0f; // Very aggressive snapping for stubborn junctions
+            const int GRID_CELL_SIZE = 12; // Grid cell size (must be >= snap distance)
 
             // Spatial grid for fast neighbor lookup
             var grid = new Dictionary<(int, int), List<(Vector2 point, (ushort, ushort) borderKey, int segmentIndex, bool isStart)>>();
@@ -239,29 +270,42 @@ namespace Map.Rendering
                 }
             }
 
-            // Snap endpoints within each grid cell
+            // Snap endpoints checking neighboring cells (3x3 around each cell)
             int snappedCount = 0;
             var processed = new HashSet<(Vector2, (ushort, ushort), int, bool)>();
 
-            foreach (var cell in grid.Values)
+            foreach (var kvp in grid)
             {
-                if (cell.Count < 2) continue; // No junction here
+                var cellKey = kvp.Key;
+                var cellEndpoints = kvp.Value;
 
-                // Find clusters within this cell
-                for (int i = 0; i < cell.Count; i++)
+                // For each endpoint in this cell
+                for (int i = 0; i < cellEndpoints.Count; i++)
                 {
-                    if (processed.Contains(cell[i])) continue;
+                    if (processed.Contains(cellEndpoints[i])) continue;
 
-                    var cluster = new List<(Vector2, (ushort, ushort), int, bool)> { cell[i] };
+                    var cluster = new List<(Vector2, (ushort, ushort), int, bool)> { cellEndpoints[i] };
 
-                    for (int j = i + 1; j < cell.Count; j++)
+                    // Check current cell + 24 neighboring cells (5x5 grid)
+                    for (int dy = -2; dy <= 2; dy++)
                     {
-                        if (processed.Contains(cell[j])) continue;
-
-                        float dist = Vector2.Distance(cell[i].point, cell[j].point);
-                        if (dist <= SNAP_DISTANCE)
+                        for (int dx = -2; dx <= 2; dx++)
                         {
-                            cluster.Add(cell[j]);
+                            var neighborKey = (cellKey.Item1 + dx, cellKey.Item2 + dy);
+                            if (!grid.ContainsKey(neighborKey)) continue;
+
+                            var neighborEndpoints = grid[neighborKey];
+                            foreach (var candidate in neighborEndpoints)
+                            {
+                                if (processed.Contains(candidate)) continue;
+                                if (candidate.Equals(cellEndpoints[i])) continue;
+
+                                float dist = Vector2.Distance(cellEndpoints[i].point, candidate.point);
+                                if (dist <= SNAP_DISTANCE)
+                                {
+                                    cluster.Add(candidate);
+                                }
+                            }
                         }
                     }
 
@@ -275,7 +319,7 @@ namespace Map.Rendering
                         }
                         avgPos /= cluster.Count;
 
-                        // Snap all endpoints
+                        // Snap all endpoints in cluster
                         foreach (var (point, borderKey, segmentIndex, isStart) in cluster)
                         {
                             var segments = borderCurves[borderKey];
@@ -348,6 +392,39 @@ namespace Map.Rendering
                 }
             }
 
+            // CRITICAL: Add junction pixels AND bridge gaps to reach them
+            // Junction pixels might be isolated if they belong to a third province
+            int addedJunctions = 0;
+            int bridgedGaps = 0;
+
+            foreach (var kvp in junctionPixels)
+            {
+                var junctionPos = kvp.Key;
+                var provinces = kvp.Value;
+
+                // If this junction involves both provinceA and provinceB, add it
+                if (provinces.Contains(provinceA) && provinces.Contains(provinceB))
+                {
+                    // Add junction if not already in border pixels
+                    if (!borderPixels.Contains(junctionPos))
+                    {
+                        borderPixels.Add(junctionPos);
+                        addedJunctions++;
+                    }
+
+                    // CRITICAL FIX: Bridge any gap between existing border pixels and this junction
+                    // This ensures 8-connected path exists to reach the junction
+                    int bridgePixels = BridgeToJunction(junctionPos, provinceA, provinceB, borderPixels);
+                    bridgedGaps += bridgePixels;
+                }
+            }
+
+            // DEBUG: Log junction additions for first few borders
+            if ((addedJunctions > 0 || bridgedGaps > 0) && !firstResultLogged)
+            {
+                ArchonLogger.Log($"BorderCurveExtractor: Border {provinceA}<->{provinceB}: Added {addedJunctions} junctions, bridged {bridgedGaps} gap pixels", "map_initialization");
+            }
+
             // DEBUG: Log results for first pair
             if (!firstResultLogged)
             {
@@ -356,6 +433,150 @@ namespace Map.Rendering
             }
 
             return borderPixels;
+        }
+
+        /// <summary>
+        /// Bridge gap between existing border pixels and a junction using BFS
+        /// Finds shortest 8-connected path of valid border pixels to reach the junction
+        /// Returns number of bridge pixels added
+        /// </summary>
+        private int BridgeToJunction(Vector2 junctionPos, ushort provinceA, ushort provinceB, List<Vector2> borderPixels)
+        {
+            int jx = (int)junctionPos.x;
+            int jy = (int)junctionPos.y;
+
+            // Check if junction already has an 8-connected neighbor in borderPixels
+            bool hasConnection = false;
+            int[] dx = { 1, -1, 0, 0, 1, -1, 1, -1 };
+            int[] dy = { 0, 0, 1, -1, 1, 1, -1, -1 };
+
+            for (int i = 0; i < 8; i++)
+            {
+                Vector2 neighbor = new Vector2(jx + dx[i], jy + dy[i]);
+                if (borderPixels.Contains(neighbor))
+                {
+                    hasConnection = true;
+                    break;
+                }
+            }
+
+            // If already connected, no bridge needed
+            if (hasConnection)
+                return 0;
+
+            // BFS to find shortest path from any existing border pixel to junction
+            var queue = new Queue<Vector2>();
+            var visited = new HashSet<Vector2>();
+            var parent = new Dictionary<Vector2, Vector2>();
+
+            // Start BFS from junction
+            queue.Enqueue(junctionPos);
+            visited.Add(junctionPos);
+
+            Vector2 connectionPoint = Vector2.zero;
+            bool foundPath = false;
+
+            // BFS search (max distance: 10 pixels to avoid runaway searches)
+            int maxDistance = 10;
+            int currentDistance = 0;
+
+            while (queue.Count > 0 && currentDistance < maxDistance)
+            {
+                int levelSize = queue.Count;
+                currentDistance++;
+
+                for (int level = 0; level < levelSize; level++)
+                {
+                    Vector2 current = queue.Dequeue();
+                    int cx = (int)current.x;
+                    int cy = (int)current.y;
+
+                    // Check 8-neighbors
+                    for (int i = 0; i < 8; i++)
+                    {
+                        int nx = cx + dx[i];
+                        int ny = cy + dy[i];
+
+                        // Bounds check
+                        if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight)
+                            continue;
+
+                        Vector2 neighborPos = new Vector2(nx, ny);
+
+                        // Skip if already visited
+                        if (visited.Contains(neighborPos))
+                            continue;
+
+                        // If this pixel is already in borderPixels, we found a connection!
+                        if (borderPixels.Contains(neighborPos))
+                        {
+                            connectionPoint = neighborPos;
+                            parent[neighborPos] = current;
+                            foundPath = true;
+                            break;
+                        }
+
+                        // Check if this pixel is a valid border pixel (borders both A and B or is part of junction)
+                        int index = ny * mapWidth + nx;
+                        ushort pixelProvince = Province.ProvinceIDEncoder.UnpackProvinceID(provinceIDPixels[index]);
+
+                        bool isValidBridge = false;
+
+                        // Valid if it's part of A or B and borders the other
+                        if (pixelProvince == provinceA && HasNeighborProvince(nx, ny, provinceB, provinceIDPixels, mapWidth, mapHeight))
+                        {
+                            isValidBridge = true;
+                        }
+                        else if (pixelProvince == provinceB && HasNeighborProvince(nx, ny, provinceA, provinceIDPixels, mapWidth, mapHeight))
+                        {
+                            isValidBridge = true;
+                        }
+                        // Also valid if it's part of a junction (touches A and B)
+                        else if (junctionPixels.ContainsKey(neighborPos))
+                        {
+                            var junctionProvinces = junctionPixels[neighborPos];
+                            if (junctionProvinces.Contains(provinceA) && junctionProvinces.Contains(provinceB))
+                            {
+                                isValidBridge = true;
+                            }
+                        }
+
+                        if (isValidBridge)
+                        {
+                            visited.Add(neighborPos);
+                            parent[neighborPos] = current;
+                            queue.Enqueue(neighborPos);
+                        }
+                    }
+
+                    if (foundPath)
+                        break;
+                }
+
+                if (foundPath)
+                    break;
+            }
+
+            // If no path found, return 0
+            if (!foundPath)
+                return 0;
+
+            // Trace back path and add bridge pixels
+            int bridgeCount = 0;
+            Vector2 tracePos = connectionPoint;
+
+            while (parent.ContainsKey(tracePos) && tracePos != junctionPos)
+            {
+                Vector2 nextPos = parent[tracePos];
+                if (!borderPixels.Contains(nextPos) && nextPos != junctionPos)
+                {
+                    borderPixels.Add(nextPos);
+                    bridgeCount++;
+                }
+                tracePos = nextPos;
+            }
+
+            return bridgeCount;
         }
 
         /// <summary>
@@ -394,7 +615,7 @@ namespace Map.Rendering
         /// Chain scattered border pixels into an ordered polyline (single chain)
         /// Uses greedy nearest-neighbor with strict adjacency constraint
         /// Modifies the 'remaining' set by removing chained pixels
-        /// IMPORTANT: Only connects adjacent pixels (8-connectivity), stops at gaps
+        /// IMPORTANT: Starts from junction pixels and always chains to junction endpoints
         /// </summary>
         private List<Vector2> ChainBorderPixelsSingle(HashSet<Vector2> remaining)
         {
@@ -403,8 +624,27 @@ namespace Map.Rendering
 
             List<Vector2> orderedPath = new List<Vector2>();
 
-            // Start with first remaining pixel
-            Vector2 current = remaining.First();
+            // STRATEGY: Start from a junction pixel if one exists
+            // This ensures chains naturally end at junctions
+            Vector2 current = Vector2.zero;
+            bool foundJunctionStart = false;
+
+            foreach (var pixel in remaining)
+            {
+                if (junctionPixels.ContainsKey(pixel))
+                {
+                    current = pixel;
+                    foundJunctionStart = true;
+                    break;
+                }
+            }
+
+            // If no junction found, start with any pixel
+            if (!foundJunctionStart)
+            {
+                current = remaining.First();
+            }
+
             orderedPath.Add(current);
             remaining.Remove(current);
 
@@ -434,17 +674,21 @@ namespace Map.Rendering
                     }
                 }
 
-                // If no adjacent pixel found, stop chaining (border has gap or branch)
-                // This prevents creating artificial straight-line shortcuts across provinces
+                // Stop conditions:
+                // 1. No adjacent pixel found (gap)
+                // 2. Current pixel is a junction (endpoint reached)
                 if (!foundAdjacent)
                 {
-                    break; // Stop here, don't create long-distance connections
+                    break; // Gap detected, stop chain
                 }
 
                 // Add to path
                 orderedPath.Add(nearest);
                 remaining.Remove(nearest);
                 current = nearest;
+
+                // DON'T stop at junctions - continue chaining through them
+                // This ensures chains connect all the way through junction points
             }
 
             return orderedPath;
