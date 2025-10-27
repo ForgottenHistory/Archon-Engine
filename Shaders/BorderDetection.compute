@@ -414,37 +414,40 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
     float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
     uint currentProvince = DecodeProvinceID(currentEncoded);
 
-    // Check 4-connected neighbors (up/down/left/right)
-    // If any neighbor has different province ID, mark as border
+    // Check in 3-pixel radius for borders (expanded from 1-pixel to catch smooth curves)
+    // This ensures vector curves passing near borders get tested by fragment shader
     bool isBorder = false;
+    int searchRadius = 3;
 
-    // Neighbor offsets: right, left, down, up
-    int2 offsets[4] = {
-        int2(1, 0),   // right
-        int2(-1, 0),  // left
-        int2(0, 1),   // down
-        int2(0, -1)   // up
-    };
-
-    for (int i = 0; i < 4; i++)
+    for (int dy = -searchRadius; dy <= searchRadius; dy++)
     {
-        int2 neighborPos = int2(id.xy) + offsets[i];
-
-        // Bounds check
-        if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
-            neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
-            continue;
-
-        // Sample neighbor province ID
-        float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
-        uint neighborProvince = DecodeProvinceID(neighborEncoded);
-
-        // Different province = border
-        if (neighborProvince != currentProvince)
+        for (int dx = -searchRadius; dx <= searchRadius; dx++)
         {
-            isBorder = true;
-            break;
+            // Skip center pixel (already tested)
+            if (dx == 0 && dy == 0)
+                continue;
+
+            int2 neighborPos = int2(id.xy) + int2(dx, dy);
+
+            // Bounds check
+            if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+                neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+                continue;
+
+            // Sample neighbor province ID
+            float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+            uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+            // Different province = near border
+            if (neighborProvince != currentProvince)
+            {
+                isBorder = true;
+                break;
+            }
         }
+
+        if (isBorder)
+            break;
     }
 
     // Write mask to R channel: 1.0 = border pixel, 0.0 = interior pixel

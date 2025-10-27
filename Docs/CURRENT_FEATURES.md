@@ -193,7 +193,6 @@ This document lists all implemented features in the Archon Engine organized by c
 **Point Filtering** - Pixel-perfect province ID lookup without interpolation
 **Single Draw Call Optimization** - Entire map rendered in one draw call
 **ProvinceHighlighter** - Province highlighting for selection feedback
-**Performance** - 100-120 FPS with 583K Bézier segments at 50x debug speed, 200+ FPS at normal speeds
 **Memory Efficiency** - 720KB curve data vs 40MB rasterized (55x compression)
 
 ---

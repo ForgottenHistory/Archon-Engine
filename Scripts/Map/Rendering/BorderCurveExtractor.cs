@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Unity.Collections;
 using Unity.Mathematics;
@@ -115,67 +116,56 @@ namespace Map.Rendering
 
                     if (borderPixels.Count > 0)
                     {
-                        // Chain pixels into ordered polyline (CRITICAL for smooth curves!)
-                        List<Vector2> orderedPath = ChainBorderPixels(borderPixels);
+                        // Chain pixels into multiple ordered polylines (handles disconnected border segments)
+                        List<List<Vector2>> allChains = ChainBorderPixelsMultiple(borderPixels);
 
-                        // Smooth the pixel chain before curve fitting
-                        // Smoothing helps Bézier fitting by reducing noise in pixel positions
-                        List<Vector2> smoothedPath;
-                        if (orderedPath.Count >= 5)
-                        {
-                            smoothedPath = SmoothCurve(orderedPath, smoothingIterations);
-                        }
-                        else
-                        {
-                            // Use raw chained path for very short borders
-                            smoothedPath = orderedPath;
-                        }
-
-                        // Fit Bézier curves to smoothed path (VECTOR CURVE RENDERING!)
-                        // This creates parametric curves that can be evaluated at any resolution
+                        // Process each chain separately to handle disconnected borders
+                        List<BezierSegment> allCurveSegments = new List<BezierSegment>();
                         BorderType borderType = DetermineBorderType(provinceA, provinceB);
-                        List<BezierSegment> curveSegments = BezierCurveFitter.FitCurve(smoothedPath, borderType);
+
+                        foreach (var orderedPath in allChains)
+                        {
+                            if (orderedPath.Count < 3)
+                                continue; // Skip tiny chains (1-2 pixels are bitmap artifacts)
+
+                            // Smooth the pixel chain before curve fitting
+                            List<Vector2> smoothedPath;
+                            if (orderedPath.Count >= 5)
+                            {
+                                smoothedPath = SmoothCurve(orderedPath, smoothingIterations);
+                            }
+                            else
+                            {
+                                // Use raw chained path for very short borders
+                                smoothedPath = orderedPath;
+                            }
+
+                            // Fit Bézier curves to smoothed path (VECTOR CURVE RENDERING!)
+                            List<BezierSegment> curveSegments = BezierCurveFitter.FitCurve(smoothedPath, borderType);
+                            allCurveSegments.AddRange(curveSegments);
+                        }
+
+                        // Early exit if no valid curves generated
+                        if (allCurveSegments.Count == 0)
+                            continue;
 
                         // Set province IDs for each segment
-                        for (int segIdx = 0; segIdx < curveSegments.Count; segIdx++)
+                        for (int segIdx = 0; segIdx < allCurveSegments.Count; segIdx++)
                         {
-                            BezierSegment seg = curveSegments[segIdx];
+                            BezierSegment seg = allCurveSegments[segIdx];
                             seg.provinceID1 = provinceA;
                             seg.provinceID2 = provinceB;
-                            curveSegments[segIdx] = seg;
+                            allCurveSegments[segIdx] = seg;
                         }
 
                         // DEBUG: Log first curve stats
                         if (processedBorders == 0)
                         {
-                            string rawSample = "";
-                            for (int j = 0; j < Mathf.Min(5, borderPixels.Count); j++)
-                            {
-                                rawSample += $"({borderPixels[j].x:F0},{borderPixels[j].y:F0}) ";
-                            }
-                            string chainedSample = "";
-                            for (int k = 0; k < Mathf.Min(5, orderedPath.Count); k++)
-                            {
-                                chainedSample += $"({orderedPath[k].x:F0},{orderedPath[k].y:F0}) ";
-                            }
-                            string smoothedSample = "";
-                            for (int m = 0; m < Mathf.Min(5, smoothedPath.Count); m++)
-                            {
-                                smoothedSample += $"({smoothedPath[m].x:F2},{smoothedPath[m].y:F2}) ";
-                            }
-                            ArchonLogger.Log($"BorderCurveExtractor: First curve - Raw pixels: {borderPixels.Count}, After chaining: {orderedPath.Count}, After smoothing: {smoothedPath.Count}, Bézier segments: {curveSegments.Count}", "map_initialization");
-                            ArchonLogger.Log($"  Raw sample: {rawSample}", "map_initialization");
-                            ArchonLogger.Log($"  Chained sample: {chainedSample}", "map_initialization");
-                            ArchonLogger.Log($"  Smoothed sample: {smoothedSample}", "map_initialization");
-                            if (curveSegments.Count > 0)
-                            {
-                                BezierSegment firstSeg = curveSegments[0];
-                                ArchonLogger.Log($"  First Bézier segment: P0=({firstSeg.P0.x:F2},{firstSeg.P0.y:F2}) P1=({firstSeg.P1.x:F2},{firstSeg.P1.y:F2}) P2=({firstSeg.P2.x:F2},{firstSeg.P2.y:F2}) P3=({firstSeg.P3.x:F2},{firstSeg.P3.y:F2})", "map_initialization");
-                            }
+                            ArchonLogger.Log($"BorderCurveExtractor: First curve - Raw pixels: {borderPixels.Count}, Chains: {allChains.Count}, Bézier segments: {allCurveSegments.Count}", "map_initialization");
                         }
 
                         // Cache the curve segments
-                        borderCurves[(provinceA, provinceB)] = curveSegments;
+                        borderCurves[(provinceA, provinceB)] = allCurveSegments;
                         processedBorders++;
                     }
                     else if (processedBorders == 0 && borderCurves.Count == 0)
@@ -206,10 +196,119 @@ namespace Map.Rendering
 
             if (logProgress)
             {
-                ArchonLogger.Log($"BorderCurveExtractor: Completed! Extracted {processedBorders} border curves in {elapsed:F0}ms ({elapsed / processedBorders:F2}ms per border)", "map_initialization");
+                ArchonLogger.Log($"BorderCurveExtractor: Completed extraction! {processedBorders} borders in {elapsed:F0}ms", "map_initialization");
+            }
+
+            // POST-PROCESSING: Snap curve endpoints at junctions to ensure borders connect
+            ArchonLogger.Log("BorderCurveExtractor: Snapping curve endpoints at junctions...", "map_initialization");
+            float snapStart = Time.realtimeSinceStartup;
+            SnapCurveEndpointsAtJunctions(borderCurves);
+            float snapElapsed = (Time.realtimeSinceStartup - snapStart) * 1000f;
+            ArchonLogger.Log($"BorderCurveExtractor: Junction snapping completed in {snapElapsed:F0}ms", "map_initialization");
+
+            if (logProgress)
+            {
+                ArchonLogger.Log($"BorderCurveExtractor: Total time: {(Time.realtimeSinceStartup - startTime) * 1000f:F0}ms", "map_initialization");
             }
 
             return borderCurves;
+        }
+
+        /// <summary>
+        /// Snap curve endpoints that are within snap distance to a common point
+        /// Uses spatial grid for O(n) performance instead of O(n²)
+        /// </summary>
+        private void SnapCurveEndpointsAtJunctions(Dictionary<(ushort, ushort), List<BezierSegment>> borderCurves)
+        {
+            const float SNAP_DISTANCE = 1.5f;
+            const int GRID_CELL_SIZE = 3; // Grid cell size (snap distance * 2)
+
+            // Spatial grid for fast neighbor lookup
+            var grid = new Dictionary<(int, int), List<(Vector2 point, (ushort, ushort) borderKey, int segmentIndex, bool isStart)>>();
+
+            // Add all endpoints to spatial grid
+            foreach (var kvp in borderCurves)
+            {
+                var borderKey = kvp.Key;
+                var segments = kvp.Value;
+
+                for (int i = 0; i < segments.Count; i++)
+                {
+                    AddToGrid(grid, segments[i].P0, borderKey, i, true);
+                    AddToGrid(grid, segments[i].P3, borderKey, i, false);
+                }
+            }
+
+            // Snap endpoints within each grid cell
+            int snappedCount = 0;
+            var processed = new HashSet<(Vector2, (ushort, ushort), int, bool)>();
+
+            foreach (var cell in grid.Values)
+            {
+                if (cell.Count < 2) continue; // No junction here
+
+                // Find clusters within this cell
+                for (int i = 0; i < cell.Count; i++)
+                {
+                    if (processed.Contains(cell[i])) continue;
+
+                    var cluster = new List<(Vector2, (ushort, ushort), int, bool)> { cell[i] };
+
+                    for (int j = i + 1; j < cell.Count; j++)
+                    {
+                        if (processed.Contains(cell[j])) continue;
+
+                        float dist = Vector2.Distance(cell[i].point, cell[j].point);
+                        if (dist <= SNAP_DISTANCE)
+                        {
+                            cluster.Add(cell[j]);
+                        }
+                    }
+
+                    if (cluster.Count >= 2)
+                    {
+                        // Calculate average position
+                        Vector2 avgPos = Vector2.zero;
+                        foreach (var item in cluster)
+                        {
+                            avgPos += item.Item1; // Item1 is the point
+                        }
+                        avgPos /= cluster.Count;
+
+                        // Snap all endpoints
+                        foreach (var (point, borderKey, segmentIndex, isStart) in cluster)
+                        {
+                            var segments = borderCurves[borderKey];
+                            var seg = segments[segmentIndex];
+
+                            if (isStart)
+                                seg.P0 = avgPos;
+                            else
+                                seg.P3 = avgPos;
+
+                            segments[segmentIndex] = seg;
+                            processed.Add((point, borderKey, segmentIndex, isStart));
+                        }
+
+                        snappedCount += cluster.Count;
+                    }
+                }
+            }
+
+            ArchonLogger.Log($"BorderCurveExtractor: Snapped {snappedCount} curve endpoints at junctions", "map_initialization");
+
+            // Helper: Add endpoint to spatial grid
+            void AddToGrid(Dictionary<(int, int), List<(Vector2, (ushort, ushort), int, bool)>> g, Vector2 point, (ushort, ushort) key, int idx, bool start)
+            {
+                int cellX = (int)(point.x / GRID_CELL_SIZE);
+                int cellY = (int)(point.y / GRID_CELL_SIZE);
+                var cellKey = (cellX, cellY);
+
+                if (!g.ContainsKey(cellKey))
+                    g[cellKey] = new List<(Vector2, (ushort, ushort), int, bool)>();
+
+                g[cellKey].Add((point, key, idx, start));
+            }
         }
 
         /// <summary>
@@ -237,13 +336,12 @@ namespace Map.Rendering
             }
 
             // Check pixels of Province A for neighbors in Province B
-            // This is O(pixelsA) instead of O(width×height)!
             foreach (var pixel in pixelsA)
             {
                 int x = pixel.x;
                 int y = pixel.y;
 
-                // Check 4-neighbors for Province B
+                // Check if this pixel borders Province B
                 if (HasNeighborProvince(x, y, provinceB, provinceIDPixels, mapWidth, mapHeight))
                 {
                     borderPixels.Add(new Vector2(x, y));
@@ -261,47 +359,86 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Chain scattered border pixels into an ordered polyline
-        /// Uses greedy nearest-neighbor to create connected path
+        /// Chain scattered border pixels into multiple ordered polylines (handles disconnected segments)
+        /// Returns a list of chains, where each chain is a list of connected pixels
+        /// IMPORTANT: Only connects adjacent pixels (8-connectivity), creates new chain at gaps
         /// </summary>
-        private List<Vector2> ChainBorderPixels(List<Vector2> scatteredPixels)
+        private List<List<Vector2>> ChainBorderPixelsMultiple(List<Vector2> scatteredPixels)
         {
-            if (scatteredPixels.Count < 2)
-                return scatteredPixels;
+            List<List<Vector2>> allChains = new List<List<Vector2>>();
 
-            List<Vector2> orderedPath = new List<Vector2>(scatteredPixels.Count);
+            if (scatteredPixels.Count == 0)
+                return allChains;
+
             HashSet<Vector2> remaining = new HashSet<Vector2>(scatteredPixels);
 
-            // Start with first pixel
-            Vector2 current = scatteredPixels[0];
+            // Keep creating chains until all pixels are used
+            while (remaining.Count > 0)
+            {
+                List<Vector2> currentChain = ChainBorderPixelsSingle(remaining);
+                if (currentChain.Count > 0)
+                {
+                    allChains.Add(currentChain);
+                }
+                else
+                {
+                    // Safety: if ChainBorderPixelsSingle returns empty, break to prevent infinite loop
+                    break;
+                }
+            }
+
+            return allChains;
+        }
+
+        /// <summary>
+        /// Chain scattered border pixels into an ordered polyline (single chain)
+        /// Uses greedy nearest-neighbor with strict adjacency constraint
+        /// Modifies the 'remaining' set by removing chained pixels
+        /// IMPORTANT: Only connects adjacent pixels (8-connectivity), stops at gaps
+        /// </summary>
+        private List<Vector2> ChainBorderPixelsSingle(HashSet<Vector2> remaining)
+        {
+            if (remaining.Count == 0)
+                return new List<Vector2>();
+
+            List<Vector2> orderedPath = new List<Vector2>();
+
+            // Start with first remaining pixel
+            Vector2 current = remaining.First();
             orderedPath.Add(current);
             remaining.Remove(current);
 
-            // Greedy nearest-neighbor chaining
+            // Greedy nearest-neighbor chaining with STRICT adjacency
             while (remaining.Count > 0)
             {
                 Vector2 nearest = Vector2.zero;
                 float minDistSq = float.MaxValue;
+                bool foundAdjacent = false;
 
-                // Find nearest remaining pixel (8-connectivity)
+                // Find nearest adjacent pixel (MUST be 8-neighbor, max distance sqrt(2))
                 foreach (var candidate in remaining)
                 {
                     float dx = candidate.x - current.x;
                     float dy = candidate.y - current.y;
                     float distSq = dx * dx + dy * dy;
 
-                    // Prioritize adjacent pixels (8-neighbors)
-                    if (distSq <= 2.0f) // sqrt(2) for diagonal neighbors
+                    // ONLY accept adjacent pixels (8-connectivity: max distance sqrt(2) ≈ 1.414)
+                    if (distSq <= 2.0f) // sqrt(2)^2 = 2.0
                     {
-                        nearest = candidate;
-                        minDistSq = distSq;
-                        break; // Found adjacent pixel, use it immediately
+                        if (distSq < minDistSq)
+                        {
+                            nearest = candidate;
+                            minDistSq = distSq;
+                            foundAdjacent = true;
+                        }
                     }
-                    else if (distSq < minDistSq)
-                    {
-                        nearest = candidate;
-                        minDistSq = distSq;
-                    }
+                }
+
+                // If no adjacent pixel found, stop chaining (border has gap or branch)
+                // This prevents creating artificial straight-line shortcuts across provinces
+                if (!foundAdjacent)
+                {
+                    break; // Stop here, don't create long-distance connections
                 }
 
                 // Add to path
@@ -315,14 +452,15 @@ namespace Map.Rendering
 
         /// <summary>
         /// Check if pixel at (x,y) has a neighbor with target province ID
+        /// Uses 8-connectivity (includes diagonals) to match chaining algorithm
         /// </summary>
         private bool HasNeighborProvince(int x, int y, ushort targetProvince, Color32[] pixels, int mapWidth, int mapHeight)
         {
-            // Check 4-neighbors
-            int[] dx = { 1, -1, 0, 0 };
-            int[] dy = { 0, 0, 1, -1 };
+            // Check 8-neighbors (includes diagonals for complete border detection)
+            int[] dx = { 1, -1, 0, 0, 1, -1, 1, -1 };
+            int[] dy = { 0, 0, 1, -1, 1, 1, -1, -1 };
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 8; i++)
             {
                 int nx = x + dx[i];
                 int ny = y + dy[i];
@@ -341,13 +479,50 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Get all unique province IDs neighboring this pixel (including self)
+        /// Used for junction detection
+        /// </summary>
+        private HashSet<ushort> GetNeighboringProvinces(int x, int y, Color32[] pixels, int mapWidth, int mapHeight)
+        {
+            var provinces = new HashSet<ushort>();
+
+            // Add self
+            int selfIndex = y * mapWidth + x;
+            provinces.Add(Province.ProvinceIDEncoder.UnpackProvinceID(pixels[selfIndex]));
+
+            // Check 8-neighbors
+            int[] dx = { 1, -1, 0, 0, 1, -1, 1, -1 };
+            int[] dy = { 0, 0, 1, -1, 1, 1, -1, -1 };
+
+            for (int i = 0; i < 8; i++)
+            {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+
+                // Bounds check
+                if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight)
+                    continue;
+
+                int neighborIndex = ny * mapWidth + nx;
+                provinces.Add(Province.ProvinceIDEncoder.UnpackProvinceID(pixels[neighborIndex]));
+            }
+
+            return provinces;
+        }
+
+        /// <summary>
         /// Smooth a polyline using Chaikin's corner-cutting algorithm
         /// Iteratively rounds corners by replacing each segment with two shorter segments
+        /// IMPORTANT: Endpoints are NEVER smoothed to preserve junction connections
         /// </summary>
         private List<Vector2> SmoothCurve(List<Vector2> points, int iterations)
         {
             if (points.Count < 3)
                 return points; // Can't smooth lines with less than 3 points
+
+            // Store original endpoints - these MUST NOT change to preserve junctions
+            Vector2 originalFirst = points[0];
+            Vector2 originalLast = points[points.Count - 1];
 
             List<Vector2> smoothed = new List<Vector2>(points);
 
@@ -355,10 +530,10 @@ namespace Map.Rendering
             {
                 List<Vector2> newPoints = new List<Vector2>(smoothed.Count * 2);
 
-                // Keep first point
-                newPoints.Add(smoothed[0]);
+                // Keep EXACT first point (junction preservation)
+                newPoints.Add(originalFirst);
 
-                // Apply Chaikin smoothing to each segment
+                // Apply Chaikin smoothing to each segment EXCEPT endpoints
                 for (int i = 0; i < smoothed.Count - 1; i++)
                 {
                     Vector2 p0 = smoothed[i];
@@ -372,8 +547,8 @@ namespace Map.Rendering
                     newPoints.Add(r);
                 }
 
-                // Keep last point
-                newPoints.Add(smoothed[smoothed.Count - 1]);
+                // Keep EXACT last point (junction preservation)
+                newPoints.Add(originalLast);
 
                 smoothed = newPoints;
             }
