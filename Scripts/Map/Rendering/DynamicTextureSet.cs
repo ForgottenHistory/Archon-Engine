@@ -65,7 +65,7 @@ namespace Map.Rendering
 
             borderTexture = new RenderTexture(descriptor);
             borderTexture.name = "Border_RenderTexture";
-            borderTexture.filterMode = FilterMode.Bilinear; // CRITICAL: Bilinear filtering for smooth distance gradients
+            borderTexture.filterMode = FilterMode.Bilinear; // Bilinear + smoothstep gradient = crisp thin borders
             borderTexture.wrapMode = TextureWrapMode.Clamp;
             borderTexture.Create();
 

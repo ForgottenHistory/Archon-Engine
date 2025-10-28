@@ -19,11 +19,13 @@
 **Map.Rendering.PaletteTextureManager** - Color palette texture (256×1 RGBA32) with HSV distribution
 **Map.Rendering.MapRenderer** - Single draw call map rendering
 **Map.Rendering.MapRenderingCoordinator** - Coordinate rendering subsystems
-**Map.Rendering.BorderComputeDispatcher** - Dispatch border detection and vector curve rendering
-**Map.Rendering.BorderCurveExtractor** - Extract border pixel chains from province pairs (uses AdjacencySystem)
-**Map.Rendering.BorderCurveCache** - Cache Bézier curve segments with metadata (type, provinces, colors)
-**Map.Rendering.BorderCurveRenderer** - Upload Bézier curves to GPU, manage curve buffers
+**Map.Rendering.BorderComputeDispatcher** - Orchestrates border rendering: initializes curve extraction/cache/renderer, uploads GPU data, generates border mask & distance fields
+**Map.Rendering.BorderCurveExtractor** - Extract border pixel chains from province pairs, chain into polylines, merge chains (uses AdjacencySystem)
+**Map.Rendering.BezierCurveFitter** - Fit curves to pixel chains (currently: polyline approach - straight segments between pixels)
+**Map.Rendering.BorderCurveCache** - Cache Bézier/polyline segments with metadata (type, provinces, colors)
+**Map.Rendering.BorderCurveRenderer** - Upload curve segments to GPU, manage curve buffers, spatial grid
 **Map.Rendering.SpatialHashGrid** - Spatial acceleration structure (88×32 grid, 64px cells) for O(nearby) curve lookup
+**Map.Rendering.BorderDistanceFieldGenerator** - Generate signed distance field for borders using jump flooding algorithm
 **Map.Rendering.OwnerTextureDispatcher** - Update owner texture from simulation state
 **Map.Rendering.TextureStreamingManager** - Stream texture LODs for memory optimization
 **Map.Rendering.TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
@@ -149,4 +151,4 @@ Map.MapRenderer (renders)
 
 ---
 
-*Updated: 2025-10-25*
+*Updated: 2025-10-27 - Added BezierCurveFitter, BorderDistanceFieldGenerator to registry*

@@ -17,6 +17,7 @@ namespace Map.Rendering
         [Header("Compute Shaders")]
         [SerializeField] private ComputeShader borderDetectionCompute;
         [SerializeField] private ComputeShader borderCurveRasterizerCompute;
+        [SerializeField] private ComputeShader borderSDFCompute;
 
         [Header("Border Settings")]
         [SerializeField] private BorderMode borderMode = BorderMode.Province;
@@ -24,6 +25,11 @@ namespace Map.Rendering
         [SerializeField] private int provinceBorderThickness = 0;
         [SerializeField] private float borderAntiAliasing = 1.0f;
         [SerializeField] private bool autoUpdateBorders = true;
+
+        [Header("SDF Rendering (Resolution Independent)")]
+        [SerializeField] private bool useSDFRendering = false;
+        [SerializeField] private float countryBorderWidth = 0.5f;
+        [SerializeField] private float provinceBorderWidth = 0.5f;
 
         public BorderMode CurrentBorderMode => borderMode;
 
@@ -51,6 +57,8 @@ namespace Map.Rendering
         private BorderCurveExtractor curveExtractor;
         private BorderCurveCache curveCache;
         private BorderCurveRenderer curveRenderer;
+        private BorderSDFRenderer sdfRenderer;
+        private SpatialHashGrid spatialGrid;
         private bool smoothBordersInitialized = false;
 
         public enum BorderMode
@@ -108,7 +116,26 @@ namespace Map.Rendering
 
                 if (borderCurveRasterizerCompute == null)
                 {
-                    ArchonLogger.LogWarning("BorderComputeDispatcher: BorderCurveRasterizer compute shader not found - smooth borders will not be available", "map_initialization");
+                    ArchonLogger.LogWarning("BorderComputeDispatcher: BorderCurveRasterizer compute shader not found - rasterization rendering will not be available", "map_initialization");
+                }
+            }
+
+            // Load BorderSDF compute shader (for resolution-independent SDF rendering)
+            if (borderSDFCompute == null)
+            {
+                #if UNITY_EDITOR
+                string[] guids = UnityEditor.AssetDatabase.FindAssets("BorderSDF t:ComputeShader");
+                if (guids.Length > 0)
+                {
+                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+                    borderSDFCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
+                    ArchonLogger.Log($"BorderComputeDispatcher: Found BorderSDF shader at {path}", "map_initialization");
+                }
+                #endif
+
+                if (borderSDFCompute == null)
+                {
+                    ArchonLogger.LogWarning("BorderComputeDispatcher: BorderSDF compute shader not found - SDF rendering will not be available", "map_initialization");
                 }
             }
 
@@ -181,23 +208,60 @@ namespace Map.Rendering
             ArchonLogger.Log("BorderComputeDispatcher: Classifying borders by ownership...", "map_initialization");
             UpdateAllBorderStyles();
 
-            // Get or create distance field generator for smooth anti-aliasing
-            if (distanceFieldGenerator == null)
+            // Build spatial hash grid for both rasterization and SDF rendering
+            ArchonLogger.Log("BorderComputeDispatcher: Building spatial grid...", "map_initialization");
+            spatialGrid = new SpatialHashGrid(textureManager.MapWidth, textureManager.MapHeight, cellSize: 64);
+
+            uint segmentIndex = 0;
+            foreach (var (segments, style) in curveCache.GetAllBordersForRendering())
             {
-                distanceFieldGenerator = GetComponent<BorderDistanceFieldGenerator>();
+                if (segments != null)
+                {
+                    foreach (var seg in segments)
+                    {
+                        spatialGrid.AddSegment(segmentIndex++, seg);
+                    }
+                }
+            }
+            spatialGrid.Finalize();
+
+            // Choose rendering method: SDF (resolution independent) or Rasterization (fixed resolution)
+            if (useSDFRendering && borderSDFCompute != null)
+            {
+                ArchonLogger.Log("BorderComputeDispatcher: Using SDF rendering (resolution independent)", "map_initialization");
+
+                // Initialize SDF renderer
+                sdfRenderer = new BorderSDFRenderer(borderSDFCompute, textureManager, curveCache, spatialGrid);
+
+                // Upload curve data and spatial grid to GPU
+                ArchonLogger.Log("BorderComputeDispatcher: Uploading SDF data to GPU...", "map_initialization");
+                sdfRenderer.UploadSDFData();
+
+                // Render borders once at startup (no AA - bilinear filtering handles sub-pixel smoothing)
+                sdfRenderer.RenderBorders(countryBorderWidth, provinceBorderWidth, antiAliasRadius: 0.0f);
+            }
+            else
+            {
+                ArchonLogger.Log("BorderComputeDispatcher: Using rasterization rendering (fixed resolution)", "map_initialization");
+
+                // Get or create distance field generator for smooth anti-aliasing
                 if (distanceFieldGenerator == null)
                 {
-                    distanceFieldGenerator = gameObject.AddComponent<BorderDistanceFieldGenerator>();
+                    distanceFieldGenerator = GetComponent<BorderDistanceFieldGenerator>();
+                    if (distanceFieldGenerator == null)
+                    {
+                        distanceFieldGenerator = gameObject.AddComponent<BorderDistanceFieldGenerator>();
+                    }
+                    distanceFieldGenerator.SetTextureManager(textureManager);
                 }
-                distanceFieldGenerator.SetTextureManager(textureManager);
+
+                // Initialize curve renderer with distance field generator
+                curveRenderer = new BorderCurveRenderer(borderCurveRasterizerCompute, textureManager, curveCache, distanceFieldGenerator);
+
+                // Upload curve data to GPU
+                ArchonLogger.Log("BorderComputeDispatcher: Uploading curve data to GPU...", "map_initialization");
+                curveRenderer.UploadCurveData();
             }
-
-            // Initialize curve renderer with distance field generator
-            curveRenderer = new BorderCurveRenderer(borderCurveRasterizerCompute, textureManager, curveCache, distanceFieldGenerator);
-
-            // Upload curve data to GPU
-            ArchonLogger.Log("BorderComputeDispatcher: Uploading curve data to GPU...", "map_initialization");
-            curveRenderer.UploadCurveData();
 
             // CRITICAL: GPU synchronization - Wait for curve data upload to complete
             // Following unity-compute-shader-coordination.md pattern
@@ -330,8 +394,15 @@ namespace Map.Rendering
             // Start performance timing
             float startTime = Time.realtimeSinceStartup;
 
+            // Use SDF rendering if initialized (takes priority over rasterization)
+            if (smoothBordersInitialized && sdfRenderer != null)
+            {
+                ArchonLogger.Log($"BorderComputeDispatcher: SDF rendering already complete at startup", "map_rendering");
+                // SDF rendering was done once at initialization - no need to re-render each frame
+                return;
+            }
             // Use smooth curve rendering if initialized
-            if (smoothBordersInitialized && curveRenderer != null)
+            else if (smoothBordersInitialized && curveRenderer != null)
             {
                 ArchonLogger.Log($"BorderComputeDispatcher: Rasterizing {curveCache.BorderCount} smooth curves to BorderTexture", "map_rendering");
 
@@ -743,6 +814,15 @@ namespace Map.Rendering
         public ComputeBuffer GetGridSegmentIndicesBuffer()
         {
             return curveRenderer?.GetGridSegmentIndicesBuffer();
+        }
+
+        /// <summary>
+        /// Check if SDF rendering is active (vs vector curve rasterization)
+        /// Used by VisualStyleManager to disable _UseVectorCurves when SDF is active
+        /// </summary>
+        public bool IsUsingSDFRendering()
+        {
+            return useSDFRendering && sdfRenderer != null;
         }
     }
 }

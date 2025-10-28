@@ -78,13 +78,17 @@ namespace Map.Rendering
     /// </summary>
     public static class BezierCurveFitter
     {
-        private const int MAX_POINTS_PER_SEGMENT = 20;  // Max points to fit in single Bézier
-        private const int MIN_POINTS_PER_SEGMENT = 5;   // Min points needed for meaningful fit
-        private const float MAX_FIT_ERROR = 2.0f;       // Max pixel error tolerance
+        private const int MAX_POINTS_PER_SEGMENT = 20;  // Shorter segments for accuracy
+        private const int MIN_POINTS_PER_SEGMENT = 4;   // Lower minimum to handle short borders
+        private const float MAX_FIT_ERROR = 1.5f;       // Tight error tolerance for accurate borders
+
+        private const float ENDPOINT_QUANTIZATION = 0.5f; // Snap endpoints to 0.5px grid for junction alignment
 
         /// <summary>
-        /// Fit Bézier curve segments to an ordered point chain
-        /// Returns list of cubic Bézier segments that approximate the input
+        /// Fit Bézier curves to pixel chain using adaptive segmentation
+        /// Creates smooth curves that approximate the pixel path
+        /// Uses recursive splitting to ensure accuracy within MAX_FIT_ERROR
+        /// Quantizes endpoints to ensure perfect junction connections
         /// </summary>
         public static List<BezierSegment> FitCurve(List<Vector2> points, BorderType borderType = BorderType.None)
         {
@@ -93,36 +97,70 @@ namespace Map.Rendering
             if (points == null || points.Count < 2)
                 return segments;
 
-            // Very short chains: create single linear segment
+            // Quantize first and last points to grid for junction alignment
+            points[0] = QuantizePoint(points[0], ENDPOINT_QUANTIZATION);
+            points[points.Count - 1] = QuantizePoint(points[points.Count - 1], ENDPOINT_QUANTIZATION);
+
             if (points.Count < MIN_POINTS_PER_SEGMENT)
             {
-                Vector2 p0 = points[0];
-                Vector2 p3 = points[points.Count - 1];
-                // Linear: control points at 1/3 and 2/3 along line
-                Vector2 p1 = Vector2.Lerp(p0, p3, 0.33f);
-                Vector2 p2 = Vector2.Lerp(p0, p3, 0.67f);
-                segments.Add(new BezierSegment(p0, p1, p2, p3, borderType));
+                // Too few points - create single segment
+                segments.Add(FitSegment(points, borderType));
                 return segments;
             }
 
-            // Segment long chains into chunks
-            int index = 0;
-            while (index < points.Count - 1)
-            {
-                int segmentLength = Mathf.Min(MAX_POINTS_PER_SEGMENT, points.Count - index);
-
-                // Extract segment points
-                List<Vector2> segmentPoints = points.GetRange(index, segmentLength);
-
-                // Fit Bézier to this segment
-                BezierSegment bezier = FitSegment(segmentPoints, borderType);
-                segments.Add(bezier);
-
-                // Advance index (overlap by 1 point for continuity)
-                index += segmentLength - 1;
-            }
+            // Use adaptive recursive fitting to ensure accuracy
+            FitCurveAdaptive(points, 0, points.Count - 1, segments, borderType);
 
             return segments;
+        }
+
+        /// <summary>
+        /// Quantize point to grid for endpoint alignment
+        /// </summary>
+        private static Vector2 QuantizePoint(Vector2 point, float gridSize)
+        {
+            return new Vector2(
+                Mathf.Round(point.x / gridSize) * gridSize,
+                Mathf.Round(point.y / gridSize) * gridSize
+            );
+        }
+
+        /// <summary>
+        /// Recursively fit curve segments with adaptive splitting based on error
+        /// </summary>
+        private static void FitCurveAdaptive(List<Vector2> points, int first, int last, List<BezierSegment> segments, BorderType borderType)
+        {
+            // Extract segment points
+            List<Vector2> segmentPoints = new List<Vector2>();
+            for (int i = first; i <= last; i++)
+            {
+                segmentPoints.Add(points[i]);
+            }
+
+            // Fit a curve to this segment
+            BezierSegment segment = FitSegment(segmentPoints, borderType);
+
+            // Check error
+            float maxError = CalculateMaxError(segment, segmentPoints);
+
+            // If error acceptable OR segment too short to split, accept it
+            if (maxError <= MAX_FIT_ERROR || (last - first) < MIN_POINTS_PER_SEGMENT)
+            {
+                segments.Add(segment);
+
+                // Log if error is high but we had to accept it
+                if (maxError > MAX_FIT_ERROR)
+                {
+                    ArchonLogger.LogWarning($"BezierCurveFitter: Accepted segment with high error {maxError:F2}px (too short to split, {last - first + 1} points)", "map_rendering");
+                }
+
+                return;
+            }
+
+            // Error too high - split in half and recurse
+            int mid = first + (last - first) / 2;
+            FitCurveAdaptive(points, first, mid, segments, borderType);
+            FitCurveAdaptive(points, mid, last, segments, borderType);
         }
 
         /// <summary>
@@ -145,28 +183,29 @@ namespace Map.Rendering
             Vector2 P1;
             Vector2 P2;
 
-            // For short segments, use simple heuristic for control points
+            // For short segments OR polyline-style rendering, use minimal curvature
+            // Control points very close to endpoints = almost straight line with slight smoothing
             if (points.Count < 4)
             {
-                P1 = Vector2.Lerp(P0, P3, 0.33f);
-                P2 = Vector2.Lerp(P0, P3, 0.67f);
+                // Straight line with tiny control point offset (5% from endpoints)
+                P1 = Vector2.Lerp(P0, P3, 0.05f);
+                P2 = Vector2.Lerp(P0, P3, 0.95f);
                 return new BezierSegment(P0, P1, P2, P3, borderType);
             }
 
-            // Estimate tangent vectors at endpoints
-            Vector2 tangent0 = EstimateTangent(points, 0);
-            Vector2 tangent1 = EstimateTangent(points, points.Count - 1);
+            // Use OVERALL segment direction for tangents (prevents overshoot at junctions)
+            // Local pixel-to-pixel tangents can be misaligned with overall segment direction
+            Vector2 overallDirection = (P3 - P0).normalized;
 
-            // Parameterize points (assign t values 0-1 using chord length)
-            float[] tValues = ChordLengthParameterize(points);
+            // Use MINIMAL tangent influence for gentle curves (not aggressive Bézier curves)
+            // 0.15x segment length = subtle corner rounding, mostly straight
+            float segmentLength = Vector2.Distance(P0, P3);
+            float alpha0 = 0.15f * segmentLength; // Reduced from 0.4x
+            float alpha1 = 0.15f * segmentLength;
 
-            // Solve for control points P1 and P2 using least-squares
-            // We'll use a simplified approach: place control points along tangents
-            float alpha0 = 0.3f * Vector2.Distance(P0, P3);  // Rough distance along tangent
-            float alpha1 = 0.3f * Vector2.Distance(P0, P3);
-
-            P1 = P0 + tangent0.normalized * alpha0;
-            P2 = P3 - tangent1.normalized * alpha1;
+            // Control points aligned with overall segment direction (no perpendicular offset)
+            P1 = P0 + overallDirection * alpha0;
+            P2 = P3 - overallDirection * alpha1;
 
             return new BezierSegment(P0, P1, P2, P3, borderType);
         }

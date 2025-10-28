@@ -120,32 +120,53 @@ namespace Map.Rendering
                     // Extract shared border pixels (unordered)
                     List<Vector2> borderPixels = ExtractSharedBorderPixels(provinceA, provinceB);
 
+                    // Skip tiny borders (small peninsulas/artifacts from map compression)
+                    // These create "wild lines" that cross through provinces
+                    const int MIN_BORDER_PIXELS = 10; // Minimum pixels for a real border
+                    if (borderPixels.Count > 0 && borderPixels.Count < MIN_BORDER_PIXELS)
+                    {
+                        // DEBUG: Log first few skipped tiny borders
+                        if (processedBorders < 3)
+                        {
+                            ArchonLogger.Log($"BorderCurveExtractor: Skipping tiny border {provinceA}<->{provinceB} ({borderPixels.Count} pixels)", "map_initialization");
+                        }
+                        continue; // Skip this border - too small to be real
+                    }
+
                     if (borderPixels.Count > 0)
                     {
                         // Chain pixels into multiple ordered polylines (handles disconnected border segments)
                         List<List<Vector2>> allChains = ChainBorderPixelsMultiple(borderPixels);
 
-                        // Process each chain separately to handle disconnected borders
+                        // CRITICAL: Merge chains into one continuous path for polyline rendering
+                        // Multiple separate chains create visual gaps and clumping at junctions
+                        List<Vector2> mergedPath = MergeChains(allChains);
+
+                        // Generate polyline segments for merged path
                         List<BezierSegment> allCurveSegments = new List<BezierSegment>();
                         BorderType borderType = DetermineBorderType(provinceA, provinceB);
 
-                        foreach (var orderedPath in allChains)
+                        if (mergedPath.Count >= 2)
                         {
-                            if (orderedPath.Count < 3)
-                                continue; // Skip tiny chains (1-2 pixels are bitmap artifacts)
-
-                            // Skip Chaikin smoothing - Bézier curve fitter already creates smooth curves
-                            // Pre-smoothing creates artifacts and clumps with thin borders
-                            List<Vector2> smoothedPath = orderedPath;
-
-                            // Fit Bézier curves to pixel path (curve fitter handles smoothing)
-                            List<BezierSegment> curveSegments = BezierCurveFitter.FitCurve(smoothedPath, borderType);
-                            allCurveSegments.AddRange(curveSegments);
+                            // Fit Bézier curves to merged pixel path (creates one continuous polyline)
+                            allCurveSegments = BezierCurveFitter.FitCurve(mergedPath, borderType);
                         }
 
                         // Early exit if no valid curves generated
                         if (allCurveSegments.Count == 0)
                             continue;
+
+                        // DEBUG: Validate curves for NaN or invalid values
+                        foreach (var seg in allCurveSegments)
+                        {
+                            if (float.IsNaN(seg.P0.x) || float.IsNaN(seg.P0.y) ||
+                                float.IsNaN(seg.P1.x) || float.IsNaN(seg.P1.y) ||
+                                float.IsNaN(seg.P2.x) || float.IsNaN(seg.P2.y) ||
+                                float.IsNaN(seg.P3.x) || float.IsNaN(seg.P3.y))
+                            {
+                                ArchonLogger.LogError($"BorderCurveExtractor: Border {provinceA}<->{provinceB} has NaN curve! P0={seg.P0}, P1={seg.P1}, P2={seg.P2}, P3={seg.P3}", "map_initialization");
+                            }
+                        }
 
                         // Set province IDs for each segment
                         for (int segIdx = 0; segIdx < allCurveSegments.Count; segIdx++)
@@ -159,7 +180,7 @@ namespace Map.Rendering
                         // DEBUG: Log first curve stats
                         if (processedBorders == 0)
                         {
-                            ArchonLogger.Log($"BorderCurveExtractor: First curve - Raw pixels: {borderPixels.Count}, Chains: {allChains.Count}, Bézier segments: {allCurveSegments.Count}", "map_initialization");
+                            ArchonLogger.Log($"BorderCurveExtractor: First curve - Raw pixels: {borderPixels.Count}, Chains: {allChains.Count}, Merged path: {mergedPath.Count} pixels, Bézier segments: {allCurveSegments.Count}", "map_initialization");
                         }
 
                         // Cache the curve segments
@@ -197,12 +218,9 @@ namespace Map.Rendering
                 ArchonLogger.Log($"BorderCurveExtractor: Completed extraction! {processedBorders} borders in {elapsed:F0}ms", "map_initialization");
             }
 
-            // POST-PROCESSING: Snap curve endpoints at junctions to ensure borders connect
-            ArchonLogger.Log("BorderCurveExtractor: Snapping curve endpoints at junctions...", "map_initialization");
-            float snapStart = Time.realtimeSinceStartup;
-            SnapCurveEndpointsAtJunctions(borderCurves);
-            float snapElapsed = (Time.realtimeSinceStartup - snapStart) * 1000f;
-            ArchonLogger.Log($"BorderCurveExtractor: Junction snapping completed in {snapElapsed:F0}ms", "map_initialization");
+            // POST-PROCESSING: Unify junction control points to prevent overlapping render regions
+            // DISABLED: Junction pixels now handled by BorderMask, no CPU post-processing needed
+            // UnifyJunctionControlPoints(borderCurves);
 
             if (logProgress)
             {
@@ -251,8 +269,8 @@ namespace Map.Rendering
         /// </summary>
         private void SnapCurveEndpointsAtJunctions(Dictionary<(ushort, ushort), List<BezierSegment>> borderCurves)
         {
-            const float SNAP_DISTANCE = 10.0f; // Very aggressive snapping for stubborn junctions
-            const int GRID_CELL_SIZE = 12; // Grid cell size (must be >= snap distance)
+            const float SNAP_DISTANCE = 1.5f; // Conservative snapping for polyline approach (short segments)
+            const int GRID_CELL_SIZE = 4; // Grid cell size (must be >= snap distance)
 
             // Spatial grid for fast neighbor lookup
             var grid = new Dictionary<(int, int), List<(Vector2 point, (ushort, ushort) borderKey, int segmentIndex, bool isStart)>>();
@@ -300,6 +318,12 @@ namespace Map.Rendering
                                 if (processed.Contains(candidate)) continue;
                                 if (candidate.Equals(cellEndpoints[i])) continue;
 
+                                // CRITICAL: Don't snap P0 and P3 of the SAME segment together
+                                // This creates degenerate zero-length segments (tumors)
+                                bool sameSegment = (candidate.Item2 == cellEndpoints[i].Item2) &&
+                                                   (candidate.Item3 == cellEndpoints[i].Item3);
+                                if (sameSegment) continue;
+
                                 float dist = Vector2.Distance(cellEndpoints[i].point, candidate.point);
                                 if (dist <= SNAP_DISTANCE)
                                 {
@@ -340,6 +364,29 @@ namespace Map.Rendering
             }
 
             ArchonLogger.Log($"BorderCurveExtractor: Snapped {snappedCount} curve endpoints at junctions", "map_initialization");
+
+            // DEBUG: Check for degenerate segments after snapping
+            int degenerateCount = 0;
+            foreach (var kvp in borderCurves)
+            {
+                var segments = kvp.Value;
+                for (int i = 0; i < segments.Count; i++)
+                {
+                    float segLength = Vector2.Distance(segments[i].P0, segments[i].P3);
+                    if (segLength < 0.1f)
+                    {
+                        degenerateCount++;
+                        if (degenerateCount <= 5) // Log first 5
+                        {
+                            ArchonLogger.LogWarning($"BorderCurveExtractor: Degenerate segment in border {kvp.Key.Item1}<->{kvp.Key.Item2}, seg {i}: P0={segments[i].P0}, P3={segments[i].P3}, length={segLength:F2}", "map_initialization");
+                        }
+                    }
+                }
+            }
+            if (degenerateCount > 0)
+            {
+                ArchonLogger.LogWarning($"BorderCurveExtractor: Found {degenerateCount} degenerate segments (length < 0.1px) after snapping!", "map_initialization");
+            }
 
             // Helper: Add endpoint to spatial grid
             void AddToGrid(Dictionary<(int, int), List<(Vector2, (ushort, ushort), int, bool)>> g, Vector2 point, (ushort, ushort) key, int idx, bool start)
@@ -392,37 +439,55 @@ namespace Map.Rendering
                 }
             }
 
-            // CRITICAL: Add junction pixels AND bridge gaps to reach them
-            // Junction pixels might be isolated if they belong to a third province
+            // Add junction pixels ONLY if they're already 8-connected to existing border pixels
+            // This ensures borders reach junctions without adding disconnected pixels
             int addedJunctions = 0;
-            int bridgedGaps = 0;
 
             foreach (var kvp in junctionPixels)
             {
                 var junctionPos = kvp.Key;
                 var provinces = kvp.Value;
 
-                // If this junction involves both provinceA and provinceB, add it
+                // If this junction involves both provinceA and provinceB, check if we should add it
                 if (provinces.Contains(provinceA) && provinces.Contains(provinceB))
                 {
-                    // Add junction if not already in border pixels
+                    // Only add junction if NOT already in border AND is 8-connected to existing border
                     if (!borderPixels.Contains(junctionPos))
                     {
-                        borderPixels.Add(junctionPos);
-                        addedJunctions++;
-                    }
+                        bool isAdjacent = false;
+                        int jx = (int)junctionPos.x;
+                        int jy = (int)junctionPos.y;
 
-                    // CRITICAL FIX: Bridge any gap between existing border pixels and this junction
-                    // This ensures 8-connected path exists to reach the junction
-                    int bridgePixels = BridgeToJunction(junctionPos, provinceA, provinceB, borderPixels);
-                    bridgedGaps += bridgePixels;
+                        // Check 8 neighbors
+                        for (int dy = -1; dy <= 1; dy++)
+                        {
+                            for (int dx = -1; dx <= 1; dx++)
+                            {
+                                if (dx == 0 && dy == 0) continue;
+                                Vector2 neighbor = new Vector2(jx + dx, jy + dy);
+                                if (borderPixels.Contains(neighbor))
+                                {
+                                    isAdjacent = true;
+                                    break;
+                                }
+                            }
+                            if (isAdjacent) break;
+                        }
+
+                        // Only add if adjacent to existing border pixels
+                        if (isAdjacent)
+                        {
+                            borderPixels.Add(junctionPos);
+                            addedJunctions++;
+                        }
+                    }
                 }
             }
 
-            // DEBUG: Log junction additions for first few borders
-            if ((addedJunctions > 0 || bridgedGaps > 0) && !firstResultLogged)
+            // DEBUG: Log junction additions for first border
+            if (addedJunctions > 0 && !firstResultLogged)
             {
-                ArchonLogger.Log($"BorderCurveExtractor: Border {provinceA}<->{provinceB}: Added {addedJunctions} junctions, bridged {bridgedGaps} gap pixels", "map_initialization");
+                ArchonLogger.Log($"BorderCurveExtractor: Border {provinceA}<->{provinceB}: Added {addedJunctions} adjacent junction pixels", "map_initialization");
             }
 
             // DEBUG: Log results for first pair
@@ -612,6 +677,98 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Merge multiple chains into one continuous path by connecting nearby endpoints
+        /// Prioritizes junction pixels as connection points to ensure borders meet at junctions
+        /// </summary>
+        private List<Vector2> MergeChains(List<List<Vector2>> chains)
+        {
+            if (chains.Count == 0)
+                return new List<Vector2>();
+
+            if (chains.Count == 1)
+                return chains[0];
+
+            // Start with longest chain
+            int longestIdx = 0;
+            int longestCount = chains[0].Count;
+            for (int i = 1; i < chains.Count; i++)
+            {
+                if (chains[i].Count > longestCount)
+                {
+                    longestCount = chains[i].Count;
+                    longestIdx = i;
+                }
+            }
+
+            List<Vector2> merged = new List<Vector2>(chains[longestIdx]);
+            HashSet<int> usedIndices = new HashSet<int> { longestIdx };
+
+            // Keep merging closest chains until all are connected
+            while (usedIndices.Count < chains.Count)
+            {
+                float bestDist = float.MaxValue;
+                int bestChainIdx = -1;
+                bool appendToEnd = true;
+                bool reverseChain = false;
+
+                // Find closest unused chain
+                for (int i = 0; i < chains.Count; i++)
+                {
+                    if (usedIndices.Contains(i)) continue;
+
+                    var chain = chains[i];
+                    Vector2 mergedStart = merged[0];
+                    Vector2 mergedEnd = merged[merged.Count - 1];
+                    Vector2 chainStart = chain[0];
+                    Vector2 chainEnd = chain[chain.Count - 1];
+
+                    // Check all 4 connection possibilities
+                    float d1 = Vector2.Distance(mergedEnd, chainStart); // Append chain normally
+                    float d2 = Vector2.Distance(mergedEnd, chainEnd);   // Append chain reversed
+                    float d3 = Vector2.Distance(mergedStart, chainEnd); // Prepend chain normally
+                    float d4 = Vector2.Distance(mergedStart, chainStart); // Prepend chain reversed
+
+                    float minDist = Mathf.Min(d1, Mathf.Min(d2, Mathf.Min(d3, d4)));
+
+                    if (minDist < bestDist)
+                    {
+                        bestDist = minDist;
+                        bestChainIdx = i;
+
+                        if (minDist == d1) { appendToEnd = true; reverseChain = false; }
+                        else if (minDist == d2) { appendToEnd = true; reverseChain = true; }
+                        else if (minDist == d3) { appendToEnd = false; reverseChain = false; }
+                        else { appendToEnd = false; reverseChain = true; }
+                    }
+                }
+
+                // Merge best chain
+                if (bestChainIdx >= 0)
+                {
+                    var chainToMerge = chains[bestChainIdx];
+                    if (reverseChain)
+                    {
+                        chainToMerge = new List<Vector2>(chainToMerge);
+                        chainToMerge.Reverse();
+                    }
+
+                    if (appendToEnd)
+                        merged.AddRange(chainToMerge);
+                    else
+                        merged.InsertRange(0, chainToMerge);
+
+                    usedIndices.Add(bestChainIdx);
+                }
+                else
+                {
+                    break; // No more chains to merge
+                }
+            }
+
+            return merged;
+        }
+
+        /// <summary>
         /// Chain scattered border pixels into an ordered polyline (single chain)
         /// Uses greedy nearest-neighbor with strict adjacency constraint
         /// Modifies the 'remaining' set by removing chained pixels
@@ -798,6 +955,83 @@ namespace Map.Rendering
             }
 
             return smoothed;
+        }
+
+        /// <summary>
+        /// Unify control points for curves meeting at junctions
+        /// Prevents overlapping render regions by forcing curves to approach junctions from consistent angles
+        /// Uses spatial indexing for O(n) performance instead of O(n²)
+        /// </summary>
+        private void UnifyJunctionControlPoints(Dictionary<(ushort, ushort), List<BezierSegment>> borderCurves)
+        {
+            float startTime = Time.realtimeSinceStartup;
+            int segmentsModified = 0;
+
+            // STEP 1: Build spatial index - map junction positions to segments (O(n))
+            var junctionIndex = new Dictionary<Vector2, List<((ushort, ushort) border, int segmentIdx, bool isStart)>>();
+
+            foreach (var borderKvp in borderCurves)
+            {
+                var borderKey = borderKvp.Key;
+                var segments = borderKvp.Value;
+
+                for (int i = 0; i < segments.Count; i++)
+                {
+                    var seg = segments[i];
+
+                    // Quantize endpoints to match junction pixel positions (integer coordinates)
+                    Vector2 p0Quantized = new Vector2(Mathf.Round(seg.P0.x), Mathf.Round(seg.P0.y));
+                    Vector2 p3Quantized = new Vector2(Mathf.Round(seg.P3.x), Mathf.Round(seg.P3.y));
+
+                    // Index by start point
+                    if (!junctionIndex.ContainsKey(p0Quantized))
+                        junctionIndex[p0Quantized] = new List<((ushort, ushort), int, bool)>();
+                    junctionIndex[p0Quantized].Add((borderKey, i, true));
+
+                    // Index by end point
+                    if (!junctionIndex.ContainsKey(p3Quantized))
+                        junctionIndex[p3Quantized] = new List<((ushort, ushort), int, bool)>();
+                    junctionIndex[p3Quantized].Add((borderKey, i, false));
+                }
+            }
+
+            // STEP 2: Process junctions where 3+ segments meet (O(junctions))
+            int junctionsProcessed = 0;
+
+            foreach (var kvp in junctionIndex)
+            {
+                var segmentsAtJunction = kvp.Value;
+
+                // Only process if 3+ segments meet here (actual junction)
+                if (segmentsAtJunction.Count >= 3)
+                {
+                    junctionsProcessed++;
+
+                    // Force all segments to use straight-line control points at junction
+                    foreach (var (borderKey, segmentIdx, isStart) in segmentsAtJunction)
+                    {
+                        var segments = borderCurves[borderKey];
+                        var seg = segments[segmentIdx];
+
+                        if (isStart)
+                        {
+                            // Segment starts at junction - force P1 = P0 (straight line)
+                            seg.P1 = seg.P0;
+                        }
+                        else
+                        {
+                            // Segment ends at junction - force P2 = P3 (straight line)
+                            seg.P2 = seg.P3;
+                        }
+
+                        segments[segmentIdx] = seg;
+                        segmentsModified++;
+                    }
+                }
+            }
+
+            float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
+            ArchonLogger.Log($"BorderCurveExtractor: Unified {junctionsProcessed} junctions ({segmentsModified} segments modified) in {elapsed:F0}ms", "map_initialization");
         }
 
         /// <summary>

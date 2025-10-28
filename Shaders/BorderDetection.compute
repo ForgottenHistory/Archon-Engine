@@ -414,31 +414,76 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
     float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
     uint currentProvince = DecodeProvinceID(currentEncoded);
 
-    // Check in 3-pixel radius for borders (expanded from 1-pixel to catch smooth curves)
-    // This ensures vector curves passing near borders get tested by fragment shader
+    // STEP 1: Junction detection (8 immediate neighbors only)
+    // Junction = current pixel + 2+ different neighbors = 3-way junction
+    uint uniqueNeighbors[8]; // Max 8 neighbors
+    int uniqueCount = 0;
+    bool isJunction = false;
+
+    for (int dy = -1; dy <= 1; dy++)
+    {
+        for (int dx = -1; dx <= 1; dx++)
+        {
+            if (dx == 0 && dy == 0)
+                continue; // Skip center
+
+            int2 neighborPos = int2(id.xy) + int2(dx, dy);
+
+            if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+                neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+                continue;
+
+            float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+            uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+            // Only count neighbors DIFFERENT from current pixel
+            if (neighborProvince != currentProvince)
+            {
+                // Add to unique neighbors list
+                bool alreadyCounted = false;
+                for (int i = 0; i < uniqueCount; i++)
+                {
+                    if (uniqueNeighbors[i] == neighborProvince)
+                    {
+                        alreadyCounted = true;
+                        break;
+                    }
+                }
+
+                if (!alreadyCounted && uniqueCount < 8)
+                {
+                    uniqueNeighbors[uniqueCount] = neighborProvince;
+                    uniqueCount++;
+                }
+            }
+        }
+    }
+
+    // Junction = current pixel has 3+ different neighbors (4+ provinces total)
+    // A pixel with only 2 different neighbors is just a regular border, not a junction
+    // True junctions have 4+ provinces converging at a point (rare!)
+    isJunction = (uniqueCount >= 3);
+
+    // STEP 2: Border detection (1-pixel radius for thin borders)
     bool isBorder = false;
-    int searchRadius = 3;
+    int searchRadius = 1;
 
     for (int dy = -searchRadius; dy <= searchRadius; dy++)
     {
         for (int dx = -searchRadius; dx <= searchRadius; dx++)
         {
-            // Skip center pixel (already tested)
             if (dx == 0 && dy == 0)
                 continue;
 
             int2 neighborPos = int2(id.xy) + int2(dx, dy);
 
-            // Bounds check
             if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
                 neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
                 continue;
 
-            // Sample neighbor province ID
             float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
             uint neighborProvince = DecodeProvinceID(neighborEncoded);
 
-            // Different province = near border
             if (neighborProvince != currentProvince)
             {
                 isBorder = true;
@@ -450,9 +495,20 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
             break;
     }
 
-    // Write mask to R channel: 1.0 = border pixel, 0.0 = interior pixel
+    // Determine mask value:
+    // Use floating point values 0.0-1.0 to encode border information
+    // We'll render ALL border pixels as solid colors (resolution independent)
+    // 0.0 = interior pixel (no border)
+    // 1.0 = border pixel (render as solid color)
+    float maskValue = 0.0;
+    if (isBorder)
+    {
+        maskValue = 1.0; // All borders get same value - render all as solid
+    }
+
+    // Write mask to R channel
     // R8G8B8A8_UNorm stores in R channel, G/B/A unused (set to 0)
-    BorderMaskTexture[id.xy] = float4(isBorder ? 1.0 : 0.0, 0, 0, 0);
+    BorderMaskTexture[id.xy] = float4(maskValue, 0, 0, 0);
 }
 
 // ============================================================================

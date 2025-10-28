@@ -1,0 +1,199 @@
+// Border SDF (Signed Distance Field) Compute Shader
+// Pure distance field evaluation - no rasterization
+// Evaluates distance to nearest curve segment per-pixel for resolution-independent borders
+// Supports razor-thin borders (0.1px+) with smooth anti-aliasing
+
+#pragma kernel EvaluateBorderSDF
+
+// Output border texture
+RWTexture2D<float4> BorderTexture;
+
+// Curve segment data (Bézier curves)
+struct BezierSegment
+{
+    float2 p0;           // Start point
+    float2 p1;           // First control point
+    float2 p2;           // Second control point
+    float2 p3;           // End point
+    int borderType;      // 0=none, 1=province, 2=country
+    uint provinceID1;    // First province
+    uint provinceID2;    // Second province
+};
+
+StructuredBuffer<BezierSegment> Segments;
+
+// Spatial hash grid for acceleration
+struct GridCell
+{
+    uint startIndex;     // Start index in segmentIndices buffer (matches C# CellRange)
+    uint count;          // Number of segments in this cell
+};
+
+StructuredBuffer<GridCell> GridCells;
+StructuredBuffer<uint> GridSegmentIndices; // Flat list of segment indices per cell (uint matches C#)
+
+// Grid parameters
+uint GridWidth;          // Number of grid cells horizontally
+uint GridHeight;         // Number of grid cells vertically
+float GridCellSize;      // Size of each grid cell in pixels
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+// Border rendering parameters
+float CountryBorderWidth;   // Width in pixels (can be 0.1 for razor thin)
+float ProvinceBorderWidth;  // Width in pixels
+float AntiAliasRadius;      // Smoothstep radius for anti-aliasing
+
+// Evaluate cubic Bézier curve at parameter t [0,1]
+float2 EvaluateBezier(float2 p0, float2 p1, float2 p2, float2 p3, float t)
+{
+    float u = 1.0 - t;
+    float tt = t * t;
+    float uu = u * u;
+    float uuu = uu * u;
+    float ttt = tt * t;
+
+    // B(t) = (1-t)³·P0 + 3(1-t)²t·P1 + 3(1-t)t²·P2 + t³·P3
+    float2 result = uuu * p0;
+    result += 3.0 * uu * t * p1;
+    result += 3.0 * u * tt * p2;
+    result += ttt * p3;
+
+    return result;
+}
+
+// Calculate minimum distance from a point to a Bézier curve
+// Samples curve at multiple points to find approximate minimum distance
+float DistanceToBezierCurve(float2 pixelPos, float2 p0, float2 p1, float2 p2, float2 p3)
+{
+    // For linear Bézier (polylines), P1 and P2 lie on the line P0-P3
+    // Check if this is a linear segment
+    float2 lineVec = p3 - p0;
+    float lineLen = length(lineVec);
+
+    if (lineLen < 0.01)
+        return distance(pixelPos, p0); // Degenerate
+
+    // Check if P1 and P2 are on the line (linear segment)
+    float2 lineDir = lineVec / lineLen;
+    float dist1 = abs(dot(p1 - p0, float2(-lineDir.y, lineDir.x)));
+    float dist2 = abs(dot(p2 - p0, float2(-lineDir.y, lineDir.x)));
+
+    bool isLinear = (dist1 < 0.1 && dist2 < 0.1);
+
+    if (isLinear)
+    {
+        // Fast path: treat as line segment
+        float t = saturate(dot(pixelPos - p0, lineVec) / (lineLen * lineLen));
+        float2 projection = p0 + t * lineVec;
+        return distance(pixelPos, projection);
+    }
+
+    // Curved path: sample curve at multiple points
+    // Use adaptive sampling based on curve length
+    float approxLen = length(p1 - p0) + length(p2 - p1) + length(p3 - p2);
+    int numSamples = (int)clamp(approxLen * 0.5, 8.0, 32.0); // 8-32 samples based on curve length
+
+    float minDist = 999999.0;
+
+    for (int i = 0; i <= numSamples; i++)
+    {
+        float t = (float)i / (float)numSamples;
+        float2 curvePoint = EvaluateBezier(p0, p1, p2, p3, t);
+        float dist = distance(pixelPos, curvePoint);
+        minDist = min(minDist, dist);
+    }
+
+    return minDist;
+}
+
+// Get grid cell coordinates for a pixel position
+int2 GetGridCell(float2 pixelPos)
+{
+    int cellX = (int)(pixelPos.x / GridCellSize);
+    int cellY = (int)(pixelPos.y / GridCellSize);
+    return int2(cellX, cellY);
+}
+
+// Get grid cell index from coordinates
+int GetGridCellIndex(int2 cellCoords)
+{
+    // Bounds check
+    if (cellCoords.x < 0 || cellCoords.x >= (int)GridWidth ||
+        cellCoords.y < 0 || cellCoords.y >= (int)GridHeight)
+        return -1;
+
+    return cellCoords.y * (int)GridWidth + cellCoords.x;
+}
+
+// Thread group size: 8x8 = 64 threads per group (optimal for most GPUs)
+[numthreads(8, 8, 1)]
+void EvaluateBorderSDF(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    float2 pixelPos = float2((float)id.x, (float)id.y);
+
+    // Get grid cell for this pixel
+    int2 cellCoords = GetGridCell(pixelPos);
+
+    // Track minimum distance to province and country borders separately
+    float minDistProvince = 999999.0;
+    float minDistCountry = 999999.0;
+
+    // Search neighboring grid cells (3x3 around current cell)
+    // This ensures we don't miss segments near cell boundaries
+    for (int dy = -1; dy <= 1; dy++)
+    {
+        for (int dx = -1; dx <= 1; dx++)
+        {
+            int2 neighborCell = cellCoords + int2(dx, dy);
+            int cellIndex = GetGridCellIndex(neighborCell);
+
+            if (cellIndex < 0)
+                continue;
+
+            GridCell cell = GridCells[cellIndex];
+
+            // Evaluate distance to all segments in this cell
+            for (int i = 0; i < cell.count; i++)
+            {
+                int segmentIndex = GridSegmentIndices[cell.startIndex + i];
+                BezierSegment seg = Segments[segmentIndex];
+
+                // Skip invalid segments
+                if (seg.borderType == 0)
+                    continue;
+
+                // Calculate distance to this Bézier curve
+                float dist = DistanceToBezierCurve(pixelPos, seg.p0, seg.p1, seg.p2, seg.p3);
+
+                // Track minimum distance by border type
+                if (seg.borderType == 2) // Country border
+                {
+                    minDistCountry = min(minDistCountry, dist);
+                }
+                else if (seg.borderType == 1) // Province border
+                {
+                    minDistProvince = min(minDistProvince, dist);
+                }
+            }
+        }
+    }
+
+    // Sharp cutoff at border width with tiny smoothstep for sub-pixel AA
+    // 0.25px smoothstep range is minimal - just enough to avoid hard aliasing
+    float countryIntensity = 1.0 - smoothstep(CountryBorderWidth - 0.25,
+                                                CountryBorderWidth + 0.25,
+                                                minDistCountry);
+
+    float provinceIntensity = 1.0 - smoothstep(ProvinceBorderWidth - 0.25,
+                                                 ProvinceBorderWidth + 0.25,
+                                                 minDistProvince);
+
+    BorderTexture[id.xy] = float4(countryIntensity, provinceIntensity, 0.0, 0.0);
+}
