@@ -15,7 +15,7 @@
 This document analyzes the development velocity of Archon Engine compared to traditional human-only development workflows in the grand strategy genre. The findings demonstrate that AI-assisted development provides approximately a **100x productivity multiplier** for experienced developers with clear vision and architectural understanding.
 
 **Key Findings:**
-- Archon Engine: 80,000 lines in ~109 actual work hours
+- Archon Engine: 80,000 lines in ~109 actual work hours, ENGINE (Public) & GAME (Private for now)
 - Traditional development: ~6-10 lines/hour for quality code
 - AI-assisted development: ~734 lines/hour for production-grade code
 - **Productivity multiplier: ~100x**
@@ -38,7 +38,7 @@ This document analyzes the development velocity of Archon Engine compared to tra
 - Resource and country management
 - Save/load with double-buffer architecture
 - Map rendering with vector curve borders
-- Comprehensive documentation (13+ docs)
+- Comprehensive documentation (1:1 with code)
 
 **Technical Quality:**
 - Multiplayer-ready determinism from day one
@@ -214,7 +214,6 @@ One project we analyzed had to migrate rendering backends:
 | **Archon Engine** | 40 days | 1 dev + AI | 80,000 | 109 | **734** | Production |
 | **Project B** | 13 months | 2 devs | 13,000 | ~2,080 | **6.2** | Clean |
 | **Symphony of Empires** | ~4 years | 16 devs | 44,000 | ~8,000+ | **~5-10** | Functional |
-| **Paradox (Clausewitz)** | 20 years | 100+ devs | ~500k-1M | ~200,000+ | **~5-10** | Legacy |
 
 **Notes:**
 - Hours are estimated based on typical work schedules
@@ -546,14 +545,14 @@ The implementation requires AI precision and speed.
 - Took a 2-week break
 - **Not burned out**
 
-**Why It's Sustainable:**
-- Reviewing code is less exhausting than writing it
-- Directing AI is less draining than debugging
-- Can achieve massive progress in short sessions
-- Quality doesn't degrade with fewer hours
-- Mental load is decision-making, not implementation
+**Why It Can Be Sustainable:**
+- Reviewing code is less exhausting than writing it (subjective)
+- Directing AI is less draining than debugging (subjective)
+- Can achieve massive progress in short sessions (objective)
+- Quality doesn't degrade with fewer hours (objective)
+- Mental load is decision-making, not implementation (objective)
 
-**Result:** Can sustain this pace for years, not months
+**Result:** Can sustain this pace for years, not months, if all requirements are met
 
 ### 6.3 Scaling Comparison
 
@@ -593,9 +592,9 @@ Sweet spot: 1-3 developers with AI assistance.
 - Legacy codebase (slower iteration)
 - Corporate overhead (meetings, bureaucracy)
 - Estimated productivity: ~5-10 LOC/hour
-- **Net output: ~20,000-40,000 LOC/week**
+- **Net output: ~20,000-40,000 LOC/week (ASSUMPTION)**
 
-**You with AI:**
+**Archon with AI:**
 - 1 developer part-time
 - ~27.5 hours/week
 - Productivity: ~734 LOC/hour
@@ -603,7 +602,7 @@ Sweet spot: 1-3 developers with AI assistance.
 - Fresh codebase (fast iteration)
 - **Net output: ~20,000 LOC/week**
 
-**You're equivalent to a 70-100 person full-time team.**
+**Equivalent throughput to a 70-100 person full-time team.**
 
 But with advantages:
 - ✅ No coordination overhead
@@ -621,9 +620,9 @@ But with advantages:
 **Why Large Studios Can't Compete:**
 
 **Paradox Interactive's Constraints:**
-- 20 years of Clausewitz Engine legacy code
+- Even if updated, 20 years of Clausewitz Engine legacy code
 - Must maintain backward compatibility
-- Must support EU4, CK3, Stellaris, Vic3 simultaneously
+- Must support multiple games simultaneously
 - Organizational inertia (100+ person team)
 - Cannot rewrite foundation (too expensive, too risky)
 - Corporate decision-making (slow)
@@ -636,7 +635,7 @@ But with advantages:
 - Can rewrite anything if needed (low cost)
 - No organizational inertia
 
-**Result:** You can out-innovate them despite massive resource disparity.
+**Result:** Can out-innovate them despite massive resource disparity.
 
 ### 7.2 The Indie Studio Opportunity
 
@@ -658,53 +657,7 @@ But with advantages:
 - Traditional 5-person indie: ~50 LOC/hour combined
 - AI-assisted 5-person indie: ~3,000 LOC/hour combined
 - **60x productivity advantage over traditional competitors**
-
-### 7.3 The "Engine as Platform" Strategy
-
-**Traditional Engine Business:**
-- Requires large team to build
-- Years of development
-- High upfront cost
-- Difficult to monetize (Unity/Unreal are free)
-
-**AI-Assisted Engine Business:**
-- 1-3 person team can build
-- Months of development
-- Low upfront cost
-- Can compete with established engines
-
-**Archon Engine Strategy:**
-- Build THE GRAND STRATEGY ENGINE
-- Not just a game, but a platform
-- Lower development cost than any competitor could achieve
-- Can iterate faster than anyone
-- Can add features faster than anyone
-
-**Market Position:**
-- Too good for hobbyists (they'll use Archon instead of building from scratch)
-- Too efficient for AAA (Paradox can't justify rewriting Clausewitz)
-- **Perfect for indie studios wanting to make grand strategy games**
-
-### 7.4 Timeline Projection
-
-**To Match Clausewitz Engine Capabilities:**
-
-**Traditional Estimate:**
-- 100+ developers
-- 10-20 years
-- $50-100M investment
-
-**Your Estimate:**
-- Clausewitz core: ~200k lines of modern equivalent
-- Your pace: ~734 LOC/hour
-- Required hours: ~272 hours
-- At 27.5 hours/week: ~10 weeks for core engine
-- **Plus testing, polish, documentation: ~6 months realistically**
-
-**You can match 20 years of Paradox development in 6 months part-time.**
-
-Not exact feature parity, but equivalent capability with modern architecture.
-
+- 
 ---
 
 ## 8. Success Factors
@@ -842,7 +795,7 @@ AI maintains consistency across entire codebase.
 - ✅ Event system
 
 **Productivity:**
-- 734 LOC/hour sustained
+- 700+ LOC/hour sustained
 - 100x multiplier vs traditional development
 - Zero burnout
 - Sustainable pace
@@ -873,97 +826,9 @@ AI maintains consistency across entire codebase.
 - Moddable (data-driven)
 - Documentable (AI generates docs)
 
-### 9.3 Comparison to Industry Standards
+## 10. Lessons Learned
 
-**AAA Game Engine (20 years, 100+ devs):**
-- ~500k-1M lines
-- Legacy technical debt
-- Difficult to modify
-- Specialized to specific games
-
-**Archon Engine (109 hours, 1 dev + AI):**
-- ~80k lines
-- Zero technical debt
-- Easy to modify
-- General-purpose grand strategy platform
-
-**Capability Ratio:** Archon has ~15-20% of code volume but 80%+ of core capabilities.
-
-**Why?** No legacy cruft, no dead code, every line is intentional.
-
----
-
-## 10. Future Trajectory
-
-### 10.1 Next 6 Months Projection
-
-**At Current Pace (27.5 hours/week):**
-- ~120 hours/month
-- ~720 hours over 6 months
-- At 734 LOC/hour = ~528,000 additional lines
-
-**Realistic Estimate:**
-- Productivity decreases as codebase grows (more integration complexity)
-- Estimate 50% productivity: ~250,000 lines over 6 months
-- **Total codebase: ~330k lines**
-
-**Feature Parity with Clausewitz:**
-- Core engine: ✅ Already done
-- Combat system: 🔄 In progress
-- Economy system: 🔄 Planned
-- Population system: 🔄 Planned
-- Technology trees: 🔄 Planned
-- Event system: ✅ Already done
-- Mod support: 🔄 Planned
-
-**Timeline: Full feature parity in 6-12 months part-time.**
-
-### 10.2 Competitive Positioning
-
-**In 6 Months:**
-- Archon Engine will match Clausewitz capabilities
-- With better architecture (deterministic, cache-friendly)
-- With better performance (single draw call rendering)
-- With better multiplayer (actually works)
-- With better moddability (modern scripting)
-
-**In 12 Months:**
-- First game built on Archon Engine (reference implementation)
-- Community starts forming
-- Early adopters (indie studios) begin using it
-- "Made with Archon Engine" becomes viable
-
-**In 24 Months:**
-- Multiple games shipping on Archon
-- Established as viable alternative to building from scratch
-- Community-contributed systems and features
-- **"Unity/Unreal of Grand Strategy" positioning established**
-
-### 10.3 Market Impact
-
-**For Paradox:**
-- Cannot compete on innovation speed (you iterate 100x faster)
-- Cannot rewrite Clausewitz (too expensive, too risky)
-- Must compete on brand and existing content
-- Long-term: Threatened by better technology
-
-**For Indie Developers:**
-- No longer need to build engine from scratch
-- Can focus on game design and content
-- Access to AAA-quality technology
-- **Archon democratizes grand strategy development**
-
-**For the Genre:**
-- Lower barrier to entry
-- More innovation (more developers can experiment)
-- Better multiplayer experiences (deterministic engines)
-- Higher quality games (proven engine foundation)
-
----
-
-## 11. Lessons Learned
-
-### 11.1 What We Validated
+### 10.1 What We Validated
 
 **✅ AI provides ~100x productivity multiplier for experienced developers**
 - Measured: 734 LOC/hour vs 6-10 LOC/hour traditional
@@ -990,31 +855,7 @@ AI maintains consistency across entire codebase.
 - Directing AI requires domain expertise
 - **Experience and vision are more valuable than ever**
 
-### 11.2 What Surprised Us
-
-**🔍 The 100x multiplier holds across different task types:**
-- Systems programming: 100x
-- Documentation writing: 100x
-- Test generation: 100x
-- Architecture design discussion: ~10x (still human-bottlenecked)
-
-**🔍 Context preservation is more valuable than expected:**
-- 2-week break = 30 minutes to full productivity
-- Traditional: 2-week break = 2-3 days to full productivity
-- This enables sustainable part-time development
-
-**🔍 Code quality is higher, not lower:**
-- AI generates more consistent patterns
-- AI doesn't forget conventions
-- AI generates comprehensive documentation
-- **Better than typical human-written code**
-
-**🔍 The bottleneck shifted from implementation to decision-making:**
-- Limiting factor: How fast can you make architectural decisions?
-- Not: How fast can you type?
-- **This favors experienced developers even more**
-
-### 11.3 What Remains True
+### 10.2 What Remains True
 
 **Experience Still Matters (More Than Ever):**
 - AI can't replace architectural vision
@@ -1039,9 +880,9 @@ AI maintains consistency across entire codebase.
 
 ---
 
-## 12. Recommendations
+## 11. Recommendations
 
-### 12.1 For Developers Adopting AI
+### 11.1 For Developers Adopting AI
 
 **Start Small:**
 - Use AI for specific tasks first (boilerplate, documentation)
@@ -1066,7 +907,7 @@ AI maintains consistency across entire codebase.
 - Quality standards (human critical)
 - Final review (human critical)
 
-### 12.2 For Studios Evaluating AI
+### 11.2 For Studios Evaluating AI
 
 **Small Team + AI > Large Traditional Team:**
 - 3 experienced devs + AI ≈ 30-person traditional team
@@ -1079,18 +920,13 @@ AI maintains consistency across entire codebase.
 - Junior devs won't get 100x multiplier
 - Senior devs with clear vision get maximum benefit
 
-**Rethink Project Timelines:**
-- What took 2 years might take 2 months
-- What required 20 people might require 2
-- Adjust expectations upward, not downward
-
 **Focus on Unique Strengths:**
 - Game design and content
 - Player experience and polish
 - Marketing and community
 - Let AI handle technical implementation
 
-### 12.3 For the Industry
+### 11.3 For the Industry
 
 **The Paradigm Has Shifted:**
 - Lone developers can now build AAA-scale engines
@@ -1117,7 +953,7 @@ AI maintains consistency across entire codebase.
 
 ---
 
-## 13. Conclusion
+## 12. Conclusion
 
 Archon Engine's development demonstrates that **AI-assisted development provides an approximately 100x productivity multiplier** for experienced developers with clear architectural vision.
 
@@ -1158,13 +994,11 @@ This is not theoretical. This is measured reality from Archon Engine's developme
 
 **The future is "AI making determined, experienced developers superhuman."**
 
-And Archon Engine is proof.
-
 ---
 
-**Document Version:** 1.0
+**Document Version:** 1.1
 **Author:** Archon Engine Development Team
-**Date:** 2025-10-27
+**Date:** 2025-10-28
 **Code Base:** 80,000 lines in 109 hours
 
 ---
@@ -1176,5 +1010,3 @@ For deeper exploration of the themes in this document:
 - **`Log/personal/ON_WORKFLOWS_AND_EVOLUTION.md`** explores the historical pattern of abstraction in industrial revolutions, why traditional Agile/Waterfall workflows fail with AI, the "invasive species" pattern of technological disruption, and the 10-15 year timeline for market transformation.
 
 - **`Log/personal/ON_SCALING_AND_SUCCESS.md`** provides practical guidance for solo developers using AI to build complex systems, addresses the challenges of scaling from 10k to 500k lines of code, and discusses the "AI CTO" mental model.
-
-Together, these documents form a comprehensive view of AI-assisted development: the measured productivity data (this document), the strategic implications and market transformation (ON_WORKFLOWS_AND_EVOLUTION), and the practical execution methodology (ON_SCALING_AND_SUCCESS).
