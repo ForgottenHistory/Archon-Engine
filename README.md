@@ -4,6 +4,8 @@ A Unity-based game engine for grand strategy games, built around a dual-layer ar
 
 Currently in **ACTIVE development**, not recommended for real use yet. Documentation is about 1:1 size as code, feel free to take a look.
 
+Free open-source game demo will be released later.  
+
 ## Core Architecture
 
 **Dual-Layer Design**
