@@ -460,10 +460,12 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
     }
 
     // Junction = current pixel has 2+ different neighbors (3+ provinces total)
-    // This marks pixels where 3+ provinces converge
+    // This marks pixels where 3+ provinces converge (including curves/bends)
+    // This is what created the beautiful thin red lines!
     isJunction = (uniqueCount >= 2);
 
-    // STEP 2: Border detection (1-pixel radius for thin borders)
+    // STEP 2: Border detection (1-pixel radius)
+    // Mark pixels touching a different province
     bool isBorder = false;
     int searchRadius = 1;
 
@@ -496,28 +498,16 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
 
     // Determine mask value:
     // 0.0 = interior pixel (no border)
-    // 0.5 = junction pixel (3+ provinces meet)
-    // 1.0 = regular border pixel (only if current province is LOWER ID than all neighbors)
+    // 0.5 = junction pixel (creates beautiful smooth lines)
+    // 1.0 = regular border pixel
     float maskValue = 0.0;
     if (isJunction)
     {
-        maskValue = 0.5; // Junction takes priority
+        maskValue = 0.5; // Junction = smooth beautiful shape
     }
     else if (isBorder)
     {
-        // Only render border if current province has LOWER ID than neighbors
-        // This prevents double-rendering (both sides drawing the same border)
-        bool shouldRenderBorder = false;
-        for (int i = 0; i < uniqueCount; i++)
-        {
-            if (currentProvince < uniqueNeighbors[i])
-            {
-                shouldRenderBorder = true;
-                break;
-            }
-        }
-
-        maskValue = shouldRenderBorder ? 1.0 : 0.0;
+        maskValue = 1.0; // Regular border = blocky but centered
     }
 
     // Write mask to R channel
