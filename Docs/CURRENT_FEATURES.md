@@ -90,12 +90,12 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ## Pathfinding System
 
-**AdjacencySystem** - Province neighbor management with sparse collections
-**PathfindingSystem** - A* pathfinding for unit movement
-**GetNeighbors** - O(1) neighbor lookup with sparse storage
-**FindPath** - A* algorithm with province graph traversal
-**GetReachableProvinces** - Calculate movement range for units
-**Distance Caching** - Cached distance matrix for performance
+- **AdjacencySystem** - Province neighbor management with sparse collections
+- **PathfindingSystem** - A* pathfinding for unit movement
+- **GetNeighbors** - O(1) neighbor lookup with sparse storage
+- **FindPath** - A* algorithm with province graph traversal
+- **GetReachableProvinces** - Calculate movement range for units
+- **Distance Caching** - Cached distance matrix for performance
 
 ---
 
