@@ -9,7 +9,7 @@ Currently in **ACTIVE development**, not recommended for production use. Documen
 **Quick Links:**
 - [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Architecture overview
 - [Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Complete feature list
-- 
+
 Free open-source game demo will be released later.
 
 ## Core Architecture
