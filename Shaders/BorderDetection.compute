@@ -414,55 +414,52 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
     float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
     uint currentProvince = DecodeProvinceID(currentEncoded);
 
-    // STEP 1: Junction detection (8 immediate neighbors only)
-    // Junction = current pixel + 2+ different neighbors = 3-way junction
-    uint uniqueNeighbors[8]; // Max 8 neighbors
+    // STEP 1: Junction detection - CARDINAL DIRECTIONS ONLY (no diagonals!)
+    // True junction = 3+ provinces meeting at a POINT (not just curved border)
+    // CRITICAL: Only check 4-way neighbors (up/down/left/right) to avoid diagonal pollution
+    uint uniqueNeighbors[4]; // Max 4 cardinal neighbors
     int uniqueCount = 0;
-    bool isJunction = false;
 
-    for (int dy = -1; dy <= 1; dy++)
+    // Check only cardinal directions (no diagonals!)
+    int2 cardinalOffsets[4] = {
+        int2(1, 0),   // Right
+        int2(-1, 0),  // Left
+        int2(0, 1),   // Down
+        int2(0, -1)   // Up
+    };
+
+    for (int i = 0; i < 4; i++)
     {
-        for (int dx = -1; dx <= 1; dx++)
+        int2 neighborPos = int2(id.xy) + cardinalOffsets[i];
+
+        if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
+            neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
+            continue;
+
+        float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
+        uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+        // Only count neighbors DIFFERENT from current pixel
+        if (neighborProvince != currentProvince)
         {
-            if (dx == 0 && dy == 0)
-                continue; // Skip center
-
-            int2 neighborPos = int2(id.xy) + int2(dx, dy);
-
-            if (neighborPos.x < 0 || neighborPos.x >= (int)MapWidth ||
-                neighborPos.y < 0 || neighborPos.y >= (int)MapHeight)
-                continue;
-
-            float2 neighborEncoded = ProvinceIDTexture[neighborPos].rg;
-            uint neighborProvince = DecodeProvinceID(neighborEncoded);
-
-            // Only count neighbors DIFFERENT from current pixel
-            if (neighborProvince != currentProvince)
+            // Add to unique neighbors list and track direction
+            bool alreadyCounted = false;
+            for (int j = 0; j < uniqueCount; j++)
             {
-                // Add to unique neighbors list
-                bool alreadyCounted = false;
-                for (int i = 0; i < uniqueCount; i++)
+                if (uniqueNeighbors[j] == neighborProvince)
                 {
-                    if (uniqueNeighbors[i] == neighborProvince)
-                    {
-                        alreadyCounted = true;
-                        break;
-                    }
+                    alreadyCounted = true;
+                    break;
                 }
+            }
 
-                if (!alreadyCounted && uniqueCount < 8)
-                {
-                    uniqueNeighbors[uniqueCount] = neighborProvince;
-                    uniqueCount++;
-                }
+            if (!alreadyCounted && uniqueCount < 4)
+            {
+                uniqueNeighbors[uniqueCount] = neighborProvince;
+                uniqueCount++;
             }
         }
     }
-
-    // Junction = current pixel has 2+ different neighbors (3+ provinces total)
-    // This marks pixels where 3+ provinces converge (including curves/bends)
-    // This is what created the beautiful thin red lines!
-    isJunction = (uniqueCount >= 2);
 
     // STEP 2: Border detection (1-pixel radius)
     // Mark pixels touching a different province
@@ -496,22 +493,29 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
             break;
     }
 
-    // Determine mask value:
-    // 0.0 = interior pixel (no border)
-    // 0.5 = junction pixel (creates beautiful smooth lines)
-    // 1.0 = regular border pixel
+    // Simple approach: uniqueCount tells us everything we need!
+    // 0.0 = interior (no border)
+    // 0.5 = regular border (uniqueCount=1, border between 2 provinces)
+    // 0.66 = 3-way junction (uniqueCount=2, 3 provinces meet)
+    // 0.75 = 4-way junction (uniqueCount=3, 4 provinces meet)
     float maskValue = 0.0;
-    if (isJunction)
+
+    if (isBorder)
     {
-        maskValue = 0.5; // Junction = smooth beautiful shape
-    }
-    else if (isBorder)
-    {
-        maskValue = 1.0; // Regular border = blocky but centered
+        if (uniqueCount >= 3)
+        {
+            maskValue = 0.75; // 4-way junction
+        }
+        else if (uniqueCount == 2)
+        {
+            maskValue = 0.66; // 3-way junction
+        }
+        else // uniqueCount == 1 or 0
+        {
+            maskValue = 0.5; // Regular border - use 0.5 for perfect bilinear gradients
+        }
     }
 
-    // Write mask to R channel
-    // R8G8B8A8_UNorm stores in R channel, G/B/A unused (set to 0)
     BorderMaskTexture[id.xy] = float4(maskValue, 0, 0, 0);
 }
 
