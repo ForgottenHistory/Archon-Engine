@@ -2,12 +2,15 @@
 
 A Unity-based game engine for grand strategy games, built around a dual-layer architecture that separates deterministic simulation from GPU-accelerated presentation.
 
-Currently in **ACTIVE development**, not recommended for real use yet. Documentation is about 1:1 size as code, feel free to take a look.
+**Solo-developed using AI-assisted methodology.** This project explores whether one architect directing AI specialists can build systems that traditionally require teams.
 
-Free open-source game demo will be released later.  
+Currently in **ACTIVE development**, not recommended for production use. Documentation is approximately 1:1 with code size - architecture docs, session logs, and decision records are maintained as the foundation for AI collaboration.
 
-- [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Quick overview
-- [Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Up to date feature list
+**Quick Links:**
+- [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Architecture overview
+- [Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Complete feature list
+- 
+Free open-source game demo will be released later.
 
 ## Core Architecture
 
@@ -37,13 +40,28 @@ Free open-source game demo will be released later.
 - **Command pattern**: All state changes go through commands for determinism and networking
 - **Zero allocations**: Hot paths use pre-allocated memory and value types
 
-## Performance Results
+## What Makes This Different
 
-Tested with ~4,000 provinces (see `Docs/Log/2025-10-05/2025-10-05-4-core-stress-tests-eventbus-zero-allocation.md`):
-- **Province updates**: 0.24ms (target: <5ms)
-- **EventBus**: 0.85ms, zero allocations
-- **Fixed-point math**: 0.13ms for 10k calculations
-- **Memory stability**: Stable over 400+ simulated years
+**Memory Efficiency:**
+- 8-byte province structs: 10,000 provinces = 80KB hot data
+- Hot/cold data separation for cache-friendly access
+- Zero-allocation EventBus (99.99% allocation reduction)
+
+**Rendering Performance:**
+- Single draw call for entire map
+- Vector curve borders: 720KB curve data vs 40MB rasterized (55× compression)
+- Resolution-independent borders (sharp at any zoom level)
+
+**Multiplayer-Ready Architecture:**
+- Deterministic fixed-point math (no floats in simulation)
+- Command pattern for all state changes
+- Built for lockstep synchronization from day one
+
+**Tested with ~4,000 provinces:**
+- Province updates: 0.24ms (target: <5ms)
+- EventBus: 0.85ms, zero allocations
+- Fixed-point math: 0.13ms for 10k calculations
+- Memory stability: Stable over 400+ simulated years
 
 ## Structure
 
@@ -53,21 +71,51 @@ Assets/Archon-Engine/
 │   ├── Core/           # Deterministic simulation layer
 │   └── Map/            # GPU-accelerated presentation
 ├── Shaders/            # Compute shaders for rendering
-├── Docs/
-│   ├── Engine/         # Architecture documentation
-│   ├── Planning/       # Future features
-│   └── Log/            # Development journal
-└── CLAUDE.md           # AI development guide
+└── Docs/
+    ├── Engine/         # Architecture documentation
+    ├── Planning/       # Future features
+    └── Log/            # Development journal
 ```
+
+## Development Status
+
+**Core Engine (Complete):**
+- Dual-layer architecture with hot/cold data separation
+- Province, Country, Diplomacy, Unit, and Pathfinding systems
+- Vector curve border rendering with spatial acceleration
+- Save/load system with command pattern
+- Zero-allocation EventBus and performance optimizations
+- AI system with goal-oriented behavior and bucketing scheduler
+
+**Game Layer (In Progress):**
+- Economic system and resource management
+- Building construction and development
+- Map modes and visualization
+
+**Planned Features:**
+- Multiplayer (lockstep command synchronization)
+- Modding API (C# scripting support)
+- Advanced AI (heat-map tactical positioning)
+
+## Development Methodology
+
+This engine is built using an "AI CTO" model: one human architect defines the vision, constraints, and architecture, while AI handles implementation. This approach requires rigorous documentation discipline - every architectural decision is recorded not just for humans, but as the instruction manual for AI.
+
+**Key to scalability:**
+- Architecture documents define immutable constraints (8-byte structs, deterministic simulation)
+- Session logs capture decisions and rationale
+- FILE_REGISTRY documents catalog all systems
+- Documentation serves as the instruction manual for AI collaboration
 
 ## Documentation
 
-**Important Docs:**
+**Architecture:**
 - [Docs/Engine/master-architecture-document.md](Docs/Engine/master-architecture-document.md) - Complete architecture
+- [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Quick overview
 - [Scripts/Core/FILE_REGISTRY.md](Scripts/Core/FILE_REGISTRY.md) - Core layer catalog
 - [Scripts/Map/FILE_REGISTRY.md](Scripts/Map/FILE_REGISTRY.md) - Map layer catalog
 
-## Requirements
+## Technical Requirements
 
 - Unity 2023.3+
 - Universal Render Pipeline (URP)
