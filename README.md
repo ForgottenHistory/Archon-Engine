@@ -6,6 +6,9 @@ Currently in **ACTIVE development**, not recommended for real use yet. Documenta
 
 Free open-source game demo will be released later.  
 
+[Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Quick overview
+[Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Up to date feature list
+
 ## Core Architecture
 
 **Dual-Layer Design**
@@ -59,8 +62,7 @@ Assets/Archon-Engine/
 
 ## Documentation
 
-**Start here:**
-- [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Quick overview
+**Important Docs:**
 - [Docs/Engine/master-architecture-document.md](Docs/Engine/master-architecture-document.md) - Complete architecture
 - [Scripts/Core/FILE_REGISTRY.md](Scripts/Core/FILE_REGISTRY.md) - Core layer catalog
 - [Scripts/Map/FILE_REGISTRY.md](Scripts/Map/FILE_REGISTRY.md) - Map layer catalog
