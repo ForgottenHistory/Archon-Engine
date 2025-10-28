@@ -169,6 +169,14 @@ namespace Map.Rendering
         /// </summary>
         public void InitializeSmoothBorders(AdjacencySystem adjacencySystem, ProvinceSystemType provinceSystem, CountrySystem countrySystem, ProvinceMapping provinceMapping)
         {
+            // DISABLED: Bézier curve extraction no longer needed - using BorderMask approach
+            // BorderMask provides thin crisp borders without expensive curve fitting
+            // See: Assets/Archon-Engine/Docs/Log/2025-10/28/2-bordermask-rendering-breakthrough.md
+            ArchonLogger.Log("BorderComputeDispatcher: Skipping Bézier curve extraction (using BorderMask rendering)", "map_initialization");
+            return;
+
+            // OLD CODE BELOW (disabled for performance - curve extraction took ~24 seconds)
+            /*
             if (textureManager == null)
             {
                 ArchonLogger.LogError("BorderComputeDispatcher: Cannot initialize smooth borders - texture manager is null", "map_initialization");
@@ -272,6 +280,7 @@ namespace Map.Rendering
 
             float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
             ArchonLogger.Log($"BorderComputeDispatcher: Smooth border system initialized in {elapsedMs:F0}ms ({curveCache.BorderCount} curves)", "map_initialization");
+            */
         }
 
         /// <summary>

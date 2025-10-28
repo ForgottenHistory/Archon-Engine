@@ -459,10 +459,9 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
         }
     }
 
-    // Junction = current pixel has 3+ different neighbors (4+ provinces total)
-    // A pixel with only 2 different neighbors is just a regular border, not a junction
-    // True junctions have 4+ provinces converging at a point (rare!)
-    isJunction = (uniqueCount >= 3);
+    // Junction = current pixel has 2+ different neighbors (3+ provinces total)
+    // This marks pixels where 3+ provinces converge
+    isJunction = (uniqueCount >= 2);
 
     // STEP 2: Border detection (1-pixel radius for thin borders)
     bool isBorder = false;
@@ -496,14 +495,29 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
     }
 
     // Determine mask value:
-    // Use floating point values 0.0-1.0 to encode border information
-    // We'll render ALL border pixels as solid colors (resolution independent)
     // 0.0 = interior pixel (no border)
-    // 1.0 = border pixel (render as solid color)
+    // 0.5 = junction pixel (3+ provinces meet)
+    // 1.0 = regular border pixel (only if current province is LOWER ID than all neighbors)
     float maskValue = 0.0;
-    if (isBorder)
+    if (isJunction)
     {
-        maskValue = 1.0; // All borders get same value - render all as solid
+        maskValue = 0.5; // Junction takes priority
+    }
+    else if (isBorder)
+    {
+        // Only render border if current province has LOWER ID than neighbors
+        // This prevents double-rendering (both sides drawing the same border)
+        bool shouldRenderBorder = false;
+        for (int i = 0; i < uniqueCount; i++)
+        {
+            if (currentProvince < uniqueNeighbors[i])
+            {
+                shouldRenderBorder = true;
+                break;
+            }
+        }
+
+        maskValue = shouldRenderBorder ? 1.0 : 0.0;
     }
 
     // Write mask to R channel
