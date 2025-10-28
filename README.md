@@ -6,8 +6,8 @@ Currently in **ACTIVE development**, not recommended for real use yet. Documenta
 
 Free open-source game demo will be released later.  
 
-[Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Quick overview
-[Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Up to date feature list
+- [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Quick overview
+- [Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Up to date feature list
 
 ## Core Architecture
 
