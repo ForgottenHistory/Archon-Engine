@@ -16,6 +16,11 @@ struct BezierSegment
     int borderType;      // BorderType enum: 0=None, 1=Province, 2=Country
     uint provinceID1;    // First province (stored as 2 ushorts packed)
     uint provinceID2;    // Second province
+
+    // Connectivity flags for geometry-aware rendering
+    // Bits: [0] = P0 has connected segment, [1] = P3 has connected segment
+    //       [2] = P0 is junction, [3] = P3 is junction
+    uint connectivityFlags;
 };
 
 /// <summary>

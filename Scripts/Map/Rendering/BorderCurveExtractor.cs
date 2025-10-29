@@ -222,6 +222,9 @@ namespace Map.Rendering
             // DISABLED: Junction pixels now handled by BorderMask, no CPU post-processing needed
             // UnifyJunctionControlPoints(borderCurves);
 
+            // POST-PROCESSING: Build segment connectivity for geometry-aware rendering
+            BuildSegmentConnectivity(borderCurves);
+
             if (logProgress)
             {
                 ArchonLogger.Log($"BorderCurveExtractor: Total time: {(Time.realtimeSinceStartup - startTime) * 1000f:F0}ms", "map_initialization");
@@ -439,56 +442,10 @@ namespace Map.Rendering
                 }
             }
 
-            // Add junction pixels ONLY if they're already 8-connected to existing border pixels
-            // This ensures borders reach junctions without adding disconnected pixels
-            int addedJunctions = 0;
-
-            foreach (var kvp in junctionPixels)
-            {
-                var junctionPos = kvp.Key;
-                var provinces = kvp.Value;
-
-                // If this junction involves both provinceA and provinceB, check if we should add it
-                if (provinces.Contains(provinceA) && provinces.Contains(provinceB))
-                {
-                    // Only add junction if NOT already in border AND is 8-connected to existing border
-                    if (!borderPixels.Contains(junctionPos))
-                    {
-                        bool isAdjacent = false;
-                        int jx = (int)junctionPos.x;
-                        int jy = (int)junctionPos.y;
-
-                        // Check 8 neighbors
-                        for (int dy = -1; dy <= 1; dy++)
-                        {
-                            for (int dx = -1; dx <= 1; dx++)
-                            {
-                                if (dx == 0 && dy == 0) continue;
-                                Vector2 neighbor = new Vector2(jx + dx, jy + dy);
-                                if (borderPixels.Contains(neighbor))
-                                {
-                                    isAdjacent = true;
-                                    break;
-                                }
-                            }
-                            if (isAdjacent) break;
-                        }
-
-                        // Only add if adjacent to existing border pixels
-                        if (isAdjacent)
-                        {
-                            borderPixels.Add(junctionPos);
-                            addedJunctions++;
-                        }
-                    }
-                }
-            }
-
-            // DEBUG: Log junction additions for first border
-            if (addedJunctions > 0 && !firstResultLogged)
-            {
-                ArchonLogger.Log($"BorderCurveExtractor: Border {provinceA}<->{provinceB}: Added {addedJunctions} adjacent junction pixels", "map_initialization");
-            }
+            // NOTE: We do NOT remove junction pixels here - curves render fully to junctions
+            // Two-pass approach:
+            // 1. Render all curves to texture (overlaps allowed)
+            // 2. GPU cleanup pass fixes overlaps and junctions
 
             // DEBUG: Log results for first pair
             if (!firstResultLogged)
@@ -1045,6 +1002,133 @@ namespace Map.Rendering
 
             // Same owner = province border, different owner = country border
             return (ownerA == ownerB) ? BorderType.Province : BorderType.Country;
+        }
+
+        /// <summary>
+        /// Build connectivity information for all segment endpoints
+        /// Sets connectivity flags for geometry-aware rendering (avoids round caps)
+        /// </summary>
+        private void BuildSegmentConnectivity(Dictionary<(ushort, ushort), List<BezierSegment>> borderCurves)
+        {
+            float startTime = Time.realtimeSinceStartup;
+            const float ENDPOINT_THRESHOLD = 2.0f; // Endpoints within 2px are considered connected
+
+            // Build spatial index of all endpoints
+            var endpointIndex = new Dictionary<(int, int), List<(Vector2 pos, (ushort, ushort) borderKey, int segmentIndex, bool isP0)>>();
+
+            foreach (var kvp in borderCurves)
+            {
+                var borderKey = kvp.Key;
+                var segments = kvp.Value;
+
+                for (int i = 0; i < segments.Count; i++)
+                {
+                    // Add both endpoints to spatial grid
+                    AddToEndpointGrid(endpointIndex, segments[i].P0, borderKey, i, true);
+                    AddToEndpointGrid(endpointIndex, segments[i].P3, borderKey, i, false);
+                }
+            }
+
+            // Analyze connectivity at each grid cell
+            int connectedCount = 0;
+            int junctionCount = 0;
+
+            foreach (var cellEndpoints in endpointIndex.Values)
+            {
+                if (cellEndpoints.Count < 2) continue; // No connectivity possible
+
+                // Check all pairs of endpoints in this cell
+                for (int i = 0; i < cellEndpoints.Count; i++)
+                {
+                    var (pos1, key1, idx1, isP0_1) = cellEndpoints[i];
+
+                    // Count how many OTHER endpoints are close to this one
+                    int nearbyCount = 0;
+                    for (int j = 0; j < cellEndpoints.Count; j++)
+                    {
+                        if (i == j) continue;
+                        var (pos2, key2, idx2, isP0_2) = cellEndpoints[j];
+
+                        float dist = Vector2.Distance(pos1, pos2);
+                        if (dist < ENDPOINT_THRESHOLD)
+                        {
+                            nearbyCount++;
+                        }
+                    }
+
+                    // Set connectivity flags
+                    // IMPORTANT: Get list reference, modify segment, write back to list
+                    var segments = borderCurves[key1];
+                    var seg = segments[idx1];
+                    uint flags = seg.connectivityFlags;
+
+                    if (nearbyCount >= 1)
+                    {
+                        // Has at least one connected segment
+                        if (isP0_1)
+                            flags |= 0x1; // Bit 0: P0 has connection
+                        else
+                            flags |= 0x2; // Bit 1: P3 has connection
+
+                        connectedCount++;
+                    }
+
+                    if (nearbyCount >= 2)
+                    {
+                        // Junction (3+ segments meet at this point)
+                        if (isP0_1)
+                            flags |= 0x4; // Bit 2: P0 is junction
+                        else
+                            flags |= 0x8; // Bit 3: P3 is junction
+
+                        junctionCount++;
+                    }
+
+                    // Update the flags
+                    seg.connectivityFlags = flags;
+
+                    // CRITICAL: Write back to the list (structs are value types!)
+                    segments[idx1] = seg;
+
+                    // Update the dictionary entry (in case the list is a copy)
+                    borderCurves[key1] = segments;
+                }
+            }
+
+            float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
+            ArchonLogger.Log($"BorderCurveExtractor: Built connectivity - {connectedCount} connected endpoints, {junctionCount} junction endpoints in {elapsed:F0}ms", "map_initialization");
+
+            // DEBUG: Log first segment's connectivity flags
+            foreach (var kvp in borderCurves)
+            {
+                if (kvp.Value.Count > 0)
+                {
+                    var seg = kvp.Value[0];
+                    ArchonLogger.Log($"BorderCurveExtractor: First segment connectivity flags = 0x{seg.connectivityFlags:X} (P0 connected={(seg.connectivityFlags & 0x1) != 0}, P3 connected={(seg.connectivityFlags & 0x2) != 0})", "map_initialization");
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Helper: Add endpoint to spatial grid (10px cells for fast lookup)
+        /// </summary>
+        private void AddToEndpointGrid(
+            Dictionary<(int, int), List<(Vector2, (ushort, ushort), int, bool)>> grid,
+            Vector2 point,
+            (ushort, ushort) borderKey,
+            int segmentIndex,
+            bool isP0)
+        {
+            const int CELL_SIZE = 10;
+            int cellX = (int)(point.x / CELL_SIZE);
+            int cellY = (int)(point.y / CELL_SIZE);
+            var cellKey = (cellX, cellY);
+
+            if (!grid.ContainsKey(cellKey))
+                grid[cellKey] = new List<(Vector2, (ushort, ushort), int, bool)>();
+
+            grid[cellKey].Add((point, borderKey, segmentIndex, isP0));
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Map.Rendering
     /// Used for resolution-independent vector border rendering
     ///
     /// CRITICAL: Memory layout MUST match HLSL BezierSegment struct exactly!
-    /// HLSL expects: float2 P0-P3 (32 bytes), int borderType (4), uint provinceID1 (4), uint provinceID2 (4)
-    /// Total: 44 bytes
+    /// HLSL expects: float2 P0-P3 (32 bytes), int borderType (4), uint provinceID1 (4), uint provinceID2 (4), uint connectivityFlags (4)
+    /// Total: 48 bytes
     /// </summary>
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public struct BezierSegment
@@ -24,6 +24,11 @@ namespace Map.Rendering
         public uint provinceID1;       // 4 bytes (offset 36) - MUST be uint to match HLSL
         public uint provinceID2;       // 4 bytes (offset 40) - MUST be uint to match HLSL
 
+        // Connectivity flags for geometry-aware rendering
+        // Bits: [0] = P0 has connected segment, [1] = P3 has connected segment
+        //       [2] = P0 is junction, [3] = P3 is junction
+        public uint connectivityFlags; // 4 bytes (offset 44) - MUST be uint to match HLSL
+
         public BezierSegment(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, BorderType type = BorderType.None)
         {
             P0 = p0;
@@ -33,6 +38,7 @@ namespace Map.Rendering
             borderType = type;
             provinceID1 = 0;
             provinceID2 = 0;
+            connectivityFlags = 0;
         }
 
         /// <summary>

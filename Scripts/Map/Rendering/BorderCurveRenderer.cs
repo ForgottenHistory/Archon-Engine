@@ -117,9 +117,9 @@ namespace Map.Rendering
             }
 
             // Create GPU buffers for Bézier segments
-            // BezierSegment struct size: 4 Vector2 (32 bytes) + 1 int borderType (4) + 2 uint provinceIDs (8) = 44 bytes
+            // BezierSegment struct size: 4 Vector2 (32 bytes) + 1 int borderType (4) + 2 uint provinceIDs (8) + 1 uint connectivityFlags (4) = 48 bytes
             // CRITICAL: Must match BezierSegment C# struct layout (now uses uint not ushort for province IDs)
-            int segmentStride = sizeof(float) * 8 + sizeof(int) + sizeof(uint) * 2;
+            int segmentStride = sizeof(float) * 8 + sizeof(int) + sizeof(uint) * 3;
             curvePointsBuffer = new ComputeBuffer(allSegments.Count, segmentStride);
             curveTypesBuffer = new ComputeBuffer(allSegments.Count, sizeof(int));
             curveThicknessBuffer = new ComputeBuffer(allSegments.Count, sizeof(float));

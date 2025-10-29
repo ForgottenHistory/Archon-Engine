@@ -42,6 +42,11 @@ namespace Map.Core
         public MapTextureManager TextureManager => textureManager;
 
         /// <summary>
+        /// Get the map plane transform for border mesh scaling
+        /// </summary>
+        public Transform GetMapPlaneTransform() => meshRenderer?.transform;
+
+        /// <summary>
         /// Initialize the entire map system with proper references
         /// </summary>
         public void InitializeSystem(Camera camera, MeshRenderer renderer)
