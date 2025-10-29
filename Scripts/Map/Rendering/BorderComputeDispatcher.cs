@@ -26,10 +26,48 @@ namespace Map.Rendering
         [SerializeField] private float borderAntiAliasing = 1.0f;
         [SerializeField] private bool autoUpdateBorders = true;
 
-        [Header("SDF Rendering (Resolution Independent)")]
-        [SerializeField] private bool useSDFRendering = false;
+        [Header("Rendering Mode")]
+        [SerializeField] private BorderRenderingMode renderingMode = BorderRenderingMode.DistanceField;
         [SerializeField] private float countryBorderWidth = 0.5f;
         [SerializeField] private float provinceBorderWidth = 0.5f;
+
+        [Header("AAA Distance Field Border Settings")]
+        [Tooltip("Sharp border thickness in pixels (0.5 = razor-thin, 2.0 = thick)")]
+        [SerializeField] private float edgeWidth = 0.5f;
+
+        [Tooltip("Soft gradient falloff distance in pixels (creates outer glow effect)")]
+        [SerializeField] private float gradientWidth = 2.0f;
+
+        [Tooltip("Anti-aliasing smoothness factor (0.1 = crisp, 0.5 = soft)")]
+        [SerializeField] private float edgeSmoothness = 0.2f;
+
+        [Tooltip("Edge color darkening multiplier (0.0 = black, 1.0 = province color)")]
+        [Range(0f, 1f)]
+        [SerializeField] private float edgeColorMul = 0.7f;
+
+        [Tooltip("Gradient color darkening multiplier (0.0 = black, 1.0 = province color)")]
+        [Range(0f, 1f)]
+        [SerializeField] private float gradientColorMul = 0.85f;
+
+        [Tooltip("Edge layer opacity (0.0 = transparent, 1.0 = opaque)")]
+        [Range(0f, 1f)]
+        [SerializeField] private float edgeAlpha = 1.0f;
+
+        [Tooltip("Gradient layer opacity inside border (0.0 = transparent, 1.0 = opaque)")]
+        [Range(0f, 1f)]
+        [SerializeField] private float gradientAlphaInside = 0.5f;
+
+        [Tooltip("Gradient layer opacity outside border (0.0 = transparent, 1.0 = opaque)")]
+        [Range(0f, 1f)]
+        [SerializeField] private float gradientAlphaOutside = 0.3f;
+
+        public enum BorderRenderingMode
+        {
+            None,           // No smooth border rendering (DISABLED - mesh approach doesn't scale)
+            SDF,            // Signed distance field (old - round caps issue)
+            Rasterization,  // Legacy rasterization (old - fixed resolution)
+            DistanceField   // AAA-quality: 1/4 resolution distance field + 9-tap + two-layer (RECOMMENDED)
+        }
 
         public BorderMode CurrentBorderMode => borderMode;
 
@@ -58,6 +96,8 @@ namespace Map.Rendering
         private BorderCurveCache curveCache;
         private BorderCurveRenderer curveRenderer;
         private BorderSDFRenderer sdfRenderer;
+        private BorderMeshGenerator meshGenerator;
+        private BorderMeshRenderer meshRenderer;
         private SpatialHashGrid spatialGrid;
         private bool smoothBordersInitialized = false;
 
@@ -73,6 +113,11 @@ namespace Map.Rendering
         void Awake()
         {
             InitializeKernels();
+        }
+
+        void Update()
+        {
+            // Mesh-based rendering disabled - doesn't scale for complex maps
         }
 
         /// <summary>
@@ -167,16 +212,11 @@ namespace Map.Rendering
         /// Initialize smooth curve-based border rendering system
         /// MUST be called after AdjacencySystem, ProvinceSystem, and CountrySystem are ready
         /// </summary>
-        public void InitializeSmoothBorders(AdjacencySystem adjacencySystem, ProvinceSystemType provinceSystem, CountrySystem countrySystem, ProvinceMapping provinceMapping)
+        public void InitializeSmoothBorders(AdjacencySystem adjacencySystem, ProvinceSystemType provinceSystem, CountrySystem countrySystem, ProvinceMapping provinceMapping, Transform mapPlaneTransform = null)
         {
-            // DISABLED: Bézier curve extraction no longer needed - using BorderMask approach
-            // BorderMask provides thin crisp borders without expensive curve fitting
-            // See: Assets/Archon-Engine/Docs/Log/2025-10/28/2-bordermask-rendering-breakthrough.md
-            ArchonLogger.Log("BorderComputeDispatcher: Skipping Bézier curve extraction (using BorderMask rendering)", "map_initialization");
-            return;
-
-            // OLD CODE BELOW (disabled for performance - curve extraction took ~24 seconds)
-            /*
+            // Re-enabled: Bézier curves with junction detection
+            // BorderMask marks junctions (0.66) so fragment shader can skip curve evaluation there
+            // This combines vector curve smoothness with proper junction handling
             if (textureManager == null)
             {
                 ArchonLogger.LogError("BorderComputeDispatcher: Cannot initialize smooth borders - texture manager is null", "map_initialization");
@@ -233,8 +273,18 @@ namespace Map.Rendering
             }
             spatialGrid.Finalize();
 
-            // Choose rendering method: SDF (resolution independent) or Rasterization (fixed resolution)
-            if (useSDFRendering && borderSDFCompute != null)
+            // Choose rendering method based on mode
+            if (renderingMode == BorderRenderingMode.DistanceField)
+            {
+                ArchonLogger.Log("BorderComputeDispatcher: Using AAA Distance Field rendering (1/4 res + 9-tap + two-layer)", "map_initialization");
+
+                // Distance Field mode is fragment-shader based - no C# renderer needed!
+                // All rendering happens in MapModeCommon.hlsl's ApplyBorders() function
+                // We just need to generate the distance field texture and bind parameters
+
+                // Distance field generation happens below (lines 314-347)
+            }
+            else if (renderingMode == BorderRenderingMode.SDF && borderSDFCompute != null)
             {
                 ArchonLogger.Log("BorderComputeDispatcher: Using SDF rendering (resolution independent)", "map_initialization");
 
@@ -248,7 +298,7 @@ namespace Map.Rendering
                 // Render borders once at startup (no AA - bilinear filtering handles sub-pixel smoothing)
                 sdfRenderer.RenderBorders(countryBorderWidth, provinceBorderWidth, antiAliasRadius: 0.0f);
             }
-            else
+            else if (renderingMode == BorderRenderingMode.Rasterization)
             {
                 ArchonLogger.Log("BorderComputeDispatcher: Using rasterization rendering (fixed resolution)", "map_initialization");
 
@@ -270,6 +320,48 @@ namespace Map.Rendering
                 ArchonLogger.Log("BorderComputeDispatcher: Uploading curve data to GPU...", "map_initialization");
                 curveRenderer.UploadCurveData();
             }
+            else
+            {
+                ArchonLogger.Log("BorderComputeDispatcher: Border rendering mode is None - no borders will be rendered", "map_initialization");
+            }
+
+            // Generate AAA-quality distance field at 1/4 resolution (for DistanceField mode)
+            // This runs when renderingMode == DistanceField
+            if (renderingMode == BorderRenderingMode.DistanceField)
+            {
+                if (distanceFieldGenerator == null)
+                {
+                    distanceFieldGenerator = GetComponent<BorderDistanceFieldGenerator>();
+                    if (distanceFieldGenerator == null)
+                    {
+                        distanceFieldGenerator = gameObject.AddComponent<BorderDistanceFieldGenerator>();
+                    }
+                    distanceFieldGenerator.SetTextureManager(textureManager);
+                }
+
+                if (textureManager.BorderDistanceTexture != null)
+                {
+                    ArchonLogger.Log("BorderComputeDispatcher: Generating 1/4 resolution distance field (AAA approach)...", "map_initialization");
+                    float distFieldStartTime = Time.realtimeSinceStartup;
+                    distanceFieldGenerator.GenerateQuarterResolutionDistanceField(textureManager.BorderDistanceTexture);
+                    float distFieldElapsedMs = (Time.realtimeSinceStartup - distFieldStartTime) * 1000f;
+                    ArchonLogger.Log($"BorderComputeDispatcher: 1/4 resolution distance field generation complete in {distFieldElapsedMs:F1}ms", "map_initialization");
+
+                    // Bind distance field parameters to material (if map plane has material set)
+                    if (mapPlaneTransform != null)
+                    {
+                        var meshRenderer = mapPlaneTransform.GetComponent<MeshRenderer>();
+                        if (meshRenderer != null && meshRenderer.sharedMaterial != null)
+                        {
+                            BindDistanceFieldBorderParams(meshRenderer.sharedMaterial);
+                        }
+                    }
+                }
+                else
+                {
+                    ArchonLogger.LogWarning("BorderComputeDispatcher: BorderDistanceTexture not available, skipping AAA distance field generation", "map_initialization");
+                }
+            } // End of DistanceField mode block
 
             // CRITICAL: GPU synchronization - Wait for curve data upload to complete
             // Following unity-compute-shader-coordination.md pattern
@@ -280,7 +372,6 @@ namespace Map.Rendering
 
             float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
             ArchonLogger.Log($"BorderComputeDispatcher: Smooth border system initialized in {elapsedMs:F0}ms ({curveCache.BorderCount} curves)", "map_initialization");
-            */
         }
 
         /// <summary>
@@ -523,6 +614,40 @@ namespace Map.Rendering
             {
                 DetectBorders();
             }
+        }
+
+        /// <summary>
+        /// Bind AAA distance field border parameters to material
+        /// Call this after BindTexturesToMaterial to set all border rendering parameters
+        /// </summary>
+        public void BindDistanceFieldBorderParams(Material material)
+        {
+            if (material == null)
+            {
+                ArchonLogger.LogWarning("BorderComputeDispatcher: Cannot bind distance field params - material is null", "map_rendering");
+                return;
+            }
+
+            if (textureManager == null)
+            {
+                ArchonLogger.LogWarning("BorderComputeDispatcher: Cannot bind distance field params - textureManager is null", "map_rendering");
+                return;
+            }
+
+            // Bind parameters via DynamicTextureSet
+            textureManager.DynamicTextures?.SetDistanceFieldBorderParams(
+                material,
+                edgeWidth,
+                gradientWidth,
+                edgeSmoothness,
+                edgeColorMul,
+                gradientColorMul,
+                edgeAlpha,
+                gradientAlphaInside,
+                gradientAlphaOutside
+            );
+
+            ArchonLogger.Log("BorderComputeDispatcher: Bound distance field border parameters to material", "map_rendering");
         }
 
         /// <summary>
@@ -831,7 +956,7 @@ namespace Map.Rendering
         /// </summary>
         public bool IsUsingSDFRendering()
         {
-            return useSDFRendering && sdfRenderer != null;
+            return renderingMode == BorderRenderingMode.SDF && sdfRenderer != null;
         }
     }
 }

@@ -39,8 +39,12 @@ namespace Map.Rendering
         public Texture2D ProvinceColorPalette => paletteManager?.ProvinceColorPalette;
         public RenderTexture BorderTexture => dynamicTextures?.BorderTexture;
         public RenderTexture BorderMaskTexture => dynamicTextures?.BorderMaskTexture;
+        public RenderTexture BorderDistanceTexture => dynamicTextures?.BorderDistanceTexture;
         public RenderTexture HighlightTexture => dynamicTextures?.HighlightTexture;
         public RenderTexture FogOfWarTexture => dynamicTextures?.FogOfWarTexture;
+
+        // Expose texture sets for direct access (needed for parameter binding)
+        public DynamicTextureSet DynamicTextures => dynamicTextures;
 
         void Awake()
         {
