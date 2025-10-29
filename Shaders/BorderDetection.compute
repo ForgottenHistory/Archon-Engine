@@ -493,26 +493,23 @@ void GenerateBorderMask(uint3 id : SV_DispatchThreadID)
             break;
     }
 
-    // Simple approach: uniqueCount tells us everything we need!
+    // Revert to old approach from Session 2: Mark curves/junctions as 0.5
+    // This creates beautiful smooth bilinear gradients!
+    // uniqueCount >= 2 means curves, bends, or junctions (creates smooth lines)
     // 0.0 = interior (no border)
-    // 0.5 = regular border (uniqueCount=1, border between 2 provinces)
-    // 0.66 = 3-way junction (uniqueCount=2, 3 provinces meet)
-    // 0.75 = 4-way junction (uniqueCount=3, 4 provinces meet)
+    // 0.5 = curves/junctions/bends (uniqueCount >= 2) - SMOOTH GRADIENT ZONE
+    // 1.0 = straight borders (uniqueCount < 2)
     float maskValue = 0.0;
 
     if (isBorder)
     {
-        if (uniqueCount >= 3)
+        if (uniqueCount >= 2)
         {
-            maskValue = 0.75; // 4-way junction
+            maskValue = 0.5; // Curves/junctions - creates smooth 0.4-0.6 gradient with bilinear filtering
         }
-        else if (uniqueCount == 2)
+        else
         {
-            maskValue = 0.66; // 3-way junction
-        }
-        else // uniqueCount == 1 or 0
-        {
-            maskValue = 0.5; // Regular border - use 0.5 for perfect bilinear gradients
+            maskValue = 1.0; // Straight borders (not rendered for now, causes gaps)
         }
     }
 

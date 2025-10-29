@@ -104,9 +104,12 @@ namespace Map.Rendering
 
             borderMaskTexture = new RenderTexture(descriptor);
             borderMaskTexture.name = "BorderMask_RenderTexture";
-            borderMaskTexture.filterMode = FilterMode.Bilinear; // Bilinear filtering for smooth curves
             borderMaskTexture.wrapMode = TextureWrapMode.Clamp;
             borderMaskTexture.Create();
+
+            // CRITICAL: Set filterMode AFTER Create() to ensure it takes effect
+            // RenderTexture filterMode must be set after creation for proper GPU state
+            borderMaskTexture.filterMode = FilterMode.Bilinear; // Bilinear filtering for smooth curves
 
             // Clear to black (no borders detected yet)
             RenderTexture.active = borderMaskTexture;
@@ -135,7 +138,10 @@ namespace Map.Rendering
         /// </summary>
         private void CreateBorderDistanceTexture()
         {
-            // Calculate 1/4 resolution (rounded up to avoid truncation)
+            // Calculate 1/4 resolution to match Imperator's downsampling ratio
+            // Imperator: 8192×4096 → 2048×1024 (1/4 res, 4×4 blocks) = 2.1M pixels
+            // Us: 5632×2048 → 1408×512 (1/4 res, 4×4 blocks) = 0.72M pixels
+            // The 4×4 averaging creates the blur that makes borders smooth!
             int distanceWidth = (mapWidth + 3) / 4;   // Integer division with ceiling
             int distanceHeight = (mapHeight + 3) / 4;
 
@@ -160,7 +166,7 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.Log($"DynamicTextureSet: Created BorderDistance RenderTexture {distanceWidth}x{distanceHeight} (1/4 resolution) R8G8_UNorm - {memorySizeMB:F2}MB - Actual format: {borderDistanceTexture.graphicsFormat}", "map_initialization");
+                ArchonLogger.Log($"DynamicTextureSet: Created BorderDistance RenderTexture {distanceWidth}x{distanceHeight} (1/2 resolution) R8G8_UNorm - {memorySizeMB:F2}MB - Actual format: {borderDistanceTexture.graphicsFormat}", "map_initialization");
             }
         }
 
