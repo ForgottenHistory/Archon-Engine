@@ -84,13 +84,8 @@ namespace Map.Rendering
         [Header("Debug")]
         [SerializeField] private bool logPerformance = false;
 
-        // Kernel indices
-        private int detectBordersKernel;
-        private int detectBordersThickKernel;
-        private int detectCountryBordersKernel;
+        // Kernel indices (only actually used kernel)
         private int detectDualBordersKernel;
-        private int generateBorderMaskKernel;
-        private int copyBorderToMaskKernel;
 
         // Thread group sizes (must match compute shader)
         private const int THREAD_GROUP_SIZE = 8;
@@ -195,19 +190,12 @@ namespace Map.Rendering
                 }
             }
 
-            // Get kernel indices for border detection
-            detectBordersKernel = borderDetectionCompute.FindKernel("DetectBorders");
-            detectBordersThickKernel = borderDetectionCompute.FindKernel("DetectBordersThick");
-            detectCountryBordersKernel = borderDetectionCompute.FindKernel("DetectCountryBorders");
+            // Get kernel index for dual border detection (only used kernel)
             detectDualBordersKernel = borderDetectionCompute.FindKernel("DetectDualBorders");
-            generateBorderMaskKernel = borderDetectionCompute.FindKernel("GenerateBorderMask");
-            copyBorderToMaskKernel = borderDetectionCompute.FindKernel("CopyBorderToMask");
 
             if (logPerformance)
             {
-                ArchonLogger.Log($"BorderComputeDispatcher: Initialized with kernels - " +
-                    $"Borders: {detectBordersKernel}, Thick: {detectBordersThickKernel}, " +
-                    $"Country: {detectCountryBordersKernel}, Dual: {detectDualBordersKernel}, Mask: {generateBorderMaskKernel}, CopyMask: {copyBorderToMaskKernel}", "map_initialization");
+                ArchonLogger.Log($"BorderComputeDispatcher: Initialized with DetectDualBorders kernel (ID: {detectDualBordersKernel})", "map_initialization");
             }
         }
 
@@ -420,49 +408,6 @@ namespace Map.Rendering
 
             float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
             ArchonLogger.Log($"BorderComputeDispatcher: Generated dual-channel BorderMask (country/province) in {elapsedMs:F1}ms", "map_initialization");
-        }
-
-        /// <summary>
-        /// Rasterize smooth curves to DualBorderTexture
-        /// Uses the smooth curves already rendered to DistanceFieldTexture
-        /// Copies DistanceFieldTexture data to DualBorderTexture R channel
-        /// </summary>
-        private void RasterizeCurvesToMask()
-        {
-            if (textureManager.DistanceFieldTexture == null)
-            {
-                ArchonLogger.LogError("BorderComputeDispatcher: Cannot copy borders - DistanceFieldTexture is null", "map_rendering");
-                return;
-            }
-
-            // Use compute shader to copy DistanceFieldTexture (smooth curves) to DualBorderTexture
-            // DistanceFieldTexture.R = country border distance, DistanceFieldTexture.G = province border distance
-            // DualBorderTexture.R = combined border mask (1.0 = border, 0.0 = interior)
-
-            if (borderDetectionCompute == null)
-            {
-                ArchonLogger.LogError("BorderComputeDispatcher: Cannot copy borders - compute shader missing", "map_rendering");
-                return;
-            }
-
-            // Set textures
-            // Note: Use "BorderTextureFloat4" name to match kernel's local declaration
-            borderDetectionCompute.SetTexture(copyBorderToMaskKernel, "BorderTextureFloat4", textureManager.DistanceFieldTexture);
-            borderDetectionCompute.SetTexture(copyBorderToMaskKernel, "BorderMaskTexture", textureManager.DualBorderTexture);
-            borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
-            borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
-
-            // Dispatch
-            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-
-            borderDetectionCompute.Dispatch(copyBorderToMaskKernel, threadGroupsX, threadGroupsY, 1);
-
-            // Force GPU sync
-            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.DualBorderTexture);
-            syncRequest.WaitForCompletion();
-
-            ArchonLogger.Log($"BorderComputeDispatcher: Copied smooth curves from DistanceFieldTexture to DualBorderTexture", "map_initialization");
         }
 
         /// <summary>
@@ -694,60 +639,6 @@ namespace Map.Rendering
             borderMode = (BorderMode)(((int)borderMode + 1) % 5);
             DetectBorders();
             ArchonLogger.Log($"BorderComputeDispatcher: Toggled to border mode: {borderMode}", "map_rendering");
-        }
-
-        /// <summary>
-        /// Async border detection using CommandBuffer
-        /// </summary>
-        public void DetectBordersAsync(CommandBuffer cmd)
-        {
-            if (textureManager == null || borderDetectionCompute == null)
-                return;
-
-            int kernelToUse = GetKernelForMode();
-
-            // Set compute shader parameters via command buffer
-            cmd.SetComputeTextureParam(borderDetectionCompute, kernelToUse, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
-            cmd.SetComputeTextureParam(borderDetectionCompute, kernelToUse, "BorderTexture", textureManager.DistanceFieldTexture);
-            cmd.SetComputeIntParam(borderDetectionCompute, "MapWidth", textureManager.MapWidth);
-            cmd.SetComputeIntParam(borderDetectionCompute, "MapHeight", textureManager.MapHeight);
-
-            // Set border thickness (applies to all modes)
-            cmd.SetComputeIntParam(borderDetectionCompute, "CountryBorderThickness", countryBorderThickness);
-            cmd.SetComputeIntParam(borderDetectionCompute, "ProvinceBorderThickness", provinceBorderThickness);
-
-            // Set anti-aliasing
-            cmd.SetComputeFloatParam(borderDetectionCompute, "BorderAntiAliasing", borderAntiAliasing);
-
-            if (borderMode == BorderMode.Country || borderMode == BorderMode.Dual)
-            {
-                cmd.SetComputeTextureParam(borderDetectionCompute, kernelToUse, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
-            }
-
-            // Calculate thread groups
-            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-
-            // Dispatch via command buffer
-            cmd.DispatchCompute(borderDetectionCompute, kernelToUse, threadGroupsX, threadGroupsY, 1);
-        }
-
-        /// <summary>
-        /// Get the appropriate kernel index for current mode
-        /// </summary>
-        private int GetKernelForMode()
-        {
-            switch (borderMode)
-            {
-                case BorderMode.Country:
-                    return detectCountryBordersKernel;
-                case BorderMode.Thick:
-                    return detectBordersThickKernel;
-                case BorderMode.Dual:
-                    return detectDualBordersKernel;
-                default:
-                    return detectBordersKernel;
-            }
         }
 
         /// <summary>
