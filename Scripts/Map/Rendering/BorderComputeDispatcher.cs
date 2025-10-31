@@ -63,11 +63,20 @@ namespace Map.Rendering
 
         public enum BorderRenderingMode
         {
-            None,           // No border rendering
-            SDF,            // Signed distance field (old - round caps issue)
-            Rasterization,  // Legacy rasterization (old - fixed resolution)
-            DistanceField,  // AAA-quality: 1/4 resolution distance field + 9-tap + two-layer
-            Mesh            // Triangle strip geometry (Paradox approach - EXPERIMENTAL)
+            None,                   // No border rendering at all
+            ShaderDistanceField,    // Shader-based using JFA distance field (smooth, 3D tessellation compatible)
+            MeshGeometry,           // CPU triangle strip geometry (resolution-independent, runtime style updates)
+            ShaderPixelPerfect,     // Shader-based using 1-pixel BorderMask (retro aesthetic, planned)
+
+            // Legacy/deprecated modes (kept for backwards compatibility)
+            [System.Obsolete("Use ShaderDistanceField instead")]
+            SDF = ShaderDistanceField,      // Old name: signed distance field
+            [System.Obsolete("Use ShaderDistanceField instead")]
+            DistanceField = ShaderDistanceField,  // Old name: AAA distance field
+            [System.Obsolete("Use ShaderPixelPerfect instead")]
+            Rasterization = ShaderPixelPerfect,   // Old name: not implemented yet
+            [System.Obsolete("Use MeshGeometry instead")]
+            Mesh = MeshGeometry             // Old name: mesh rendering
         }
 
         public BorderMode CurrentBorderMode => borderMode;
@@ -261,17 +270,22 @@ namespace Map.Rendering
             // Spatial grid removed - was only used by deleted BorderCurveRenderer
 
             // Choose rendering method based on mode
-            if (renderingMode == BorderRenderingMode.DistanceField)
+            if (renderingMode == BorderRenderingMode.None)
             {
-                ArchonLogger.Log("BorderComputeDispatcher: Using AAA Distance Field rendering (1/4 res + 9-tap + two-layer)", "map_initialization");
+                ArchonLogger.Log("BorderComputeDispatcher: Border rendering mode is None - no borders will be rendered", "map_initialization");
+                // Don't initialize any border rendering systems
+            }
+            else if (renderingMode == BorderRenderingMode.ShaderDistanceField)
+            {
+                ArchonLogger.Log("BorderComputeDispatcher: Using shader-based distance field rendering (JFA, smooth borders)", "map_initialization");
 
                 // Distance Field mode is fragment-shader based - no C# renderer needed!
                 // All rendering happens in MapModeCommon.hlsl's ApplyBorders() function
                 // We just need to generate the distance field texture and bind parameters
 
-                // Distance field generation happens below (lines 314-347)
+                // Distance field generation happens below
             }
-            else if (renderingMode == BorderRenderingMode.Mesh)
+            else if (renderingMode == BorderRenderingMode.MeshGeometry)
             {
                 ArchonLogger.Log("BorderComputeDispatcher: Using mesh-based rendering (triangle strips - Paradox approach)", "map_initialization");
 
@@ -312,14 +326,9 @@ namespace Map.Rendering
                     }
                 }
             }
-            else
-            {
-                ArchonLogger.Log("BorderComputeDispatcher: Border rendering mode is None - no borders will be rendered", "map_initialization");
-            }
 
-            // Generate AAA-quality distance field at 1/4 resolution (for DistanceField mode)
-            // This runs when renderingMode == DistanceField
-            if (renderingMode == BorderRenderingMode.DistanceField)
+            // Generate JFA distance field (for ShaderDistanceField mode)
+            if (renderingMode == BorderRenderingMode.ShaderDistanceField)
             {
                 if (distanceFieldGenerator == null)
                 {
@@ -487,14 +496,14 @@ namespace Map.Rendering
             float startTime = Time.realtimeSinceStartup;
 
             // Mesh rendering doesn't need per-frame updates - meshes are rendered automatically by Unity
-            if (smoothBordersInitialized && renderingMode == BorderRenderingMode.Mesh)
+            if (smoothBordersInitialized && renderingMode == BorderRenderingMode.MeshGeometry)
             {
                 // Mesh rendering is handled by BorderMeshRenderer - nothing to do per frame
                 return;
             }
-            else
+            else if (renderingMode == BorderRenderingMode.ShaderDistanceField)
             {
-                // Fallback to distance field approach (legacy)
+                // Distance field rendering
                 // Get or create distance field generator
                 if (distanceFieldGenerator == null)
                 {

@@ -367,14 +367,6 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ---
 
-## Removed/Legacy Features (2025-10-31)
-
-**Border Rendering Cleanup:**
-- Removed BezierCurveFitter.cs - Bézier fitting abandoned (circular conversion, no viable use case)
-- Removed BorderCurveRenderer.cs - GPU curve rasterization (anti-pattern: destroys smoothness)
-- Removed BorderSDFRenderer.cs - Redundant SDF approach (replaced by distance field mode)
-- Removed SpatialHashGrid.cs - Spatial acceleration (only used by deleted BorderCurveRenderer)
-
 **Total cleanup:** 4 files deleted, ~1,450 lines removed, codebase simplified to 3 clear rendering modes.
 
 ---
