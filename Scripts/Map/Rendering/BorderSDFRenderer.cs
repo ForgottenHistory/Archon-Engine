@@ -1,3 +1,4 @@
+#if FALSE // DISABLED: Legacy rendering system - incompatible with polyline-based borders
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -265,3 +266,4 @@ namespace Map.Rendering
         }
     }
 }
+#endif

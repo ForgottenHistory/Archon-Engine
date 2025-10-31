@@ -25,7 +25,7 @@ namespace Map.Rendering
         private readonly ProvinceMapping provinceMapping;
 
         // Configuration
-        private readonly int smoothingIterations = 5;  // More iterations = smoother curves
+        private readonly int smoothingIterations = 7;  // More iterations = smoother curves (7 = good balance between smoothness and performance)
         private readonly bool logProgress = true;
 
         // Debug flags
@@ -49,12 +49,12 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Extract and fit Bézier curves to all province borders
-        /// Returns dictionary of border curves: (provinceA, provinceB) -> list of BezierSegments
+        /// Extract and smooth all province borders using Chaikin algorithm
+        /// Returns dictionary of border polylines: (provinceA, provinceB) -> smooth polyline points
         /// </summary>
-        public Dictionary<(ushort, ushort), List<BezierSegment>> ExtractAllBorders()
+        public Dictionary<(ushort, ushort), List<Vector2>> ExtractAllBorders()
         {
-            var borderCurves = new Dictionary<(ushort, ushort), List<BezierSegment>>();
+            var borderPolylines = new Dictionary<(ushort, ushort), List<Vector2>>();
 
             if (logProgress)
             {
@@ -112,7 +112,7 @@ namespace Map.Rendering
                     processedCount++;
 
                     // DEBUG: Log first border extraction call
-                    if (processedBorders == 0 && borderCurves.Count == 0)
+                    if (processedBorders == 0 && borderPolylines.Count == 0)
                     {
                         ArchonLogger.Log($"BorderCurveExtractor: First border pair: {provinceA} <-> {provinceB}", "map_initialization");
                     }
@@ -120,15 +120,15 @@ namespace Map.Rendering
                     // Extract shared border pixels (unordered)
                     List<Vector2> borderPixels = ExtractSharedBorderPixels(provinceA, provinceB);
 
-                    // Skip tiny borders (small peninsulas/artifacts from map compression)
-                    // These create "wild lines" that cross through provinces
-                    const int MIN_BORDER_PIXELS = 10; // Minimum pixels for a real border
+                    // Skip truly degenerate borders (1-2 pixels = compression artifacts)
+                    // But allow small borders (3-9 pixels) - these are real borders that need to render
+                    const int MIN_BORDER_PIXELS = 3; // Minimum pixels for a real border (lowered from 10)
                     if (borderPixels.Count > 0 && borderPixels.Count < MIN_BORDER_PIXELS)
                     {
-                        // DEBUG: Log first few skipped tiny borders
-                        if (processedBorders < 3)
+                        // DEBUG: Log skipped degenerate borders
+                        if (processedBorders < 10)
                         {
-                            ArchonLogger.Log($"BorderCurveExtractor: Skipping tiny border {provinceA}<->{provinceB} ({borderPixels.Count} pixels)", "map_initialization");
+                            ArchonLogger.Log($"BorderCurveExtractor: Skipping degenerate border {provinceA}<->{provinceB} ({borderPixels.Count} pixels)", "map_initialization");
                         }
                         continue; // Skip this border - too small to be real
                     }
@@ -138,56 +138,123 @@ namespace Map.Rendering
                         // Chain pixels into multiple ordered polylines (handles disconnected border segments)
                         List<List<Vector2>> allChains = ChainBorderPixelsMultiple(borderPixels);
 
-                        // CRITICAL: Merge chains into one continuous path for polyline rendering
-                        // Multiple separate chains create visual gaps and clumping at junctions
-                        List<Vector2> mergedPath = MergeChains(allChains);
-
-                        // Generate polyline segments for merged path
-                        List<BezierSegment> allCurveSegments = new List<BezierSegment>();
-                        BorderType borderType = DetermineBorderType(provinceA, provinceB);
-
-                        if (mergedPath.Count >= 2)
+                        // DEBUG: Log borders with multiple chains (potential U-turn issues)
+                        bool isDebugBorder = (provinceA == 1160 || provinceB == 1160);
+                        if ((allChains.Count > 1 && processedBorders < 20) || isDebugBorder)
                         {
-                            // Fit Bézier curves to merged pixel path (creates one continuous polyline)
-                            allCurveSegments = BezierCurveFitter.FitCurve(mergedPath, borderType);
+                            string chainSizes = string.Join(", ", allChains.Select(c => c.Count));
+                            ArchonLogger.Log($"MULTI-CHAIN BORDER {provinceA}-{provinceB}: {allChains.Count} chains [{chainSizes}], {borderPixels.Count} total pixels", "map_initialization");
                         }
 
-                        // Early exit if no valid curves generated
-                        if (allCurveSegments.Count == 0)
-                            continue;
+                        // CRITICAL: Two-tier approach for handling multiple chains
+                        // 1. Discard tiny chains (≤3 pixels) - these are noise/artifacts
+                        // 2. Merge remaining chains without U-turn detection - they're real border segments
+                        List<List<Vector2>> significantChains = allChains.Where(chain => chain.Count > 3).ToList();
 
-                        // DEBUG: Validate curves for NaN or invalid values
-                        foreach (var seg in allCurveSegments)
+                        if (significantChains.Count < allChains.Count && (isDebugBorder || processedBorders < 10))
                         {
-                            if (float.IsNaN(seg.P0.x) || float.IsNaN(seg.P0.y) ||
-                                float.IsNaN(seg.P1.x) || float.IsNaN(seg.P1.y) ||
-                                float.IsNaN(seg.P2.x) || float.IsNaN(seg.P2.y) ||
-                                float.IsNaN(seg.P3.x) || float.IsNaN(seg.P3.y))
+                            int discarded = allChains.Count - significantChains.Count;
+                            ArchonLogger.Log($"FILTERED TINY CHAINS {provinceA}-{provinceB}: Discarded {discarded} chains (≤3 pixels)", "map_initialization");
+                        }
+
+                        // Merge significant chains (no U-turn detection for now)
+                        List<Vector2> mergedPath;
+                        if (significantChains.Count == 0)
+                        {
+                            // All chains were tiny - fallback to longest original chain
+                            mergedPath = allChains.OrderByDescending(c => c.Count).First();
+                        }
+                        else if (significantChains.Count == 1)
+                        {
+                            mergedPath = significantChains[0];
+                        }
+                        else
+                        {
+                            // Multiple significant chains - merge with self-intersection detection
+                            mergedPath = MergeChainsSimple(significantChains, provinceA, provinceB);
+                        }
+
+                        // DEBUG: Log pre-smoothing data (ONLY FIRST 3 BORDERS to avoid spam)
+                        bool enableDebugLog = (processedBorders < 3);
+
+                        if (enableDebugLog)
+                        {
+                            ArchonLogger.Log($"SMOOTHING DEBUG - Border {provinceA}-{provinceB} (#{processedBorders + 1}):", "map_initialization");
+                            ArchonLogger.Log($"  Merged: {mergedPath.Count} points", "map_initialization");
+                        }
+
+                        // CRITICAL: Simplify the pixel-perfect path to create longer line segments
+                        // This gives Chaikin something to actually smooth (staircase corners become angled lines)
+                        List<Vector2> simplifiedPath = SimplifyPolyline(mergedPath, epsilon: 1.5f);
+
+                        if (enableDebugLog)
+                        {
+                            ArchonLogger.Log($"  Simplified: {simplifiedPath.Count} points", "map_initialization");
+                            if (simplifiedPath.Count >= 3)
                             {
-                                ArchonLogger.LogError($"BorderCurveExtractor: Border {provinceA}<->{provinceB} has NaN curve! P0={seg.P0}, P1={seg.P1}, P2={seg.P2}, P3={seg.P3}", "map_initialization");
+                                ArchonLogger.Log($"  First 3 points: ({simplifiedPath[0].x:F2},{simplifiedPath[0].y:F2}), ({simplifiedPath[1].x:F2},{simplifiedPath[1].y:F2}), ({simplifiedPath[2].x:F2},{simplifiedPath[2].y:F2})", "map_initialization");
                             }
                         }
 
-                        // Set province IDs for each segment
-                        for (int segIdx = 0; segIdx < allCurveSegments.Count; segIdx++)
+                        // CRITICAL: Apply Chaikin smoothing to create smooth sub-pixel curves
+                        // This is the ONLY smoothing step - no Bézier fitting needed!
+                        List<Vector2> smoothedPath = SmoothCurve(simplifiedPath, smoothingIterations, enableDebugLog);
+
+                        // DEBUG: Log post-smoothing data
+                        if (enableDebugLog)
                         {
-                            BezierSegment seg = allCurveSegments[segIdx];
-                            seg.provinceID1 = provinceA;
-                            seg.provinceID2 = provinceB;
-                            allCurveSegments[segIdx] = seg;
+                            ArchonLogger.Log($"  Post-smooth: {smoothedPath.Count} points (iterations: {smoothingIterations})", "map_initialization");
+                            if (smoothedPath.Count >= 3)
+                            {
+                                ArchonLogger.Log($"  First 3 points: ({smoothedPath[0].x:F2},{smoothedPath[0].y:F2}), ({smoothedPath[1].x:F2},{smoothedPath[1].y:F2}), ({smoothedPath[2].x:F2},{smoothedPath[2].y:F2})", "map_initialization");
+                            }
+                        }
+
+                        // CRITICAL: Tessellate smoothed path for dense vertex coverage (Paradox approach)
+                        // Target: ~0.5 pixel spacing between vertices for smooth rendering at all zoom levels
+                        // This dramatically improves visual quality for small borders
+                        smoothedPath = TessellatePolyline(smoothedPath, maxSegmentLength: 0.5f);
+
+                        if (enableDebugLog)
+                        {
+                            ArchonLogger.Log($"  Post-tessellation: {smoothedPath.Count} points", "map_initialization");
+                        }
+
+                        // Early exit if path too short or degenerate
+                        if (smoothedPath.Count < 2)
+                            continue;
+
+                        // Skip degenerate borders where start/end are same point
+                        if (smoothedPath.Count == 2)
+                        {
+                            float length = Vector2.Distance(smoothedPath[0], smoothedPath[1]);
+                            if (length < 0.5f) // Less than half a pixel
+                            {
+                                if (processedBorders < 10) // Log first few
+                                    ArchonLogger.LogWarning($"BorderCurveExtractor: Skipping degenerate border {provinceA}<->{provinceB} (length: {length:F2}px)", "map_initialization");
+                                continue;
+                            }
                         }
 
                         // DEBUG: Log first curve stats
                         if (processedBorders == 0)
                         {
-                            ArchonLogger.Log($"BorderCurveExtractor: First curve - Raw pixels: {borderPixels.Count}, Chains: {allChains.Count}, Merged path: {mergedPath.Count} pixels, Bézier segments: {allCurveSegments.Count}", "map_initialization");
+                            ArchonLogger.Log($"BorderCurveExtractor: First border - Raw pixels: {borderPixels.Count}, Chains: {allChains.Count}, Merged: {mergedPath.Count} points, Smoothed: {smoothedPath.Count} points", "map_initialization");
                         }
 
-                        // Cache the curve segments
-                        borderCurves[(provinceA, provinceB)] = allCurveSegments;
+                        // Cache the smoothed polyline (Chaikin output)
+                        // Note: Junction snapping happens AFTER all borders are extracted
+                        borderPolylines[(provinceA, provinceB)] = smoothedPath;
+
+                        // DEBUG: Log small borders to track if they reach mesh generation
+                        if (mergedPath.Count <= 20 && processedBorders < 20)
+                        {
+                            ArchonLogger.Log($"CACHED SMALL BORDER {provinceA}-{provinceB}: original={mergedPath.Count}px, final={smoothedPath.Count} vertices", "map_initialization");
+                        }
+
                         processedBorders++;
                     }
-                    else if (processedBorders == 0 && borderCurves.Count == 0)
+                    else if (processedBorders == 0 && borderPolylines.Count == 0)
                     {
                         // DEBUG: Why did first border extraction find 0 pixels?
                         ArchonLogger.Log($"BorderCurveExtractor: First border extraction {provinceA} <-> {provinceB} found 0 pixels!", "map_initialization");
@@ -218,19 +285,16 @@ namespace Map.Rendering
                 ArchonLogger.Log($"BorderCurveExtractor: Completed extraction! {processedBorders} borders in {elapsed:F0}ms", "map_initialization");
             }
 
-            // POST-PROCESSING: Unify junction control points to prevent overlapping render regions
-            // DISABLED: Junction pixels now handled by BorderMask, no CPU post-processing needed
-            // UnifyJunctionControlPoints(borderCurves);
-
-            // POST-PROCESSING: Build segment connectivity for geometry-aware rendering
-            BuildSegmentConnectivity(borderCurves);
+            // POST-PROCESSING: Snap polyline endpoints at junctions to ensure perfect connectivity
+            // This fixes staircase artifacts where multiple borders meet
+            SnapPolylineEndpointsAtJunctions(borderPolylines);
 
             if (logProgress)
             {
                 ArchonLogger.Log($"BorderCurveExtractor: Total time: {(Time.realtimeSinceStartup - startTime) * 1000f:F0}ms", "map_initialization");
             }
 
-            return borderCurves;
+            return borderPolylines;
         }
 
         /// <summary>
@@ -402,6 +466,123 @@ namespace Map.Rendering
                     g[cellKey] = new List<(Vector2, (ushort, ushort), int, bool)>();
 
                 g[cellKey].Add((point, key, idx, start));
+            }
+        }
+
+        /// <summary>
+        /// Snap polyline endpoints that are within snap distance to a common point
+        /// This ensures all borders meeting at a junction share the exact same endpoint coordinate
+        /// Uses spatial grid for O(n) performance instead of O(n²)
+        /// </summary>
+        private void SnapPolylineEndpointsAtJunctions(Dictionary<(ushort, ushort), List<Vector2>> borderPolylines)
+        {
+            const float SNAP_DISTANCE = 2.0f; // Snap endpoints within 2 pixels (accounts for smoothing displacement)
+            const int GRID_CELL_SIZE = 4; // Grid cell size (must be >= snap distance)
+
+            // Spatial grid for fast neighbor lookup
+            var grid = new Dictionary<(int, int), List<(Vector2 point, (ushort, ushort) borderKey, bool isStart)>>();
+
+            // Add all polyline endpoints to spatial grid
+            foreach (var kvp in borderPolylines)
+            {
+                var borderKey = kvp.Key;
+                var polyline = kvp.Value;
+
+                if (polyline.Count < 2)
+                    continue;
+
+                AddToGrid(grid, polyline[0], borderKey, true);  // First point
+                AddToGrid(grid, polyline[polyline.Count - 1], borderKey, false);  // Last point
+            }
+
+            // Snap endpoints checking neighboring cells (5x5 grid around each cell)
+            int snappedCount = 0;
+            int junctionCount = 0;
+            var processed = new HashSet<(Vector2, (ushort, ushort), bool)>();
+
+            foreach (var kvp in grid)
+            {
+                var cellKey = kvp.Key;
+                var cellEndpoints = kvp.Value;
+
+                // For each endpoint in this cell
+                for (int i = 0; i < cellEndpoints.Count; i++)
+                {
+                    if (processed.Contains(cellEndpoints[i])) continue;
+
+                    var cluster = new List<(Vector2, (ushort, ushort), bool)> { cellEndpoints[i] };
+
+                    // Check current cell + 24 neighboring cells (5x5 grid)
+                    for (int dy = -2; dy <= 2; dy++)
+                    {
+                        for (int dx = -2; dx <= 2; dx++)
+                        {
+                            var neighborKey = (cellKey.Item1 + dx, cellKey.Item2 + dy);
+                            if (!grid.ContainsKey(neighborKey)) continue;
+
+                            var neighborEndpoints = grid[neighborKey];
+                            foreach (var candidate in neighborEndpoints)
+                            {
+                                if (processed.Contains(candidate)) continue;
+                                if (candidate.Equals(cellEndpoints[i])) continue;
+
+                                // CRITICAL: Don't snap start and end of the SAME polyline together
+                                // This would create a degenerate loop
+                                bool samePolyline = (candidate.Item2 == cellEndpoints[i].Item2);
+                                if (samePolyline) continue;
+
+                                float dist = Vector2.Distance(cellEndpoints[i].point, candidate.point);
+                                if (dist <= SNAP_DISTANCE)
+                                {
+                                    cluster.Add(candidate);
+                                }
+                            }
+                        }
+                    }
+
+                    // If 2+ endpoints are close, snap them to their average position
+                    if (cluster.Count >= 2)
+                    {
+                        // Calculate average position
+                        Vector2 avgPos = Vector2.zero;
+                        foreach (var item in cluster)
+                        {
+                            avgPos += item.Item1; // Item1 is the point
+                        }
+                        avgPos /= cluster.Count;
+
+                        // Snap all endpoints in cluster
+                        foreach (var (point, borderKey, isStart) in cluster)
+                        {
+                            var polyline = borderPolylines[borderKey];
+
+                            if (isStart)
+                                polyline[0] = avgPos;
+                            else
+                                polyline[polyline.Count - 1] = avgPos;
+
+                            processed.Add((point, borderKey, isStart));
+                        }
+
+                        snappedCount += cluster.Count;
+                        junctionCount++;
+                    }
+                }
+            }
+
+            ArchonLogger.Log($"BorderCurveExtractor: Snapped {snappedCount} polyline endpoints at {junctionCount} junctions", "map_initialization");
+
+            // Helper: Add endpoint to spatial grid
+            void AddToGrid(Dictionary<(int, int), List<(Vector2, (ushort, ushort), bool)>> g, Vector2 point, (ushort, ushort) key, bool start)
+            {
+                int cellX = (int)(point.x / GRID_CELL_SIZE);
+                int cellY = (int)(point.y / GRID_CELL_SIZE);
+                var cellKey = (cellX, cellY);
+
+                if (!g.ContainsKey(cellKey))
+                    g[cellKey] = new List<(Vector2, (ushort, ushort), bool)>();
+
+                g[cellKey].Add((point, key, start));
             }
         }
 
@@ -634,6 +815,178 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Merge multiple chains with self-intersection detection
+        /// Rejects merges that would create U-turns (self-crossing paths)
+        /// </summary>
+        private List<Vector2> MergeChainsSimple(List<List<Vector2>> chains, ushort provinceA = 0, ushort provinceB = 0)
+        {
+            if (chains.Count == 0)
+                return new List<Vector2>();
+            if (chains.Count == 1)
+                return chains[0];
+
+            // Start with longest chain
+            int longestIdx = 0;
+            int longestCount = chains[0].Count;
+            for (int i = 1; i < chains.Count; i++)
+            {
+                if (chains[i].Count > longestCount)
+                {
+                    longestCount = chains[i].Count;
+                    longestIdx = i;
+                }
+            }
+
+            List<Vector2> merged = new List<Vector2>(chains[longestIdx]);
+            HashSet<int> usedIndices = new HashSet<int> { longestIdx };
+
+            // Merge remaining chains by closest endpoint (no U-turn detection)
+            while (usedIndices.Count < chains.Count)
+            {
+                float bestDist = float.MaxValue;
+                int bestChainIdx = -1;
+                bool appendToEnd = true;
+                bool reverseChain = false;
+
+                for (int i = 0; i < chains.Count; i++)
+                {
+                    if (usedIndices.Contains(i)) continue;
+
+                    var chain = chains[i];
+                    Vector2 mergedStart = merged[0];
+                    Vector2 mergedEnd = merged[merged.Count - 1];
+                    Vector2 chainStart = chain[0];
+                    Vector2 chainEnd = chain[chain.Count - 1];
+
+                    float d1 = Vector2.Distance(mergedEnd, chainStart);
+                    float d2 = Vector2.Distance(mergedEnd, chainEnd);
+                    float d3 = Vector2.Distance(mergedStart, chainEnd);
+                    float d4 = Vector2.Distance(mergedStart, chainStart);
+
+                    float minDist = Mathf.Min(d1, Mathf.Min(d2, Mathf.Min(d3, d4)));
+
+                    if (minDist < bestDist)
+                    {
+                        bestDist = minDist;
+                        bestChainIdx = i;
+
+                        if (minDist == d1) { appendToEnd = true; reverseChain = false; }
+                        else if (minDist == d2) { appendToEnd = true; reverseChain = true; }
+                        else if (minDist == d3) { appendToEnd = false; reverseChain = false; }
+                        else { appendToEnd = false; reverseChain = true; }
+                    }
+                }
+
+                // Merge if within reasonable distance
+                const float MAX_MERGE_DISTANCE = 5.0f;
+                if (bestChainIdx >= 0 && bestDist <= MAX_MERGE_DISTANCE)
+                {
+                    var chainToMerge = chains[bestChainIdx];
+                    if (reverseChain)
+                    {
+                        chainToMerge = new List<Vector2>(chainToMerge);
+                        chainToMerge.Reverse();
+                    }
+
+                    // CRITICAL: Test merge and check if it creates self-intersection (U-turn)
+                    // U-turns always self-intersect, legitimate borders don't
+                    List<Vector2> testMerge = new List<Vector2>(merged);
+                    if (appendToEnd)
+                        testMerge.AddRange(chainToMerge);
+                    else
+                        testMerge.InsertRange(0, chainToMerge);
+
+                    bool wouldSelfIntersect = PathSelfIntersects(testMerge);
+
+                    if (!wouldSelfIntersect)
+                    {
+                        if (appendToEnd)
+                            merged.AddRange(chainToMerge);
+                        else
+                            merged.InsertRange(0, chainToMerge);
+
+                        usedIndices.Add(bestChainIdx);
+                    }
+                    else
+                    {
+                        // Log rejection (for first 10 cases or debug borders)
+                        if (usedIndices.Count < 10 || provinceA == 1160 || provinceB == 1160)
+                        {
+                            ArchonLogger.Log($"SELF-INTERSECTION DETECTED {provinceA}-{provinceB}: Rejected chain {bestChainIdx} ({chainToMerge.Count}px) - would create U-turn", "map_initialization");
+                        }
+                        break; // Skip this chain - would create U-turn
+                    }
+                }
+                else
+                {
+                    break; // Too far apart
+                }
+            }
+
+            return merged;
+        }
+
+        /// <summary>
+        /// Check if a polyline path self-intersects (crosses itself)
+        /// U-turns create self-intersections, legitimate borders don't
+        /// </summary>
+        private bool PathSelfIntersects(List<Vector2> path)
+        {
+            if (path.Count < 4)
+                return false; // Need at least 4 points to self-intersect
+
+            // Check every line segment against every other non-adjacent segment
+            for (int i = 0; i < path.Count - 1; i++)
+            {
+                for (int j = i + 2; j < path.Count - 1; j++)
+                {
+                    // Skip adjacent segments (they share an endpoint, so they "touch" but don't cross)
+                    if (j == i + 1)
+                        continue;
+
+                    if (LineSegmentsIntersect(path[i], path[i + 1], path[j], path[j + 1]))
+                    {
+                        return true; // Self-intersection found = U-turn
+                    }
+                }
+            }
+
+            return false; // No self-intersection = valid path
+        }
+
+        /// <summary>
+        /// Check if two line segments intersect (not just touch at endpoints)
+        /// Uses cross product method for robust intersection detection
+        /// </summary>
+        private bool LineSegmentsIntersect(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
+        {
+            // Line segment 1: p1 -> p2
+            // Line segment 2: p3 -> p4
+
+            Vector2 d1 = p2 - p1;
+            Vector2 d2 = p4 - p3;
+
+            // Cross product to determine orientation
+            float cross = d1.x * d2.y - d1.y * d2.x;
+
+            // Parallel lines (or degenerate segments)
+            if (Mathf.Abs(cross) < 1e-6f)
+                return false;
+
+            Vector2 d3 = p3 - p1;
+
+            // Calculate parameters for intersection point
+            float t1 = (d3.x * d2.y - d3.y * d2.x) / cross;
+            float t2 = (d3.x * d1.y - d3.y * d1.x) / cross;
+
+            // Segments intersect if both t parameters are in range (0, 1)
+            // Exclude endpoints (== 0 or == 1) to avoid false positives at shared vertices
+            const float epsilon = 0.01f; // Small tolerance to exclude near-endpoint intersections
+            return (t1 > epsilon && t1 < 1.0f - epsilon &&
+                    t2 > epsilon && t2 < 1.0f - epsilon);
+        }
+
+        /// <summary>
         /// Merge multiple chains into one continuous path by connecting nearby endpoints
         /// Prioritizes junction pixels as connection points to ensure borders meet at junctions
         /// </summary>
@@ -699,8 +1052,11 @@ namespace Map.Rendering
                     }
                 }
 
-                // Merge best chain
-                if (bestChainIdx >= 0)
+                // CRITICAL: Only merge if chains are close (within 5 pixels)
+                // Prevents creating U-turn artifacts from connecting distant chains
+                const float MAX_MERGE_DISTANCE = 5.0f;
+
+                if (bestChainIdx >= 0 && bestDist <= MAX_MERGE_DISTANCE)
                 {
                     var chainToMerge = chains[bestChainIdx];
                     if (reverseChain)
@@ -709,20 +1065,108 @@ namespace Map.Rendering
                         chainToMerge.Reverse();
                     }
 
-                    if (appendToEnd)
-                        merged.AddRange(chainToMerge);
-                    else
-                        merged.InsertRange(0, chainToMerge);
+                    // CRITICAL: Check if merge would create backtracking (U-turn)
+                    // Use BOTH angle at connection point AND overall direction comparison
+                    bool wouldCreateUturn = false;
 
-                    usedIndices.Add(bestChainIdx);
+                    // Check 1: Angle at connection point (sharp turn check)
+                    if (merged.Count >= 2 && chainToMerge.Count >= 2)
+                    {
+                        if (appendToEnd)
+                        {
+                            Vector2 beforeConnection = merged[merged.Count - 2];
+                            Vector2 connectionPoint = merged[merged.Count - 1];
+                            Vector2 afterConnection = chainToMerge[1];
+
+                            float angle = CalculateAngle(beforeConnection, connectionPoint, afterConnection);
+                            if (angle > 90f) // Sharp turn at connection
+                            {
+                                wouldCreateUturn = true;
+                            }
+                        }
+                        else
+                        {
+                            Vector2 beforeConnection = chainToMerge[chainToMerge.Count - 2];
+                            Vector2 connectionPoint = chainToMerge[chainToMerge.Count - 1];
+                            Vector2 afterConnection = merged[1];
+
+                            float angle = CalculateAngle(beforeConnection, connectionPoint, afterConnection);
+                            if (angle > 90f) // Sharp turn at connection
+                            {
+                                wouldCreateUturn = true;
+                            }
+                        }
+                    }
+
+                    // Check 2: Overall direction comparison (gradual U-turn check)
+                    // DISABLED: This was too aggressive and blocked legitimate connections
+                    // The sharp angle check (Check 1) should be sufficient
+
+                    if (!wouldCreateUturn)
+                    {
+                        if (appendToEnd)
+                            merged.AddRange(chainToMerge);
+                        else
+                            merged.InsertRange(0, chainToMerge);
+
+                        usedIndices.Add(bestChainIdx);
+                    }
+                    else
+                    {
+                        // Reject merge - would create U-turn
+                        // DEBUG: Log rejected merges for debugging
+                        if (usedIndices.Count >= 1 && chains.Count > 1) // Log when we have unmerged chains left
+                        {
+                            int remainingChains = chains.Count - usedIndices.Count;
+                            ArchonLogger.Log($"REJECTED MERGE: {remainingChains} chains left unmerged, rejected connection at distance {bestDist:F2}px", "map_initialization");
+                        }
+                        break;
+                    }
                 }
                 else
                 {
-                    break; // No more chains to merge
+                    // Can't merge - chains too far apart or no more chains
+                    break;
+                }
+            }
+
+            // CRITICAL: If we couldn't merge all chains, discard tiny leftover chains (<5 pixels)
+            // These are usually artifacts (noise pixels) that would create bad geometry
+            if (usedIndices.Count < chains.Count)
+            {
+                int discardedCount = 0;
+                for (int i = 0; i < chains.Count; i++)
+                {
+                    if (!usedIndices.Contains(i) && chains[i].Count < 5)
+                    {
+                        discardedCount++;
+                    }
+                }
+
+                if (discardedCount > 0)
+                {
+                    // Note: We already returned 'merged' which doesn't include these tiny chains
+                    // This is intentional - we're discarding them as artifacts
                 }
             }
 
             return merged;
+        }
+
+        /// <summary>
+        /// Calculate angle in degrees at point B formed by line A-B-C
+        /// Returns 0° for straight line, 180° for complete reversal
+        /// </summary>
+        private float CalculateAngle(Vector2 pointA, Vector2 pointB, Vector2 pointC)
+        {
+            Vector2 vectorBA = pointA - pointB;
+            Vector2 vectorBC = pointC - pointB;
+
+            float dotProduct = Vector2.Dot(vectorBA.normalized, vectorBC.normalized);
+            float angleRadians = Mathf.Acos(Mathf.Clamp(dotProduct, -1f, 1f));
+            float angleDegrees = angleRadians * Mathf.Rad2Deg;
+
+            return angleDegrees;
         }
 
         /// <summary>
@@ -873,10 +1317,17 @@ namespace Map.Rendering
         /// Iteratively rounds corners by replacing each segment with two shorter segments
         /// IMPORTANT: Endpoints are NEVER smoothed to preserve junction connections
         /// </summary>
-        private List<Vector2> SmoothCurve(List<Vector2> points, int iterations)
+        private List<Vector2> SmoothCurve(List<Vector2> points, int iterations, bool enableDebugLog = false)
         {
             if (points.Count < 3)
+            {
+                if (enableDebugLog)
+                    ArchonLogger.Log($"  SmoothCurve: SKIPPED (only {points.Count} points, need 3+)", "map_initialization");
                 return points; // Can't smooth lines with less than 3 points
+            }
+
+            if (enableDebugLog)
+                ArchonLogger.Log($"  SmoothCurve: Starting with {points.Count} points, {iterations} iterations", "map_initialization");
 
             // Store original endpoints - these MUST NOT change to preserve junctions
             Vector2 originalFirst = points[0];
@@ -886,12 +1337,11 @@ namespace Map.Rendering
 
             for (int iter = 0; iter < iterations; iter++)
             {
+                int beforeCount = smoothed.Count;
                 List<Vector2> newPoints = new List<Vector2>(smoothed.Count * 2);
 
-                // Keep EXACT first point (junction preservation)
-                newPoints.Add(originalFirst);
-
-                // Apply Chaikin smoothing to each segment EXCEPT endpoints
+                // Chaikin smoothing: For each segment, create 2 points at 1/4 and 3/4
+                // But preserve the ORIGINAL endpoints (don't modify first/last)
                 for (int i = 0; i < smoothed.Count - 1; i++)
                 {
                     Vector2 p0 = smoothed[i];
@@ -901,17 +1351,139 @@ namespace Map.Rendering
                     Vector2 q = Vector2.Lerp(p0, p1, 0.25f);
                     Vector2 r = Vector2.Lerp(p0, p1, 0.75f);
 
-                    newPoints.Add(q);
-                    newPoints.Add(r);
+                    // For first segment, use original first point instead of q
+                    if (i == 0)
+                    {
+                        newPoints.Add(originalFirst);
+                        newPoints.Add(r);
+                    }
+                    // For last segment, use original last point instead of r
+                    else if (i == smoothed.Count - 2)
+                    {
+                        newPoints.Add(q);
+                        newPoints.Add(originalLast);
+                    }
+                    // For interior segments, add both q and r
+                    else
+                    {
+                        newPoints.Add(q);
+                        newPoints.Add(r);
+                    }
                 }
 
-                // Keep EXACT last point (junction preservation)
-                newPoints.Add(originalLast);
-
                 smoothed = newPoints;
+
+                if (enableDebugLog)
+                    ArchonLogger.Log($"    Iteration {iter + 1}: {beforeCount} → {smoothed.Count} points", "map_initialization");
             }
 
+            if (enableDebugLog)
+                ArchonLogger.Log($"  SmoothCurve: COMPLETE - Final count: {smoothed.Count} points", "map_initialization");
             return smoothed;
+        }
+
+        /// <summary>
+        /// Tessellate polyline to ensure dense vertex coverage (Paradox approach)
+        /// Subdivides any segment longer than maxSegmentLength to create smooth rendering
+        /// Target: 0.5 pixel spacing = ~2 vertices per pixel for ultra-smooth borders
+        /// </summary>
+        private List<Vector2> TessellatePolyline(List<Vector2> points, float maxSegmentLength)
+        {
+            if (points.Count < 2)
+                return points;
+
+            List<Vector2> tessellated = new List<Vector2>();
+            tessellated.Add(points[0]);
+
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                Vector2 p0 = points[i];
+                Vector2 p1 = points[i + 1];
+                float segmentLength = Vector2.Distance(p0, p1);
+
+                // If segment is longer than max, subdivide it
+                if (segmentLength > maxSegmentLength)
+                {
+                    int subdivisions = Mathf.CeilToInt(segmentLength / maxSegmentLength);
+                    for (int j = 1; j <= subdivisions; j++)
+                    {
+                        float t = j / (float)subdivisions;
+                        Vector2 interpolated = Vector2.Lerp(p0, p1, t);
+                        tessellated.Add(interpolated);
+                    }
+                }
+                else
+                {
+                    // Segment is short enough - keep it
+                    tessellated.Add(p1);
+                }
+            }
+
+            return tessellated;
+        }
+
+        /// <summary>
+        /// Simplify polyline using Ramer-Douglas-Peucker algorithm
+        /// Reduces pixel-perfect staircase to longer line segments that Chaikin can smooth
+        /// </summary>
+        private List<Vector2> SimplifyPolyline(List<Vector2> points, float epsilon)
+        {
+            if (points.Count < 3)
+                return new List<Vector2>(points);
+
+            // Find the point with maximum distance from line segment
+            float maxDistance = 0;
+            int maxIndex = 0;
+
+            Vector2 start = points[0];
+            Vector2 end = points[points.Count - 1];
+
+            for (int i = 1; i < points.Count - 1; i++)
+            {
+                float distance = PerpendicularDistance(points[i], start, end);
+                if (distance > maxDistance)
+                {
+                    maxDistance = distance;
+                    maxIndex = i;
+                }
+            }
+
+            // If max distance is greater than epsilon, recursively simplify
+            if (maxDistance > epsilon)
+            {
+                // Recursive call on both halves
+                List<Vector2> left = SimplifyPolyline(points.GetRange(0, maxIndex + 1), epsilon);
+                List<Vector2> right = SimplifyPolyline(points.GetRange(maxIndex, points.Count - maxIndex), epsilon);
+
+                // Combine results (remove duplicate middle point)
+                List<Vector2> result = new List<Vector2>(left.Count + right.Count - 1);
+                result.AddRange(left);
+                result.AddRange(right.GetRange(1, right.Count - 1)); // Skip first point (duplicate)
+                return result;
+            }
+            else
+            {
+                // Points are close enough to line - just return endpoints
+                return new List<Vector2> { start, end };
+            }
+        }
+
+        /// <summary>
+        /// Calculate perpendicular distance from point to line segment
+        /// </summary>
+        private float PerpendicularDistance(Vector2 point, Vector2 lineStart, Vector2 lineEnd)
+        {
+            Vector2 line = lineEnd - lineStart;
+            float lineLengthSquared = line.sqrMagnitude;
+
+            if (lineLengthSquared == 0)
+                return Vector2.Distance(point, lineStart);
+
+            // Project point onto line
+            float t = Mathf.Clamp01(Vector2.Dot(point - lineStart, line) / lineLengthSquared);
+            Vector2 projection = lineStart + t * line;
+
+            return Vector2.Distance(point, projection);
         }
 
         /// <summary>

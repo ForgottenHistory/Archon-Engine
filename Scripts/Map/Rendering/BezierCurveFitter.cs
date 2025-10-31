@@ -84,9 +84,9 @@ namespace Map.Rendering
     /// </summary>
     public static class BezierCurveFitter
     {
-        private const int MAX_POINTS_PER_SEGMENT = 20;  // Shorter segments for accuracy
+        private const int MAX_POINTS_PER_SEGMENT = 30;  // Medium segments for balance (was 20, tried 50)
         private const int MIN_POINTS_PER_SEGMENT = 4;   // Lower minimum to handle short borders
-        private const float MAX_FIT_ERROR = 1.5f;       // Tight error tolerance for accurate borders
+        private const float MAX_FIT_ERROR = 3.0f;       // Medium tolerance (was 1.5px, tried 5.0px)
 
         private const float ENDPOINT_QUANTIZATION = 0.5f; // Snap endpoints to 0.5px grid for junction alignment
 

@@ -17,7 +17,7 @@ namespace Map.Rendering
         public static BorderStyle ProvinceBorder => new BorderStyle
         {
             type = BorderType.Province,
-            color = new Color(0.3f, 0.3f, 0.3f, 1f), // Gray
+            color = Color.black, // Black for visibility
             thickness = 1.0f,
             visible = true
         };
@@ -25,7 +25,7 @@ namespace Map.Rendering
         public static BorderStyle CountryBorder(Color countryColor) => new BorderStyle
         {
             type = BorderType.Country,
-            color = countryColor,
+            color = Color.black, // Black for visibility
             thickness = 2.0f,
             visible = true
         };
@@ -56,8 +56,8 @@ namespace Map.Rendering
     /// </summary>
     public class BorderCurveCache
     {
-        // Static geometry: pre-computed Bézier curve segments
-        private readonly Dictionary<(ushort, ushort), List<BezierSegment>> borderCurves;
+        // Static geometry: pre-computed smooth polylines (Chaikin smoothed)
+        private readonly Dictionary<(ushort, ushort), List<Vector2>> borderPolylines;
 
         // Dynamic appearance: runtime style for each border
         private readonly Dictionary<(ushort, ushort), BorderStyle> borderStyles;
@@ -65,32 +65,32 @@ namespace Map.Rendering
         // Reverse lookup: province ID -> list of border keys it participates in
         private readonly Dictionary<ushort, List<(ushort, ushort)>> provinceToBorders;
 
-        public int BorderCount => borderCurves.Count;
+        public int BorderCount => borderPolylines.Count;
 
         public BorderCurveCache()
         {
-            borderCurves = new Dictionary<(ushort, ushort), List<BezierSegment>>();
+            borderPolylines = new Dictionary<(ushort, ushort), List<Vector2>>();
             borderStyles = new Dictionary<(ushort, ushort), BorderStyle>();
             provinceToBorders = new Dictionary<ushort, List<(ushort, ushort)>>();
         }
 
         /// <summary>
-        /// Initialize cache with pre-computed Bézier border curves
+        /// Initialize cache with pre-computed smooth polylines (Chaikin smoothed)
         /// </summary>
-        public void Initialize(Dictionary<(ushort, ushort), List<BezierSegment>> curves)
+        public void Initialize(Dictionary<(ushort, ushort), List<Vector2>> polylines)
         {
-            borderCurves.Clear();
+            borderPolylines.Clear();
             borderStyles.Clear();
             provinceToBorders.Clear();
 
-            // Store curves and build reverse lookup
-            foreach (var kvp in curves)
+            // Store polylines and build reverse lookup
+            foreach (var kvp in polylines)
             {
                 var (provinceA, provinceB) = kvp.Key;
-                List<BezierSegment> segments = kvp.Value;
+                List<Vector2> points = kvp.Value;
 
-                // Store curve segments
-                borderCurves[kvp.Key] = segments;
+                // Store polyline points
+                borderPolylines[kvp.Key] = points;
 
                 // Default style: province border (will be updated based on ownership)
                 borderStyles[kvp.Key] = BorderStyle.ProvinceBorder;
@@ -105,7 +105,7 @@ namespace Map.Rendering
                 provinceToBorders[provinceB].Add(kvp.Key);
             }
 
-            ArchonLogger.Log($"BorderCurveCache: Initialized with {borderCurves.Count} border curves", "map_initialization");
+            ArchonLogger.Log($"BorderCurveCache: Initialized with {borderPolylines.Count} border polylines", "map_initialization");
         }
 
         /// <summary>
@@ -156,11 +156,11 @@ namespace Map.Rendering
 
         /// <summary>
         /// Get all borders for rendering
-        /// Returns enumerable of (segments, style) pairs
+        /// Returns enumerable of (polyline, style) pairs
         /// </summary>
-        public IEnumerable<(List<BezierSegment> segments, BorderStyle style)> GetAllBordersForRendering()
+        public IEnumerable<(List<Vector2> polyline, BorderStyle style)> GetAllBordersForRendering()
         {
-            foreach (var kvp in borderCurves)
+            foreach (var kvp in borderPolylines)
             {
                 if (borderStyles.TryGetValue(kvp.Key, out BorderStyle style))
                 {
@@ -173,15 +173,15 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Get Bézier curve segments for a specific border
+        /// Get smooth polyline for a specific border
         /// </summary>
-        public List<BezierSegment> GetCurve(ushort provinceA, ushort provinceB)
+        public List<Vector2> GetPolyline(ushort provinceA, ushort provinceB)
         {
             // Normalize key (smaller ID first)
             var key = provinceA < provinceB ? (provinceA, provinceB) : (provinceB, provinceA);
 
-            borderCurves.TryGetValue(key, out List<BezierSegment> segments);
-            return segments;
+            borderPolylines.TryGetValue(key, out List<Vector2> points);
+            return points;
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Map.Rendering
         /// </summary>
         public void Clear()
         {
-            borderCurves.Clear();
+            borderPolylines.Clear();
             borderStyles.Clear();
             provinceToBorders.Clear();
         }

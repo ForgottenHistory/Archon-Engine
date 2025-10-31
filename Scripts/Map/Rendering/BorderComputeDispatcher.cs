@@ -63,10 +63,11 @@ namespace Map.Rendering
 
         public enum BorderRenderingMode
         {
-            None,           // No smooth border rendering (DISABLED - mesh approach doesn't scale)
+            None,           // No border rendering
             SDF,            // Signed distance field (old - round caps issue)
             Rasterization,  // Legacy rasterization (old - fixed resolution)
-            DistanceField   // AAA-quality: 1/4 resolution distance field + 9-tap + two-layer (RECOMMENDED)
+            DistanceField,  // AAA-quality: 1/4 resolution distance field + 9-tap + two-layer
+            Mesh            // Triangle strip geometry (Paradox approach - EXPERIMENTAL)
         }
 
         public BorderMode CurrentBorderMode => borderMode;
@@ -94,8 +95,10 @@ namespace Map.Rendering
         // Smooth curve border system components
         private BorderCurveExtractor curveExtractor;
         private BorderCurveCache curveCache;
+#if FALSE // Legacy rendering systems - disabled
         private BorderCurveRenderer curveRenderer;
         private BorderSDFRenderer sdfRenderer;
+#endif
         private BorderMeshGenerator meshGenerator;
         private BorderMeshRenderer meshRenderer;
         private SpatialHashGrid spatialGrid;
@@ -117,7 +120,11 @@ namespace Map.Rendering
 
         void Update()
         {
-            // Mesh-based rendering disabled - doesn't scale for complex maps
+            // Render mesh-based borders every frame if enabled
+            if (renderingMode == BorderRenderingMode.Mesh && meshRenderer != null)
+            {
+                meshRenderer.RenderBorders();
+            }
         }
 
         /// <summary>
@@ -256,22 +263,16 @@ namespace Map.Rendering
             ArchonLogger.Log("BorderComputeDispatcher: Classifying borders by ownership...", "map_initialization");
             UpdateAllBorderStyles();
 
-            // Build spatial hash grid for both rasterization and SDF rendering
-            ArchonLogger.Log("BorderComputeDispatcher: Building spatial grid...", "map_initialization");
-            spatialGrid = new SpatialHashGrid(textureManager.MapWidth, textureManager.MapHeight, cellSize: 64);
-
-            uint segmentIndex = 0;
-            foreach (var (segments, style) in curveCache.GetAllBordersForRendering())
+            // Build spatial hash grid for old rendering modes (not needed for mesh rendering)
+            if (renderingMode != BorderRenderingMode.Mesh)
             {
-                if (segments != null)
-                {
-                    foreach (var seg in segments)
-                    {
-                        spatialGrid.AddSegment(segmentIndex++, seg);
-                    }
-                }
+                ArchonLogger.Log("BorderComputeDispatcher: Building spatial grid...", "map_initialization");
+                spatialGrid = new SpatialHashGrid(textureManager.MapWidth, textureManager.MapHeight, cellSize: 64);
+
+                // Note: This code expects BezierSegments but we now have Vector2 polylines
+                // Keeping it for compatibility with old rendering modes, but mesh mode doesn't use it
+                ArchonLogger.LogWarning("BorderComputeDispatcher: Spatial grid not supported with polyline-based rendering", "map_initialization");
             }
-            spatialGrid.Finalize();
 
             // Choose rendering method based on mode
             if (renderingMode == BorderRenderingMode.DistanceField)
@@ -284,6 +285,7 @@ namespace Map.Rendering
 
                 // Distance field generation happens below (lines 314-347)
             }
+#if FALSE // Legacy rendering systems - disabled
             else if (renderingMode == BorderRenderingMode.SDF && borderSDFCompute != null)
             {
                 ArchonLogger.Log("BorderComputeDispatcher: Using SDF rendering (resolution independent)", "map_initialization");
@@ -319,6 +321,48 @@ namespace Map.Rendering
                 // Upload curve data to GPU
                 ArchonLogger.Log("BorderComputeDispatcher: Uploading curve data to GPU...", "map_initialization");
                 curveRenderer.UploadCurveData();
+            }
+#endif
+            else if (renderingMode == BorderRenderingMode.Mesh)
+            {
+                ArchonLogger.Log("BorderComputeDispatcher: Using mesh-based rendering (triangle strips - Paradox approach)", "map_initialization");
+
+                // Initialize mesh generator with Paradox's border width (0.0002 world units)
+                float borderWidthWorldUnits = 0.0002f;
+                meshGenerator = new BorderMeshGenerator(borderWidthWorldUnits, textureManager.MapWidth, textureManager.MapHeight);
+
+                // Generate triangle strip meshes from border curves
+                ArchonLogger.Log("BorderComputeDispatcher: Generating triangle strip meshes...", "map_initialization");
+                meshGenerator.GenerateBorderMeshes(curveCache);
+
+                // Initialize mesh renderer with map plane transform
+                // Use the mapPlaneTransform parameter passed to InitializeSmoothBorders
+                meshRenderer = new BorderMeshRenderer(mapPlaneTransform);
+
+                // Set meshes for rendering
+                var provinceMeshes = meshGenerator.GetProvinceBorderMeshes();
+                var countryMeshes = meshGenerator.GetCountryBorderMeshes();
+                meshRenderer.SetMeshes(provinceMeshes, countryMeshes);
+
+                ArchonLogger.Log($"BorderComputeDispatcher: Mesh rendering initialized - Province: {provinceMeshes.Count} meshes, Country: {countryMeshes.Count} meshes", "map_initialization");
+
+                // CRITICAL: Disable shader-based border rendering when mesh mode is active
+                // Set border strength to 0 so ApplyBorders() in shader doesn't render duplicate borders
+                if (mapPlaneTransform != null)
+                {
+                    var mapMeshRenderer = mapPlaneTransform.GetComponent<MeshRenderer>();
+                    if (mapMeshRenderer != null && mapMeshRenderer.material != null)
+                    {
+                        // Use .material (runtime instance) not .sharedMaterial (asset)
+                        mapMeshRenderer.material.SetFloat("_CountryBorderStrength", 0f);
+                        mapMeshRenderer.material.SetFloat("_ProvinceBorderStrength", 0f);
+                        ArchonLogger.Log("BorderComputeDispatcher: Disabled shader-based borders (mesh rendering active)", "map_initialization");
+                    }
+                    else
+                    {
+                        ArchonLogger.LogWarning("BorderComputeDispatcher: Could not disable shader borders - MeshRenderer or material not found", "map_initialization");
+                    }
+                }
             }
             else
             {
@@ -494,6 +538,14 @@ namespace Map.Rendering
             // Start performance timing
             float startTime = Time.realtimeSinceStartup;
 
+            // Mesh rendering doesn't need per-frame updates - meshes are rendered automatically by Unity
+            if (smoothBordersInitialized && renderingMode == BorderRenderingMode.Mesh)
+            {
+                // Mesh rendering is handled by BorderMeshRenderer - nothing to do per frame
+                return;
+            }
+
+#if FALSE // Legacy rendering systems - disabled
             // Use SDF rendering if initialized (takes priority over rasterization)
             if (smoothBordersInitialized && sdfRenderer != null)
             {
@@ -516,6 +568,7 @@ namespace Map.Rendering
                         $"({curveCache.BorderCount} curves)", "map_rendering");
                 }
             }
+#endif
             else
             {
                 // Fallback to distance field approach (legacy)
@@ -614,6 +667,15 @@ namespace Map.Rendering
             {
                 DetectBorders();
             }
+        }
+
+        /// <summary>
+        /// Set border rendering mode (must be called BEFORE InitializeSmoothBorders)
+        /// </summary>
+        public void SetBorderRenderingMode(BorderRenderingMode mode)
+        {
+            renderingMode = mode;
+            ArchonLogger.Log($"BorderComputeDispatcher: Border rendering mode set to {mode}", "map_initialization");
         }
 
         /// <summary>
@@ -761,6 +823,7 @@ namespace Map.Rendering
         /// </summary>
         public Texture2D GenerateCurveDebugTexture()
         {
+#if FALSE // Legacy rendering systems - disabled
             if (curveRenderer == null)
             {
                 ArchonLogger.LogWarning("BorderComputeDispatcher: Cannot generate curve debug - no renderer", "map_rendering");
@@ -768,6 +831,10 @@ namespace Map.Rendering
             }
 
             return curveRenderer.RenderCurvePointsDebug(textureManager.MapWidth, textureManager.MapHeight);
+#else
+            ArchonLogger.LogWarning("BorderComputeDispatcher: Curve debug texture not available with mesh rendering", "map_rendering");
+            return null;
+#endif
         }
 
         /// <summary>
@@ -815,10 +882,12 @@ namespace Map.Rendering
         /// </summary>
         void OnDestroy()
         {
+#if FALSE // Legacy rendering systems - disabled
             if (curveRenderer != null)
             {
                 curveRenderer.Dispose();
             }
+#endif
 
             if (curveCache != null)
             {
@@ -893,6 +962,7 @@ namespace Map.Rendering
         // PUBLIC API: Vector Curve Buffer Access
         // ============================================================================
 
+#if FALSE // Legacy rendering systems - disabled
         /// <summary>
         /// Get the Bézier segments buffer for binding to shaders
         /// Returns null if smooth borders not initialized
@@ -958,5 +1028,6 @@ namespace Map.Rendering
         {
             return renderingMode == BorderRenderingMode.SDF && sdfRenderer != null;
         }
+#endif
     }
 }

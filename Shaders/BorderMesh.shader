@@ -9,8 +9,8 @@ Shader "Archon/BorderMesh"
     {
         Tags
         {
-            "RenderType" = "Transparent"
-            "Queue" = "Transparent"
+            "RenderType" = "Opaque"
+            "Queue" = "Geometry+1"
             "RenderPipeline" = "UniversalPipeline"
         }
 
@@ -19,7 +19,7 @@ Shader "Archon/BorderMesh"
             Name "BorderMesh"
 
             Blend SrcAlpha OneMinusSrcAlpha
-            ZWrite Off
+            ZWrite On
             ZTest LEqual
             Cull Off
 
