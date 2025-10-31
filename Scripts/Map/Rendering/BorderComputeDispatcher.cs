@@ -273,6 +273,9 @@ namespace Map.Rendering
                 GL.Clear(true, true, Color.black);
                 RenderTexture.active = null;
                 ArchonLogger.Log("BorderComputeDispatcher: Cleared DistanceFieldTexture for pixel-perfect mode", "map_initialization");
+
+                // Generate dual-channel border texture (R=country, G=province)
+                GeneratePixelPerfectBorders();
             }
             else if (renderingMode == BorderRenderingMode.ShaderDistanceField)
             {
@@ -359,13 +362,13 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Generate border mask for sparse shader-based detection with DUAL borders
+        /// Generate DualBorderTexture for pixel-perfect border rendering
         /// R channel = Country borders (different owners)
         /// G channel = Province borders (same owner, different province)
         /// This enables resolution-independent borders with minimal per-frame cost
         /// IMPORTANT: Call ONCE at initialization after ProvinceIDTexture is populated
         /// </summary>
-        public void GenerateBorderMask()
+        public void GeneratePixelPerfectBorders()
         {
             if (textureManager == null)
             {
