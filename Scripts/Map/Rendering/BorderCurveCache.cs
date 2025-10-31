@@ -47,11 +47,11 @@ namespace Map.Rendering
     }
 
     /// <summary>
-    /// Caches pre-computed Bézier border curves and their runtime styles
+    /// Caches pre-computed smooth border polylines and their runtime styles
     /// Separates static geometry (expensive to compute) from dynamic appearance (cheap to update)
     ///
     /// Pattern: Static Geometry + Dynamic Appearance
-    /// - Bézier curves computed once at map load (vector representation)
+    /// - Smooth polylines (RDP + Chaikin) computed once at map load
     /// - Styles updated at runtime when ownership changes
     /// </summary>
     public class BorderCurveCache

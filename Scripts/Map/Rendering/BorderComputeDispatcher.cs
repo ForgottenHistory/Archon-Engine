@@ -95,13 +95,8 @@ namespace Map.Rendering
         // Smooth curve border system components
         private BorderCurveExtractor curveExtractor;
         private BorderCurveCache curveCache;
-#if FALSE // Legacy rendering systems - disabled
-        private BorderCurveRenderer curveRenderer;
-        private BorderSDFRenderer sdfRenderer;
-#endif
         private BorderMeshGenerator meshGenerator;
         private BorderMeshRenderer meshRenderer;
-        private SpatialHashGrid spatialGrid;
         private bool smoothBordersInitialized = false;
 
         public enum BorderMode
@@ -263,16 +258,7 @@ namespace Map.Rendering
             ArchonLogger.Log("BorderComputeDispatcher: Classifying borders by ownership...", "map_initialization");
             UpdateAllBorderStyles();
 
-            // Build spatial hash grid for old rendering modes (not needed for mesh rendering)
-            if (renderingMode != BorderRenderingMode.Mesh)
-            {
-                ArchonLogger.Log("BorderComputeDispatcher: Building spatial grid...", "map_initialization");
-                spatialGrid = new SpatialHashGrid(textureManager.MapWidth, textureManager.MapHeight, cellSize: 64);
-
-                // Note: This code expects BezierSegments but we now have Vector2 polylines
-                // Keeping it for compatibility with old rendering modes, but mesh mode doesn't use it
-                ArchonLogger.LogWarning("BorderComputeDispatcher: Spatial grid not supported with polyline-based rendering", "map_initialization");
-            }
+            // Spatial grid removed - was only used by deleted BorderCurveRenderer
 
             // Choose rendering method based on mode
             if (renderingMode == BorderRenderingMode.DistanceField)
@@ -285,50 +271,12 @@ namespace Map.Rendering
 
                 // Distance field generation happens below (lines 314-347)
             }
-#if FALSE // Legacy rendering systems - disabled
-            else if (renderingMode == BorderRenderingMode.SDF && borderSDFCompute != null)
-            {
-                ArchonLogger.Log("BorderComputeDispatcher: Using SDF rendering (resolution independent)", "map_initialization");
-
-                // Initialize SDF renderer
-                sdfRenderer = new BorderSDFRenderer(borderSDFCompute, textureManager, curveCache, spatialGrid);
-
-                // Upload curve data and spatial grid to GPU
-                ArchonLogger.Log("BorderComputeDispatcher: Uploading SDF data to GPU...", "map_initialization");
-                sdfRenderer.UploadSDFData();
-
-                // Render borders once at startup (no AA - bilinear filtering handles sub-pixel smoothing)
-                sdfRenderer.RenderBorders(countryBorderWidth, provinceBorderWidth, antiAliasRadius: 0.0f);
-            }
-            else if (renderingMode == BorderRenderingMode.Rasterization)
-            {
-                ArchonLogger.Log("BorderComputeDispatcher: Using rasterization rendering (fixed resolution)", "map_initialization");
-
-                // Get or create distance field generator for smooth anti-aliasing
-                if (distanceFieldGenerator == null)
-                {
-                    distanceFieldGenerator = GetComponent<BorderDistanceFieldGenerator>();
-                    if (distanceFieldGenerator == null)
-                    {
-                        distanceFieldGenerator = gameObject.AddComponent<BorderDistanceFieldGenerator>();
-                    }
-                    distanceFieldGenerator.SetTextureManager(textureManager);
-                }
-
-                // Initialize curve renderer with distance field generator
-                curveRenderer = new BorderCurveRenderer(borderCurveRasterizerCompute, textureManager, curveCache, distanceFieldGenerator);
-
-                // Upload curve data to GPU
-                ArchonLogger.Log("BorderComputeDispatcher: Uploading curve data to GPU...", "map_initialization");
-                curveRenderer.UploadCurveData();
-            }
-#endif
             else if (renderingMode == BorderRenderingMode.Mesh)
             {
                 ArchonLogger.Log("BorderComputeDispatcher: Using mesh-based rendering (triangle strips - Paradox approach)", "map_initialization");
 
                 // Initialize mesh generator with Paradox's border width (0.0002 world units)
-                float borderWidthWorldUnits = 0.0002f;
+                float borderWidthWorldUnits = 0.0006f;
                 meshGenerator = new BorderMeshGenerator(borderWidthWorldUnits, textureManager.MapWidth, textureManager.MapHeight);
 
                 // Generate triangle strip meshes from border curves
@@ -544,31 +492,6 @@ namespace Map.Rendering
                 // Mesh rendering is handled by BorderMeshRenderer - nothing to do per frame
                 return;
             }
-
-#if FALSE // Legacy rendering systems - disabled
-            // Use SDF rendering if initialized (takes priority over rasterization)
-            if (smoothBordersInitialized && sdfRenderer != null)
-            {
-                ArchonLogger.Log($"BorderComputeDispatcher: SDF rendering already complete at startup", "map_rendering");
-                // SDF rendering was done once at initialization - no need to re-render each frame
-                return;
-            }
-            // Use smooth curve rendering if initialized
-            else if (smoothBordersInitialized && curveRenderer != null)
-            {
-                ArchonLogger.Log($"BorderComputeDispatcher: Rasterizing {curveCache.BorderCount} smooth curves to BorderTexture", "map_rendering");
-
-                // Rasterize pre-computed smooth curves
-                curveRenderer.RasterizeCurves();
-
-                if (logPerformance)
-                {
-                    float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                    ArchonLogger.Log($"BorderComputeDispatcher: Smooth curve border rendering completed in {elapsedMs:F2}ms " +
-                        $"({curveCache.BorderCount} curves)", "map_rendering");
-                }
-            }
-#endif
             else
             {
                 // Fallback to distance field approach (legacy)
@@ -882,13 +805,6 @@ namespace Map.Rendering
         /// </summary>
         void OnDestroy()
         {
-#if FALSE // Legacy rendering systems - disabled
-            if (curveRenderer != null)
-            {
-                curveRenderer.Dispose();
-            }
-#endif
-
             if (curveCache != null)
             {
                 curveCache.Clear();
@@ -958,76 +874,5 @@ namespace Map.Rendering
         }
 #endif
 
-        // ============================================================================
-        // PUBLIC API: Vector Curve Buffer Access
-        // ============================================================================
-
-#if FALSE // Legacy rendering systems - disabled
-        /// <summary>
-        /// Get the Bézier segments buffer for binding to shaders
-        /// Returns null if smooth borders not initialized
-        /// </summary>
-        public ComputeBuffer GetBezierSegmentsBuffer()
-        {
-            return curveRenderer?.GetBezierSegmentsBuffer();
-        }
-
-        /// <summary>
-        /// Get the count of Bézier segments
-        /// </summary>
-        public int GetBezierSegmentCount()
-        {
-            return curveRenderer?.GetSegmentCount() ?? 0;
-        }
-
-        /// <summary>
-        /// Check if vector curve rendering is available
-        /// </summary>
-        public bool IsVectorCurveRenderingAvailable()
-        {
-            return smoothBordersInitialized && curveRenderer != null && curveRenderer.IsInitialized();
-        }
-
-        /// <summary>
-        /// Check if spatial grid acceleration is available
-        /// </summary>
-        public bool IsSpatialGridAvailable()
-        {
-            return smoothBordersInitialized && curveRenderer != null && curveRenderer.IsSpatialGridInitialized();
-        }
-
-        /// <summary>
-        /// Get spatial grid parameters (gridWidth, gridHeight, cellSize)
-        /// </summary>
-        public (int gridWidth, int gridHeight, int cellSize) GetSpatialGridParams()
-        {
-            return curveRenderer?.GetSpatialGridParams() ?? (0, 0, 0);
-        }
-
-        /// <summary>
-        /// Get spatial grid cell ranges buffer
-        /// </summary>
-        public ComputeBuffer GetGridCellRangesBuffer()
-        {
-            return curveRenderer?.GetGridCellRangesBuffer();
-        }
-
-        /// <summary>
-        /// Get spatial grid segment indices buffer
-        /// </summary>
-        public ComputeBuffer GetGridSegmentIndicesBuffer()
-        {
-            return curveRenderer?.GetGridSegmentIndicesBuffer();
-        }
-
-        /// <summary>
-        /// Check if SDF rendering is active (vs vector curve rasterization)
-        /// Used by VisualStyleManager to disable _UseVectorCurves when SDF is active
-        /// </summary>
-        public bool IsUsingSDFRendering()
-        {
-            return renderingMode == BorderRenderingMode.SDF && sdfRenderer != null;
-        }
-#endif
     }
 }

@@ -173,10 +173,8 @@ namespace Map.Rendering
             if (polyline.Count < 2)
                 return;
 
-            // TEMPORARY: Use moderately thick borders for debugging visibility
-            // Normal: 0.0002 world units = sub-pixel thin
-            // Debug: 0.002 world units = 10x thicker
-            float halfWidth = 0.001f; // Half of 0.002 world units (TEMPORARY FOR DEBUGGING)
+            // Use the configured border width (set in BorderComputeDispatcher)
+            float halfWidth = borderWidth / 2f;
 
             Color borderColor = style.color;
             int baseIndex = verts.Count;
@@ -244,25 +242,6 @@ namespace Map.Rendering
             }
         }
 
-        /// <summary>
-        /// Evaluate cubic Bézier curve at parameter t (0 to 1)
-        /// </summary>
-        private Vector2 EvaluateBezier(BezierSegment seg, float t)
-        {
-            // Cubic Bézier formula: B(t) = (1-t)³P0 + 3(1-t)²tP1 + 3(1-t)t²P2 + t³P3
-            float u = 1f - t;
-            float u2 = u * u;
-            float u3 = u2 * u;
-            float t2 = t * t;
-            float t3 = t2 * t;
-
-            Vector2 result = u3 * seg.P0 +
-                            3f * u2 * t * seg.P1 +
-                            3f * u * t2 * seg.P2 +
-                            t3 * seg.P3;
-
-            return result;
-        }
 
         /// <summary>
         /// Calculate perpendicular direction in world space

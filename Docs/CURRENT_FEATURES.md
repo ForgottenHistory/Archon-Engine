@@ -1,7 +1,7 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2025-10-26
-**Version:** 1.7 (Vector Curve Border Rendering Complete)
+**Last Updated:** 2025-10-31
+**Version:** 1.8 (Border Rendering Cleanup - Three Rendering Modes)
 
 This document lists all implemented features in the Archon Engine organized by category.
 
@@ -181,19 +181,21 @@ This document lists all implemented features in the Archon Engine organized by c
 
 - **Texture-Based Rendering** - Single draw call for entire map via texture-based approach
 - **GPU Compute Shaders** - All visual processing on GPU for maximum performance
-- **Vector Curve Borders** - Resolution-independent smooth borders using parametric Bézier curves evaluated in fragment shader
-- **Spatial Acceleration** - Uniform hash grid (88×32 cells, 64px) for O(nearby) curve lookup preventing GPU timeout
+- **Three Border Rendering Modes:**
+  - **Distance Field** - Fragment-shader borders using JFA distance field (smooth, 3D-compatible for tessellation)
+  - **Mesh** - Triangle strip geometry with runtime style updates (resolution-independent smooth borders)
+  - **Pixelated** - BorderMask pixel-perfect borders (retro aesthetic, 1-pixel precision)
+- **Static Geometry + Dynamic Appearance** - Pre-compute geometry once, update colors/styles at runtime
 - **Border Classification** - Automatic country vs province border detection based on ownership
-- **BorderMask Texture** - R8 sparse mask for early-out optimization (~90% of pixels skip curve testing)
+- **BorderMask Texture** - R8 sparse mask for pixel-perfect borders and early-out optimization
 - **Province Selection** - Sub-millisecond province selection via texture lookup (no raycasting)
 - **Map Texture Management** - Coordinated texture system (~60MB VRAM for 5632×2048 map)
-- **Border Thickness Control** - Configurable border width and anti-aliasing
+- **Border Thickness Control** - Configurable border width and anti-aliasing per mode
 - **Heightmap Support** - 8-bit grayscale heightmap rendering
 - **Normal Map Support** - RGB24 normal map for terrain lighting
 - **Point Filtering** - Pixel-perfect province ID lookup without interpolation
 - **Single Draw Call Optimization** - Entire map rendered in one draw call
 - **ProvinceHighlighter** - Province highlighting for selection feedback
-- **Memory Efficiency** - 720KB curve data vs 40MB rasterized (55x compression)
 
 ---
 
@@ -204,11 +206,12 @@ This document lists all implemented features in the Archon Engine organized by c
 - **VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map
 - **DynamicTextureSet** - Dynamic textures: Border, BorderMask (R8 sparse), Highlight RenderTextures
 - **PaletteTextureManager** - Color palette texture with HSV distribution
-- **BorderComputeDispatcher** - Dispatch border detection and vector curve rendering
-- **BorderCurveExtractor** - Extract border pixel chains from province pairs using AdjacencySystem
-- **BorderCurveCache** - Cache Bézier curve segments with metadata (type, provinces, colors)
-- **BorderCurveRenderer** - Upload Bézier curves to GPU and manage curve buffers
-- **SpatialHashGrid** - Uniform grid spatial acceleration (88×32 cells, 64px) for O(nearby) curve lookup
+- **BorderComputeDispatcher** - Orchestrates border rendering across three modes
+- **BorderCurveExtractor** - Extract border pixel chains from province pairs, apply RDP simplification + Chaikin smoothing
+- **BorderCurveCache** - Cache smooth polyline segments with runtime styles (static geometry + dynamic appearance)
+- **BorderMeshGenerator** - Generate triangle strip geometry from polylines
+- **BorderMeshRenderer** - Render mesh borders with dynamic color updates
+- **BorderDistanceFieldGenerator** - Generate JFA distance field for fragment-shader borders
 - **TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
 
 ---
@@ -364,4 +367,16 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ---
 
-*Updated: 2025-10-25*
+## Removed/Legacy Features (2025-10-31)
+
+**Border Rendering Cleanup:**
+- Removed BezierCurveFitter.cs - Bézier fitting abandoned (circular conversion, no viable use case)
+- Removed BorderCurveRenderer.cs - GPU curve rasterization (anti-pattern: destroys smoothness)
+- Removed BorderSDFRenderer.cs - Redundant SDF approach (replaced by distance field mode)
+- Removed SpatialHashGrid.cs - Spatial acceleration (only used by deleted BorderCurveRenderer)
+
+**Total cleanup:** 4 files deleted, ~1,450 lines removed, codebase simplified to 3 clear rendering modes.
+
+---
+
+*Updated: 2025-10-31*
