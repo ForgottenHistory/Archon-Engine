@@ -251,5 +251,55 @@ User sets mode → SetBorderRenderingMode()
 
 ---
 
+## Cleanup Completed (2025-10-31)
+
+All 4 phases of the cleanup have been completed successfully:
+
+### Phase 1: Rename Textures and Methods ✓
+- `BorderTexture` → `DistanceFieldTexture` (JFA distance field for smooth borders)
+- `BorderMaskTexture` → `DualBorderTexture` (dual-channel: R=country, G=province)
+- Removed obsolete `BorderDistanceTexture` (unused 1/4 resolution texture)
+- Updated all references in 5 files
+
+### Phase 2: Delete Obsolete Code ✓
+- Removed 5 unused compute kernel variables (detectBorders, detectBordersThick, detectCountryBorders, generateBorderMask, copyBorderToMask)
+- Kept only `detectDualBordersKernel` (actually used for pixel-perfect mode)
+- Removed unused methods: RasterizeCurvesToMask(), DetectBordersAsync(), GetKernelForMode()
+- Reduced code by ~115 lines
+
+### Phase 3: Simplify API ✓
+- Renamed `GenerateBorderMask()` → `GeneratePixelPerfectBorders()` (clearer purpose)
+- **Fixed bug**: Pixel-perfect mode wasn't generating DualBorderTexture during initialization
+- Added missing call to GeneratePixelPerfectBorders() in ShaderPixelPerfect initialization branch
+
+### Phase 4: Documentation ✓
+- Updated border-pipeline-analysis.md with completion summary
+- All confusion points documented in analysis have been resolved
+
+### Results
+- **Code reduction**: ~120 lines removed
+- **Clarity improvement**: All texture and method names now accurately reflect their purpose
+- **Bug fixes**: Pixel-perfect mode now works correctly
+- **Maintenance**: Only 1 compute kernel referenced instead of 6
+
+### Current Border System (Clean State)
+
+**Three Rendering Modes**:
+1. **ShaderDistanceField** - JFA distance field in DistanceFieldTexture, smooth anti-aliased borders
+2. **ShaderPixelPerfect** - Dual-channel borders in DualBorderTexture, sharp 1-pixel borders
+3. **MeshGeometry** - Triangle strip meshes, sub-pixel width borders
+
+**Textures** (all purposes clear):
+- `DistanceFieldTexture` - Full resolution RGBA8, R/G channels = distance field
+- `DualBorderTexture` - Full resolution RGBA8, R=country borders, G=province borders
+
+**Entry Points** (simplified):
+- `InitializeSmoothBorders()` - Main initialization, handles all modes
+- `GeneratePixelPerfectBorders()` - Generate dual-channel border texture
+- `DetectBorders()` - Per-frame update (no-op for pixel-perfect/mesh modes)
+
+---
+
 *Analysis Date: 2025-10-31*
-*Next Step: User review and proposal discussion*
+*Cleanup Completed: 2025-10-31 (same day)*
+*Status: All confusion points resolved*
