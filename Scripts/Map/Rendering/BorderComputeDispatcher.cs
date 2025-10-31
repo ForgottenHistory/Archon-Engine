@@ -275,6 +275,17 @@ namespace Map.Rendering
                 ArchonLogger.Log("BorderComputeDispatcher: Border rendering mode is None - no borders will be rendered", "map_initialization");
                 // Don't initialize any border rendering systems
             }
+            else if (renderingMode == BorderRenderingMode.ShaderPixelPerfect)
+            {
+                ArchonLogger.Log("BorderComputeDispatcher: Using shader-based pixel-perfect rendering (1-pixel BorderMask)", "map_initialization");
+
+                // Pixel-perfect mode uses BorderMask texture for sharp 1-pixel borders
+                // Clear BorderTexture so shader knows to use pixel-perfect mode
+                RenderTexture.active = textureManager.BorderTexture;
+                GL.Clear(true, true, Color.black);
+                RenderTexture.active = null;
+                ArchonLogger.Log("BorderComputeDispatcher: Cleared BorderTexture for pixel-perfect mode", "map_initialization");
+            }
             else if (renderingMode == BorderRenderingMode.ShaderDistanceField)
             {
                 ArchonLogger.Log("BorderComputeDispatcher: Using shader-based distance field rendering (JFA, smooth borders)", "map_initialization");
@@ -340,28 +351,12 @@ namespace Map.Rendering
                     distanceFieldGenerator.SetTextureManager(textureManager);
                 }
 
-                if (textureManager.BorderDistanceTexture != null)
-                {
-                    ArchonLogger.Log("BorderComputeDispatcher: Generating 1/4 resolution distance field (AAA approach)...", "map_initialization");
-                    float distFieldStartTime = Time.realtimeSinceStartup;
-                    distanceFieldGenerator.GenerateQuarterResolutionDistanceField(textureManager.BorderDistanceTexture);
-                    float distFieldElapsedMs = (Time.realtimeSinceStartup - distFieldStartTime) * 1000f;
-                    ArchonLogger.Log($"BorderComputeDispatcher: 1/4 resolution distance field generation complete in {distFieldElapsedMs:F1}ms", "map_initialization");
-
-                    // Bind distance field parameters to material (if map plane has material set)
-                    if (mapPlaneTransform != null)
-                    {
-                        var meshRenderer = mapPlaneTransform.GetComponent<MeshRenderer>();
-                        if (meshRenderer != null && meshRenderer.sharedMaterial != null)
-                        {
-                            BindDistanceFieldBorderParams(meshRenderer.sharedMaterial);
-                        }
-                    }
-                }
-                else
-                {
-                    ArchonLogger.LogWarning("BorderComputeDispatcher: BorderDistanceTexture not available, skipping AAA distance field generation", "map_initialization");
-                }
+                // Generate full-resolution distance field into BorderTexture
+                ArchonLogger.Log("BorderComputeDispatcher: Generating FULL RESOLUTION distance field...", "map_initialization");
+                float distFieldStartTime = Time.realtimeSinceStartup;
+                distanceFieldGenerator.GenerateDistanceField();
+                float distFieldElapsedMs = (Time.realtimeSinceStartup - distFieldStartTime) * 1000f;
+                ArchonLogger.Log($"BorderComputeDispatcher: Full resolution distance field generation complete in {distFieldElapsedMs:F1}ms", "map_initialization");
             } // End of DistanceField mode block
 
             // CRITICAL: GPU synchronization - Wait for curve data upload to complete
@@ -376,8 +371,9 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Generate border mask for sparse shader-based detection
-        /// Marks pixels that are within 2-3 pixels of ANY border
+        /// Generate border mask for sparse shader-based detection with DUAL borders
+        /// R channel = Country borders (different owners)
+        /// G channel = Province borders (same owner, different province)
         /// This enables resolution-independent borders with minimal per-frame cost
         /// IMPORTANT: Call ONCE at initialization after ProvinceIDTexture is populated
         /// </summary>
@@ -397,33 +393,33 @@ namespace Map.Rendering
 
             float startTime = Time.realtimeSinceStartup;
 
-            // ALWAYS use simple edge detection for BorderMask (curve rasterization is obsolete)
-            // Edge detection computes shader marks pixels where ProvinceID changes
-            // This is fast, simple, and works perfectly with shader-based border rendering
+            // Use DetectDualBorders kernel for pixel-perfect mode
+            // This separates country borders (R) from province borders (G)
+            if (borderDetectionCompute == null)
             {
-                // Simple edge detection (4-neighbor check)
-                if (borderDetectionCompute == null)
-                {
-                    ArchonLogger.LogError("BorderComputeDispatcher: Cannot generate border mask - compute shader missing", "map_initialization");
-                    return;
-                }
-
-                borderDetectionCompute.SetTexture(generateBorderMaskKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
-                borderDetectionCompute.SetTexture(generateBorderMaskKernel, "BorderMaskTexture", textureManager.BorderMaskTexture);
-                borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
-                borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
-
-                int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-                int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-
-                borderDetectionCompute.Dispatch(generateBorderMaskKernel, threadGroupsX, threadGroupsY, 1);
-
-                var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.BorderMaskTexture);
-                syncRequest.WaitForCompletion();
-
-                float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                ArchonLogger.Log($"BorderComputeDispatcher: Generated edge-detected BorderMask in {elapsedMs:F1}ms", "map_initialization");
+                ArchonLogger.LogError("BorderComputeDispatcher: Cannot generate border mask - compute shader missing", "map_initialization");
+                return;
             }
+
+            borderDetectionCompute.SetTexture(detectDualBordersKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
+            borderDetectionCompute.SetTexture(detectDualBordersKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
+            borderDetectionCompute.SetTexture(detectDualBordersKernel, "DualBorderTexture", textureManager.BorderMaskTexture);
+            borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
+            borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
+            borderDetectionCompute.SetInt("CountryBorderThickness", 0); // 0 = 1-pixel borders
+            borderDetectionCompute.SetInt("ProvinceBorderThickness", 0); // 0 = 1-pixel borders
+            borderDetectionCompute.SetFloat("BorderAntiAliasing", 0.0f); // No AA for pixel-perfect
+
+            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+
+            borderDetectionCompute.Dispatch(detectDualBordersKernel, threadGroupsX, threadGroupsY, 1);
+
+            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.BorderMaskTexture);
+            syncRequest.WaitForCompletion();
+
+            float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
+            ArchonLogger.Log($"BorderComputeDispatcher: Generated dual-channel BorderMask (country/province) in {elapsedMs:F1}ms", "map_initialization");
         }
 
         /// <summary>
@@ -499,6 +495,12 @@ namespace Map.Rendering
             if (smoothBordersInitialized && renderingMode == BorderRenderingMode.MeshGeometry)
             {
                 // Mesh rendering is handled by BorderMeshRenderer - nothing to do per frame
+                return;
+            }
+            else if (renderingMode == BorderRenderingMode.ShaderPixelPerfect)
+            {
+                // Pixel-perfect mode uses BorderMask only - no distance field needed
+                // BorderMask is already generated, nothing to do per frame
                 return;
             }
             else if (renderingMode == BorderRenderingMode.ShaderDistanceField)

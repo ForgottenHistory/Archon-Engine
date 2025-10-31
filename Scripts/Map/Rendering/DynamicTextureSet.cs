@@ -109,7 +109,7 @@ namespace Map.Rendering
 
             // CRITICAL: Set filterMode AFTER Create() to ensure it takes effect
             // RenderTexture filterMode must be set after creation for proper GPU state
-            borderMaskTexture.filterMode = FilterMode.Bilinear; // Bilinear filtering for smooth curves
+            borderMaskTexture.filterMode = FilterMode.Point; // Point filtering for pixel-perfect borders (no interpolation)
 
             // Clear to black (no borders detected yet)
             RenderTexture.active = borderMaskTexture;

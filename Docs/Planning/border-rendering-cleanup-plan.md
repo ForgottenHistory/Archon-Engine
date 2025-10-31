@@ -404,7 +404,7 @@ Border Rendering System (Three Modes)
 - [x] Bézier logic completely removed
 - [x] Git history preserved (incremental commits)
 - [x] Shader fixed - uncommented border rendering code in MapModeCommon.hlsl
-- [ ] ShaderPixelPerfect mode needs implementation (planned, not urgent)
+- [x] ShaderPixelPerfect mode fully implemented with dual-channel BorderMask
 
 ---
 
@@ -421,6 +421,13 @@ Border Rendering System (Three Modes)
 - Added DynamicTextureSet.BindToMaterial() (was already present)
 - Fixed shader early return that was skipping all border rendering
 - Tuned border width in shader (settled on 1px sharp for now)
+
+**Pixel-Perfect Mode Implementation** (2025-10-31 continuation):
+- Changed BorderMask from single-channel to dual-channel (R=country, G=province)
+- Updated GenerateBorderMask() to use DetectDualBorders kernel
+- Changed BorderMask filterMode from Bilinear to Point for pixel-perfect rendering
+- Updated shader to sample both R/G channels and render country/province borders separately
+- Result: Clean 1-pixel borders with proper country/province separation, no gray bleed
 
 ---
 
