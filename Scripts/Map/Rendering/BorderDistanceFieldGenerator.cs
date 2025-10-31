@@ -353,8 +353,8 @@ namespace Map.Rendering
             // Set input buffer
             distanceFieldCompute.SetTexture(finalizeKernel, "DistanceFieldA", distanceFieldA);
 
-            // Set output texture (BorderTexture in MapTextureManager)
-            distanceFieldCompute.SetTexture(finalizeKernel, "BorderDistanceTexture", textureManager.BorderTexture);
+            // Set output texture (DistanceFieldTexture in MapTextureManager)
+            distanceFieldCompute.SetTexture(finalizeKernel, "BorderDistanceTexture", textureManager.DistanceFieldTexture);
 
             // Set output channel (0 = R, 1 = G)
             distanceFieldCompute.SetInt("OutputChannel", outputChannel);
@@ -376,7 +376,7 @@ namespace Map.Rendering
             {
                 // Known test coordinates: Castile (2751) at pixel (2767, 711)
                 // Should have a country border nearby
-                RenderTexture.active = textureManager.BorderTexture;
+                RenderTexture.active = textureManager.DistanceFieldTexture;
                 Texture2D samplePixel = new Texture2D(1, 1, TextureFormat.RGFloat, false);
                 samplePixel.ReadPixels(new Rect(2767, 711, 1, 1), 0, 0);
                 samplePixel.Apply();
@@ -386,7 +386,7 @@ namespace Map.Rendering
                 float countryDist = pixel.r; // Normalized distance [0,1]
                 float provinceDist = pixel.g;
 
-                ArchonLogger.Log($"BorderDistanceFieldGenerator: BorderTexture at (2767,711) - Country dist={countryDist:F4}, Province dist={provinceDist:F4} (expect <1.0 if near border)", "map_rendering");
+                ArchonLogger.Log($"BorderDistanceFieldGenerator: DistanceFieldTexture at (2767,711) - Country dist={countryDist:F4}, Province dist={provinceDist:F4} (expect <1.0 if near border)", "map_rendering");
                 UnityEngine.Object.Destroy(samplePixel);
             }
         }

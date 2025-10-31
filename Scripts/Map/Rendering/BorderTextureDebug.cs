@@ -9,8 +9,8 @@ namespace Map.Rendering
     public static class BorderTextureDebug
     {
 #if UNITY_EDITOR
-        [MenuItem("Tools/Save BorderTexture to PNG")]
-        public static void SaveBorderTexture()
+        [MenuItem("Tools/Save DistanceField Texture to PNG")]
+        public static void SaveDistanceFieldTexture()
         {
             var textureManager = Object.FindObjectOfType<MapTextureManager>();
             if (textureManager == null)
@@ -19,20 +19,20 @@ namespace Map.Rendering
                 return;
             }
 
-            if (textureManager.BorderTexture == null)
+            if (textureManager.DistanceFieldTexture == null)
             {
-                Debug.LogError("BorderTexture is null!");
+                Debug.LogError("DistanceFieldTexture is null!");
                 return;
             }
 
-            string path = "Assets/Game/Debug/Screenshots/border_texture.png";
-            SaveRenderTextureToFile(textureManager.BorderTexture, path);
+            string path = "Assets/Game/Debug/Screenshots/distance_field_texture.png";
+            SaveRenderTextureToFile(textureManager.DistanceFieldTexture, path);
             AssetDatabase.Refresh();
-            Debug.Log($"BorderTexture saved to {path}");
+            Debug.Log($"DistanceFieldTexture saved to {path}");
         }
 
-        [MenuItem("Tools/Save BorderTexture to PNG", true)]
-        private static bool ValidateSaveBorderTexture()
+        [MenuItem("Tools/Save DistanceField Texture to PNG", true)]
+        private static bool ValidateSaveDistanceFieldTexture()
         {
             return Application.isPlaying;
         }

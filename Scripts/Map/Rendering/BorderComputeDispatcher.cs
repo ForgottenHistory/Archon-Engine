@@ -277,14 +277,14 @@ namespace Map.Rendering
             }
             else if (renderingMode == BorderRenderingMode.ShaderPixelPerfect)
             {
-                ArchonLogger.Log("BorderComputeDispatcher: Using shader-based pixel-perfect rendering (1-pixel BorderMask)", "map_initialization");
+                ArchonLogger.Log("BorderComputeDispatcher: Using shader-based pixel-perfect rendering (1-pixel DualBorder)", "map_initialization");
 
-                // Pixel-perfect mode uses BorderMask texture for sharp 1-pixel borders
-                // Clear BorderTexture so shader knows to use pixel-perfect mode
-                RenderTexture.active = textureManager.BorderTexture;
+                // Pixel-perfect mode uses DualBorder texture for sharp 1-pixel borders
+                // Clear DistanceField so shader knows to use pixel-perfect mode
+                RenderTexture.active = textureManager.DistanceFieldTexture;
                 GL.Clear(true, true, Color.black);
                 RenderTexture.active = null;
-                ArchonLogger.Log("BorderComputeDispatcher: Cleared BorderTexture for pixel-perfect mode", "map_initialization");
+                ArchonLogger.Log("BorderComputeDispatcher: Cleared DistanceFieldTexture for pixel-perfect mode", "map_initialization");
             }
             else if (renderingMode == BorderRenderingMode.ShaderDistanceField)
             {
@@ -351,7 +351,7 @@ namespace Map.Rendering
                     distanceFieldGenerator.SetTextureManager(textureManager);
                 }
 
-                // Generate full-resolution distance field into BorderTexture
+                // Generate full-resolution distance field into DistanceFieldTexture
                 ArchonLogger.Log("BorderComputeDispatcher: Generating FULL RESOLUTION distance field...", "map_initialization");
                 float distFieldStartTime = Time.realtimeSinceStartup;
                 distanceFieldGenerator.GenerateDistanceField();
@@ -361,7 +361,7 @@ namespace Map.Rendering
 
             // CRITICAL: GPU synchronization - Wait for curve data upload to complete
             // Following unity-compute-shader-coordination.md pattern
-            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.BorderTexture);
+            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.DistanceFieldTexture);
             syncRequest.WaitForCompletion();
 
             smoothBordersInitialized = true;
@@ -385,9 +385,9 @@ namespace Map.Rendering
                 return;
             }
 
-            if (textureManager.BorderMaskTexture == null)
+            if (textureManager.DualBorderTexture == null)
             {
-                ArchonLogger.LogError("BorderComputeDispatcher: BorderMaskTexture not created!", "map_initialization");
+                ArchonLogger.LogError("BorderComputeDispatcher: DualBorderTexture not created!", "map_initialization");
                 return;
             }
 
@@ -403,7 +403,7 @@ namespace Map.Rendering
 
             borderDetectionCompute.SetTexture(detectDualBordersKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
             borderDetectionCompute.SetTexture(detectDualBordersKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
-            borderDetectionCompute.SetTexture(detectDualBordersKernel, "DualBorderTexture", textureManager.BorderMaskTexture);
+            borderDetectionCompute.SetTexture(detectDualBordersKernel, "DualBorderTexture", textureManager.DualBorderTexture);
             borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
             borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
             borderDetectionCompute.SetInt("CountryBorderThickness", 0); // 0 = 1-pixel borders
@@ -415,7 +415,7 @@ namespace Map.Rendering
 
             borderDetectionCompute.Dispatch(detectDualBordersKernel, threadGroupsX, threadGroupsY, 1);
 
-            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.BorderMaskTexture);
+            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.DualBorderTexture);
             syncRequest.WaitForCompletion();
 
             float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
@@ -423,21 +423,21 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Rasterize smooth curves to BorderMaskTexture
-        /// Uses the smooth curves already rendered to BorderTexture
-        /// Copies BorderTexture data to BorderMaskTexture R channel
+        /// Rasterize smooth curves to DualBorderTexture
+        /// Uses the smooth curves already rendered to DistanceFieldTexture
+        /// Copies DistanceFieldTexture data to DualBorderTexture R channel
         /// </summary>
         private void RasterizeCurvesToMask()
         {
-            if (textureManager.BorderTexture == null)
+            if (textureManager.DistanceFieldTexture == null)
             {
-                ArchonLogger.LogError("BorderComputeDispatcher: Cannot copy borders - BorderTexture is null", "map_rendering");
+                ArchonLogger.LogError("BorderComputeDispatcher: Cannot copy borders - DistanceFieldTexture is null", "map_rendering");
                 return;
             }
 
-            // Use compute shader to copy BorderTexture (smooth curves) to BorderMaskTexture
-            // BorderTexture.R = country border distance, BorderTexture.G = province border distance
-            // BorderMaskTexture.R = combined border mask (1.0 = border, 0.0 = interior)
+            // Use compute shader to copy DistanceFieldTexture (smooth curves) to DualBorderTexture
+            // DistanceFieldTexture.R = country border distance, DistanceFieldTexture.G = province border distance
+            // DualBorderTexture.R = combined border mask (1.0 = border, 0.0 = interior)
 
             if (borderDetectionCompute == null)
             {
@@ -447,8 +447,8 @@ namespace Map.Rendering
 
             // Set textures
             // Note: Use "BorderTextureFloat4" name to match kernel's local declaration
-            borderDetectionCompute.SetTexture(copyBorderToMaskKernel, "BorderTextureFloat4", textureManager.BorderTexture);
-            borderDetectionCompute.SetTexture(copyBorderToMaskKernel, "BorderMaskTexture", textureManager.BorderMaskTexture);
+            borderDetectionCompute.SetTexture(copyBorderToMaskKernel, "BorderTextureFloat4", textureManager.DistanceFieldTexture);
+            borderDetectionCompute.SetTexture(copyBorderToMaskKernel, "BorderMaskTexture", textureManager.DualBorderTexture);
             borderDetectionCompute.SetInt("MapWidth", textureManager.MapWidth);
             borderDetectionCompute.SetInt("MapHeight", textureManager.MapHeight);
 
@@ -459,10 +459,10 @@ namespace Map.Rendering
             borderDetectionCompute.Dispatch(copyBorderToMaskKernel, threadGroupsX, threadGroupsY, 1);
 
             // Force GPU sync
-            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.BorderMaskTexture);
+            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.DualBorderTexture);
             syncRequest.WaitForCompletion();
 
-            ArchonLogger.Log($"BorderComputeDispatcher: Copied smooth curves from BorderTexture to BorderMaskTexture", "map_initialization");
+            ArchonLogger.Log($"BorderComputeDispatcher: Copied smooth curves from DistanceFieldTexture to DualBorderTexture", "map_initialization");
         }
 
         /// <summary>
@@ -535,10 +535,10 @@ namespace Map.Rendering
         [ContextMenu("Debug - Fill Borders White")]
         public void DebugFillBordersWhite()
         {
-            if (textureManager == null || textureManager.BorderTexture == null)
+            if (textureManager == null || textureManager.DistanceFieldTexture == null)
                 return;
 
-            RenderTexture.active = textureManager.BorderTexture;
+            RenderTexture.active = textureManager.DistanceFieldTexture;
             GL.Clear(true, true, Color.white);
             RenderTexture.active = null;
 
@@ -550,10 +550,10 @@ namespace Map.Rendering
         /// </summary>
         public void ClearBorders()
         {
-            if (textureManager == null || textureManager.BorderTexture == null)
+            if (textureManager == null || textureManager.DistanceFieldTexture == null)
                 return;
 
-            RenderTexture.active = textureManager.BorderTexture;
+            RenderTexture.active = textureManager.DistanceFieldTexture;
             GL.Clear(true, true, Color.clear);
             RenderTexture.active = null;
 
@@ -708,7 +708,7 @@ namespace Map.Rendering
 
             // Set compute shader parameters via command buffer
             cmd.SetComputeTextureParam(borderDetectionCompute, kernelToUse, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
-            cmd.SetComputeTextureParam(borderDetectionCompute, kernelToUse, "BorderTexture", textureManager.BorderTexture);
+            cmd.SetComputeTextureParam(borderDetectionCompute, kernelToUse, "BorderTexture", textureManager.DistanceFieldTexture);
             cmd.SetComputeIntParam(borderDetectionCompute, "MapWidth", textureManager.MapWidth);
             cmd.SetComputeIntParam(borderDetectionCompute, "MapHeight", textureManager.MapHeight);
 

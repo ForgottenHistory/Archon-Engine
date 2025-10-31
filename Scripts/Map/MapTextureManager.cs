@@ -37,9 +37,8 @@ namespace Map.Rendering
         public Texture2D HeightmapTexture => visualTextures?.HeightmapTexture;
         public Texture2D NormalMapTexture => visualTextures?.NormalMapTexture;
         public Texture2D ProvinceColorPalette => paletteManager?.ProvinceColorPalette;
-        public RenderTexture BorderTexture => dynamicTextures?.BorderTexture;
-        public RenderTexture BorderMaskTexture => dynamicTextures?.BorderMaskTexture;
-        public RenderTexture BorderDistanceTexture => dynamicTextures?.BorderDistanceTexture;
+        public RenderTexture DistanceFieldTexture => dynamicTextures?.DistanceFieldTexture;
+        public RenderTexture DualBorderTexture => dynamicTextures?.DualBorderTexture;
         public RenderTexture HighlightTexture => dynamicTextures?.HighlightTexture;
         public RenderTexture FogOfWarTexture => dynamicTextures?.FogOfWarTexture;
 
