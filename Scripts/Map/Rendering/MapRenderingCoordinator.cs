@@ -140,10 +140,6 @@ namespace Map.Rendering
             float mapHeight = 10.0f; // Same as quad height
             mapCamera.orthographicSize = mapHeight * 0.6f; // Show with padding
 
-            // Set appropriate clipping planes
-            mapCamera.nearClipPlane = 0.1f;
-            mapCamera.farClipPlane = 100f;
-
             if (logRenderingProgress)
             {
                 ArchonLogger.Log($"MapRenderingCoordinator: Camera positioned for {textureManager.MapWidth}x{textureManager.MapHeight} map", "map_initialization");
