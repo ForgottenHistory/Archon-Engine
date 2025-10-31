@@ -73,6 +73,24 @@ namespace Map.Rendering
             provinceIDPixels = tempTexture.GetPixels32();
             Object.Destroy(tempTexture);
 
+            // CRITICAL: Apply median filter to smooth province IDs (removes peninsula indents at source)
+            // This eliminates U-turn artifacts by smoothing the province boundaries before extraction
+            provinceIDPixels = ApplyMedianFilterToProvinceIDs(provinceIDPixels, mapWidth, mapHeight);
+
+            if (logProgress)
+            {
+                ArchonLogger.Log("BorderCurveExtractor: Applied median filter to smooth province boundaries", "map_initialization");
+            }
+
+            // CRITICAL: Rebuild provinceMapping to match filtered data
+            // The median filter changed which pixels belong to which provinces
+            RebuildProvinceMappingFromFilteredPixels(provinceIDPixels, mapWidth, mapHeight);
+
+            if (logProgress)
+            {
+                ArchonLogger.Log("BorderCurveExtractor: Rebuilt province pixel mapping from filtered data", "map_initialization");
+            }
+
             // Get all provinces from ProvinceSystem
             var allProvinceIds = provinceSystem.GetAllProvinceIds(Allocator.Temp);
             int processedBorders = 0;
@@ -135,11 +153,14 @@ namespace Map.Rendering
 
                     if (borderPixels.Count > 0)
                     {
-                        // Chain pixels into multiple ordered polylines (handles disconnected border segments)
-                        List<List<Vector2>> allChains = ChainBorderPixelsMultiple(borderPixels);
+                        // DEBUG: Check if this is a debug border (for detailed logging)
+                        bool isDebugBorder = (provinceA == 1160 || provinceB == 1160 ||
+                                             provinceA == 1765 || provinceB == 1765 ||
+                                             provinceA == 4703 || provinceB == 4703);
 
-                        // DEBUG: Log borders with multiple chains (potential U-turn issues)
-                        bool isDebugBorder = (provinceA == 1160 || provinceB == 1160);
+                        // Median filter already smoothed the province IDs at source - no need for convex hull filtering
+                        // Chain border pixels into polylines
+                        List<List<Vector2>> allChains = ChainBorderPixelsMultiple(borderPixels);
                         if ((allChains.Count > 1 && processedBorders < 20) || isDebugBorder)
                         {
                             string chainSizes = string.Join(", ", allChains.Select(c => c.Count));
@@ -157,7 +178,7 @@ namespace Map.Rendering
                             ArchonLogger.Log($"FILTERED TINY CHAINS {provinceA}-{provinceB}: Discarded {discarded} chains (≤3 pixels)", "map_initialization");
                         }
 
-                        // Merge significant chains (no U-turn detection for now)
+                        // Merge significant chains with self-intersection detection
                         List<Vector2> mergedPath;
                         if (significantChains.Count == 0)
                         {
@@ -166,6 +187,7 @@ namespace Map.Rendering
                         }
                         else if (significantChains.Count == 1)
                         {
+                            // Single chain - just use it directly
                             mergedPath = significantChains[0];
                         }
                         else
@@ -218,6 +240,15 @@ namespace Map.Rendering
                         if (enableDebugLog)
                         {
                             ArchonLogger.Log($"  Post-tessellation: {smoothedPath.Count} points", "map_initialization");
+                        }
+
+                        // Check if final smoothed path self-intersects (U-turn created by smoothing)
+                        if (PathSelfIntersects(smoothedPath))
+                        {
+                            if (processedBorders < 10 || isDebugBorder)
+                            {
+                                ArchonLogger.LogWarning($"POST-SMOOTHING SELF-INTERSECTION {provinceA}-{provinceB}: Final path has U-turn after smoothing (chains: {allChains.Count})", "map_initialization");
+                            }
                         }
 
                         // Early exit if path too short or degenerate
@@ -984,6 +1015,229 @@ namespace Map.Rendering
             const float epsilon = 0.01f; // Small tolerance to exclude near-endpoint intersections
             return (t1 > epsilon && t1 < 1.0f - epsilon &&
                     t2 > epsilon && t2 < 1.0f - epsilon);
+        }
+
+        /// <summary>
+        /// Filter border pixels to convex hull perimeter, removing interior pixels
+        /// This prevents U-turns caused by peninsula indents creating interior loops
+        /// </summary>
+        private List<Vector2> FilterToConvexHullPerimeter(List<Vector2> pixels)
+        {
+            if (pixels.Count < 3)
+                return pixels;
+
+            // Compute convex hull using Graham scan
+            List<Vector2> hull = ComputeConvexHull(pixels);
+
+            // Keep pixels that are ON or NEAR the hull perimeter (within 2 pixels)
+            const float PERIMETER_TOLERANCE = 2.0f;
+            List<Vector2> filtered = new List<Vector2>();
+
+            foreach (var pixel in pixels)
+            {
+                if (IsPointOnOrNearPolyline(pixel, hull, PERIMETER_TOLERANCE))
+                {
+                    filtered.Add(pixel);
+                }
+            }
+
+            return filtered.Count > 0 ? filtered : pixels; // Fallback to original if filtering failed
+        }
+
+        /// <summary>
+        /// Compute convex hull of points using Graham scan algorithm
+        /// Returns hull vertices in counter-clockwise order
+        /// </summary>
+        private List<Vector2> ComputeConvexHull(List<Vector2> points)
+        {
+            if (points.Count < 3)
+                return new List<Vector2>(points);
+
+            // Find bottom-most point (or left-most if tied)
+            Vector2 pivot = points[0];
+            foreach (var p in points)
+            {
+                if (p.y < pivot.y || (p.y == pivot.y && p.x < pivot.x))
+                    pivot = p;
+            }
+
+            // Sort points by polar angle with respect to pivot
+            List<Vector2> sorted = new List<Vector2>(points);
+            sorted.Sort((a, b) =>
+            {
+                if (a == pivot) return -1;
+                if (b == pivot) return 1;
+
+                float angleA = Mathf.Atan2(a.y - pivot.y, a.x - pivot.x);
+                float angleB = Mathf.Atan2(b.y - pivot.y, b.x - pivot.x);
+
+                if (Mathf.Abs(angleA - angleB) < 1e-6f)
+                {
+                    // Same angle - closer point first
+                    float distA = Vector2.Distance(pivot, a);
+                    float distB = Vector2.Distance(pivot, b);
+                    return distA.CompareTo(distB);
+                }
+
+                return angleA.CompareTo(angleB);
+            });
+
+            // Graham scan
+            List<Vector2> hull = new List<Vector2>();
+            foreach (var point in sorted)
+            {
+                // Remove points that make right turn
+                while (hull.Count >= 2 && CrossProduct(hull[hull.Count - 2], hull[hull.Count - 1], point) <= 0)
+                {
+                    hull.RemoveAt(hull.Count - 1);
+                }
+                hull.Add(point);
+            }
+
+            return hull;
+        }
+
+        /// <summary>
+        /// Cross product for Graham scan (determines turn direction)
+        /// Positive = counter-clockwise, Negative = clockwise, Zero = collinear
+        /// </summary>
+        private float CrossProduct(Vector2 o, Vector2 a, Vector2 b)
+        {
+            return (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+        }
+
+        /// <summary>
+        /// Check if point is on or near a polyline (within tolerance distance)
+        /// </summary>
+        private bool IsPointOnOrNearPolyline(Vector2 point, List<Vector2> polyline, float tolerance)
+        {
+            if (polyline.Count < 2)
+                return false;
+
+            // Check distance to each line segment
+            for (int i = 0; i < polyline.Count; i++)
+            {
+                Vector2 p1 = polyline[i];
+                Vector2 p2 = polyline[(i + 1) % polyline.Count]; // Wrap around for closed hull
+
+                float dist = DistancePointToSegment(point, p1, p2);
+                if (dist <= tolerance)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Compute distance from point to line segment
+        /// </summary>
+        private float DistancePointToSegment(Vector2 point, Vector2 segStart, Vector2 segEnd)
+        {
+            Vector2 segVec = segEnd - segStart;
+            Vector2 pointVec = point - segStart;
+
+            float segLengthSq = segVec.sqrMagnitude;
+            if (segLengthSq < 1e-6f)
+                return Vector2.Distance(point, segStart);
+
+            // Project point onto segment
+            float t = Mathf.Clamp01(Vector2.Dot(pointVec, segVec) / segLengthSq);
+            Vector2 projection = segStart + t * segVec;
+
+            return Vector2.Distance(point, projection);
+        }
+
+        /// <summary>
+        /// Rebuild provinceMapping from filtered province ID pixels
+        /// Clears existing pixel lists and re-scans the filtered texture
+        /// </summary>
+        private void RebuildProvinceMappingFromFilteredPixels(Color32[] pixels, int width, int height)
+        {
+            // Clear all pixel lists (but keep province IDs and colors)
+            var allProvinces = provinceMapping.GetAllProvinces();
+            foreach (var kvp in allProvinces)
+            {
+                kvp.Value.Pixels.Clear();
+            }
+
+            // Re-scan filtered texture and rebuild pixel lists
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int idx = y * width + x;
+                    ushort provinceID = Province.ProvinceIDEncoder.UnpackProvinceID(pixels[idx]);
+
+                    if (provinceID > 0)
+                    {
+                        provinceMapping.AddPixelToProvince(provinceID, x, y);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Apply median filter to province ID texture to smooth boundaries
+        /// Removes small peninsulas and indents that cause U-turn artifacts
+        /// Uses 3x3 window - replaces center pixel with most common province ID in neighborhood
+        /// </summary>
+        private Color32[] ApplyMedianFilterToProvinceIDs(Color32[] pixels, int width, int height)
+        {
+            Color32[] filtered = new Color32[pixels.Length];
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int centerIdx = y * width + x;
+
+                    // Collect province IDs in 3x3 window
+                    var neighborIDs = new System.Collections.Generic.Dictionary<ushort, int>(); // provinceID -> count
+
+                    for (int dy = -1; dy <= 1; dy++)
+                    {
+                        for (int dx = -1; dx <= 1; dx++)
+                        {
+                            int nx = x + dx;
+                            int ny = y + dy;
+
+                            // Skip out of bounds
+                            if (nx < 0 || nx >= width || ny < 0 || ny >= height)
+                                continue;
+
+                            int neighborIdx = ny * width + nx;
+                            ushort provinceID = Province.ProvinceIDEncoder.UnpackProvinceID(pixels[neighborIdx]);
+
+                            if (provinceID > 0) // Skip empty pixels
+                            {
+                                if (!neighborIDs.ContainsKey(provinceID))
+                                    neighborIDs[provinceID] = 0;
+                                neighborIDs[provinceID]++;
+                            }
+                        }
+                    }
+
+                    // Find most common province ID (median/mode)
+                    ushort mostCommonID = 0;
+                    int maxCount = 0;
+                    foreach (var kvp in neighborIDs)
+                    {
+                        if (kvp.Value > maxCount)
+                        {
+                            maxCount = kvp.Value;
+                            mostCommonID = kvp.Key;
+                        }
+                    }
+
+                    // Use most common ID, or keep original if no neighbors found
+                    if (mostCommonID > 0)
+                        filtered[centerIdx] = Province.ProvinceIDEncoder.PackProvinceID(mostCommonID);
+                    else
+                        filtered[centerIdx] = pixels[centerIdx];
+                }
+            }
+
+            return filtered;
         }
 
         /// <summary>
