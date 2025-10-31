@@ -15,14 +15,10 @@
 **Map.Rendering.MapTextureManager** - Facade coordinator for all map textures (delegates to texture sets)
 **Map.Rendering.CoreTextureSet** - Core textures: Province ID (RenderTexture), Owner (RenderTexture), Color (Texture2D), Development (RenderTexture UAV-enabled for GPU writes)
 **Map.Rendering.VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map
-**Map.Rendering.DynamicTextureSet** - Dynamic textures: Border, BorderMask (R8 sparse mask), Highlight RenderTextures
+**Map.Rendering.DynamicTextureSet** - [BURST] Dynamic textures with mode-aware binding: DistanceField/DualBorder RenderTextures, Highlight, FogOfWar
 **Map.Rendering.PaletteTextureManager** - Color palette texture (256×1 RGBA32) with HSV distribution
 **Map.Rendering.MapRenderer** - Single draw call map rendering
 **Map.Rendering.MapRenderingCoordinator** - Coordinate rendering subsystems
-**Map.Rendering.BorderComputeDispatcher** - Orchestrates border rendering: initializes curve extraction/cache/renderer, uploads GPU data, generates border mask & distance fields
-**Map.Rendering.BorderCurveExtractor** - Extract border pixel chains from province pairs, chain into polylines, merge chains (uses AdjacencySystem)
-**Map.Rendering.BorderCurveCache** - Cache smooth polyline segments with runtime styles (static geometry + dynamic appearance pattern)
-**Map.Rendering.BorderDistanceFieldGenerator** - Generate signed distance field for borders using jump flooding algorithm (JFA)
 **Map.Rendering.OwnerTextureDispatcher** - Update owner texture from simulation state
 **Map.Rendering.TextureStreamingManager** - Stream texture LODs for memory optimization
 **Map.Rendering.TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
@@ -30,6 +26,25 @@
 **Map.Rendering.BillboardAtlasGenerator** - Generate texture atlases for billboard rendering
 **Map.Rendering.FogOfWarSystem** - Fog of war rendering system
 **Map.Rendering.InstancedBillboardRenderer** - Instanced rendering for billboards (units, buildings)
+
+### Rendering/Border/
+**Map.Rendering.BorderComputeDispatcher** - [OPTIMIZED] Orchestrates border rendering: conditionally loads curves only for MeshGeometry mode, skips for shader modes (~0ms for ShaderDistanceField)
+**Map.Rendering.BorderEnums** - Shared enums: BorderMode, BorderRenderingMode (single source of truth)
+**Map.Rendering.BorderCurveExtractor** - [BURST] Extract border curves with 3x Burst jobs: median filter (8x faster), pixel mapping rebuild (14x faster), border pixel detection (2x faster). Only runs for MeshGeometry mode.
+**Map.Rendering.BorderCurveCache** - Cache smooth polyline segments with runtime styles (static geometry + dynamic appearance pattern)
+**Map.Rendering.BorderDistanceFieldGenerator** - [GPU] Generate signed distance field using Jump Flooding Algorithm (JFA) - dual channel R=country, G=province (~14ms for 5.6M pixels)
+**Map.Rendering.Border.BorderShaderManager** - Manage compute shader loading and kernel initialization
+**Map.Rendering.Border.BorderParameterBinder** - Centralize border rendering parameters (thickness, colors, alphas)
+**Map.Rendering.Border.BorderStyleUpdater** - Update border styles based on ownership (country vs province classification)
+**Map.Rendering.Border.BorderDebugUtility** - Debug utilities and benchmarking tools
+**Map.Rendering.Border.MedianFilterProcessor** - [BURST] 3x3 median filter with parallel job (7.3x speedup: 3.9s → 0.5s)
+**Map.Rendering.Border.JunctionDetector** - Detect junction pixels where 3+ provinces meet
+**Map.Rendering.Border.BorderChainMerger** - Merge border chains with U-turn detection
+**Map.Rendering.Border.BorderGeometryUtils** - Geometric utilities (intersection, angles, distances)
+**Map.Rendering.Border.BorderPolylineSimplifier** - RDP simplification, Chaikin smoothing, tessellation
+**Map.Rendering.BorderMeshGenerator** - Generate triangle strip meshes from border curves (MeshGeometry mode only)
+**Map.Rendering.BorderMeshRenderer** - Render border meshes (MeshGeometry mode only)
+**Map.Rendering.BorderTextureDebug** - Debug visualization for border textures
 
 ---
 

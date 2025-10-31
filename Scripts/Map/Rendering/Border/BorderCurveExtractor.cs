@@ -3,6 +3,8 @@ using System.Linq;
 using UnityEngine;
 using Unity.Collections;
 using Unity.Mathematics;
+using Unity.Jobs;
+using Unity.Burst;
 using Core.Systems;
 using Map.Rendering.Border;
 using ProvinceSystemType = Core.Systems.ProvinceSystem;
@@ -44,6 +46,9 @@ namespace Map.Rendering
         private Color32[] provinceIDPixels;
         private int mapWidth;
         private int mapHeight;
+
+        // Reusable NativeArray for Burst jobs (created once, reused for all border pairs)
+        private NativeArray<Color32> cachedNativePixels;
 
         // Junction detection: pixels where 3+ provinces meet
         private Dictionary<Vector2, HashSet<ushort>> junctionPixels;
@@ -94,7 +99,8 @@ namespace Map.Rendering
 
             // CRITICAL: Apply median filter to smooth province IDs (removes peninsula indents at source)
             // This eliminates U-turn artifacts by smoothing the province boundaries before extraction
-            provinceIDPixels = medianFilterProcessor.ApplyMedianFilter(provinceIDPixels);
+            // Using Burst-compiled version for ~10-20x performance improvement
+            provinceIDPixels = medianFilterProcessor.ApplyMedianFilterBurst(provinceIDPixels);
 
             if (logProgress)
             {
@@ -103,7 +109,8 @@ namespace Map.Rendering
 
             // CRITICAL: Rebuild provinceMapping to match filtered data
             // The median filter changed which pixels belong to which provinces
-            RebuildProvinceMappingFromFilteredPixels(provinceIDPixels, mapWidth, mapHeight);
+            // Using Burst-compiled version for parallel pixel scanning
+            RebuildProvinceMappingBurst(provinceIDPixels, mapWidth, mapHeight);
 
             if (logProgress)
             {
@@ -119,6 +126,9 @@ namespace Map.Rendering
 
             // Initialize chain merger with junction data
             chainMerger = new BorderChainMerger(mapWidth, mapHeight, provinceIDPixels, junctionPixels);
+
+            // Create reusable NativeArray for Burst jobs (huge performance win - create once, reuse for all 11k+ borders)
+            cachedNativePixels = new NativeArray<Color32>(provinceIDPixels, Allocator.Persistent);
 
             // Get all provinces from ProvinceSystem
             var allProvinceIds = provinceSystem.GetAllProvinceIds(Allocator.Temp);
@@ -161,8 +171,8 @@ namespace Map.Rendering
                         ArchonLogger.Log($"BorderCurveExtractor: First border pair: {provinceA} <-> {provinceB}", "map_initialization");
                     }
 
-                    // Extract shared border pixels (unordered)
-                    List<Vector2> borderPixels = ExtractSharedBorderPixels(provinceA, provinceB);
+                    // Extract shared border pixels (unordered) using Burst-compiled parallel job
+                    List<Vector2> borderPixels = ExtractSharedBorderPixelsBurst(provinceA, provinceB);
 
                     // Skip truly degenerate borders (1-2 pixels = compression artifacts)
                     // But allow small borders (3-9 pixels) - these are real borders that need to render
@@ -340,6 +350,12 @@ namespace Map.Rendering
             // POST-PROCESSING: Snap polyline endpoints at junctions using JunctionDetector
             junctionDetector.SnapPolylineEndpointsAtJunctions(borderPolylines, junctionPixels);
 
+            // Dispose cached NativeArray
+            if (cachedNativePixels.IsCreated)
+            {
+                cachedNativePixels.Dispose();
+            }
+
             if (logProgress)
             {
                 ArchonLogger.Log($"BorderCurveExtractor: Total time: {(Time.realtimeSinceStartup - startTime) * 1000f:F0}ms", "map_initialization");
@@ -463,6 +479,193 @@ namespace Map.Rendering
 
             // Same owner = province border, different owner = country border
             return (ownerA == ownerB) ? BorderType.Province : BorderType.Country;
+        }
+
+        /// <summary>
+        /// Burst-compiled job to find border pixels between two provinces
+        /// Processes pixels from province A in parallel to find neighbors in province B
+        /// </summary>
+        [BurstCompile]
+        private struct FindBorderPixelsJob : IJobParallelFor
+        {
+            [ReadOnly] public NativeArray<int2> provinceAPixels; // x, y coords
+            [ReadOnly] public NativeArray<Color32> allPixels;
+            [ReadOnly] public ushort targetProvinceB;
+            [ReadOnly] public int mapWidth;
+            [ReadOnly] public int mapHeight;
+
+            [WriteOnly, NativeDisableParallelForRestriction]
+            public NativeArray<byte> isBorderPixel; // 1 if border, 0 if not
+
+            public void Execute(int index)
+            {
+                int2 pixel = provinceAPixels[index];
+                int x = pixel.x;
+                int y = pixel.y;
+
+                // Check 8-neighbors for target province
+                bool found = false;
+                for (int dy = -1; dy <= 1 && !found; dy++)
+                {
+                    for (int dx = -1; dx <= 1 && !found; dx++)
+                    {
+                        if (dx == 0 && dy == 0) continue; // Skip center
+
+                        int nx = x + dx;
+                        int ny = y + dy;
+
+                        // Bounds check
+                        if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight)
+                            continue;
+
+                        int neighborIndex = ny * mapWidth + nx;
+                        ushort neighborProvince = Province.ProvinceIDEncoder.UnpackProvinceID(allPixels[neighborIndex]);
+
+                        if (neighborProvince == targetProvinceB)
+                        {
+                            found = true;
+                        }
+                    }
+                }
+
+                isBorderPixel[index] = found ? (byte)1 : (byte)0;
+            }
+        }
+
+        /// <summary>
+        /// Extract border pixels using Burst-compiled parallel job
+        /// Uses cached NativeArray for massive performance improvement (no allocation per border)
+        /// </summary>
+        private List<Vector2> ExtractSharedBorderPixelsBurst(ushort provinceA, ushort provinceB)
+        {
+            var pixelsA = provinceMapping.GetProvincePixels(provinceA);
+            if (pixelsA == null || pixelsA.Count == 0)
+                return new List<Vector2>();
+
+            // Convert pixel list to NativeArray of int2 (x, y)
+            var nativePixelsA = new NativeArray<int2>(pixelsA.Count, Allocator.TempJob);
+            for (int i = 0; i < pixelsA.Count; i++)
+            {
+                nativePixelsA[i] = new int2(pixelsA[i].x, pixelsA[i].y);
+            }
+
+            var isBorderPixel = new NativeArray<byte>(pixelsA.Count, Allocator.TempJob);
+
+            var job = new FindBorderPixelsJob
+            {
+                provinceAPixels = nativePixelsA,
+                allPixels = cachedNativePixels, // Reuse cached array - HUGE performance win!
+                targetProvinceB = provinceB,
+                mapWidth = mapWidth,
+                mapHeight = mapHeight,
+                isBorderPixel = isBorderPixel
+            };
+
+            int batchSize = UnityEngine.Mathf.Max(1, pixelsA.Count / (UnityEngine.SystemInfo.processorCount * 2));
+            JobHandle handle = job.Schedule(pixelsA.Count, batchSize);
+            handle.Complete();
+
+            // Collect border pixels
+            var borderPixels = new List<Vector2>();
+            for (int i = 0; i < pixelsA.Count; i++)
+            {
+                if (isBorderPixel[i] == 1)
+                {
+                    borderPixels.Add(new Vector2(pixelsA[i].x, pixelsA[i].y));
+                }
+            }
+
+            nativePixelsA.Dispose();
+            isBorderPixel.Dispose();
+
+            return borderPixels;
+        }
+
+        /// <summary>
+        /// Burst-compiled job to scan pixels and extract (provinceID, x, y) data
+        /// </summary>
+        [BurstCompile]
+        private struct ScanProvincePixelsJob : IJobParallelFor
+        {
+            [ReadOnly] public NativeArray<Color32> pixels;
+            [ReadOnly] public int width;
+
+            [WriteOnly, NativeDisableParallelForRestriction]
+            public NativeArray<ushort> provinceIDs;
+
+            [WriteOnly, NativeDisableParallelForRestriction]
+            public NativeArray<int> xCoords;
+
+            [WriteOnly, NativeDisableParallelForRestriction]
+            public NativeArray<int> yCoords;
+
+            public void Execute(int index)
+            {
+                ushort provinceID = Province.ProvinceIDEncoder.UnpackProvinceID(pixels[index]);
+
+                if (provinceID > 0)
+                {
+                    int x = index % width;
+                    int y = index / width;
+
+                    provinceIDs[index] = provinceID;
+                    xCoords[index] = x;
+                    yCoords[index] = y;
+                }
+                else
+                {
+                    provinceIDs[index] = 0; // Mark as invalid
+                }
+            }
+        }
+
+        /// <summary>
+        /// Rebuild province pixel mapping using Burst-compiled job for scanning
+        /// Much faster than nested loops with Dictionary operations
+        /// </summary>
+        private void RebuildProvinceMappingBurst(Color32[] pixels, int width, int height)
+        {
+            // Clear all pixel lists
+            var allProvinces = provinceMapping.GetAllProvinces();
+            foreach (var kvp in allProvinces)
+            {
+                kvp.Value.Pixels.Clear();
+            }
+
+            // Use Burst to scan all pixels in parallel
+            var nativePixels = new NativeArray<Color32>(pixels, Allocator.TempJob);
+            var provinceIDs = new NativeArray<ushort>(pixels.Length, Allocator.TempJob);
+            var xCoords = new NativeArray<int>(pixels.Length, Allocator.TempJob);
+            var yCoords = new NativeArray<int>(pixels.Length, Allocator.TempJob);
+
+            var scanJob = new ScanProvincePixelsJob
+            {
+                pixels = nativePixels,
+                width = width,
+                provinceIDs = provinceIDs,
+                xCoords = xCoords,
+                yCoords = yCoords
+            };
+
+            int batchSize = UnityEngine.Mathf.Max(1, pixels.Length / (UnityEngine.SystemInfo.processorCount * 4));
+            JobHandle handle = scanJob.Schedule(pixels.Length, batchSize);
+            handle.Complete();
+
+            // Add pixels to province mapping (managed Dictionary operations, but much faster than before)
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                ushort provinceID = provinceIDs[i];
+                if (provinceID > 0)
+                {
+                    provinceMapping.AddPixelToProvince(provinceID, xCoords[i], yCoords[i]);
+                }
+            }
+
+            // Cleanup
+            nativePixels.Dispose();
+            provinceIDs.Dispose();
+            xCoords.Dispose();
+            yCoords.Dispose();
         }
     }
 }

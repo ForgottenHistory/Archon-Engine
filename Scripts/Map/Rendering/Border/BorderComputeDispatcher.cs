@@ -192,16 +192,35 @@ namespace Map.Rendering
             this.provinceSystem = provinceSystem;
             this.countrySystem = countrySystem;
 
-            // Initialize curve extractor with province pixel lists
-            curveExtractor = new BorderCurveExtractor(textureManager, adjacencySystem, provinceSystem, provinceMapping);
+            // OPTIMIZATION: Only extract curves for MeshGeometry mode
+            // ShaderDistanceField and ShaderPixelPerfect modes work directly from textures (GPU)
+            if (renderingMode == BorderRenderingMode.MeshGeometry)
+            {
+                // Initialize curve extractor with province pixel lists
+                curveExtractor = new BorderCurveExtractor(textureManager, adjacencySystem, provinceSystem, provinceMapping);
 
-            // Extract all border curves (CPU intensive, done once at startup)
-            ArchonLogger.Log("BorderComputeDispatcher: Extracting border curves...", "map_initialization");
-            var borderCurves = curveExtractor.ExtractAllBorders();
+                // Extract all border curves (CPU intensive, done once at startup)
+                ArchonLogger.Log("BorderComputeDispatcher: Extracting border curves for mesh rendering...", "map_initialization");
+                var borderCurves = curveExtractor.ExtractAllBorders();
 
-            // Initialize curve cache to store extracted curves
-            curveCache = new BorderCurveCache();
-            curveCache.Initialize(borderCurves);
+                // Initialize curve cache to store extracted curves
+                curveCache = new BorderCurveCache();
+                curveCache.Initialize(borderCurves);
+
+                // Initialize style updater
+                styleUpdater = new BorderStyleUpdater(curveCache, provinceSystem, countrySystem);
+
+                // Update all border styles (classify as country vs province borders)
+                styleUpdater.UpdateAllBorderStyles();
+
+                // Initialize mesh generator and renderer
+                meshGenerator = new BorderMeshGenerator(1.0f, textureManager.MapWidth, textureManager.MapHeight);
+                meshRenderer = new BorderMeshRenderer(mapPlaneTransform);
+            }
+            else
+            {
+                ArchonLogger.Log("BorderComputeDispatcher: Skipping curve extraction (not needed for shader-based rendering)", "map_initialization");
+            }
 
             // Initialize distance field generator (for ShaderDistanceField mode)
             // Note: BorderDistanceFieldGenerator is a MonoBehaviour, should already exist on GameObject
@@ -219,16 +238,6 @@ namespace Map.Rendering
             {
                 distanceFieldGenerator.SetTextureManager(textureManager);
             }
-
-            // Initialize style updater
-            styleUpdater = new BorderStyleUpdater(curveCache, provinceSystem, countrySystem);
-
-            // Update all border styles (classify as country vs province borders)
-            styleUpdater.UpdateAllBorderStyles();
-
-            // Initialize mesh generator and renderer (for MeshGeometry mode)
-            meshGenerator = new BorderMeshGenerator(1.0f, textureManager.MapWidth, textureManager.MapHeight);
-            meshRenderer = new BorderMeshRenderer(mapPlaneTransform);
 
             smoothBordersInitialized = true;
 
