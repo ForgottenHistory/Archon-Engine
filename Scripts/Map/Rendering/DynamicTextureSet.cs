@@ -180,19 +180,40 @@ namespace Map.Rendering
 
         /// <summary>
         /// Bind dynamic textures to material
+        /// Default binding uses distance field texture (ShaderDistanceField mode)
         /// </summary>
         public void BindToMaterial(Material material)
         {
             if (material == null) return;
 
+            // Default: bind distanceFieldTexture for ShaderDistanceField mode
             material.SetTexture(BorderTexID, distanceFieldTexture);
-            material.SetTexture(BorderMaskTexID, dualBorderTexture);
             material.SetTexture(HighlightTexID, highlightTexture);
             material.SetTexture(FogOfWarTexID, fogOfWarTexture);
 
             if (logCreation)
             {
-                ArchonLogger.Log("DynamicTextureSet: Bound dynamic textures to material (DistanceField and DualBorder)", "map_initialization");
+                ArchonLogger.Log("DynamicTextureSet: Bound dynamic textures to material (DistanceField mode)", "map_initialization");
+            }
+        }
+
+        /// <summary>
+        /// Bind border texture based on rendering mode
+        /// Call this when switching border rendering modes
+        /// </summary>
+        public void BindBorderTexture(Material material, bool usePixelPerfect)
+        {
+            if (material == null) return;
+
+            // ShaderDistanceField mode uses distanceFieldTexture (JFA SDF, smooth anti-aliased)
+            // ShaderPixelPerfect mode uses dualBorderTexture (R=country, G=province, 1-pixel borders)
+            RenderTexture borderTex = usePixelPerfect ? dualBorderTexture : distanceFieldTexture;
+            material.SetTexture(BorderTexID, borderTex);
+
+            if (logCreation)
+            {
+                string modeName = usePixelPerfect ? "PixelPerfect (DualBorder)" : "DistanceField (SDF)";
+                ArchonLogger.Log($"DynamicTextureSet: Bound _BorderTexture to {modeName} mode", "map_rendering");
             }
         }
 
