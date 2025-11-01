@@ -2,15 +2,30 @@
 
 A Unity-based game engine for grand strategy games, built around a dual-layer architecture that separates deterministic simulation from GPU-accelerated presentation.
 
-**Solo-developed using AI-assisted methodology.** This project explores whether one architect directing AI specialists can build systems that traditionally require teams.
+Documentation is approximately 1:1 with code size - architecture docs, session logs, and decision records. Many 1% topis covered in great detail.
 
-Currently in **ACTIVE development**, not recommended for production use. Documentation is approximately 1:1 with code size - architecture docs, session logs, and decision records are maintained as the foundation for AI collaboration.
+APIs should be stable by 2026 Q1. Until a release pops up, production use is discouraged. Free open-source game demo will be released in 2026 Q1 to showcase practical integration.
 
 **Quick Links:**
 - [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Architecture overview
 - [Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Complete feature list
 
-Free open-source game demo will be released later.
+## Why
+
+Grand strategy is notorious for being extremely complex. Even for experienced studios it's a daunting task to set everything up. It essentially has given monopoly to Paradox, with only exceptioanlly few coming close to their quality and scale. And for good reason.
+
+Some extreme hurdles for Paradox-like grand strategy:
+- Vector like graphics to scale infinitely
+- Create beautiful maps from simple bitmaps/pngs
+- Fixed-Point arithmetic & deterministic simulation
+- Data oriented design (not OOP)
+- AI, Diplomacy, Military, Economy as core pillars
+
+I could go on.
+
+Archon-Engine is designed to be generic infrastructure, providing everything you need from day 1. You can focus on creating content rather than researching the 1% topics barely anyone knows about.
+
+**This not a dunk on Paradox.** I love their games. I just wish they didn't lag so goddamn much.
 
 ## Core Architecture
 
@@ -49,8 +64,7 @@ Free open-source game demo will be released later.
 
 **Rendering Performance:**
 - Single draw call for entire map
-- Vector curve borders: 720KB curve data vs 40MB rasterized (55× compression)
-- Resolution-independent borders (sharp at any zoom level)
+- TO BE DETERMINED
 
 **Multiplayer-Ready Architecture:**
 - Deterministic fixed-point math (no floats in simulation)
@@ -82,30 +96,40 @@ Assets/Archon-Engine/
 **Core Engine (Complete):**
 - Dual-layer architecture with hot/cold data separation
 - Province, Country, Diplomacy, Unit, and Pathfinding systems
-- Vector curve border rendering with spatial acceleration
+- Resource & modifiers system
 - Save/load system with command pattern
 - Zero-allocation EventBus and performance optimizations
-- AI system with goal-oriented behavior and bucketing scheduler
+- AI system with goal-oriented behavior
 
 **Game Layer (In Progress):**
-- Economic system and resource management
-- Building construction and development
-- Map modes and visualization
+- Core pillars implementation
+- Vector like borders
+- 3D terrain tessallation
 
 **Planned Features:**
 - Multiplayer (lockstep command synchronization)
 - Modding API (C# scripting support)
-- Advanced AI (heat-map tactical positioning)
+- Advanced AI
 
 ## Development Methodology
 
-This engine is built using an "AI CTO" model: one human architect defines the vision, constraints, and architecture, while AI handles implementation. This approach requires rigorous documentation discipline - every architectural decision is recorded not just for humans, but as the instruction manual for AI.
+I could not have started this project a couple years ago. You need very specific expertise to pull something like this off. For now, I'm just one guy.
+
+With the advent of AI agents, I present the "AI CTO" model: one human architect defines the vision, constraints, and architecture, while AI handles implementation. This approach requires rigorous documentation discipline - every architectural decision is recorded as the instruction manual and institutional memory for AI.
 
 **Key to scalability:**
-- Architecture documents define immutable constraints (8-byte structs, deterministic simulation)
-- Session logs capture decisions and rationale
-- FILE_REGISTRY documents catalog all systems
-- Documentation serves as the instruction manual for AI collaboration
+- Architecture documents defines immutable constraints (8-byte structs, deterministic simulation)
+- Session logs capture pivotal moments and implementations
+- FILE_REGISTRY & CURRENT_FEATURES documents catalog all systems
+- Documentation serves as the instruction manual for AI collaboration, preserves context
+
+Documentation is not overhead, it's needed. That's why if you read the docs you'll notice the information dense principles over code examples. It's AI optimized formatting for fast lookup. But I'm not here to preach, the work speaks for itself. Make your own conclusions.
+
+The project goal is twofold:
+- Prove grand strategy with proper architecture does not lag lategame
+- AI development can scale & handle complexity
+
+Hot takes, I know. Find my hidden docs if you want full picture.
 
 ## Documentation
 
