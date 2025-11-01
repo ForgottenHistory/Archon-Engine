@@ -12,7 +12,7 @@ APIs should be stable by 2026 Q1. Until a release pops up, production use is dis
 
 ## Why
 
-Grand strategy is notorious for being extremely complex. Even for experienced studios it's a daunting task to set everything up. It essentially has given monopoly to Paradox, with only exceptioanlly few coming close to their quality and scale. And for good reason.
+Grand strategy is notorious for being extremely complex. Even for experienced studios it's a daunting task to set everything up. It essentially has given monopoly to Paradox, with only exceptionally few coming close to their quality and scale. And for good reason.
 
 Some extreme hurdles for Paradox-like grand strategy:
 - Vector like graphics to scale infinitely
@@ -20,6 +20,8 @@ Some extreme hurdles for Paradox-like grand strategy:
 - Fixed-Point arithmetic & deterministic simulation
 - Data oriented design (not OOP)
 - AI, Diplomacy, Military, Economy as core pillars
+- Modifiers, resources, relations, unit movements, sparse storage
+- Modding capability
 
 I could go on.
 
@@ -105,6 +107,7 @@ Assets/Archon-Engine/
 - Core pillars implementation
 - Vector like borders
 - 3D terrain tessallation
+- Graphics overhaul to match AAA standards
 
 **Planned Features:**
 - Multiplayer (lockstep command synchronization)
