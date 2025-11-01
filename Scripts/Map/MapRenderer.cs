@@ -11,6 +11,9 @@ namespace Map.Rendering
         [Header("Map Dimensions")]
         [SerializeField] private Vector2 mapSize = new Vector2(10f, 10f);
 
+        [Header("Tessellation Support")]
+        [SerializeField] private int subdivisions = 100; // Grid resolution (100x100 = 20,000 triangles)
+
         [Header("URP Settings")]
         [SerializeField] private Material mapMaterial;
 
@@ -28,43 +31,70 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Generates a two-triangle quad mesh with bottom-left pivot and 0-1 UV mapping
+        /// Generates a subdivided grid mesh for tessellation support
+        /// Bottom-left pivot with 0-1 UV mapping
         /// </summary>
         private void SetupMapQuad()
         {
             quadMesh = new Mesh();
-            quadMesh.name = "MapQuad";
+            quadMesh.name = "MapGrid";
 
-            // Vertices with bottom-left pivot (0,0 at bottom-left corner)
-            Vector3[] vertices = new Vector3[4]
+            // Use 32-bit index buffer for meshes with >65k vertices
+            if (subdivisions > 255)
             {
-                new Vector3(0, 0, 0),              // Bottom-left
-                new Vector3(mapSize.x, 0, 0),      // Bottom-right
-                new Vector3(0, mapSize.y, 0),      // Top-left
-                new Vector3(mapSize.x, mapSize.y, 0) // Top-right
-            };
+                quadMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+            }
 
-            // UV coordinates mapping 0-1 across entire quad
-            Vector2[] uvs = new Vector2[4]
-            {
-                new Vector2(0, 0), // Bottom-left
-                new Vector2(1, 0), // Bottom-right
-                new Vector2(0, 1), // Top-left
-                new Vector2(1, 1)  // Top-right
-            };
+            // Calculate grid dimensions
+            int vertexCountX = subdivisions + 1;
+            int vertexCountY = subdivisions + 1;
+            int totalVertices = vertexCountX * vertexCountY;
 
-            // Two triangles forming the quad
-            int[] triangles = new int[6]
-            {
-                0, 2, 1, // First triangle
-                2, 3, 1  // Second triangle
-            };
+            // Pre-allocate arrays
+            Vector3[] vertices = new Vector3[totalVertices];
+            Vector2[] uvs = new Vector2[totalVertices];
+            Vector3[] normals = new Vector3[totalVertices];
 
-            // Normals pointing up (positive Y)
-            Vector3[] normals = new Vector3[4]
+            // Generate vertices
+            for (int y = 0; y < vertexCountY; y++)
             {
-                Vector3.up, Vector3.up, Vector3.up, Vector3.up
-            };
+                for (int x = 0; x < vertexCountX; x++)
+                {
+                    int index = y * vertexCountX + x;
+
+                    // Normalized position (0-1)
+                    float u = (float)x / subdivisions;
+                    float v = (float)y / subdivisions;
+
+                    // World position with bottom-left pivot
+                    vertices[index] = new Vector3(u * mapSize.x, 0, v * mapSize.y);
+                    uvs[index] = new Vector2(u, v);
+                    normals[index] = Vector3.up;
+                }
+            }
+
+            // Generate triangles (2 triangles per quad)
+            int quadCount = subdivisions * subdivisions;
+            int[] triangles = new int[quadCount * 6];
+            int triangleIndex = 0;
+
+            for (int y = 0; y < subdivisions; y++)
+            {
+                for (int x = 0; x < subdivisions; x++)
+                {
+                    int vertexIndex = y * vertexCountX + x;
+
+                    // First triangle (bottom-left)
+                    triangles[triangleIndex++] = vertexIndex;
+                    triangles[triangleIndex++] = vertexIndex + vertexCountX;
+                    triangles[triangleIndex++] = vertexIndex + 1;
+
+                    // Second triangle (top-right)
+                    triangles[triangleIndex++] = vertexIndex + 1;
+                    triangles[triangleIndex++] = vertexIndex + vertexCountX;
+                    triangles[triangleIndex++] = vertexIndex + vertexCountX + 1;
+                }
+            }
 
             quadMesh.vertices = vertices;
             quadMesh.uv = uvs;
@@ -73,9 +103,11 @@ namespace Map.Rendering
 
             // Optimize mesh for performance
             quadMesh.Optimize();
-            quadMesh.UploadMeshData(true); // Free CPU memory
+            quadMesh.UploadMeshData(false); // Keep CPU copy for potential modifications
 
             meshFilter.mesh = quadMesh;
+
+            ArchonLogger.Log($"MapRenderer: Generated {totalVertices:N0} vertices, {quadCount * 2:N0} triangles (subdivisions: {subdivisions}x{subdivisions})", "map_rendering");
         }
 
         /// <summary>
