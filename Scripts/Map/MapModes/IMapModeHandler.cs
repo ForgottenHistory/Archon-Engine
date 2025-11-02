@@ -68,7 +68,7 @@ namespace Map.MapModes
     {
         // Basic modes (single data source)
         Political = 0,      // Owner ID → Country color
-        Terrain = 1,        // Terrain type → Terrain color
+        Terrain = 1,        // Terrain.bmp → Geographical terrain colors
         Development = 2,    // Development level → Gradient
         Culture = 3,        // Culture ID → Culture color
         Religion = 4,       // Religion ID → Religion color
@@ -83,6 +83,7 @@ namespace Map.MapModes
         Selected = 9,       // Highlights for selected country
         StrategicView = 10, // Simplified military view
         PlayerMapMode = 11, // Custom player-defined
+        ProvinceColors = 12, // Provinces.bmp → Original province colors (debug/simple)
 
         // Debug modes (100+)
         BorderDebug = 100,  // Shows border texture in grayscale

@@ -18,15 +18,23 @@ namespace Map.Rendering
 
         // Visual enhancement textures
         private Texture2D provinceTerrainTexture;
+        private Texture2D terrainTypeTexture;
+        private Texture2DArray terrainDetailArray;
+        private Texture2D detailNoiseTexture;
         private Texture2D heightmapTexture;
         private Texture2D normalMapTexture;
 
         // Shader property IDs
         private static readonly int ProvinceTerrainTexID = Shader.PropertyToID("_ProvinceTerrainTexture");
+        private static readonly int TerrainTypeTexID = Shader.PropertyToID("_TerrainTypeTexture");
+        private static readonly int TerrainDetailArrayID = Shader.PropertyToID("_TerrainDetailArray");
+        private static readonly int DetailNoiseTexID = Shader.PropertyToID("_DetailNoiseTexture");
         private static readonly int HeightmapTexID = Shader.PropertyToID("_HeightmapTexture");
         private static readonly int NormalMapTexID = Shader.PropertyToID("_NormalMapTexture");
 
         public Texture2D ProvinceTerrainTexture => provinceTerrainTexture;
+        public Texture2D TerrainTypeTexture => terrainTypeTexture;
+        public Texture2DArray TerrainDetailArray => terrainDetailArray;
         public Texture2D HeightmapTexture => heightmapTexture;
         public Texture2D NormalMapTexture => normalMapTexture;
 
@@ -45,6 +53,10 @@ namespace Map.Rendering
         public void CreateTextures()
         {
             CreateProvinceTerrainTexture();
+            // NOTE: TerrainTypeTexture generated AFTER terrain.bmp is loaded
+            // via GenerateTerrainTypeTexture() called by TerrainBitmapLoader
+            LoadTerrainDetailArray();
+            GenerateDetailNoiseTexture();
             CreateHeightmapTexture();
             CreateNormalMapTexture();
         }
@@ -134,6 +146,61 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Load terrain detail texture array from Assets/Data/textures/terrain_detail/
+        /// </summary>
+        private void LoadTerrainDetailArray()
+        {
+            terrainDetailArray = Loading.DetailTextureArrayLoader.LoadDetailTextureArray(
+                textureSize: 512,  // 512x512 per detail texture
+                logProgress: logCreation
+            );
+
+            if (logCreation && terrainDetailArray != null)
+            {
+                ArchonLogger.Log($"VisualTextureSet: Loaded terrain detail array {terrainDetailArray.width}x{terrainDetailArray.height} with {terrainDetailArray.depth} layers", "map_initialization");
+            }
+        }
+
+        /// <summary>
+        /// Generate noise texture for anti-tiling (Inigo Quilez method)
+        /// </summary>
+        private void GenerateDetailNoiseTexture()
+        {
+            detailNoiseTexture = Loading.NoiseTextureGenerator.GenerateNoiseTexture(
+                size: 256,  // 256x256 tileable noise
+                logProgress: logCreation
+            );
+
+            if (logCreation && detailNoiseTexture != null)
+            {
+                ArchonLogger.Log($"VisualTextureSet: Generated detail noise texture {detailNoiseTexture.width}x{detailNoiseTexture.height} R8", "map_initialization");
+            }
+        }
+
+        /// <summary>
+        /// Generate terrain type texture from terrain color texture
+        /// Must be called AFTER terrain.bmp is loaded into provinceTerrainTexture
+        /// </summary>
+        public void GenerateTerrainTypeTexture()
+        {
+            if (provinceTerrainTexture == null)
+            {
+                ArchonLogger.LogError("VisualTextureSet: Cannot generate terrain type texture - terrain texture not loaded", "map_initialization");
+                return;
+            }
+
+            terrainTypeTexture = Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture(
+                provinceTerrainTexture,
+                logCreation
+            );
+
+            if (logCreation && terrainTypeTexture != null)
+            {
+                ArchonLogger.Log($"VisualTextureSet: Generated terrain type texture {terrainTypeTexture.width}x{terrainTypeTexture.height} R8", "map_initialization");
+            }
+        }
+
+        /// <summary>
         /// Bind visual textures to material
         /// </summary>
         public void BindToMaterial(Material material)
@@ -141,6 +208,9 @@ namespace Map.Rendering
             if (material == null) return;
 
             material.SetTexture(ProvinceTerrainTexID, provinceTerrainTexture);
+            material.SetTexture(TerrainTypeTexID, terrainTypeTexture);
+            material.SetTexture(TerrainDetailArrayID, terrainDetailArray);
+            material.SetTexture(DetailNoiseTexID, detailNoiseTexture);
             material.SetTexture(HeightmapTexID, heightmapTexture);
             material.SetTexture(NormalMapTexID, normalMapTexture);
 
@@ -173,6 +243,9 @@ namespace Map.Rendering
         public void Release()
         {
             if (provinceTerrainTexture != null) Object.DestroyImmediate(provinceTerrainTexture);
+            if (terrainTypeTexture != null) Object.DestroyImmediate(terrainTypeTexture);
+            if (terrainDetailArray != null) Object.DestroyImmediate(terrainDetailArray);
+            if (detailNoiseTexture != null) Object.DestroyImmediate(detailNoiseTexture);
             if (heightmapTexture != null) Object.DestroyImmediate(heightmapTexture);
             if (normalMapTexture != null) Object.DestroyImmediate(normalMapTexture);
         }

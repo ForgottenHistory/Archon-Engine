@@ -101,6 +101,15 @@ namespace Map.Loading.Bitmaps
             // Apply terrain colors to texture
             terrainTexture.SetPixels32(pixels);
             ApplyTextureAndSync(terrainTexture);
+
+            // Generate terrain type texture (R8, terrain indices) from terrain colors
+            // Must happen AFTER terrain.bmp is loaded into ProvinceTerrainTexture
+            if (logProgress)
+            {
+                ArchonLogger.Log("TerrainBitmapLoader: Generating terrain type texture from loaded terrain colors", "map_initialization");
+            }
+
+            textureManager.GenerateTerrainTypeTexture();
         }
     }
 }

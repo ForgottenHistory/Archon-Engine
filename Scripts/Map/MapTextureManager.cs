@@ -34,6 +34,7 @@ namespace Map.Rendering
         public Texture2D ProvinceColorTexture => coreTextures?.ProvinceColorTexture;
         public RenderTexture ProvinceDevelopmentTexture => coreTextures?.ProvinceDevelopmentTexture;
         public Texture2D ProvinceTerrainTexture => visualTextures?.ProvinceTerrainTexture;
+        public Texture2D TerrainTypeTexture => visualTextures?.TerrainTypeTexture;
         public Texture2D HeightmapTexture => visualTextures?.HeightmapTexture;
         public Texture2D NormalMapTexture => visualTextures?.NormalMapTexture;
         public Texture2D ProvinceColorPalette => paletteManager?.ProvinceColorPalette;
@@ -147,6 +148,15 @@ namespace Map.Rendering
         public void ApplyPaletteChanges()
         {
             paletteManager?.ApplyChanges();
+        }
+
+        /// <summary>
+        /// Generate terrain type texture from terrain color texture
+        /// Must be called AFTER terrain.bmp is loaded
+        /// </summary>
+        public void GenerateTerrainTypeTexture()
+        {
+            visualTextures?.GenerateTerrainTypeTexture();
         }
 
         /// <summary>
