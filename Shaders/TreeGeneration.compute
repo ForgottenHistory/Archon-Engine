@@ -1,0 +1,126 @@
+// Tree Instance Generation Compute Shader for Archon Engine
+// Procedurally generates tree positions based on terrain types
+// GPU-driven for massive scale (DrawMeshInstancedIndirect)
+
+#pragma kernel GenerateTreeInstances
+
+// Input: Terrain data
+Texture2D<float> TerrainTypeTexture;        // R8 terrain type indices (0-255)
+SamplerState samplerTerrainTypeTexture;
+Texture2D<float> HeightmapTexture;          // R8 heightmap for Y position
+SamplerState samplerHeightmapTexture;
+
+// Output: Tree instance data
+RWStructuredBuffer<float4x4> TreeMatrices;  // Transform matrices for instances
+RWStructuredBuffer<uint> TreeCount;         // Total tree count (for indirect args)
+
+// Parameters
+uint MapWidth;
+uint MapHeight;
+float TreeDensity;                          // Trees per 100 world units squared
+uint MaxTrees;                              // Buffer capacity
+float TreeScale;                            // Base tree scale
+float TreeScaleVariation;                   // Random scale variation (0-1)
+float MapWorldWidth;                        // Map width in world space
+float MapWorldHeight;                       // Map height in world space
+
+// Terrain type filter (which terrain types spawn trees)
+// Set by GAME layer (policy decision)
+uint TreeTerrainTypeCount;
+StructuredBuffer<uint> TreeTerrainTypes;    // List of terrain types that spawn trees
+
+// Hash function for deterministic procedural placement
+// Based on position, creates pseudo-random values
+float Hash(float2 p)
+{
+    float3 p3 = frac(float3(p.xyx) * 0.1031);
+    p3 += dot(p3, p3.yzx + 33.33);
+    return frac((p3.x + p3.y) * p3.z);
+}
+
+float3 Hash3D(float2 p)
+{
+    float3 p3 = frac(float3(p.xyx) * float3(0.1031, 0.1030, 0.0973));
+    p3 += dot(p3, p3.yxz + 33.33);
+    return frac((p3.xxy + p3.yxx) * p3.zyx);
+}
+
+// Check if terrain type should spawn trees
+bool ShouldSpawnTrees(uint terrainType)
+{
+    for (uint i = 0; i < TreeTerrainTypeCount; i++)
+    {
+        if (TreeTerrainTypes[i] == terrainType)
+            return true;
+    }
+    return false;
+}
+
+// Create transform matrix from position, rotation, scale
+float4x4 CreateTransformMatrix(float3 position, float rotation, float scale)
+{
+    float c = cos(rotation);
+    float s = sin(rotation);
+
+    return float4x4(
+        scale * c, 0, scale * s, position.x,
+        0, scale, 0, position.y,
+        -scale * s, 0, scale * c, position.z,
+        0, 0, 0, 1
+    );
+}
+
+// Thread group size - 8x8 = 64 threads per group (optimal for most GPUs)
+[numthreads(8, 8, 1)]
+void GenerateTreeInstances(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Sample terrain type at this pixel
+    float2 uv = float2(id.x / (float)MapWidth, id.y / (float)MapHeight);
+    uint terrainType = (uint)(TerrainTypeTexture.SampleLevel(samplerTerrainTypeTexture, uv, 0).r * 255.0);
+
+    // Check if this terrain type spawns trees
+    if (!ShouldSpawnTrees(terrainType))
+        return;
+
+    // Calculate how many trees to spawn at this pixel based on density
+    // Each pixel represents a small area - spawn trees probabilistically
+    float2 pixelCoord = float2(id.x, id.y);
+    float spawnChance = TreeDensity / 10000.0; // Normalize density to 0-1 range
+    float hashValue = Hash(pixelCoord);
+
+    if (hashValue > spawnChance)
+        return; // Don't spawn tree at this pixel
+
+    // Atomic increment to get unique tree index
+    uint treeIndex;
+    InterlockedAdd(TreeCount[0], 1, treeIndex);
+
+    // Safety check - don't overflow buffer
+    if (treeIndex >= MaxTrees)
+        return;
+
+    // Generate tree position
+    float3 hash3 = Hash3D(pixelCoord);
+
+    // Position: Convert from pixel coordinates to world space
+    float3 position;
+    float normalizedX = ((float)id.x + hash3.x - 0.5) / (float)MapWidth;
+    float normalizedZ = ((float)id.y + hash3.y - 0.5) / (float)MapHeight;
+
+    position.x = normalizedX * MapWorldWidth;
+    position.z = normalizedZ * MapWorldHeight;
+    position.y = 1.0; // Place trees on TOP of map mesh (map mesh is at Y=0 with scale.y=1)
+
+    // Generate random rotation (Y-axis only, trees stand upright)
+    float rotation = hash3.z * 6.28318530718; // 0 to 2*PI
+
+    // Generate random scale
+    float scale = TreeScale * (1.0 + (hash3.x * 2.0 - 1.0) * TreeScaleVariation);
+
+    // Create transform matrix
+    TreeMatrices[treeIndex] = CreateTransformMatrix(position, rotation, scale);
+}
