@@ -2,13 +2,20 @@
 
 A Unity-based game engine for grand strategy games, built around a dual-layer architecture that separates deterministic simulation from GPU-accelerated presentation.
 
+![Archon-Engine](Images/hero2.png)
+
 Documentation is approximately 1:1 with code size - architecture docs, session logs, and decision records. Many 1% topis covered in great detail.
 
-APIs should be stable by 2026 Q1. Until a release pops up, production use is discouraged. Free open-source game demo will be released in 2026 Q1 to showcase practical integration.
+APIs should be stable by 2026 Q1. Until a release pops up, production use is discouraged. Free open-source game demo will be released in 2026 Q2 to showcase practical integration.
+
+**GAME DATA IS NOT PROVIDED IN PROJECT!**
 
 **Quick Links:**
 - [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Architecture overview
 - [Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Complete feature list
+
+![Flat-Map](Images/flat_map.png)
+2D map loaded using Europa Universalis 4 data.
 
 ## Why
 
@@ -104,10 +111,15 @@ Assets/Archon-Engine/
 - AI system with goal-oriented behavior
 
 **Game Layer (In Progress):**
-- Core pillars implementation
-- Vector like borders
-- 3D terrain tessallation
-- Graphics overhaul to match AAA standards
+
+As in, practical implementation of core systems.
+
+- Core pillars (Economy, Military, Diplomacy, AI)
+- Vector like borders, razor thin
+- 3D terrain tessallation and smart texturing for realistic terrain
+
+![Heightmap-example](Images/tessallation_heightmap.png)
+3D tessallated terrain WIP.
 
 **Planned Features:**
 - Multiplayer (lockstep command synchronization)
@@ -141,6 +153,11 @@ Hot takes, I know. Find my hidden docs if you want full picture.
 - [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Quick overview
 - [Scripts/Core/FILE_REGISTRY.md](Scripts/Core/FILE_REGISTRY.md) - Core layer catalog
 - [Scripts/Map/FILE_REGISTRY.md](Scripts/Map/FILE_REGISTRY.md) - Map layer catalog
+
+## Screenshots
+
+![early-3d-map](Images/early_3d_map.png)
+WIP 3D map. Figuring out how texturing with infinite scale works
 
 ## Technical Requirements
 
