@@ -102,8 +102,14 @@ namespace Map.Loading
                 // Load supplementary bitmaps in parallel using specialized loaders
                 await Task.WhenAll(
                     terrainLoader.LoadAndPopulateAsync(bmpPath),
-                    heightmapLoader.LoadAndPopulateAsync(bmpPath),
-                    normalMapLoader.LoadAndPopulateAsync(bmpPath)
+                    heightmapLoader.LoadAndPopulateAsync(bmpPath)
+                    // Note: Normal map is now generated from heightmap, not loaded from file
+                );
+
+                // Generate normal map from heightmap (GPU compute shader)
+                textureManager.GenerateNormalMapFromHeightmap(
+                    heightScale: 10.0f,
+                    logProgress: logLoadingProgress
                 );
 
                 // Generate initial borders
@@ -169,8 +175,14 @@ namespace Map.Loading
                 // Load supplementary bitmaps in parallel using specialized loaders
                 await Task.WhenAll(
                     terrainLoader.LoadAndPopulateAsync(bmpPath),
-                    heightmapLoader.LoadAndPopulateAsync(bmpPath),
-                    normalMapLoader.LoadAndPopulateAsync(bmpPath)
+                    heightmapLoader.LoadAndPopulateAsync(bmpPath)
+                    // Note: Normal map is now generated from heightmap, not loaded from file
+                );
+
+                // Generate normal map from heightmap (GPU compute shader)
+                textureManager.GenerateNormalMapFromHeightmap(
+                    heightScale: 10.0f,
+                    logProgress: logLoadingProgress
                 );
 
                 // Generate initial borders

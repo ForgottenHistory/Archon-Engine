@@ -160,6 +160,15 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Generate normal map from heightmap using GPU compute shader
+        /// Must be called AFTER heightmap is loaded
+        /// </summary>
+        public void GenerateNormalMapFromHeightmap(float heightScale = 10.0f, bool logProgress = false)
+        {
+            visualTextures?.GenerateNormalMapFromHeightmap(heightScale, logProgress);
+        }
+
+        /// <summary>
         /// Bind all textures to material
         /// </summary>
         public void BindTexturesToMaterial(Material material)

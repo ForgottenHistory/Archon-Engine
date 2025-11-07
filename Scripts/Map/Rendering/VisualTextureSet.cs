@@ -229,6 +229,41 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Generate normal map from heightmap using GPU compute shader
+        /// Should be called after heightmap is populated
+        /// </summary>
+        public void GenerateNormalMapFromHeightmap(float heightScale = 10.0f, bool logProgress = false)
+        {
+            if (heightmapTexture == null)
+            {
+                ArchonLogger.LogError("VisualTextureSet: Cannot generate normal map - heightmap texture is null", "map_initialization");
+                return;
+            }
+
+            if (normalMapTexture == null)
+            {
+                ArchonLogger.LogError("VisualTextureSet: Cannot generate normal map - normal map texture is null", "map_initialization");
+                return;
+            }
+
+            // Create normal map generator
+            var normalMapGenerator = new NormalMapGenerator();
+
+            // Generate normal map from heightmap on GPU
+            normalMapGenerator.GenerateNormalMap(
+                heightmapTexture,
+                normalMapTexture,
+                heightScale,
+                logProgress || logCreation
+            );
+
+            if (logCreation)
+            {
+                ArchonLogger.Log($"VisualTextureSet: Generated normal map from heightmap (scale: {heightScale})", "map_initialization");
+            }
+        }
+
+        /// <summary>
         /// Apply texture changes (call after batch updates)
         /// </summary>
         public void ApplyChanges()

@@ -1,0 +1,79 @@
+// Normal Map Generation Compute Shader for Archon Map System
+// Generates normal map from heightmap using gradient calculation
+// Based on EU5's approach - store RG channels, reconstruct B in fragment shader
+// Runs entirely on GPU for maximum performance
+
+#pragma kernel GenerateNormals
+
+// Input: Heightmap data from CPU as buffer
+// CRITICAL: Use StructuredBuffer instead of Graphics.Blit to avoid coordinate issues
+StructuredBuffer<float> HeightmapData;
+
+// Output: Normal map texture
+RWTexture2D<float4> NormalMapTexture; // Output (write) - stored as RG but needs float4 for Unity
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+// Height scale for normal calculation
+// Higher values = more pronounced lighting from height differences
+float HeightScale;
+
+// Helper function to read heightmap from buffer (must be defined OUTSIDE kernel)
+float GetHeight(uint x, uint y)
+{
+    uint bufferIndex = y * MapWidth + x;
+    return HeightmapData[bufferIndex];
+}
+
+// Thread group size - 8x8 = 64 threads per group
+// Optimal for most modern GPUs
+[numthreads(8, 8, 1)]
+void GenerateNormals(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // CRITICAL: NO Y-FLIP - use raw id.xy coordinates
+    // See: unity-compute-shader-coordination.md - Y-flip only in fragment shaders
+
+    // Sample heightmap at current position and 4 neighbors
+    float heightC = GetHeight(id.x, id.y);
+
+    // Clamp neighbor coordinates to avoid out-of-bounds
+    uint idL_x = max(0, (int)id.x - 1);
+    uint idR_x = min(MapWidth - 1, id.x + 1);
+    uint idD_y = max(0, (int)id.y - 1);
+    uint idU_y = min(MapHeight - 1, id.y + 1);
+
+    float heightL = GetHeight(idL_x, id.y);
+    float heightR = GetHeight(idR_x, id.y);
+    float heightD = GetHeight(id.x, idD_y);
+    float heightU = GetHeight(id.x, idU_y);
+
+    // Calculate gradients using central difference
+    // (right - left) / 2 and (up - down) / 2
+    float dx = (heightR - heightL) * 0.5 * HeightScale;
+    float dz = (heightU - heightD) * 0.5 * HeightScale;
+
+    // Construct normal vector
+    // In Unity: Y is up, so unnormalized normal is (dx, 1, dz)
+    // IMPORTANT: Normalize the vector to get valid normal
+    float3 unnormalized = float3(dx, 1.0, dz);
+    float3 normal = normalize(unnormalized);
+
+    // Store normal in texture as RG (XZ components only)
+    // Shader will reconstruct Y from X and Z
+    // Use float4 because Unity RenderTexture binding requires it
+    float4 packedNormal = float4(
+        normal.x * 0.5 + 0.5,  // X component (R channel)
+        normal.z * 0.5 + 0.5,  // Z component (G channel)
+        0.0,                    // B channel (unused)
+        1.0                     // A channel (unused)
+    );
+
+    // Write to output texture
+    NormalMapTexture[id.xy] = packedNormal;
+}
