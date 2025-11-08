@@ -73,7 +73,7 @@ Archon-Engine is designed to be generic infrastructure, providing everything you
 
 **Rendering Performance:**
 - Single draw call for entire map
-- TO BE DETERMINED
+- 3D MAP TO BE DETERMINED
 
 **Multiplayer-Ready Architecture:**
 - Deterministic fixed-point math (no floats in simulation)
