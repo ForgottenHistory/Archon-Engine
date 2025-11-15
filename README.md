@@ -126,26 +126,6 @@ As in, practical implementation of core systems.
 - Modding API (C# scripting support)
 - Advanced AI
 
-## Development Methodology
-
-I could not have started this project a couple years ago. You need very specific expertise to pull something like this off. For now, I'm just one guy.
-
-With the advent of AI agents, I present the "AI CTO" model: one human architect defines the vision, constraints, and architecture, while AI handles implementation. This approach requires rigorous documentation discipline - every architectural decision is recorded as the instruction manual and institutional memory for AI.
-
-**Key to scalability:**
-- Architecture documents defines immutable constraints (8-byte structs, deterministic simulation)
-- Session logs capture pivotal moments and implementations
-- FILE_REGISTRY & CURRENT_FEATURES documents catalog all systems
-- Documentation serves as the instruction manual for AI collaboration, preserves context
-
-Documentation is not overhead, it's needed. That's why if you read the docs you'll notice the information dense principles over code examples. It's AI optimized formatting for fast lookup. But I'm not here to preach, the work speaks for itself. Make your own conclusions.
-
-The project goal is twofold:
-- Prove grand strategy with proper architecture does not lag lategame
-- AI development can scale & handle complexity
-
-Hot takes, I know. Find my hidden docs if you want full picture.
-
 ## Documentation
 
 **Architecture:**
