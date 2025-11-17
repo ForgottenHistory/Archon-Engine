@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9910efd2cc5a7149a6e1453eb73a6ca, type: 3}
+  m_Name: DefaultVisualStyleFlat
+  m_EditorClassIdentifier: 
+  styleName: Default
+  description: Default visual style
+  borders:
+    countryBorderColor: {r: 0, g: 0, b: 0, a: 1}
+    countryBorderStrength: 1
+    countryBorderThickness: 1
+    provinceBorderColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+    provinceBorderStrength: 0.5
+    provinceBorderThickness: 1
+    borderAntiAliasing: 0
+    enableBordersOnStartup: 1
+    defaultBorderMode: 3
+  mapModes:
+    oceanColor: {r: 0.098, g: 0.157, b: 0.439, a: 1}
+    unownedLandColor: {r: 0.8, g: 0.7, b: 0.5, a: 1}
+    showTerrainForUnowned: 1
+    terrainBrightness: 1
+    terrainSaturation: 1
+    detailTiling: 1
+    detailStrength: 1
+    normalMapStrength: 2
+    normalMapAmbient: 0.5
+    normalMapHighlight: 1.5
+  mapMaterial: {fileID: 2100000, guid: 821dfde5a904fe448b138118b61eee70, type: 2}
+  advancedEffects:
+    overlayTexture: {fileID: 0}
+    overlayStrength: 0
+    countryColorSaturation: 1
+  fogOfWar:
+    enabled: 1
+    unexploredColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
+    exploredTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    exploredDesaturation: 0.032
+    noiseColor: {r: 0.3, g: 0.3, b: 0.4, a: 1}
+    noiseScale: 20
+    noiseStrength: 0.626
+    noiseSpeed: 2
+  tessellation:
+    enabled: 0
+    heightScale: 5
+    tessellationFactor: 32
+    tessellationMinDistance: 10
+    tessellationMaxDistance: 1000

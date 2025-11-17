@@ -1,0 +1,138 @@
+// DefaultCommon.hlsl
+// ENGINE: Common structures, texture declarations, and basic utility functions
+// Part of Default visual style shader architecture
+
+#ifndef DEFAULT_COMMON_INCLUDED
+#define DEFAULT_COMMON_INCLUDED
+
+// SRP Batcher compatibility - Material properties
+CBUFFER_START(UnityPerMaterial)
+    float4 _ProvinceIDTexture_ST;
+    float4 _ProvinceOwnerTexture_ST;
+    float4 _ProvinceColorTexture_ST;
+    float4 _ProvinceDevelopmentTexture_ST;
+    float4 _ProvinceTerrainTexture_ST;
+    float4 _HeightmapTexture_ST;
+    float4 _NormalMapTexture_ST;
+    float4 _ProvinceColorPalette_ST;
+    float4 _CountryColorPalette_ST;
+    float4 _BorderTexture_ST;
+    float4 _HighlightTexture_ST;
+    float4 _MainTex_ST;
+
+    int _MapMode;
+
+    // Tessellation parameters
+    float _HeightScale;
+    float _TessellationFactor;
+    float _TessellationMaxDistance;
+    float _TessellationMinDistance;
+
+    // Border parameters (configurable from VisualStyleConfiguration)
+    float _CountryBorderStrength;
+    float4 _CountryBorderColor;
+    float _ProvinceBorderStrength;
+    float4 _ProvinceBorderColor;
+
+    // Vector curve border parameters
+    float _UseVectorCurves;
+    uint _BezierSegmentCount;
+    int _MapWidth;
+    int _MapHeight;
+
+    // Spatial grid parameters
+    int _GridWidth;
+    int _GridHeight;
+    int _GridCellSize;
+
+    // Map mode colors (configurable from VisualStyleConfiguration)
+    float4 _OceanColor;
+    float4 _UnownedLandColor;
+
+    // Development gradient colors (configurable from VisualStyleConfiguration)
+    float4 _DevVeryLow;
+    float4 _DevLow;
+    float4 _DevMedium;
+    float4 _DevHigh;
+    float4 _DevVeryHigh;
+
+    // Development tier thresholds
+    float _DevTier1;
+    float _DevTier2;
+    float _DevTier3;
+    float _DevTier4;
+
+    // Terrain adjustments
+    float _TerrainBrightness;
+    float _TerrainSaturation;
+
+    // Terrain detail mapping
+    float _DetailTiling;
+    float _DetailStrength;
+    float _TriPlanarTightenFactor;
+
+    // Normal mapping lighting controls
+    float _NormalMapStrength;
+    float _NormalMapAmbient;
+    float _NormalMapHighlight;
+
+    float _HighlightStrength;
+
+    // Advanced Effects parameters
+    float4 _OverlayTexture_ST;
+    float _OverlayStrength;
+    float _CountryColorSaturation;
+
+    // Fog of War parameters
+    float _FogOfWarEnabled;
+    float _FogOfWarZoomDisable;
+    float4 _FogUnexploredColor;
+    float4 _FogExploredColor;
+    float _FogExploredDesaturation;
+    float _FogNoiseScale;
+    float _FogNoiseStrength;
+    float _FogNoiseSpeed;
+    float4 _FogNoiseColor;
+
+    // AAA Distance Field Border Parameters
+    float _EdgeWidth;
+    float _GradientWidth;
+    float _EdgeSmoothness;
+    float _EdgeColorMul;
+    float _GradientColorMul;
+    float _EdgeAlpha;
+    float _GradientAlphaInside;
+    float _GradientAlphaOutside;
+CBUFFER_END
+
+// Texture declarations - Core simulation textures
+TEXTURE2D(_ProvinceIDTexture); SAMPLER(sampler_ProvinceIDTexture);
+TEXTURE2D(_ProvinceOwnerTexture); SAMPLER(sampler_ProvinceOwnerTexture);
+TEXTURE2D(_ProvinceColorTexture); SAMPLER(sampler_ProvinceColorTexture);
+TEXTURE2D(_ProvinceDevelopmentTexture); SAMPLER(sampler_ProvinceDevelopmentTexture);
+TEXTURE2D(_ProvinceTerrainTexture); SAMPLER(sampler_ProvinceTerrainTexture);
+TEXTURE2D(_TerrainTypeTexture); SAMPLER(sampler_TerrainTypeTexture);
+TEXTURE2D_ARRAY(_TerrainDetailArray); SAMPLER(sampler_TerrainDetailArray);
+TEXTURE2D(_DetailNoiseTexture); SAMPLER(sampler_DetailNoiseTexture);
+TEXTURE2D(_HeightmapTexture); SAMPLER(sampler_HeightmapTexture);
+TEXTURE2D(_NormalMapTexture); SAMPLER(sampler_NormalMapTexture);
+TEXTURE2D(_ProvinceColorPalette); SAMPLER(sampler_ProvinceColorPalette);
+TEXTURE2D(_CountryColorPalette); SAMPLER(sampler_CountryColorPalette);
+TEXTURE2D(_TerrainColorPalette); SAMPLER(sampler_TerrainColorPalette);
+TEXTURE2D(_BorderTexture); SAMPLER(sampler_BorderTexture);
+TEXTURE2D(_BorderMaskTexture); SAMPLER(sampler_BorderMaskTexture);
+TEXTURE2D(_BorderDistanceTexture); SAMPLER(sampler_BorderDistanceTexture);
+TEXTURE2D(_HighlightTexture); SAMPLER(sampler_HighlightTexture);
+TEXTURE2D(_FogOfWarTexture); SAMPLER(sampler_FogOfWarTexture);
+TEXTURE2D(_OverlayTexture); SAMPLER(sampler_OverlayTexture);
+TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); // For SRP Batcher
+
+// CRITICAL: Include BezierCurves.hlsl to define BezierSegment struct
+#include "../BezierCurves.hlsl"
+
+// Vector curve border buffers (set from C#)
+StructuredBuffer<BezierSegment> _BezierSegments;
+StructuredBuffer<uint2> _GridCellRanges;         // Per-cell (startIndex, count)
+StructuredBuffer<uint> _GridSegmentIndices;       // Flat segment indices
+
+#endif // DEFAULT_COMMON_INCLUDED
