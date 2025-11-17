@@ -1,7 +1,7 @@
 # Move Visual Styles System to Archon-Engine
 **Date**: 2025-11-17
 **Session**: 1
-**Status**: 🔄 In Progress
+**Status**: ✅ Complete
 **Priority**: High
 
 ---
@@ -124,10 +124,38 @@
 **Files Changed:**
 - `Assets/Game/HegemonInitializer.cs:6` - Changed `using Game.VisualStyles;` → `using Archon.Engine.Map;`
 - `Assets/Game/DebugInputHandler.cs:2` - Changed `using Game.VisualStyles;` → `using Archon.Engine.Map;`
+- `Assets/Game/Initialization/HegemonUIPhaseHandler.cs:9,30` - Added ENGINE import, removed qualified type reference
 
 **Rationale:**
 - GAME now imports ENGINE types (correct dependency direction)
-- Old GAME VisualStyleManager files will be deleted (migration complete)
+- Old GAME VisualStyleManager files deleted (migration complete)
+
+### 5. Removed Development Map Mode from ENGINE
+**Files Changed:**
+- `DefaultMapModes.hlsl` - Removed Development include and map mode case
+- `VisualStyleManager.cs` - Removed Development gradient material property setters
+- `VisualStyleConfiguration.cs` - Removed DevelopmentGradient class and field
+
+**Rationale:**
+- Development is GAME-specific policy (how to calculate/visualize development)
+- ENGINE only provides universal defaults: Political & Terrain
+- MapModeDevelopment.hlsl remains in GAME layer for game-specific use
+
+### 6. Fixed Terrain Shader Border Rendering
+**Files Changed:**
+- `DefaultTerrainMapShader.shader:313` - Uncommented `ApplyBorders()` call
+
+**Problem:**
+- Borders were disabled in Terrain shader with comment "TEMPORARILY DISABLED - vector curves need refactoring"
+- Flat shader had borders working, Terrain shader did not
+
+**Solution:**
+- Borders work fine with current distance field system
+- Uncommented border application to match Flat shader behavior
+
+**Testing:**
+- ✅ Flat shader: Borders render correctly
+- ✅ Terrain shader: Borders render correctly after fix
 
 ---
 
@@ -207,7 +235,22 @@
 
 ## Problems Encountered & Solutions
 
-### Problem 1: Compilation Errors After Moving VisualStyleManager
+### Problem 1: Missing Namespace Import in HegemonUIPhaseHandler
+**Symptom:**
+```
+Assets\Game\Initialization\HegemonUIPhaseHandler.cs(29,18): error CS0234:
+The type or namespace name 'VisualStyles' does not exist in the namespace 'Game'
+```
+
+**Root Cause:**
+- HegemonUIPhaseHandler still referenced `Game.VisualStyles.VisualStyleManager`
+- Visual styles moved to ENGINE but this file wasn't updated
+
+**Solution:**
+- Added `using Archon.Engine.Map;` to imports
+- Changed fully-qualified type reference to simple `VisualStyleManager`
+
+### Problem 2: Compilation Errors After Moving VisualStyleManager
 **Symptom:**
 ```
 CS0234: The type or namespace name 'Rendering' does not exist in the namespace 'Archon.Engine.Map'
@@ -247,7 +290,7 @@ if (gameState != null && gameState.ProvinceQueries != null)
 
 ### Documentation Updates Required
 - [ ] Update visual-styles-architecture.md - ENGINE default map modes (Political & Terrain only)
-- [ ] Remove Development from ENGINE includes - Move to GAME layer as example
+- [x] Remove Development from ENGINE includes - Completed
 - [ ] Add "How to extend with custom map modes" section
 
 ### New Patterns/Anti-Patterns Discovered
@@ -263,33 +306,45 @@ if (gameState != null && gameState.ProvinceQueries != null)
 
 ---
 
-## Next Session
+## Completion Summary
 
-### Immediate Next Steps (Priority Order)
-1. **Remove Development map mode from ENGINE** - Move `MapModeDevelopment.hlsl` to GAME, update DefaultMapModes.hlsl
-2. **Remove Development config from VisualStyleConfiguration** - Move DevelopmentGradient to GAME-specific config
-3. **Update scene to use ENGINE VisualStyleManager component** - Remove GAME component, add ENGINE component
-4. **Create default materials in Unity** - DefaultFlatMapMaterial + DefaultTerrainMapMaterial
-5. **Create DefaultVisualStyle.asset** - ENGINE ScriptableObject with sensible defaults
-6. **Test drop-in workflow** - Verify map renders with ENGINE defaults only
+### All Tasks Completed ✅
+1. ✅ **Moved C# classes to ENGINE** - VisualStyleConfiguration + VisualStyleManager
+2. ✅ **Moved shader includes to ENGINE** - All .hlsl files in Shaders/Includes/
+3. ✅ **Created default shaders** - DefaultFlatMapShader + DefaultTerrainMapShader
+4. ✅ **Updated GAME layer references** - All namespace imports updated
+5. ✅ **Removed Development from ENGINE** - GAME-specific policy removed
+6. ✅ **Fixed Terrain shader borders** - Uncommented ApplyBorders() call
+7. ✅ **Deleted old GAME files** - VisualStyleConfiguration.cs + VisualStyleManager.cs removed
+8. ✅ **Testing complete** - Both Flat and Terrain modes work with Political & Terrain map modes
 
-### Questions to Resolve
-1. Should Development gradient stay in ENGINE VisualStyleConfiguration for backward compatibility?
-2. Where should GAME-specific map modes live? (New `Game/MapModes/` folder?)
-3. Should we create example "How to add custom map mode" in GAME layer?
+### Questions Resolved
+1. ~~Should Development gradient stay in ENGINE?~~ → **NO** - Removed, it's GAME policy
+2. ~~Where should GAME-specific map modes live?~~ → **Assets/Game/Shaders/MapModes/** (already exists)
+3. Future work: Create example "How to add custom map mode" documentation
 
 ---
 
 ## Session Statistics
 
-**Files Changed:** 13
-- Moved: 2 C# files, 9 HLSL files
-- Created: 2 shader files
-- Updated: 2 GAME initializers
+**Files Changed:** 46 total
+- ENGINE: 39 files (created: C# classes, shaders, includes, materials, ScriptableObject assets)
+- GAME: 7 files (updated: 3 initializers, deleted: 2 old visual style files + 2 meta files, scene updated)
 
-**Lines Added/Removed:** ~3500 lines moved to ENGINE
-**Tests Added:** 0 (manual testing pending)
-**Commits:** 0 (user controls git)
+**Lines Changed:**
+- ENGINE: +3661 insertions
+- GAME: +4 insertions, -780 deletions (old files removed)
+
+**Git Commits:** 3
+- ENGINE: `b260e39` - "Move visual styles system to ENGINE for drop-in workflow"
+- GAME: `ab7354c` - "Update GAME layer to use ENGINE visual styles system"
+- GAME: `171bce2` - "Update scene to use ENGINE VisualStyleManager component"
+
+**Testing:** Manual testing completed
+- ✅ Flat shader renders correctly (Political + Terrain modes)
+- ✅ Terrain shader renders correctly with borders enabled
+- ✅ 2D/3D mode switching works via material swap
+- ✅ System compiles without errors
 
 ---
 
@@ -306,10 +361,11 @@ if (gameState != null && gameState.ProvinceQueries != null)
 - Implementation: Shader includes moved to `Archon-Engine/Shaders/Includes/`
 - Constraints: ENGINE uses old namespaces (`Map.X`, not `Archon.Engine.Map.X`)
 
-**Gotchas for Next Session:**
+**Gotchas for Future:**
 - Watch out for: ENGINE still uses old namespaces, don't assume `Archon.Engine.X`
 - Don't forget: ProvinceQueries accessed via GameState, not FindFirstObjectByType
-- Remember: User wants Political & Terrain as ENGINE defaults only, Development stays GAME
+- Remember: Political & Terrain are ENGINE defaults, Development is GAME-specific
+- Border rendering: Works with distance field system, no need for vector curves refactoring
 
 ---
 
@@ -333,8 +389,9 @@ if (gameState != null && gameState.ProvinceQueries != null)
 - Political & Terrain are "good start" defaults, not comprehensive
 - Development is explicitly GAME policy, not ENGINE mechanism
 - Material swapping approach validated by user (2D/3D mode switch working)
-- Next session: Remove Development from ENGINE, test drop-in workflow
+- Border rendering bug found and fixed (was commented out in Terrain shader)
+- All tasks completed, tested, and committed to git
 
 ---
 
-*Session logged: 2025-11-17 - Visual Styles Migration (In Progress)*
+*Session logged: 2025-11-17 - Visual Styles Migration (Complete)*

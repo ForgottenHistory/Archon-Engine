@@ -351,17 +351,29 @@ Follow the implementation roadmap, avoid the anti-patterns, and you'll have a pe
 
 ## Related Documents
 
+### Essential Architecture
+- **[ARCHITECTURE_OVERVIEW.md](ARCHITECTURE_OVERVIEW.md)** - Start here for quick overview
+- **[architecture-patterns.md](architecture-patterns.md)** - 19 architectural patterns catalog
+- **[engine-game-separation.md](engine-game-separation.md)** - Mechanism vs Policy philosophy
+
 ### Architecture Documents
 - **[Map System Architecture](map-system-architecture.md)** - Map rendering system details
+- **[Visual Styles Architecture](visual-styles-architecture.md)** - Visual style system
+- **[Vector Curve Rendering](vector-curve-rendering-pattern.md)** - Border rendering
 - **[Performance Architecture Guide](performance-architecture-guide.md)** - Optimization and memory strategies
 - **[Time System Architecture](time-system-architecture.md)** - Update scheduling and dirty flag systems
-- **[Data Flow Architecture](data-flow-architecture.md)** - Hot/cold data separation
+- **[Data Flow Architecture](data-flow-architecture.md)** - Command + Event patterns
 - **[Data Linking Architecture](data-linking-architecture.md)** - Reference resolution and cross-linking
-- **[Data Loading Architecture](data-loading-architecture.md)** - Data loading system
-- **[Save/Load Architecture](save-load-architecture.md)** - Hybrid snapshot + command log, serialization patterns, layer separation
+- **[Data Loading Architecture](data-loading-architecture.md)** - Phase-based initialization
+- **[Save/Load Architecture](save-load-architecture.md)** - Hybrid snapshot + command log
+- **[UI Architecture](ui-architecture.md)** - UI Toolkit + Presenter Pattern
+- **[Sparse Data Structures](sparse-data-structures-design.md)** - Scale-safe storage
+- **[Flat Storage Burst](flat-storage-burst-architecture.md)** - Burst-compiled systems
+- **[Modifier System](modifier-system.md)** - Generic modifier system
 
 ### Critical Knowledge
 - **[Unity Compute Shader Coordination](../Log/learnings/unity-compute-shader-coordination.md)** - GPU synchronization patterns (MUST READ before writing compute shaders)
 
 ### Architecture Decisions
 - **[Fixed-Point Determinism](../Log/decisions/fixed-point-determinism.md)** - Deterministic math requirements (MUST READ before implementing simulation logic)
+- **[UI Presenter Pattern](../Log/decisions/ui-presenter-pattern-for-panels.md)** - UI pattern rationale
