@@ -162,35 +162,71 @@ float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
                 proceduralTerrainType = 0; // Grassland
             }
 
-        // SMOOTH BLENDING between terrain types
-        // Use height proximity to blend between adjacent terrain types
+        // ENHANCED SMOOTH BLENDING between terrain types (Imperator Rome style)
+        // Multi-material blending with smoothstep for natural transitions
+        // Based on Imperator pixel.txt:166-170 (smoothstep falloff technique)
         float4 blendedDetail;
 
-        if (height > 0.23 && height < 0.27)
-        {
-            // Blend zone between mountain and snow (0.23 - 0.27)
-            float blendFactor = (height - 0.23) / 0.04;
-            blendFactor = blendFactor * blendFactor * (3.0 - 2.0 * blendFactor); // Smoothstep
+        // Define terrain type indices
+        const uint TERRAIN_GRASS = 0;
+        const uint TERRAIN_MOUNTAIN = 6;
+        const uint TERRAIN_SNOW = 16;
 
-            float4 mountainDetail = TriPlanarSampleArray(positionWS, terrainNormal, 6, _DetailTiling);
-            float4 snowDetail = TriPlanarSampleArray(positionWS, terrainNormal, 16, _DetailTiling);
-            blendedDetail = lerp(mountainDetail, snowDetail, blendFactor);
+        // Sample all relevant materials once (for multi-material blending)
+        float4 grassDetail = TriPlanarSampleArray(positionWS, terrainNormal, TERRAIN_GRASS, _DetailTiling);
+        float4 mountainDetail = TriPlanarSampleArray(positionWS, terrainNormal, TERRAIN_MOUNTAIN, _DetailTiling);
+        float4 snowDetail = TriPlanarSampleArray(positionWS, terrainNormal, TERRAIN_SNOW, _DetailTiling);
+
+        // Calculate blend weights based on height
+        // Using wider blend zones and smoothstep for gradual transitions
+        float3 blendWeights = float3(0, 0, 0);
+
+        // Grass influence (0.12 - 0.18)
+        if (height < 0.18)
+        {
+            float grassBlend = saturate((0.18 - height) / 0.06);
+            grassBlend = grassBlend * grassBlend * (3.0 - 2.0 * grassBlend); // Smoothstep
+            blendWeights.x = grassBlend;
         }
-        else if (height > 0.13 && height < 0.17)
-        {
-            // Blend zone between grassland and mountain (0.13 - 0.17)
-            float blendFactor = (height - 0.13) / 0.04;
-            blendFactor = blendFactor * blendFactor * (3.0 - 2.0 * blendFactor); // Smoothstep
 
-            float4 grassDetail = TriPlanarSampleArray(positionWS, terrainNormal, 0, _DetailTiling);
-            float4 mountainDetail = TriPlanarSampleArray(positionWS, terrainNormal, 6, _DetailTiling);
-            blendedDetail = lerp(grassDetail, mountainDetail, blendFactor);
+        // Mountain influence (0.13 - 0.26)
+        if (height > 0.13 && height < 0.26)
+        {
+            float mountainCenter = 0.195; // Center of mountain range
+            float mountainWidth = 0.065;  // Half-width of influence
+            float mountainBlend = 1.0 - abs(height - mountainCenter) / mountainWidth;
+            mountainBlend = saturate(mountainBlend);
+            mountainBlend = mountainBlend * mountainBlend * (3.0 - 2.0 * mountainBlend); // Smoothstep
+            blendWeights.y = mountainBlend;
+        }
+
+        // Snow influence (0.23 - 0.30)
+        if (height > 0.23)
+        {
+            float snowBlend = saturate((height - 0.23) / 0.07);
+            snowBlend = snowBlend * snowBlend * (3.0 - 2.0 * snowBlend); // Smoothstep
+            blendWeights.z = snowBlend;
+        }
+
+        // Normalize blend weights (ensure they sum to 1.0)
+        float totalWeight = blendWeights.x + blendWeights.y + blendWeights.z;
+        if (totalWeight > 0.0001)
+        {
+            blendWeights /= totalWeight;
         }
         else
         {
-            // No blending - use single terrain type
-            blendedDetail = TriPlanarSampleArray(positionWS, terrainNormal, proceduralTerrainType, _DetailTiling);
+            // Fallback: use procedural terrain type
+            if (proceduralTerrainType == TERRAIN_SNOW) blendWeights.z = 1.0;
+            else if (proceduralTerrainType == TERRAIN_MOUNTAIN) blendWeights.y = 1.0;
+            else blendWeights.x = 1.0;
         }
+
+        // Blend all materials based on weights
+        // This allows up to 3 materials to blend naturally at transition zones
+        blendedDetail = grassDetail * blendWeights.x +
+                        mountainDetail * blendWeights.y +
+                        snowDetail * blendWeights.z;
 
             // REPLACE macro with procedural detail texture entirely
             // DetailStrength controls blend: 0 = macro only, 1 = detail only

@@ -137,6 +137,12 @@ float Sample9TapDistance(float2 uv, float2 invSize)
 /// </summary>
 float4 ApplyBorders(float4 baseColor, float2 uv)
 {
+    // Early return when border strength is 0 (no borders enabled)
+    if (_CountryBorderStrength < 0.01 && _ProvinceBorderStrength < 0.01)
+    {
+        return baseColor;
+    }
+
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
 
     // Check if we should use pixel-perfect mode (BorderMask only)
@@ -167,8 +173,8 @@ float4 ApplyBorders(float4 baseColor, float2 uv)
         float countryBorder = borderMask.r;
         float provinceBorder = borderMask.g;
 
-        // Country borders take priority
-        if (countryBorder > 0.5)
+        // Country borders take priority (check strength parameter)
+        if (countryBorder > 0.5 && _CountryBorderStrength > 0.01)
         {
             baseColor.rgb = _CountryBorderColor.rgb;
         }

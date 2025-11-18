@@ -180,8 +180,8 @@ namespace Map.Rendering
             dynamicTextures?.BindToMaterial(material);
             paletteManager?.BindToMaterial(material);
 
-            // Set default border parameters
-            dynamicTextures?.SetBorderStyle(material, Color.black, 1.0f, new Color(0.3f, 0.3f, 0.3f), 0.5f);
+            // NOTE: Border parameters are set by VisualStyleManager, not here
+            // Removed hardcoded SetBorderStyle() call to respect visual style configuration
 
             if (logTextureCreation)
             {
