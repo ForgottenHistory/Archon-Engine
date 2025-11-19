@@ -133,31 +133,35 @@ float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
     float3 terrainColor = float3(0.5, 0.5, 0.5); // Default: gray
 
     // Terrain indices from terrain_rgb.json5 (in order):
-    if (terrainTypeIndex == 0)       terrainColor = float3(86.0/255.0, 124.0/255.0, 27.0/255.0);      // grasslands RGB(86,124,27)
-    else if (terrainTypeIndex == 1)  terrainColor = float3(0.0/255.0, 86.0/255.0, 6.0/255.0);         // hills RGB(0,86,6)
-    else if (terrainTypeIndex == 2)  terrainColor = float3(112.0/255.0, 74.0/255.0, 31.0/255.0);      // desert_mountain RGB(112,74,31)
-    else if (terrainTypeIndex == 3)  terrainColor = float3(206.0/255.0, 169.0/255.0, 99.0/255.0);     // desert RGB(206,169,99)
-    else if (terrainTypeIndex == 4)  terrainColor = float3(200.0/255.0, 214.0/255.0, 107.0/255.0);    // plains RGB(200,214,107)
-    else if (terrainTypeIndex == 5)  terrainColor = float3(13.0/255.0, 96.0/255.0, 62.0/255.0);       // terrain_5 RGB(13,96,62)
-    else if (terrainTypeIndex == 6)  terrainColor = float3(65.0/255.0, 42.0/255.0, 17.0/255.0);       // mountain RGB(65,42,17)
-    else if (terrainTypeIndex == 7)  terrainColor = float3(158.0/255.0, 130.0/255.0, 77.0/255.0);     // desert_mountain_low RGB(158,130,77)
-    else if (terrainTypeIndex == 8)  terrainColor = float3(53.0/255.0, 77.0/255.0, 17.0/255.0);       // terrain_8 RGB(53,77,17)
-    else if (terrainTypeIndex == 9)  terrainColor = float3(75.0/255.0, 147.0/255.0, 174.0/255.0);     // marsh RGB(75,147,174)
-    else if (terrainTypeIndex == 10) terrainColor = float3(155.0/255.0, 155.0/255.0, 155.0/255.0);    // terrain_10 RGB(155,155,155)
-    else if (terrainTypeIndex == 11) terrainColor = float3(255.0/255.0, 0.0/255.0, 0.0/255.0);        // terrain_11 RGB(255,0,0)
-    else if (terrainTypeIndex == 12) terrainColor = float3(42.0/255.0, 55.0/255.0, 22.0/255.0);       // forest_12 RGB(42,55,22)
-    else if (terrainTypeIndex == 13) terrainColor = float3(213.0/255.0, 144.0/255.0, 199.0/255.0);    // forest_13 RGB(213,144,199)
-    else if (terrainTypeIndex == 14) terrainColor = float3(127.0/255.0, 24.0/255.0, 60.0/255.0);      // forest_14 RGB(127,24,60)
-    else if (terrainTypeIndex == 15) terrainColor = float3(8.0/255.0, 31.0/255.0, 130.0/255.0);       // ocean RGB(8,31,130)
-    else if (terrainTypeIndex == 16) terrainColor = float3(255.0/255.0, 255.0/255.0, 255.0/255.0);    // snow RGB(255,255,255)
-    else if (terrainTypeIndex == 17) terrainColor = float3(55.0/255.0, 90.0/255.0, 220.0/255.0);      // inland_ocean_17 RGB(55,90,220)
-    else if (terrainTypeIndex == 18) terrainColor = float3(203.0/255.0, 191.0/255.0, 103.0/255.0);    // coastal_desert_18 RGB(203,191,103)
-    else if (terrainTypeIndex == 19) terrainColor = float3(255.0/255.0, 247.0/255.0, 0.0/255.0);      // coastline RGB(255,247,0)
-    else if (terrainTypeIndex == 20) terrainColor = float3(0.0/255.0, 0.0/255.0, 0.0/255.0);          // savannah RGB(0,0,0)
-    else if (terrainTypeIndex == 21) terrainColor = float3(23.0/255.0, 23.0/255.0, 23.0/255.0);       // highlands RGB(23,23,23)
-    else if (terrainTypeIndex == 22) terrainColor = float3(24.0/255.0, 24.0/255.0, 24.0/255.0);       // dry_highlands RGB(24,24,24)
-    else if (terrainTypeIndex == 23) terrainColor = float3(254.0/255.0, 254.0/255.0, 254.0/255.0);    // jungle RGB(254,254,254)
-    else if (terrainTypeIndex == 24) terrainColor = float3(21.0/255.0, 21.0/255.0, 21.0/255.0);       // terrain_21 RGB(21,21,21)
+    // IMPORTANT: Must match ORDER in terrain_rgb.json5 exactly
+    // Using natural, visually appealing colors for each terrain type
+    if (terrainTypeIndex == 0)       terrainColor = float3(0.45, 0.65, 0.30);    // grasslands - lush green
+    else if (terrainTypeIndex == 1)  terrainColor = float3(0.55, 0.50, 0.35);    // hills - earthy brown-green
+    else if (terrainTypeIndex == 2)  terrainColor = float3(0.50, 0.40, 0.30);    // desert_mountain - brown mountain
+    else if (terrainTypeIndex == 3)  terrainColor = float3(0.85, 0.75, 0.50);    // desert - sandy yellow
+    else if (terrainTypeIndex == 4)  terrainColor = float3(0.60, 0.75, 0.45);    // plains - light green
+    else if (terrainTypeIndex == 5)  terrainColor = float3(0.40, 0.60, 0.35);    // terrain_5 (grasslands) - medium green
+    else if (terrainTypeIndex == 6)  terrainColor = float3(0.45, 0.40, 0.35);    // mountain - dark rocky brown
+    else if (terrainTypeIndex == 7)  terrainColor = float3(0.75, 0.65, 0.45);    // desert_mountain_low - pale desert
+    else if (terrainTypeIndex == 8)  terrainColor = float3(0.50, 0.55, 0.30);    // terrain_8 (hills) - olive green
+    else if (terrainTypeIndex == 9)  terrainColor = float3(0.40, 0.55, 0.50);    // marsh - murky blue-green
+    else if (terrainTypeIndex == 10) terrainColor = float3(0.65, 0.75, 0.50);    // terrain_10 (farmlands) - fertile yellow-green
+    else if (terrainTypeIndex == 11) terrainColor = float3(0.70, 0.80, 0.55);    // terrain_11 (farmlands) - bright farmland
+    else if (terrainTypeIndex == 12) terrainColor = float3(0.25, 0.40, 0.20);    // forest_12 - dark forest green
+    else if (terrainTypeIndex == 13) terrainColor = float3(0.30, 0.45, 0.25);    // forest_13 - medium forest
+    else if (terrainTypeIndex == 14) terrainColor = float3(0.35, 0.50, 0.30);    // forest_14 - lighter forest
+    else if (terrainTypeIndex == 15) terrainColor = float3(0.10, 0.30, 0.55);    // ocean - deep blue
+    else if (terrainTypeIndex == 16) terrainColor = float3(0.90, 0.92, 0.95);    // snow - bright white-blue
+    else if (terrainTypeIndex == 17) terrainColor = float3(0.30, 0.50, 0.70);    // inland_ocean - medium blue
+    else if (terrainTypeIndex == 18) terrainColor = float3(0.80, 0.70, 0.50);    // coastal_desert - pale sand
+    else if (terrainTypeIndex == 19) terrainColor = float3(0.90, 0.85, 0.60);    // coastline - sandy beach
+    else if (terrainTypeIndex == 20) terrainColor = float3(0.75, 0.70, 0.45);    // savannah - dry grassland yellow
+    else if (terrainTypeIndex == 21) terrainColor = float3(0.70, 0.60, 0.40);    // drylands - arid brown-yellow
+    else if (terrainTypeIndex == 22) terrainColor = float3(0.55, 0.50, 0.40);    // highlands - elevated rocky terrain
+    else if (terrainTypeIndex == 23) terrainColor = float3(0.65, 0.55, 0.40);    // dry_highlands - arid highlands
+    else if (terrainTypeIndex == 24) terrainColor = float3(0.35, 0.50, 0.30);    // woods - medium green woodland
+    else if (terrainTypeIndex == 25) terrainColor = float3(0.20, 0.45, 0.25);    // jungle - deep tropical green
+    else if (terrainTypeIndex == 26) terrainColor = float3(0.70, 0.78, 0.52);    // terrain_21 (farmlands) - cultivated land
 
     float4 macroColor = float4(terrainColor, 1.0);
 

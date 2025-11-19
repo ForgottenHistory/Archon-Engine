@@ -485,11 +485,11 @@ namespace Map.Rendering
                     }
                 }
 
-                // Apply terrain overrides from terrain.json5 (DISABLED - incompatible with terrain_rgb.json5 system)
+                // Apply terrain overrides from terrain.json5
                 // EU4 uses terrain_override arrays to assign specific provinces different terrain
                 // This happens AFTER the bitmap majority vote
-                // TODO: Fix terrain overrides to work with terrain_rgb.json5 index system
-                // ApplyTerrainOverrides(results);
+                // NOW FIXED: Uses terrain_rgb.json5 for correct index mapping
+                ApplyTerrainOverrides(results, provinceIDs);
 
                 return results;
             }
@@ -512,11 +512,19 @@ namespace Map.Rendering
         /// EU4 uses terrain_override arrays to force specific provinces to specific terrain types
         /// regardless of what the terrain.bmp shows
         /// </summary>
-        private void ApplyTerrainOverrides(uint[] terrainAssignments)
+        private void ApplyTerrainOverrides(uint[] terrainAssignments, ushort[] provinceIDs)
         {
             try
             {
-                // Load terrain.json5
+                // Build provinceID → array index lookup
+                // terrainAssignments is indexed by array position (0-provinceCount), not province ID
+                var provinceIDToIndex = new Dictionary<ushort, int>();
+                for (int i = 0; i < provinceIDs.Length; i++)
+                {
+                    provinceIDToIndex[provinceIDs[i]] = i;
+                }
+
+                // Load terrain.json5 for overrides
                 string terrainJsonPath = System.IO.Path.Combine(UnityEngine.Application.dataPath, "Data", "map", "terrain.json5");
 
                 if (!System.IO.File.Exists(terrainJsonPath))
@@ -527,32 +535,50 @@ namespace Map.Rendering
 
                 JObject terrainData = Json5Loader.LoadJson5File(terrainJsonPath);
 
-                // Build category name → terrain index mapping from "terrain" section
-                // terrain.json5 has two sections:
-                // - "terrain": maps terrain names to indices (e.g., mountain: { color: [6] })
-                // - "categories": defines terrain properties and overrides
+                // Build terrain type name → index mapping from terrain_rgb.json5
+                // Terrain indices = ORDER in terrain_rgb.json5 (same as BuildRGBToTerrainTypeLookup)
                 var categoryToIndex = new Dictionary<string, uint>();
 
-                JObject terrainSection = Json5Loader.GetObject(terrainData, "terrain");
-                if (terrainSection != null)
+                string terrainRgbPath = System.IO.Path.Combine(UnityEngine.Application.dataPath, "Data", "map", "terrain_rgb.json5");
+                if (!System.IO.File.Exists(terrainRgbPath))
                 {
-                    foreach (var property in terrainSection.Properties())
+                    ArchonLogger.LogError($"ProvinceTerrainAnalyzer: terrain_rgb.json5 not found at {terrainRgbPath}", "map_rendering");
+                    return;
+                }
+
+                JObject terrainRgbData = Json5Loader.LoadJson5File(terrainRgbPath);
+
+                // Build type name → index mapping (index = order in terrain_rgb.json5)
+                uint terrainTypeIndex = 0;
+                foreach (var terrainProperty in terrainRgbData.Properties())
+                {
+                    if (terrainProperty.Value is JObject terrainObj)
                     {
-                        string terrainName = property.Name;
-                        if (property.Value is JObject terrainObj)
+                        string typeName = terrainObj["type"]?.ToString();
+                        if (!string.IsNullOrEmpty(typeName))
                         {
-                            var colorArray = Json5Loader.GetIntArray(terrainObj, "color");
-                            if (colorArray.Count > 0)
+                            // Map each terrain type name to its index (first occurrence wins)
+                            if (!categoryToIndex.ContainsKey(typeName))
                             {
-                                categoryToIndex[terrainName] = (uint)colorArray[0];
+                                categoryToIndex[typeName] = terrainTypeIndex;
                             }
+                            terrainTypeIndex++;
                         }
                     }
                 }
 
                 if (logAnalysis)
                 {
-                    ArchonLogger.Log($"ProvinceTerrainAnalyzer: Loaded {categoryToIndex.Count} terrain type mappings", "map_rendering");
+                    ArchonLogger.Log($"ProvinceTerrainAnalyzer: Loaded {categoryToIndex.Count} terrain type mappings from terrain_rgb.json5", "map_rendering");
+
+                    // Debug: Show the mappings
+                    var sb = new System.Text.StringBuilder();
+                    sb.Append("ProvinceTerrainAnalyzer: Terrain type name→index mappings: ");
+                    foreach (var kvp in categoryToIndex)
+                    {
+                        sb.Append($"{kvp.Key}={kvp.Value} ");
+                    }
+                    ArchonLogger.Log(sb.ToString(), "map_rendering");
                 }
 
                 // Parse "categories" section for terrain_override arrays
@@ -581,19 +607,37 @@ namespace Map.Rendering
                             uint terrainIndex = 0;
                             if (categoryToIndex.TryGetValue(categoryName, out terrainIndex))
                             {
+                                if (logAnalysis)
+                                {
+                                    ArchonLogger.Log($"ProvinceTerrainAnalyzer: Category '{categoryName}' → Terrain Index {terrainIndex}, applying to {overrideProvinces.Count} provinces", "map_rendering");
+                                }
+
                                 // Apply overrides for all provinces in the list
                                 foreach (int provinceID in overrideProvinces)
                                 {
-                                    if (provinceID > 0 && provinceID < terrainAssignments.Length)
+                                    // Convert province ID to array index
+                                    ushort pid = (ushort)provinceID;
+                                    if (provinceIDToIndex.TryGetValue(pid, out int arrayIndex))
                                     {
-                                        terrainAssignments[provinceID] = terrainIndex;
+                                        uint oldTerrain = terrainAssignments[arrayIndex];
+                                        terrainAssignments[arrayIndex] = terrainIndex;
                                         overridesApplied++;
+
+                                        // Debug: Log first few overrides for this category
+                                        if (logAnalysis && overridesApplied <= 5)
+                                        {
+                                            ArchonLogger.Log($"  Province {provinceID} (index {arrayIndex}): T{oldTerrain} → T{terrainIndex} ({categoryName})", "map_rendering");
+                                        }
+                                    }
+                                    else if (logAnalysis && overridesApplied <= 5)
+                                    {
+                                        ArchonLogger.LogWarning($"  Province {provinceID}: Not found in province ID lookup (invalid province?)", "map_rendering");
                                     }
                                 }
                             }
                             else if (logAnalysis)
                             {
-                                ArchonLogger.LogWarning($"ProvinceTerrainAnalyzer: No terrain index mapping for category '{categoryName}'", "map_rendering");
+                                ArchonLogger.LogWarning($"ProvinceTerrainAnalyzer: No terrain index mapping for category '{categoryName}' (has {overrideProvinces.Count} overrides)", "map_rendering");
                             }
                         }
                     }
