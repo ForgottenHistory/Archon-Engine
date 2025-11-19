@@ -118,8 +118,8 @@ As in, practical implementation of core systems.
 - Vector like borders, razor thin
 - 3D terrain tessallation and smart texturing for realistic terrain
 
-![Heightmap-example](Images/tessallation_heightmap.png)
-3D tessallated terrain WIP.
+![early-3d-map](Images/simple_terrain.png)
+Simple province terrain, auto terrain assignment from texture
 
 **Planned Features:**
 - Multiplayer (lockstep command synchronization)
@@ -137,7 +137,10 @@ As in, practical implementation of core systems.
 ## Screenshots
 
 ![early-3d-map](Images/early_3d_map.png)
-WIP 3D map. Figuring out how texturing with infinite scale works
+WIP 3D map with texturing
+
+![Heightmap-example](Images/tessallation_heightmap.png)
+3D tessallated terrain WIP.
 
 ## Technical Requirements
 
