@@ -294,6 +294,67 @@ namespace ParadoxParser.Bitmap
 
             return matchingPixels;
         }
+
+        /// <summary>
+        /// Extract palette from 8-bit indexed BMP file
+        /// Returns null if not an 8-bit BMP or no palette present
+        /// </summary>
+        public static UnityEngine.Color32[] ExtractPalette(NativeArray<byte> fileData, BMPHeader header)
+        {
+            return ExtractPalette(new NativeSlice<byte>(fileData), header);
+        }
+
+        /// <summary>
+        /// Extract palette from 8-bit indexed BMP file
+        /// Palette is located between info header and pixel data
+        /// Each palette entry is 4 bytes: BGRA (Blue, Green, Red, Alpha/Reserved)
+        /// </summary>
+        public static UnityEngine.Color32[] ExtractPalette(NativeSlice<byte> fileData, BMPHeader header)
+        {
+            // Only 8-bit BMPs have palettes
+            if (header.BitsPerPixel != 8)
+            {
+                return null;
+            }
+
+            // Calculate palette size
+            // ColorsUsed = 0 means use maximum (256 for 8-bit)
+            int paletteSize = header.InfoHeader.ColorsUsed == 0 ? 256 : (int)header.InfoHeader.ColorsUsed;
+
+            // Palette starts after info header (at offset 54 for standard BMP)
+            int paletteOffset = 14 + (int)header.InfoHeader.HeaderSize;
+
+            // Each palette entry is 4 bytes (BGRA)
+            int paletteByteSize = paletteSize * 4;
+
+            // Verify we have enough data
+            if (fileData.Length < paletteOffset + paletteByteSize)
+            {
+                return null;
+            }
+
+            // Extract palette
+            UnityEngine.Color32[] palette = new UnityEngine.Color32[paletteSize];
+
+            unsafe
+            {
+                byte* dataPtr = (byte*)fileData.GetUnsafePtr();
+                byte* palettePtr = dataPtr + paletteOffset;
+
+                for (int i = 0; i < paletteSize; i++)
+                {
+                    // BMP palette format is BGRA (not RGBA!)
+                    byte b = palettePtr[i * 4 + 0];
+                    byte g = palettePtr[i * 4 + 1];
+                    byte r = palettePtr[i * 4 + 2];
+                    byte a = palettePtr[i * 4 + 3]; // Usually 0 (reserved)
+
+                    palette[i] = new UnityEngine.Color32(r, g, b, 255);
+                }
+            }
+
+            return palette;
+        }
     }
 
     /// <summary>

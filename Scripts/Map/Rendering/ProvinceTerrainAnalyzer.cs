@@ -3,6 +3,7 @@ using UnityEngine.Rendering;
 using Core.Loaders;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Map.Rendering
 {
@@ -30,6 +31,7 @@ namespace Map.Rendering
         private static readonly int MapWidthID = Shader.PropertyToID("MapWidth");
         private static readonly int MapHeightID = Shader.PropertyToID("MapHeight");
         private static readonly int ProvinceCountID = Shader.PropertyToID("ProvinceCount");
+        private static readonly int ProvinceIDToIndexBufferID = Shader.PropertyToID("ProvinceIDToIndexBuffer");
 
         void Awake()
         {
@@ -51,7 +53,7 @@ namespace Map.Rendering
         public uint[] AnalyzeProvinceTerrain(
             RenderTexture provinceIDTexture,
             RenderTexture terrainTexture,
-            int provinceCount)
+            ushort[] provinceIDs)
         {
             if (terrainAnalyzerCompute == null)
             {
@@ -61,13 +63,31 @@ namespace Map.Rendering
 
             int mapWidth = provinceIDTexture.width;
             int mapHeight = provinceIDTexture.height;
+            int provinceCount = provinceIDs.Length;
 
             if (logAnalysis)
             {
                 ArchonLogger.Log($"ProvinceTerrainAnalyzer: Starting terrain analysis for {provinceCount} provinces ({mapWidth}x{mapHeight} map)", "map_rendering");
             }
 
-            // Create vote matrix buffer: [provinceID * 256 + terrainType] = voteCount
+            // Create Province ID → Array Index lookup buffer
+            // Size by max province ID (65536), value is array index (0 to provinceCount-1)
+            // Invalid IDs map to 0 (ocean)
+            const int MAX_PROVINCE_ID = 65536;
+            uint[] provinceIDToIndex = new uint[MAX_PROVINCE_ID];
+            for (int i = 0; i < provinceIDs.Length; i++)
+            {
+                provinceIDToIndex[provinceIDs[i]] = (uint)i;
+            }
+            ComputeBuffer provinceIDToIndexBuffer = new ComputeBuffer(MAX_PROVINCE_ID, sizeof(uint));
+            provinceIDToIndexBuffer.SetData(provinceIDToIndex);
+
+            if (logAnalysis)
+            {
+                ArchonLogger.Log($"ProvinceTerrainAnalyzer: Created ProvinceID→Index lookup (65536 entries, {MAX_PROVINCE_ID * sizeof(uint) / 1024}KB)", "map_rendering");
+            }
+
+            // Create vote matrix buffer: [arrayIndex * 256 + terrainType] = voteCount
             // Each province has 256 vote counters (one per terrain type)
             int voteMatrixSize = provinceCount * 256;
             ComputeBuffer voteMatrix = new ComputeBuffer(voteMatrixSize, sizeof(uint));
@@ -88,6 +108,7 @@ namespace Map.Rendering
                 terrainAnalyzerCompute.SetTexture(countVotesKernel, ProvinceIDTextureID, provinceIDTexture);
                 terrainAnalyzerCompute.SetTexture(countVotesKernel, TerrainTextureID, terrainTexture);
                 terrainAnalyzerCompute.SetBuffer(countVotesKernel, VoteMatrixID, voteMatrix);
+                terrainAnalyzerCompute.SetBuffer(countVotesKernel, ProvinceIDToIndexBufferID, provinceIDToIndexBuffer);
                 terrainAnalyzerCompute.SetInt(MapWidthID, mapWidth);
                 terrainAnalyzerCompute.SetInt(MapHeightID, mapHeight);
                 terrainAnalyzerCompute.SetInt(ProvinceCountID, provinceCount);
@@ -158,6 +179,7 @@ namespace Map.Rendering
                 // Always release GPU buffers
                 voteMatrix?.Release();
                 provinceTerrainTypes?.Release();
+                provinceIDToIndexBuffer?.Release();
 
                 if (logAnalysis)
                 {
@@ -168,16 +190,17 @@ namespace Map.Rendering
 
         /// <summary>
         /// Analyze terrain and store results in a lookup texture
-        /// Creates a 1D texture: [provinceID] = terrainTypeIndex
+        /// Creates a 1D texture: [arrayIndex] = terrainTypeIndex
         /// Overload for Texture2D terrain input (uses Texture2D directly - no conversion needed)
         /// </summary>
         public RenderTexture AnalyzeAndCreateLookupTexture(
             RenderTexture provinceIDTexture,
             Texture2D terrainTexture,
-            int provinceCount)
+            ushort[] provinceIDs)
         {
             // Get terrain assignments - use Texture2D version
-            uint[] terrainTypes = AnalyzeProvinceTerrain(provinceIDTexture, terrainTexture, provinceCount);
+            uint[] terrainTypes = AnalyzeProvinceTerrain(provinceIDTexture, terrainTexture, provinceIDs);
+            int provinceCount = provinceIDs.Length;
             if (terrainTypes == null)
                 return null;
 
@@ -228,7 +251,7 @@ namespace Map.Rendering
         public uint[] AnalyzeProvinceTerrain(
             RenderTexture provinceIDTexture,
             Texture2D terrainTexture,
-            int provinceCount)
+            ushort[] provinceIDs)
         {
             if (terrainAnalyzerCompute == null)
             {
@@ -238,27 +261,39 @@ namespace Map.Rendering
 
             int mapWidth = provinceIDTexture.width;
             int mapHeight = provinceIDTexture.height;
+            int provinceCount = provinceIDs.Length;
 
             if (logAnalysis)
             {
                 ArchonLogger.Log($"ProvinceTerrainAnalyzer: Starting terrain analysis for {provinceCount} provinces ({mapWidth}x{mapHeight} map)", "map_rendering");
             }
 
-            // Extract terrain type indices from Texture2D
-            // CRITICAL: Unity's texture import converts the 8-bit indexed bitmap
-            // We need to read the raw BMP file directly to get actual palette indices
-
-            // Try to read raw BMP file directly
-            string terrainBmpPath = System.IO.Path.Combine(UnityEngine.Application.dataPath, "Data", "map", "terrain.bmp");
-            uint[] terrainTypeData = ReadBmpPaletteIndices(terrainBmpPath, mapWidth, mapHeight);
-
-            if (terrainTypeData == null)
+            // Create Province ID → Array Index lookup buffer
+            const int MAX_PROVINCE_ID = 65536;
+            uint[] provinceIDToIndex = new uint[MAX_PROVINCE_ID];
+            for (int i = 0; i < provinceIDs.Length; i++)
             {
-                ArchonLogger.LogError("ProvinceTerrainAnalyzer: Failed to read terrain.bmp palette indices", "map_rendering");
+                provinceIDToIndex[provinceIDs[i]] = (uint)i;
+            }
+            ComputeBuffer provinceIDToIndexBuffer = new ComputeBuffer(MAX_PROVINCE_ID, sizeof(uint));
+            provinceIDToIndexBuffer.SetData(provinceIDToIndex);
+
+            if (logAnalysis)
+            {
+                ArchonLogger.Log($"ProvinceTerrainAnalyzer: Created ProvinceID→Index lookup (65536 entries, {MAX_PROVINCE_ID * sizeof(uint) / 1024}KB)", "map_rendering");
+            }
+
+            // Build RGB → Terrain Type lookup from terrain.json5
+            var rgbToTerrainType = BuildRGBToTerrainTypeLookup();
+
+            if (rgbToTerrainType == null || rgbToTerrainType.Count == 0)
+            {
+                ArchonLogger.LogError("ProvinceTerrainAnalyzer: Failed to build RGB→Terrain lookup from terrain.json5", "map_rendering");
                 return null;
             }
 
-            // terrainTypeData now contains raw BMP palette indices (not Unity's converted RGB)
+            // Read terrain.bmp RGB pixels and convert to terrain type indices
+            uint[] terrainTypeData = ConvertRGBToTerrainTypes(terrainTexture, rgbToTerrainType, mapWidth, mapHeight);
 
             if (logAnalysis)
             {
@@ -331,6 +366,7 @@ namespace Map.Rendering
                 terrainAnalyzerCompute.SetTexture(countVotesKernel, ProvinceIDTextureID, provinceIDTexture);
                 terrainAnalyzerCompute.SetBuffer(countVotesKernel, "TerrainDataBuffer", terrainDataBuffer);  // Use buffer, not texture
                 terrainAnalyzerCompute.SetBuffer(countVotesKernel, VoteMatrixID, voteMatrix);
+                terrainAnalyzerCompute.SetBuffer(countVotesKernel, ProvinceIDToIndexBufferID, provinceIDToIndexBuffer);
                 terrainAnalyzerCompute.SetInt(MapWidthID, mapWidth);
                 terrainAnalyzerCompute.SetInt(MapHeightID, mapHeight);
                 terrainAnalyzerCompute.SetInt(ProvinceCountID, provinceCount);
@@ -405,20 +441,29 @@ namespace Map.Rendering
 
                     // Sample a few provinces to see their vote distributions
                     // Include some provinces that should be mountains (e.g., Alps)
-                    var sampleProvinces = new List<int> { 1, 2, 3, 100, 110, 112, 113, 1276 };  // 1276 is ocean
+                    var sampleProvinceIDs = new List<ushort> { 1, 2, 3, 100, 110, 112, 113, 1276, 1314, 4333 };  // 1276 is ocean, 1314 is inland_ocean, 4333 is sea
 
-                    foreach (int p in sampleProvinces)
+                    foreach (ushort provinceID in sampleProvinceIDs)
                     {
-                        if (p >= provinceCount) continue;
+                        // Convert province ID to array index using lookup
+                        if (provinceID >= provinceIDToIndex.Length)
+                            continue;
+
+                        uint arrayIndex = provinceIDToIndex[provinceID];
+                        if (arrayIndex == 0 && provinceID != 0)
+                        {
+                            // This province ID doesn't exist in the dataset
+                            continue;
+                        }
 
                         sb.Clear();
-                        sb.Append($"ProvinceTerrainAnalyzer: Province {p} votes - ");
+                        sb.Append($"ProvinceTerrainAnalyzer: Province {provinceID} (index {arrayIndex}) votes - ");
                         bool hasVotes = false;
                         uint totalVotesForProvince = 0;
 
                         for (int t = 0; t < 256; t++)
                         {
-                            uint votes = allVotes[p * 256 + t];
+                            uint votes = allVotes[arrayIndex * 256 + t];
                             if (votes > 0)
                             {
                                 sb.Append($"T{t}:{votes} ");
@@ -433,17 +478,18 @@ namespace Map.Rendering
                         }
                         else
                         {
-                            sb.Append($"| Total: {totalVotesForProvince} | Winner: T{results[p]}");
+                            sb.Append($"| Total: {totalVotesForProvince} | Winner: T{results[arrayIndex]}");
                         }
 
                         ArchonLogger.Log(sb.ToString(), "map_rendering");
                     }
                 }
 
-                // Apply terrain overrides from terrain.json5
+                // Apply terrain overrides from terrain.json5 (DISABLED - incompatible with terrain_rgb.json5 system)
                 // EU4 uses terrain_override arrays to assign specific provinces different terrain
                 // This happens AFTER the bitmap majority vote
-                ApplyTerrainOverrides(results);
+                // TODO: Fix terrain overrides to work with terrain_rgb.json5 index system
+                // ApplyTerrainOverrides(results);
 
                 return results;
             }
@@ -452,6 +498,7 @@ namespace Map.Rendering
                 terrainDataBuffer?.Release();
                 voteMatrix?.Release();
                 provinceTerrainTypes?.Release();
+                provinceIDToIndexBuffer?.Release();
 
                 if (logAnalysis)
                 {
@@ -610,6 +657,32 @@ namespace Map.Rendering
                         ArchonLogger.Log($"ProvinceTerrainAnalyzer: Reading 8-bit BMP - {width}x{height}, data offset: {dataOffset}", "map_rendering");
                     }
 
+                    // Read palette (256 entries, 4 bytes each: B, G, R, Reserved)
+                    // Palette starts after DIB header
+                    fs.Seek(14 + headerSize, System.IO.SeekOrigin.Begin);
+
+                    var palette = new System.Collections.Generic.List<(byte r, byte g, byte b)>();
+                    for (int i = 0; i < 256; i++)
+                    {
+                        byte b = reader.ReadByte();
+                        byte g = reader.ReadByte();
+                        byte r = reader.ReadByte();
+                        reader.ReadByte(); // Reserved
+                        palette.Add((r, g, b));
+                    }
+
+                    if (logAnalysis)
+                    {
+                        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                        sb.AppendLine("ProvinceTerrainAnalyzer: BMP Palette (first 20 entries):");
+                        for (int i = 0; i < System.Math.Min(20, palette.Count); i++)
+                        {
+                            var (r, g, b) = palette[i];
+                            sb.AppendLine($"  Index {i}: RGB({r}, {g}, {b})");
+                        }
+                        ArchonLogger.Log(sb.ToString(), "map_rendering");
+                    }
+
                     // Skip to pixel data
                     fs.Seek(dataOffset, System.IO.SeekOrigin.Begin);
 
@@ -664,15 +737,15 @@ namespace Map.Rendering
 
         /// <summary>
         /// Analyze terrain and return results as array
-        /// Returns uint[] where [provinceID] = terrainTypeIndex (0-255)
+        /// Returns uint[] where [arrayIndex] = terrainTypeIndex (0-255)
         /// </summary>
         public uint[] AnalyzeAndGetTerrainTypes(
             RenderTexture provinceIDTexture,
             Texture2D terrainTexture,
-            int provinceCount)
+            ushort[] provinceIDs)
         {
             // Get terrain assignments and return directly (no RenderTexture conversion)
-            uint[] terrainTypes = AnalyzeProvinceTerrain(provinceIDTexture, terrainTexture, provinceCount);
+            uint[] terrainTypes = AnalyzeProvinceTerrain(provinceIDTexture, terrainTexture, provinceIDs);
             if (terrainTypes == null)
                 return null;
 
@@ -681,7 +754,7 @@ namespace Map.Rendering
             {
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
                 sb.Append("ProvinceTerrainAnalyzer: Terrain type array samples - ");
-                for (int i = 1; i <= Mathf.Min(10, provinceCount); i++)
+                for (int i = 1; i <= Mathf.Min(10, provinceIDs.Length); i++)
                 {
                     sb.Append($"P{i}=T{terrainTypes[i]} ");
                 }
@@ -690,7 +763,140 @@ namespace Map.Rendering
 
             if (logAnalysis)
             {
-                ArchonLogger.Log($"ProvinceTerrainAnalyzer: Returning terrain type array ({provinceCount} entries)", "map_rendering");
+                ArchonLogger.Log($"ProvinceTerrainAnalyzer: Returning terrain type array ({provinceIDs.Length} entries)", "map_rendering");
+            }
+
+            return terrainTypes;
+        }
+
+        /// <summary>
+        /// Build RGB → Terrain Type lookup from terrain_rgb.json5
+        /// Returns dictionary: RGB(r,g,b) → terrain type index
+        /// Terrain type index is determined by ORDER in terrain_rgb.json5 (0, 1, 2, 3...)
+        /// </summary>
+        private Dictionary<(byte r, byte g, byte b), uint> BuildRGBToTerrainTypeLookup()
+        {
+            var lookup = new Dictionary<(byte r, byte g, byte b), uint>();
+
+            try
+            {
+                // Load RGB mappings from terrain_rgb.json5
+                string terrainRgbPath = System.IO.Path.Combine(UnityEngine.Application.dataPath, "Data", "map", "terrain_rgb.json5");
+                if (!System.IO.File.Exists(terrainRgbPath))
+                {
+                    ArchonLogger.LogError($"ProvinceTerrainAnalyzer: terrain_rgb.json5 not found at {terrainRgbPath}", "map_rendering");
+                    return null;
+                }
+
+                JObject terrainRgbData = Json5Loader.LoadJson5File(terrainRgbPath);
+
+                if (terrainRgbData == null)
+                {
+                    ArchonLogger.LogError("ProvinceTerrainAnalyzer: Failed to parse terrain_rgb.json5", "map_rendering");
+                    return null;
+                }
+
+                // Assign terrain type indices based on ORDER in terrain_rgb.json5
+                uint terrainTypeIndex = 0;
+                foreach (var terrainProperty in terrainRgbData.Properties())
+                {
+                    string terrainName = terrainProperty.Name;
+
+                    if (terrainProperty.Value is JObject terrainObj)
+                    {
+                        var colorArray = Json5Loader.GetIntArray(terrainObj, "color");
+                        string typeName = terrainObj["type"]?.ToString();
+
+                        if (colorArray.Count >= 3)
+                        {
+                            byte r = (byte)colorArray[0];
+                            byte g = (byte)colorArray[1];
+                            byte b = (byte)colorArray[2];
+
+                            // Only add if RGB doesn't already exist (handle duplicates like savannah/drylands both at 0,0,0)
+                            if (!lookup.ContainsKey((r, g, b)))
+                            {
+                                lookup[(r, g, b)] = terrainTypeIndex;
+
+                                if (logAnalysis)
+                                {
+                                    ArchonLogger.Log($"ProvinceTerrainAnalyzer: Terrain mapping - RGB({r},{g},{b}) → T{terrainTypeIndex} ({terrainName}, type={typeName})", "map_rendering");
+                                }
+
+                                terrainTypeIndex++;
+                            }
+                            else if (logAnalysis)
+                            {
+                                ArchonLogger.LogWarning($"ProvinceTerrainAnalyzer: Duplicate RGB({r},{g},{b}) for {terrainName} (already mapped)", "map_rendering");
+                            }
+                        }
+                    }
+                }
+
+                ArchonLogger.Log($"ProvinceTerrainAnalyzer: Built RGB→Terrain lookup with {lookup.Count} mappings", "map_rendering");
+                return lookup;
+            }
+            catch (System.Exception e)
+            {
+                ArchonLogger.LogError($"ProvinceTerrainAnalyzer: Failed to build RGB lookup: {e.Message}\nStack trace: {e.StackTrace}", "map_rendering");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Convert RGB pixels from terrain texture to terrain type indices
+        /// </summary>
+        private uint[] ConvertRGBToTerrainTypes(
+            Texture2D terrainTexture,
+            Dictionary<(byte r, byte g, byte b), uint> rgbToTerrainType,
+            int width,
+            int height)
+        {
+            Color[] pixels = terrainTexture.GetPixels();
+            uint[] terrainTypes = new uint[pixels.Length];
+            int unmappedCount = 0;
+            Dictionary<(byte r, byte g, byte b), int> unmappedColors = new Dictionary<(byte r, byte g, byte b), int>();
+
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                Color pixel = pixels[i];
+                byte r = (byte)(pixel.r * 255f + 0.5f);
+                byte g = (byte)(pixel.g * 255f + 0.5f);
+                byte b = (byte)(pixel.b * 255f + 0.5f);
+
+                if (rgbToTerrainType.TryGetValue((r, g, b), out uint terrainType))
+                {
+                    terrainTypes[i] = terrainType;
+                }
+                else
+                {
+                    // Unmapped color - default to 0
+                    terrainTypes[i] = 0;
+                    unmappedCount++;
+
+                    // Track unmapped colors
+                    if (!unmappedColors.ContainsKey((r, g, b)))
+                    {
+                        unmappedColors[(r, g, b)] = 0;
+                    }
+                    unmappedColors[(r, g, b)]++;
+                }
+            }
+
+            if (unmappedCount > 0)
+            {
+                ArchonLogger.LogWarning($"ProvinceTerrainAnalyzer: {unmappedCount} pixels had unmapped RGB colors (defaulted to index 0)", "map_rendering");
+
+                // Log the unmapped colors
+                ArchonLogger.Log($"ProvinceTerrainAnalyzer: Found {unmappedColors.Count} unique unmapped RGB values:", "map_rendering");
+                foreach (var kvp in unmappedColors.OrderByDescending(x => x.Value).Take(10))
+                {
+                    byte r = kvp.Key.r;
+                    byte g = kvp.Key.g;
+                    byte b = kvp.Key.b;
+                    int count = kvp.Value;
+                    ArchonLogger.Log($"  RGB({r},{g},{b}) - {count} pixels", "map_rendering");
+                }
             }
 
             return terrainTypes;

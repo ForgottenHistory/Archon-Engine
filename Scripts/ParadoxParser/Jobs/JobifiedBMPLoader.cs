@@ -72,6 +72,13 @@ namespace ParadoxParser.Jobs
                 // Collect unique colors for any BMP type
                 var uniqueColors = CollectUniqueColorsWithJobs(pixelData);
 
+                // Extract palette for 8-bit indexed BMPs
+                UnityEngine.Color32[] palette = null;
+                if (header.BitsPerPixel == 8)
+                {
+                    palette = BMPParser.ExtractPalette(fileData, header);
+                }
+
                 // Create persistent copy of pixel data before disposing file data
                 var persistentPixelData = CopyPixelDataToPersistentMemory(pixelData);
 
@@ -82,7 +89,8 @@ namespace ParadoxParser.Jobs
                     UniqueColors = uniqueColors,
                     Width = header.Width,
                     Height = header.Height,
-                    BitsPerPixel = header.BitsPerPixel
+                    BitsPerPixel = header.BitsPerPixel,
+                    Palette = palette
                 };
 
                 return Task.FromResult(result);
@@ -164,6 +172,7 @@ namespace ParadoxParser.Jobs
         public int Width;
         public int Height;
         public int BitsPerPixel;
+        public UnityEngine.Color32[] Palette; // Palette for 8-bit indexed BMPs (null for 24/32-bit)
 
         /// <summary>
         /// Get pixel data as BMPPixelData for processing

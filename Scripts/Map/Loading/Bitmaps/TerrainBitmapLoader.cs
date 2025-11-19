@@ -41,25 +41,102 @@ namespace Map.Loading.Bitmaps
             // Handle indexed color format (8-bit) vs direct RGB
             if (terrainData.BitsPerPixel == 8)
             {
-                // 8-bit indexed color - use TerrainColorMapper for color lookup
-                for (int y = 0; y < height && y < terrainData.Height; y++)
-                {
-                    for (int x = 0; x < width && x < terrainData.Width; x++)
-                    {
-                        int textureIndex = y * width + x;
+                // 8-bit indexed color - use REAL palette from BMP file
+                var palette = terrainData.Palette;
 
-                        // Read palette index from bitmap
-                        if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte index, out byte _, out byte __))
+                if (palette != null && palette.Length > 0)
+                {
+                    if (logProgress)
+                    {
+                        ArchonLogger.Log($"TerrainBitmapLoader: Using BMP palette with {palette.Length} colors", "map_initialization");
+
+                        // Print entire palette to compare with terrain_rgb.json5
+                        ArchonLogger.Log($"TerrainBitmapLoader: Extracted palette ({palette.Length} colors):", "map_initialization");
+                        for (int i = 0; i < palette.Length; i++)
                         {
-                            // Use centralized terrain color mapper
-                            pixels[textureIndex] = TerrainColorMapper.GetTerrainColor(index);
-                            successfulReads++;
+                            ArchonLogger.Log($"  Palette[{i}] = RGB({palette[i].r},{palette[i].g},{palette[i].b})", "map_initialization");
                         }
-                        else
+                    }
+
+                    // Track indices found for province 357 debugging
+                    System.Collections.Generic.Dictionary<byte, int> province357Indices = new System.Collections.Generic.Dictionary<byte, int>();
+
+                    // Read palette indices and convert to RGB using REAL palette colors
+                    for (int y = 0; y < height && y < terrainData.Height; y++)
+                    {
+                        for (int x = 0; x < width && x < terrainData.Width; x++)
                         {
-                            // Fallback to default terrain color
-                            pixels[textureIndex] = TerrainColorMapper.GetDefaultTerrainColor();
-                            failedReads++;
+                            int textureIndex = y * width + x;
+
+                            // Read palette index from bitmap
+                            if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte index, out byte _, out byte __))
+                            {
+                                // Log specific coordinate for province 357 debugging
+                                if (logProgress && x == 3162 && y == 865)
+                                {
+                                    ArchonLogger.Log($"TerrainBitmapLoader: Pixel at (3162,865) - Read index={index} → RGB({palette[index].r},{palette[index].g},{palette[index].b})", "map_initialization");
+                                }
+
+                                // Use REAL palette RGB color from BMP file
+                                if (index < palette.Length)
+                                {
+                                    pixels[textureIndex] = palette[index];
+
+                                    // Track indices for province 357 (check provinces.bmp at same coordinate)
+                                    // We'll log all unique indices found to see what's being read
+                                    if (!province357Indices.ContainsKey(index))
+                                    {
+                                        province357Indices[index] = 0;
+                                    }
+                                    province357Indices[index]++;
+                                }
+                                else
+                                {
+                                    pixels[textureIndex] = new Color32(0, 0, 0, 255); // Black for out-of-range
+                                }
+                                successfulReads++;
+                            }
+                            else
+                            {
+                                pixels[textureIndex] = new Color32(0, 0, 0, 255);
+                                failedReads++;
+                            }
+                        }
+                    }
+
+                    // Log all indices found in terrain.bmp
+                    if (logProgress)
+                    {
+                        ArchonLogger.Log($"TerrainBitmapLoader: Found {province357Indices.Count} unique terrain palette indices across entire map:", "map_initialization");
+                        foreach (var kvp in province357Indices)
+                        {
+                            byte idx = kvp.Key;
+                            int count = kvp.Value;
+                            ArchonLogger.Log($"  Index[{idx}] → RGB({palette[idx].r},{palette[idx].g},{palette[idx].b}) - {count} pixels", "map_initialization");
+                        }
+                    }
+                }
+                else
+                {
+                    // Fallback to TerrainColorMapper if no palette available
+                    ArchonLogger.LogWarning("TerrainBitmapLoader: No palette found in 8-bit BMP, using TerrainColorMapper fallback", "map_initialization");
+
+                    for (int y = 0; y < height && y < terrainData.Height; y++)
+                    {
+                        for (int x = 0; x < width && x < terrainData.Width; x++)
+                        {
+                            int textureIndex = y * width + x;
+
+                            if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte index, out byte _, out byte __))
+                            {
+                                pixels[textureIndex] = TerrainColorMapper.GetTerrainColor(index);
+                                successfulReads++;
+                            }
+                            else
+                            {
+                                pixels[textureIndex] = TerrainColorMapper.GetDefaultTerrainColor();
+                                failedReads++;
+                            }
                         }
                     }
                 }
@@ -101,6 +178,13 @@ namespace Map.Loading.Bitmaps
             // Apply terrain colors to texture
             terrainTexture.SetPixels32(pixels);
             ApplyTextureAndSync(terrainTexture);
+
+            // Verify the texture stored the pixel correctly by reading it back
+            if (logProgress)
+            {
+                Color32 verifyPixel = terrainTexture.GetPixel(3162, 865);
+                ArchonLogger.Log($"TerrainBitmapLoader: VERIFY texture at (3162,865) after upload = RGB({verifyPixel.r},{verifyPixel.g},{verifyPixel.b})", "map_initialization");
+            }
 
             // Generate terrain type texture (R8, terrain indices) from terrain colors
             // Must happen AFTER terrain.bmp is loaded into ProvinceTerrainTexture

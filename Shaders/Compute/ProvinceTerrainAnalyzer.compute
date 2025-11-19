@@ -21,9 +21,13 @@ Texture2D<float4> ProvinceIDTexture;   // Which province each pixel belongs to (
 // CRITICAL: Use StructuredBuffer instead of Graphics.Blit (see unity-compute-shader-coordination.md)
 StructuredBuffer<uint> TerrainDataBuffer;  // Terrain type indices (0-255) as bytes
 
-// Output: Vote matrix [provinceID * 256 + terrainTypeIndex] = voteCount
+// Output: Vote matrix [arrayIndex * 256 + terrainTypeIndex] = voteCount
 // Each province has 256 counters (one per terrain type)
 RWStructuredBuffer<uint> VoteMatrix;
+
+// Province ID → Array Index lookup (size: 65536)
+// Maps actual province IDs to array indices (0 to ProvinceCount-1)
+StructuredBuffer<uint> ProvinceIDToIndexBuffer;
 
 // Map dimensions
 uint MapWidth;
@@ -48,7 +52,14 @@ void CountVotes(uint3 id : SV_DispatchThreadID)
     uint provinceID = (g << 8) | r;
 
     // Skip ocean/invalid provinces
-    if (provinceID == 0 || provinceID >= ProvinceCount)
+    if (provinceID == 0 || provinceID >= 65536)
+        return;
+
+    // Convert province ID to array index using lookup buffer
+    uint arrayIndex = ProvinceIDToIndexBuffer[provinceID];
+
+    // Skip if not a valid province (lookup returns 0 for invalid IDs, which is ocean)
+    if (arrayIndex == 0)
         return;
 
     // Sample terrain type from buffer (0-255 index)
@@ -57,8 +68,8 @@ void CountVotes(uint3 id : SV_DispatchThreadID)
     uint terrainType = TerrainDataBuffer[bufferIndex];
 
     // Atomic increment vote count for this terrain type in this province
-    // VoteMatrix layout: [provinceID * 256 + terrainType]
-    uint voteIndex = provinceID * 256 + terrainType;
+    // VoteMatrix layout: [arrayIndex * 256 + terrainType]
+    uint voteIndex = arrayIndex * 256 + terrainType;
     InterlockedAdd(VoteMatrix[voteIndex], 1);
 }
 
@@ -71,17 +82,17 @@ void CountVotes(uint3 id : SV_DispatchThreadID)
 // Input: Vote matrix from Pass 1
 // (Reuse VoteMatrix buffer from Pass 1 - read-only in this pass)
 
-// Output: Province terrain assignments [provinceID] = terrainTypeIndex
+// Output: Province terrain assignments [arrayIndex] = terrainTypeIndex
 RWStructuredBuffer<uint> ProvinceTerrainTypes;
 
 // Thread group: 256 threads per province (one per terrain type)
 [numthreads(256, 1, 1)]
 void DetermineWinner(uint3 id : SV_DispatchThreadID)
 {
-    uint provinceID = id.x;
+    uint arrayIndex = id.x;
 
     // Skip invalid provinces
-    if (provinceID >= ProvinceCount)
+    if (arrayIndex >= ProvinceCount)
         return;
 
     // Find terrain type with most votes for this province
@@ -91,7 +102,7 @@ void DetermineWinner(uint3 id : SV_DispatchThreadID)
     // Check all 256 terrain types
     for (uint terrainType = 0; terrainType < 256; terrainType++)
     {
-        uint voteIndex = provinceID * 256 + terrainType;
+        uint voteIndex = arrayIndex * 256 + terrainType;
         uint votes = VoteMatrix[voteIndex];
 
         if (votes > maxVotes)
@@ -102,5 +113,5 @@ void DetermineWinner(uint3 id : SV_DispatchThreadID)
     }
 
     // Write result: this province's dominant terrain type
-    ProvinceTerrainTypes[provinceID] = winningTerrainType;
+    ProvinceTerrainTypes[arrayIndex] = winningTerrainType;
 }

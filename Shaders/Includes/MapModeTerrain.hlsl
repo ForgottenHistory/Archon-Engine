@@ -116,41 +116,93 @@ float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
         return _OceanColor; // Configurable from GAME layer
     }
 
-    // Fix flipped UV coordinates
-    float2 correctedUV = float2(uv.x, 1.0 - uv.y);
+    // PROVINCE TERRAIN TYPE: Get terrain type for this province
+    // Each province shows a solid color based on its assigned terrain type
+    uint terrainTypeIndex = 0;
+    if (provinceID > 0 && provinceID < 65536)
+    {
+        terrainTypeIndex = _ProvinceTerrainBuffer[provinceID];
+    }
 
-    // MACRO TEXTURE: Sample terrain color (only used as fallback if detail mapping disabled)
-    // The macro texture (terrain.bmp) is pixelated and only for boundaries/simulation data
-    float4 macroColor = SAMPLE_TEXTURE2D(_ProvinceTerrainTexture, sampler_ProvinceTerrainTexture, correctedUV);
+    // DEBUG: Show magenta to verify this code is executing
+    // return float4(1, 0, 1, 1);
+
+    // Map terrain type index to color
+    // Indices based on ORDER in terrain_rgb.json5
+    // Colors converted from RGB(r,g,b) to float3(r/255, g/255, b/255)
+    float3 terrainColor = float3(0.5, 0.5, 0.5); // Default: gray
+
+    // Terrain indices from terrain_rgb.json5 (in order):
+    if (terrainTypeIndex == 0)       terrainColor = float3(86.0/255.0, 124.0/255.0, 27.0/255.0);      // grasslands RGB(86,124,27)
+    else if (terrainTypeIndex == 1)  terrainColor = float3(0.0/255.0, 86.0/255.0, 6.0/255.0);         // hills RGB(0,86,6)
+    else if (terrainTypeIndex == 2)  terrainColor = float3(112.0/255.0, 74.0/255.0, 31.0/255.0);      // desert_mountain RGB(112,74,31)
+    else if (terrainTypeIndex == 3)  terrainColor = float3(206.0/255.0, 169.0/255.0, 99.0/255.0);     // desert RGB(206,169,99)
+    else if (terrainTypeIndex == 4)  terrainColor = float3(200.0/255.0, 214.0/255.0, 107.0/255.0);    // plains RGB(200,214,107)
+    else if (terrainTypeIndex == 5)  terrainColor = float3(13.0/255.0, 96.0/255.0, 62.0/255.0);       // terrain_5 RGB(13,96,62)
+    else if (terrainTypeIndex == 6)  terrainColor = float3(65.0/255.0, 42.0/255.0, 17.0/255.0);       // mountain RGB(65,42,17)
+    else if (terrainTypeIndex == 7)  terrainColor = float3(158.0/255.0, 130.0/255.0, 77.0/255.0);     // desert_mountain_low RGB(158,130,77)
+    else if (terrainTypeIndex == 8)  terrainColor = float3(53.0/255.0, 77.0/255.0, 17.0/255.0);       // terrain_8 RGB(53,77,17)
+    else if (terrainTypeIndex == 9)  terrainColor = float3(75.0/255.0, 147.0/255.0, 174.0/255.0);     // marsh RGB(75,147,174)
+    else if (terrainTypeIndex == 10) terrainColor = float3(155.0/255.0, 155.0/255.0, 155.0/255.0);    // terrain_10 RGB(155,155,155)
+    else if (terrainTypeIndex == 11) terrainColor = float3(255.0/255.0, 0.0/255.0, 0.0/255.0);        // terrain_11 RGB(255,0,0)
+    else if (terrainTypeIndex == 12) terrainColor = float3(42.0/255.0, 55.0/255.0, 22.0/255.0);       // forest_12 RGB(42,55,22)
+    else if (terrainTypeIndex == 13) terrainColor = float3(213.0/255.0, 144.0/255.0, 199.0/255.0);    // forest_13 RGB(213,144,199)
+    else if (terrainTypeIndex == 14) terrainColor = float3(127.0/255.0, 24.0/255.0, 60.0/255.0);      // forest_14 RGB(127,24,60)
+    else if (terrainTypeIndex == 15) terrainColor = float3(8.0/255.0, 31.0/255.0, 130.0/255.0);       // ocean RGB(8,31,130)
+    else if (terrainTypeIndex == 16) terrainColor = float3(255.0/255.0, 255.0/255.0, 255.0/255.0);    // snow RGB(255,255,255)
+    else if (terrainTypeIndex == 17) terrainColor = float3(55.0/255.0, 90.0/255.0, 220.0/255.0);      // inland_ocean_17 RGB(55,90,220)
+    else if (terrainTypeIndex == 18) terrainColor = float3(203.0/255.0, 191.0/255.0, 103.0/255.0);    // coastal_desert_18 RGB(203,191,103)
+    else if (terrainTypeIndex == 19) terrainColor = float3(255.0/255.0, 247.0/255.0, 0.0/255.0);      // coastline RGB(255,247,0)
+    else if (terrainTypeIndex == 20) terrainColor = float3(0.0/255.0, 0.0/255.0, 0.0/255.0);          // savannah RGB(0,0,0)
+    else if (terrainTypeIndex == 21) terrainColor = float3(23.0/255.0, 23.0/255.0, 23.0/255.0);       // highlands RGB(23,23,23)
+    else if (terrainTypeIndex == 22) terrainColor = float3(24.0/255.0, 24.0/255.0, 24.0/255.0);       // dry_highlands RGB(24,24,24)
+    else if (terrainTypeIndex == 23) terrainColor = float3(254.0/255.0, 254.0/255.0, 254.0/255.0);    // jungle RGB(254,254,254)
+    else if (terrainTypeIndex == 24) terrainColor = float3(21.0/255.0, 21.0/255.0, 21.0/255.0);       // terrain_21 RGB(21,21,21)
+
+    float4 macroColor = float4(terrainColor, 1.0);
 
     // ============================================================================
-    // DEBUG MODE: Show raw province terrain assignments
-    // Enabled to verify terrain assignments are working correctly
-    // Each terrain type gets a distinct debug color for easy visual inspection
+    // DEBUG MODE: Show raw province terrain assignments (DISABLED)
+    // Was showing debug colors instead of actual terrain texture
+    // Uncomment the code below to enable debug visualization
     // ============================================================================
+    /*
     #ifdef TERRAIN_DETAIL_MAPPING
     uint rawTerrain = (provinceID > 0 && provinceID < 65536) ? _ProvinceTerrainBuffer[provinceID] : 0;
 
     // Map terrain types to distinct colors for debugging
-    // From terrain.json5 "terrain" section palette indices
     float3 debugColor = float3(0, 0, 0);
-    if (rawTerrain == 0)       debugColor = float3(0.2, 0.8, 0.2);   // Grasslands = bright green
-    else if (rawTerrain == 1)  debugColor = float3(0.4, 0.6, 0.5);   // Hills = teal
-    else if (rawTerrain == 2)  debugColor = float3(0.5, 0.3, 0.2);   // Desert mountain = dark brown
-    else if (rawTerrain == 3)  debugColor = float3(0.9, 0.9, 0.4);   // Desert = yellow
-    else if (rawTerrain == 6)  debugColor = float3(0.6, 0.4, 0.3);   // Mountain = brown
-    else if (rawTerrain == 9)  debugColor = float3(0.2, 0.6, 0.5);   // Marsh = cyan
-    else if (rawTerrain == 12) debugColor = float3(0.1, 0.5, 0.1);   // Forest = dark green
-    else if (rawTerrain == 16) debugColor = float3(1.0, 1.0, 1.0);   // Snow = white
-    else if (rawTerrain == 17) debugColor = float3(0.7, 1.0, 0.3);   // Farmlands = light green
-    else if (rawTerrain == 35) debugColor = float3(0.3, 0.7, 0.9);   // Coastline = light blue
-    else if (rawTerrain == 254) debugColor = float3(0.4, 0.8, 0.3);  // Jungle = lime green
-    else if (rawTerrain == 255) debugColor = float3(0.2, 0.6, 0.2);  // Woods = medium green
+    if (rawTerrain == 0)       debugColor = float3(0.4, 0.8, 0.3);   // Grasslands = green
+    else if (rawTerrain == 1)  debugColor = float3(0.6, 0.5, 0.3);   // Hills = tan/brown
+    else if (rawTerrain == 2)  debugColor = float3(0.7, 0.4, 0.2);   // Desert mountain = orange-brown
+    else if (rawTerrain == 3)  debugColor = float3(0.95, 0.85, 0.5); // Desert = sandy yellow
+    else if (rawTerrain == 4)  debugColor = float3(0.5, 0.75, 0.4);  // Plains = light green
+    else if (rawTerrain == 6)  debugColor = float3(0.5, 0.4, 0.35);  // Mountain = dark brown
+    else if (rawTerrain == 7)  debugColor = float3(0.85, 0.75, 0.45);// Desert mountain low = pale desert
+    else if (rawTerrain == 9)  debugColor = float3(0.3, 0.5, 0.4);   // Marsh = murky green-gray
+    else if (rawTerrain == 12) debugColor = float3(0.2, 0.5, 0.2);   // Forest = dark green
+    else if (rawTerrain == 15) debugColor = float3(0.1, 0.3, 0.6);   // Ocean = deep blue
+    else if (rawTerrain == 16) debugColor = float3(0.95, 0.95, 1.0); // Snow = bright white
+    else if (rawTerrain == 17) debugColor = float3(0.5, 0.75, 0.85); // Inland ocean = light blue
+    else if (rawTerrain == 18) debugColor = float3(0.6, 0.85, 0.4);  // Farmlands = fertile green
+    else if (rawTerrain == 19) debugColor = float3(0.95, 0.8, 0.55); // Coastal desert = pale sand
+    else if (rawTerrain == 20) debugColor = float3(0.9, 0.75, 0.4);  // Savannah = golden yellow
+    else if (rawTerrain == 22) debugColor = float3(0.8, 0.7, 0.5);   // Drylands = beige
+    else if (rawTerrain == 23) debugColor = float3(0.65, 0.5, 0.35); // Highlands = brown
+    else if (rawTerrain == 35) debugColor = float3(0.4, 0.7, 0.85);  // Coastline = light blue
+    else if (rawTerrain == 254) debugColor = float3(0.3, 0.6, 0.25); // Jungle = deep green
+    else if (rawTerrain == 255) debugColor = float3(0.35, 0.55, 0.3);// Woods = medium green
     else                       debugColor = float3(rawTerrain / 255.0, 0.0, 1.0 - rawTerrain / 255.0); // Unknown = purple gradient
 
     return float4(debugColor, 1.0);
     #endif
+    */
 
+    // ============================================================================
+    // TERRAIN DETAIL MAPPING (DISABLED - user request for simple raw colors)
+    // All texture sampling, height blending, and detail effects disabled
+    // ============================================================================
+    /*
     #ifdef TERRAIN_DETAIL_MAPPING
     // TERRAIN DETAIL MAPPING (only in shaders with TERRAIN_DETAIL_MAPPING defined)
 
@@ -206,13 +258,13 @@ float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
                 provinceTerrainType = _ProvinceTerrainBuffer[provinceID];
             }
 
-            // Generate noise from world position for variation
-            float2 noiseCoord = positionWS.xz * 0.1;
-            float noise = frac(sin(dot(noiseCoord, float2(12.9898, 78.233))) * 43758.5453);
+            // Generate noise from world position for variation (DISABLED - user request)
+            // float2 noiseCoord = positionWS.xz * 0.1;
+            // float noise = frac(sin(dot(noiseCoord, float2(12.9898, 78.233))) * 43758.5453);
 
-            // Use height + noise to modulate terrain type within province
+            // Use height only (noise disabled for cleaner look)
             // This creates smooth variation while respecting province assignment
-            float heightNoise = height + noise * 0.05; // Add small noise variation
+            float heightNoise = height; // No noise variation
 
             // Define common terrain transition types
             const uint TERRAIN_GRASS = 0;
@@ -257,6 +309,7 @@ float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
         } // End else (height >= beachThreshold - land terrain)
     } // End if (_DetailStrength > 0.0)
     #endif
+    */
 
     return macroColor;
 }
