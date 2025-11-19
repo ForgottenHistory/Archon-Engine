@@ -31,6 +31,9 @@ namespace Map.Loading
         // Terrain analyzer for hybrid terrain system
         private ProvinceTerrainAnalyzer terrainAnalyzer;
 
+        // Terrain blend map generator for Imperator Rome-style blending
+        private Map.Rendering.Terrain.TerrainBlendMapGenerator blendMapGenerator;
+
         public void Initialize(ProvinceMapProcessor processor, BorderComputeDispatcher borders, MapTextureManager textures)
         {
             provinceProcessor = processor;
@@ -52,6 +55,13 @@ namespace Map.Loading
             if (terrainAnalyzer == null)
             {
                 ArchonLogger.LogError("MapDataLoader: ProvinceTerrainAnalyzer component not found in scene!", "map_initialization");
+            }
+
+            // Find terrain blend map generator component
+            blendMapGenerator = Object.FindFirstObjectByType<Map.Rendering.Terrain.TerrainBlendMapGenerator>();
+            if (blendMapGenerator == null)
+            {
+                ArchonLogger.LogWarning("MapDataLoader: TerrainBlendMapGenerator component not found in scene - terrain blending disabled", "map_initialization");
             }
         }
 
@@ -318,6 +328,14 @@ namespace Map.Loading
                     ComputeBuffer terrainBuffer = new ComputeBuffer(65536, sizeof(uint));
                     terrainBuffer.SetData(terrainByProvinceID);
 
+                    // CRITICAL: GPU synchronization - ensure terrain buffer upload completes before blend map generation
+                    // SetData() is async, TerrainBlendMapGenerator needs the data to be ready on GPU
+                    // Use a temporary RenderTexture to force GPU sync (AsyncGPUReadback only works with textures)
+                    RenderTexture tempRT = RenderTexture.GetTemporary(1, 1, 0);
+                    var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(tempRT);
+                    syncRequest.WaitForCompletion();
+                    RenderTexture.ReleaseTemporary(tempRT);
+
                     // Bind to material (fragment shaders can use StructuredBuffer)
                     var meshRenderer = Object.FindFirstObjectByType<MeshRenderer>();
                     if (meshRenderer != null && meshRenderer.material != null)
@@ -332,6 +350,41 @@ namespace Map.Loading
                     if (logLoadingProgress)
                     {
                         ArchonLogger.Log($"MapDataLoader: Province terrain analysis complete ({provinceCount} provinces)", "map_rendering");
+                    }
+
+                    // Generate terrain blend maps (Imperator Rome-style 4-channel blending)
+                    // CRITICAL: Must happen AFTER terrain analysis completes and buffer upload is synchronized
+                    if (blendMapGenerator != null)
+                    {
+                        var (detailIndex, detailMask) = blendMapGenerator.Generate(
+                            provinceIDTexture,
+                            terrainBuffer,
+                            textureManager.MapWidth,
+                            textureManager.MapHeight
+                        );
+
+                        if (detailIndex != null && detailMask != null)
+                        {
+                            // Store blend maps in MapTextureManager
+                            textureManager.SetTerrainBlendMaps(detailIndex, detailMask);
+
+                            // CRITICAL: Rebind textures to material to include new blend maps
+                            // Without this, shader won't see the newly set textures
+                            var mapMeshRenderer = Object.FindFirstObjectByType<MeshRenderer>();
+                            if (mapMeshRenderer != null && mapMeshRenderer.material != null)
+                            {
+                                textureManager.BindTexturesToMaterial(mapMeshRenderer.material);
+                            }
+
+                            if (logLoadingProgress)
+                            {
+                                ArchonLogger.Log("MapDataLoader: Terrain blend maps generated, stored, and bound to material", "map_rendering");
+                            }
+                        }
+                        else
+                        {
+                            ArchonLogger.LogError("MapDataLoader: Failed to generate terrain blend maps", "map_rendering");
+                        }
                     }
 
                     // NOTE: terrainBuffer not released - needs to persist for rendering

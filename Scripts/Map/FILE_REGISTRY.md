@@ -14,7 +14,7 @@
 ## Rendering/
 - **Map.Rendering.MapTextureManager** - Facade coordinator for all map textures (delegates to texture sets)
 - **Map.Rendering.CoreTextureSet** - Core textures: Province ID (RenderTexture), Owner (RenderTexture), Color (Texture2D), Development (RenderTexture UAV-enabled for GPU writes)
-- **Map.Rendering.VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map
+- **Map.Rendering.VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map, Texture2DArray (27 terrain detail textures)
 - **Map.Rendering.DynamicTextureSet** - [BURST] Dynamic textures with mode-aware binding: DistanceField/DualBorder RenderTextures, Highlight, FogOfWar
 - **Map.Rendering.PaletteTextureManager** - Color palette texture (256×1 RGBA32) with HSV distribution
 - **Map.Rendering.MapRenderer** - Single draw call map rendering
@@ -48,6 +48,10 @@
 - **Map.Rendering.BorderMeshGenerator** - Generate triangle strip meshes from border curves (MeshGeometry mode only)
 - **Map.Rendering.BorderMeshRenderer** - Render border meshes (MeshGeometry mode only)
 - **Map.Rendering.BorderTextureDebug** - Debug visualization for border textures
+
+### Rendering/Terrain/
+- **Map.Rendering.Terrain.TerrainBlendMapGenerator** - [GPU] Imperator Rome-style 4-channel blend map generation: samples ProvinceIDTexture in configurable radius (default 5x5), counts terrain types via ProvinceTerrainBuffer, outputs DetailIndexTexture (RGBA8: 4 indices) + DetailMaskTexture (RGBA8: 4 weights). Configurable sample radius and blend sharpness. (~50-100ms at load time)
+- **Map.Rendering.Terrain.ProvinceTerrainAnalyzer** - [GPU] Analyze terrain.bmp per province, generate ProvinceTerrainBuffer (65536 entries, uint per province). Feeds TerrainBlendMapGenerator.
 
 ---
 
@@ -86,9 +90,9 @@
 
 ## Loading/
 - **Map.Loading.IMapDataProvider** - Interface for map data sources
-- **Map.Loading.MapDataLoader** - Load map from bitmap files (provinces.bmp, terrain.bmp, heightmap.bmp, world_normal.bmp)
+- **Map.Loading.MapDataLoader** - Load map from bitmap files (provinces.bmp, terrain.bmp, heightmap.bmp, world_normal.bmp). Orchestrates terrain blend map generation after terrain analysis.
 - **Map.Loading.ProvinceMapProcessor** - Process loaded province map data
-- **Map.Loading.DetailTextureArrayLoader** - Load terrain detail texture arrays for 3D rendering
+- **Map.Loading.DetailTextureArrayLoader** - Load terrain detail textures into Texture2DArray: scans Assets/Data/textures/terrain_detail/ for {index}_{name}.jpg/png files, supports 0-255 indices, missing textures filled with neutral gray (128,128,128), 512x512 per texture with mipmaps
 - **Map.Loading.NoiseTextureGenerator** - Generate noise textures for terrain variation
 - **Map.Loading.TerrainTypeTextureGenerator** - Generate terrain type textures from province data
 

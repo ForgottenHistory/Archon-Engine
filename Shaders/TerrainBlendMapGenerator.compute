@@ -1,0 +1,177 @@
+// Terrain Blend Map Generator for Imperator Rome-style Terrain Rendering
+// Generates DetailIndexTexture + DetailMaskTexture for 4-channel bilinear blending
+// Architecture: Pre-computes blend maps at load time (~50-100ms acceptable)
+// Approach: Sample 5x5 radius, count terrain types, take top 4, normalize weights
+
+#pragma kernel GenerateBlendMaps
+
+// Input textures (read-only)
+Texture2D<float4> ProvinceIDTexture;            // Which province each pixel belongs to (READ-ONLY)
+StructuredBuffer<uint> ProvinceTerrainBuffer;   // Province ID → terrain type index (0-27)
+
+// Output textures
+RWTexture2D<float4> DetailIndexTexture;         // RGBA = 4 material indices per pixel
+RWTexture2D<float4> DetailMaskTexture;          // RGBA = 4 blend weights per pixel (0-1)
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+// Sampling parameters
+uint SampleRadius;          // Default: 2 (5x5 sampling = radius 2)
+float BlendSharpness;       // Default: 1.0 (smoothstep exponent for transition control)
+
+// Province ID decoding (matches BorderDetection.compute)
+uint DecodeProvinceID(float2 encoded)
+{
+    // Convert from float [0,1] back to uint16 values
+    uint r = (uint)(encoded.r * 255.0 + 0.5);
+    uint g = (uint)(encoded.g * 255.0 + 0.5);
+
+    // Reconstruct 16-bit province ID from RG channels
+    return (g << 8) | r;
+}
+
+// Thread group size - 8x8 = 64 threads per group (GPU-optimal)
+[numthreads(8, 8, 1)]
+void GenerateBlendMaps(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Count terrain types in neighborhood (max 27 terrain types)
+    uint terrainCounts[27];
+    for (int i = 0; i < 27; i++)
+        terrainCounts[i] = 0;
+
+    int totalSamples = 0;
+
+    // Sample in radius around current pixel (default 5x5 = radius 2)
+    int radius = (int)SampleRadius;
+    for (int dy = -radius; dy <= radius; dy++)
+    {
+        for (int dx = -radius; dx <= radius; dx++)
+        {
+            // Calculate neighbor position
+            int2 samplePos = int2(id.xy) + int2(dx, dy);
+
+            // Bounds check
+            if (samplePos.x < 0 || samplePos.x >= (int)MapWidth ||
+                samplePos.y < 0 || samplePos.y >= (int)MapHeight)
+                continue;
+
+            // Sample province ID at this position
+            float2 provinceEncoded = ProvinceIDTexture[samplePos].rg;
+            uint provinceID = DecodeProvinceID(provinceEncoded);
+
+            // Skip invalid provinces (ocean = 0)
+            if (provinceID == 0 || provinceID >= 65536)
+                continue;
+
+            // Get terrain type for this province
+            uint terrainType = ProvinceTerrainBuffer[provinceID];
+
+            // Skip invalid terrain types (should be 0-26)
+            if (terrainType >= 27)
+                continue;
+
+            // Increment count for this terrain type
+            terrainCounts[terrainType]++;
+            totalSamples++;
+        }
+    }
+
+    // Early exit if no valid samples (shouldn't happen, but defensive)
+    if (totalSamples == 0)
+    {
+        DetailIndexTexture[id.xy] = float4(0, 0, 0, 0);
+        DetailMaskTexture[id.xy] = float4(1, 0, 0, 0); // 100% terrain 0 (fallback)
+        return;
+    }
+
+    // Find top 4 terrain types by count
+    // Use simple insertion sort for top 4 (fast for small N)
+    uint topIndices[4] = { 0, 0, 0, 0 };
+    uint topCounts[4] = { 0, 0, 0, 0 };
+
+    for (uint terrainType = 0; terrainType < 27; terrainType++)
+    {
+        uint count = terrainCounts[terrainType];
+
+        // Skip if zero count
+        if (count == 0)
+            continue;
+
+        // Insert into top 4 if larger than smallest (topCounts[3])
+        if (count > topCounts[3])
+        {
+            // Find insertion position (iterate from bottom to top)
+            int insertPos = 3;
+            for (int i = 3; i >= 0; i--)
+            {
+                if (i == 0 || count <= topCounts[i - 1])
+                {
+                    insertPos = i;
+                    break;
+                }
+            }
+
+            // Shift elements down to make room
+            for (int i = 3; i > insertPos; i--)
+            {
+                topCounts[i] = topCounts[i - 1];
+                topIndices[i] = topIndices[i - 1];
+            }
+
+            // Insert at correct position
+            topCounts[insertPos] = count;
+            topIndices[insertPos] = terrainType;
+        }
+    }
+
+    // Normalize weights (convert counts to 0-1 range)
+    float totalWeight = (float)(topCounts[0] + topCounts[1] + topCounts[2] + topCounts[3]);
+    float4 weights;
+
+    if (totalWeight > 0)
+    {
+        weights.r = (float)topCounts[0] / totalWeight;
+        weights.g = (float)topCounts[1] / totalWeight;
+        weights.b = (float)topCounts[2] / totalWeight;
+        weights.a = (float)topCounts[3] / totalWeight;
+    }
+    else
+    {
+        // Fallback: 100% first terrain type
+        weights = float4(1, 0, 0, 0);
+    }
+
+    // Apply smoothstep for artistic control over blend width
+    // This makes transitions smoother and more natural
+    if (BlendSharpness != 1.0)
+    {
+        weights.r = pow(weights.r, BlendSharpness);
+        weights.g = pow(weights.g, BlendSharpness);
+        weights.b = pow(weights.b, BlendSharpness);
+        weights.a = pow(weights.a, BlendSharpness);
+
+        // Re-normalize after power adjustment
+        float newTotal = weights.r + weights.g + weights.b + weights.a;
+        if (newTotal > 0)
+            weights /= newTotal;
+    }
+
+    // Convert terrain indices to normalized float [0-1] for storage
+    // Terrain indices are 0-26, store as index/255 (Imperator Rome style)
+    // Shader will read back and multiply by 255 to get index
+    float4 indices;
+    indices.r = (float)topIndices[0] / 255.0;
+    indices.g = (float)topIndices[1] / 255.0;
+    indices.b = (float)topIndices[2] / 255.0;
+    indices.a = (float)topIndices[3] / 255.0;
+
+    // Write to output textures
+    DetailIndexTexture[id.xy] = indices;
+    DetailMaskTexture[id.xy] = weights;
+}

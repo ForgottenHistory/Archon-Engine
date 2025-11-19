@@ -37,6 +37,8 @@ namespace Map.Rendering
         public Texture2D TerrainTypeTexture => visualTextures?.TerrainTypeTexture;
         public Texture2D HeightmapTexture => visualTextures?.HeightmapTexture;
         public Texture2D NormalMapTexture => visualTextures?.NormalMapTexture;
+        public RenderTexture DetailIndexTexture => visualTextures?.DetailIndexTexture;
+        public RenderTexture DetailMaskTexture => visualTextures?.DetailMaskTexture;
         public Texture2D ProvinceColorPalette => paletteManager?.ProvinceColorPalette;
         public RenderTexture DistanceFieldTexture => dynamicTextures?.DistanceFieldTexture;
         public RenderTexture DualBorderTexture => dynamicTextures?.DualBorderTexture;
@@ -205,6 +207,14 @@ namespace Map.Rendering
         public void SetProvinceTerrainLookup(RenderTexture lookupTexture)
         {
             visualTextures?.SetProvinceTerrainLookup(lookupTexture);
+        }
+
+        /// <summary>
+        /// Set terrain blend map textures (Imperator Rome-style blending)
+        /// </summary>
+        public void SetTerrainBlendMaps(RenderTexture indexTexture, RenderTexture maskTexture)
+        {
+            visualTextures?.SetTerrainBlendMaps(indexTexture, maskTexture);
         }
 
         /// <summary>

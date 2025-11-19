@@ -1,7 +1,7 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2025-10-31
-**Version:** 1.8 (Border Rendering Cleanup - Three Rendering Modes)
+**Last Updated:** 2025-11-19
+**Version:** 1.9 (Imperator Rome-Style Terrain Blending)
 
 This document lists all implemented features in the Archon Engine organized by category.
 
@@ -203,7 +203,7 @@ This document lists all implemented features in the Archon Engine organized by c
 
 - **MapTextureManager** - Facade coordinator for all map textures
 - **CoreTextureSet** - Core textures: Province ID, Owner, Color, Development
-- **VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map
+- **VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map, Texture2DArray (27 detail textures)
 - **DynamicTextureSet** - Dynamic textures: Border, BorderMask (R8 sparse), Highlight RenderTextures
 - **PaletteTextureManager** - Color palette texture with HSV distribution
 - **BorderComputeDispatcher** - Orchestrates border rendering across three modes
@@ -213,13 +213,34 @@ This document lists all implemented features in the Archon Engine organized by c
 - **BorderMeshRenderer** - Render mesh borders with dynamic color updates
 - **BorderDistanceFieldGenerator** - Generate JFA distance field for fragment-shader borders
 - **TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
+- **TerrainBlendMapGenerator** - Imperator Rome-style 4-channel blend map generation (DetailIndexTexture + DetailMaskTexture)
+- **DetailTextureArrayLoader** - Loads 512x512 detail textures from Assets/Data/textures/terrain_detail/
+
+---
+
+## Terrain Rendering System (Imperator Rome-Style)
+
+- **4-Channel Terrain Blending** - Ultra-smooth watercolor-like transitions between terrain types
+- **Dual-Layer Rendering** - Macro: smooth color blending, Micro: sharp texture detail
+- **Manual Bilinear Interpolation** - Fragment shader 4-tap filtering matching Imperator Rome technique
+- **DetailIndexTexture** - RGBA8 storing 4 terrain indices per pixel (index/255 encoding)
+- **DetailMaskTexture** - RGBA8 storing 4 blend weights per pixel (normalized 0-1)
+- **GPU Blend Map Generation** - Compute shader pre-processes blend maps at load time (~50-100ms)
+- **Configurable Sample Radius** - Adjustable neighborhood sampling (default 5x5, supports up to 11x11+)
+- **Blend Sharpness Control** - Power function for transition tuning (1.0=linear, >1.0=sharper, <1.0=softer)
+- **Weight Accumulation** - Boundary-aware blending prevents black artifacts at province borders
+- **Texture2DArray Detail Textures** - 27 terrain types with 512x512 tileable multiply-blend textures
+- **Moddable Texture System** - Drop-in PNG/JPG files in Assets/Data/textures/terrain_detail/
+- **Automatic Fallback** - Missing textures use neutral gray (128,128,128) for no visual effect
+- **Performance** - 8 texture samples + accumulation loop per pixel (acceptable for terrain quality)
+- **Proven Architecture** - Based on analysis of Imperator Rome's actual pixel shader (375_pixel.txt)
 
 ---
 
 ## Map Modes
 
 - **Political Map Mode** - Country ownership visualization with color palette
-- **Terrain Map Mode** - Terrain type visualization from terrain.bmp
+- **Terrain Map Mode** - Imperator Rome-style terrain rendering with smooth blending
 - **Debug Map Modes** - Heightmap and normal map debug visualization
 - **IMapModeHandler Interface** - Extensible interface for custom modes
 - **MapModeManager** - Runtime switching between visualization modes
@@ -334,6 +355,8 @@ This document lists all implemented features in the Archon Engine organized by c
 ## Shader Infrastructure
 
 - **BorderDetection.compute** - Dual border generation (country + province)
+- **TerrainBlendMapGenerator.compute** - 4-channel terrain blend map generation with configurable sampling
+- **MapModeTerrain.hlsl** - Imperator Rome manual bilinear filtering + detail texture blending
 - **MapFallback.shader** - Pink fallback for missing visual styles
 - **MapModeCommon.hlsl** - Shared utilities (ID decoding, sampling)
 

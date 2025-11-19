@@ -108,25 +108,9 @@ uint GetProvinceTerrainCategory(uint provinceID)
 // ============================================================================
 #endif
 
-float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
+// Helper function: Get terrain color by index
+float3 GetTerrainColor(uint terrainTypeIndex)
 {
-    // Handle ocean/invalid provinces
-    if (provinceID == 0)
-    {
-        return _OceanColor; // Configurable from GAME layer
-    }
-
-    // PROVINCE TERRAIN TYPE: Get terrain type for this province
-    // Each province shows a solid color based on its assigned terrain type
-    uint terrainTypeIndex = 0;
-    if (provinceID > 0 && provinceID < 65536)
-    {
-        terrainTypeIndex = _ProvinceTerrainBuffer[provinceID];
-    }
-
-    // DEBUG: Show magenta to verify this code is executing
-    // return float4(1, 0, 1, 1);
-
     // Map terrain type index to color
     // Indices based on ORDER in terrain_rgb.json5
     // Colors converted from RGB(r,g,b) to float3(r/255, g/255, b/255)
@@ -163,7 +147,157 @@ float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
     else if (terrainTypeIndex == 25) terrainColor = float3(0.20, 0.45, 0.25);    // jungle - deep tropical green
     else if (terrainTypeIndex == 26) terrainColor = float3(0.70, 0.78, 0.52);    // terrain_21 (farmlands) - cultivated land
 
+    return terrainColor;
+}
+
+float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
+{
+    // Handle ocean/invalid provinces
+    if (provinceID == 0)
+    {
+        return _OceanColor; // Configurable from GAME layer
+    }
+
+    // ============================================================================
+    // IMPERATOR ROME-STYLE 4-CHANNEL BLENDING WITH MANUAL BILINEAR INTERPOLATION
+    // Sample DetailIndexTexture + DetailMaskTexture with manual 4-tap filtering
+    // This creates ultra-smooth terrain transitions like Imperator Rome
+    // ============================================================================
+
+    float3 terrainColor;
+    float2 correctedUV = float2(uv.x, 1.0 - uv.y);
+
+    // Get texture dimensions for manual bilinear sampling
+    float2 texSize = float2(5632, 2048); // TODO: Pass as shader param
+    float2 texelSize = 1.0 / texSize;
+
+    // Calculate pixel position and fractional offset (Imperator Rome style, lines 45-55)
+    float2 pixelPos = correctedUV * texSize;
+    float2 pixelPosFloor = floor(pixelPos);
+    float2 fractional = pixelPos - pixelPosFloor;
+
+    // Calculate bilinear weights for 4 neighboring pixels
+    float weight00 = (1.0 - fractional.x) * (1.0 - fractional.y); // Top-left
+    float weight10 = fractional.x * (1.0 - fractional.y);         // Top-right
+    float weight01 = (1.0 - fractional.x) * fractional.y;         // Bottom-left
+    float weight11 = fractional.x * fractional.y;                 // Bottom-right
+
+    // Sample 4 neighboring pixels from both textures (Imperator Rome lines 59-100)
+    float2 uv00 = (pixelPosFloor + float2(0.5, 0.5)) * texelSize;
+    float2 uv10 = (pixelPosFloor + float2(1.5, 0.5)) * texelSize;
+    float2 uv01 = (pixelPosFloor + float2(0.5, 1.5)) * texelSize;
+    float2 uv11 = (pixelPosFloor + float2(1.5, 1.5)) * texelSize;
+
+    float4 indices00 = SAMPLE_TEXTURE2D(_DetailIndexTexture, sampler_DetailIndexTexture, uv00) * 255.0;
+    float4 indices10 = SAMPLE_TEXTURE2D(_DetailIndexTexture, sampler_DetailIndexTexture, uv10) * 255.0;
+    float4 indices01 = SAMPLE_TEXTURE2D(_DetailIndexTexture, sampler_DetailIndexTexture, uv01) * 255.0;
+    float4 indices11 = SAMPLE_TEXTURE2D(_DetailIndexTexture, sampler_DetailIndexTexture, uv11) * 255.0;
+
+    float4 mask00 = SAMPLE_TEXTURE2D(_DetailMaskTexture, sampler_DetailMaskTexture, uv00);
+    float4 mask10 = SAMPLE_TEXTURE2D(_DetailMaskTexture, sampler_DetailMaskTexture, uv10);
+    float4 mask01 = SAMPLE_TEXTURE2D(_DetailMaskTexture, sampler_DetailMaskTexture, uv01);
+    float4 mask11 = SAMPLE_TEXTURE2D(_DetailMaskTexture, sampler_DetailMaskTexture, uv11);
+
+    // Accumulate weights for all terrain types found in the 4 samples (max 27 types)
+    float terrainWeights[27];
+    for (int i = 0; i < 27; i++)
+        terrainWeights[i] = 0.0;
+
+    // Accumulate weights from all 4 neighboring pixels
+    for (int channel = 0; channel < 4; channel++)
+    {
+        uint idx00 = (uint)(indices00[channel] + 0.5);
+        uint idx10 = (uint)(indices10[channel] + 0.5);
+        uint idx01 = (uint)(indices01[channel] + 0.5);
+        uint idx11 = (uint)(indices11[channel] + 0.5);
+
+        if (idx00 < 27) terrainWeights[idx00] += mask00[channel] * weight00;
+        if (idx10 < 27) terrainWeights[idx10] += mask10[channel] * weight10;
+        if (idx01 < 27) terrainWeights[idx01] += mask01[channel] * weight01;
+        if (idx11 < 27) terrainWeights[idx11] += mask11[channel] * weight11;
+    }
+
+    // Find top 4 terrain types by weight (simple selection for top 4)
+    uint topIndices[4] = {0, 0, 0, 0};
+    float topWeights[4] = {0, 0, 0, 0};
+
+    for (uint terrainIdx = 0; terrainIdx < 27; terrainIdx++)
+    {
+        float weight = terrainWeights[terrainIdx];
+        if (weight > topWeights[3])
+        {
+            // Insert into top 4
+            if (weight > topWeights[0])
+            {
+                topWeights[3] = topWeights[2]; topIndices[3] = topIndices[2];
+                topWeights[2] = topWeights[1]; topIndices[2] = topIndices[1];
+                topWeights[1] = topWeights[0]; topIndices[1] = topIndices[0];
+                topWeights[0] = weight; topIndices[0] = terrainIdx;
+            }
+            else if (weight > topWeights[1])
+            {
+                topWeights[3] = topWeights[2]; topIndices[3] = topIndices[2];
+                topWeights[2] = topWeights[1]; topIndices[2] = topIndices[1];
+                topWeights[1] = weight; topIndices[1] = terrainIdx;
+            }
+            else if (weight > topWeights[2])
+            {
+                topWeights[3] = topWeights[2]; topIndices[3] = topIndices[2];
+                topWeights[2] = weight; topIndices[2] = terrainIdx;
+            }
+            else
+            {
+                topWeights[3] = weight; topIndices[3] = terrainIdx;
+            }
+        }
+    }
+
+    // Get terrain colors and blend with accumulated weights
+    float3 color0 = GetTerrainColor(topIndices[0]);
+    float3 color1 = GetTerrainColor(topIndices[1]);
+    float3 color2 = GetTerrainColor(topIndices[2]);
+    float3 color3 = GetTerrainColor(topIndices[3]);
+
+    terrainColor = color0 * topWeights[0] +
+                   color1 * topWeights[1] +
+                   color2 * topWeights[2] +
+                   color3 * topWeights[3];
+
     float4 macroColor = float4(terrainColor, 1.0);
+
+    // ============================================================================
+    // TERRAIN DETAIL TEXTURE MAPPING (Imperator Rome-style)
+    // Sample terrain detail textures using same indices and weights
+    // This adds micro-level sharp texture detail on top of smooth macro colors
+    // ============================================================================
+    #ifdef TERRAIN_DETAIL_MAPPING
+    if (_DetailStrength > 0.0)
+    {
+        // Calculate world-space tiling for detail textures
+        float2 worldUV = positionWS.xz * _DetailTiling;
+
+        // Sample detail textures for top 4 terrain types
+        // Use simple UV tiling (no tri-planar for now, can add later if needed)
+        float4 detail0 = SAMPLE_TEXTURE2D_ARRAY(_TerrainDetailArray, sampler_TerrainDetailArray, worldUV, topIndices[0]);
+        float4 detail1 = SAMPLE_TEXTURE2D_ARRAY(_TerrainDetailArray, sampler_TerrainDetailArray, worldUV, topIndices[1]);
+        float4 detail2 = SAMPLE_TEXTURE2D_ARRAY(_TerrainDetailArray, sampler_TerrainDetailArray, worldUV, topIndices[2]);
+        float4 detail3 = SAMPLE_TEXTURE2D_ARRAY(_TerrainDetailArray, sampler_TerrainDetailArray, worldUV, topIndices[3]);
+
+        // Blend detail textures with same weights as colors
+        float3 detailColor = detail0.rgb * topWeights[0] +
+                             detail1.rgb * topWeights[1] +
+                             detail2.rgb * topWeights[2] +
+                             detail3.rgb * topWeights[3];
+
+        // Multiply detail onto macro color (Imperator Rome approach)
+        // Detail textures are authored as "multiply" textures (neutral gray = 128,128,128)
+        // This preserves the smooth color blending while adding crisp texture detail
+        macroColor.rgb = macroColor.rgb * (detailColor * 2.0); // *2.0 to convert 0.5 neutral gray to 1.0
+
+        // Optional: Blend between smooth and detailed based on _DetailStrength
+        // macroColor.rgb = lerp(terrainColor, macroColor.rgb, _DetailStrength);
+    }
+    #endif
 
     // ============================================================================
     // DEBUG MODE: Show raw province terrain assignments (DISABLED)
