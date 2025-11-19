@@ -76,8 +76,8 @@ namespace Map.Interaction
                 if (Physics.Raycast(ray, out hit) && hit.transform == mapQuadTransform)
                 {
                     Vector2 uv = hit.textureCoord;
-                    int x = Mathf.FloorToInt(uv.x * textureManager.MapWidth);
-                    int y = Mathf.FloorToInt(uv.y * textureManager.MapHeight);
+                    int x = Mathf.FloorToInt((1.0f - uv.x) * textureManager.MapWidth);   // Flip X coordinate
+                    int y = Mathf.FloorToInt((1.0f - uv.y) * textureManager.MapHeight);  // Flip Y coordinate
                     x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
                     y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
                     ushort clickedProvince = textureManager.GetProvinceID(x, y);
@@ -112,8 +112,8 @@ namespace Map.Interaction
                 if (Physics.Raycast(ray, out hit) && hit.transform == mapQuadTransform)
                 {
                     Vector2 uv = hit.textureCoord;
-                    int x = Mathf.FloorToInt(uv.x * textureManager.MapWidth);
-                    int y = Mathf.FloorToInt(uv.y * textureManager.MapHeight);
+                    int x = Mathf.FloorToInt((1.0f - uv.x) * textureManager.MapWidth);   // Flip X coordinate
+                    int y = Mathf.FloorToInt((1.0f - uv.y) * textureManager.MapHeight);  // Flip Y coordinate
                     x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
                     y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
                     ushort clickedProvince = textureManager.GetProvinceID(x, y);
@@ -177,8 +177,8 @@ namespace Map.Interaction
                     Vector2 uv = hit.textureCoord;
 
                     // Convert UV to pixel coordinates
-                    int x = Mathf.FloorToInt(uv.x * textureManager.MapWidth);
-                    int y = Mathf.FloorToInt(uv.y * textureManager.MapHeight);
+                    int x = Mathf.FloorToInt((1.0f - uv.x) * textureManager.MapWidth);   // Flip X coordinate
+                    int y = Mathf.FloorToInt((1.0f - uv.y) * textureManager.MapHeight);  // Flip Y coordinate
 
                     // Clamp to texture bounds
                     x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);

@@ -16,10 +16,10 @@ MonoBehaviour:
   description: Default visual style
   borders:
     countryBorderColor: {r: 0, g: 0, b: 0, a: 1}
-    countryBorderStrength: 1
-    countryBorderThickness: 1
+    countryBorderStrength: 0.2
+    countryBorderThickness: 0
     provinceBorderColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-    provinceBorderStrength: 0.5
+    provinceBorderStrength: 0.2
     provinceBorderThickness: 1
     borderAntiAliasing: 0
     enableBordersOnStartup: 1

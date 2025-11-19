@@ -45,6 +45,14 @@ Shader "Archon/MapCore"
         _TerrainBrightness ("Terrain Brightness", Range(0.5, 2)) = 1.0
         _TerrainSaturation ("Terrain Saturation", Range(0, 2)) = 1.0
 
+        // Terrain detail mapping (resolution-independent detail)
+        _TerrainTypeTexture ("Terrain Type Texture (R8)", 2D) = "black" {}
+        _TerrainDetailArray ("Terrain Detail Array", 2DArray) = "" {}
+        _HeightmapTexture ("Heightmap Texture (R8)", 2D) = "gray" {}
+        _DetailTiling ("Detail Tiling (world-space)", Range(1, 500)) = 100.0
+        _DetailStrength ("Detail Strength", Range(0, 1)) = 1.0
+        _TriPlanarTightenFactor ("Tri-Planar Blend Sharpness", Range(1, 8)) = 4.0
+
         _HighlightStrength ("Highlight Strength", Range(0, 2)) = 1.0
 
         // Performance settings
@@ -78,6 +86,9 @@ Shader "Archon/MapCore"
 
             // Shader variants for different map modes
             #pragma multi_compile_local _ MAP_MODE_POLITICAL MAP_MODE_TERRAIN MAP_MODE_DEVELOPMENT MAP_MODE_CULTURE MAP_MODE_DEBUG MAP_MODE_BORDERS
+
+            // Terrain detail mapping feature
+            #pragma multi_compile_local _ TERRAIN_DETAIL_MAPPING
 
             // URP includes
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -125,6 +136,12 @@ Shader "Archon/MapCore"
                 float _TerrainBrightness;
                 float _TerrainSaturation;
 
+                // Terrain detail mapping parameters
+                float _DetailTiling;
+                float _DetailStrength;
+                float _TriPlanarTightenFactor;
+                float _HeightScale;
+
                 float _HighlightStrength;
             CBUFFER_END
 
@@ -140,6 +157,12 @@ Shader "Archon/MapCore"
             TEXTURE2D(_BorderTexture); SAMPLER(sampler_BorderTexture);
             TEXTURE2D(_HighlightTexture); SAMPLER(sampler_HighlightTexture);
             TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); // For SRP Batcher
+
+            // Terrain detail mapping textures
+            TEXTURE2D(_TerrainTypeTexture); SAMPLER(sampler_TerrainTypeTexture);
+            TEXTURE2D_ARRAY(_TerrainDetailArray); SAMPLER(sampler_TerrainDetailArray);
+            TEXTURE2D(_HeightmapTexture); SAMPLER(sampler_HeightmapTexture);
+            StructuredBuffer<uint> _ProvinceTerrainBuffer;
 
             // Map mode includes (after texture declarations)
             #include "MapModeCommon.hlsl"  // ENGINE utilities
@@ -161,6 +184,7 @@ Shader "Archon/MapCore"
             {
                 float4 positionHCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                float3 positionWS : TEXCOORD1;  // World position for detail mapping
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
@@ -178,6 +202,9 @@ Shader "Archon/MapCore"
 
                 // Pass through UV coordinates with tiling and offset
                 output.uv = TRANSFORM_TEX(input.uv, _ProvinceIDTexture);
+
+                // Calculate world position for terrain detail mapping
+                output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
 
                 return output;
             }
@@ -229,7 +256,7 @@ Shader "Archon/MapCore"
                 }
                 else if (_MapMode == 1) // Terrain mode
                 {
-                    baseColor = RenderTerrain(provinceID, input.uv);
+                    baseColor = RenderTerrain(provinceID, input.uv, input.positionWS);
                 }
                 else if (_MapMode == 2) // Development mode
                 {
@@ -239,7 +266,7 @@ Shader "Archon/MapCore"
                 {
                     // Culture mode: would need culture data
                     // For now, use terrain mode with a tint
-                    baseColor = RenderTerrain(provinceID, input.uv);
+                    baseColor = RenderTerrain(provinceID, input.uv, input.positionWS);
                     baseColor.rgb *= float3(1.2, 0.8, 1.0); // Tint for culture mode
                 }
                 else

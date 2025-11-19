@@ -200,6 +200,14 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Set province terrain lookup texture (hybrid terrain system)
+        /// </summary>
+        public void SetProvinceTerrainLookup(RenderTexture lookupTexture)
+        {
+            visualTextures?.SetProvinceTerrainLookup(lookupTexture);
+        }
+
+        /// <summary>
         /// Update map dimensions and recreate textures
         /// </summary>
         public void ResizeTextures(int newWidth, int newHeight)

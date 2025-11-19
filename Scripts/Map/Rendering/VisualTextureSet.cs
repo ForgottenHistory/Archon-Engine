@@ -23,6 +23,7 @@ namespace Map.Rendering
         private Texture2D detailNoiseTexture;
         private Texture2D heightmapTexture;
         private Texture2D normalMapTexture;
+        private RenderTexture provinceTerrainLookup;  // Hybrid terrain system: [provinceID] = terrainTypeIndex
 
         // Shader property IDs
         private static readonly int ProvinceTerrainTexID = Shader.PropertyToID("_ProvinceTerrainTexture");
@@ -31,6 +32,7 @@ namespace Map.Rendering
         private static readonly int DetailNoiseTexID = Shader.PropertyToID("_DetailNoiseTexture");
         private static readonly int HeightmapTexID = Shader.PropertyToID("_HeightmapTexture");
         private static readonly int NormalMapTexID = Shader.PropertyToID("_NormalMapTexture");
+        private static readonly int ProvinceTerrainLookupID = Shader.PropertyToID("_ProvinceTerrainLookup");
 
         public Texture2D ProvinceTerrainTexture => provinceTerrainTexture;
         public Texture2D TerrainTypeTexture => terrainTypeTexture;
@@ -201,6 +203,19 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Set province terrain lookup texture (created by ProvinceTerrainAnalyzer)
+        /// </summary>
+        public void SetProvinceTerrainLookup(RenderTexture lookupTexture)
+        {
+            provinceTerrainLookup = lookupTexture;
+
+            if (logCreation)
+            {
+                ArchonLogger.Log($"VisualTextureSet: Province terrain lookup texture set ({lookupTexture.width}x{lookupTexture.height})", "map_rendering");
+            }
+        }
+
+        /// <summary>
         /// Bind visual textures to material
         /// </summary>
         public void BindToMaterial(Material material)
@@ -213,6 +228,12 @@ namespace Map.Rendering
             material.SetTexture(DetailNoiseTexID, detailNoiseTexture);
             material.SetTexture(HeightmapTexID, heightmapTexture);
             material.SetTexture(NormalMapTexID, normalMapTexture);
+
+            // Bind province terrain lookup if available (hybrid terrain system)
+            if (provinceTerrainLookup != null)
+            {
+                material.SetTexture(ProvinceTerrainLookupID, provinceTerrainLookup);
+            }
 
             if (logCreation)
             {

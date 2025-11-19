@@ -9,6 +9,7 @@ Shader "Archon/DefaultTerrain"
         _ProvinceDevelopmentTexture ("Province Development Texture (R8)", 2D) = "black" {}
         _ProvinceTerrainTexture ("Province Terrain Texture (RGBA32)", 2D) = "white" {}
         _TerrainTypeTexture ("Terrain Type Texture (R8)", 2D) = "black" {}
+        _ProvinceTerrainLookup ("Province Terrain Lookup (R8)", 2D) = "black" {}
         _TerrainDetailArray ("Terrain Detail Array", 2DArray) = "" {}
         _DetailNoiseTexture ("Detail Anti-Tiling Noise", 2D) = "gray" {}
         _HeightmapTexture ("Heightmap Texture (R8)", 2D) = "gray" {}

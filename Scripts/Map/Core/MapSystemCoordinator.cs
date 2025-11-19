@@ -238,9 +238,20 @@ namespace Map.Core
             // Generate map from simulation data using provided paths
             bool success = await GenerateMapFromSimulation(simulationData, bitmapPath, csvPath, useDefinition);
 
-            if (success && logSystemProgress)
+            if (success)
             {
-                ArchonLogger.Log($"MapSystemCoordinator: Map generation complete. Rendering {simulationData.ProvinceCount} provinces.", "map_initialization");
+                if (logSystemProgress)
+                {
+                    ArchonLogger.Log($"MapSystemCoordinator: Map generation complete. Rendering {simulationData.ProvinceCount} provinces.", "map_initialization");
+                }
+
+                // CRITICAL: Analyze terrain AFTER ProvinceIDTexture is populated
+                // This determines dominant terrain type per province for hybrid terrain rendering
+                var gameState = Object.FindFirstObjectByType<global::Core.GameState>();
+                if (gameState != null && dataLoader != null)
+                {
+                    dataLoader.AnalyzeProvinceTerrainAfterMapInit(gameState);
+                }
             }
 
             // Notify MapInitializer that initialization is complete

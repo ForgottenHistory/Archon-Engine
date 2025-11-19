@@ -28,6 +28,9 @@ namespace Map.Loading
         private HeightmapBitmapLoader heightmapLoader;
         private NormalMapBitmapLoader normalMapLoader;
 
+        // Terrain analyzer for hybrid terrain system
+        private ProvinceTerrainAnalyzer terrainAnalyzer;
+
         public void Initialize(ProvinceMapProcessor processor, BorderComputeDispatcher borders, MapTextureManager textures)
         {
             provinceProcessor = processor;
@@ -43,6 +46,13 @@ namespace Map.Loading
 
             normalMapLoader = new NormalMapBitmapLoader();
             normalMapLoader.Initialize(textures, logLoadingProgress);
+
+            // Find terrain analyzer component (should be in scene, assigned via inspector)
+            terrainAnalyzer = Object.FindFirstObjectByType<ProvinceTerrainAnalyzer>();
+            if (terrainAnalyzer == null)
+            {
+                ArchonLogger.LogError("MapDataLoader: ProvinceTerrainAnalyzer component not found in scene!", "map_initialization");
+            }
         }
 
         /// <summary>
@@ -105,6 +115,9 @@ namespace Map.Loading
                     heightmapLoader.LoadAndPopulateAsync(bmpPath)
                     // Note: Normal map is now generated from heightmap, not loaded from file
                 );
+
+                // NOTE: Terrain analysis moved to after ProvinceIDTexture population
+                // See AnalyzeProvinceTerrainAfterMapInit() - called by MapSystemCoordinator
 
                 // Generate normal map from heightmap (GPU compute shader)
                 textureManager.GenerateNormalMapFromHeightmap(
@@ -194,6 +207,125 @@ namespace Map.Loading
             {
                 ArchonLogger.LogError($"MapDataLoader: Exception during province map loading: {e.Message}\n{e.StackTrace}", "map_initialization");
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Analyze terrain.bmp to create province terrain lookup (hybrid terrain system)
+        /// Runs GPU compute shader to determine dominant terrain type per province via majority voting
+        /// CRITICAL: Must be called AFTER ProvinceIDTexture is populated!
+        /// </summary>
+        public void AnalyzeProvinceTerrainAfterMapInit(GameState gameState)
+        {
+            AnalyzeProvinceTerrain(gameState);
+        }
+
+        /// <summary>
+        /// Internal terrain analysis implementation
+        /// </summary>
+        private void AnalyzeProvinceTerrain(GameState gameState)
+        {
+            if (terrainAnalyzer == null)
+            {
+                ArchonLogger.LogError("MapDataLoader: ProvinceTerrainAnalyzer not initialized!", "map_rendering");
+                return;
+            }
+
+            if (textureManager == null)
+            {
+                ArchonLogger.LogError("MapDataLoader: TextureManager not available for terrain analysis!", "map_rendering");
+                return;
+            }
+
+            // Get required textures
+            var provinceIDTexture = textureManager.ProvinceIDTexture;
+            var terrainTexture = textureManager.TerrainTypeTexture;  // Use terrain TYPE texture (R8 indices), not terrain COLOR texture
+            int provinceCount = gameState.Provinces.ProvinceCount;
+
+            if (provinceIDTexture == null || terrainTexture == null)
+            {
+                ArchonLogger.LogError("MapDataLoader: Required textures not available for terrain analysis!", "map_rendering");
+                return;
+            }
+
+            // Analyze terrain and get results directly as uint[] array
+            // Avoids Graphics.Blit corruption (unpredictable Y-flipping)
+            uint[] terrainTypes = terrainAnalyzer.AnalyzeAndGetTerrainTypes(
+                provinceIDTexture,
+                terrainTexture,
+                provinceCount
+            );
+
+            if (terrainTypes != null)
+            {
+
+                // Debug: Log what terrain types are actually in the buffer
+                if (logLoadingProgress)
+                {
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                    sb.Append("MapDataLoader: Terrain buffer samples - ");
+                    for (int i = 1; i <= Mathf.Min(20, provinceCount); i++)
+                    {
+                        sb.Append($"P{i}=T{terrainTypes[i]} ");
+                    }
+                    ArchonLogger.Log(sb.ToString(), "map_rendering");
+
+                    // Count how many provinces have each terrain type
+                    var counts = new System.Collections.Generic.Dictionary<uint, int>();
+                    for (int i = 1; i < terrainTypes.Length; i++)
+                    {
+                        uint t = terrainTypes[i];
+                        if (!counts.ContainsKey(t)) counts[t] = 0;
+                        counts[t]++;
+                    }
+                    sb.Clear();
+                    sb.Append("MapDataLoader: Terrain type distribution - ");
+                    foreach (var kvp in counts)
+                    {
+                        sb.Append($"T{kvp.Key}:{kvp.Value} ");
+                    }
+                    ArchonLogger.Log(sb.ToString(), "map_rendering");
+                }
+
+                // Store terrain types into ProvinceState (simulation layer)
+                // CRITICAL: UI reads terrain from ProvinceState, not GPU buffer
+                for (int i = 1; i < terrainTypes.Length; i++)
+                {
+                    gameState.Provinces.SetProvinceTerrain((ushort)i, (ushort)terrainTypes[i]);
+                }
+
+                if (logLoadingProgress)
+                {
+                    ArchonLogger.Log($"MapDataLoader: Stored {terrainTypes.Length - 1} terrain types into ProvinceState", "map_rendering");
+                }
+
+                // Create ComputeBuffer (same pattern as ProvinceOwnerBuffer)
+                ComputeBuffer terrainBuffer = new ComputeBuffer(provinceCount, sizeof(uint));
+                terrainBuffer.SetData(terrainTypes);
+
+                // Bind to material (fragment shaders can use StructuredBuffer)
+                var meshRenderer = Object.FindFirstObjectByType<MeshRenderer>();
+                if (meshRenderer != null && meshRenderer.material != null)
+                {
+                    meshRenderer.material.SetBuffer("_ProvinceTerrainBuffer", terrainBuffer);
+                    if (logLoadingProgress)
+                    {
+                        ArchonLogger.Log($"MapDataLoader: Bound province terrain buffer to material ({provinceCount} entries)", "map_rendering");
+                    }
+                }
+
+                if (logLoadingProgress)
+                {
+                    ArchonLogger.Log($"MapDataLoader: Province terrain analysis complete ({provinceCount} provinces)", "map_rendering");
+                }
+
+                // NOTE: terrainBuffer not released - needs to persist for rendering
+                // Should be managed by a persistent component, not leaked here
+                // TODO: Store buffer reference for cleanup
+            }
+            else
+            {
+                ArchonLogger.LogError("MapDataLoader: Terrain analysis failed!", "map_rendering");
             }
         }
 

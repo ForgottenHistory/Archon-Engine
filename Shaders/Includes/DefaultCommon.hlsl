@@ -112,6 +112,9 @@ TEXTURE2D(_ProvinceColorTexture); SAMPLER(sampler_ProvinceColorTexture);
 TEXTURE2D(_ProvinceDevelopmentTexture); SAMPLER(sampler_ProvinceDevelopmentTexture);
 TEXTURE2D(_ProvinceTerrainTexture); SAMPLER(sampler_ProvinceTerrainTexture);
 TEXTURE2D(_TerrainTypeTexture); SAMPLER(sampler_TerrainTypeTexture);
+// Province terrain lookup buffer (same pattern as ProvinceOwnerBuffer in PopulateOwnerTexture.compute)
+// Indexed by province ID: ProvinceTerrainBuffer[provinceID] = terrainTypeIndex (0-255)
+StructuredBuffer<uint> _ProvinceTerrainBuffer;
 TEXTURE2D_ARRAY(_TerrainDetailArray); SAMPLER(sampler_TerrainDetailArray);
 TEXTURE2D(_DetailNoiseTexture); SAMPLER(sampler_DetailNoiseTexture);
 TEXTURE2D(_HeightmapTexture); SAMPLER(sampler_HeightmapTexture);

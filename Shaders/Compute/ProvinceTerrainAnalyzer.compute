@@ -1,0 +1,106 @@
+// Province Terrain Analyzer Compute Shader
+// Analyzes terrain.bmp to determine dominant terrain type per province
+// Uses majority voting: province gets terrain type that covers most pixels
+//
+// Two-Pass Algorithm:
+// Pass 1 (CountVotes): Each thread atomically increments vote counters per province
+// Pass 2 (DetermineWinner): Each province finds terrain type with most votes
+//
+// This avoids the groupshared memory limitation (can't share across thread groups)
+
+// ============================================================================
+// PASS 1: Count Votes
+// ============================================================================
+
+#pragma kernel CountVotes
+
+// Input textures
+Texture2D<float4> ProvinceIDTexture;   // Which province each pixel belongs to (RenderTexture)
+
+// Input: Terrain type data as raw buffer (follows NormalMapGenerator pattern)
+// CRITICAL: Use StructuredBuffer instead of Graphics.Blit (see unity-compute-shader-coordination.md)
+StructuredBuffer<uint> TerrainDataBuffer;  // Terrain type indices (0-255) as bytes
+
+// Output: Vote matrix [provinceID * 256 + terrainTypeIndex] = voteCount
+// Each province has 256 counters (one per terrain type)
+RWStructuredBuffer<uint> VoteMatrix;
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+uint ProvinceCount;
+
+// Thread group: 8x8 (64 threads) - optimal for GPU warps
+[numthreads(8, 8, 1)]
+void CountVotes(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Sample province ID and terrain type at this pixel
+    // Use direct indexing for RenderTexture (NO Y-flip) - see unity-compute-shader-coordination.md
+    float4 provinceIDColor = ProvinceIDTexture[id.xy];
+
+    // Decode province ID from RG channels (16-bit encoding, matches BorderDistanceField.compute)
+    uint r = (uint)(provinceIDColor.r * 255.0 + 0.5);
+    uint g = (uint)(provinceIDColor.g * 255.0 + 0.5);
+    uint provinceID = (g << 8) | r;
+
+    // Skip ocean/invalid provinces
+    if (provinceID == 0 || provinceID >= ProvinceCount)
+        return;
+
+    // Sample terrain type from buffer (0-255 index)
+    // Buffer is linear: index = y * width + x
+    uint bufferIndex = id.y * MapWidth + id.x;
+    uint terrainType = TerrainDataBuffer[bufferIndex];
+
+    // Atomic increment vote count for this terrain type in this province
+    // VoteMatrix layout: [provinceID * 256 + terrainType]
+    uint voteIndex = provinceID * 256 + terrainType;
+    InterlockedAdd(VoteMatrix[voteIndex], 1);
+}
+
+// ============================================================================
+// PASS 2: Determine Winner (Majority Vote)
+// ============================================================================
+
+#pragma kernel DetermineWinner
+
+// Input: Vote matrix from Pass 1
+// (Reuse VoteMatrix buffer from Pass 1 - read-only in this pass)
+
+// Output: Province terrain assignments [provinceID] = terrainTypeIndex
+RWStructuredBuffer<uint> ProvinceTerrainTypes;
+
+// Thread group: 256 threads per province (one per terrain type)
+[numthreads(256, 1, 1)]
+void DetermineWinner(uint3 id : SV_DispatchThreadID)
+{
+    uint provinceID = id.x;
+
+    // Skip invalid provinces
+    if (provinceID >= ProvinceCount)
+        return;
+
+    // Find terrain type with most votes for this province
+    uint maxVotes = 0;
+    uint winningTerrainType = 0;
+
+    // Check all 256 terrain types
+    for (uint terrainType = 0; terrainType < 256; terrainType++)
+    {
+        uint voteIndex = provinceID * 256 + terrainType;
+        uint votes = VoteMatrix[voteIndex];
+
+        if (votes > maxVotes)
+        {
+            maxVotes = votes;
+            winningTerrainType = terrainType;
+        }
+    }
+
+    // Write result: this province's dominant terrain type
+    ProvinceTerrainTypes[provinceID] = winningTerrainType;
+}

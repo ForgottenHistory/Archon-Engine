@@ -2,12 +2,14 @@
 #define MAPMODE_TERRAIN_INCLUDED
 
 // ============================================================================
-// Terrain Map Mode with Detail Mapping
+// Terrain Map Mode with Hybrid Detail Mapping
 // Renders terrain using dual-layer architecture:
-// - Macro: Terrain colors from terrain.bmp (unique per region)
-// - Micro: Tiled detail textures (scale-independent sharpness)
-// - Anti-tiling: Inigo Quilez method to break up repetition
+// - Coarse: Province terrain category from terrain.bmp (via GPU analysis)
+// - Fine: World-space procedural detail (resolution-independent)
+// - Anti-tiling: Tri-planar mapping to eliminate stretching
 // ============================================================================
+// Province terrain lookup declared in DefaultCommon.hlsl
+// Enables hybrid terrain: coarse category from terrain.bmp + fine procedural detail
 
 #ifdef TERRAIN_DETAIL_MAPPING
 // ============================================================================
@@ -78,6 +80,31 @@ float4 NoTilingTextureArray(float2 uv, uint arrayIndex)
     // This will be replaced by TriPlanarSampleArray calls
     return SAMPLE_TEXTURE2D_ARRAY(_TerrainDetailArray, sampler_TerrainDetailArray, uv, arrayIndex);
 }
+
+// ============================================================================
+// Province Terrain Category Lookup (Hybrid Mode)
+// ============================================================================
+
+/// <summary>
+/// Get terrain category for a province from lookup texture
+/// Returns terrain type index (0-255) from terrain.bmp majority vote
+/// Falls back to 0 (grassland) if lookup texture not bound
+/// </summary>
+uint GetProvinceTerrainCategory(uint provinceID)
+{
+    // Look up terrain type from buffer (same pattern as PopulateOwnerTexture.compute)
+    // ProvinceTerrainBuffer[provinceID] = terrainTypeIndex (0-255)
+    uint terrainCategory = 0;  // Default to grassland
+
+    // Bounds check (assuming max 65536 provinces)
+    if (provinceID > 0 && provinceID < 65536)
+    {
+        terrainCategory = _ProvinceTerrainBuffer[provinceID];
+    }
+
+    return terrainCategory;
+}
+
 // ============================================================================
 #endif
 
@@ -96,14 +123,36 @@ float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
     // The macro texture (terrain.bmp) is pixelated and only for boundaries/simulation data
     float4 macroColor = SAMPLE_TEXTURE2D(_ProvinceTerrainTexture, sampler_ProvinceTerrainTexture, correctedUV);
 
-    // DEBUG: Uncomment to verify shader code is executing
-    // return float4(1, 1, 0, 1);  // Yellow = shader code reached this point
+    // ============================================================================
+    // DEBUG MODE: Show raw province terrain assignments
+    // Enabled to verify terrain assignments are working correctly
+    // Each terrain type gets a distinct debug color for easy visual inspection
+    // ============================================================================
+    #ifdef TERRAIN_DETAIL_MAPPING
+    uint rawTerrain = (provinceID > 0 && provinceID < 65536) ? _ProvinceTerrainBuffer[provinceID] : 0;
+
+    // Map terrain types to distinct colors for debugging
+    // From terrain.json5 "terrain" section palette indices
+    float3 debugColor = float3(0, 0, 0);
+    if (rawTerrain == 0)       debugColor = float3(0.2, 0.8, 0.2);   // Grasslands = bright green
+    else if (rawTerrain == 1)  debugColor = float3(0.4, 0.6, 0.5);   // Hills = teal
+    else if (rawTerrain == 2)  debugColor = float3(0.5, 0.3, 0.2);   // Desert mountain = dark brown
+    else if (rawTerrain == 3)  debugColor = float3(0.9, 0.9, 0.4);   // Desert = yellow
+    else if (rawTerrain == 6)  debugColor = float3(0.6, 0.4, 0.3);   // Mountain = brown
+    else if (rawTerrain == 9)  debugColor = float3(0.2, 0.6, 0.5);   // Marsh = cyan
+    else if (rawTerrain == 12) debugColor = float3(0.1, 0.5, 0.1);   // Forest = dark green
+    else if (rawTerrain == 16) debugColor = float3(1.0, 1.0, 1.0);   // Snow = white
+    else if (rawTerrain == 17) debugColor = float3(0.7, 1.0, 0.3);   // Farmlands = light green
+    else if (rawTerrain == 35) debugColor = float3(0.3, 0.7, 0.9);   // Coastline = light blue
+    else if (rawTerrain == 254) debugColor = float3(0.4, 0.8, 0.3);  // Jungle = lime green
+    else if (rawTerrain == 255) debugColor = float3(0.2, 0.6, 0.2);  // Woods = medium green
+    else                       debugColor = float3(rawTerrain / 255.0, 0.0, 1.0 - rawTerrain / 255.0); // Unknown = purple gradient
+
+    return float4(debugColor, 1.0);
+    #endif
 
     #ifdef TERRAIN_DETAIL_MAPPING
     // TERRAIN DETAIL MAPPING (only in shaders with TERRAIN_DETAIL_MAPPING defined)
-
-    // DEBUG: Uncomment to verify TERRAIN_DETAIL_MAPPING is defined
-    // return float4(1, 0, 1, 1);  // Magenta = define is active
 
     // Check if detail strength > 0 to enable detail mapping
     if (_DetailStrength > 0.0)
@@ -145,91 +194,65 @@ float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
         }
         else
         {
-            // PROCEDURAL TERRAIN RULES (height-based)
-            // Terrain type indices: 16=snow, 6=mountain, 0=grassland
-            uint proceduralTerrainType;
+            // PROVINCE-BASED TERRAIN with HEIGHT MODULATION
+            // Province defines base terrain (from terrain.bmp majority vote)
+            // Height modulates within province for smooth variation
+            // Uses world-space noise for organic blending
 
-            if (height > 0.25)
+            // Get province's assigned terrain type
+            uint provinceTerrainType = 0;
+            if (provinceID > 0 && provinceID < 65536)
             {
-                proceduralTerrainType = 16; // Snow
-            }
-            else if (height > 0.15)
-            {
-                proceduralTerrainType = 6; // Mountain
-            }
-            else
-            {
-                proceduralTerrainType = 0; // Grassland
+                provinceTerrainType = _ProvinceTerrainBuffer[provinceID];
             }
 
-        // ENHANCED SMOOTH BLENDING between terrain types (Imperator Rome style)
-        // Multi-material blending with smoothstep for natural transitions
-        // Based on Imperator pixel.txt:166-170 (smoothstep falloff technique)
-        float4 blendedDetail;
+            // Generate noise from world position for variation
+            float2 noiseCoord = positionWS.xz * 0.1;
+            float noise = frac(sin(dot(noiseCoord, float2(12.9898, 78.233))) * 43758.5453);
 
-        // Define terrain type indices
-        const uint TERRAIN_GRASS = 0;
-        const uint TERRAIN_MOUNTAIN = 6;
-        const uint TERRAIN_SNOW = 16;
+            // Use height + noise to modulate terrain type within province
+            // This creates smooth variation while respecting province assignment
+            float heightNoise = height + noise * 0.05; // Add small noise variation
 
-        // Sample all relevant materials once (for multi-material blending)
-        float4 grassDetail = TriPlanarSampleArray(positionWS, terrainNormal, TERRAIN_GRASS, _DetailTiling);
-        float4 mountainDetail = TriPlanarSampleArray(positionWS, terrainNormal, TERRAIN_MOUNTAIN, _DetailTiling);
-        float4 snowDetail = TriPlanarSampleArray(positionWS, terrainNormal, TERRAIN_SNOW, _DetailTiling);
+            // Define common terrain transition types
+            const uint TERRAIN_GRASS = 0;
+            const uint TERRAIN_FOREST = 12;
+            const uint TERRAIN_MOUNTAIN = 6;
+            const uint TERRAIN_SNOW = 16;
 
-        // Calculate blend weights based on height
-        // Using wider blend zones and smoothstep for gradual transitions
-        float3 blendWeights = float3(0, 0, 0);
+            // Determine blend neighbors based on height
+            uint terrain1 = provinceTerrainType; // Base
+            uint terrain2 = provinceTerrainType; // Variation
+            float blendFactor = 0.0;
 
-        // Grass influence (0.12 - 0.18)
-        if (height < 0.18)
-        {
-            float grassBlend = saturate((0.18 - height) / 0.06);
-            grassBlend = grassBlend * grassBlend * (3.0 - 2.0 * grassBlend); // Smoothstep
-            blendWeights.x = grassBlend;
-        }
+            // Height-based variation: modulate towards mountain/snow at high elevations
+            if (heightNoise > 0.20)
+            {
+                terrain2 = TERRAIN_SNOW;
+                blendFactor = saturate((heightNoise - 0.20) / 0.10);
+            }
+            else if (heightNoise > 0.15)
+            {
+                terrain2 = TERRAIN_MOUNTAIN;
+                blendFactor = saturate((heightNoise - 0.15) / 0.05);
+            }
+            else if (heightNoise < 0.14 && provinceTerrainType != TERRAIN_GRASS)
+            {
+                // Blend towards grassland at low elevations
+                terrain2 = TERRAIN_GRASS;
+                blendFactor = saturate((0.14 - heightNoise) / 0.04);
+            }
 
-        // Mountain influence (0.13 - 0.26)
-        if (height > 0.13 && height < 0.26)
-        {
-            float mountainCenter = 0.195; // Center of mountain range
-            float mountainWidth = 0.065;  // Half-width of influence
-            float mountainBlend = 1.0 - abs(height - mountainCenter) / mountainWidth;
-            mountainBlend = saturate(mountainBlend);
-            mountainBlend = mountainBlend * mountainBlend * (3.0 - 2.0 * mountainBlend); // Smoothstep
-            blendWeights.y = mountainBlend;
-        }
+            // Apply smoothstep to blend factor
+            blendFactor = blendFactor * blendFactor * (3.0 - 2.0 * blendFactor);
 
-        // Snow influence (0.23 - 0.30)
-        if (height > 0.23)
-        {
-            float snowBlend = saturate((height - 0.23) / 0.07);
-            snowBlend = snowBlend * snowBlend * (3.0 - 2.0 * snowBlend); // Smoothstep
-            blendWeights.z = snowBlend;
-        }
+            // Sample both terrain types
+            float4 baseTerrain = TriPlanarSampleArray(positionWS, terrainNormal, terrain1, _DetailTiling);
+            float4 variationTerrain = TriPlanarSampleArray(positionWS, terrainNormal, terrain2, _DetailTiling);
 
-        // Normalize blend weights (ensure they sum to 1.0)
-        float totalWeight = blendWeights.x + blendWeights.y + blendWeights.z;
-        if (totalWeight > 0.0001)
-        {
-            blendWeights /= totalWeight;
-        }
-        else
-        {
-            // Fallback: use procedural terrain type
-            if (proceduralTerrainType == TERRAIN_SNOW) blendWeights.z = 1.0;
-            else if (proceduralTerrainType == TERRAIN_MOUNTAIN) blendWeights.y = 1.0;
-            else blendWeights.x = 1.0;
-        }
+            // Blend based on height/noise
+            float4 blendedDetail = lerp(baseTerrain, variationTerrain, blendFactor);
 
-        // Blend all materials based on weights
-        // This allows up to 3 materials to blend naturally at transition zones
-        blendedDetail = grassDetail * blendWeights.x +
-                        mountainDetail * blendWeights.y +
-                        snowDetail * blendWeights.z;
-
-            // REPLACE macro with procedural detail texture entirely
-            // DetailStrength controls blend: 0 = macro only, 1 = detail only
             macroColor.rgb = lerp(macroColor.rgb, blendedDetail.rgb, _DetailStrength);
         } // End else (height >= beachThreshold - land terrain)
     } // End if (_DetailStrength > 0.0)
