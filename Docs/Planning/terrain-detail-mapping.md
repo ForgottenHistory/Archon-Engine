@@ -1,237 +1,323 @@
-# Terrain Detail Mapping Architecture
+# Terrain Detail Mapping Architecture - Imperator Rome Approach
 
-**Status:** 🚧 Planning
-**Date:** 2025-11-02
-**Goal:** Scale-independent terrain visuals via macro/micro texture blending
-
----
-
-## Principle: Dual-Layer Terrain Rendering
-
-**Problem:** Single terrain texture stretched across map becomes pixelated when zoomed in (fixed pixel budget).
-
-**Solution:** Separate color (macro) from detail (micro) using dual-layer architecture:
-- **Macro Texture:** Low-res unique colors per region (what terrain type)
-- **Detail Texture:** High-res tiled grain (sharp at any zoom level)
-
-**Key Insight:** World-space UVs make detail texture scale-independent. Camera zooms in → samples detail texture more densely → stays sharp.
+**Status:** 🚧 Implementation In Progress
+**Date:** 2025-11-19
+**Approach:** Imperator Rome's 4-channel bilinear material blending system
+**Goal:** AAA+ quality terrain with ultra-smooth transitions at province boundaries
 
 ---
 
-## Architecture: Three-Texture System
+## Principle: Multi-Material Blending at Province Boundaries
 
-### 1. Macro Texture (Existing: `_ProvinceTerrainTexture`)
-- **Source:** `terrain.bmp` (8-bit indexed) converted via `TerrainColorMapper`
-- **Size:** 5632x2048 RGBA32
-- **UVs:** Map coordinates (0-1 across world)
-- **Purpose:** Defines terrain COLOR per region (grasslands=green, desert=tan, etc.)
+**Problem:** Sharp terrain transitions at province borders look digital and unrealistic.
 
-### 2. Terrain Type Texture (NEW: `_TerrainTypeTexture`)
-- **Format:** R8 (1 byte per pixel, 0-255 terrain type IDs)
-- **Size:** Same as macro texture (5632x2048)
-- **Generation:** Reverse lookup from `terrain.bmp` using `TerrainColorMapper`
-- **Purpose:** Tells shader WHICH detail texture to use per pixel
-- **Moddable:** Auto-generated from `terrain.bmp`, no manual authoring
+**Solution:** Imperator Rome's approach - pre-compute blend masks that store up to 4 materials per pixel with smooth falloff at boundaries.
 
-### 3. Detail Texture Array (NEW: `_TerrainDetailArray`)
-- **Type:** `Texture2DArray` (all detail textures in one shader property)
-- **Format:** RGBA32_sRGB (BC7 compressed for performance)
-- **Size per layer:** 512x512 or 1024x1024 (tiled)
-- **Indices:** Match `TerrainColorMapper` (0=grasslands, 3=desert, 6=mountain, etc.)
+**Key Insight:** By storing multiple materials and their blend weights per pixel, we can create watercolor-like smooth transitions between provinces while maintaining distinct terrain types.
+
+---
+
+## Architecture: 4-Texture System (Imperator Approach)
+
+### 1. Province ID Texture (Existing: `_ProvinceIDTexture`)
+- **Source:** Generated from provinces.bmp
+- **Size:** 5632x2048 (EU4 data resolution)
+- **Format:** RG16 (16-bit province ID encoding)
+- **Purpose:** Identifies which province each pixel belongs to
+
+### 2. Province Terrain Buffer (Existing: `_ProvinceTerrainBuffer`)
+- **Type:** ComputeBuffer (StructuredBuffer in shader)
+- **Size:** 65536 entries (indexed by province ID)
+- **Format:** uint per province (terrain type 0-26)
+- **Purpose:** Maps province ID → terrain type
+
+### 3. Detail Index Texture (NEW: `_DetailIndexTexture`)
+- **Format:** RGBA8 (4 material indices per pixel)
+- **Size:** 5632x2048 (same as province texture)
+- **Generation:** GPU compute shader at load time
+- **Purpose:** Stores which 4 materials to blend at each pixel
+- **Example pixel:** (0, 12, 6, 0) = grassland, forest, mountain, empty
+
+### 4. Detail Mask Texture (NEW: `_DetailMaskTexture`)
+- **Format:** RGBA8 (4 blend weights per pixel, 0-1 normalized)
+- **Size:** 5632x2048 (same as province texture)
+- **Generation:** GPU compute shader at load time
+- **Purpose:** Stores blend weight for each of the 4 materials
+- **Example pixel:** (0.6, 0.3, 0.1, 0.0) = 60% grass, 30% forest, 10% mountain
+
+### 5. Terrain Texture Arrays (NEW)
+- **Type:** Texture2DArray (one array each for albedo, normal, material properties)
+- **Layers:** 27 (one per terrain type from terrain_rgb.json5)
+- **Format:**
+  - Albedo: RGBA8_sRGB (BC7 compressed)
+  - Normal: RG16 (BC5 compressed, reconstruct Z in shader)
+  - Material: RGB8 (BC7 compressed, R=AO, G=Roughness, B=Metallic)
+- **Size per layer:** 1024x1024 (tiled, seamless)
+- **Source:** Polyhaven textures (already in Assets/Data/)
 - **UVs:** World-space (`positionWS.xz * _DetailTiling`)
-- **Moddable:** Load from `Assets/Data/textures/terrain_detail/{index}_{name}.png`
 
 ---
 
-## Shader Algorithm
+## Imperator's 4-Channel Bilinear Blending
 
+### How It Works
+
+**Step 1: Pre-compute at Load Time (GPU)**
 ```
-1. Sample terrain type ID from _TerrainTypeTexture (R8, 0-255)
-2. Sample macro color from _ProvinceTerrainTexture (RGBA32, map UVs)
-3. Calculate world-space UVs: worldUV = positionWS.xz * _DetailTiling
-4. Sample detail from array: _TerrainDetailArray[terrainType] using worldUV
-5. Blend: finalColor = macroColor * detail
+For each pixel in DetailIndexTexture/DetailMaskTexture:
+  1. Sample ProvinceIDTexture in 5x5 radius (25 samples for smooth falloff)
+  2. Get terrain type for each sample via ProvinceTerrainBuffer
+  3. Count occurrences: {grass: 14, forest: 8, mountain: 3}
+  4. Normalize to weights: {grass: 0.56, forest: 0.32, mountain: 0.12}
+  5. Sort by weight, take top 4
+  6. Write indices to DetailIndexTexture.RGBA
+  7. Write weights to DetailMaskTexture.RGBA
 ```
 
-**Why This Works:**
-- Macro gives unique color per region (not tiled)
-- Detail gives sharp grain (tiled via world-space UVs)
-- Terrain type selects correct detail texture per pixel
-- Supports 256 distinct terrain types (future-proof)
+**Step 2: Runtime Shader (4-Channel Sampling)**
+```hlsl
+// Sample DetailIndex + DetailMask
+uint4 indices = _DetailIndexTexture.Sample(uv);  // (0, 12, 6, 0)
+float4 weights = _DetailMaskTexture.Sample(uv);  // (0.6, 0.3, 0.1, 0.0)
+
+// Sample each material from texture arrays
+float4 albedo0 = _TerrainAlbedoArray[indices.r];  // Grass
+float4 albedo1 = _TerrainAlbedoArray[indices.g];  // Forest
+float4 albedo2 = _TerrainAlbedoArray[indices.b];  // Mountain
+float4 albedo3 = _TerrainAlbedoArray[indices.a];  // Empty (unused)
+
+// Blend with weights
+float4 finalAlbedo = albedo0 * weights.r +
+                     albedo1 * weights.g +
+                     albedo2 * weights.b +
+                     albedo3 * weights.a;
+```
+
+**Step 3: Bilinear Filtering (Ultra-Smooth Transitions)**
+```hlsl
+// Sample DetailIndex/DetailMask at 4 corners (bilinear quad)
+// This gives up to 16 materials contributing per pixel!
+// 4 samples × 4 channels = 16 possible materials
+
+// Imperator does this automatically via hardware bilinear filtering
+// on the index/mask textures
+```
+
+### Why This Creates Smooth Transitions
+
+**At a province border:**
+- Pixel A (inside province): 100% grass (1, 0, 0, 0) + (1.0, 0, 0, 0)
+- Pixel B (1 pixel from border): 80% grass, 20% forest (1, 12, 0, 0) + (0.8, 0.2, 0, 0)
+- Pixel C (at border): 50% grass, 50% forest (1, 12, 0, 0) + (0.5, 0.5, 0, 0)
+- Pixel D (other side): 20% grass, 80% forest (1, 12, 0, 0) + (0.2, 0.8, 0, 0)
+- Pixel E (deep inside): 100% forest (12, 0, 0, 0) + (1.0, 0, 0, 0)
+
+**Result:** Gradual, natural transition like watercolor painting!
 
 ---
 
-## Texture Format Requirements
+## Generation Algorithm (GPU Compute Shader)
 
-**Critical:** Follow explicit `GraphicsFormat` pattern (see `decisions/explicit-graphics-format.md`)
+### TerrainBlendMapGenerator.compute
 
-### Terrain Type Texture
-```csharp
-var descriptor = new RenderTextureDescriptor(
-    width, height,
-    GraphicsFormat.R8_UNorm,  // 1 byte, [0,1] normalized
-    0
-);
-descriptor.enableRandomWrite = false;  // Read-only
+**Kernel: GenerateBlendMaps**
 ```
-**Why R8_UNorm:**
-- 1 byte = 256 terrain types (0-255)
-- No UAV needed (static after generation)
-- Minimal memory (5632x2048x1 = 11.5 MB uncompressed)
+[numthreads(8, 8, 1)]
+void GenerateBlendMaps(uint3 id : SV_DispatchThreadID)
+{
+    // Sample ProvinceIDTexture in 5x5 radius
+    float2 uv = id.xy / float2(mapWidth, mapHeight);
 
-### Detail Texture Array
-```csharp
-var textureArray = new Texture2DArray(
-    512, 512,          // Per-texture resolution
-    layerCount,        // Number of terrain types
-    GraphicsFormat.R8G8B8A8_SRGB,  // sRGB for proper color
-    TextureCreationFlags.MipChain  // Mipmaps for performance
-);
+    // Count terrain types in neighborhood
+    uint terrainCounts[27] = {0}; // One per terrain type
+
+    for (int y = -2; y <= 2; y++) {
+        for (int x = -2; x <= 2; x++) {
+            float2 sampleUV = uv + float2(x, y) * texelSize;
+            uint provinceID = SampleProvinceID(sampleUV);
+            uint terrainType = _ProvinceTerrainBuffer[provinceID];
+            terrainCounts[terrainType]++;
+        }
+    }
+
+    // Find top 4 terrain types by count
+    uint4 topIndices = FindTop4(terrainCounts);
+    float4 topWeights = NormalizeWeights(terrainCounts, topIndices);
+
+    // Apply smoothstep falloff for smooth transitions
+    topWeights = smoothstep(0.0, 1.0, topWeights);
+
+    // Write to output textures
+    _DetailIndexTexture[id.xy] = topIndices;
+    _DetailMaskTexture[id.xy] = topWeights;
+}
 ```
-**Why Texture2DArray:**
-- Single shader property (no array limit on texture slots)
-- GPU-efficient indexing (no branching)
-- Mipmaps per layer (automatic LOD)
-- BC7 compression supported (4:1 ratio)
+
+**Optimizations:**
+- 8x8 thread groups for GPU efficiency
+- Shared memory for province ID samples (reduce texture fetches)
+- Early exit for interior provinces (all samples same terrain)
+- Smoothstep falloff for artistic control over blend width
 
 ---
 
-## Moddability Design
+## Shader Integration
 
-### File Structure
+### New Shader Properties
+```hlsl
+// Imperator-style blend system
+Texture2D _DetailIndexTexture;       // RGBA8: 4 material indices
+Texture2D _DetailMaskTexture;        // RGBA8: 4 blend weights
+SamplerState sampler_DetailIndexTexture;  // Point filtering (no interpolation of indices)
+SamplerState sampler_DetailMaskTexture;   // Bilinear filtering (smooth weight transitions)
+
+// Terrain texture arrays
+Texture2DArray _TerrainAlbedoArray;  // Diffuse colors
+Texture2DArray _TerrainNormalArray;  // Tangent-space normals
+Texture2DArray _TerrainMaterialArray; // AO/Roughness/Metallic
+
+// Tiling parameters
+float _DetailTiling;                 // World-space tiling factor (e.g., 0.01)
+float _BlendSharpness;              // Smoothstep exponent for transition control
 ```
-Assets/Data/textures/terrain_detail/
-├── 0_grasslands.png
-├── 3_desert.png
-├── 6_mountain.png
-├── 9_marsh.png
-├── 12_forest.png
-├── 15_ocean.png
-├── 16_snow.png
-└── ... (modders add more)
+
+### Updated RenderTerrain() Function
+```hlsl
+float4 RenderTerrain(uint provinceID, float2 uv, float3 positionWS)
+{
+    // Sample blend maps
+    uint4 indices = _DetailIndexTexture.Sample(sampler_DetailIndexTexture, uv);
+    float4 weights = _DetailMaskTexture.Sample(sampler_DetailMaskTexture, uv);
+
+    // Calculate world-space UVs for tiling detail textures
+    float2 worldUV = positionWS.xz * _DetailTiling;
+
+    // Calculate world-space normal from heightmap for tri-planar
+    float3 terrainNormal = CalculateTerrainNormal(uv, _HeightScale);
+
+    // Sample and blend up to 4 materials
+    float4 finalAlbedo = float4(0, 0, 0, 0);
+    float3 finalNormal = float3(0, 0, 1);
+    float3 finalMaterial = float3(0, 0, 0);
+
+    // Blend channel R
+    if (weights.r > 0.01) {
+        finalAlbedo += TriPlanarSampleArray(positionWS, terrainNormal, _TerrainAlbedoArray, indices.r, _DetailTiling) * weights.r;
+        finalNormal += SampleNormal(_TerrainNormalArray, indices.r, worldUV) * weights.r;
+        finalMaterial += _TerrainMaterialArray[indices.r].Sample(worldUV) * weights.r;
+    }
+
+    // Repeat for G, B, A channels...
+
+    return finalAlbedo;
+}
 ```
-
-### Loader Behavior
-1. **Scan folder** for `{index}_{name}.png` pattern
-2. **Parse index** from filename (0-255)
-3. **Build Texture2DArray** with layers matching indices
-4. **Missing textures:** Use default neutral gray detail (50% gray = no effect on multiply blend)
-5. **Runtime replacement:** Hot-reload supported (rebuild array on file change)
-
-### Modder Workflow
-**Add new terrain type:**
-1. Add color to `TerrainColorMapper.cs` (e.g., `[25] = new Color32(...)`)
-2. Create `25_volcanic.png` detail texture
-3. Edit `terrain.bmp` to use palette index 25
-4. Regenerate terrain type texture (automatic on load)
-
-**Replace existing detail:**
-1. Drop new `3_desert.png` in folder
-2. Overrides default desert detail
 
 ---
 
 ## Performance Characteristics
 
-### Memory Cost
-- **Terrain Type Texture:** 11.5 MB uncompressed (5632x2048x1)
-- **Detail Array (uncompressed):** `512x512x4 bytes x N layers`
-  - 8 layers = 8 MB
-  - 16 layers = 16 MB
-- **Detail Array (BC7 compressed):** ~25% of uncompressed
-  - 8 layers = 2 MB
-  - 16 layers = 4 MB
+### Memory Cost (5632x2048 resolution)
+- **DetailIndexTexture:** 5632×2048×4 = 46 MB uncompressed
+  - With BC7 compression: ~12 MB
+- **DetailMaskTexture:** 5632×2048×4 = 46 MB uncompressed
+  - With BC7 compression: ~12 MB
+- **Terrain Texture Arrays:** 27 layers × 1024×1024×4 bytes
+  - Albedo: ~27 MB uncompressed → 7 MB BC7
+  - Normal: ~27 MB uncompressed → 7 MB BC5
+  - Material: ~27 MB uncompressed → 7 MB BC7
+- **Total:** ~45 MB compressed (AAA+ quality, acceptable)
 
 ### Runtime Cost
-- **Additional texture samples:** +2 per pixel (terrain type, detail array)
-- **Frame time impact:** <5% (detail sampling is cheap)
+- **Generation time:** ~50-100ms on modern GPU (one-time at load)
+- **Shader cost:** +4 texture samples per pixel (index, mask, albedo, normal)
+- **Frame time impact:** ~10-15% (acceptable for AAA+ visuals)
 - **Mipmaps:** Automatic LOD reduces bandwidth at distance
 
 ### Scalability
-- **Supports 256 terrain types** (1 byte index)
-- **No shader recompilation** when adding terrain types
-- **No texture slot limits** (single Texture2DArray property)
+- Supports 27 terrain types (current terrain_rgb.json5)
+- Can expand to 256 types (8-bit indices)
+- Resolution-independent (works at any map size)
 
 ---
 
 ## Implementation Phases
 
-### Phase 1: Terrain Type Texture Generation
-- Utility to convert `terrain.bmp` → terrain type texture (R8)
-- Reverse lookup using `TerrainColorMapper`
-- Save as `terrain_types.asset` (RenderTexture)
+### Phase 1: TerrainBlendMapGenerator Component ✅ NEXT
+**Location:** `Assets/Archon-Engine/Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs`
+- Create GPU compute shader for blend map generation
+- Integrate with MapDataLoader initialization
+- Generate DetailIndexTexture + DetailMaskTexture at load time
 
-### Phase 2: Detail Texture Array Loader
-- Scan `Assets/Data/textures/terrain_detail/`
-- Build `Texture2DArray` from `{index}_{name}.png` files
-- Apply BC7 compression
+### Phase 2: Terrain Texture Array Loader
+**Location:** `Assets/Archon-Engine/Scripts/Map/Rendering/Terrain/TerrainTextureArrayLoader.cs`
+- Load terrain textures from `Assets/Data/textures/terrain/`
+- Build Texture2DArray for albedo, normal, material
+- Apply BC compression
 - Generate mipmaps
 
 ### Phase 3: Shader Integration
-- Add `_TerrainTypeTexture` (Texture2D R8) property
-- Add `_TerrainDetailArray` (Texture2DArray) property
-- Add `_DetailTiling` (float) property
-- Modify `RenderTerrain()` in `MapModeTerrain.hlsl`
+- Update `MapModeTerrain.hlsl` with 4-channel blending
+- Keep tri-planar projection for each material sample
+- Add material property support (PBR workflow)
 
-### Phase 4: Default Detail Textures
-- Create initial set (grasslands, desert, mountain, forest, etc.)
-- Procedurally generated or sourced from CC0 libraries
-
----
-
-## Anti-Tiling Enhancement (Future)
-
-**Optional:** Add Inigo Quilez anti-tiling to break up repetition patterns.
-
-**Cost:** +1 texture sample, +1 noise texture slot, +50% shader complexity
-
-**Benefit:** Eliminates visible tiling patterns at extreme zoom
-
-**Decision:** Implement basic detail mapping first, evaluate if tiling is noticeable before adding anti-tiling.
+### Phase 4: Integration & Testing
+- Wire into MapDataLoader + MapTextureManager
+- Test at various zoom levels
+- Performance profiling
+- Visual quality validation
 
 ---
 
-## Trade-offs
+## Comparison: Simple vs Imperator Approach
 
-### What We Gain
-- ✅ Scale-independent terrain (infinite zoom sharpness)
-- ✅ Supports 256 distinct terrain types
-- ✅ Fully moddable (drop-in PNG files)
-- ✅ Modern AAA visuals (Victoria 3/EU5 quality)
-- ✅ Minimal runtime cost (<5% frame time)
+### Simple Approach (MapModeTerrainSimple.hlsl)
+- ✅ Low memory (~0 MB additional)
+- ✅ Fast shader (height-based blending only)
+- ✅ Works in world-space
+- ❌ No province-aware transitions
+- ❌ Single terrain type per pixel
+- **Use case:** Quick terrain mapmode, debugging
 
-### What We Give Up
-- ❌ Additional texture memory (~2-4 MB compressed)
-- ❌ Slightly more complex shader (+2 texture samples)
-- ❌ Requires detail texture authoring (but can start with procedural)
-
-**Verdict:** Trade-off heavily favors implementation. Memory cost is trivial on modern GPUs, visual improvement is massive.
+### Imperator Approach (MapModeTerrain.hlsl)
+- ✅ Ultra-smooth province boundary transitions
+- ✅ Up to 4 materials per pixel (16 with bilinear)
+- ✅ AAA+ visual quality
+- ✅ Procedurally generated (no hand-authoring)
+- ❌ Higher memory cost (~45 MB)
+- ❌ Generation time at load (~50-100ms)
+- **Use case:** Production-quality terrain rendering
 
 ---
 
-## Related Patterns
+## Related Documents
 
-- **Pattern 1 (Engine-Game Separation):** Terrain type texture = ENGINE mechanism, detail textures = GAME policy
-- **Explicit GraphicsFormat:** Always use `GraphicsFormat.R8_UNorm` for terrain type texture
-- **GPU-First Architecture:** Detail selection happens entirely on GPU (zero CPU cost)
+- **Imperator Analysis:** `Assets/Archon-Engine/Docs/Log/learnings/imperator-rome-terrain-rendering-analysis.md`
+- **Tri-Planar Projection:** Already implemented in MapModeTerrainSimple.hlsl
+- **Province Terrain Analysis:** `Assets/Archon-Engine/Scripts/Map/Rendering/Terrain/ProvinceTerrainAnalyzer.cs`
 
 ---
 
 ## Success Metrics
 
 **Visual Quality:**
-- Terrain stays sharp at all zoom levels (no pixelation)
-- Distinct detail per terrain type (grass ≠ desert ≠ mountain)
+- ✅ Smooth watercolor-like transitions at province borders
+- ✅ Distinct detail per terrain type (grass ≠ desert ≠ mountain)
+- ✅ No visible tiling patterns
+- ✅ Sharp detail at all zoom levels
 
 **Performance:**
-- <5% frame time impact
-- No stuttering when zooming
+- ✅ <100ms generation time at load
+- ✅ <15% frame time impact
+- ✅ No stuttering when zooming
 
-**Moddability:**
-- Modders can add new terrain types without code changes
-- Hot-reload of detail textures works
+**Technical:**
+- ✅ Procedurally generated (zero hand-authoring)
+- ✅ Moddable (texture array system)
+- ✅ Scales to any map size
 
 ---
 
-*Decision to implement: 2025-11-02*
-*Based on: Paradox modern graphics architecture (Victoria 3/EU5)*
+*Implementation Started: 2025-11-19*
+*Based on: Imperator Rome shader analysis (RenderDoc reverse-engineering)*
+*Target: AAA+ terrain quality with smooth province transitions*
