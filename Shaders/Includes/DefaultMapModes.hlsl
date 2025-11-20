@@ -8,7 +8,7 @@
 // Map mode includes - ENGINE DEFAULT RENDERERS
 // CRITICAL: Include MapModeCommon.hlsl FIRST - it defines SampleProvinceID(), SampleOwnerID(), etc.
 #include "MapModeCommon.hlsl"
-#include "MapModeTerrain.hlsl"
+#include "MapModeTerrainSimple.hlsl"
 #include "MapModePolitical.hlsl"
 
 // Render base color based on current map mode

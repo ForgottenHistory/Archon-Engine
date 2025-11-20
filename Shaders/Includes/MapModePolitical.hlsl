@@ -104,10 +104,10 @@ float4 RenderPolitical(uint provinceID, float2 uv)
     // This matches the C# architecture where PoliticalMapMode updates CountryColorPalette
     uint ownerID = SampleOwnerID(uv);
 
-    // Handle unowned provinces - show terrain color
+    // Handle unowned provinces - show terrain color using TerrainSimple palette
     if (ownerID == 0)
     {
-        return SampleTerrainColorDirect(uv); // Show terrain for unowned provinces
+        return RenderTerrain(provinceID, uv); // Show terrain for unowned provinces (uses TerrainSimple colors)
     }
 
     // DEBUG: Visualize owner ID to verify encoding/decoding
