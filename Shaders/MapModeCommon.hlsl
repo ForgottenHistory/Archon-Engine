@@ -65,13 +65,14 @@ uint SampleOwnerID(float2 uv)
     // Need Y-flip to convert UV space to texture space
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
 
-    // Sample owner texture - R16 format stores 16-bit uint directly
-    // Read as float (normalized 0.0-1.0), then convert to uint16 (0-65535)
+    // Sample owner texture - R32_SFloat format stores raw owner ID as float
+    // See CoreTextureSet.cs:88 and OwnerTextureDispatcher.cs:237
+    // Value is NOT normalized - it's the actual owner ID (e.g., 151.0 for owner 151)
     float ownerData = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture, correctedUV).r;
 
-    // Convert normalized float to uint16
-    // R16 format: 0.0-1.0 maps to 0-65535
-    uint ownerID = (uint)(ownerData * 65535.0 + 0.5);
+    // Convert raw float to uint (just cast, NO multiplication)
+    // Matches C# decoding: OwnerTextureDispatcher.cs:239
+    uint ownerID = (uint)(ownerData + 0.5);
 
     return ownerID;
 }

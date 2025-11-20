@@ -100,33 +100,64 @@ float4 RenderPolitical(uint provinceID, float2 uv)
         return _OceanColor; // Configurable from GAME layer
     }
 
-    // GPU Palette System: ProvinceOwnerTexture → owner ID → CountryColorPalette → color
-    // This matches the C# architecture where PoliticalMapMode updates CountryColorPalette
-    uint ownerID = SampleOwnerID(uv);
+    // ============================================================================
+    // BILINEAR BLENDING (Imperator Rome technique)
+    // Samples 4 neighboring owner IDs and blends colors for smooth boundaries
+    // ============================================================================
 
-    // Handle unowned provinces - show terrain color using TerrainSimple palette
-    if (ownerID == 0)
+    float2 correctedUV = float2(uv.x, 1.0 - uv.y);
+
+    // Manual bilinear sampling using texture-space offsets
+    float2 texSize = float2(5632.0, 2048.0); // TODO: Make this a shader parameter
+    float2 texelSize = 1.0 / texSize;
+
+    float2 pixelPos = correctedUV * texSize;
+    float2 pixelPosFloor = floor(pixelPos);
+    float2 fractional = pixelPos - pixelPosFloor;
+
+    // Sample 4 neighboring pixels
+    float2 uv00 = (pixelPosFloor + float2(0.5, 0.5)) * texelSize;
+    float2 uv10 = (pixelPosFloor + float2(1.5, 0.5)) * texelSize;
+    float2 uv01 = (pixelPosFloor + float2(0.5, 1.5)) * texelSize;
+    float2 uv11 = (pixelPosFloor + float2(1.5, 1.5)) * texelSize;
+
+    // Sample owner IDs (R32_SFloat format - stores raw owner ID as float)
+    float ownerData00 = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture, uv00).r;
+    float ownerData10 = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture, uv10).r;
+    float ownerData01 = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture, uv01).r;
+    float ownerData11 = SAMPLE_TEXTURE2D(_ProvinceOwnerTexture, sampler_ProvinceOwnerTexture, uv11).r;
+
+    // Decode owner IDs (R32_SFloat stores raw values - just cast, NO multiplication)
+    // OwnerTextureDispatcher.cs line 239: uint decodedValue = (uint)(ownerRawFloat + 0.5f);
+    uint owner00 = (uint)(ownerData00 + 0.5);
+    uint owner10 = (uint)(ownerData10 + 0.5);
+    uint owner01 = (uint)(ownerData01 + 0.5);
+    uint owner11 = (uint)(ownerData11 + 0.5);
+
+    // Handle unowned provinces
+    if (owner00 == 0)
     {
-        return RenderTerrain(provinceID, uv); // Show terrain for unowned provinces (uses TerrainSimple colors)
+        return RenderTerrain(provinceID, uv);
     }
 
-    // DEBUG: Visualize owner ID to verify encoding/decoding
-    // Uncomment this to see owner IDs as colors (for debugging)
-    // return float4(ownerID / 1000.0, 0, 0, 1.0); // Red intensity = owner ID
+    // Fetch country colors for each owner from palette
+    float4 color00 = SAMPLE_TEXTURE2D(_CountryColorPalette, sampler_CountryColorPalette, GetColorUV(owner00));
+    float4 color10 = SAMPLE_TEXTURE2D(_CountryColorPalette, sampler_CountryColorPalette, GetColorUV(owner10));
+    float4 color01 = SAMPLE_TEXTURE2D(_CountryColorPalette, sampler_CountryColorPalette, GetColorUV(owner01));
+    float4 color11 = SAMPLE_TEXTURE2D(_CountryColorPalette, sampler_CountryColorPalette, GetColorUV(owner11));
 
-    // Lookup country color in palette using owner ID
-    // CountryColorPalette is dynamically sized based on max country ID (979+ countries)
-    float2 paletteUV = GetColorUV(ownerID);
-    float4 countryColor = SAMPLE_TEXTURE2D(_CountryColorPalette, sampler_CountryColorPalette, paletteUV);
+    // Apply HSV
+    color00.rgb = ApplyHSVColorGrading(color00.rgb);
+    color10.rgb = ApplyHSVColorGrading(color10.rgb);
+    color01.rgb = ApplyHSVColorGrading(color01.rgb);
+    color11.rgb = ApplyHSVColorGrading(color11.rgb);
 
-    // Apply HSV color grading (Imperator Rome technique - exact implementation)
-    countryColor.rgb = ApplyHSVColorGrading(countryColor.rgb);
+    // Bilinear blend
+    float4 colorTop = lerp(color00, color10, fractional.x);
+    float4 colorBottom = lerp(color01, color11, fractional.x);
+    float4 finalColor = lerp(colorTop, colorBottom, fractional.y);
 
-    // DEBUG: Show raw palette color to verify palette is populated
-    // Uncomment to check if palette has correct colors
-    // return float4(1, 0, 1, 1); // Magenta = shader is running
-
-    return countryColor;
+    return finalColor;
 }
 
 #endif // MAPMODE_POLITICAL_INCLUDED
