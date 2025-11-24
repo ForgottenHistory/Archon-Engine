@@ -583,34 +583,6 @@ Sweet spot: 1-3 developers with AI assistance.
 
 **Key Insight:** AI doesn't eliminate coordination costs. **Small, focused teams with AI assistance are optimal.**
 
-### 6.4 The "One Dev + AI = 70-Person Team" Math
-
-**Paradox Interactive (Clausewitz Engine):**
-- ~100 full-time developers
-- 40 hours/week each
-- 100 × 40 = 4,000 developer-hours/week
-- Legacy codebase (slower iteration)
-- Corporate overhead (meetings, bureaucracy)
-- Estimated productivity: ~5-10 LOC/hour
-- **Net output: ~20,000-40,000 LOC/week (ASSUMPTION)**
-
-**Archon with AI:**
-- 1 developer part-time
-- ~27.5 hours/week
-- Productivity: ~734 LOC/hour
-- Zero overhead (instant decisions)
-- Fresh codebase (fast iteration)
-- **Net output: ~20,000 LOC/week**
-
-**Equivalent throughput to a 70-100 person full-time team.**
-
-But with advantages:
-- ✅ No coordination overhead
-- ✅ No legacy code constraints
-- ✅ Instant architectural decisions
-- ✅ No meetings or bureaucracy
-- ✅ Sustainable pace
-
 ---
 
 ## 7. Implications for Industry
