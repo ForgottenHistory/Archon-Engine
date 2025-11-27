@@ -4,15 +4,17 @@ A Unity-based game engine for grand strategy games, built around a dual-layer ar
 
 ![Archon-Engine](Images/hero2.png)
 
-Documentation is approximately 1:1 with code size - architecture docs, session logs, and decision records. Many 1% topis covered in great detail.
-
 APIs should be stable by 2026 Q1. Until a release pops up, production use is discouraged. Free open-source game demo will be released in 2026 Q2 to showcase practical integration.
 
 **GAME DATA IS NOT PROVIDED IN PROJECT!**
 
+There is no *"How To Get Started"* guide yet, partly because I'm trying to figure how to get it going too. It's not exactly a small project to develop nor work with. I'll try my best to create something eventually however expect this to be a complex project and it should be treated as such.
+
 **Quick Links:**
 - [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Architecture overview
 - [Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Complete feature list
+
+Documentation is extensive and I *try* to keep it up to date. However expect some sloppyness.
 
 ![Flat-Map](Images/flat_map.png)
 2D map loaded using Europa Universalis 4 data.
