@@ -4,7 +4,6 @@ namespace Core
 {
     /// <summary>
     /// ScriptableObject configuration for game initialization and data loading
-    /// Contains paths, settings, and performance targets for the loading pipeline
     /// </summary>
     [CreateAssetMenu(fileName = "GameSettings", menuName = "Archon/Game Settings", order = 1)]
     public class GameSettings : ScriptableObject
@@ -19,30 +18,6 @@ namespace Core
 
         [Tooltip("Enable detailed validation of loaded data")]
         public bool EnableDataValidation = true;
-
-        [Tooltip("Enable performance monitoring during loading")]
-        public bool EnablePerformanceMonitoring = true;
-
-        [Tooltip("Maximum time to spend on data validation (seconds)")]
-        [Range(0.1f, 5.0f)]
-        public float MaxValidationTime = 1.0f;
-
-        [Header("Performance Targets")]
-        [Tooltip("Target maximum loading time in seconds")]
-        [Range(1.0f, 30.0f)]
-        public float TargetLoadingTime = 5.0f;
-
-        [Tooltip("Target maximum memory usage during loading (MB)")]
-        [Range(50, 500)]
-        public int TargetMaxMemoryMB = 100;
-
-        [Tooltip("Expected number of provinces (for memory allocation)")]
-        [Range(1000, 50000)]
-        public int ExpectedProvinceCount = 10000;
-
-        [Tooltip("Expected number of countries")]
-        [Range(50, 1000)]
-        public int ExpectedCountryCount = 200;
 
         [Header("Error Handling")]
         [Tooltip("Continue loading with defaults if non-critical files are missing")]
@@ -61,9 +36,6 @@ namespace Core
 
         [Tooltip("Enable memory leak detection")]
         public bool EnableMemoryLeakDetection = false;
-
-        [Tooltip("Enable loading performance profiling")]
-        public bool EnableLoadingProfiler = false;
 
         [Tooltip("Skip cache warming for faster iteration")]
         public bool SkipCacheWarming = false;
@@ -127,34 +99,6 @@ namespace Core
         }
 
         /// <summary>
-        /// Get memory allocation settings based on expected counts
-        /// </summary>
-        public MemorySettings GetMemorySettings()
-        {
-            return new MemorySettings
-            {
-                ProvinceCapacity = ExpectedProvinceCount,
-                CountryCapacity = ExpectedCountryCount,
-                MaxMemoryMB = TargetMaxMemoryMB,
-                EnableLeakDetection = EnableMemoryLeakDetection
-            };
-        }
-
-        /// <summary>
-        /// Get performance monitoring settings
-        /// </summary>
-        public PerformanceSettings GetPerformanceSettings()
-        {
-            return new PerformanceSettings
-            {
-                EnableMonitoring = EnablePerformanceMonitoring,
-                EnableProfiler = EnableLoadingProfiler,
-                TargetLoadingTimeSeconds = TargetLoadingTime,
-                EnableVerboseLogging = EnableVerboseLogging
-            };
-        }
-
-        /// <summary>
         /// Result of path validation
         /// </summary>
         public struct ValidationResult
@@ -194,28 +138,6 @@ namespace Core
         }
 
         /// <summary>
-        /// Memory allocation settings
-        /// </summary>
-        public struct MemorySettings
-        {
-            public int ProvinceCapacity;
-            public int CountryCapacity;
-            public int MaxMemoryMB;
-            public bool EnableLeakDetection;
-        }
-
-        /// <summary>
-        /// Performance monitoring settings
-        /// </summary>
-        public struct PerformanceSettings
-        {
-            public bool EnableMonitoring;
-            public bool EnableProfiler;
-            public float TargetLoadingTimeSeconds;
-            public bool EnableVerboseLogging;
-        }
-
-        /// <summary>
         /// Create default settings for testing
         /// </summary>
         public static GameSettings CreateDefault()
@@ -232,10 +154,6 @@ namespace Core
         {
             ArchonLogger.Log($"GameSettings Configuration:", "core_simulation");
             ArchonLogger.Log($"  Data Directory: {DataDirectory}", "core_simulation");
-            ArchonLogger.Log($"  Expected Provinces: {ExpectedProvinceCount}", "core_simulation");
-            ArchonLogger.Log($"  Expected Countries: {ExpectedCountryCount}", "core_simulation");
-            ArchonLogger.Log($"  Target Loading Time: {TargetLoadingTime}s", "core_simulation");
-            ArchonLogger.Log($"  Target Memory: {TargetMaxMemoryMB}MB", "core_simulation");
             ArchonLogger.Log($"  Parallel Loading: {EnableParallelLoading}", "core_simulation");
             ArchonLogger.Log($"  Data Validation: {EnableDataValidation}", "core_simulation");
         }

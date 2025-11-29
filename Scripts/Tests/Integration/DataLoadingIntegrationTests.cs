@@ -143,7 +143,6 @@ namespace Tests.Integration
 
             // Set permissive settings for testing
             settings.UseGracefulDegradation = true;
-            settings.TargetLoadingTime = 10f; // More lenient for tests
             settings.EnableDataValidation = true;
             settings.EnableVerboseLogging = true;
         }
