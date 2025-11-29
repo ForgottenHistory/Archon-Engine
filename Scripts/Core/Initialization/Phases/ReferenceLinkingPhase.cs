@@ -9,6 +9,10 @@ namespace Core.Initialization.Phases
     /// <summary>
     /// Phase 5: Link all string references to numeric IDs
     /// Resolves country tags, province references, and builds cross-references
+    ///
+    /// GRACEFUL DEGRADATION:
+    /// - No province history: Skip province reference resolution
+    /// - No countries: Skip country registration
     /// </summary>
     public class ReferenceLinkingPhase : IInitializationPhase
     {
@@ -28,7 +32,7 @@ namespace Core.Initialization.Phases
 
             if (!countryTagResult.Success)
             {
-                ArchonLogger.LogError($"Failed to load country tags: {countryTagResult.ErrorMessage}", "core_data_loading");
+                ArchonLogger.LogWarning($"Failed to load country tags: {countryTagResult.ErrorMessage}", "core_data_loading");
                 // Continue with limited functionality
             }
 
@@ -77,96 +81,125 @@ namespace Core.Initialization.Phases
 
             ArchonLogger.Log($"Country registration complete: {context.Registries.Countries.Count} countries registered with real tags", "core_data_loading");
 
-            context.ReportProgress(62f, "Registering provinces with JSON5 history data...");
+            context.ReportProgress(62f, "Registering provinces...");
             yield return null;
 
-            // STEP 1: Register provinces that have JSON5 history files (full data)
-            ArchonLogger.Log($"Province processing: Found {context.ProvinceInitialStates.LoadedCount} provinces with JSON5 history files", "core_data_loading");
+            // Check if we have province history data
+            bool hasProvinceHistory = context.ProvinceInitialStates.Success &&
+                                      context.ProvinceInitialStates.InitialStates.IsCreated &&
+                                      context.ProvinceInitialStates.InitialStates.Length > 0;
 
-            for (int i = 0; i < context.ProvinceInitialStates.InitialStates.Length; i++)
+            if (hasProvinceHistory)
             {
-                var initialState = context.ProvinceInitialStates.InitialStates[i];
+                // STEP 1: Register provinces that have JSON5 history files (full data)
+                ArchonLogger.Log($"Province processing: Found {context.ProvinceInitialStates.LoadedCount} provinces with JSON5 history files", "core_data_loading");
 
-                // Skip provinces with invalid IDs (0 or negative)
-                if (initialState.ProvinceID <= 0)
-                    continue;
-
-                // Create ProvinceData with real loaded data
-                var provinceRegistryData = new ProvinceData
+                for (int i = 0; i < context.ProvinceInitialStates.InitialStates.Length; i++)
                 {
-                    RuntimeId = (ushort)initialState.ProvinceID,
-                    DefinitionId = initialState.ProvinceID,
-                    Name = $"Province {initialState.ProvinceID}",
-                    Development = initialState.Development,
-                    // Fix terrain: if province has development, it's land (terrain = 1), otherwise ocean (terrain = 0)
-                    Terrain = (byte)(initialState.Development > 0 ? 1 : 0),
-                    Flags = initialState.Flags,
-                    BaseTax = initialState.BaseTax,
-                    BaseProduction = initialState.BaseProduction,
-                    BaseManpower = initialState.BaseManpower,
-                    CenterOfTrade = initialState.CenterOfTrade
-                };
+                    var initialState = context.ProvinceInitialStates.InitialStates[i];
 
-                try
-                {
-                    context.Registries.Provinces.Register(initialState.ProvinceID, provinceRegistryData);
+                    // Skip provinces with invalid IDs (0 or negative)
+                    if (initialState.ProvinceID <= 0)
+                        continue;
+
+                    // Create ProvinceData with real loaded data
+                    var provinceRegistryData = new ProvinceData
+                    {
+                        RuntimeId = (ushort)initialState.ProvinceID,
+                        DefinitionId = initialState.ProvinceID,
+                        Name = $"Province {initialState.ProvinceID}",
+                        Development = initialState.Development,
+                        // Fix terrain: if province has development, it's land (terrain = 1), otherwise ocean (terrain = 0)
+                        Terrain = (byte)(initialState.Development > 0 ? 1 : 0),
+                        Flags = initialState.Flags,
+                        BaseTax = initialState.BaseTax,
+                        BaseProduction = initialState.BaseProduction,
+                        BaseManpower = initialState.BaseManpower,
+                        CenterOfTrade = initialState.CenterOfTrade
+                    };
+
+                    try
+                    {
+                        context.Registries.Provinces.Register(initialState.ProvinceID, provinceRegistryData);
+                    }
+                    catch (System.Exception e)
+                    {
+                        ArchonLogger.LogWarning($"Failed to register province {initialState.ProvinceID}: {e.Message}", "core_data_loading");
+                    }
                 }
-                catch (System.Exception e)
-                {
-                    ArchonLogger.LogWarning($"Failed to register province {initialState.ProvinceID}: {e.Message}", "core_data_loading");
-                }
+
+                ArchonLogger.Log($"Province registration (JSON5): {context.Registries.Provinces.Count} provinces registered with historical data", "core_data_loading");
             }
-
-            ArchonLogger.Log($"Province registration (JSON5): {context.Registries.Provinces.Count} provinces registered with historical data", "core_data_loading");
+            else
+            {
+                ArchonLogger.Log("No province history data - skipping JSON5 province registration", "core_data_loading");
+            }
 
             context.ReportProgress(63f, "Filling in missing provinces from definition.csv...");
             yield return null;
 
             // STEP 2: Register remaining provinces from definition.csv (uncolonized/water provinces without JSON5)
             // RegisterDefinitions() automatically skips provinces already registered in step 1
-            DefinitionLoader.RegisterDefinitions(context.ProvinceDefinitions, context.Registries.Provinces);
-
-            ArchonLogger.Log($"Province registration complete: {context.Registries.Provinces.Count} total provinces (JSON5 + definition.csv)", "core_data_loading");
+            if (context.ProvinceDefinitions != null && context.ProvinceDefinitions.Count > 0)
+            {
+                DefinitionLoader.RegisterDefinitions(context.ProvinceDefinitions, context.Registries.Provinces);
+                ArchonLogger.Log($"Province registration complete: {context.Registries.Provinces.Count} total provinces (JSON5 + definition.csv)", "core_data_loading");
+            }
+            else
+            {
+                ArchonLogger.Log($"Province registration complete: {context.Registries.Provinces.Count} total provinces (no definition.csv)", "core_data_loading");
+            }
 
             context.ReportProgress(63f, "Resolving province references...");
             yield return null;
 
-            // Get local copy to avoid struct property modification issues
-            var provinceStates = context.ProvinceInitialStates;
-
-            // Resolve string references in province data
-            for (int i = 0; i < provinceStates.InitialStates.Length; i++)
+            // Only resolve references if we have province history data
+            if (hasProvinceHistory)
             {
-                var initialState = provinceStates.InitialStates[i];
+                // Get local copy to avoid struct property modification issues
+                var provinceStates = context.ProvinceInitialStates;
 
-                // Skip provinces with invalid IDs
-                if (initialState.ProvinceID <= 0)
-                    continue;
-
-                var existingProvinceData = context.Registries.Provinces.GetByDefinition(initialState.ProvinceID);
-                if (existingProvinceData != null)
+                // Resolve string references in province data
+                for (int i = 0; i < provinceStates.InitialStates.Length; i++)
                 {
-                    context.ReferenceResolver.ResolveProvinceReferences(ref initialState, existingProvinceData);
+                    var initialState = provinceStates.InitialStates[i];
 
-                    // CRITICAL: Save the updated initialState back to the array
-                    provinceStates.InitialStates[i] = initialState;
+                    // Skip provinces with invalid IDs
+                    if (initialState.ProvinceID <= 0)
+                        continue;
+
+                    var existingProvinceData = context.Registries.Provinces.GetByDefinition(initialState.ProvinceID);
+                    if (existingProvinceData != null)
+                    {
+                        context.ReferenceResolver.ResolveProvinceReferences(ref initialState, existingProvinceData);
+
+                        // CRITICAL: Save the updated initialState back to the array
+                        provinceStates.InitialStates[i] = initialState;
+                    }
                 }
-            }
 
-            // Store modified struct back to context
-            context.ProvinceInitialStates = provinceStates;
+                // Store modified struct back to context
+                context.ProvinceInitialStates = provinceStates;
+
+                context.ReportProgress(64f, "Applying resolved province data...");
+                yield return null;
+
+                // Apply the resolved province data to the hot ProvinceSystem
+                context.ProvinceSystem.ApplyResolvedInitialStates(provinceStates.InitialStates);
+
+                // Clean up
+                provinceStates.Dispose();
+            }
+            else
+            {
+                ArchonLogger.Log("No province history data - skipping reference resolution", "core_data_loading");
+            }
 
             context.ReportProgress(63f, "Resolving country references...");
             yield return null;
 
             // Resolve references for all countries
             // TODO: This will be implemented when country data contains string references
-
-            context.ReportProgress(64f, "Applying resolved province data...");
-            yield return null;
-
-            // Apply the resolved province data to the hot ProvinceSystem
-            context.ProvinceSystem.ApplyResolvedInitialStates(provinceStates.InitialStates);
 
             context.ReportProgress(64f, "Building cross-references...");
             yield return null;
@@ -177,11 +210,30 @@ namespace Core.Initialization.Phases
             context.ReportProgress(65f, "Validating data integrity...");
             yield return null;
 
-            // Validate all references
-            if (!context.DataValidator.ValidateGameData())
+            // Detect if we're in map-only mode (no province history, no countries, or no definitions)
+            bool isMapOnlyMode = !hasProvinceHistory ||
+                                 context.Registries.Countries.Count == 0 ||
+                                 context.Registries.Provinces.Count == 0;
+
+            if (isMapOnlyMode)
             {
-                context.ReportError("Data validation failed after linking references");
-                yield break;
+                // Enable map-only mode on validator - missing data becomes warnings instead of errors
+                context.DataValidator.SetMapOnlyMode(true);
+                ArchonLogger.Log("Running in map-only mode - validation will be relaxed", "core_data_loading");
+            }
+
+            // Validate all references
+            var validationResult = context.DataValidator.ValidateGameData();
+            if (!validationResult)
+            {
+                // In map-only mode, we've already converted missing data errors to warnings
+                // So any remaining errors are real problems
+                var errors = context.DataValidator.GetErrors();
+                if (errors.Count > 0)
+                {
+                    context.ReportError("Data validation failed after linking references");
+                    yield break;
+                }
             }
 
             context.ReportProgress(65f, "Reference linking complete");
@@ -201,9 +253,6 @@ namespace Core.Initialization.Phases
             {
                 ArchonLogger.Log($"Phase complete: Linked references: {context.Registries.Countries.Count} countries, {context.Registries.Provinces.Count} provinces", "core_data_loading");
             }
-
-            // Clean up - reuse the local copy we already have
-            provinceStates.Dispose();
         }
 
         public void Rollback(InitializationContext context)

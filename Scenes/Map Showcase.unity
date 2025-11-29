@@ -661,35 +661,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 5217042520025654107, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
+      propertyPath: gameSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: e3093190015160b46a01e6682885d9d5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4839071971490523384, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8874278137753444553}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
---- !u!1 &8874278137753444552 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4839071971490523384, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
-  m_PrefabInstance: {fileID: 8874278137753444551}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8874278137753444553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8874278137753444552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db4c4d9cae04e1a4bb47e115eeb7303a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initializeOnAwake: 1
-  debugProvinceCount: 0
-  debugCountryCount: 0
-  debugEventBusActive: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

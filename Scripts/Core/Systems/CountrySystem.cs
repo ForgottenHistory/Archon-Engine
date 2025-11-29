@@ -105,6 +105,22 @@ namespace Core.Systems
             stateLoader.InitializeFromCountryData(countryDataResult);
         }
 
+        /// <summary>
+        /// Initialize empty country system for map-only mode
+        /// No country data loaded
+        /// </summary>
+        public void InitializeEmpty()
+        {
+            if (!isInitialized)
+            {
+                ArchonLogger.LogError("CountrySystem not initialized - call Initialize() first", "core_simulation");
+                return;
+            }
+
+            // System is already initialized with empty arrays
+            ArchonLogger.Log("CountrySystem initialized empty (map-only mode)", "core_simulation");
+        }
+
         // ===== DATA ACCESS OPERATIONS (delegated to CountryDataManager) =====
 
         public Color32 GetCountryColor(ushort countryId) => dataManager.GetCountryColor(countryId);

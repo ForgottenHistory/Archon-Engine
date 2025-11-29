@@ -9,6 +9,11 @@ namespace Core.Initialization.Phases
     /// <summary>
     /// Phase 3: Load province data using definition.csv + JSON5 + Burst architecture
     /// Loads ALL provinces (including uncolonized ones) and initializes ProvinceSystem
+    ///
+    /// GRACEFUL DEGRADATION:
+    /// - No definition.csv: Initialize with 0 provinces (map-only mode)
+    /// - No history files: Use definitions only (no ownership/history data)
+    /// - Full data: Complete province initialization
     /// </summary>
     public class ProvinceDataLoadingPhase : IInitializationPhase
     {
@@ -20,20 +25,42 @@ namespace Core.Initialization.Phases
         {
             context.ReportProgress(15f, "Loading province data...");
 
-            // Step 1: Load definition.csv to get ALL provinces (including uncolonized ones)
+            // Step 1: Try to load definition.csv (OPTIONAL)
             context.ReportProgress(15f, "Loading definition.csv...");
             yield return null;
 
             context.ProvinceDefinitions = DefinitionLoader.LoadDefinitions(context.Settings.DataDirectory);
+
             if (context.ProvinceDefinitions.Count == 0)
             {
-                context.ReportError("Failed to load province definitions from definition.csv");
+                // No definition.csv - this is OK for map-only mode
+                ArchonLogger.LogWarning("No province definitions found - running in map-only mode", "core_data_loading");
+
+                // Initialize empty province system
+                context.ProvinceSystem.InitializeEmpty();
+
+                context.ReportProgress(40f, "Province data loaded (map-only mode)");
+
+                // Emit event with zero provinces
+                context.EventBus.Emit(new ProvinceDataReadyEvent
+                {
+                    ProvinceCount = 0,
+                    HasDefinitions = false,
+                    HasInitialStates = false,
+                    TimeStamp = Time.time
+                });
+                context.EventBus.ProcessEvents();
+
+                if (context.EnableDetailedLogging)
+                {
+                    ArchonLogger.Log("Phase complete: Map-only mode (no province data)", "core_data_loading");
+                }
                 yield break;
             }
 
             ArchonLogger.Log($"Loaded {context.ProvinceDefinitions.Count} province definitions from definition.csv", "core_data_loading");
 
-            // Step 2: Load province initial states from JSON5 files (history data)
+            // Step 2: Try to load province initial states from JSON5 files (OPTIONAL)
             context.ReportProgress(20f, "Loading province JSON5 files...");
             yield return null;
 
@@ -41,7 +68,32 @@ namespace Core.Initialization.Phases
 
             if (!context.ProvinceInitialStates.Success)
             {
-                context.ReportError($"Province loading failed: {context.ProvinceInitialStates.ErrorMessage}");
+                // No history data - use definitions only
+                ArchonLogger.LogWarning($"Province history not loaded: {context.ProvinceInitialStates.ErrorMessage}", "core_data_loading");
+                ArchonLogger.Log("Initializing provinces from definitions only (no ownership data)", "core_data_loading");
+
+                context.ReportProgress(32f, "Initializing province system from definitions...");
+                yield return null;
+
+                // Initialize from definitions only
+                context.ProvinceSystem.InitializeFromDefinitions(context.ProvinceDefinitions);
+
+                context.ReportProgress(40f, "Province data loaded (definitions only)");
+
+                // Emit event
+                context.EventBus.Emit(new ProvinceDataReadyEvent
+                {
+                    ProvinceCount = context.ProvinceDefinitions.Count,
+                    HasDefinitions = true,
+                    HasInitialStates = false,
+                    TimeStamp = Time.time
+                });
+                context.EventBus.ProcessEvents();
+
+                if (context.EnableDetailedLogging)
+                {
+                    ArchonLogger.Log($"Phase complete: Loaded {context.ProvinceDefinitions.Count} provinces from definitions (no history)", "core_data_loading");
+                }
                 yield break;
             }
 
@@ -50,7 +102,7 @@ namespace Core.Initialization.Phases
             context.ReportProgress(32f, "Initializing province system...");
             yield return null;
 
-            // Initialize ProvinceSystem with loaded data
+            // Initialize ProvinceSystem with full data
             context.ProvinceSystem.InitializeFromProvinceStates(context.ProvinceInitialStates);
 
             context.ReportProgress(40f, "Province data loaded");

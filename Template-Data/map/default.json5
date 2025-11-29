@@ -1,0 +1,18 @@
+{
+  // Template map configuration
+  // Generated for Archon Engine template data
+
+  "width": 5632,
+  "height": 2048,
+  "max_provinces": 5000,
+
+  // Sea provinces - provinces below sea level (heightmap < 94)
+  // These will be auto-detected based on heightmap values
+  "sea_starts": [],
+
+  // Lakes - inland water bodies
+  "lake_starts": [],
+
+  // Deep ocean provinces
+  "ocean_starts": []
+}

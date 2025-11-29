@@ -18,11 +18,24 @@ namespace Core.Linking
         private readonly GameRegistries registries;
         private readonly List<ValidationError> errors = new();
         private readonly List<ValidationError> warnings = new();
+        private bool mapOnlyMode;
 
         public DataValidator(GameRegistries registries)
         {
             this.registries = registries ?? throw new System.ArgumentNullException(nameof(registries));
             ArchonLogger.Log("DataValidator initialized", "core_data_linking");
+        }
+
+        /// <summary>
+        /// Enable map-only mode - treats missing data as warnings instead of errors
+        /// </summary>
+        public void SetMapOnlyMode(bool enabled)
+        {
+            mapOnlyMode = enabled;
+            if (enabled)
+            {
+                ArchonLogger.Log("DataValidator: Map-only mode enabled - missing data will be treated as warnings", "core_data_linking");
+            }
         }
 
         /// <summary>
@@ -53,24 +66,25 @@ namespace Core.Linking
         private void ValidateStaticData()
         {
             // Check that essential static data is loaded
+            // These are "missing data" errors - expected in map-only mode
             if (registries.Religions.Count == 0)
             {
-                AddError("No religions loaded", "Static Data");
+                AddMissingDataError("No religions loaded", "Static Data");
             }
 
             if (registries.Cultures.Count == 0)
             {
-                AddError("No cultures loaded", "Static Data");
+                AddMissingDataError("No cultures loaded", "Static Data");
             }
 
             if (registries.TradeGoods.Count == 0)
             {
-                AddError("No trade goods loaded", "Static Data");
+                AddMissingDataError("No trade goods loaded", "Static Data");
             }
 
             if (registries.Terrains.Count == 0)
             {
-                AddError("No terrain types loaded", "Static Data");
+                AddMissingDataError("No terrain types loaded", "Static Data");
             }
 
             ArchonLogger.Log($"DataValidator: Static data validation complete - {registries.Religions.Count} religions, {registries.Cultures.Count} cultures, {registries.TradeGoods.Count} trade goods", "core_data_linking");
@@ -83,7 +97,7 @@ namespace Core.Linking
         {
             if (registries.Countries.Count == 0)
             {
-                AddError("No countries loaded", "Countries");
+                AddMissingDataError("No countries loaded", "Countries");
                 return;
             }
 
@@ -150,7 +164,7 @@ namespace Core.Linking
         {
             if (registries.Provinces.Count == 0)
             {
-                AddError("No provinces loaded", "Provinces");
+                AddMissingDataError("No provinces loaded", "Provinces");
                 return;
             }
 
@@ -242,7 +256,7 @@ namespace Core.Linking
             var playableCountries = registries.Countries.GetAll().Where(c => c.OwnedProvinces.Count > 0).Count();
             if (playableCountries == 0)
             {
-                AddError("No playable countries found (countries with owned provinces)", "Gameplay");
+                AddMissingDataError("No playable countries found (countries with owned provinces)", "Gameplay");
             }
             else if (playableCountries < 5)
             {
@@ -253,14 +267,14 @@ namespace Core.Linking
             var landProvinces = registries.Provinces.GetAll().Where(p => p.Terrain != 0).Count();
             if (landProvinces == 0)
             {
-                AddError("No land provinces found", "Gameplay");
+                AddMissingDataError("No land provinces found", "Gameplay");
             }
 
             // Check that there are owned provinces
             var ownedProvinces = registries.Provinces.GetAll().Where(p => p.OwnerId != 0).Count();
             if (ownedProvinces == 0)
             {
-                AddError("No provinces are owned by any country", "Gameplay");
+                AddMissingDataError("No provinces are owned by any country", "Gameplay");
             }
 
             ArchonLogger.Log($"DataValidator: Gameplay validation complete - {playableCountries} playable countries, {landProvinces} land provinces, {ownedProvinces} owned provinces", "core_data_linking");
@@ -272,6 +286,22 @@ namespace Core.Linking
         private void AddError(string message, string category)
         {
             errors.Add(new ValidationError { Message = message, Category = category, IsError = true });
+        }
+
+        /// <summary>
+        /// Add an error that becomes a warning in map-only mode
+        /// Used for "missing data" type errors that are expected when running without full game data
+        /// </summary>
+        private void AddMissingDataError(string message, string category)
+        {
+            if (mapOnlyMode)
+            {
+                warnings.Add(new ValidationError { Message = message, Category = category, IsError = false });
+            }
+            else
+            {
+                errors.Add(new ValidationError { Message = message, Category = category, IsError = true });
+            }
         }
 
         /// <summary>

@@ -1,0 +1,103 @@
+{
+  // Template terrain definitions
+  // Simplified terrain categories for Archon Engine template
+
+  // RGB -> Terrain Type Mapping defined in terrain_rgb.json5
+
+  categories: {
+    ocean: {
+      color: [0, 105, 148],
+      sound_type: "sea",
+      is_water: true,
+      movement_cost: 1.0
+    },
+    grasslands: {
+      color: [86, 125, 70],
+      type: "plains",
+      sound_type: "plains",
+      movement_cost: 1.0,
+      supply_limit: 8
+    },
+    forest: {
+      color: [34, 85, 51],
+      type: "forest",
+      sound_type: "forest",
+      movement_cost: 1.25,
+      defence: 1,
+      supply_limit: 4
+    },
+    hills: {
+      color: [139, 119, 101],
+      type: "hills",
+      sound_type: "mountains",
+      movement_cost: 1.4,
+      defence: 1,
+      supply_limit: 5
+    },
+    mountain: {
+      color: [128, 128, 128],
+      type: "mountains",
+      sound_type: "mountains",
+      movement_cost: 1.5,
+      defence: 2,
+      supply_limit: 4
+    },
+    desert: {
+      color: [194, 178, 128],
+      type: "desert",
+      sound_type: "desert",
+      movement_cost: 1.05,
+      supply_limit: 4
+    },
+    tundra: {
+      color: [170, 190, 180],
+      type: "arctic",
+      sound_type: "desert",
+      movement_cost: 1.2,
+      supply_limit: 3
+    },
+    snow: {
+      color: [235, 235, 235],
+      type: "arctic",
+      sound_type: "desert",
+      movement_cost: 1.3,
+      supply_limit: 2
+    }
+  },
+
+  // Terrain type mappings from terrain.bmp colors
+  terrain: {
+    ocean: {
+      type: "ocean",
+      color: [0]
+    },
+    grasslands: {
+      type: "grasslands",
+      color: [1]
+    },
+    forest: {
+      type: "forest",
+      color: [2]
+    },
+    hills: {
+      type: "hills",
+      color: [3]
+    },
+    mountain: {
+      type: "mountain",
+      color: [4]
+    },
+    desert: {
+      type: "desert",
+      color: [5]
+    },
+    tundra: {
+      type: "tundra",
+      color: [6]
+    },
+    snow: {
+      type: "snow",
+      color: [7]
+    }
+  }
+}

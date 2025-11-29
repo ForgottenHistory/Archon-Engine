@@ -118,6 +118,68 @@ namespace Core.Systems
             });
         }
 
+        /// <summary>
+        /// Initialize empty province system for map-only mode
+        /// No province data loaded - just renders the map texture
+        /// </summary>
+        public void InitializeEmpty()
+        {
+            if (!isInitialized)
+            {
+                ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first", "core_simulation");
+                return;
+            }
+
+            // Clear any existing data
+            dataManager.Clear();
+
+            ArchonLogger.Log("ProvinceSystem initialized empty (map-only mode)", "core_simulation");
+
+            // Emit initialization complete event
+            eventBus?.Emit(new ProvinceSystemInitializedEvent
+            {
+                ProvinceCount = 0
+            });
+        }
+
+        /// <summary>
+        /// Initialize provinces from definition.csv only (no history data)
+        /// Creates provinces with default state (no owner, no development)
+        /// </summary>
+        public void InitializeFromDefinitions(System.Collections.Generic.List<Core.Loaders.DefinitionLoader.DefinitionEntry> definitions)
+        {
+            if (!isInitialized)
+            {
+                ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first", "core_simulation");
+                return;
+            }
+
+            ArchonLogger.Log($"Initializing {definitions.Count} provinces from definitions (no history)", "core_simulation");
+
+            // Clear existing data
+            dataManager.Clear();
+
+            // Add each province with default state
+            foreach (var def in definitions)
+            {
+                if (def.ProvinceID <= 0 || def.ProvinceID > ushort.MaxValue)
+                    continue;
+
+                ushort provinceId = (ushort)def.ProvinceID;
+
+                // Add province with terrain 0 (grasslands) and no owner
+                dataManager.AddProvince(provinceId, 0);
+            }
+
+            ArchonLogger.Log($"ProvinceSystem initialized with {ProvinceCount} provinces from definitions", "core_simulation");
+
+            // Emit initialization complete event
+            eventBus?.Emit(new ProvinceSystemInitializedEvent
+            {
+                ProvinceCount = ProvinceCount
+            });
+        }
+
 
         // ===== DATA ACCESS OPERATIONS (delegated to ProvinceDataManager) =====
 

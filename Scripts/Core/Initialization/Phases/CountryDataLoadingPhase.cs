@@ -8,6 +8,9 @@ namespace Core.Initialization.Phases
     /// <summary>
     /// Phase 4: Load country data using JSON5 + Burst architecture
     /// Loads all country files and initializes CountrySystem
+    ///
+    /// GRACEFUL DEGRADATION:
+    /// - No country files: Initialize empty (map-only mode)
     /// </summary>
     public class CountryDataLoadingPhase : IInitializationPhase
     {
@@ -42,7 +45,27 @@ namespace Core.Initialization.Phases
 
             if (!countryDataResult.Success)
             {
-                context.ReportError($"Country loading failed: {countryDataResult.ErrorMessage}");
+                // No country data - this is OK for map-only mode
+                ArchonLogger.LogWarning($"Country loading failed: {countryDataResult.ErrorMessage}", "core_data_loading");
+                ArchonLogger.Log("Initializing empty country system (map-only mode)", "core_data_loading");
+
+                context.CountrySystem.InitializeEmpty();
+
+                context.ReportProgress(60f, "Country phase complete (map-only mode)");
+
+                // Emit event with zero countries
+                context.EventBus.Emit(new CountryDataReadyEvent
+                {
+                    CountryCount = 0,
+                    HasScenarioData = false,
+                    TimeStamp = Time.time
+                });
+                context.EventBus.ProcessEvents();
+
+                if (context.EnableDetailedLogging)
+                {
+                    ArchonLogger.Log("Phase complete: Map-only mode (no country data)", "core_data_loading");
+                }
                 yield break;
             }
 
