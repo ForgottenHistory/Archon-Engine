@@ -41,7 +41,7 @@ MonoBehaviour:
     overlayStrength: 0
     countryColorSaturation: 1
   fogOfWar:
-    enabled: 1
+    enabled: 0
     unexploredColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
     exploredTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     exploredDesaturation: 0.032

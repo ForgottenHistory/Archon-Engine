@@ -65,7 +65,7 @@ namespace Map.Core
 
             // Start and wait for EngineInitializer to complete
             if (logProgress)
-                ArchonLogger.Log("[1/5] Starting engine initialization...", "map_initialization");
+                ArchonLogger.Log("[1/6] Starting engine initialization...", "map_initialization");
 
             engineInitializer.StartInitialization();
 
@@ -80,11 +80,11 @@ namespace Map.Core
             }
 
             if (logProgress)
-                ArchonLogger.Log("[1/5] ✓ Engine initialization complete", "map_initialization");
+                ArchonLogger.Log("[1/6] ✓ Engine initialization complete", "map_initialization");
 
             // Apply visual style before map initialization
             if (logProgress)
-                ArchonLogger.Log("[2/5] Applying visual style...", "map_initialization");
+                ArchonLogger.Log("[2/6] Applying visual style...", "map_initialization");
 
             if (visualStyleManager != null)
             {
@@ -93,7 +93,7 @@ namespace Map.Core
                 {
                     visualStyleManager.ApplyStyle(activeStyle);
                     if (logProgress)
-                        ArchonLogger.Log($"[2/5] ✓ Visual style '{activeStyle.styleName}' applied", "map_initialization");
+                        ArchonLogger.Log($"[2/6] ✓ Visual style '{activeStyle.styleName}' applied", "map_initialization");
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace Map.Core
 
             // Trigger map initialization
             if (logProgress)
-                ArchonLogger.Log("[3/5] Starting map initialization...", "map_initialization");
+                ArchonLogger.Log("[3/6] Starting map initialization...", "map_initialization");
 
             mapInitializer.StartMapInitialization();
 
@@ -117,15 +117,33 @@ namespace Map.Core
 
             // Initialize map modes (ENGINE-only political mode)
             if (logProgress)
-                ArchonLogger.Log("[4/5] Initializing map modes...", "map_initialization");
+                ArchonLogger.Log("[4/6] Initializing map modes...", "map_initialization");
 
             yield return InitializeMapModes();
+
+            // Initialize border system (must happen after map init when BorderDispatcher exists)
+            if (logProgress)
+                ArchonLogger.Log("[5/6] Initializing border system...", "map_initialization");
+
+            yield return InitializeBorderSystem();
+
+            // Apply border configuration
+            if (visualStyleManager != null)
+            {
+                var activeStyle = visualStyleManager.GetActiveStyle();
+                if (activeStyle != null)
+                {
+                    visualStyleManager.ApplyBorderConfiguration(activeStyle);
+                    if (logProgress)
+                        ArchonLogger.Log("[5/6] ✓ Border system initialized and configured", "map_initialization");
+                }
+            }
 
             // Initialize camera
             if (initializeCamera)
             {
                 if (logProgress)
-                    ArchonLogger.Log("[5/5] Initializing camera...", "map_initialization");
+                    ArchonLogger.Log("[6/6] Initializing camera...", "map_initialization");
 
                 InitializeCameraController();
             }
@@ -134,6 +152,46 @@ namespace Map.Core
 
             if (logProgress)
                 ArchonLogger.Log("=== ✓ ENGINE map initialization complete ===", "map_initialization");
+        }
+
+        /// <summary>
+        /// Initialize border system (distance field generator)
+        /// Mirrors what HegemonMapPhaseHandler.ScanProvinceAdjacencies does in GAME layer
+        /// </summary>
+        private IEnumerator InitializeBorderSystem()
+        {
+            var mapSystemCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
+            var gameState = FindFirstObjectByType<GameState>();
+
+            if (mapSystemCoordinator == null || gameState == null)
+            {
+                ArchonLogger.LogWarning("EngineMapInitializer: Missing dependencies for border system", "map_initialization");
+                yield break;
+            }
+
+            var borderDispatcher = mapSystemCoordinator.GetComponent<BorderComputeDispatcher>();
+            if (borderDispatcher == null)
+            {
+                ArchonLogger.LogWarning("EngineMapInitializer: BorderComputeDispatcher not found", "map_initialization");
+                yield break;
+            }
+
+            // Set rendering mode to ShaderDistanceField (smooth anti-aliased borders)
+            borderDispatcher.SetBorderRenderingMode(BorderRenderingMode.ShaderDistanceField);
+
+            // Initialize smooth borders with distance field generator
+            borderDispatcher.InitializeSmoothBorders(
+                gameState.Adjacencies,
+                gameState.Provinces,
+                gameState.Countries,
+                mapSystemCoordinator.ProvinceMapping,
+                null // mapPlaneTransform not needed for shader mode
+            );
+
+            if (logProgress)
+                ArchonLogger.Log("EngineMapInitializer: Initialized border distance field system", "map_initialization");
+
+            yield return null;
         }
 
         /// <summary>
@@ -194,7 +252,7 @@ namespace Map.Core
             mapModeManager.SetMapMode(MapMode.Political, forceUpdate: true);
 
             if (logProgress)
-                ArchonLogger.Log("[4/5] ✓ Map modes initialized (Political mode active)", "map_initialization");
+                ArchonLogger.Log("[4/6] ✓ Map modes initialized (Political mode active)", "map_initialization");
 
             yield return null;
         }

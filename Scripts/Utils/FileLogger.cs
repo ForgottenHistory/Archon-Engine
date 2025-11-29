@@ -61,7 +61,7 @@ public class FileLogger : MonoBehaviour
         public bool includeTimestamps = true;  // Always include timestamps for better debugging
         public bool includeStackTrace = false;
         public int maxLogFileSize = 10485760; // 10MB
-        public string logFileName = "dominion_log.log";
+        public string logFileName = "generic.log";
 
         [Header("Log Filters")]
         public bool logInfo = true;
