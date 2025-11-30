@@ -105,6 +105,16 @@ class PerlinNoise:
         return total / max_value
 
 
+def smooth_falloff(x: float, edge0: float, edge1: float) -> float:
+    """Smoothstep falloff function. Returns 0 when x < edge0, 1 when x > edge1."""
+    if x <= edge0:
+        return 0.0
+    if x >= edge1:
+        return 1.0
+    t = (x - edge0) / (edge1 - edge0)
+    return t * t * (3 - 2 * t)
+
+
 def draw_hexagon(draw: ImageDraw.Draw, cx: float, cy: float, size: float, color: tuple):
     """Draw a filled hexagon centered at (cx, cy)."""
     points = []
@@ -177,12 +187,20 @@ def generate_heightmap(
             nx = cx / width * scale
             ny = cy / height * scale
 
-            # Generate multi-octave noise
+            # Generate multi-octave noise for terrain variation
             value = noise.octave_noise(nx, ny, octaves=octaves)
 
-            # Add some continent-like large-scale variation
-            continent_noise = noise.octave_noise(nx * 0.3, ny * 0.3, octaves=2)
-            value = value * 0.7 + continent_noise * 0.3
+            # Create vertical continent shape in center
+            # Distance from center horizontal line (0 = center, 1 = edge)
+            horizontal_dist = abs(cx / width - 0.5) * 2.0
+
+            # Smooth falloff: land in center, ocean at edges
+            # Use smoothstep for natural coastlines
+            continent_factor = 1.0 - smooth_falloff(horizontal_dist, 0.3, 0.6)
+
+            # Combine noise with continent shape
+            # High continent_factor = more likely to be land
+            value = value * 0.4 + continent_factor * 0.8 - 0.2
 
             hex_values.append((cx, cy, value))
 

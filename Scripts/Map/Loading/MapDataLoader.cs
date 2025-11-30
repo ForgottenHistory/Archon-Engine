@@ -34,11 +34,17 @@ namespace Map.Loading
         // Terrain blend map generator for Imperator Rome-style blending
         private Map.Rendering.Terrain.TerrainBlendMapGenerator blendMapGenerator;
 
-        public void Initialize(ProvinceMapProcessor processor, BorderComputeDispatcher borders, MapTextureManager textures)
+        public void Initialize(ProvinceMapProcessor processor, BorderComputeDispatcher borders, MapTextureManager textures, string dataDirectory = null)
         {
             provinceProcessor = processor;
             borderDispatcher = borders;
             textureManager = textures;
+
+            // Initialize terrain color mapper from terrain_rgb.json5
+            if (!string.IsNullOrEmpty(dataDirectory))
+            {
+                Data.TerrainColorMapper.Initialize(dataDirectory);
+            }
 
             // Initialize specialized bitmap loaders
             terrainLoader = new TerrainBitmapLoader();

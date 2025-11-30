@@ -85,6 +85,16 @@ namespace Map.MapModes
             // Use the terrain texture from MapTextureManager (critical for unowned provinces)
             ProvinceTerrainTexture = textureManager.ProvinceTerrainTexture;
 
+            // DEBUG: Log terrain texture status
+            if (ProvinceTerrainTexture == null)
+            {
+                ArchonLogger.LogError("MapModeDataTextures: ProvinceTerrainTexture is NULL from MapTextureManager!", "map_initialization");
+            }
+            else
+            {
+                ArchonLogger.Log($"MapModeDataTextures: ProvinceTerrainTexture acquired - {ProvinceTerrainTexture.width}x{ProvinceTerrainTexture.height}, instance {ProvinceTerrainTexture.GetInstanceID()}", "map_initialization");
+            }
+
             // Create color palettes only
             CreateColorPalettes();
 

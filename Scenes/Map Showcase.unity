@@ -592,6 +592,14 @@ PrefabInstance:
       propertyPath: mapPlane
       value: 
       objectReference: {fileID: 1040298674}
+    - target: {fileID: 8938318788282967630, guid: 59d9981f5bc39d34ebd39e3007f7f2a7, type: 3}
+      propertyPath: currentZoom
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938318788282967630, guid: 59d9981f5bc39d34ebd39e3007f7f2a7, type: 3}
+      propertyPath: maxDistance
+      value: 230
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

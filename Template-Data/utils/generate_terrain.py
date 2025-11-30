@@ -107,6 +107,8 @@ def determine_terrain_for_hex(
     Valid terrain types: grasslands, hills, desert_mountain, desert, plains,
     mountain, marsh, forest, ocean, snow, inland_ocean, coastal_desert,
     savannah, highlands, jungle
+
+    For vertical continent: top = cold/snow, middle = temperate, bottom = hot/desert
     """
     # Normalize coordinates for noise
     nx = cx / width * 8.0
@@ -114,71 +116,98 @@ def determine_terrain_for_hex(
 
     # Get noise values for biome variation
     moisture = (noise.noise2d(nx * 2, ny * 2) + 1) / 2
-    temperature = (noise.noise2d(nx * 1.5 + 100, ny * 1.5 + 100) + 1) / 2
 
-    # Latitude effect
-    latitude_factor = abs(cy / img_height - 0.5) * 2
-    temperature = temperature * (1 - latitude_factor * 0.5)
+    # Latitude-based temperature: top of map = cold (0), bottom = hot (1)
+    # Use y position directly for clear north-south gradient
+    base_temperature = cy / img_height  # 0 at top, 1 at bottom
+
+    # Add some noise variation but keep the gradient dominant
+    temp_noise = (noise.noise2d(nx * 1.5 + 100, ny * 1.5 + 100) + 1) / 2
+    temperature = base_temperature * 0.8 + temp_noise * 0.2
 
     # Ocean
     if height < sea_level - 5:
         return "ocean"
 
-    # Coastline (use marsh or plains instead of removed "coastline")
-    if height < sea_level + 3:
-        if moisture > 0.6:
+    # Coastal areas (just above sea level)
+    if height < sea_level + 5:
+        if moisture > 0.65:
             return "marsh"
+        if temperature > 0.75:
+            return "coastal_desert"
         return "plains"
 
-    # Inland water
-    if height < sea_level + 5 and moisture > 0.8:
+    # Inland water (lakes in wet areas)
+    if height < sea_level + 8 and moisture > 0.85:
         return "inland_ocean"
 
     # Normalized land height
     land_height = (height - sea_level) / (255 - sea_level)
 
-    # Snow peaks
-    if land_height > 0.8:
-        return "snow"
-
-    # Mountains
-    if land_height > 0.6:
-        if temperature < 0.3:
+    # High mountains and snow (elevation > 0.7)
+    if land_height > 0.7:
+        if temperature < 0.35:
             return "snow"
-        if moisture < 0.3:
+        if temperature > 0.7 and moisture < 0.35:
             return "desert_mountain"
         return "mountain"
 
-    # Highlands/hills (use highlands instead of removed "dry_highlands")
-    if land_height > 0.4:
-        if moisture < 0.4:
+    # Mountains (elevation 0.5-0.7)
+    if land_height > 0.5:
+        if temperature < 0.25:
+            return "snow"
+        if temperature > 0.65 and moisture < 0.35:
+            return "desert_mountain"
+        return "mountain"
+
+    # Highlands/hills (elevation 0.3-0.5)
+    if land_height > 0.3:
+        if temperature < 0.3:
+            if moisture > 0.5:
+                return "forest"
             return "highlands"
-        if moisture > 0.7:
+        if temperature > 0.7:
+            if moisture < 0.3:
+                return "desert"
+            return "savannah"
+        if moisture > 0.65:
             return "forest"
+        if moisture < 0.35:
+            return "highlands"
         return "hills"
 
-    # Mid-elevation (use forest instead of removed "woods")
-    if land_height > 0.2:
-        if temperature > 0.7 and moisture < 0.3:
-            return "desert"
-        if temperature > 0.6 and moisture < 0.4:
+    # Mid-elevation (0.15-0.3)
+    if land_height > 0.15:
+        if temperature < 0.25:
+            return "forest"  # Cold forest (taiga-like)
+        if temperature > 0.75:
+            if moisture < 0.3:
+                return "desert"
+            if moisture > 0.7:
+                return "jungle"
             return "savannah"
-        if moisture > 0.75:
-            if temperature > 0.7:
+        if moisture > 0.7:
+            if temperature > 0.6:
                 return "jungle"
             return "forest"
         if moisture > 0.5:
-            return "forest"
+            return "grasslands"
         return "plains"
 
-    # Low elevation
-    if temperature > 0.7 and moisture < 0.35:
-        return "coastal_desert"
-    if temperature > 0.6 and moisture < 0.4:
+    # Low elevation (< 0.15)
+    if temperature < 0.3:
+        if moisture > 0.6:
+            return "marsh"
+        return "grasslands"
+    if temperature > 0.7:
+        if moisture < 0.35:
+            return "coastal_desert"
+        if moisture > 0.7:
+            return "jungle"
         return "savannah"
-    if moisture > 0.7:
+    if moisture > 0.65:
         return "marsh"
-    if moisture > 0.5:
+    if moisture > 0.45:
         return "grasslands"
 
     return "plains"

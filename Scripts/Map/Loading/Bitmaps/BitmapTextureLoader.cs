@@ -29,11 +29,13 @@ namespace Map.Loading.Bitmaps
         /// <summary>
         /// Load bitmap and populate corresponding texture
         /// </summary>
-        /// <param name="provincesBmpPath">Path to provinces.bmp (used to derive bitmap path)</param>
-        public async Task LoadAndPopulateAsync(string provincesBmpPath)
+        /// <param name="provincesPath">Path to provinces.bmp or provinces.png (used to derive bitmap path)</param>
+        public async Task LoadAndPopulateAsync(string provincesPath)
         {
-            // Derive specific bitmap path from provinces.bmp path
-            string bitmapPath = provincesBmpPath.Replace("provinces.bmp", GetBitmapFileName());
+            // Derive specific bitmap path from provinces path (handles both .bmp and .png)
+            string bitmapPath = provincesPath
+                .Replace("provinces.bmp", GetBitmapFileName())
+                .Replace("provinces.png", GetBitmapFileName());
 
             // Check if file exists
             if (!System.IO.File.Exists(bitmapPath))

@@ -18,6 +18,6 @@ MonoBehaviour:
   UseGracefulDegradation: 1
   ShowDetailedErrors: 1
   RetryAttempts: 1
-  EnableVerboseLogging: 0
+  EnableVerboseLogging: 1
   EnableMemoryLeakDetection: 0
   SkipCacheWarming: 0

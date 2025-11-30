@@ -289,6 +289,11 @@ Shader "Archon/DefaultTerrain"
             // Fragment shader - composition of modular includes
             float4 frag(Varyings input) : SV_Target
             {
+                // DEBUG: Directly sample terrain texture to verify it's bound
+                // Uncomment to test:
+                // float2 debugUV = float2(input.uv.x, 1.0 - input.uv.y);
+                // return SAMPLE_TEXTURE2D(_ProvinceTerrainTexture, sampler_ProvinceTerrainTexture, debugUV);
+
                 // Check for debug modes first (100-103)
                 float4 debugOutput;
                 if (TryRenderDebugMode(_MapMode, input.uv, debugOutput))

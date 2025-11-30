@@ -204,7 +204,14 @@ namespace Map.Core
             // Tell the coordinator to handle map generation using GameSettings
             if (gameSettings != null)
             {
+                // Try both .bmp and .png for provinces file
                 var provinceBitmapPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.bmp");
+                if (!System.IO.File.Exists(provinceBitmapPath))
+                {
+                    var pngPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.png");
+                    if (System.IO.File.Exists(pngPath))
+                        provinceBitmapPath = pngPath;
+                }
                 var provinceDefinitionsPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "definition.csv");
                 bool useDefinition = System.IO.File.Exists(provinceDefinitionsPath);
                 coordinator.HandleSimulationReady(cachedSimulationData, provinceBitmapPath, provinceDefinitionsPath, useDefinition);
@@ -353,7 +360,8 @@ namespace Map.Core
             // Initialize MapDataLoader with dependencies
             if (provinceProcessor != null && borderDispatcher != null && textureManager != null)
             {
-                dataLoader.Initialize(provinceProcessor, borderDispatcher, textureManager);
+                string dataDirectory = gameSettings != null ? gameSettings.DataDirectory : null;
+                dataLoader.Initialize(provinceProcessor, borderDispatcher, textureManager, dataDirectory);
             }
         }
 
