@@ -1,7 +1,7 @@
 using UnityEngine;
 using Map.Rendering;
 using Map.Loading;
-using ParadoxParser.Bitmap;
+using Map.Loading.Bitmaps;
 using Core;
 using Utils;
 using static Map.Loading.ProvinceMapProcessor;

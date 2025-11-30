@@ -14,7 +14,7 @@ namespace Map.Loading.Bitmaps
         protected override string GetBitmapFileName() => "heightmap.bmp";
         protected override string GetLoaderName() => "HeightmapBitmapLoader";
 
-        protected override void PopulateTexture(ParadoxParser.Jobs.BMPLoadResult heightmapData)
+        protected override void PopulateTexture(BMPLoadResult heightmapData)
         {
             if (textureManager == null || textureManager.HeightmapTexture == null)
             {
@@ -47,7 +47,7 @@ namespace Map.Loading.Bitmaps
                     int textureIndex = y * width + x;
 
                     // Read palette index as height value
-                    if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte heightValue, out byte _, out byte __))
+                    if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte heightValue, out byte _, out byte __))
                     {
                         // Convert 8-bit height (0-255) to normalized float (0.0-1.0)
                         float normalizedHeight = heightValue / 255f;

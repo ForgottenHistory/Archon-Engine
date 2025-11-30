@@ -22,7 +22,7 @@ except ImportError:
     exit(1)
 
 
-# Terrain type definitions matching shader indices
+# Terrain type definitions matching terrain_rgb.json5
 # Format: name -> (index, rgb, type_category)
 TERRAIN_TYPES = {
     "grasslands":         (0,  (86, 124, 27),   "grasslands"),
@@ -30,27 +30,16 @@ TERRAIN_TYPES = {
     "desert_mountain":    (2,  (112, 74, 31),   "mountain"),
     "desert":             (3,  (206, 169, 99),  "desert"),
     "plains":             (4,  (200, 214, 107), "grasslands"),
-    "terrain_5":          (5,  (13, 96, 62),    "grasslands"),
-    "mountain":           (6,  (65, 42, 17),    "mountain"),
-    "desert_mountain_low":(7,  (158, 130, 77),  "desert"),
-    "terrain_8":          (8,  (53, 77, 17),    "hills"),
-    "marsh":              (9,  (75, 147, 174),  "marsh"),
-    "terrain_10":         (10, (155, 155, 155), "farmlands"),
-    "terrain_11":         (11, (255, 0, 0),     "farmlands"),
-    "forest":             (12, (42, 55, 22),    "forest"),
-    "forest_13":          (13, (213, 144, 199), "forest"),
-    "forest_14":          (14, (127, 24, 60),   "forest"),
-    "ocean":              (15, (8, 31, 130),    "ocean"),
-    "snow":               (16, (255, 255, 255), "mountain"),
-    "inland_ocean":       (17, (55, 90, 220),   "inland_ocean"),
-    "coastal_desert":     (18, (203, 191, 103), "coastal_desert"),
-    "coastline":          (19, (255, 247, 0),   "coastline"),
-    "savannah":           (20, (180, 160, 80),  "savannah"),
-    "highlands":          (21, (23, 23, 23),    "highlands"),
-    "dry_highlands":      (22, (24, 24, 24),    "highlands"),
-    "woods":              (23, (80, 100, 50),   "woods"),
-    "jungle":             (24, (254, 254, 254), "jungle"),
-    "terrain_21":         (25, (21, 21, 21),    "farmlands"),
+    "mountain":           (5,  (65, 42, 17),    "mountain"),
+    "marsh":              (6,  (75, 147, 174),  "marsh"),
+    "forest":             (7,  (42, 55, 22),    "forest"),
+    "ocean":              (8,  (8, 31, 130),    "ocean"),
+    "snow":               (9,  (255, 255, 255), "mountain"),
+    "inland_ocean":       (10, (55, 90, 220),   "inland_ocean"),
+    "coastal_desert":     (11, (203, 191, 103), "coastal_desert"),
+    "savannah":           (12, (180, 160, 80),  "savannah"),
+    "highlands":          (13, (23, 23, 23),    "highlands"),
+    "jungle":             (14, (254, 254, 254), "jungle"),
 }
 
 
@@ -115,6 +104,9 @@ def determine_terrain_for_hex(
 ) -> str:
     """
     Determine terrain type for a hexagon based on height at center.
+    Valid terrain types: grasslands, hills, desert_mountain, desert, plains,
+    mountain, marsh, forest, ocean, snow, inland_ocean, coastal_desert,
+    savannah, highlands, jungle
     """
     # Normalize coordinates for noise
     nx = cx / width * 8.0
@@ -132,11 +124,11 @@ def determine_terrain_for_hex(
     if height < sea_level - 5:
         return "ocean"
 
-    # Coastline
+    # Coastline (use marsh or plains instead of removed "coastline")
     if height < sea_level + 3:
         if moisture > 0.6:
             return "marsh"
-        return "coastline"
+        return "plains"
 
     # Inland water
     if height < sea_level + 5 and moisture > 0.8:
@@ -157,17 +149,15 @@ def determine_terrain_for_hex(
             return "desert_mountain"
         return "mountain"
 
-    # Highlands/hills
+    # Highlands/hills (use highlands instead of removed "dry_highlands")
     if land_height > 0.4:
-        if moisture < 0.25:
-            return "dry_highlands"
         if moisture < 0.4:
             return "highlands"
         if moisture > 0.7:
             return "forest"
         return "hills"
 
-    # Mid-elevation
+    # Mid-elevation (use forest instead of removed "woods")
     if land_height > 0.2:
         if temperature > 0.7 and moisture < 0.3:
             return "desert"
@@ -178,7 +168,7 @@ def determine_terrain_for_hex(
                 return "jungle"
             return "forest"
         if moisture > 0.5:
-            return "woods"
+            return "forest"
         return "plains"
 
     # Low elevation

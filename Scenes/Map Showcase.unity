@@ -654,6 +654,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330585545}
     - target: {fileID: 2821160507791628392, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
+      propertyPath: gameSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: e3093190015160b46a01e6682885d9d5, type: 2}
+    - target: {fileID: 2821160507791628392, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
       propertyPath: meshRenderer
       value: 
       objectReference: {fileID: 1040298675}

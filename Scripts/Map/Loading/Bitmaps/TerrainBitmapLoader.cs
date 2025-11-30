@@ -14,7 +14,7 @@ namespace Map.Loading.Bitmaps
         protected override string GetBitmapFileName() => "terrain.bmp";
         protected override string GetLoaderName() => "TerrainBitmapLoader";
 
-        protected override void PopulateTexture(ParadoxParser.Jobs.BMPLoadResult terrainData)
+        protected override void PopulateTexture(BMPLoadResult terrainData)
         {
             if (textureManager == null || textureManager.ProvinceTerrainTexture == null)
             {
@@ -69,7 +69,7 @@ namespace Map.Loading.Bitmaps
                             int textureIndex = y * width + x;
 
                             // Read palette index from bitmap
-                            if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte index, out byte _, out byte __))
+                            if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte index, out byte _, out byte __))
                             {
                                 // Log specific coordinate for province 357 debugging
                                 if (logProgress && x == 3162 && y == 865)
@@ -127,7 +127,7 @@ namespace Map.Loading.Bitmaps
                         {
                             int textureIndex = y * width + x;
 
-                            if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte index, out byte _, out byte __))
+                            if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte index, out byte _, out byte __))
                             {
                                 pixels[textureIndex] = TerrainColorMapper.GetTerrainColor(index);
                                 successfulReads++;
@@ -150,7 +150,7 @@ namespace Map.Loading.Bitmaps
                     {
                         int textureIndex = y * width + x;
 
-                        if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                        if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
                         {
                             pixels[textureIndex] = new Color32(r, g, b, 255);
                             successfulReads++;

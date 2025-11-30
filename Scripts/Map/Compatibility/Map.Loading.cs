@@ -1,7 +1,7 @@
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-using ParadoxParser.Jobs;
+using Map.Loading.Bitmaps;
 using Map.Rendering;
 using System.Threading.Tasks;
 

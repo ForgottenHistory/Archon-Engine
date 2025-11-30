@@ -169,7 +169,7 @@ MonoBehaviour:
   zoomSmoothTime: 0.1
   zoomToCursor: 0
   scaleSpeedWithZoom: 1
-  enableHorizontalWrapping: 1
+  enableHorizontalWrapping: 0
   clampVerticalMovement: 1
   hideUnitsAboveZoom: 3.5
   disableFogOfWarAboveZoom: 4

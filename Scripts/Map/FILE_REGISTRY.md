@@ -90,8 +90,8 @@
 
 ## Loading/
 - **Map.Loading.IMapDataProvider** - Interface for map data sources
-- **Map.Loading.MapDataLoader** - Load map from bitmap files (provinces.bmp, terrain.bmp, heightmap.bmp, world_normal.bmp). Orchestrates terrain blend map generation after terrain analysis.
-- **Map.Loading.ProvinceMapProcessor** - Process loaded province map data
+- **Map.Loading.MapDataLoader** - Load map from image files (provinces.bmp/.png, terrain.bmp, heightmap.bmp, world_normal.bmp). Orchestrates terrain blend map generation after terrain analysis.
+- **Map.Loading.ProvinceMapProcessor** - Process loaded province map data. Supports BMP and PNG formats via auto-detection.
 - **Map.Loading.DetailTextureArrayLoader** - Load terrain detail textures into Texture2DArray: scans Assets/Data/textures/terrain_detail/ for {index}_{name}.jpg/png files, supports 0-255 indices, missing textures filled with neutral gray (128,128,128), 512x512 per texture with mipmaps
 - **Map.Loading.NoiseTextureGenerator** - Generate noise textures for terrain variation
 - **Map.Loading.TerrainTypeTextureGenerator** - Generate terrain type textures from province data

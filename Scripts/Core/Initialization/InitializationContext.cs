@@ -4,7 +4,6 @@ using Core.Registries;
 using Core.Loaders;
 using Core.Linking;
 using Core.Data;
-using ParadoxParser.Jobs;
 
 namespace Core.Initialization
 {

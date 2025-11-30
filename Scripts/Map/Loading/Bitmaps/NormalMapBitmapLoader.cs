@@ -14,7 +14,7 @@ namespace Map.Loading.Bitmaps
         protected override string GetBitmapFileName() => "world_normal.bmp";
         protected override string GetLoaderName() => "NormalMapBitmapLoader";
 
-        protected override void PopulateTexture(ParadoxParser.Jobs.BMPLoadResult normalMapData)
+        protected override void PopulateTexture(BMPLoadResult normalMapData)
         {
             if (textureManager == null || textureManager.NormalMapTexture == null)
             {
@@ -47,7 +47,7 @@ namespace Map.Loading.Bitmaps
                     int textureIndex = y * width + x;
 
                     // Read RGB values from normal map (R=X, G=Y, B=Z)
-                    if (ParadoxParser.Bitmap.BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                    if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
                     {
                         // Store RGB directly (shader will decode to normal vector)
                         pixels[textureIndex] = new Color32(r, g, b, 255);

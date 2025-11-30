@@ -1,103 +1,117 @@
 {
   // Template terrain definitions
-  // Simplified terrain categories for Archon Engine template
-
-  // RGB -> Terrain Type Mapping defined in terrain_rgb.json5
+  // Matching terrain_rgb.json5
 
   categories: {
     ocean: {
-      color: [0, 105, 148],
+      color: [8, 31, 130],
+      sound_type: "sea",
+      is_water: true,
+      movement_cost: 1.0
+    },
+    inland_ocean: {
+      color: [55, 90, 220],
       sound_type: "sea",
       is_water: true,
       movement_cost: 1.0
     },
     grasslands: {
-      color: [86, 125, 70],
-      type: "plains",
+      color: [86, 124, 27],
+      type: "grasslands",
       sound_type: "plains",
       movement_cost: 1.0,
       supply_limit: 8
     },
-    forest: {
-      color: [34, 85, 51],
-      type: "forest",
-      sound_type: "forest",
-      movement_cost: 1.25,
-      defence: 1,
-      supply_limit: 4
+    plains: {
+      color: [200, 214, 107],
+      type: "grasslands",
+      sound_type: "plains",
+      movement_cost: 1.0,
+      supply_limit: 8
     },
     hills: {
-      color: [139, 119, 101],
+      color: [0, 86, 6],
       type: "hills",
       sound_type: "mountains",
       movement_cost: 1.4,
       defence: 1,
       supply_limit: 5
     },
+    highlands: {
+      color: [23, 23, 23],
+      type: "highlands",
+      sound_type: "mountains",
+      movement_cost: 1.3,
+      defence: 1,
+      supply_limit: 4
+    },
     mountain: {
-      color: [128, 128, 128],
-      type: "mountains",
+      color: [65, 42, 17],
+      type: "mountain",
       sound_type: "mountains",
       movement_cost: 1.5,
       defence: 2,
-      supply_limit: 4
+      supply_limit: 3
+    },
+    desert_mountain: {
+      color: [112, 74, 31],
+      type: "mountain",
+      sound_type: "desert",
+      movement_cost: 1.5,
+      defence: 2,
+      supply_limit: 2
+    },
+    snow: {
+      color: [255, 255, 255],
+      type: "mountain",
+      sound_type: "desert",
+      movement_cost: 1.6,
+      defence: 2,
+      supply_limit: 2
     },
     desert: {
-      color: [194, 178, 128],
+      color: [206, 169, 99],
+      type: "desert",
+      sound_type: "desert",
+      movement_cost: 1.1,
+      supply_limit: 3
+    },
+    coastal_desert: {
+      color: [203, 191, 103],
       type: "desert",
       sound_type: "desert",
       movement_cost: 1.05,
       supply_limit: 4
     },
-    tundra: {
-      color: [170, 190, 180],
-      type: "arctic",
-      sound_type: "desert",
-      movement_cost: 1.2,
-      supply_limit: 3
-    },
-    snow: {
-      color: [235, 235, 235],
-      type: "arctic",
-      sound_type: "desert",
-      movement_cost: 1.3,
-      supply_limit: 2
-    }
-  },
-
-  // Terrain type mappings from terrain.bmp colors
-  terrain: {
-    ocean: {
-      type: "ocean",
-      color: [0]
-    },
-    grasslands: {
-      type: "grasslands",
-      color: [1]
+    savannah: {
+      color: [180, 160, 80],
+      type: "savannah",
+      sound_type: "plains",
+      movement_cost: 1.0,
+      supply_limit: 6
     },
     forest: {
+      color: [42, 55, 22],
       type: "forest",
-      color: [2]
+      sound_type: "forest",
+      movement_cost: 1.25,
+      defence: 1,
+      supply_limit: 4
     },
-    hills: {
-      type: "hills",
-      color: [3]
+    jungle: {
+      color: [254, 254, 254],
+      type: "jungle",
+      sound_type: "forest",
+      movement_cost: 1.4,
+      defence: 1,
+      supply_limit: 3
     },
-    mountain: {
-      type: "mountain",
-      color: [4]
-    },
-    desert: {
-      type: "desert",
-      color: [5]
-    },
-    tundra: {
-      type: "tundra",
-      color: [6]
-    },
-    snow: {
-      type: "snow",
-      color: [7]
+    marsh: {
+      color: [75, 147, 174],
+      type: "marsh",
+      sound_type: "marsh",
+      movement_cost: 1.3,
+      supply_limit: 3
     }
   }
 }

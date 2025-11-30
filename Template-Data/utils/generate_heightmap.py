@@ -9,6 +9,7 @@ Creates:
   - (255, 255, 255) = highest point
 
 Uses Perlin noise to generate natural-looking terrain.
+Height is assigned per-hexagon to match province boundaries.
 """
 
 import math
@@ -17,7 +18,7 @@ import random
 from pathlib import Path
 
 try:
-    from PIL import Image
+    from PIL import Image, ImageDraw
 except ImportError:
     print("ERROR: Pillow not installed. Run: pip install Pillow")
     exit(1)
@@ -104,10 +105,22 @@ class PerlinNoise:
         return total / max_value
 
 
+def draw_hexagon(draw: ImageDraw.Draw, cx: float, cy: float, size: float, color: tuple):
+    """Draw a filled hexagon centered at (cx, cy)."""
+    points = []
+    for i in range(6):
+        angle = math.pi / 3 * i
+        x = cx + size * math.cos(angle)
+        y = cy + size * math.sin(angle)
+        points.append((x, y))
+    draw.polygon(points, fill=color)
+
+
 def generate_heightmap(
     width: int,
     height: int,
     output_dir: Path,
+    hex_size: float = 32,
     seed: int = 42,
     sea_level: int = 94,
     scale: float = 4.0,
@@ -115,12 +128,13 @@ def generate_heightmap(
     land_percentage: float = 0.4
 ) -> None:
     """
-    Generate a heightmap using Perlin noise.
+    Generate a heightmap using Perlin noise with hexagonal provinces.
 
     Args:
         width: Image width in pixels
         height: Image height in pixels
         output_dir: Directory to save output
+        hex_size: Hexagon radius - must match province map! (default: 32)
         seed: Random seed for reproducibility
         sea_level: Grayscale value for sea level (default 94)
         scale: Noise scale (larger = bigger features)
@@ -128,24 +142,40 @@ def generate_heightmap(
         land_percentage: Approximate percentage of land vs water
     """
     print(f"Generating heightmap: {width}x{height}")
-    print(f"Seed: {seed}, Sea level: {sea_level}, Scale: {scale}")
+    print(f"Hex size: {hex_size}, Seed: {seed}, Sea level: {sea_level}, Scale: {scale}")
 
     noise = PerlinNoise(seed)
 
-    # Create grayscale image
-    img = Image.new('RGB', (width, height), (0, 0, 0))
-    pixels = img.load()
+    # Hexagon spacing (must match province map generator!)
+    hex_width = hex_size * 2
+    hex_height = hex_size * math.sqrt(3)
+    col_spacing = hex_width * 0.75
+    row_spacing = hex_height
 
-    # Generate noise values and track min/max for normalization
-    print("Generating noise...")
-    noise_values = []
+    cols = int(width / col_spacing) + 2
+    rows = int(height / row_spacing) + 2
 
-    for y in range(height):
-        row = []
-        for x in range(width):
+    print(f"Generating {cols}x{rows} hexagon grid...")
+
+    # First pass: calculate noise values for each hex center
+    hex_values = []
+    for col in range(cols):
+        for row in range(rows):
+            # Calculate center (must match province generator!)
+            cx = col * col_spacing + hex_size
+            cy = row * row_spacing + hex_height / 2
+            if col % 2 == 1:
+                cy += row_spacing / 2
+
+            # Skip if outside bounds
+            if cx < -hex_size or cx > width + hex_size:
+                continue
+            if cy < -hex_size or cy > height + hex_size:
+                continue
+
             # Normalize coordinates to noise space
-            nx = x / width * scale
-            ny = y / height * scale
+            nx = cx / width * scale
+            ny = cy / height * scale
 
             # Generate multi-octave noise
             value = noise.octave_noise(nx, ny, octaves=octaves)
@@ -154,54 +184,57 @@ def generate_heightmap(
             continent_noise = noise.octave_noise(nx * 0.3, ny * 0.3, octaves=2)
             value = value * 0.7 + continent_noise * 0.3
 
-            row.append(value)
-        noise_values.append(row)
-
-        if y % 256 == 0:
-            print(f"  Row {y}/{height}...")
+            hex_values.append((cx, cy, value))
 
     # Find min/max for normalization
-    flat_values = [v for row in noise_values for v in row]
-    min_val = min(flat_values)
-    max_val = max(flat_values)
+    all_values = [v[2] for v in hex_values]
+    min_val = min(all_values)
+    max_val = max(all_values)
 
     print(f"Noise range: [{min_val:.3f}, {max_val:.3f}]")
 
     # Calculate threshold for desired land percentage
-    sorted_values = sorted(flat_values)
+    sorted_values = sorted(all_values)
     threshold_idx = int(len(sorted_values) * (1 - land_percentage))
     land_threshold = sorted_values[threshold_idx]
 
     print(f"Land threshold: {land_threshold:.3f} ({land_percentage*100:.0f}% land)")
 
-    # Convert noise to heightmap
-    print("Converting to heightmap...")
-    for y in range(height):
-        for x in range(width):
-            value = noise_values[y][x]
+    # Create image with ocean as default (below sea level)
+    ocean_gray = sea_level // 2  # Default underwater
+    img = Image.new('RGB', (width, height), (ocean_gray, ocean_gray, ocean_gray))
+    draw = ImageDraw.Draw(img)
 
-            if value < land_threshold:
-                # Underwater: map to [0, sea_level-1]
-                # Normalize underwater portion
-                underwater_range = land_threshold - min_val
-                if underwater_range > 0:
-                    normalized = (value - min_val) / underwater_range
-                else:
-                    normalized = 0
-                gray = int(normalized * (sea_level - 1))
+    # Second pass: draw hexagons with calculated heights
+    print("Drawing hexagons...")
+    water_count = 0
+    land_count = 0
+
+    for cx, cy, value in hex_values:
+        if value < land_threshold:
+            # Underwater: map to [0, sea_level-1]
+            underwater_range = land_threshold - min_val
+            if underwater_range > 0:
+                normalized = (value - min_val) / underwater_range
             else:
-                # Above water: map to [sea_level, 255]
-                # Normalize above-water portion
-                above_range = max_val - land_threshold
-                if above_range > 0:
-                    normalized = (value - land_threshold) / above_range
-                else:
-                    normalized = 0
-                gray = int(sea_level + normalized * (255 - sea_level))
+                normalized = 0
+            gray = int(normalized * (sea_level - 1))
+            water_count += 1
+        else:
+            # Above water: map to [sea_level, 255]
+            above_range = max_val - land_threshold
+            if above_range > 0:
+                normalized = (value - land_threshold) / above_range
+            else:
+                normalized = 0
+            gray = int(sea_level + normalized * (255 - sea_level))
+            land_count += 1
 
-            # Clamp to valid range
-            gray = max(0, min(255, gray))
-            pixels[x, y] = (gray, gray, gray)
+        # Clamp to valid range
+        gray = max(0, min(255, gray))
+
+        # Draw hexagon with this height
+        draw_hexagon(draw, cx, cy, hex_size, (gray, gray, gray))
 
     # Save as BMP
     heightmap_path = output_dir / "heightmap.bmp"
@@ -209,11 +242,12 @@ def generate_heightmap(
     print(f"Saved: {heightmap_path}")
 
     # Print statistics
-    water_count = sum(1 for row in noise_values for v in row if v < land_threshold)
-    total_pixels = width * height
-    actual_water_pct = water_count / total_pixels * 100
-    print(f"Water coverage: {actual_water_pct:.1f}%")
-    print(f"Land coverage: {100 - actual_water_pct:.1f}%")
+    total_hexes = water_count + land_count
+    if total_hexes > 0:
+        actual_water_pct = water_count / total_hexes * 100
+        print(f"Total hexagons: {total_hexes}")
+        print(f"Water coverage: {actual_water_pct:.1f}%")
+        print(f"Land coverage: {100 - actual_water_pct:.1f}%")
 
 
 def main():
@@ -231,6 +265,10 @@ def main():
     parser.add_argument(
         '--output', type=str, default='.',
         help='Output directory (default: current directory)'
+    )
+    parser.add_argument(
+        '--hex-size', type=float, default=32,
+        help='Hexagon radius - must match province map! (default: 32)'
     )
     parser.add_argument(
         '--seed', type=int, default=42,
@@ -258,6 +296,7 @@ def main():
         width=args.width,
         height=args.height,
         output_dir=output_dir,
+        hex_size=args.hex_size,
         seed=args.seed,
         sea_level=args.sea_level,
         scale=args.scale,

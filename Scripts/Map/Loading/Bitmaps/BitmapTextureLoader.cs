@@ -12,7 +12,7 @@ namespace Map.Loading.Bitmaps
     /// </summary>
     public abstract class BitmapTextureLoader
     {
-        protected ParadoxParser.Jobs.JobifiedBMPLoader bmpLoader;
+        protected JobifiedBMPLoader bmpLoader;
         protected MapTextureManager textureManager;
         protected bool logProgress;
 
@@ -23,7 +23,7 @@ namespace Map.Loading.Bitmaps
         {
             textureManager = textures;
             logProgress = enableLogging;
-            bmpLoader = new ParadoxParser.Jobs.JobifiedBMPLoader();
+            bmpLoader = new JobifiedBMPLoader();
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Map.Loading.Bitmaps
         /// <summary>
         /// Populate texture with bitmap data (implemented by derived classes)
         /// </summary>
-        protected abstract void PopulateTexture(ParadoxParser.Jobs.BMPLoadResult bitmapData);
+        protected abstract void PopulateTexture(BMPLoadResult bitmapData);
 
         /// <summary>
         /// Get the bitmap filename (e.g., "terrain.bmp", "heightmap.bmp")
