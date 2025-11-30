@@ -109,25 +109,8 @@ namespace Map.Rendering
                 }
             }
 
-            // DEBUG: Check what we wrote to the CPU array
-            int testPixelIndex = 711 * width + 2767;
-            var testColor = provinceIDPixels[testPixelIndex];
-            ushort testProvinceID = Province.ProvinceIDEncoder.UnpackProvinceID(testColor);
-            ArchonLogger.Log($"MapTexturePopulator: CPU array at [711, 2767] (index {testPixelIndex}) = province {testProvinceID} (R={testColor.r} G={testColor.g})", "map_initialization");
-
-            // Also check what's at the Y-flipped location (what GPU might have after Graphics.Blit)
-            int flippedPixelIndex = (height - 1 - 711) * width + 2767; // Y-flipped location
-            var flippedColor = provinceIDPixels[flippedPixelIndex];
-            ushort flippedProvinceID = Province.ProvinceIDEncoder.UnpackProvinceID(flippedColor);
-            ArchonLogger.Log($"MapTexturePopulator: CPU array at Y-flipped [{height-1-711}, 2767] (index {flippedPixelIndex}) = province {flippedProvinceID} (R={flippedColor.r} G={flippedColor.g})", "map_initialization");
-
             // Batch-write to GPU using RenderTexture (architecture: GPU-native textures)
             PopulateProvinceIDTextureGPU(textureManager, width, height, provinceIDPixels);
-
-            // DEBUG: Verify ProvinceIDTexture was populated correctly after blit
-            ushort verifyProvinceID = textureManager.GetProvinceID(2767, 711);
-            ArchonLogger.Log($"MapTexturePopulator: ProvinceIDTexture at pixel (2767,711) contains province ID {verifyProvinceID} AFTER blit (expected 2751 for Castile)", "map_initialization");
-
             PopulateProvinceColorTextureGPU(textureManager, width, height, provinceColorPixels);
 
             // Populate owner texture using GPU compute shader (architecture compliance: NO CPU pixel ops)

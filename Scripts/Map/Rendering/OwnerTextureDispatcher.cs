@@ -185,10 +185,6 @@ namespace Map.Rendering
 
             ArchonLogger.Log($"OwnerTextureDispatcher: Populated {populatedCount} provinces, {nonZeroOwners} have non-zero owners", "map_initialization");
 
-            // DEBUG: Check specific test provinces before uploading to GPU
-            ArchonLogger.Log($"OwnerTextureDispatcher: Buffer at index 2751 (Castile) = {ownerData[2751]} (expected 151)", "map_initialization");
-            ArchonLogger.Log($"OwnerTextureDispatcher: Buffer at index 817 (Inca) = {ownerData[817]} (expected 731)", "map_initialization");
-
             // Upload to GPU
             provinceOwnerBuffer.SetData(ownerData);
 
@@ -222,31 +218,6 @@ namespace Map.Rendering
 
             // Dispatch compute shader - GPU processes all pixels in parallel
             populateOwnerCompute.Dispatch(populateOwnersKernel, threadGroupsX, threadGroupsY, 1);
-
-            // DEBUG: Verify compute shader wrote data - sample a known province pixel
-            // Castile province 2751 should have owner 151
-            // We know from logs that province 2751 is at approx pixel (2767, 711) based on previous debugging
-            // But we don't want to loop - just sample ONE specific pixel
-            RenderTexture.active = textureManager.ProvinceOwnerTexture;
-            Texture2D singlePixel = new Texture2D(1, 1, TextureFormat.RFloat, false);
-            singlePixel.ReadPixels(new Rect(2767, 711, 1, 1), 0, 0);
-            singlePixel.Apply();
-            RenderTexture.active = null;
-
-            float ownerRawFloat = singlePixel.GetPixel(0, 0).r;
-            // ProvinceOwnerTexture is R32_SFloat storing raw float values (151.0, not normalized)
-            // No multiplication needed - just cast to uint
-            uint decodedValue = (uint)(ownerRawFloat + 0.5f);
-            Object.Destroy(singlePixel);
-
-            if (debugWriteProvinceIDs)
-            {
-                ArchonLogger.Log($"OwnerTextureDispatcher: DEBUG - ProvinceOwnerTexture at pixel (2767,711) contains province ID {decodedValue} (expected 2751 for Castile if coordinates match)", "map_initialization");
-            }
-            else
-            {
-                ArchonLogger.Log($"OwnerTextureDispatcher: ProvinceOwnerTexture at pixel (2767,711) contains owner ID {decodedValue} (expected 151 for Castile)", "map_initialization");
-            }
 
             // Log performance
             if (logPerformance)

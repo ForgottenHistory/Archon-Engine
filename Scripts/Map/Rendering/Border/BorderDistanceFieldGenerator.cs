@@ -251,24 +251,6 @@ namespace Map.Rendering
             string borderTypeName = borderType == 0 ? "country" : "province";
             ArchonLogger.Log($"BorderDistanceFieldGenerator: Starting init pass for {borderTypeName} borders", "map_rendering");
 
-            // DEBUG: Verify input textures before binding
-            if (borderType == 0) // Country borders pass
-            {
-                ArchonLogger.Log($"BorderDistanceFieldGenerator: Input textures - ProvinceIDTexture={textureManager.ProvinceIDTexture?.GetInstanceID()}, ProvinceOwnerTexture={textureManager.ProvinceOwnerTexture?.GetInstanceID()}", "map_rendering");
-
-                // Sample owner texture to verify it has data
-                RenderTexture.active = textureManager.ProvinceOwnerTexture;
-                Texture2D ownerSample = new Texture2D(1, 1, TextureFormat.RFloat, false);
-                ownerSample.ReadPixels(new Rect(2767, 711, 1, 1), 0, 0);
-                ownerSample.Apply();
-                RenderTexture.active = null;
-
-                float ownerRaw = ownerSample.GetPixel(0, 0).r;
-                uint ownerId = (uint)(ownerRaw + 0.5f);
-                ArchonLogger.Log($"BorderDistanceFieldGenerator: ProvinceOwnerTexture at (2767,711) contains owner ID {ownerId} (expected 151 for Castile)", "map_rendering");
-                UnityEngine.Object.Destroy(ownerSample);
-            }
-
             // Set input textures
             distanceFieldCompute.SetTexture(initKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
             distanceFieldCompute.SetTexture(initKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
@@ -370,25 +352,6 @@ namespace Map.Rendering
             ArchonLogger.Log($"BorderDistanceFieldGenerator: Dispatching finalize pass ({threadGroupsX}x{threadGroupsY} thread groups)", "map_rendering");
             distanceFieldCompute.Dispatch(finalizeKernel, threadGroupsX, threadGroupsY, 1);
             ArchonLogger.Log($"BorderDistanceFieldGenerator: Finalize pass complete for {channelName} channel)", "map_rendering");
-
-            // DEBUG: Sample border texture to verify distance values are being written
-            if (outputChannel == 0) // After country borders pass
-            {
-                // Known test coordinates: Castile (2751) at pixel (2767, 711)
-                // Should have a country border nearby
-                RenderTexture.active = textureManager.DistanceFieldTexture;
-                Texture2D samplePixel = new Texture2D(1, 1, TextureFormat.RGFloat, false);
-                samplePixel.ReadPixels(new Rect(2767, 711, 1, 1), 0, 0);
-                samplePixel.Apply();
-                RenderTexture.active = null;
-
-                Color pixel = samplePixel.GetPixel(0, 0);
-                float countryDist = pixel.r; // Normalized distance [0,1]
-                float provinceDist = pixel.g;
-
-                ArchonLogger.Log($"BorderDistanceFieldGenerator: DistanceFieldTexture at (2767,711) - Country dist={countryDist:F4}, Province dist={provinceDist:F4} (expect <1.0 if near border)", "map_rendering");
-                UnityEngine.Object.Destroy(samplePixel);
-            }
         }
 
         /// <summary>

@@ -1,0 +1,6 @@
+// Yellow Dominion
+{
+  tag: "YEL",
+  graphical_culture: "westerngfx",
+  color: [220, 200, 50]
+}

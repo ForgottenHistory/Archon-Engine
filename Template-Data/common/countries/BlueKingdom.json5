@@ -1,0 +1,6 @@
+// Blue Kingdom
+{
+  tag: "BLU",
+  graphical_culture: "westerngfx",
+  color: [50, 100, 200]
+}

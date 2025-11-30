@@ -1,0 +1,13 @@
+# Template country tags for Archon Engine
+# Format: TAG = "countries/Filename.json5"
+
+RED = "countries/RedEmpire.json5"
+BLU = "countries/BlueKingdom.json5"
+GRN = "countries/GreenRepublic.json5"
+YEL = "countries/YellowDominion.json5"
+PUR = "countries/PurpleRealm.json5"
+ORG = "countries/OrangeFederation.json5"
+CYN = "countries/CyanAlliance.json5"
+PNK = "countries/PinkDynasty.json5"
+BRN = "countries/BrownConfederacy.json5"
+GRY = "countries/GrayUnion.json5"

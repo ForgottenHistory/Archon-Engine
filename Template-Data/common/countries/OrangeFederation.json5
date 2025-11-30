@@ -1,0 +1,6 @@
+// Orange Federation
+{
+  tag: "ORG",
+  graphical_culture: "westerngfx",
+  color: [230, 140, 50]
+}

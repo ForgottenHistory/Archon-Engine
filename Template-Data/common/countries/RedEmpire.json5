@@ -1,0 +1,6 @@
+// Red Empire
+{
+  tag: "RED",
+  graphical_culture: "westerngfx",
+  color: [200, 50, 50]
+}

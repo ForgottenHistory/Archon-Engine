@@ -1,0 +1,6 @@
+// Gray Union
+{
+  tag: "GRY",
+  graphical_culture: "westerngfx",
+  color: [120, 120, 130]
+}
