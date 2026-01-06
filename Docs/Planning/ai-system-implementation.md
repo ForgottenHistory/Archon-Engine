@@ -14,11 +14,11 @@ Implement AI decision-making system for 200+ nations. AI uses existing Command P
 
 **Phase 1 MVP Success Criteria:**
 - ✅ 300 AI countries making decisions
-- ✅ Bucketed processing (~10 AI per day, spread across 30 days)
+- ✅ Tier-based scheduling (distance from player determines processing frequency)
 - ✅ Two basic goals: BuildEconomy, ExpandTerritory
 - ✅ Uses player commands (ConstructBuildingCommand, DeclareWarCommand)
 - ✅ Deterministic (FixedPoint64 evaluations)
-- ✅ <5ms per frame (10 AI × 0.5ms each)
+- ✅ <5ms per frame (smooth, distributed load)
 - ✅ Integrates with existing systems (Economy, Diplomacy, Units, Buildings)
 
 **What MVP Does NOT Include:**
@@ -38,11 +38,13 @@ Implement AI decision-making system for 200+ nations. AI uses existing Command P
 ### Layer Separation (Critical)
 
 **ENGINE Layer (Core.AI) - MECHANISMS:**
-- `AISystem` - Manages all AI countries, bucketing scheduler
+- `AISystem` - Manages all AI countries, tier-based scheduler
 - `AIGoal` - Base class for decision-making goals (extension point)
 - `AIState` - 8-byte struct per country (hot data storage)
 - `AIScheduler` - Picks best goal, executes it (generic algorithm)
 - `AIGoalRegistry` - Plug-and-play goal system (no game logic)
+- `AISchedulingConfig` - Configurable tier definitions (distance thresholds, intervals)
+- `AIDistanceCalculator` - BFS distance calculation from player
 - **Zero knowledge of:** What goals exist, when to build, when to war, personality traits
 
 **GAME Layer (Game.AI) - POLICY:**
@@ -180,10 +182,10 @@ Hot data stored per country in NativeArray (flat storage):
 
 struct AIState {
     ushort countryID;           // 2 bytes - Which country
-    byte currentGoalTypeID;     // 1 byte - Active goal (0 = none)
-    byte flags;                 // 1 byte - IsPlayerControlled, AtWar, etc.
-    ushort targetID;            // 2 bytes - Target province/country
-    ushort padding;             // 2 bytes - Reserved for future
+    byte tier;                  // 1 byte - Priority tier (0=neighbors, higher=farther)
+    byte flags;                 // 1 byte - IsActive, etc.
+    ushort activeGoalID;        // 2 bytes - Current goal (0 = none)
+    ushort lastProcessedHour;   // 2 bytes - Hour-of-year when last processed (0-8639)
 }
 ```
 
@@ -194,12 +196,13 @@ private NativeArray<AIState> aiStates;  // Allocator.Persistent
 // Access: O(1) array indexing
 AIState state = aiStates[countryID];
 
-// Bucketing: Simple array slicing
-int start = bucket * 10;
-int end = start + 10;
-for (int i = start; i < end; i++) {
-    if (!IsPlayerControlled(aiStates[i])) {
-        ProcessAI(aiStates[i]);
+// Tier-based processing: Check interval elapsed
+foreach (var state in aiStates) {
+    if (!state.IsActive) continue;
+    ushort interval = config.GetIntervalForTier(state.tier);
+    if (hoursSinceLastProcessed >= interval) {
+        ProcessAI(state);
+        state.lastProcessedHour = currentHour;
     }
 }
 ```
@@ -207,10 +210,10 @@ for (int i = start; i < end; i++) {
 **Design Decisions:**
 - **8 bytes total** - Fits in cache line (64 bytes = 8 AI states)
 - **Fixed-size** - No allocations, no pointers, no references
-- **Hot data only** - Accessed every 3 days (bucketed)
-- **Padding reserved** - Future expansion without size change
+- **Tier-based** - Near AI processed frequently, far AI processed rarely
+- **Hour tracking** - Enables interval-based scheduling with year wrap handling
 - **Flat storage** - Every country has AIState (simple, fast, cache-friendly)
-- **Value types only** - No pointers, cache-friendly (performance-architecture-guide.md principle)
+- **Country 0 always inactive** - Null/unowned country never processes
 
 **Future Cold Data (when needed):**
 ```
@@ -387,27 +390,34 @@ public class BuildEconomyGoal : AIGoal {
 
 **Responsibilities:**
 - Own AIState NativeArray (one per country)
-- Schedule AI processing (bucketing across 30 days)
+- Schedule AI processing via tier-based intervals
+- Calculate distances from player (BFS via AIDistanceCalculator)
 - Delegate to AIScheduler for actual decisions
-- Integrate with TimeManager for daily ticks
+- Integrate with TimeManager for hourly ticks
 
 **API:**
 ```
-void OnDailyTick()                    - Process daily bucket of AI
-void SetGoalRegistry(AIGoalRegistry)  - Inject goals (GAME layer)
-AIState GetAIState(ushort countryID)  - Query current state
+void ProcessHourlyAI(month, day, hour)     - Process AI whose interval has elapsed
+void RecalculateDistances()                - Recalculate tiers (call monthly)
+void SetSchedulingConfig(config)           - Override tier definitions (GAME layer)
+AIState GetAIState(ushort countryID)       - Query current state
 ```
 
-**Bucketing Strategy:**
-- 300 AI countries / 30 days = 10 AI per day
-- Day 0: Process countries 0-9
-- Day 1: Process countries 10-19
-- Day 2: Process countries 20-29
-- ...spread across entire month
+**Tier-Based Scheduling (Default Config):**
+- Tier 0 (distance 0-1): Neighbors → every 1 hour
+- Tier 1 (distance 2-4): Near → every 6 hours
+- Tier 2 (distance 5-8): Medium → every 24 hours
+- Tier 3 (distance 9+): Far → every 72 hours
+
+**Staggered Initialization:**
+- Each country's lastProcessedHour is staggered at init
+- Prevents all tier 3 AI processing simultaneously
+- Distributes load evenly across intervals
 
 **Performance:**
-- 10 AI per day × 0.5ms each = 5ms per frame
-- <5% of frame budget (16.67ms at 60 FPS)
+- Near AI: Responsive (hourly)
+- Far AI: Background processing (every 3 days)
+- Smooth frame times (no spikes)
 
 ### 2. AIScheduler (ENGINE)
 
@@ -655,22 +665,23 @@ Example: Neighbor with 3 provinces = 0.33 weakness
 
 ```
 Assets/Archon-Engine/Scripts/Core/AI/
-  AISystem.cs                 ← Central manager (bucketing, scheduling)
+  AISystem.cs                 ← Central manager (tier-based scheduling)
   AIState.cs                  ← 8-byte struct per country
   AIGoal.cs                   ← Base class for goals
-  AIScheduler.cs              ← Pick best goal, execute it
+  AIScheduler.cs              ← Pick best goal, execute it (hourly processing)
   AIGoalRegistry.cs           ← Plug-and-play goal system
+  AISchedulingConfig.cs       ← Configurable tier definitions (ENGINE mechanism)
+  AIDistanceCalculator.cs     ← BFS distance calculation from player
 
 Assets/Game/AI/
   Goals/
     BuildEconomyGoal.cs       ← Build buildings (GAME policy)
     ExpandTerritoryGoal.cs    ← Declare wars (GAME policy)
 
-  Systems/
-    AITickHandler.cs          ← TimeManager integration
+  AITickHandler.cs            ← TimeManager integration (hourly + monthly ticks)
 ```
 
-**Total:** 8 files for MVP (estimated 500-800 lines)
+**Total:** 10 files (ENGINE: 7, GAME: 3)
 
 ---
 
@@ -893,22 +904,51 @@ public struct AIEvaluationContext {
 - ✅ Extensible (can add goals without refactoring)
 - ✅ Pre-allocation (NativeArray with Allocator.Persistent)
 
-**Observed AI Behavior:**
-- Countries evaluating goals every day (bucketed)
-- Wars declared when strength ratio > 1.5x
-- No invalid war targets (proper validation)
-- BuildEconomy not yet seen in logs (need provinces with low income + high treasury)
+---
+
+## IMPLEMENTATION UPDATE (2026-01-06)
+
+**Tier-Based Distance Scheduling:**
+Replaced arbitrary bucket assignment (countryID % 30) with meaningful distance-based tiers.
+
+**New Components:**
+- `AISchedulingConfig` - Configurable tier definitions (ENGINE mechanism)
+- `AIDistanceCalculator` - BFS distance calculation from player provinces
+
+**AIState Changes:**
+- `bucket` → `tier` (priority based on distance from player)
+- `reserved` → `lastProcessedHour` (hour-of-year tracking for intervals)
+
+**Tier Configuration (Default - GAME can override):**
+| Tier | Distance | Interval | Use Case |
+|------|----------|----------|----------|
+| 0 | 0-1 | 1 hour | Direct neighbors (responsive) |
+| 1 | 2-4 | 6 hours | Near countries |
+| 2 | 5-8 | 24 hours | Medium distance |
+| 3 | 9+ | 72 hours | Far countries (background) |
+
+**Key Fixes:**
+- Staggered lastProcessedHour at init (prevents all tier 3 AI processing at once)
+- Country 0 (null/unowned) always has AI disabled
+- Monthly distance recalculation via MonthlyTickEvent
+- Hourly processing via HourlyTickEvent
+
+**Performance Results:**
+- No more 3-day stutters (staggered initialization)
+- Near AI feels responsive (hourly updates)
+- Far AI doesn't waste cycles (every 72 hours)
+- Smooth frame times throughout
 
 **Next Steps:**
 - Test Save/Load with AI state
 - Add more goals (DefendTerritory, FormAlliance)
 - Add AI personality modifiers
-- Performance profiling at scale
+- Consider dynamic tier recalculation on major border changes
 
 ---
 
 *Planning Document Created: 2025-10-25*
 *Implementation Completed: 2025-10-25*
+*Tier-Based Scheduling Update: 2026-01-06*
 *Priority: AI Pillar - Complete the four pillars (Economy ✅, Military 🔄, Diplomacy ✅, AI ✅)*
-*Status: Phase 1 MVP complete and working in production*
-*Note: Architecture designed for scale, MVP implements minimum viable feature set - validated successfully*
+*Status: Phase 1 MVP complete, tier-based scheduling implemented*

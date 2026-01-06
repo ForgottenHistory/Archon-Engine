@@ -5,65 +5,106 @@ using Unity.Collections;
 namespace Core.AI
 {
     /// <summary>
-    /// AI scheduler - handles bucketing and goal evaluation.
+    /// AI scheduler - handles tier-based processing and goal evaluation.
     ///
     /// Design:
-    /// - Bucketing: Spread ALL countries across 30 days (N/30 AI per day)
+    /// - Tier-based: Countries assigned tiers based on distance from player
+    /// - Interval-based: Each tier has configurable processing interval (hours)
     /// - Goal Evaluation: Pick highest-scoring goal, execute it
-    /// - Stateless: No persistent state (operates on AIState array)
     ///
     /// Performance Target:
-    /// - <5ms per frame for typical bucket size
-    /// - Simple heuristics over perfect optimization
+    /// - <5ms per hourly tick for typical load
+    /// - Near AI processed frequently, far AI processed rarely
     ///
-    /// Bucketing Strategy:
-    /// - 30 buckets (one per day of month)
-    /// - Each day: Process all AI in current bucket
-    /// - Distribution: country.bucket = countryID % 30 (deterministic, even spread)
+    /// Scheduling Strategy:
+    /// - Tiers defined by AISchedulingConfig (GAME provides policy)
+    /// - Each hour: Process AI whose interval has elapsed
+    /// - Example: Tier 0 (neighbors) every hour, Tier 3 (far) every 72 hours
     ///
-    /// Future Extensions:
-    /// - Crisis override (process out-of-bucket for wars, bankruptcy)
-    /// - Tactical/Operational layers (weekly/daily processing)
-    /// - Priority system (important AI process more frequently)
+    /// Hour-of-year tracking:
+    /// - 360 days × 24 hours = 8640 hours per year
+    /// - lastProcessedHour wraps at 8640
+    /// - Handles year wrap correctly
     /// </summary>
     public class AIScheduler
     {
-        private const int BUCKETS_PER_MONTH = 30;
+        private const int HOURS_PER_YEAR = 8640; // 360 days × 24 hours
 
         private AIGoalRegistry goalRegistry;
+        private AISchedulingConfig config;
 
-        public AIScheduler(AIGoalRegistry goalRegistry)
+        public AIScheduler(AIGoalRegistry goalRegistry, AISchedulingConfig config)
         {
             this.goalRegistry = goalRegistry;
+            this.config = config;
         }
 
         /// <summary>
-        /// Process AI for the current day's bucket.
-        ///
-        /// Called once per game day from AISystem.ProcessDailyAI().
+        /// Update scheduling config (e.g., when GAME layer provides custom config).
         /// </summary>
-        public void ProcessDailyBucket(int currentDay, NativeArray<AIState> aiStates, GameState gameState)
+        public void SetConfig(AISchedulingConfig newConfig)
         {
-            // Determine which bucket to process (0-29)
-            int bucketToProcess = currentDay % BUCKETS_PER_MONTH;
+            this.config = newConfig;
+        }
 
-            // Process all AI in this bucket
+        /// <summary>
+        /// Process AI for the current hour based on tier intervals.
+        ///
+        /// Called once per game hour from AISystem.ProcessHourlyAI().
+        /// </summary>
+        public void ProcessHourlyTick(ushort currentHourOfYear, NativeArray<AIState> aiStates, GameState gameState)
+        {
+            int processedCount = 0;
+
             for (int i = 0; i < aiStates.Length; i++)
             {
                 var state = aiStates[i];
 
-                // Skip if wrong bucket, inactive, or player-controlled
-                if (state.bucket != bucketToProcess || !state.IsActive)
+                // Skip inactive AI
+                if (!state.IsActive)
+                    continue;
+
+                // Check if enough time has passed based on tier interval
+                if (!ShouldProcess(state, currentHourOfYear))
                     continue;
 
                 // Process this AI
                 ProcessSingleAI(ref state, gameState);
 
-                // Write back modified state
+                // Update last processed hour
+                state.lastProcessedHour = currentHourOfYear;
                 aiStates[i] = state;
+
+                processedCount++;
             }
 
-            ArchonLogger.Log($"Processed AI bucket {bucketToProcess} (day {currentDay})", "core_ai");
+            if (processedCount > 0)
+            {
+                ArchonLogger.Log($"Processed {processedCount} AI (hour {currentHourOfYear})", "core_ai");
+            }
+        }
+
+        /// <summary>
+        /// Check if AI should be processed based on tier interval.
+        /// Handles year wrap correctly.
+        /// </summary>
+        private bool ShouldProcess(AIState state, ushort currentHourOfYear)
+        {
+            ushort interval = config.GetIntervalForTier(state.tier);
+
+            // Calculate hours elapsed (handle year wrap)
+            int elapsed;
+            if (currentHourOfYear >= state.lastProcessedHour)
+            {
+                elapsed = currentHourOfYear - state.lastProcessedHour;
+            }
+            else
+            {
+                // Year wrapped
+                elapsed = (HOURS_PER_YEAR - state.lastProcessedHour) + currentHourOfYear;
+            }
+
+            return elapsed >= interval;
         }
 
         /// <summary>
@@ -74,11 +115,6 @@ namespace Core.AI
         /// 2. Pick highest-scoring goal
         /// 3. Execute best goal
         /// 4. Update AIState.activeGoalID
-        ///
-        /// Design:
-        /// - Stateless evaluation (pure function of GameState)
-        /// - Simple iteration (no fancy optimization)
-        /// - Early exit if no valid goals (score > 0)
         /// </summary>
         private void ProcessSingleAI(ref AIState state, GameState gameState)
         {
@@ -107,25 +143,24 @@ namespace Core.AI
                 bestGoal.Execute(countryID, gameState);
                 state.activeGoalID = bestGoal.GoalID;
 
-                ArchonLogger.Log($"Country {countryID}: Executing goal '{bestGoal.GoalName}' (score: {bestScore})", "core_ai");
+                ArchonLogger.Log($"Country {countryID} (tier {state.tier}): Executing goal '{bestGoal.GoalName}' (score: {bestScore})", "core_ai");
             }
             else
             {
                 // No valid goals
                 state.activeGoalID = 0;
-                ArchonLogger.Log($"Country {countryID}: No valid goals", "core_ai");
             }
         }
 
         /// <summary>
-        /// Get bucket assignment for a country (deterministic distribution).
-        ///
-        /// Uses modulo to distribute countries evenly across 30 buckets.
-        /// All countries get AI, bucket determines which day they process.
+        /// Calculate hour-of-year from day and hour.
+        /// Day is 1-30, hour is 0-23, month is 1-12.
         /// </summary>
-        public static byte GetBucketForCountry(ushort countryID)
+        public static ushort CalculateHourOfYear(int month, int day, int hour)
         {
-            return (byte)(countryID % BUCKETS_PER_MONTH);
+            // Month 1-12, Day 1-30, Hour 0-23
+            int totalHours = ((month - 1) * 30 + (day - 1)) * 24 + hour;
+            return (ushort)(totalHours % HOURS_PER_YEAR);
         }
     }
 }

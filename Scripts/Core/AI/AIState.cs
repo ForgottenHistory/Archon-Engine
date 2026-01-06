@@ -19,11 +19,11 @@ namespace Core.AI
         public ushort countryID;
 
         /// <summary>
-        /// Which bucket this AI belongs to (0-29 for monthly cycle)
-        /// Determines which day of month this AI processes strategic layer.
+        /// Priority tier based on distance from player (0 = closest, higher = farther).
+        /// Determines processing frequency via AISchedulingConfig.
         /// (byte = 1 byte)
         /// </summary>
-        public byte bucket;
+        public byte tier;
 
         /// <summary>
         /// AI behavior flags (byte = 1 byte)
@@ -40,10 +40,12 @@ namespace Core.AI
         public ushort activeGoalID;
 
         /// <summary>
-        /// Reserved for future use (2 bytes to reach 8-byte alignment)
-        /// Could be used for: goal priority, last evaluation tick, etc.
+        /// Hour-of-year when this AI was last processed (0-8639).
+        /// Used to determine if enough time has passed based on tier interval.
+        /// 360 days × 24 hours = 8640 hours per year, wraps around.
+        /// (ushort = 2 bytes)
         /// </summary>
-        public ushort reserved;
+        public ushort lastProcessedHour;
 
         // Total size: 2 + 1 + 1 + 2 + 2 = 8 bytes ✅
 
@@ -64,16 +66,32 @@ namespace Core.AI
 
         /// <summary>
         /// Create new AI state for a country.
+        /// Tier 255 = unassigned (will be set by AIDistanceCalculator).
         /// </summary>
-        public static AIState Create(ushort countryID, byte bucket, bool isActive = true)
+        public static AIState Create(ushort countryID, bool isActive = true)
         {
             return new AIState
             {
                 countryID = countryID,
-                bucket = bucket,
+                tier = 255, // Unassigned, will be calculated
                 flags = (byte)(isActive ? 0x01 : 0x00),
                 activeGoalID = 0,
-                reserved = 0
+                lastProcessedHour = 0
+            };
+        }
+
+        /// <summary>
+        /// Create new AI state with explicit tier.
+        /// </summary>
+        public static AIState Create(ushort countryID, byte tier, bool isActive = true)
+        {
+            return new AIState
+            {
+                countryID = countryID,
+                tier = tier,
+                flags = (byte)(isActive ? 0x01 : 0x00),
+                activeGoalID = 0,
+                lastProcessedHour = 0
             };
         }
     }

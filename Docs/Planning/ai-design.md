@@ -33,21 +33,29 @@ Grand strategy games have 200+ nations making strategic decisions simultaneously
 
 **Trade-off:** AI less reactive to rapid changes vs computational feasibility
 
-### Principle 2: Bucketing Strategy
+### Principle 2: Distance-Based Priority Scheduling
 
-**Insight:** Not all AI nations need to think simultaneously.
+**Insight:** Not all AI nations need to think at the same frequency. Nations near the player matter more.
 
-**Spread Processing Across Time:**
-- 200 nations / 30 days = ~7 nations process strategic layer per day
-- Only nations at war process operational layer
-- Stagger updates to distribute load across frames
+**Tier-Based Processing:**
+- Calculate distance from player (BFS through province adjacency)
+- Assign tiers based on distance thresholds
+- Each tier has different processing interval
+- Near AI = frequent (hourly), Far AI = infrequent (every 3 days)
+
+**Default Tiers (Configurable):**
+- Tier 0 (neighbors): Every 1 hour
+- Tier 1 (near): Every 6 hours
+- Tier 2 (medium): Every 24 hours
+- Tier 3 (far): Every 72 hours
 
 **Why This Works:**
-- Frame-to-frame cost predictable and low
-- Monthly cost amortized across 30 days
-- Crisis situations can override bucketing (war, bankruptcy)
+- Player-relevant AI feels responsive
+- Distant AI doesn't waste cycles
+- Smooth frame times (staggered initialization)
+- Recalculate distances monthly (borders change)
 
-**Trade-off:** AI decisions delayed by bucket position vs smooth frame times
+**Trade-off:** Far AI less reactive vs computational efficiency
 
 ### Principle 3: Shared Calculations
 
@@ -122,22 +130,29 @@ Grand strategy games have 200+ nations making strategic decisions simultaneously
 
 **Integration:** Layers feed each other (strategic sets goals → tactical plans actions → operational executes)
 
-### Pattern: Bucketed Processing
+### Pattern: Tier-Based Interval Processing
 
-**Round-Robin Scheduling:**
-- Divide nations into buckets (typically 30 for monthly cycle)
-- Each day/tick process one bucket
-- Full cycle completes over time period
+**Distance-Based Tiers:**
+- Calculate province-hop distance from player via BFS
+- Assign countries to tiers based on distance thresholds
+- Each tier has configurable processing interval (hours)
+- ENGINE provides mechanism, GAME defines tier policy
 
-**Crisis Override:**
-- Nations in crisis (war, bankruptcy) process out-of-bucket
-- Emergency processing bypasses bucketing delay
-- Normal processing resumes when crisis ends
+**Interval Scheduling:**
+- Track lastProcessedHour per AI (hour-of-year, 0-8639)
+- Each hour tick, check if interval elapsed for each AI
+- Process AI whose interval has passed, update lastProcessedHour
+- Handles year wrap correctly
 
-**Load Balancing:**
-- Distribute expensive AI across buckets
-- Cheap AI can process every frame if needed
-- Dynamic adjustment based on profiling
+**Staggered Initialization:**
+- Stagger lastProcessedHour at game start
+- Prevents all same-tier AI processing simultaneously
+- Distributes load evenly across intervals
+
+**Monthly Recalculation:**
+- Recalculate distances when borders change
+- Subscribe to MonthlyTickEvent for automatic updates
+- Tiers reassigned based on new distances
 
 ### Pattern: Shared Intelligence Data
 
@@ -239,12 +254,12 @@ Grand strategy games have 200+ nations making strategic decisions simultaneously
 
 ## DESIGN DECISIONS & TRADE-OFFS
 
-### Decision: Bucketing Over Real-Time
+### Decision: Distance-Based Tiers Over Arbitrary Bucketing
 
-**Chosen:** Bucketed processing (stagger AI updates)
-**Alternative:** Real-time (all AI every frame)
-**Trade-off:** Delayed AI reactions vs smooth frame times
-**Rationale:** Performance at scale more important than instant reactions
+**Chosen:** Distance-based tier scheduling (near AI = frequent, far AI = rare)
+**Alternative:** Arbitrary bucketing (countryID % N)
+**Trade-off:** Additional distance calculation vs meaningful prioritization
+**Rationale:** Player-relevant AI should feel responsive; distant AI can be background processed
 
 ### Decision: Goal-Oriented Over Utility-Based
 
@@ -359,4 +374,4 @@ AI state must save/load. Goals, priorities, cached scores persist across session
 
 *Design Document - Timeless Principles*
 *See: ai-system-implementation.md for current implementation status*
-*Last Updated: 2025-10-25*
+*Last Updated: 2026-01-06 (tier-based scheduling)*

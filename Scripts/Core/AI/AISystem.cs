@@ -1,4 +1,5 @@
 using Core;
+using Core.Systems;
 using Unity.Collections;
 using UnityEngine;
 
@@ -7,28 +8,28 @@ namespace Core.AI
     /// <summary>
     /// Main AI system - manages AI state and coordinates AI processing.
     ///
-    /// ENGINE LAYER - Provides AI mechanisms (bucketing, scheduling, goal evaluation).
-    /// GAME LAYER provides policy (which goals, formulas, thresholds).
+    /// ENGINE LAYER - Provides AI mechanisms (tier-based scheduling, goal evaluation).
+    /// GAME LAYER provides policy (which goals, formulas, tier configuration).
     ///
     /// Architecture:
     /// - Flat storage: NativeArray of AIState (all countries, O(1) access)
-    /// - Bucketed runtime: Process 1/30th of AI per day (smooth frame times)
-    /// - Initialization: Process ALL countries at once (no bucketing)
+    /// - Tier-based: Countries assigned priority tiers based on distance from player
+    /// - Interval-based: Each tier processes at configurable hourly intervals
     ///
     /// Memory:
     /// - AIState: 8 bytes × N countries (e.g., 300 × 8 = 2.4 KB)
     /// - Pre-allocated with Allocator.Persistent (zero gameplay allocations)
     ///
     /// Performance:
-    /// - Initialization: Can process all AI at once
-    /// - Runtime: ~1/30th of AI per day (amortized cost)
-    /// - Target: <5ms per frame for typical bucket size
+    /// - Near AI (tier 0): Processed every hour
+    /// - Far AI (tier 3): Processed every 72 hours
+    /// - Smooth frame times through interval-based distribution
     ///
     /// Responsibilities:
     /// - Initialize AI for all countries
     /// - Store AIState array
-    /// - Coordinate AIScheduler for daily processing
-    /// - Expose query API for debugging
+    /// - Calculate distances and assign tiers
+    /// - Coordinate AIScheduler for hourly processing
     /// </summary>
     public class AISystem
     {
@@ -36,12 +37,16 @@ namespace Core.AI
         private NativeArray<AIState> aiStates;
         private AIGoalRegistry goalRegistry;
         private AIScheduler scheduler;
+        private AIDistanceCalculator distanceCalculator;
+        private AISchedulingConfig config;
         private bool isInitialized;
+        private ushort playerCountryID;
 
         public AISystem(GameState gameState)
         {
             this.gameState = gameState;
             this.isInitialized = false;
+            this.playerCountryID = ushort.MaxValue;
         }
 
         /// <summary>
@@ -49,10 +54,8 @@ namespace Core.AI
         ///
         /// Initialization workflow:
         /// 1. Create goal registry
-        /// 2. Register goals (GAME layer responsibility via AITickHandler)
-        /// 3. Allocate AIState array for all countries
-        /// 4. Initialize AI for all non-player countries
-        /// 5. Create scheduler
+        /// 2. Create default scheduling config (GAME can override)
+        /// 3. Create distance calculator
         ///
         /// Note: Goal registration happens externally (GAME layer calls RegisterGoal).
         /// </summary>
@@ -67,8 +70,25 @@ namespace Core.AI
             // Create goal registry (goals registered externally by GAME layer)
             goalRegistry = new AIGoalRegistry();
 
+            // Create default config (GAME layer can override via SetSchedulingConfig)
+            config = AISchedulingConfig.CreateDefault();
+
+            // Create distance calculator
+            distanceCalculator = new AIDistanceCalculator();
+
             ArchonLogger.Log("AISystem initialized (goals pending registration)", "core_ai");
             isInitialized = true;
+        }
+
+        /// <summary>
+        /// Set custom scheduling config (called by GAME layer).
+        /// Must be called before InitializeCountryAI.
+        /// </summary>
+        public void SetSchedulingConfig(AISchedulingConfig customConfig)
+        {
+            config = customConfig;
+            scheduler?.SetConfig(config);
+            ArchonLogger.Log($"AI scheduling config updated ({config.TierCount} tiers)", "core_ai");
         }
 
         /// <summary>
@@ -76,12 +96,12 @@ namespace Core.AI
         ///
         /// This is a separate step because:
         /// 1. Goals must be registered first (GAME layer responsibility)
-        /// 2. Country count comes from CountrySystem (may not be ready at Initialize())
-        /// 3. Allows flexible initialization order
+        /// 2. Province/country count may not be ready at Initialize()
+        /// 3. Player country must be known for distance calculation
         ///
-        /// Performance: Processes ALL countries at once (initialization, not runtime).
+        /// Performance: Calculates distances for ALL countries (one-time cost).
         /// </summary>
-        public void InitializeCountryAI(int countryCount)
+        public void InitializeCountryAI(int countryCount, int provinceCount, ushort playerCountryID, ushort currentHourOfYear = 0)
         {
             if (aiStates.IsCreated)
             {
@@ -89,24 +109,74 @@ namespace Core.AI
                 return;
             }
 
+            this.playerCountryID = playerCountryID;
+
             // Allocate AIState array for all countries (Allocator.Persistent = no gameplay allocations)
             aiStates = new NativeArray<AIState>(countryCount, Allocator.Persistent);
 
-            // Initialize AI for ALL countries
+            // Initialize AI for ALL countries (tier will be set by distance calculator)
+            // Stagger lastProcessedHour to prevent all AI processing at once
+            // Each country gets a different "last processed" time within the max interval (72h)
+            const int MAX_INTERVAL = 72;
+
             for (ushort i = 0; i < countryCount; i++)
             {
-                // Determine bucket assignment (deterministic distribution)
-                byte bucket = AIScheduler.GetBucketForCountry(i);
+                // Country 0 is "unowned/null" country - never enable AI for it
+                bool isActive = (i != 0);
 
-                // Create AI state (default: active for all countries)
+                // Create AI state
                 // GAME layer can disable AI for player-controlled countries later
-                aiStates[i] = AIState.Create(i, bucket, isActive: true);
+                var state = AIState.Create(i, isActive: isActive);
+
+                // Stagger: pretend each country was last processed at a different time
+                // This spreads out when they next become eligible
+                // Use modulo to distribute evenly across the max interval
+                int stagger = i % MAX_INTERVAL;
+                int staggeredHour = currentHourOfYear - stagger;
+                if (staggeredHour < 0) staggeredHour += 8640; // Wrap to previous year
+                state.lastProcessedHour = (ushort)staggeredHour;
+
+                aiStates[i] = state;
             }
 
-            // Create scheduler (needs goal registry)
-            scheduler = new AIScheduler(goalRegistry);
+            // Initialize distance calculator
+            distanceCalculator.Initialize(provinceCount, countryCount);
 
-            ArchonLogger.Log($"Initialized AI for {countryCount} countries ({goalRegistry.GoalCount} goals registered)", "core_ai");
+            // Calculate distances and assign tiers
+            RecalculateDistances();
+
+            // Create scheduler (needs goal registry and config)
+            scheduler = new AIScheduler(goalRegistry, config);
+
+            ArchonLogger.Log($"Initialized AI for {countryCount} countries ({goalRegistry.GoalCount} goals, {config.TierCount} tiers)", "core_ai");
+        }
+
+        /// <summary>
+        /// Recalculate distances from player and reassign tiers.
+        /// Call monthly or when major border changes occur.
+        /// </summary>
+        public void RecalculateDistances()
+        {
+            if (!isInitialized || !aiStates.IsCreated || playerCountryID == ushort.MaxValue)
+            {
+                ArchonLogger.LogWarning("Cannot recalculate distances before full initialization", "core_ai");
+                return;
+            }
+
+            var provinceSystem = gameState.Provinces;
+            var adjacencySystem = gameState.Adjacencies;
+
+            if (provinceSystem == null || adjacencySystem == null)
+            {
+                ArchonLogger.LogWarning("Cannot recalculate distances: missing systems", "core_ai");
+                return;
+            }
+
+            // Calculate distances via BFS
+            distanceCalculator.CalculateDistances(playerCountryID, provinceSystem, adjacencySystem);
+
+            // Assign tiers based on distances
+            distanceCalculator.AssignTiers(aiStates, config);
         }
 
         /// <summary>
@@ -124,11 +194,12 @@ namespace Core.AI
         }
 
         /// <summary>
-        /// Process AI for the current day's bucket (called once per game day).
+        /// Process AI for the current hour (called once per game hour).
         ///
-        /// Runtime: Processes only ~1/30th of AI (bucketed for smooth frame times).
+        /// Runtime: Processes AI based on tier intervals.
+        /// Near AI processed frequently, far AI processed rarely.
         /// </summary>
-        public void ProcessDailyAI(int currentDay)
+        public void ProcessHourlyAI(int month, int day, int hour)
         {
             if (!isInitialized || !aiStates.IsCreated)
             {
@@ -136,7 +207,8 @@ namespace Core.AI
                 return;
             }
 
-            scheduler.ProcessDailyBucket(currentDay, aiStates, gameState);
+            ushort currentHourOfYear = AIScheduler.CalculateHourOfYear(month, day, hour);
+            scheduler.ProcessHourlyTick(currentHourOfYear, aiStates, gameState);
         }
 
         /// <summary>
@@ -180,6 +252,14 @@ namespace Core.AI
         }
 
         /// <summary>
+        /// Get scheduling config (for debugging/testing).
+        /// </summary>
+        public AISchedulingConfig GetSchedulingConfig()
+        {
+            return config;
+        }
+
+        /// <summary>
         /// Dispose AI system (cleanup native allocations).
         /// </summary>
         public void Dispose()
@@ -190,6 +270,7 @@ namespace Core.AI
             }
 
             goalRegistry?.Dispose();
+            distanceCalculator?.Dispose();
 
             ArchonLogger.Log("AISystem disposed", "core_ai");
         }

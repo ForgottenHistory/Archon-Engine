@@ -90,11 +90,13 @@
 ---
 
 ## AI/
-- **Core.AI.AISystem** - Manages AI for all countries (bucketing, scheduling, goal registry)
-- **Core.AI.AIState** - 8-byte struct per country: countryID, bucket, flags, activeGoalID
+- **Core.AI.AISystem** - Manages AI for all countries (tier-based scheduling, distance calculation)
+- **Core.AI.AIState** - 8-byte struct per country: countryID, tier, flags, activeGoalID, lastProcessedHour
 - **Core.AI.AIGoal** - Base class for AI goals (Evaluate/Execute pattern, extensible)
-- **Core.AI.AIScheduler** - Goal evaluation scheduler (pick best goal, execute)
+- **Core.AI.AIScheduler** - Hourly goal evaluation (tier-based intervals, year-wrap handling)
 - **Core.AI.AIGoalRegistry** - Plug-and-play goal registration system
+- **Core.AI.AISchedulingConfig** - Configurable tier definitions (distance thresholds, intervals)
+- **Core.AI.AIDistanceCalculator** - BFS distance calculation from player provinces
 
 ---
 
