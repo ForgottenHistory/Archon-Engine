@@ -9,6 +9,41 @@ using Utils;
 namespace Core.Systems
 {
     /// <summary>
+    /// Read-only native province data for Burst jobs.
+    /// Use this struct in IJob implementations for parallel algorithms.
+    /// </summary>
+    public struct NativeProvinceData
+    {
+        [ReadOnly] public NativeArray<ProvinceState> provinceStates;
+        [ReadOnly] public NativeHashMap<ushort, int> idToIndex;
+        [ReadOnly] public NativeList<ushort> activeProvinceIds;
+        public int provinceCount;
+
+        public bool IsCreated => provinceStates.IsCreated;
+
+        /// <summary>
+        /// Get province owner by province ID. Use in Burst jobs.
+        /// Returns 0 (unowned) if province not found.
+        /// </summary>
+        public ushort GetProvinceOwner(ushort provinceId)
+        {
+            if (!idToIndex.TryGetValue(provinceId, out int index))
+                return 0;
+            return provinceStates[index].ownerID;
+        }
+
+        /// <summary>
+        /// Get province ID at array index. Use in Burst jobs.
+        /// </summary>
+        public ushort GetProvinceIdAtIndex(int index)
+        {
+            if (index < 0 || index >= activeProvinceIds.Length)
+                return 0;
+            return activeProvinceIds[index];
+        }
+    }
+
+    /// <summary>
     /// Single source of truth for all province data
     /// Owns the 8-byte ProvinceState array for deterministic simulation
     /// Manages province ownership, development, terrain, and flags
@@ -254,6 +289,25 @@ namespace Core.Systems
                 throw new System.InvalidOperationException("ProvinceSystem not initialized");
             }
             return snapshot.GetProvinceReadBuffer();
+        }
+
+        /// <summary>
+        /// Get read-only native province data for Burst jobs.
+        /// Returns a struct with read-only views of province data.
+        /// </summary>
+        public NativeProvinceData GetNativeData()
+        {
+            if (!isInitialized || snapshot == null)
+            {
+                throw new System.InvalidOperationException("ProvinceSystem not initialized");
+            }
+            return new NativeProvinceData
+            {
+                provinceStates = snapshot.GetProvinceWriteBuffer(),
+                idToIndex = idToIndex,
+                activeProvinceIds = activeProvinceIds,
+                provinceCount = ProvinceCount
+            };
         }
 
         /// <summary>

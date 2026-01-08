@@ -4,6 +4,38 @@ using Unity.Collections;
 namespace Core.Systems
 {
     /// <summary>
+    /// Read-only native adjacency data for Burst jobs.
+    /// Use this struct in IJob implementations for parallel graph algorithms.
+    /// </summary>
+    public struct NativeAdjacencyData
+    {
+        [ReadOnly] public NativeParallelMultiHashMap<ushort, ushort> adjacencyMap;
+
+        public bool IsCreated => adjacencyMap.IsCreated;
+
+        /// <summary>
+        /// Get neighbors for a province. Use in Burst jobs.
+        /// </summary>
+        public NativeParallelMultiHashMap<ushort, ushort>.Enumerator GetNeighbors(ushort provinceId)
+        {
+            return adjacencyMap.GetValuesForKey(provinceId);
+        }
+
+        /// <summary>
+        /// Check if two provinces are adjacent. Use in Burst jobs.
+        /// </summary>
+        public bool IsAdjacent(ushort province1, ushort province2)
+        {
+            foreach (var neighbor in adjacencyMap.GetValuesForKey(province1))
+            {
+                if (neighbor == province2)
+                    return true;
+            }
+            return false;
+        }
+    }
+
+    /// <summary>
     /// ENGINE LAYER: Province adjacency system
     ///
     /// Stores which provinces are adjacent (share a border) for movement validation.
@@ -24,10 +56,13 @@ namespace Core.Systems
     /// - GetNeighbors: O(1) dictionary lookup
     /// - Memory: ~6 neighbors × 13,350 provinces × 2 bytes = ~160 KB
     /// </summary>
-    public class AdjacencySystem
+    public class AdjacencySystem : System.IDisposable
     {
-        // Storage: provinceID → set of adjacent province IDs
+        // Storage: provinceID → set of adjacent province IDs (managed, for convenience)
         private Dictionary<ushort, HashSet<ushort>> adjacencies;
+
+        // Native storage for Burst jobs (populated from managed data)
+        private NativeParallelMultiHashMap<ushort, ushort> nativeAdjacencies;
 
         // Statistics
         private int totalAdjacencyPairs = 0;
@@ -38,8 +73,17 @@ namespace Core.Systems
         }
 
         /// <summary>
+        /// Get read-only native adjacency data for Burst jobs.
+        /// </summary>
+        public NativeAdjacencyData GetNativeData()
+        {
+            return new NativeAdjacencyData { adjacencyMap = nativeAdjacencies };
+        }
+
+        /// <summary>
         /// Initialize adjacency data from FastAdjacencyScanner results
         /// Converts from Dictionary<int, HashSet<int>> to Dictionary<ushort, HashSet<ushort>>
+        /// Also builds native MultiHashMap for Burst job compatibility
         /// </summary>
         public void SetAdjacencies(Dictionary<int, HashSet<int>> scanResults)
         {
@@ -49,9 +93,24 @@ namespace Core.Systems
                 return;
             }
 
+            // Dispose existing native data if re-initializing
+            if (nativeAdjacencies.IsCreated)
+                nativeAdjacencies.Dispose();
+
             adjacencies.Clear();
             totalAdjacencyPairs = 0;
 
+            // First pass: count total adjacencies for native allocation
+            int totalEntries = 0;
+            foreach (var kvp in scanResults)
+            {
+                totalEntries += kvp.Value.Count;
+            }
+
+            // Allocate native storage (capacity = total adjacency entries)
+            nativeAdjacencies = new NativeParallelMultiHashMap<ushort, ushort>(totalEntries, Allocator.Persistent);
+
+            // Second pass: populate both managed and native storage
             foreach (var kvp in scanResults)
             {
                 ushort provinceId = (ushort)kvp.Key;
@@ -59,7 +118,9 @@ namespace Core.Systems
 
                 foreach (int neighborId in kvp.Value)
                 {
-                    neighbors.Add((ushort)neighborId);
+                    ushort neighborUshort = (ushort)neighborId;
+                    neighbors.Add(neighborUshort);
+                    nativeAdjacencies.Add(provinceId, neighborUshort);
                     totalAdjacencyPairs++;
                 }
 
@@ -69,7 +130,16 @@ namespace Core.Systems
             // Divide by 2 since each adjacency is counted twice (A→B and B→A)
             totalAdjacencyPairs /= 2;
 
-            ArchonLogger.Log($"AdjacencySystem: Initialized with {adjacencies.Count} provinces, {totalAdjacencyPairs} adjacency pairs", "core_simulation");
+            ArchonLogger.Log($"AdjacencySystem: Initialized with {adjacencies.Count} provinces, {totalAdjacencyPairs} adjacency pairs (native MultiHashMap ready)", "core_simulation");
+        }
+
+        /// <summary>
+        /// Dispose native allocations
+        /// </summary>
+        public void Dispose()
+        {
+            if (nativeAdjacencies.IsCreated)
+                nativeAdjacencies.Dispose();
         }
 
         /// <summary>

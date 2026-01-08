@@ -1,7 +1,7 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2025-11-19
-**Version:** 1.9 (Imperator Rome-Style Terrain Blending)
+**Last Updated:** 2026-01-08
+**Version:** 2.0 (Burst-Compiled Pathfinding & AI)
 
 This document lists all implemented features in the Archon Engine organized by category.
 
@@ -90,28 +90,33 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ## Pathfinding System
 
-- **AdjacencySystem** - Province neighbor management with sparse collections
-- **PathfindingSystem** - A* pathfinding for unit movement
+- **AdjacencySystem** - Province neighbor management with NativeParallelMultiHashMap for Burst compatibility
+- **NativeAdjacencyData** - Read-only struct exposing neighbors for Burst jobs (GetNeighbors enumerator)
+- **PathfindingSystem** - Burst-compiled A* pathfinding with binary min-heap priority queue
+- **BurstPathfindingJob** - IJob implementing A* with O(log n) heap operations, NativeHashSet/NativeHashMap
+- **NativeMinHeap<T>** - Generic Burst-compatible priority queue for pathfinding and other algorithms
+- **Managed Fallback** - MovementValidator support via managed code path when validation needed
 - **GetNeighbors** - O(1) neighbor lookup with sparse storage
-- **FindPath** - A* algorithm with province graph traversal
-- **GetReachableProvinces** - Calculate movement range for units
-- **Distance Caching** - Cached distance matrix for performance
+- **FindPath** - A* algorithm with ~0.1ms typical performance on 13k provinces
 
 ---
 
 ## AI System
 
-- **AISystem** - Central AI manager with bucketing scheduler for 979 countries
-- **AIState (8 bytes)** - Fixed-size hot state: countryID, bucket, flags, activeGoalID
-- **AIGoal** - Abstract base class for goal-oriented decision making (Evaluate/Execute pattern)
-- **AIScheduler** - Goal evaluation and execution scheduler (picks best goal, executes it)
-- **AIGoalRegistry** - Plug-and-play goal registration system (extensible without refactoring)
-- **Bucketing Strategy** - 979 countries / 30 days = ~33 AI per day (spread load across month)
-- **Two-Phase Initialization** - Phase 1: System startup (register goals), Phase 2: Player selection (activate AI states)
+- **AISystem** - Central AI manager with tier-based scheduling for countries
+- **AIState (8 bytes)** - Fixed-size hot state: countryID, tier, flags, activeGoalID, lastProcessedHour
+- **AIGoal** - Abstract base class with Evaluate/Execute pattern; Initialize(EventBus) for event-driven caching
+- **AIScheduler** - Goal evaluation with tier-based intervals (near AI every hour, far AI every 72 hours)
+- **AIGoalRegistry** - Plug-and-play goal registration; passes EventBus for cache invalidation subscriptions
+- **AIDistanceCalculator** - Burst-compiled BFS via BurstBFSDistanceJob for player distance calculation
+- **BurstBFSDistanceJob** - IJob traversing province graph using NativeAdjacencyData and NativeProvinceData
+- **NativeProvinceData** - Read-only struct exposing province owners for Burst jobs
+- **Tier-Based Scheduling** - Near countries (tier 0) processed frequently, far countries (tier 3) rarely
+- **Event-Driven Caching** - Goals subscribe to ProvinceOwnershipChangedEvent for cache invalidation
 - **Zero Allocations** - Pre-allocated NativeArray with Allocator.Persistent
 - **Deterministic Scoring** - FixedPoint64 goal scores with ordered evaluation
 - **Command Pattern Integration** - AI uses player commands (DeclareWarCommand, BuildBuildingCommand)
-- **Performance** - <5ms per frame target with bucketing (10 AI × 0.5ms each)
+- **Performance** - 60+ FPS at 10x speed with tier scheduling and event-driven caching
 
 ---
 
@@ -394,4 +399,4 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ---
 
-*Updated: 2025-10-31*
+*Updated: 2026-01-08*

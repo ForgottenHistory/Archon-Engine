@@ -1,6 +1,7 @@
-using System.Collections.Generic;
 using Core.Systems;
+using Unity.Burst;
 using Unity.Collections;
+using Unity.Jobs;
 
 namespace Core.AI
 {
@@ -12,6 +13,7 @@ namespace Core.AI
     ///
     /// Performance:
     /// - O(P) where P = total provinces (single BFS traversal)
+    /// - Burst-compiled for SIMD and native code optimization
     /// - Called infrequently (game start, monthly, on major border changes)
     /// - Pre-allocated buffers for zero gameplay allocations
     ///
@@ -23,11 +25,11 @@ namespace Core.AI
     {
         private const byte MAX_DISTANCE = 255;
 
-        // Pre-allocated buffers
+        // Pre-allocated buffers (persistent, reused across calculations)
         private NativeArray<byte> provinceDistances;
         private NativeArray<byte> countryDistances;
         private NativeList<ushort> bfsQueue;
-        private NativeList<ushort> neighborBuffer;
+        private NativeList<ushort> playerProvincesBuffer;
 
         private int provinceCount;
         private int countryCount;
@@ -55,15 +57,15 @@ namespace Core.AI
             provinceDistances = new NativeArray<byte>(provinceCount, Allocator.Persistent);
             countryDistances = new NativeArray<byte>(countryCount, Allocator.Persistent);
             bfsQueue = new NativeList<ushort>(provinceCount, Allocator.Persistent);
-            neighborBuffer = new NativeList<ushort>(20, Allocator.Persistent);
+            playerProvincesBuffer = new NativeList<ushort>(100, Allocator.Persistent);
 
             isInitialized = true;
 
-            ArchonLogger.Log($"AIDistanceCalculator initialized: {provinceCount} provinces, {countryCount} countries", "core_ai");
+            ArchonLogger.Log($"AIDistanceCalculator initialized: {provinceCount} provinces, {countryCount} countries (Burst-enabled)", "core_ai");
         }
 
         /// <summary>
-        /// Calculate distances from player country using BFS.
+        /// Calculate distances from player country using Burst-compiled BFS.
         /// Updates internal distance arrays.
         /// </summary>
         public void CalculateDistances(ushort playerCountryID, ProvinceSystem provinceSystem, AdjacencySystem adjacencySystem)
@@ -74,88 +76,42 @@ namespace Core.AI
                 return;
             }
 
-            // Reset distances to max
-            for (int i = 0; i < provinceDistances.Length; i++)
-            {
-                provinceDistances[i] = MAX_DISTANCE;
-            }
-
-            for (int i = 0; i < countryDistances.Length; i++)
-            {
-                countryDistances[i] = MAX_DISTANCE;
-            }
-
-            // Player country has distance 0
-            countryDistances[playerCountryID] = 0;
-
             // Get player's provinces as BFS starting points
-            bfsQueue.Clear();
-            var playerProvinces = provinceSystem.GetCountryProvinces(playerCountryID, Allocator.Temp);
+            playerProvincesBuffer.Clear();
+            provinceSystem.GetCountryProvinces(playerCountryID, playerProvincesBuffer);
 
-            for (int i = 0; i < playerProvinces.Length; i++)
+            // Get native data for Burst job
+            var provinceData = provinceSystem.GetNativeData();
+            var adjacencyData = adjacencySystem.GetNativeData();
+
+            // Schedule and complete the Burst job
+            var job = new BurstBFSDistanceJob
             {
-                ushort provinceID = playerProvinces[i];
-                if (provinceID < provinceDistances.Length)
-                {
-                    provinceDistances[provinceID] = 0;
-                    bfsQueue.Add(provinceID);
-                }
-            }
+                playerCountryID = playerCountryID,
+                playerProvinces = playerProvincesBuffer.AsArray(),
+                provinceData = provinceData,
+                adjacencyData = adjacencyData,
+                provinceDistances = provinceDistances,
+                countryDistances = countryDistances,
+                bfsQueue = bfsQueue,
+                maxDistance = MAX_DISTANCE
+            };
 
-            playerProvinces.Dispose();
-
-            // BFS to calculate province distances
-            int queueIndex = 0;
-            while (queueIndex < bfsQueue.Length)
-            {
-                ushort currentProvince = bfsQueue[queueIndex++];
-                byte currentDistance = provinceDistances[currentProvince];
-
-                // Don't explore beyond max distance
-                if (currentDistance >= MAX_DISTANCE - 1)
-                    continue;
-
-                byte nextDistance = (byte)(currentDistance + 1);
-
-                // Get neighbors
-                neighborBuffer.Clear();
-                adjacencySystem.GetNeighbors(currentProvince, neighborBuffer);
-
-                for (int i = 0; i < neighborBuffer.Length; i++)
-                {
-                    ushort neighborProvince = neighborBuffer[i];
-
-                    if (neighborProvince >= provinceDistances.Length)
-                        continue;
-
-                    // Only update if we found a shorter path
-                    if (nextDistance < provinceDistances[neighborProvince])
-                    {
-                        provinceDistances[neighborProvince] = nextDistance;
-                        bfsQueue.Add(neighborProvince);
-
-                        // Update country distance (minimum of any province)
-                        ushort ownerID = provinceSystem.GetProvinceOwner(neighborProvince);
-                        if (ownerID < countryDistances.Length && nextDistance < countryDistances[ownerID])
-                        {
-                            countryDistances[ownerID] = nextDistance;
-                        }
-                    }
-                }
-            }
+            // Execute immediately (Complete blocks until done)
+            job.Schedule().Complete();
 
             // Count countries by distance tier for logging
-            int[] tierCounts = new int[4];
+            int tier0 = 0, tier1 = 0, tier2 = 0, tier3 = 0;
             for (int i = 0; i < countryDistances.Length; i++)
             {
                 byte dist = countryDistances[i];
-                if (dist <= 1) tierCounts[0]++;
-                else if (dist <= 4) tierCounts[1]++;
-                else if (dist <= 8) tierCounts[2]++;
-                else tierCounts[3]++;
+                if (dist <= 1) tier0++;
+                else if (dist <= 4) tier1++;
+                else if (dist <= 8) tier2++;
+                else tier3++;
             }
 
-            ArchonLogger.Log($"Distance calculation complete - Tier distribution: Near({tierCounts[0]}) Medium({tierCounts[1]}) Far({tierCounts[2]}) VeryFar({tierCounts[3]})", "core_ai");
+            ArchonLogger.Log($"Distance calculation complete - Tier distribution: Near({tier0}) Medium({tier1}) Far({tier2}) VeryFar({tier3})", "core_ai");
         }
 
         /// <summary>
@@ -209,10 +165,98 @@ namespace Core.AI
             if (bfsQueue.IsCreated)
                 bfsQueue.Dispose();
 
-            if (neighborBuffer.IsCreated)
-                neighborBuffer.Dispose();
+            if (playerProvincesBuffer.IsCreated)
+                playerProvincesBuffer.Dispose();
 
             isInitialized = false;
+        }
+    }
+
+    /// <summary>
+    /// Burst-compiled BFS job for distance calculation.
+    /// Traverses the province adjacency graph from player provinces.
+    /// </summary>
+    [BurstCompile]
+    public struct BurstBFSDistanceJob : IJob
+    {
+        public ushort playerCountryID;
+        [ReadOnly] public NativeArray<ushort> playerProvinces;
+        [ReadOnly] public NativeProvinceData provinceData;
+        [ReadOnly] public NativeAdjacencyData adjacencyData;
+
+        public NativeArray<byte> provinceDistances;
+        public NativeArray<byte> countryDistances;
+        public NativeList<ushort> bfsQueue;
+        public byte maxDistance;
+
+        public void Execute()
+        {
+            // Reset distances to max
+            for (int i = 0; i < provinceDistances.Length; i++)
+            {
+                provinceDistances[i] = maxDistance;
+            }
+
+            for (int i = 0; i < countryDistances.Length; i++)
+            {
+                countryDistances[i] = maxDistance;
+            }
+
+            // Player country has distance 0
+            if (playerCountryID < countryDistances.Length)
+            {
+                countryDistances[playerCountryID] = 0;
+            }
+
+            // Initialize BFS queue with player provinces
+            bfsQueue.Clear();
+            for (int i = 0; i < playerProvinces.Length; i++)
+            {
+                ushort provinceID = playerProvinces[i];
+                if (provinceID < provinceDistances.Length)
+                {
+                    provinceDistances[provinceID] = 0;
+                    bfsQueue.Add(provinceID);
+                }
+            }
+
+            // BFS traversal
+            int queueIndex = 0;
+            while (queueIndex < bfsQueue.Length)
+            {
+                ushort currentProvince = bfsQueue[queueIndex++];
+                byte currentDistance = provinceDistances[currentProvince];
+
+                // Don't explore beyond max distance
+                if (currentDistance >= maxDistance - 1)
+                    continue;
+
+                byte nextDistance = (byte)(currentDistance + 1);
+
+                // Get neighbors from adjacency map
+                var neighborEnumerator = adjacencyData.GetNeighbors(currentProvince);
+                while (neighborEnumerator.MoveNext())
+                {
+                    ushort neighborProvince = neighborEnumerator.Current;
+
+                    if (neighborProvince >= provinceDistances.Length)
+                        continue;
+
+                    // Only update if we found a shorter path
+                    if (nextDistance < provinceDistances[neighborProvince])
+                    {
+                        provinceDistances[neighborProvince] = nextDistance;
+                        bfsQueue.Add(neighborProvince);
+
+                        // Update country distance (minimum of any province)
+                        ushort ownerID = provinceData.GetProvinceOwner(neighborProvince);
+                        if (ownerID < countryDistances.Length && nextDistance < countryDistances[ownerID])
+                        {
+                            countryDistances[ownerID] = nextDistance;
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -9,9 +9,12 @@
 - **Core.Systems.GameSystem** - Base class for all game systems with lifecycle hooks
 - **Core.Systems.SystemRegistry** - Type-based system registry with dependency ordering
 - **Core.Systems.TimeManager** - Tick-based time, game speed, 360-day calendar, emits tick events
-- **Core.Systems.AdjacencySystem** - Province neighbor management with sparse collections
-- **Core.Systems.PathfindingSystem** - A* pathfinding with optional GAME POLICY validator delegate for movement rules (ownership, military access, ZOC)
-- **Core.Systems.ProvinceSystem** - Facade for province data (delegates to DataManager, StateLoader, HistoryDatabase)
+- **Core.Systems.AdjacencySystem** - Province neighbor management with NativeParallelMultiHashMap; exposes NativeAdjacencyData for Burst jobs via GetNativeData()
+- **Core.Systems.NativeAdjacencyData** - Read-only struct for Burst-compatible neighbor queries (GetNeighbors enumerator, IsAdjacent)
+- **Core.Systems.PathfindingSystem** - Burst-compiled A* pathfinding with NativeMinHeap; managed fallback when MovementValidator needed
+- **Core.Systems.BurstPathfindingJob** - IJob implementing A* with binary heap, NativeHashSet closed set, NativeHashMap gScore/cameFrom
+- **Core.Systems.ProvinceSystem** - Facade for province data; exposes NativeProvinceData for Burst jobs via GetNativeData()
+- **Core.Systems.NativeProvinceData** - Read-only struct for Burst-compatible province queries (GetProvinceOwner, GetProvinceIdAtIndex)
 - **Core.Systems.ProvinceSimulation** - Province-level simulation logic (development, economy)
 - **Core.Systems.CountrySystem** - Facade for country data (delegates to DataManager, StateLoader)
 
@@ -92,11 +95,12 @@
 ## AI/
 - **Core.AI.AISystem** - Manages AI for all countries (tier-based scheduling, distance calculation)
 - **Core.AI.AIState** - 8-byte struct per country: countryID, tier, flags, activeGoalID, lastProcessedHour
-- **Core.AI.AIGoal** - Base class for AI goals (Evaluate/Execute pattern, extensible)
+- **Core.AI.AIGoal** - Base class for AI goals (Evaluate/Execute pattern); Initialize(EventBus) for cache invalidation
 - **Core.AI.AIScheduler** - Hourly goal evaluation (tier-based intervals, year-wrap handling)
-- **Core.AI.AIGoalRegistry** - Plug-and-play goal registration system
+- **Core.AI.AIGoalRegistry** - Plug-and-play goal registration; passes EventBus to goals for event subscription
 - **Core.AI.AISchedulingConfig** - Configurable tier definitions (distance thresholds, intervals)
-- **Core.AI.AIDistanceCalculator** - BFS distance calculation from player provinces
+- **Core.AI.AIDistanceCalculator** - Burst-compiled BFS distance calculation via BurstBFSDistanceJob
+- **Core.AI.BurstBFSDistanceJob** - IJob for province graph traversal using NativeAdjacencyData and NativeProvinceData
 
 ---
 
@@ -214,6 +218,12 @@
 
 ---
 
+## Collections/
+- **Core.Collections.NativeMinHeap<T>** - Burst-compatible binary min-heap for priority queues (O(log n) Push/Pop)
+- **Core.Collections.PathfindingNode** - A* node struct with provinceID and FixedPoint64 fScore (IComparable for heap ordering)
+
+---
+
 ## Quick Reference
 **Change province state?** → Create command in Commands/ → Execute via CommandProcessor
 **Query province data?** → ProvinceQueries or ProvinceSystem.GetProvinceState()
@@ -227,5 +237,5 @@
 
 ---
 
-*Updated: 2025-11-17*
-*Fixed: All sections now use proper markdown formatting (dashes for line breaks on GitHub)*
+*Updated: 2026-01-08*
+*Added: Burst-compiled pathfinding, BFS distance calculator, NativeMinHeap, native data structs*
