@@ -25,6 +25,11 @@ namespace Core.Systems
         private const int MONTHS_PER_YEAR = 12;
         private const int DAYS_PER_YEAR = 360;  // 30 × 12 = 360 (NOT 365!)
 
+        // Performance: Max ticks per frame to prevent death spiral
+        // If frame takes too long, defer ticks to next frame rather than piling on more work
+        // This is the Paradox approach - game time slows down rather than collapsing
+        private const int MAX_TICKS_PER_FRAME = 4;
+
         [Header("Game Configuration")]
         [SerializeField] private int startYear = 1444;
         [SerializeField] private int startMonth = 11;
@@ -120,6 +125,7 @@ namespace Core.Systems
 
         /// <summary>
         /// Process time progression using deterministic fixed-point math
+        /// Capped to MAX_TICKS_PER_FRAME to prevent death spiral at high speeds
         /// </summary>
         private void ProcessTimeTicks(float realDeltaTime)
         {
@@ -129,11 +135,14 @@ namespace Core.Systems
 
             accumulator += gameTimeDelta;
 
-            // Process full hours
-            while (accumulator >= FixedPoint64.One)
+            // Process full hours (capped to prevent death spiral)
+            // Leftover accumulator carries to next frame - time deferred, not lost
+            int ticksProcessed = 0;
+            while (accumulator >= FixedPoint64.One && ticksProcessed < MAX_TICKS_PER_FRAME)
             {
                 accumulator -= FixedPoint64.One;
                 AdvanceHour();
+                ticksProcessed++;
             }
         }
 

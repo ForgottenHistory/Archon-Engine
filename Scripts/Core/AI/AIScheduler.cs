@@ -77,11 +77,6 @@ namespace Core.AI
 
                 processedCount++;
             }
-
-            if (processedCount > 0)
-            {
-                ArchonLogger.Log($"Processed {processedCount} AI (hour {currentHourOfYear})", "core_ai");
-            }
         }
 
         /// <summary>
@@ -142,8 +137,6 @@ namespace Core.AI
             {
                 bestGoal.Execute(countryID, gameState);
                 state.activeGoalID = bestGoal.GoalID;
-
-                ArchonLogger.Log($"Country {countryID} (tier {state.tier}): Executing goal '{bestGoal.GoalName}' (score: {bestScore})", "core_ai");
             }
             else
             {

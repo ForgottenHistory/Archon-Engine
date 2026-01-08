@@ -68,7 +68,8 @@ namespace Core.AI
             }
 
             // Create goal registry (goals registered externally by GAME layer)
-            goalRegistry = new AIGoalRegistry();
+            // Pass EventBus so goals can subscribe to events (e.g., ProvinceOwnershipChangedEvent)
+            goalRegistry = new AIGoalRegistry(gameState.EventBus);
 
             // Create default config (GAME layer can override via SetSchedulingConfig)
             config = AISchedulingConfig.CreateDefault();

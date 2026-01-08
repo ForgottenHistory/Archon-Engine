@@ -26,9 +26,11 @@ namespace Core.AI
         private Dictionary<ushort, AIGoal> goalsByID;
         private Dictionary<string, AIGoal> goalsByName;
         private ushort nextID;
+        private Core.EventBus eventBus;
 
-        public AIGoalRegistry()
+        public AIGoalRegistry(Core.EventBus eventBus = null)
         {
+            this.eventBus = eventBus;
             goals = new List<AIGoal>(16); // Pre-allocate for typical goal count
             goalsByID = new Dictionary<ushort, AIGoal>(16);
             goalsByName = new Dictionary<string, AIGoal>(16);
@@ -58,8 +60,8 @@ namespace Core.AI
             // Assign sequential ID
             goal.GoalID = nextID++;
 
-            // Initialize goal (allocate buffers)
-            goal.Initialize();
+            // Initialize goal (allocate buffers, subscribe to events)
+            goal.Initialize(eventBus);
 
             // Store in collections
             goals.Add(goal);

@@ -1,4 +1,3 @@
-using Core;
 using Core.Data;
 using Unity.Collections;
 
@@ -80,10 +79,11 @@ namespace Core.AI
         public abstract void Execute(ushort countryID, GameState gameState);
 
         /// <summary>
-        /// Initialize goal (allocate persistent buffers here)
+        /// Initialize goal (allocate persistent buffers here).
         /// Called once during AISystem initialization.
+        /// EventBus provided for goals that need event subscriptions.
         /// </summary>
-        public virtual void Initialize() { }
+        public virtual void Initialize(Core.EventBus eventBus) { }
 
         /// <summary>
         /// Cleanup goal (dispose allocated buffers here)
