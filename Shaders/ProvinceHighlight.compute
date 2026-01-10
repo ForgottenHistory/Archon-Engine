@@ -152,10 +152,10 @@ void HighlightCountry(uint3 id : SV_DispatchThreadID)
         return;
 
     // Read owner ID from ProvinceOwnerTexture (NO Y-FLIP - raw GPU coords)
-    // ProvinceOwnerTexture stores owner IDs normalized to [0,1] range
-    // Denormalize: multiply by 65535 to get back to uint16 range
+    // ProvinceOwnerTexture stores owner IDs as raw float values (1.0, 2.0, 7.0, etc.)
+    // PopulateOwnerTexture.compute writes: float(ownerID)
     float ownerFloat = ProvinceOwnerTexture[id.xy];
-    uint ownerID = (uint)(ownerFloat * 65535.0 + 0.5);
+    uint ownerID = (uint)(ownerFloat + 0.5);
 
     // If this pixel belongs to a province owned by target country, highlight it
     if (ownerID == TargetCountryID)

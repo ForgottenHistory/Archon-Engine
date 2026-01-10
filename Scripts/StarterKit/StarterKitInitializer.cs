@@ -3,6 +3,7 @@ using System.Collections;
 using Core;
 using Core.Systems;
 using Map.Core;
+using Map.Interaction;
 
 namespace StarterKit
 {
@@ -20,6 +21,7 @@ namespace StarterKit
         [SerializeField] private CountrySelectionUI countrySelectionUI;
         [SerializeField] private ResourceBarUI resourceBarUI;
         [SerializeField] private TimeUI timeUI;
+        [SerializeField] private ProvinceInfoUI provinceInfoUI;
 
         [Header("Configuration")]
         [SerializeField] private bool initializeOnStart = true;
@@ -61,7 +63,7 @@ namespace StarterKit
             if (logProgress)
                 ArchonLogger.Log("=== Starting StarterKit initialization ===", "starter_kit");
 
-            // Find UI references if not assigned
+            // Find references if not assigned
             if (engineMapInitializer == null)
                 engineMapInitializer = FindFirstObjectByType<EngineMapInitializer>();
             if (countrySelectionUI == null)
@@ -70,6 +72,8 @@ namespace StarterKit
                 resourceBarUI = FindFirstObjectByType<ResourceBarUI>();
             if (timeUI == null)
                 timeUI = FindFirstObjectByType<TimeUI>();
+            if (provinceInfoUI == null)
+                provinceInfoUI = FindFirstObjectByType<ProvinceInfoUI>();
 
             // Validate engine initializer
             if (engineMapInitializer == null)
@@ -80,7 +84,7 @@ namespace StarterKit
 
             // Wait for EngineMapInitializer to complete
             if (logProgress)
-                ArchonLogger.Log("[1/6] Waiting for engine + map initialization...", "starter_kit");
+                ArchonLogger.Log("Waiting for engine + map initialization...", "starter_kit");
 
             while (!engineMapInitializer.IsInitialized)
             {
@@ -88,7 +92,7 @@ namespace StarterKit
             }
 
             if (logProgress)
-                ArchonLogger.Log("[1/6] Engine + map initialization complete", "starter_kit");
+                ArchonLogger.Log("Engine + map initialization complete", "starter_kit");
 
             // Get GameState and TimeManager
             var gameState = GameState.Instance;
@@ -99,10 +103,11 @@ namespace StarterKit
             }
 
             var timeManager = FindFirstObjectByType<TimeManager>();
+            var mapInitializer = FindFirstObjectByType<MapInitializer>();
 
             // Create player state
             if (logProgress)
-                ArchonLogger.Log("[2/6] Creating player state...", "starter_kit");
+                ArchonLogger.Log("Creating player state...", "starter_kit");
 
             playerState = new PlayerState(gameState, logProgress);
 
@@ -110,7 +115,7 @@ namespace StarterKit
 
             // Create economy system
             if (logProgress)
-                ArchonLogger.Log("[3/6] Creating economy system...", "starter_kit");
+                ArchonLogger.Log("Creating economy system...", "starter_kit");
 
             economySystem = new EconomySystem(gameState, playerState, logProgress);
 
@@ -118,52 +123,49 @@ namespace StarterKit
 
             // Initialize resource bar UI
             if (logProgress)
-                ArchonLogger.Log("[4/6] Initializing resource bar UI...", "starter_kit");
+                ArchonLogger.Log("Initializing resource bar UI...", "starter_kit");
 
             if (resourceBarUI != null)
-            {
                 resourceBarUI.Initialize(economySystem, playerState, gameState);
-            }
-            else
-            {
-                if (logProgress)
-                    ArchonLogger.Log("[4/6] No ResourceBarUI found (optional)", "starter_kit");
-            }
 
             yield return null;
 
             // Initialize time UI
             if (logProgress)
-                ArchonLogger.Log("[5/6] Initializing time UI...", "starter_kit");
+                ArchonLogger.Log("Initializing time UI...", "starter_kit");
 
             if (timeUI != null && timeManager != null)
             {
                 timeUI.Initialize(timeManager);
-
-                // Subscribe to show TimeUI when country is selected
                 gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(evt => timeUI.ShowUI());
             }
-            else
+
+            yield return null;
+
+            // Province info UI - initialize after country is selected
+            if (provinceInfoUI != null && mapInitializer != null)
             {
-                if (logProgress)
-                    ArchonLogger.Log("[5/6] No TimeUI or TimeManager found (optional)", "starter_kit");
+                var selector = mapInitializer.ProvinceSelector;
+                var highlighter = mapInitializer.ProvinceHighlighter;
+
+                // Subscribe to initialize ProvinceInfoUI after country selection
+                gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(evt =>
+                {
+                    if (logProgress)
+                        ArchonLogger.Log("Initializing province info UI (post country selection)...", "starter_kit");
+
+                    provinceInfoUI.Initialize(gameState, selector, highlighter);
+                });
             }
 
             yield return null;
 
             // Initialize country selection UI
             if (logProgress)
-                ArchonLogger.Log("[6/6] Initializing country selection UI...", "starter_kit");
+                ArchonLogger.Log("Initializing country selection UI...", "starter_kit");
 
             if (countrySelectionUI != null)
-            {
                 countrySelectionUI.Initialize(gameState, playerState);
-            }
-            else
-            {
-                if (logProgress)
-                    ArchonLogger.Log("[6/6] No CountrySelectionUI found (optional)", "starter_kit");
-            }
 
             isInitialized = true;
 

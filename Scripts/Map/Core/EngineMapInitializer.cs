@@ -115,6 +115,9 @@ namespace Map.Core
                 yield return null;
             }
 
+            // Initialize province selector (needs mesh to be ready)
+            mapInitializer.InitializeProvinceSelectorWithMesh();
+
             // Initialize map modes (ENGINE-only political mode)
             if (logProgress)
                 ArchonLogger.Log("[4/6] Initializing map modes...", "map_initialization");
