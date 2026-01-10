@@ -199,9 +199,9 @@ namespace Map.DebugTools
 
             if (timeManager != null)
             {
-                // TimeManager uses speed levels 0-8, where 0 is paused
-                timeManager.SetGameSpeed(currentSpeedIndex);
-                ArchonLogger.Log($"EngineDebugUI: Set speed to {currentSpeedIndex}, TimeManager.IsPaused={timeManager.IsPaused}, IsInitialized={timeManager.IsInitialized}", "map_rendering");
+                // Pass actual multiplier value (0 = paused)
+                timeManager.SetSpeed(speedMultipliers[currentSpeedIndex]);
+                ArchonLogger.Log($"EngineDebugUI: Set speed to {speedMultipliers[currentSpeedIndex]}x, TimeManager.IsPaused={timeManager.IsPaused}, IsInitialized={timeManager.IsInitialized}", "map_rendering");
             }
             else
             {

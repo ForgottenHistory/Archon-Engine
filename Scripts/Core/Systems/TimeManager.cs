@@ -37,7 +37,7 @@ namespace Core.Systems
         [SerializeField] private bool autoStart = true;
 
         [Header("Speed Configuration")]
-        [SerializeField] private int initialSpeedLevel = 0; // 0=paused, 1-4=speed levels (default paused for manual testing)
+        [SerializeField] private int initialSpeed = 0; // 0=paused, 1+=speed multiplier (default paused)
 
         // Current game time (deterministic)
         private int hour = 0;
@@ -46,9 +46,9 @@ namespace Core.Systems
         private int year = 1444;
 
         // Speed control (deterministic fixed-point)
-        private int gameSpeedLevel = 2;
+        private int gameSpeed = 0; // Actual multiplier (0=paused, 1=1x, 2=2x, etc.)
         private FixedPoint64 accumulator = FixedPoint64.Zero;
-        private readonly FixedPoint64 hoursPerSecond = FixedPoint64.FromInt(24); // At speed level 2 (normal)
+        private readonly FixedPoint64 hoursPerSecond = FixedPoint64.FromInt(24);
 
         // Tick counter for command synchronization (CRITICAL for multiplayer)
         private ulong currentTick = 0;
@@ -78,7 +78,7 @@ namespace Core.Systems
         public int CurrentDay => day;
         public int CurrentHour => hour;
         public ulong CurrentTick => currentTick;
-        public int GameSpeed => gameSpeedLevel;
+        public int GameSpeed => gameSpeed;
         public bool IsPaused => isPaused;
         public bool IsInitialized => isInitialized;
 
@@ -96,14 +96,14 @@ namespace Core.Systems
             day = startDay;
             hour = 0;
 
-            gameSpeedLevel = initialSpeedLevel;
+            gameSpeed = initialSpeed;
             accumulator = FixedPoint64.Zero;
             currentTick = 0;
-            isPaused = (gameSpeedLevel == 0);
+            isPaused = (gameSpeed == 0);
 
             isInitialized = true;
 
-            ArchonLogger.Log($"TimeManager initialized - Starting date: {GetCurrentGameTime()}, Speed: {gameSpeedLevel}", "core_time");
+            ArchonLogger.Log($"TimeManager initialized - Starting date: {GetCurrentGameTime()}, Speed: {gameSpeed}", "core_time");
 
             if (autoStart && !isPaused)
             {
@@ -130,7 +130,7 @@ namespace Core.Systems
         private void ProcessTimeTicks(float realDeltaTime)
         {
             // Convert real-time to game time (deterministic)
-            FixedPoint64 speedMultiplier = GetSpeedMultiplier(gameSpeedLevel);
+            FixedPoint64 speedMultiplier = GetSpeedMultiplier();
             FixedPoint64 gameTimeDelta = FixedPoint64.FromFloat(realDeltaTime) * speedMultiplier * hoursPerSecond;
 
             accumulator += gameTimeDelta;
@@ -149,22 +149,12 @@ namespace Core.Systems
         /// <summary>
         /// Get deterministic speed multiplier (exact fractions)
         /// </summary>
-        private FixedPoint64 GetSpeedMultiplier(int speedLevel)
+        private FixedPoint64 GetSpeedMultiplier()
         {
-            // Exact fractions for determinism
-            return speedLevel switch
-            {
-                0 => FixedPoint64.Zero,                             // Paused
-                1 => FixedPoint64.FromFraction(1, 2),              // 0.5x
-                2 => FixedPoint64.One,                              // 1.0x (normal)
-                3 => FixedPoint64.FromInt(2),                      // 2.0x
-                4 => FixedPoint64.FromInt(5),                      // 5.0x (very fast)
-                5 => FixedPoint64.FromInt(10),                     // 10.0x (extreme - performance testing)
-                6 => FixedPoint64.FromInt(25),                     // 25.0x (extreme - performance testing)
-                7 => FixedPoint64.FromInt(50),                     // 50.0x (extreme - performance testing)
-                8 => FixedPoint64.FromInt(100),                    // 100.0x (extreme - performance testing)
-                _ => FixedPoint64.One
-            };
+            if (gameSpeed <= 0)
+                return FixedPoint64.Zero;
+
+            return FixedPoint64.FromInt(gameSpeed);
         }
 
         /// <summary>
@@ -242,7 +232,7 @@ namespace Core.Systems
             {
                 isPaused = false;
                 OnPauseStateChanged?.Invoke(false);
-                eventBus?.Emit(new TimeStateChangedEvent { IsPaused = false, GameSpeed = gameSpeedLevel });
+                eventBus?.Emit(new TimeStateChangedEvent { IsPaused = false, GameSpeed = gameSpeed });
                 ArchonLogger.Log("Time progression started", "core_time");
             }
         }
@@ -256,7 +246,7 @@ namespace Core.Systems
             {
                 isPaused = true;
                 OnPauseStateChanged?.Invoke(true);
-                eventBus?.Emit(new TimeStateChangedEvent { IsPaused = true, GameSpeed = gameSpeedLevel });
+                eventBus?.Emit(new TimeStateChangedEvent { IsPaused = true, GameSpeed = gameSpeed });
                 ArchonLogger.Log("Time progression paused", "core_time");
             }
         }
@@ -273,23 +263,21 @@ namespace Core.Systems
         }
 
         /// <summary>
-        /// Set game speed (0=paused, 1-8=speed levels)
-        /// Levels 1-4: Standard gameplay speeds (0.5x, 1x, 2x, 5x)
-        /// Levels 5-8: Extreme speeds for performance testing (10x, 25x, 50x, 100x)
+        /// Set game speed (0=paused, 1+=speed multiplier)
         /// </summary>
-        public void SetGameSpeed(int newSpeedLevel)
+        public void SetSpeed(int multiplier)
         {
-            if (newSpeedLevel < 0 || newSpeedLevel > 8)
+            if (multiplier < 0)
             {
-                ArchonLogger.LogWarning($"Invalid speed level: {newSpeedLevel} (must be 0-8)", "core_time");
+                ArchonLogger.LogWarning($"Invalid speed: {multiplier} (must be >= 0)", "core_time");
                 return;
             }
 
-            int oldSpeed = gameSpeedLevel;
-            gameSpeedLevel = newSpeedLevel;
+            int oldSpeed = gameSpeed;
+            gameSpeed = multiplier;
 
             // Speed 0 means paused
-            if (newSpeedLevel == 0)
+            if (multiplier == 0)
             {
                 PauseTime();
             }
@@ -298,10 +286,10 @@ namespace Core.Systems
                 StartTime();
             }
 
-            OnSpeedChanged?.Invoke(gameSpeedLevel);
-            eventBus?.Emit(new TimeStateChangedEvent { IsPaused = isPaused, GameSpeed = gameSpeedLevel });
+            OnSpeedChanged?.Invoke(gameSpeed);
+            eventBus?.Emit(new TimeStateChangedEvent { IsPaused = isPaused, GameSpeed = gameSpeed });
 
-            ArchonLogger.Log($"Game speed changed to level {gameSpeedLevel}", "core_time");
+            ArchonLogger.Log($"Game speed changed to {gameSpeed}x", "core_time");
         }
 
         /// <summary>
@@ -410,11 +398,11 @@ namespace Core.Systems
             month = newMonth;
             day = newDay;
             hour = newHour;
-            gameSpeedLevel = speedLevel;
+            gameSpeed = speedLevel;
             isPaused = paused;
             accumulator = newAccumulator;
 
-            ArchonLogger.Log($"TimeManager state loaded: {GetCurrentGameTime()}, Tick: {currentTick}, Speed: {gameSpeedLevel}, Paused: {isPaused}", "core_time");
+            ArchonLogger.Log($"TimeManager state loaded: {GetCurrentGameTime()}, Tick: {currentTick}, Speed: {gameSpeed}, Paused: {isPaused}", "core_time");
         }
 
         // Old OnGUI debug UI removed - replaced by Game.DebugTools.TimeDebugPanel (UI Toolkit)
