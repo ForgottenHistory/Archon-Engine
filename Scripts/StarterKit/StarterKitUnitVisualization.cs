@@ -9,15 +9,18 @@ using Map.Utils;
 namespace StarterKit
 {
     /// <summary>
-    /// Simple unit visualization for StarterKit.
-    /// Renders units as colored quads at province centers using GPU instancing.
+    /// Unit visualization for StarterKit.
+    /// Renders unit count badges at province centers using GPU instancing.
+    /// Uses BillboardAtlasGenerator for number display (0-99).
     /// </summary>
     public class StarterKitUnitVisualization : MonoBehaviour
     {
         [Header("Configuration")]
         [SerializeField] private float unitHeight = 2f;
-        [SerializeField] private float unitScale = 3f;
-        [SerializeField] private Color defaultUnitColor = Color.cyan;
+        [SerializeField] private float badgeScale = 4f;
+
+        [Header("References")]
+        [SerializeField] private BillboardAtlasGenerator atlasGenerator;
 
         [Header("Debug")]
         [SerializeField] private bool logDebug = true;
@@ -29,12 +32,15 @@ namespace StarterKit
 
         // GPU instancing data
         private Mesh quadMesh;
-        private Material unitMaterial;
+        private Material badgeMaterial;
         private List<Matrix4x4> matrices = new List<Matrix4x4>();
+        private List<float> displayValues = new List<float>();
+        private List<float> scaleValues = new List<float>();
         private MaterialPropertyBlock propertyBlock;
 
         // Tracking
         private Dictionary<ushort, UnitTrackData> trackedUnits = new Dictionary<ushort, UnitTrackData>();
+        private Dictionary<ushort, int> provinceUnitCounts = new Dictionary<ushort, int>();
         private bool isDirty = false;
         private bool isInitialized = false;
 
@@ -111,15 +117,15 @@ namespace StarterKit
 
         private void CreateRenderingResources()
         {
-            // Create horizontal quad mesh (lies flat on map, visible from above)
+            // Create vertical quad mesh (shader handles billboarding)
             quadMesh = new Mesh();
-            quadMesh.name = "UnitQuad";
+            quadMesh.name = "UnitBadgeQuad";
             quadMesh.vertices = new Vector3[]
             {
-                new Vector3(-0.5f, 0f, -0.5f),
-                new Vector3(0.5f, 0f, -0.5f),
-                new Vector3(-0.5f, 0f, 0.5f),
-                new Vector3(0.5f, 0f, 0.5f)
+                new Vector3(-0.5f, -0.5f, 0f),
+                new Vector3(0.5f, -0.5f, 0f),
+                new Vector3(-0.5f, 0.5f, 0f),
+                new Vector3(0.5f, 0.5f, 0f)
             };
             quadMesh.uv = new Vector2[]
             {
@@ -128,27 +134,44 @@ namespace StarterKit
                 new Vector2(0f, 1f),
                 new Vector2(1f, 1f)
             };
-            // Front face visible from above (Y+), back face from below
+            // Double-sided
             quadMesh.triangles = new int[] { 0, 2, 1, 2, 3, 1, 1, 2, 0, 1, 3, 2 };
             quadMesh.RecalculateNormals();
             quadMesh.RecalculateBounds();
 
-            // Use simple unlit shader for flat quads
-            Shader shader = Shader.Find("Universal Render Pipeline/Unlit");
-            if (shader == null)
-                shader = Shader.Find("Unlit/Color");
-
+            // Use the InstancedAtlasBadge shader for number display
+            Shader shader = Shader.Find("Engine/InstancedAtlasBadge");
             if (shader == null)
             {
-                ArchonLogger.LogError("StarterKitUnitVisualization: No unlit shader found!", "starter_kit");
+                ArchonLogger.LogError("StarterKitUnitVisualization: Engine/InstancedAtlasBadge shader not found!", "starter_kit");
                 return;
             }
 
-            unitMaterial = new Material(shader);
-            unitMaterial.SetColor("_BaseColor", defaultUnitColor);
-            unitMaterial.color = defaultUnitColor;
-            unitMaterial.enableInstancing = true;
-            unitMaterial.renderQueue = 3000; // Render on top of map
+            badgeMaterial = new Material(shader);
+            badgeMaterial.enableInstancing = true;
+            badgeMaterial.renderQueue = 3000; // Render on top of map
+
+            // Set background color (black with some transparency)
+            badgeMaterial.SetColor("_BackgroundColor", new Color(0f, 0f, 0f, 0.8f));
+
+            // Set atlas texture if generator is available
+            if (atlasGenerator != null)
+            {
+                var atlas = atlasGenerator.AtlasTexture;
+                if (atlas != null)
+                {
+                    badgeMaterial.SetTexture("_NumberAtlas", atlas);
+                    ArchonLogger.Log($"StarterKitUnitVisualization: Atlas assigned: {atlas.width}x{atlas.height}", "starter_kit");
+                }
+                else
+                {
+                    ArchonLogger.LogWarning("StarterKitUnitVisualization: Atlas texture is null!", "starter_kit");
+                }
+            }
+            else
+            {
+                ArchonLogger.LogWarning("StarterKitUnitVisualization: BillboardAtlasGenerator not assigned - create one and assign it", "starter_kit");
+            }
 
             propertyBlock = new MaterialPropertyBlock();
 
@@ -197,37 +220,47 @@ namespace StarterKit
                 isDirty = false;
             }
 
-            // Render all units
-            if (matrices.Count > 0 && unitMaterial != null && quadMesh != null)
+            // Render all badges with per-instance display values
+            if (matrices.Count > 0 && badgeMaterial != null && quadMesh != null)
             {
-                Graphics.DrawMeshInstanced(quadMesh, 0, unitMaterial, matrices, propertyBlock);
+                // Set per-instance properties
+                if (displayValues.Count > 0)
+                {
+                    propertyBlock.SetFloatArray("_DisplayValue", displayValues);
+                    propertyBlock.SetFloatArray("_Scale", scaleValues);
+                }
+
+                Graphics.DrawMeshInstanced(quadMesh, 0, badgeMaterial, matrices, propertyBlock);
             }
         }
 
         private void RebuildMatrices()
         {
             matrices.Clear();
+            displayValues.Clear();
+            scaleValues.Clear();
+            provinceUnitCounts.Clear();
 
             if (logDebug)
                 ArchonLogger.Log($"StarterKitUnitVisualization: RebuildMatrices called, {trackedUnits.Count} tracked units", "starter_kit");
 
-            // Group units by province
-            var provinceUnits = new Dictionary<ushort, List<ushort>>();
+            // Count units per province
             foreach (var kvp in trackedUnits)
             {
                 var provinceId = kvp.Value.provinceID;
                 if (provinceId == 0) continue;
 
-                if (!provinceUnits.ContainsKey(provinceId))
-                    provinceUnits[provinceId] = new List<ushort>();
+                if (!provinceUnitCounts.ContainsKey(provinceId))
+                    provinceUnitCounts[provinceId] = 0;
 
-                provinceUnits[provinceId].Add(kvp.Key);
+                provinceUnitCounts[provinceId]++;
             }
 
-            // Create one visual per province with units
-            foreach (var kvp in provinceUnits)
+            // Create one badge per province with units
+            foreach (var kvp in provinceUnitCounts)
             {
                 var provinceId = kvp.Key;
+                var unitCount = kvp.Value;
 
                 if (!centerLookup.TryGetProvinceCenter(provinceId, out Vector3 worldPos))
                 {
@@ -236,17 +269,21 @@ namespace StarterKit
                     continue;
                 }
 
-                // Position unit above map
-                var unitPos = new Vector3(worldPos.x, unitHeight, worldPos.z);
-                var matrix = Matrix4x4.TRS(unitPos, Quaternion.identity, Vector3.one * unitScale);
+                // Position badge above map
+                var badgePos = new Vector3(worldPos.x, unitHeight, worldPos.z);
+                var matrix = Matrix4x4.TRS(badgePos, Quaternion.identity, Vector3.one);
                 matrices.Add(matrix);
 
+                // Clamp to 0-99 for atlas display
+                displayValues.Add(Mathf.Min(unitCount, 99));
+                scaleValues.Add(badgeScale);
+
                 if (logDebug)
-                    ArchonLogger.Log($"StarterKitUnitVisualization: Unit at province {provinceId}, pos={unitPos}", "starter_kit");
+                    ArchonLogger.Log($"StarterKitUnitVisualization: Badge at province {provinceId}, count={unitCount}, pos={badgePos}", "starter_kit");
             }
 
             if (logDebug)
-                ArchonLogger.Log($"StarterKitUnitVisualization: Rebuilt {matrices.Count} unit visuals, material={unitMaterial != null}, mesh={quadMesh != null}", "starter_kit");
+                ArchonLogger.Log($"StarterKitUnitVisualization: Rebuilt {matrices.Count} badges, material={badgeMaterial != null}, mesh={quadMesh != null}", "starter_kit");
         }
 
         void OnDestroy()
@@ -260,8 +297,8 @@ namespace StarterKit
 
             if (quadMesh != null)
                 Destroy(quadMesh);
-            if (unitMaterial != null)
-                Destroy(unitMaterial);
+            if (badgeMaterial != null)
+                Destroy(badgeMaterial);
         }
     }
 }

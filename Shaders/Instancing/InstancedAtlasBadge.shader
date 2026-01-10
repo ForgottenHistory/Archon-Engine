@@ -57,6 +57,7 @@ Shader "Engine/InstancedAtlasBadge"
             // Per-instance properties
             UNITY_INSTANCING_BUFFER_START(Props)
                 UNITY_DEFINE_INSTANCED_PROP(float, _DisplayValue)
+                UNITY_DEFINE_INSTANCED_PROP(float, _Scale)
             UNITY_INSTANCING_BUFFER_END(Props)
 
             Varyings vert(Attributes input)
@@ -69,6 +70,9 @@ Shader "Engine/InstancedAtlasBadge"
                 // Billboard: tilt toward camera (X-axis rotation only for top-down view)
                 float3 positionWS = TransformObjectToWorld(float3(0, 0, 0));
 
+                // Get scale from per-instance property
+                float scale = UNITY_ACCESS_INSTANCED_PROP(Props, _Scale);
+
                 // Get camera direction
                 float3 toCamera = GetCameraPositionWS() - positionWS;
                 float horizontalDist = length(float2(toCamera.x, toCamera.z));
@@ -78,7 +82,8 @@ Shader "Engine/InstancedAtlasBadge"
                 float cosAngle = cos(tiltAngle);
                 float sinAngle = sin(tiltAngle);
 
-                float3 localPos = input.positionOS.xyz;
+                // Apply scale to local position
+                float3 localPos = input.positionOS.xyz * scale;
                 float3 tiltedPos;
                 tiltedPos.x = localPos.x;
                 tiltedPos.y = localPos.y * cosAngle - localPos.z * sinAngle;
