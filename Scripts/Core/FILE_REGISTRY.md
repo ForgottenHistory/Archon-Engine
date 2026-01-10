@@ -224,18 +224,5 @@
 
 ---
 
-## Quick Reference
-**Change province state?** → Create command in Commands/ → Execute via CommandProcessor
-**Query province data?** → ProvinceQueries or ProvinceSystem.GetProvinceState()
-**Time-based event?** → Subscribe to TimeManager events in EventBus
-**Load scenario?** → ScenarioLoader → Calls Burst loaders
-**Save/load game?** → SaveManager → F6 quicksave, F7 quickload
-**Deterministic random?** → DeterministicRandom with seed
-**Fixed-point math?** → FixedPoint64 (32.32 format)
-**Optional/rare data?** → SparseCollectionManager<TKey, TValue>
-**Add AI goal?** → Implement AIGoal in GAME layer → Register in GameSystemInitializer
-
----
-
 *Updated: 2026-01-08*
 *Added: Burst-compiled pathfinding, BFS distance calculator, NativeMinHeap, native data structs*
