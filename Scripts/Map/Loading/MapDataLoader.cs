@@ -34,6 +34,9 @@ namespace Map.Loading
         // Terrain blend map generator for Imperator Rome-style blending
         private Map.Rendering.Terrain.TerrainBlendMapGenerator blendMapGenerator;
 
+        // Persistent terrain buffer for rendering (must be disposed on cleanup)
+        private ComputeBuffer provinceTerrainBuffer;
+
         public void Initialize(ProvinceMapProcessor processor, BorderComputeDispatcher borders, MapTextureManager textures, string dataDirectory = null)
         {
             provinceProcessor = processor;
@@ -331,8 +334,10 @@ namespace Map.Loading
                         terrainByProvinceID[provinceID] = terrainTypes[i];
                     }
 
-                    ComputeBuffer terrainBuffer = new ComputeBuffer(65536, sizeof(uint));
-                    terrainBuffer.SetData(terrainByProvinceID);
+                    // Dispose previous buffer if exists (e.g., on reload)
+                    provinceTerrainBuffer?.Dispose();
+                    provinceTerrainBuffer = new ComputeBuffer(65536, sizeof(uint));
+                    provinceTerrainBuffer.SetData(terrainByProvinceID);
 
                     // CRITICAL: GPU synchronization - ensure terrain buffer upload completes before blend map generation
                     // SetData() is async, TerrainBlendMapGenerator needs the data to be ready on GPU
@@ -346,7 +351,7 @@ namespace Map.Loading
                     var meshRenderer = Object.FindFirstObjectByType<MeshRenderer>();
                     if (meshRenderer != null && meshRenderer.material != null)
                     {
-                        meshRenderer.material.SetBuffer("_ProvinceTerrainBuffer", terrainBuffer);
+                        meshRenderer.material.SetBuffer("_ProvinceTerrainBuffer", provinceTerrainBuffer);
                         if (logLoadingProgress)
                         {
                             ArchonLogger.Log($"MapDataLoader: Bound province terrain buffer to material ({provinceCount} entries)", "map_rendering");
@@ -364,7 +369,7 @@ namespace Map.Loading
                     {
                         var (detailIndex, detailMask) = blendMapGenerator.Generate(
                             provinceIDTexture,
-                            terrainBuffer,
+                            provinceTerrainBuffer,
                             textureManager.MapWidth,
                             textureManager.MapHeight
                         );
@@ -393,9 +398,7 @@ namespace Map.Loading
                         }
                     }
 
-                    // NOTE: terrainBuffer not released - needs to persist for rendering
-                    // Should be managed by a persistent component, not leaked here
-                    // TODO: Store buffer reference for cleanup
+                    // provinceTerrainBuffer persists for rendering - disposed in OnDestroy
                 }
                 else
                 {
@@ -422,6 +425,12 @@ namespace Map.Loading
             {
                 ArchonLogger.LogError("MapDataLoader: BorderComputeDispatcher is NULL - borders will not be generated!", "map_initialization");
             }
+        }
+
+        void OnDestroy()
+        {
+            provinceTerrainBuffer?.Dispose();
+            provinceTerrainBuffer = null;
         }
     }
 }

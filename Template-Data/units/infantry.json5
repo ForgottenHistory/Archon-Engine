@@ -1,0 +1,29 @@
+{
+  // Basic infantry unit for StarterKit demo
+  id: "infantry",
+  name: "Infantry",
+  category: "land",
+  version: 1,
+
+  cost: {
+    gold: 10
+  },
+
+  maintenance: {
+    gold: 1
+  },
+
+  stats: {
+    max_strength: 1000,
+    attack: 2,
+    defense: 2,
+    morale: 3,
+    speed: 2
+  },
+
+  visual: {
+    type: "billboard",
+    icon: "Icons/Infantry",
+    color_source: "country"
+  }
+}

@@ -22,6 +22,10 @@ namespace StarterKit
         [SerializeField] private ResourceBarUI resourceBarUI;
         [SerializeField] private TimeUI timeUI;
         [SerializeField] private ProvinceInfoUI provinceInfoUI;
+        [SerializeField] private UnitInfoUI unitInfoUI;
+
+        [Header("Visualization")]
+        [SerializeField] private StarterKitUnitVisualization unitVisualization;
 
         [Header("Configuration")]
         [SerializeField] private bool initializeOnStart = true;
@@ -30,12 +34,14 @@ namespace StarterKit
         // Owned systems (plain classes)
         private PlayerState playerState;
         private EconomySystem economySystem;
+        private StarterKitUnitSystem unitSystem;
 
         private bool isInitialized;
 
         public bool IsInitialized => isInitialized;
         public PlayerState PlayerState => playerState;
         public EconomySystem EconomySystem => economySystem;
+        public StarterKitUnitSystem UnitSystem => unitSystem;
 
         void Start()
         {
@@ -47,6 +53,7 @@ namespace StarterKit
 
         void OnDestroy()
         {
+            unitSystem?.Dispose();
             economySystem?.Dispose();
         }
 
@@ -74,6 +81,10 @@ namespace StarterKit
                 timeUI = FindFirstObjectByType<TimeUI>();
             if (provinceInfoUI == null)
                 provinceInfoUI = FindFirstObjectByType<ProvinceInfoUI>();
+            if (unitInfoUI == null)
+                unitInfoUI = FindFirstObjectByType<UnitInfoUI>();
+            if (unitVisualization == null)
+                unitVisualization = FindFirstObjectByType<StarterKitUnitVisualization>();
 
             // Validate engine initializer
             if (engineMapInitializer == null)
@@ -121,6 +132,15 @@ namespace StarterKit
 
             yield return null;
 
+            // Create unit system
+            if (logProgress)
+                ArchonLogger.Log("Creating unit system...", "starter_kit");
+
+            unitSystem = new StarterKitUnitSystem(gameState, playerState, logProgress);
+            unitSystem.LoadUnitTypes("Assets/Archon-Engine/Template-Data/units");
+
+            yield return null;
+
             // Initialize resource bar UI
             if (logProgress)
                 ArchonLogger.Log("Initializing resource bar UI...", "starter_kit");
@@ -142,19 +162,38 @@ namespace StarterKit
 
             yield return null;
 
-            // Province info UI - initialize after country is selected
-            if (provinceInfoUI != null && mapInitializer != null)
+            // Province info UI and Unit info UI - initialize after country is selected
+            if (mapInitializer != null)
             {
                 var selector = mapInitializer.ProvinceSelector;
                 var highlighter = mapInitializer.ProvinceHighlighter;
 
-                // Subscribe to initialize ProvinceInfoUI after country selection
+                // Subscribe to initialize UIs after country selection
                 gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(evt =>
                 {
-                    if (logProgress)
-                        ArchonLogger.Log("Initializing province info UI (post country selection)...", "starter_kit");
+                    if (provinceInfoUI != null)
+                    {
+                        if (logProgress)
+                            ArchonLogger.Log("Initializing province info UI (post country selection)...", "starter_kit");
 
-                    provinceInfoUI.Initialize(gameState, selector, highlighter);
+                        provinceInfoUI.Initialize(gameState, selector, highlighter);
+                    }
+
+                    if (unitInfoUI != null && unitSystem != null)
+                    {
+                        if (logProgress)
+                            ArchonLogger.Log("Initializing unit info UI (post country selection)...", "starter_kit");
+
+                        unitInfoUI.Initialize(gameState, unitSystem, selector);
+                    }
+
+                    if (unitVisualization != null && unitSystem != null)
+                    {
+                        if (logProgress)
+                            ArchonLogger.Log("Initializing unit visualization (post country selection)...", "starter_kit");
+
+                        unitVisualization.Initialize(gameState, unitSystem);
+                    }
                 });
             }
 
