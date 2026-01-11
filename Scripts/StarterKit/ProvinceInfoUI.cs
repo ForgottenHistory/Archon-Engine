@@ -45,10 +45,17 @@ namespace StarterKit
         private VisualElement ownerColorIndicator;
         private Label ownerLabel;
 
+        // Colonization UI
+        private VisualElement colonizeContainer;
+        private Button colonizeButton;
+        private const int COLONIZE_COST = 20;
+
         // References
         private GameState gameState;
         private ProvinceSelector provinceSelector;
         private ProvinceHighlighter provinceHighlighter;
+        private EconomySystem economySystem;
+        private PlayerState playerState;
         private bool isInitialized;
 
         // State
@@ -56,7 +63,8 @@ namespace StarterKit
 
         public bool IsInitialized => isInitialized;
 
-        public void Initialize(GameState gameStateRef, ProvinceSelector provinceSelectorRef, ProvinceHighlighter highlighterRef = null)
+        public void Initialize(GameState gameStateRef, ProvinceSelector provinceSelectorRef, ProvinceHighlighter highlighterRef = null,
+            EconomySystem economySystemRef = null, PlayerState playerStateRef = null)
         {
             if (isInitialized)
             {
@@ -79,6 +87,8 @@ namespace StarterKit
             gameState = gameStateRef;
             provinceSelector = provinceSelectorRef;
             provinceHighlighter = highlighterRef;
+            economySystem = economySystemRef;
+            playerState = playerStateRef;
 
             // Initialize UI
             InitializeUI();
@@ -219,6 +229,22 @@ namespace StarterKit
             ownerContainer.Add(ownerLabel);
             panelContainer.Add(ownerContainer);
 
+            // Colonization section (shown only for unowned provinces)
+            colonizeContainer = new VisualElement();
+            colonizeContainer.name = "colonize-container";
+            colonizeContainer.style.marginTop = 12f;
+            colonizeContainer.style.display = DisplayStyle.None;
+
+            colonizeButton = new Button(OnColonizeClicked);
+            colonizeButton.text = $"Buy Land ({COLONIZE_COST} gold)";
+            colonizeButton.style.paddingTop = 6f;
+            colonizeButton.style.paddingBottom = 6f;
+            colonizeButton.style.paddingLeft = 12f;
+            colonizeButton.style.paddingRight = 12f;
+
+            colonizeContainer.Add(colonizeButton);
+            panelContainer.Add(colonizeContainer);
+
             rootElement.Add(panelContainer);
         }
 
@@ -291,6 +317,47 @@ namespace StarterKit
             HidePanel();
         }
 
+        private void OnColonizeClicked()
+        {
+            if (currentProvinceID == 0 || economySystem == null || playerState == null)
+                return;
+
+            if (!playerState.HasPlayerCountry)
+                return;
+
+            // Check if province exists (all provinces should be pre-loaded from definition.csv)
+            if (!gameState.ProvinceQueries.Exists(currentProvinceID))
+            {
+                ArchonLogger.LogWarning($"ProvinceInfoUI: Province {currentProvinceID} not in definition.csv", "starter_kit");
+                return;
+            }
+
+            // Check if can afford
+            if (economySystem.Gold < COLONIZE_COST)
+            {
+                ArchonLogger.LogWarning($"ProvinceInfoUI: Not enough gold (need {COLONIZE_COST}, have {economySystem.Gold})", "starter_kit");
+                return;
+            }
+
+            // Check if still unowned
+            ushort owner = gameState.ProvinceQueries.GetOwner(currentProvinceID);
+            if (owner != 0)
+            {
+                ArchonLogger.LogWarning("ProvinceInfoUI: Province is no longer unowned", "starter_kit");
+                UpdatePanel();
+                return;
+            }
+
+            // Deduct gold and transfer ownership
+            economySystem.RemoveGold(COLONIZE_COST);
+            gameState.Provinces.SetProvinceOwner(currentProvinceID, playerState.PlayerCountryId);
+
+            ArchonLogger.Log($"ProvinceInfoUI: Colonized province {currentProvinceID} for {COLONIZE_COST} gold", "starter_kit");
+
+            // Update panel to reflect new ownership
+            UpdatePanel();
+        }
+
         private void UpdatePanel()
         {
             if (!isInitialized || currentProvinceID == 0)
@@ -304,6 +371,47 @@ namespace StarterKit
                 provinceIDLabel,
                 ownerColorIndicator,
                 ownerLabel);
+
+            // Update colonization button visibility
+            UpdateColonizeButton();
+        }
+
+        private void UpdateColonizeButton()
+        {
+            if (colonizeContainer == null)
+                return;
+
+            // Only show if we have economy system and player state
+            if (economySystem == null || playerState == null || !playerState.HasPlayerCountry)
+            {
+                colonizeContainer.style.display = DisplayStyle.None;
+                return;
+            }
+
+            // Check if province actually exists (not ocean/invalid pixel)
+            if (!gameState.ProvinceQueries.Exists(currentProvinceID))
+            {
+                colonizeContainer.style.display = DisplayStyle.None;
+                return;
+            }
+
+            // Check if province is unowned
+            ushort owner = gameState.ProvinceQueries.GetOwner(currentProvinceID);
+            if (owner != 0)
+            {
+                colonizeContainer.style.display = DisplayStyle.None;
+                return;
+            }
+
+            // Show colonize button for unowned provinces
+            colonizeContainer.style.display = DisplayStyle.Flex;
+
+            // Update button state based on gold
+            bool canAfford = economySystem.Gold >= COLONIZE_COST;
+            colonizeButton.SetEnabled(canAfford);
+            colonizeButton.text = canAfford
+                ? $"Buy Land ({COLONIZE_COST} gold)"
+                : $"Buy Land ({COLONIZE_COST} gold) - Not enough gold";
         }
 
         public void ShowPanel()

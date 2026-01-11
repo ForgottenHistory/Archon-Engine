@@ -233,6 +233,37 @@ namespace StarterKit
         }
 
         /// <summary>
+        /// Construct a building for AI (no gold cost, no ownership check).
+        /// </summary>
+        public bool ConstructForAI(ushort provinceId, string buildingTypeId)
+        {
+            var buildingType = GetBuildingType(buildingTypeId);
+            if (buildingType == null)
+                return false;
+
+            // Check max per province
+            int currentCount = GetBuildingCount(provinceId, buildingType.ID);
+            if (currentCount >= buildingType.MaxPerProvince)
+                return false;
+
+            // Add building to province (no gold cost for AI)
+            if (!provinceBuildings.TryGetValue(provinceId, out var data))
+            {
+                data = new ProvinceBuildingData { BuildingCounts = new Dictionary<ushort, int>() };
+                provinceBuildings[provinceId] = data;
+            }
+
+            if (!data.BuildingCounts.ContainsKey(buildingType.ID))
+            {
+                data.BuildingCounts[buildingType.ID] = 0;
+            }
+            data.BuildingCounts[buildingType.ID]++;
+
+            OnBuildingConstructed?.Invoke(provinceId, buildingType.ID);
+            return true;
+        }
+
+        /// <summary>
         /// Get the count of a specific building type in a province.
         /// </summary>
         public int GetBuildingCount(ushort provinceId, ushort buildingTypeId)

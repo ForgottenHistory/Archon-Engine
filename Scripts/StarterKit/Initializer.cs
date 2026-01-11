@@ -37,6 +37,7 @@ namespace StarterKit
         private EconomySystem economySystem;
         private UnitSystem unitSystem;
         private BuildingSystem buildingSystem;
+        private AISystem aiSystem;
 
         private bool isInitialized;
 
@@ -45,6 +46,7 @@ namespace StarterKit
         public EconomySystem EconomySystem => economySystem;
         public UnitSystem UnitSystem => unitSystem;
         public BuildingSystem BuildingSystem => buildingSystem;
+        public AISystem AISystem => aiSystem;
 
         void Start()
         {
@@ -56,6 +58,7 @@ namespace StarterKit
 
         void OnDestroy()
         {
+            aiSystem?.Dispose();
             buildingSystem?.Dispose();
             unitSystem?.Dispose();
             economySystem?.Dispose();
@@ -159,6 +162,14 @@ namespace StarterKit
 
             yield return null;
 
+            // Create AI system
+            if (logProgress)
+                ArchonLogger.Log("Creating AI system...", "starter_kit");
+
+            aiSystem = new AISystem(gameState, playerState, buildingSystem, logProgress);
+
+            yield return null;
+
             // Initialize resource bar UI
             if (logProgress)
                 ArchonLogger.Log("Initializing resource bar UI...", "starter_kit");
@@ -194,7 +205,7 @@ namespace StarterKit
                         if (logProgress)
                             ArchonLogger.Log("Initializing province info UI (post country selection)...", "starter_kit");
 
-                        provinceInfoUI.Initialize(gameState, selector, highlighter);
+                        provinceInfoUI.Initialize(gameState, selector, highlighter, economySystem, playerState);
                     }
 
                     if (unitInfoUI != null && unitSystem != null)

@@ -101,15 +101,19 @@ namespace Core.Initialization.Phases
             context.ReportProgress(32f, "Initializing province system...");
             yield return null;
 
-            // Initialize ProvinceSystem with full data
-            context.ProvinceSystem.InitializeFromProvinceStates(context.ProvinceInitialStates);
+            // IMPORTANT: Initialize ALL provinces from definition.csv first, then apply states from JSON5
+            // This ensures unowned provinces (without JSON5 files) are still registered in the simulation
+            context.ProvinceSystem.InitializeFromDefinitions(context.ProvinceDefinitions);
+
+            // Apply initial states (ownership, terrain) from JSON5 to provinces that have them
+            context.ProvinceSystem.ApplyInitialStates(context.ProvinceInitialStates);
 
             context.ReportProgress(40f, "Province data loaded");
 
-            // Emit province data ready event
+            // Emit province data ready event - count is ALL provinces from definition.csv
             context.EventBus.Emit(new ProvinceDataReadyEvent
             {
-                ProvinceCount = context.ProvinceInitialStates.LoadedCount,
+                ProvinceCount = context.ProvinceDefinitions.Count,
                 HasDefinitions = context.ProvinceDefinitions.Count > 0,
                 HasInitialStates = context.ProvinceInitialStates.LoadedCount > 0,
                 TimeStamp = Time.time
@@ -118,7 +122,7 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.Log($"Phase complete: Loaded {context.ProvinceInitialStates.LoadedCount} provinces from JSON5 (ready for reference linking)", "core_data_loading");
+                ArchonLogger.Log($"Phase complete: Loaded {context.ProvinceDefinitions.Count} provinces from definition.csv, {context.ProvinceInitialStates.LoadedCount} with JSON5 history", "core_data_loading");
             }
         }
 

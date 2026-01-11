@@ -214,6 +214,67 @@ namespace Core.Systems
             });
         }
 
+        /// <summary>
+        /// Apply initial states (ownership, terrain) from JSON5 data to already-registered provinces
+        /// Called after InitializeFromDefinitions to set ownership for provinces that have history files
+        /// </summary>
+        public void ApplyInitialStates(ProvinceInitialStateLoadResult loadResult)
+        {
+            if (!isInitialized)
+            {
+                ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first", "core_simulation");
+                return;
+            }
+
+            if (!loadResult.Success)
+            {
+                ArchonLogger.LogWarning($"Cannot apply states from failed load result: {loadResult.ErrorMessage}", "core_simulation");
+                return;
+            }
+
+            int appliedCount = 0;
+            for (int i = 0; i < loadResult.InitialStates.Length; i++)
+            {
+                var initialState = loadResult.InitialStates[i];
+
+                if (!initialState.IsValid)
+                    continue;
+
+                ushort provinceId = (ushort)initialState.ProvinceID;
+
+                // Only apply to provinces that exist (were loaded from definition.csv)
+                if (!dataManager.HasProvince(provinceId))
+                {
+                    ArchonLogger.LogWarning($"Cannot apply state to unregistered province {provinceId}", "core_simulation");
+                    continue;
+                }
+
+                // Update terrain if specified
+                if (initialState.Terrain != 0)
+                {
+                    dataManager.SetProvinceTerrain(provinceId, initialState.Terrain);
+                }
+
+                appliedCount++;
+            }
+
+            ArchonLogger.Log($"Applied initial state to {appliedCount} provinces", "core_simulation");
+        }
+
+        /// <summary>
+        /// Add a single province to the system (for runtime colonization)
+        /// </summary>
+        public void AddProvince(ushort provinceId, ushort terrainType)
+        {
+            if (!isInitialized)
+            {
+                ArchonLogger.LogError("ProvinceSystem not initialized", "core_simulation");
+                return;
+            }
+
+            dataManager.AddProvince(provinceId, terrainType);
+        }
+
 
         // ===== DATA ACCESS OPERATIONS (delegated to ProvinceDataManager) =====
 
