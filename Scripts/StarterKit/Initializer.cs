@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 using System.Collections;
+using System.Collections.Generic;
 using Core;
 using Core.Systems;
 using Map.Core;
 using Map.Interaction;
+using ProvinceSystem;
 
 namespace StarterKit
 {
@@ -124,6 +127,9 @@ namespace StarterKit
 
             var timeManager = FindFirstObjectByType<TimeManager>();
             var mapInitializer = FindFirstObjectByType<MapInitializer>();
+
+            // Scan province adjacencies (required for colonization neighbor check)
+            yield return ScanProvinceAdjacencies(gameState);
 
             // Create player state
             if (logProgress)
@@ -247,6 +253,76 @@ namespace StarterKit
 
             if (logProgress)
                 ArchonLogger.Log("=== StarterKit initialization complete ===", "starter_kit");
+        }
+
+        /// <summary>
+        /// Scan province adjacencies using FastAdjacencyScanner
+        /// Populates GameState.Adjacencies with border data for colonization neighbor checks
+        /// </summary>
+        private IEnumerator ScanProvinceAdjacencies(GameState gameState)
+        {
+            if (logProgress)
+                ArchonLogger.Log("Scanning province adjacencies...", "starter_kit");
+
+            var mapSystemCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
+            if (mapSystemCoordinator == null || mapSystemCoordinator.ProvinceMapping == null)
+            {
+                ArchonLogger.LogWarning("Initializer: MapSystemCoordinator or ProvinceMapping not found - skipping adjacency scan", "starter_kit");
+                yield break;
+            }
+
+            // Get the province color texture
+            var provinceMapTexture = mapSystemCoordinator.TextureManager.ProvinceColorTexture;
+            if (provinceMapTexture == null)
+            {
+                ArchonLogger.LogWarning("Initializer: ProvinceColorTexture not found - skipping adjacency scan", "starter_kit");
+                yield break;
+            }
+
+            // Create FastAdjacencyScanner
+            GameObject scannerObj = new GameObject("FastAdjacencyScanner_Temp");
+            var scanner = scannerObj.AddComponent<FastAdjacencyScanner>();
+            scanner.provinceMap = provinceMapTexture;
+            scanner.ignoreDiagonals = false;
+            scanner.blackThreshold = 10f;
+            scanner.showDebugInfo = logProgress;
+
+            yield return null;
+
+            // Run scan
+            var scanResult = scanner.ScanForAdjacencies();
+
+            if (scanResult == null)
+            {
+                ArchonLogger.LogWarning("Initializer: Province adjacency scan failed", "starter_kit");
+                Object.Destroy(scannerObj);
+                yield break;
+            }
+
+            // Convert color adjacencies to ID adjacencies
+            var colorToIdMap = new Dictionary<Color32, int>(new Color32Comparer());
+
+            // Build color → ID map from ProvinceMapping
+            var allProvinces = mapSystemCoordinator.ProvinceMapping.GetAllProvinces();
+            foreach (var kvp in allProvinces)
+            {
+                ushort provinceId = kvp.Key;
+                Color32 color = kvp.Value.IdentifierColor;
+                colorToIdMap[color] = provinceId;
+            }
+
+            scanner.ConvertToIdAdjacencies(colorToIdMap);
+
+            // Populate GameState.Adjacencies
+            gameState.Adjacencies.SetAdjacencies(scanner.IdAdjacencies);
+
+            if (logProgress)
+                ArchonLogger.Log(gameState.Adjacencies.GetStatistics(), "starter_kit");
+
+            // Cleanup
+            Object.Destroy(scannerObj);
+
+            yield return null;
         }
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using Map.Core;
 using Map.Rendering.Terrain;
 
 namespace Map.Rendering
@@ -48,9 +49,12 @@ namespace Map.Rendering
             countVotesKernel = terrainAnalyzerCompute.FindKernel("CountVotes");
             determineWinnerKernel = terrainAnalyzerCompute.FindKernel("DetermineWinner");
 
-            // Initialize components
+            // Initialize components - get DataDirectory from GameSettings via MapInitializer
+            var mapInitializer = FindFirstObjectByType<MapInitializer>();
+            string dataDirectory = mapInitializer?.DataDirectory;
+
             rgbLookup = new TerrainRGBLookup();
-            if (!rgbLookup.Initialize(logAnalysis))
+            if (!rgbLookup.Initialize(dataDirectory, logAnalysis))
             {
                 Debug.LogError("ProvinceTerrainAnalyzer: Failed to initialize TerrainRGBLookup!");
             }

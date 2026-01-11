@@ -55,6 +55,7 @@ namespace Map.Core
         public Camera MapCamera => mapCamera;
         public MeshRenderer MeshRenderer => meshRenderer;
         public FogOfWarSystem FogOfWarSystem => fogOfWarSystem;
+        public string DataDirectory => gameSettings != null ? gameSettings.DataDirectory : null;
 
         // Initialization state
         private bool isInitialized = false;

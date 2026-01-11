@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using Unity.Collections;
 using Core;
+using Map.Core;
 using Map.Interaction;
+using Map.Rendering.Terrain;
 
 namespace StarterKit
 {
@@ -44,6 +47,7 @@ namespace StarterKit
         private VisualElement ownerContainer;
         private VisualElement ownerColorIndicator;
         private Label ownerLabel;
+        private Label terrainLabel;
 
         // Colonization UI
         private VisualElement colonizeContainer;
@@ -56,6 +60,7 @@ namespace StarterKit
         private ProvinceHighlighter provinceHighlighter;
         private EconomySystem economySystem;
         private PlayerState playerState;
+        private TerrainRGBLookup terrainLookup;
         private bool isInitialized;
 
         // State
@@ -89,6 +94,12 @@ namespace StarterKit
             provinceHighlighter = highlighterRef;
             economySystem = economySystemRef;
             playerState = playerStateRef;
+
+            // Initialize terrain lookup for ownable checks (use DataDirectory from GameSettings via MapInitializer)
+            var mapInitializer = Object.FindFirstObjectByType<MapInitializer>();
+            string dataDirectory = mapInitializer?.DataDirectory;
+            terrainLookup = new TerrainRGBLookup();
+            terrainLookup.Initialize(dataDirectory, false); // Suppress logging
 
             // Initialize UI
             InitializeUI();
@@ -229,6 +240,14 @@ namespace StarterKit
             ownerContainer.Add(ownerLabel);
             panelContainer.Add(ownerContainer);
 
+            // Terrain type
+            terrainLabel = new Label("Terrain: Unknown");
+            terrainLabel.name = "terrain-label";
+            terrainLabel.style.fontSize = fontSize;
+            terrainLabel.style.color = labelColor;
+            terrainLabel.style.marginTop = 4f;
+            panelContainer.Add(terrainLabel);
+
             // Colonization section (shown only for unowned provinces)
             colonizeContainer = new VisualElement();
             colonizeContainer.name = "colonize-container";
@@ -348,6 +367,23 @@ namespace StarterKit
                 return;
             }
 
+            // Check if province terrain is ownable
+            ushort terrainType = gameState.ProvinceQueries.GetTerrain(currentProvinceID);
+            if (terrainLookup != null && !terrainLookup.IsTerrainOwnable(terrainType))
+            {
+                ArchonLogger.LogWarning("ProvinceInfoUI: Cannot colonize unownable terrain", "starter_kit");
+                UpdatePanel();
+                return;
+            }
+
+            // Check if province borders player territory
+            if (!IsAdjacentToPlayerTerritory(currentProvinceID))
+            {
+                ArchonLogger.LogWarning("ProvinceInfoUI: Province must border your territory", "starter_kit");
+                UpdatePanel();
+                return;
+            }
+
             // Deduct gold and transfer ownership
             economySystem.RemoveGold(COLONIZE_COST);
             gameState.Provinces.SetProvinceOwner(currentProvinceID, playerState.PlayerCountryId);
@@ -372,8 +408,24 @@ namespace StarterKit
                 ownerColorIndicator,
                 ownerLabel);
 
+            // Update terrain label
+            UpdateTerrainLabel();
+
             // Update colonization button visibility
             UpdateColonizeButton();
+        }
+
+        private void UpdateTerrainLabel()
+        {
+            if (terrainLabel == null || terrainLookup == null)
+                return;
+
+            ushort terrainType = gameState.ProvinceQueries.GetTerrain(currentProvinceID);
+            string terrainName = terrainLookup.GetTerrainTypeName(terrainType);
+            bool ownable = terrainLookup.IsTerrainOwnable(terrainType);
+
+            string ownableStr = ownable ? "" : " (unownable)";
+            terrainLabel.text = $"Terrain: {terrainName} [T{terrainType}]{ownableStr}";
         }
 
         private void UpdateColonizeButton()
@@ -403,7 +455,22 @@ namespace StarterKit
                 return;
             }
 
-            // Show colonize button for unowned provinces
+            // Check if province terrain is ownable (e.g., not ocean/water)
+            ushort terrainType = gameState.ProvinceQueries.GetTerrain(currentProvinceID);
+            if (terrainLookup != null && !terrainLookup.IsTerrainOwnable(terrainType))
+            {
+                colonizeContainer.style.display = DisplayStyle.None;
+                return;
+            }
+
+            // Check if province borders player territory
+            if (!IsAdjacentToPlayerTerritory(currentProvinceID))
+            {
+                colonizeContainer.style.display = DisplayStyle.None;
+                return;
+            }
+
+            // Show colonize button for unowned land provinces adjacent to player
             colonizeContainer.style.display = DisplayStyle.Flex;
 
             // Update button state based on gold
@@ -412,6 +479,27 @@ namespace StarterKit
             colonizeButton.text = canAfford
                 ? $"Buy Land ({COLONIZE_COST} gold)"
                 : $"Buy Land ({COLONIZE_COST} gold) - Not enough gold";
+        }
+
+        private bool IsAdjacentToPlayerTerritory(ushort provinceId)
+        {
+            if (!playerState.HasPlayerCountry)
+                return false;
+
+            ushort playerId = playerState.PlayerCountryId;
+
+            // Get neighbors of target province and check if any is owned by player
+            using (var neighbors = gameState.Adjacencies.GetNeighbors(provinceId))
+            {
+                for (int i = 0; i < neighbors.Length; i++)
+                {
+                    ushort neighborOwner = gameState.ProvinceQueries.GetOwner(neighbors[i]);
+                    if (neighborOwner == playerId)
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         public void ShowPanel()

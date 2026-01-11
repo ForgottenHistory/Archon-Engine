@@ -15,6 +15,7 @@ namespace Map.Rendering.Terrain
     {
         private Dictionary<(byte r, byte g, byte b), uint> rgbToTerrainType;
         private Dictionary<uint, string> terrainTypeToName;
+        private Dictionary<uint, bool> terrainTypeOwnable; // ownable flag per terrain
         private uint terrainCount;
         private bool isInitialized = false;
 
@@ -22,7 +23,9 @@ namespace Map.Rendering.Terrain
         /// Load terrain_rgb.json5 and build lookup tables
         /// Must be called before using any lookup methods
         /// </summary>
-        public bool Initialize(bool logProgress = true)
+        /// <param name="dataDirectory">Data directory path (e.g., from GameSettings.DataDirectory)</param>
+        /// <param name="logProgress">Whether to log progress messages</param>
+        public bool Initialize(string dataDirectory = null, bool logProgress = true)
         {
             if (isInitialized)
             {
@@ -31,11 +34,18 @@ namespace Map.Rendering.Terrain
 
             rgbToTerrainType = new Dictionary<(byte r, byte g, byte b), uint>();
             terrainTypeToName = new Dictionary<uint, string>();
+            terrainTypeOwnable = new Dictionary<uint, bool>();
 
             try
             {
+                // Use provided data directory or fall back to default
+                if (string.IsNullOrEmpty(dataDirectory))
+                {
+                    dataDirectory = System.IO.Path.Combine(Application.dataPath, "Data");
+                }
+
                 // Load RGB mappings from terrain_rgb.json5
-                string terrainRgbPath = System.IO.Path.Combine(Application.dataPath, "Data", "map", "terrain_rgb.json5");
+                string terrainRgbPath = System.IO.Path.Combine(dataDirectory, "map", "terrain_rgb.json5");
                 if (!System.IO.File.Exists(terrainRgbPath))
                 {
                     ArchonLogger.LogError($"TerrainRGBLookup: terrain_rgb.json5 not found at {terrainRgbPath}", "map_rendering");
@@ -61,6 +71,13 @@ namespace Map.Rendering.Terrain
                         var colorArray = Json5Loader.GetIntArray(terrainObj, "color");
                         string typeName = terrainObj["type"]?.ToString();
 
+                        // Parse ownable field (defaults to true if not specified)
+                        bool ownable = true;
+                        if (terrainObj["ownable"] != null)
+                        {
+                            ownable = terrainObj["ownable"].Value<bool>();
+                        }
+
                         if (colorArray.Count >= 3)
                         {
                             byte r = (byte)colorArray[0];
@@ -72,10 +89,12 @@ namespace Map.Rendering.Terrain
                             {
                                 rgbToTerrainType[(r, g, b)] = terrainTypeIndex;
                                 terrainTypeToName[terrainTypeIndex] = terrainName;
+                                terrainTypeOwnable[terrainTypeIndex] = ownable;
 
                                 if (logProgress)
                                 {
-                                    ArchonLogger.Log($"TerrainRGBLookup: Terrain mapping - RGB({r},{g},{b}) → T{terrainTypeIndex} ({terrainName}, type={typeName})", "map_rendering");
+                                    string ownableStr = ownable ? "" : ", ownable=false";
+                                    ArchonLogger.Log($"TerrainRGBLookup: Terrain mapping - RGB({r},{g},{b}) → T{terrainTypeIndex} ({terrainName}, type={typeName}{ownableStr})", "map_rendering");
                                 }
 
                                 terrainTypeIndex++;
@@ -154,6 +173,33 @@ namespace Map.Rendering.Terrain
             }
 
             return terrainCount;
+        }
+
+        /// <summary>
+        /// Check if terrain type is ownable (can be colonized/owned)
+        /// Returns true by default if terrain index not found
+        /// </summary>
+        public bool IsTerrainOwnable(uint terrainIndex)
+        {
+            if (!isInitialized)
+            {
+                return true; // Default to ownable if not initialized
+            }
+
+            if (terrainTypeOwnable.TryGetValue(terrainIndex, out bool ownable))
+            {
+                return ownable;
+            }
+
+            return true; // Default to ownable if terrain not defined
+        }
+
+        /// <summary>
+        /// Check if terrain type is ownable by ushort terrain ID
+        /// </summary>
+        public bool IsTerrainOwnable(ushort terrainIndex)
+        {
+            return IsTerrainOwnable((uint)terrainIndex);
         }
 
         /// <summary>
