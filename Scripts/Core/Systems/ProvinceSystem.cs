@@ -374,14 +374,41 @@ namespace Core.Systems
         /// <summary>
         /// Called by TimeManager after simulation tick completes
         /// Swaps write/read buffers so UI sees latest completed tick
+        ///
+        /// Uses DIRTY TRACKING for efficient partial copies:
+        /// - Only copies provinces that were modified since last swap
+        /// - O(dirty count) instead of O(total provinces)
+        /// - Scales to 100k+ provinces without performance issues
         /// </summary>
         public void SwapBuffers()
         {
-            if (!isInitialized || snapshot == null)
+            if (!isInitialized || snapshot == null || dataManager == null)
             {
                 return;
             }
-            snapshot.SwapBuffers();
+
+            // Get dirty indices BEFORE swap (while they still reference the write buffer)
+            using (var dirtyIndices = dataManager.GetDirtyIndices(Unity.Collections.Allocator.Temp))
+            {
+                // Swap buffer pointers (O(1))
+                snapshot.SwapBuffers();
+
+                // Copy only dirty entries from new read buffer (was write) to new write buffer (was read)
+                if (dirtyIndices.Length > 0)
+                {
+                    var readBuffer = snapshot.GetProvinceReadBuffer();   // Has fresh data (was old write)
+                    var writeBuffer = snapshot.GetProvinceWriteBuffer(); // Has stale data (was old read)
+
+                    for (int i = 0; i < dirtyIndices.Length; i++)
+                    {
+                        int index = dirtyIndices[i];
+                        writeBuffer[index] = readBuffer[index];
+                    }
+                }
+
+                // Clear dirty tracking for next tick
+                dataManager.ClearDirty();
+            }
         }
 
         /// <summary>
@@ -506,6 +533,7 @@ namespace Core.Systems
         public void Dispose()
         {
             snapshot?.Dispose();
+            dataManager?.Dispose();
             if (idToIndex.IsCreated) idToIndex.Dispose();
             if (activeProvinceIds.IsCreated) activeProvinceIds.Dispose();
 

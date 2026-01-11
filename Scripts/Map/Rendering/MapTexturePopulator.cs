@@ -246,8 +246,14 @@ namespace Map.Rendering
 
             if (ownerTextureDispatcher != null)
             {
-                ArchonLogger.Log($"MapTexturePopulator: Updating owner texture for {changedProvinces.Length} changed provinces via GPU compute shader", "map_initialization");
+                ArchonLogger.Log($"MapTexturePopulator: Updating owner texture for {changedProvinces.Length} changed provinces via GPU compute shader", "map_rendering");
                 ownerTextureDispatcher.PopulateOwnerTexture(provinceQueries);
+
+                // CRITICAL: Force GPU synchronization after owner texture population
+                // OwnerTextureDispatcher.Dispatch() is async - fragment shader may try to read before GPU finishes writing
+                // This forces CPU to wait for GPU completion before rendering
+                var ownerSyncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.ProvinceOwnerTexture);
+                ownerSyncRequest.WaitForCompletion();
             }
             else
             {

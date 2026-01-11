@@ -92,8 +92,12 @@ namespace Core
         /// - Flip pointers so UI sees new data
         /// - Simulation starts writing to old read buffer next tick
         ///
-        /// Performance: O(1) - just flips an int
-        /// No memcpy! No allocations!
+        /// Performance: O(1) pointer flip only
+        ///
+        /// NOTE: This just flips the buffer pointers. The caller (ProvinceSystem.SwapBuffers)
+        /// is responsible for copying dirty entries to preserve persistent state.
+        /// This separation allows ProvinceSystem to use dirty tracking for O(dirty) copies
+        /// instead of O(all) full buffer copies.
         /// </summary>
         public void SwapBuffers()
         {

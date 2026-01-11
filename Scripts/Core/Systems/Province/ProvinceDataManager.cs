@@ -8,6 +8,9 @@ namespace Core.Systems.Province
     /// Handles get/set operations, queries, and ID mapping
     /// Uses snapshot's WRITE buffer for all simulation operations
     /// Extracted from ProvinceSystem.cs for better separation of concerns
+    ///
+    /// DIRTY TRACKING: Tracks which provinces have been modified since last buffer swap.
+    /// This enables efficient partial copies instead of full buffer copies on swap.
     /// </summary>
     public class ProvinceDataManager
     {
@@ -18,10 +21,16 @@ namespace Core.Systems.Province
 
         private int provinceCount;
 
+        // Dirty tracking for efficient buffer swaps
+        // Stores array INDICES (not province IDs) for direct buffer access
+        private NativeHashSet<int> dirtyIndices;
+
         private const ushort OCEAN_TERRAIN = 0;
         private const ushort UNOWNED_COUNTRY = 0;
+        private const int INITIAL_DIRTY_CAPACITY = 256;
 
         public int ProvinceCount => provinceCount;
+        public int DirtyCount => dirtyIndices.IsCreated ? dirtyIndices.Count : 0;
 
         public ProvinceDataManager(GameStateSnapshot snapshot,
                                    NativeHashMap<ushort, int> idToIndex,
@@ -33,6 +42,9 @@ namespace Core.Systems.Province
             this.activeProvinceIds = activeProvinceIds;
             this.eventBus = eventBus;
             this.provinceCount = 0;
+
+            // Initialize dirty tracking set
+            dirtyIndices = new NativeHashSet<int>(INITIAL_DIRTY_CAPACITY, Allocator.Persistent);
         }
 
         /// <summary>
@@ -122,6 +134,9 @@ namespace Core.Systems.Province
             state.ownerID = newOwner;
             states[arrayIndex] = state;
 
+            // Mark as dirty for buffer swap
+            MarkDirty(arrayIndex);
+
             // Emit ownership change event
             eventBus?.Emit(new ProvinceOwnershipChangedEvent
             {
@@ -159,8 +174,14 @@ namespace Core.Systems.Province
             // Update state and write back (structs are value types)
             var states = snapshot.GetProvinceWriteBuffer();
             var state = states[arrayIndex];
+            if (state.terrainType == terrain)
+                return; // No change
+
             state.terrainType = terrain;
             states[arrayIndex] = state;
+
+            // Mark as dirty for buffer swap
+            MarkDirty(arrayIndex);
         }
 
         /// <summary>
@@ -185,6 +206,9 @@ namespace Core.Systems.Province
 
             var states = snapshot.GetProvinceWriteBuffer();
             states[arrayIndex] = state;
+
+            // Mark as dirty for buffer swap
+            MarkDirty(arrayIndex);
         }
 
         #endregion
@@ -251,6 +275,67 @@ namespace Core.Systems.Province
         public bool HasProvince(ushort provinceId)
         {
             return idToIndex.ContainsKey(provinceId);
+        }
+
+        #endregion
+
+        #region Dirty Tracking
+
+        /// <summary>
+        /// Mark a province as dirty (modified since last buffer swap)
+        /// Uses array index for efficient buffer access during swap
+        /// </summary>
+        private void MarkDirty(int arrayIndex)
+        {
+            if (dirtyIndices.IsCreated)
+            {
+                dirtyIndices.Add(arrayIndex);
+            }
+        }
+
+        /// <summary>
+        /// Get all dirty indices for buffer swap
+        /// Returns a NativeArray that must be disposed by caller
+        /// </summary>
+        public NativeArray<int> GetDirtyIndices(Allocator allocator = Allocator.Temp)
+        {
+            if (!dirtyIndices.IsCreated || dirtyIndices.Count == 0)
+            {
+                return new NativeArray<int>(0, allocator);
+            }
+
+            var result = dirtyIndices.ToNativeArray(allocator);
+            return result;
+        }
+
+        /// <summary>
+        /// Clear dirty tracking after buffer swap
+        /// </summary>
+        public void ClearDirty()
+        {
+            if (dirtyIndices.IsCreated)
+            {
+                dirtyIndices.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Check if any provinces are dirty
+        /// </summary>
+        public bool HasDirtyProvinces()
+        {
+            return dirtyIndices.IsCreated && dirtyIndices.Count > 0;
+        }
+
+        /// <summary>
+        /// Dispose native collections
+        /// </summary>
+        public void Dispose()
+        {
+            if (dirtyIndices.IsCreated)
+            {
+                dirtyIndices.Dispose();
+            }
         }
 
         #endregion

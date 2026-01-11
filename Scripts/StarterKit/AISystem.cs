@@ -1,16 +1,22 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using Core;
 using Core.Systems;
+using Map.Core;
+using Map.Rendering.Terrain;
 
 namespace StarterKit
 {
     /// <summary>
-    /// Simple AI for StarterKit. Non-player countries build farms on monthly tick.
+    /// Simple AI for StarterKit. Non-player countries colonize and build farms on monthly tick.
     /// AI countries earn and spend gold like the player.
+    /// Priority: Colonize first (expand), then build farms (develop).
     /// </summary>
     public class AISystem : IDisposable
     {
+        private const int COLONIZE_COST = 20;
+
         private readonly GameState gameState;
         private readonly PlayerState playerState;
         private readonly BuildingSystem buildingSystem;
@@ -23,6 +29,9 @@ namespace StarterKit
         // Gold tracking per AI country (countryId -> gold)
         private readonly Dictionary<ushort, int> aiGold;
 
+        // Terrain lookup for ownable checks
+        private TerrainRGBLookup terrainLookup;
+
         public AISystem(GameState gameStateRef, PlayerState playerStateRef, BuildingSystem buildingSystemRef, bool log = true)
         {
             gameState = gameStateRef;
@@ -32,6 +41,12 @@ namespace StarterKit
 
             random = new System.Random();
             aiGold = new Dictionary<ushort, int>();
+
+            // Initialize terrain lookup for ownable checks (use DataDirectory from GameSettings)
+            var mapInitializer = UnityEngine.Object.FindFirstObjectByType<MapInitializer>();
+            string dataDirectory = mapInitializer?.DataDirectory;
+            terrainLookup = new TerrainRGBLookup();
+            terrainLookup.Initialize(dataDirectory, false);
 
             // Pre-allocate gold entries for all countries (zero allocations during gameplay)
             var countrySystem = gameState.GetComponent<CountrySystem>();
@@ -88,7 +103,17 @@ namespace StarterKit
                 int income = CalculateIncome(countryId, provinceSystem);
                 aiGold[countryId] += income;
 
-                // Try to build a farm if we can afford it
+                // Priority 1: Try to colonize if we can afford it (expand first)
+                if (aiGold[countryId] >= COLONIZE_COST)
+                {
+                    if (TryColonize(countryId, provinceSystem))
+                    {
+                        aiGold[countryId] -= COLONIZE_COST;
+                        continue; // Move to next country after colonizing
+                    }
+                }
+
+                // Priority 2: Try to build a farm if we can afford it (develop after expanding)
                 var farmType = buildingSystem.GetBuildingType("farm");
                 if (farmType != null && aiGold[countryId] >= farmType.Cost)
                 {
@@ -119,6 +144,70 @@ namespace StarterKit
             finally
             {
                 provinces.Dispose();
+            }
+        }
+
+        private bool TryColonize(ushort countryId, Core.Systems.ProvinceSystem provinceSystem)
+        {
+            // Get owned provinces
+            var ownedProvinces = provinceSystem.GetCountryProvinces(countryId);
+            try
+            {
+                if (ownedProvinces.Length == 0)
+                    return false;
+
+                // Find all unowned, ownable neighbor provinces
+                var colonizeCandidates = new List<ushort>();
+
+                for (int i = 0; i < ownedProvinces.Length; i++)
+                {
+                    ushort ownedProvince = ownedProvinces[i];
+
+                    // Get neighbors of this owned province
+                    using (var neighbors = gameState.Adjacencies.GetNeighbors(ownedProvince))
+                    {
+                        for (int j = 0; j < neighbors.Length; j++)
+                        {
+                            ushort neighborId = neighbors[j];
+
+                            // Check if unowned
+                            ushort owner = gameState.ProvinceQueries.GetOwner(neighborId);
+                            if (owner != 0)
+                                continue;
+
+                            // Check if terrain is ownable
+                            ushort terrainType = gameState.ProvinceQueries.GetTerrain(neighborId);
+                            if (terrainLookup != null && !terrainLookup.IsTerrainOwnable(terrainType))
+                                continue;
+
+                            // Avoid duplicates (same province may neighbor multiple owned provinces)
+                            if (!colonizeCandidates.Contains(neighborId))
+                            {
+                                colonizeCandidates.Add(neighborId);
+                            }
+                        }
+                    }
+                }
+
+                if (colonizeCandidates.Count == 0)
+                    return false;
+
+                // Pick random province to colonize
+                ushort targetProvince = colonizeCandidates[random.Next(colonizeCandidates.Count)];
+
+                // Colonize (set owner)
+                gameState.Provinces.SetProvinceOwner(targetProvince, countryId);
+
+                if (logProgress)
+                {
+                    ArchonLogger.Log($"AISystem: Country {countryId} colonized province {targetProvince} (spent {COLONIZE_COST} gold)", "starter_kit");
+                }
+
+                return true;
+            }
+            finally
+            {
+                ownedProvinces.Dispose();
             }
         }
 
