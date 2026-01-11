@@ -29,7 +29,7 @@ namespace StarterKit
         private Button[] speedButtons;
 
         // Configuration
-        private int[] speeds = { 1, 2, 3, 4, 5, 10 }; // Default speeds
+        private int[] speeds = { 1, 2, 3, 4, 5, 10, 50, 100 }; // Default speeds
 
         // References
         private TimeManager timeManager;
