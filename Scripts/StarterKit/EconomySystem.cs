@@ -1,4 +1,5 @@
 using System;
+using Unity.Collections;
 using Core;
 using Core.Systems;
 
@@ -6,7 +7,7 @@ namespace StarterKit
 {
     /// <summary>
     /// Simple economy for StarterKit.
-    /// 1 gold per province, collected monthly.
+    /// 1 gold per province + building bonuses, collected monthly.
     /// </summary>
     public class EconomySystem : IDisposable
     {
@@ -15,6 +16,9 @@ namespace StarterKit
         private readonly bool logCollection;
         private int gold;
         private bool isDisposed;
+
+        // Optional building system for bonus calculation
+        private BuildingSystem buildingSystem;
 
         public int Gold => gold;
 
@@ -37,6 +41,15 @@ namespace StarterKit
             }
         }
 
+        /// <summary>
+        /// Set building system for bonus calculation.
+        /// Called after building system is created.
+        /// </summary>
+        public void SetBuildingSystem(BuildingSystem buildingSystemRef)
+        {
+            buildingSystem = buildingSystemRef;
+        }
+
         public void Dispose()
         {
             if (isDisposed) return;
@@ -57,7 +70,9 @@ namespace StarterKit
         {
             ushort countryId = playerState.PlayerCountryId;
             int provinceCount = CountProvinces(countryId);
-            int income = provinceCount; // 1 gold per province
+            int baseIncome = provinceCount; // 1 gold per province
+            int buildingBonus = CalculateBuildingBonus(countryId);
+            int income = baseIncome + buildingBonus;
 
             if (income > 0)
             {
@@ -68,9 +83,33 @@ namespace StarterKit
 
                 if (logCollection)
                 {
-                    ArchonLogger.Log($"EconomySystem: Collected {income} gold from {provinceCount} provinces (Total: {gold})", "starter_kit");
+                    ArchonLogger.Log($"EconomySystem: Collected {income} gold ({baseIncome} base + {buildingBonus} buildings) from {provinceCount} provinces (Total: {gold})", "starter_kit");
                 }
             }
+        }
+
+        private int CalculateBuildingBonus(ushort countryId)
+        {
+            if (buildingSystem == null || gameState?.ProvinceQueries == null)
+                return 0;
+
+            int totalBonus = 0;
+
+            // Get all provinces owned by the country (must dispose NativeArray)
+            var provinceIds = gameState.ProvinceQueries.GetCountryProvinces(countryId);
+            try
+            {
+                foreach (var provinceId in provinceIds)
+                {
+                    totalBonus += buildingSystem.GetProvinceGoldBonus(provinceId);
+                }
+            }
+            finally
+            {
+                provinceIds.Dispose();
+            }
+
+            return totalBonus;
         }
 
         private int CountProvinces(ushort countryId)
@@ -82,14 +121,15 @@ namespace StarterKit
         }
 
         /// <summary>
-        /// Get monthly income (province count)
+        /// Get monthly income (province count + building bonuses)
         /// </summary>
         public int GetMonthlyIncome()
         {
             if (playerState == null || !playerState.HasPlayerCountry)
                 return 0;
 
-            return CountProvinces(playerState.PlayerCountryId);
+            ushort countryId = playerState.PlayerCountryId;
+            return CountProvinces(countryId) + CalculateBuildingBonus(countryId);
         }
 
         /// <summary>

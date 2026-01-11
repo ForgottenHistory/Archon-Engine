@@ -9,11 +9,10 @@ using Map.Utils;
 namespace StarterKit
 {
     /// <summary>
-    /// Unit visualization for StarterKit.
-    /// Renders unit count badges at province centers using GPU instancing.
+    /// Unit visualization. Renders unit count badges at province centers using GPU instancing.
     /// Uses BillboardAtlasGenerator for number display (0-99).
     /// </summary>
-    public class StarterKitUnitVisualization : MonoBehaviour
+    public class UnitVisualization : MonoBehaviour
     {
         [Header("Configuration")]
         [SerializeField] private float unitHeight = 2f;
@@ -27,7 +26,7 @@ namespace StarterKit
 
         // Dependencies
         private GameState gameState;
-        private StarterKitUnitSystem unitSystem;
+        private UnitSystem unitSystem;
         private ProvinceCenterLookup centerLookup;
 
         // GPU instancing data
@@ -52,11 +51,11 @@ namespace StarterKit
 
         public bool IsInitialized => isInitialized;
 
-        public void Initialize(GameState gameStateRef, StarterKitUnitSystem unitSystemRef)
+        public void Initialize(GameState gameStateRef, UnitSystem unitSystemRef)
         {
             if (isInitialized)
             {
-                ArchonLogger.LogWarning("StarterKitUnitVisualization: Already initialized", "starter_kit");
+                ArchonLogger.LogWarning("UnitVisualization: Already initialized", "starter_kit");
                 return;
             }
 
@@ -67,14 +66,14 @@ namespace StarterKit
             var coordinator = FindFirstObjectByType<MapSystemCoordinator>();
             if (coordinator == null || coordinator.ProvinceMapping == null)
             {
-                ArchonLogger.LogError("StarterKitUnitVisualization: MapSystemCoordinator or ProvinceMapping not found", "starter_kit");
+                ArchonLogger.LogError("UnitVisualization: MapSystemCoordinator or ProvinceMapping not found", "starter_kit");
                 return;
             }
 
             var mapInitializer = FindFirstObjectByType<MapInitializer>();
             if (mapInitializer == null || mapInitializer.TextureManager == null)
             {
-                ArchonLogger.LogError("StarterKitUnitVisualization: MapInitializer or TextureManager not found", "starter_kit");
+                ArchonLogger.LogError("UnitVisualization: MapInitializer or TextureManager not found", "starter_kit");
                 return;
             }
 
@@ -82,7 +81,7 @@ namespace StarterKit
             var meshRenderer = FindFirstObjectByType<MeshRenderer>();
             if (meshRenderer == null)
             {
-                ArchonLogger.LogError("StarterKitUnitVisualization: Map MeshRenderer not found", "starter_kit");
+                ArchonLogger.LogError("UnitVisualization: Map MeshRenderer not found", "starter_kit");
                 return;
             }
 
@@ -97,7 +96,7 @@ namespace StarterKit
 
             if (!centerLookup.IsInitialized)
             {
-                ArchonLogger.LogError("StarterKitUnitVisualization: Failed to initialize center lookup", "starter_kit");
+                ArchonLogger.LogError("UnitVisualization: Failed to initialize center lookup", "starter_kit");
                 return;
             }
 
@@ -112,7 +111,7 @@ namespace StarterKit
             isInitialized = true;
             isDirty = true;
 
-            ArchonLogger.Log("StarterKitUnitVisualization: Initialized", "starter_kit");
+            ArchonLogger.Log("UnitVisualization: Initialized", "starter_kit");
         }
 
         private void CreateRenderingResources()
@@ -143,7 +142,7 @@ namespace StarterKit
             Shader shader = Shader.Find("Engine/InstancedAtlasBadge");
             if (shader == null)
             {
-                ArchonLogger.LogError("StarterKitUnitVisualization: Engine/InstancedAtlasBadge shader not found!", "starter_kit");
+                ArchonLogger.LogError("UnitVisualization: Engine/InstancedAtlasBadge shader not found!", "starter_kit");
                 return;
             }
 
@@ -161,21 +160,21 @@ namespace StarterKit
                 if (atlas != null)
                 {
                     badgeMaterial.SetTexture("_NumberAtlas", atlas);
-                    ArchonLogger.Log($"StarterKitUnitVisualization: Atlas assigned: {atlas.width}x{atlas.height}", "starter_kit");
+                    ArchonLogger.Log($"UnitVisualization: Atlas assigned: {atlas.width}x{atlas.height}", "starter_kit");
                 }
                 else
                 {
-                    ArchonLogger.LogWarning("StarterKitUnitVisualization: Atlas texture is null!", "starter_kit");
+                    ArchonLogger.LogWarning("UnitVisualization: Atlas texture is null!", "starter_kit");
                 }
             }
             else
             {
-                ArchonLogger.LogWarning("StarterKitUnitVisualization: BillboardAtlasGenerator not assigned - create one and assign it", "starter_kit");
+                ArchonLogger.LogWarning("UnitVisualization: BillboardAtlasGenerator not assigned - create one and assign it", "starter_kit");
             }
 
             propertyBlock = new MaterialPropertyBlock();
 
-            ArchonLogger.Log($"StarterKitUnitVisualization: Created material with shader '{shader.name}'", "starter_kit");
+            ArchonLogger.Log($"UnitVisualization: Created material with shader '{shader.name}'", "starter_kit");
         }
 
         private void OnUnitCreated(UnitCreatedEvent evt)
@@ -188,7 +187,7 @@ namespace StarterKit
             isDirty = true;
 
             if (logDebug)
-                ArchonLogger.Log($"StarterKitUnitVisualization: Tracking unit {evt.UnitID} in province {evt.ProvinceID}", "starter_kit");
+                ArchonLogger.Log($"UnitVisualization: Tracking unit {evt.UnitID} in province {evt.ProvinceID}", "starter_kit");
         }
 
         private void OnUnitDestroyed(UnitDestroyedEvent evt)
@@ -197,7 +196,7 @@ namespace StarterKit
             isDirty = true;
 
             if (logDebug)
-                ArchonLogger.Log($"StarterKitUnitVisualization: Removed unit {evt.UnitID}", "starter_kit");
+                ArchonLogger.Log($"UnitVisualization: Removed unit {evt.UnitID}", "starter_kit");
         }
 
         private void OnUnitMoved(UnitMovedEvent evt)
@@ -242,7 +241,7 @@ namespace StarterKit
             provinceUnitCounts.Clear();
 
             if (logDebug)
-                ArchonLogger.Log($"StarterKitUnitVisualization: RebuildMatrices called, {trackedUnits.Count} tracked units", "starter_kit");
+                ArchonLogger.Log($"UnitVisualization: RebuildMatrices called, {trackedUnits.Count} tracked units", "starter_kit");
 
             // Count units per province
             foreach (var kvp in trackedUnits)
@@ -265,7 +264,7 @@ namespace StarterKit
                 if (!centerLookup.TryGetProvinceCenter(provinceId, out Vector3 worldPos))
                 {
                     if (logDebug)
-                        ArchonLogger.LogWarning($"StarterKitUnitVisualization: Failed to get center for province {provinceId}", "starter_kit");
+                        ArchonLogger.LogWarning($"UnitVisualization: Failed to get center for province {provinceId}", "starter_kit");
                     continue;
                 }
 
@@ -279,11 +278,11 @@ namespace StarterKit
                 scaleValues.Add(badgeScale);
 
                 if (logDebug)
-                    ArchonLogger.Log($"StarterKitUnitVisualization: Badge at province {provinceId}, count={unitCount}, pos={badgePos}", "starter_kit");
+                    ArchonLogger.Log($"UnitVisualization: Badge at province {provinceId}, count={unitCount}, pos={badgePos}", "starter_kit");
             }
 
             if (logDebug)
-                ArchonLogger.Log($"StarterKitUnitVisualization: Rebuilt {matrices.Count} badges, material={badgeMaterial != null}, mesh={quadMesh != null}", "starter_kit");
+                ArchonLogger.Log($"UnitVisualization: Rebuilt {matrices.Count} badges, material={badgeMaterial != null}, mesh={quadMesh != null}", "starter_kit");
         }
 
         void OnDestroy()

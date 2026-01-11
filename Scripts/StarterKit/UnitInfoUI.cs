@@ -32,7 +32,7 @@ namespace StarterKit
 
         // References
         private GameState gameState;
-        private StarterKitUnitSystem unitSystem;
+        private UnitSystem unitSystem;
         private ProvinceSelector provinceSelector;
         private bool isInitialized;
 
@@ -42,7 +42,7 @@ namespace StarterKit
 
         public bool IsInitialized => isInitialized;
 
-        public void Initialize(GameState gameStateRef, StarterKitUnitSystem unitSystemRef, ProvinceSelector provinceSelectorRef)
+        public void Initialize(GameState gameStateRef, UnitSystem unitSystemRef, ProvinceSelector provinceSelectorRef)
         {
             if (isInitialized)
             {
@@ -277,7 +277,7 @@ namespace StarterKit
             }
         }
 
-        private VisualElement CreateUnitEntry(ushort unitId, UnitState state, StarterKitUnitType unitType)
+        private VisualElement CreateUnitEntry(ushort unitId, UnitState state, UnitType unitType)
         {
             var entry = new VisualElement();
             entry.style.flexDirection = FlexDirection.Row;

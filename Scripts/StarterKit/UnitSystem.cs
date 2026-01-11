@@ -9,10 +9,9 @@ using Newtonsoft.Json.Linq;
 namespace StarterKit
 {
     /// <summary>
-    /// Simple unit type definition for StarterKit.
-    /// Lighter weight than GAME layer's UnitDefinition.
+    /// Simple unit type definition. Lighter weight than GAME layer's UnitDefinition.
     /// </summary>
-    public class StarterKitUnitType
+    public class UnitType
     {
         public ushort ID { get; set; }
         public string StringID { get; set; }
@@ -24,10 +23,9 @@ namespace StarterKit
     }
 
     /// <summary>
-    /// Simple military unit system for StarterKit.
-    /// Wraps Core.Units.UnitSystem and provides unit type loading from Template-Data.
+    /// Simple military unit system. Wraps Core.Units.UnitSystem and provides unit type loading.
     /// </summary>
-    public class StarterKitUnitSystem : IDisposable
+    public class UnitSystem : IDisposable
     {
         private readonly GameState gameState;
         private readonly PlayerState playerState;
@@ -35,8 +33,8 @@ namespace StarterKit
         private bool isDisposed;
 
         // Unit type registry (loaded from Template-Data/units/)
-        private readonly Dictionary<string, StarterKitUnitType> unitTypesByString;
-        private readonly Dictionary<ushort, StarterKitUnitType> unitTypesById;
+        private readonly Dictionary<string, UnitType> unitTypesByString;
+        private readonly Dictionary<ushort, UnitType> unitTypesById;
         private ushort nextTypeId = 1;
 
         // Events
@@ -44,14 +42,14 @@ namespace StarterKit
         public event Action<ushort> OnUnitDestroyed;
         public event Action<ushort, ushort, ushort> OnUnitMoved; // unitID, fromProvince, toProvince
 
-        public StarterKitUnitSystem(GameState gameStateRef, PlayerState playerStateRef, bool log = true)
+        public UnitSystem(GameState gameStateRef, PlayerState playerStateRef, bool log = true)
         {
             gameState = gameStateRef;
             playerState = playerStateRef;
             logProgress = log;
 
-            unitTypesByString = new Dictionary<string, StarterKitUnitType>();
-            unitTypesById = new Dictionary<ushort, StarterKitUnitType>();
+            unitTypesByString = new Dictionary<string, UnitType>();
+            unitTypesById = new Dictionary<ushort, UnitType>();
 
             // Subscribe to unit events from Core
             gameState.EventBus.Subscribe<UnitCreatedEvent>(OnCoreUnitCreated);
@@ -60,7 +58,7 @@ namespace StarterKit
 
             if (logProgress)
             {
-                ArchonLogger.Log("StarterKitUnitSystem: Initialized", "starter_kit");
+                ArchonLogger.Log("UnitSystem: Initialized", "starter_kit");
             }
         }
 
@@ -71,7 +69,7 @@ namespace StarterKit
         {
             if (!Directory.Exists(unitsPath))
             {
-                ArchonLogger.LogWarning($"StarterKitUnitSystem: Units directory not found: {unitsPath}", "starter_kit");
+                ArchonLogger.LogWarning($"UnitSystem: Units directory not found: {unitsPath}", "starter_kit");
                 return;
             }
 
@@ -89,21 +87,21 @@ namespace StarterKit
                 }
                 catch (Exception ex)
                 {
-                    ArchonLogger.LogError($"StarterKitUnitSystem: Failed to load {file}: {ex.Message}", "starter_kit");
+                    ArchonLogger.LogError($"UnitSystem: Failed to load {file}: {ex.Message}", "starter_kit");
                 }
             }
 
             if (logProgress)
             {
-                ArchonLogger.Log($"StarterKitUnitSystem: Loaded {unitTypesByString.Count} unit types", "starter_kit");
+                ArchonLogger.Log($"UnitSystem: Loaded {unitTypesByString.Count} unit types", "starter_kit");
             }
         }
 
-        private StarterKitUnitType LoadUnitTypeFromFile(string filePath)
+        private UnitType LoadUnitTypeFromFile(string filePath)
         {
             var json = Json5Loader.LoadJson5File(filePath);
 
-            var unitType = new StarterKitUnitType
+            var unitType = new UnitType
             {
                 StringID = json["id"]?.ToString() ?? "",
                 Name = json["name"]?.ToString() ?? "",
@@ -140,7 +138,7 @@ namespace StarterKit
             return unitType;
         }
 
-        private void RegisterUnitType(StarterKitUnitType unitType)
+        private void RegisterUnitType(UnitType unitType)
         {
             unitType.ID = nextTypeId++;
             unitTypesByString[unitType.StringID] = unitType;
@@ -148,14 +146,14 @@ namespace StarterKit
 
             if (logProgress)
             {
-                ArchonLogger.Log($"StarterKitUnitSystem: Registered '{unitType.Name}' (ID={unitType.ID})", "starter_kit");
+                ArchonLogger.Log($"UnitSystem: Registered '{unitType.Name}' (ID={unitType.ID})", "starter_kit");
             }
         }
 
         /// <summary>
         /// Get unit type by string ID (e.g., "infantry").
         /// </summary>
-        public StarterKitUnitType GetUnitType(string stringId)
+        public UnitType GetUnitType(string stringId)
         {
             return unitTypesByString.TryGetValue(stringId, out var unitType) ? unitType : null;
         }
@@ -163,7 +161,7 @@ namespace StarterKit
         /// <summary>
         /// Get unit type by numeric ID.
         /// </summary>
-        public StarterKitUnitType GetUnitType(ushort typeId)
+        public UnitType GetUnitType(ushort typeId)
         {
             return unitTypesById.TryGetValue(typeId, out var unitType) ? unitType : null;
         }
@@ -171,7 +169,7 @@ namespace StarterKit
         /// <summary>
         /// Get all registered unit types.
         /// </summary>
-        public IEnumerable<StarterKitUnitType> GetAllUnitTypes()
+        public IEnumerable<UnitType> GetAllUnitTypes()
         {
             return unitTypesByString.Values;
         }
@@ -184,14 +182,14 @@ namespace StarterKit
         {
             if (!playerState.HasPlayerCountry)
             {
-                ArchonLogger.LogWarning("StarterKitUnitSystem: Cannot create unit - no player country", "starter_kit");
+                ArchonLogger.LogWarning("UnitSystem: Cannot create unit - no player country", "starter_kit");
                 return 0;
             }
 
             var unitType = GetUnitType(unitTypeStringId);
             if (unitType == null)
             {
-                ArchonLogger.LogWarning($"StarterKitUnitSystem: Unknown unit type '{unitTypeStringId}'", "starter_kit");
+                ArchonLogger.LogWarning($"UnitSystem: Unknown unit type '{unitTypeStringId}'", "starter_kit");
                 return 0;
             }
 
@@ -206,14 +204,14 @@ namespace StarterKit
         {
             if (!playerState.HasPlayerCountry)
             {
-                ArchonLogger.LogWarning("StarterKitUnitSystem: Cannot create unit - no player country", "starter_kit");
+                ArchonLogger.LogWarning("UnitSystem: Cannot create unit - no player country", "starter_kit");
                 return 0;
             }
 
             var unitSystem = gameState.Units;
             if (unitSystem == null)
             {
-                ArchonLogger.LogError("StarterKitUnitSystem: UnitSystem not available", "starter_kit");
+                ArchonLogger.LogError("UnitSystem: UnitSystem not available", "starter_kit");
                 return 0;
             }
 
@@ -223,7 +221,7 @@ namespace StarterKit
             {
                 var unitType = GetUnitType(unitTypeId);
                 string typeName = unitType?.Name ?? $"Type{unitTypeId}";
-                ArchonLogger.Log($"StarterKitUnitSystem: Created {typeName} (ID={unitId}) in province {provinceId}", "starter_kit");
+                ArchonLogger.Log($"UnitSystem: Created {typeName} (ID={unitId}) in province {provinceId}", "starter_kit");
             }
 
             return unitId;

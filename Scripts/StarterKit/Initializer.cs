@@ -12,7 +12,7 @@ namespace StarterKit
     /// Use this as the entry point for StarterKit scenes.
     /// Owns PlayerState and EconomySystem as plain classes.
     /// </summary>
-    public class StarterKitInitializer : MonoBehaviour
+    public class Initializer : MonoBehaviour
     {
         [Header("Engine References")]
         [SerializeField] private EngineMapInitializer engineMapInitializer;
@@ -23,9 +23,10 @@ namespace StarterKit
         [SerializeField] private TimeUI timeUI;
         [SerializeField] private ProvinceInfoUI provinceInfoUI;
         [SerializeField] private UnitInfoUI unitInfoUI;
+        [SerializeField] private BuildingInfoUI buildingInfoUI;
 
         [Header("Visualization")]
-        [SerializeField] private StarterKitUnitVisualization unitVisualization;
+        [SerializeField] private UnitVisualization unitVisualization;
 
         [Header("Configuration")]
         [SerializeField] private bool initializeOnStart = true;
@@ -34,14 +35,16 @@ namespace StarterKit
         // Owned systems (plain classes)
         private PlayerState playerState;
         private EconomySystem economySystem;
-        private StarterKitUnitSystem unitSystem;
+        private UnitSystem unitSystem;
+        private BuildingSystem buildingSystem;
 
         private bool isInitialized;
 
         public bool IsInitialized => isInitialized;
         public PlayerState PlayerState => playerState;
         public EconomySystem EconomySystem => economySystem;
-        public StarterKitUnitSystem UnitSystem => unitSystem;
+        public UnitSystem UnitSystem => unitSystem;
+        public BuildingSystem BuildingSystem => buildingSystem;
 
         void Start()
         {
@@ -53,6 +56,7 @@ namespace StarterKit
 
         void OnDestroy()
         {
+            buildingSystem?.Dispose();
             unitSystem?.Dispose();
             economySystem?.Dispose();
         }
@@ -83,13 +87,15 @@ namespace StarterKit
                 provinceInfoUI = FindFirstObjectByType<ProvinceInfoUI>();
             if (unitInfoUI == null)
                 unitInfoUI = FindFirstObjectByType<UnitInfoUI>();
+            if (buildingInfoUI == null)
+                buildingInfoUI = FindFirstObjectByType<BuildingInfoUI>();
             if (unitVisualization == null)
-                unitVisualization = FindFirstObjectByType<StarterKitUnitVisualization>();
+                unitVisualization = FindFirstObjectByType<UnitVisualization>();
 
             // Validate engine initializer
             if (engineMapInitializer == null)
             {
-                ArchonLogger.LogError("StarterKitInitializer: EngineMapInitializer not found!", "starter_kit");
+                ArchonLogger.LogError("Initializer: EngineMapInitializer not found!", "starter_kit");
                 yield break;
             }
 
@@ -109,7 +115,7 @@ namespace StarterKit
             var gameState = GameState.Instance;
             if (gameState == null)
             {
-                ArchonLogger.LogError("StarterKitInitializer: GameState not found!", "starter_kit");
+                ArchonLogger.LogError("Initializer: GameState not found!", "starter_kit");
                 yield break;
             }
 
@@ -136,8 +142,20 @@ namespace StarterKit
             if (logProgress)
                 ArchonLogger.Log("Creating unit system...", "starter_kit");
 
-            unitSystem = new StarterKitUnitSystem(gameState, playerState, logProgress);
+            unitSystem = new UnitSystem(gameState, playerState, logProgress);
             unitSystem.LoadUnitTypes("Assets/Archon-Engine/Template-Data/units");
+
+            yield return null;
+
+            // Create building system
+            if (logProgress)
+                ArchonLogger.Log("Creating building system...", "starter_kit");
+
+            buildingSystem = new BuildingSystem(gameState, playerState, economySystem, logProgress);
+            buildingSystem.LoadBuildingTypes("Assets/Archon-Engine/Template-Data/buildings");
+
+            // Link building system to economy for bonus calculation
+            economySystem.SetBuildingSystem(buildingSystem);
 
             yield return null;
 
@@ -185,6 +203,14 @@ namespace StarterKit
                             ArchonLogger.Log("Initializing unit info UI (post country selection)...", "starter_kit");
 
                         unitInfoUI.Initialize(gameState, unitSystem, selector);
+                    }
+
+                    if (buildingInfoUI != null && buildingSystem != null)
+                    {
+                        if (logProgress)
+                            ArchonLogger.Log("Initializing building info UI (post country selection)...", "starter_kit");
+
+                        buildingInfoUI.Initialize(gameState, buildingSystem, selector);
                     }
 
                     if (unitVisualization != null && unitSystem != null)
