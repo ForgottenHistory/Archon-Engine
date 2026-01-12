@@ -335,8 +335,8 @@ namespace Map.Rendering
             // Set input buffer
             distanceFieldCompute.SetTexture(finalizeKernel, "DistanceFieldA", distanceFieldA);
 
-            // Set output texture (DistanceFieldTexture in MapTextureManager)
-            distanceFieldCompute.SetTexture(finalizeKernel, "BorderDistanceTexture", textureManager.DistanceFieldTexture);
+            // Set output texture (DistanceFieldBorderTexture in MapTextureManager)
+            distanceFieldCompute.SetTexture(finalizeKernel, "BorderDistanceTexture", textureManager.DistanceFieldBorderTexture);
 
             // Set output channel (0 = R, 1 = G)
             distanceFieldCompute.SetInt("OutputChannel", outputChannel);

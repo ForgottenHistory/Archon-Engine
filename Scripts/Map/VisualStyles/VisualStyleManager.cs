@@ -120,23 +120,54 @@ namespace Archon.Engine.Map
                 return;
             }
 
-            // Set border parameters on the material
+            // Set border rendering mode on the material
+            // Shader values: 0=None, 1=DistanceField, 2=PixelPerfect, 3=MeshGeometry
+            int renderingModeValue = GetShaderModeValue(borders.renderingMode);
+            runtimeMaterial.SetInt("_BorderRenderingMode", renderingModeValue);
+
+            // Set border colors and strengths on the material
             runtimeMaterial.SetFloat("_CountryBorderStrength", borders.countryBorderStrength);
             runtimeMaterial.SetColor("_CountryBorderColor", borders.countryBorderColor);
             runtimeMaterial.SetFloat("_ProvinceBorderStrength", borders.provinceBorderStrength);
             runtimeMaterial.SetColor("_ProvinceBorderColor", borders.provinceBorderColor);
 
-            // DEBUG: Verify the values were actually set
-            float actualCountryStrength = runtimeMaterial.GetFloat("_CountryBorderStrength");
-            float actualProvinceStrength = runtimeMaterial.GetFloat("_ProvinceBorderStrength");
-            ArchonLogger.Log($"VisualStyleManager: Border strengths set - Country: {actualCountryStrength}, Province: {actualProvinceStrength}", "map_rendering");
+            // Set distance field parameters (used by ShaderDistanceField mode)
+            runtimeMaterial.SetFloat("_EdgeWidth", borders.edgeWidth);
+            runtimeMaterial.SetFloat("_GradientWidth", borders.gradientWidth);
+            runtimeMaterial.SetFloat("_EdgeSmoothness", borders.edgeSmoothness);
+            runtimeMaterial.SetFloat("_EdgeColorMul", borders.edgeColorMultiplier);
+            runtimeMaterial.SetFloat("_GradientColorMul", borders.gradientColorMultiplier);
+            runtimeMaterial.SetFloat("_EdgeAlpha", borders.edgeAlpha);
+            runtimeMaterial.SetFloat("_GradientAlphaInside", borders.gradientAlphaInside);
+            runtimeMaterial.SetFloat("_GradientAlphaOutside", borders.gradientAlphaOutside);
 
-            // Note: Border mode application deferred until ENGINE components exist
-            // Use ApplyBorderConfiguration() after map initialization
+            if (logStyleApplication)
+            {
+                ArchonLogger.Log($"VisualStyleManager: Border style applied - Rendering: {borders.renderingMode} (shader mode={renderingModeValue}), Country: {borders.countryBorderStrength:P0}, Province: {borders.provinceBorderStrength:P0}", "map_rendering");
+            }
+
+            // Note: Border compute shader settings applied in ApplyBorderConfiguration()
+        }
+
+        /// <summary>
+        /// Convert BorderRenderingMode enum to shader integer value
+        /// Shader values: 0=None, 1=DistanceField, 2=PixelPerfect, 3=MeshGeometry
+        /// </summary>
+        private int GetShaderModeValue(BorderRenderingMode mode)
+        {
+            switch (mode)
+            {
+                case BorderRenderingMode.None: return 0;
+                case BorderRenderingMode.ShaderDistanceField: return 1;
+                case BorderRenderingMode.ShaderPixelPerfect: return 2;
+                case BorderRenderingMode.MeshGeometry: return 3;
+                default: return 0;
+            }
         }
 
         /// <summary>
         /// Apply border configuration from style (called after map initialization when BorderDispatcher exists)
+        /// Sets rendering mode, border mode, and triggers border generation
         /// </summary>
         public void ApplyBorderConfiguration(VisualStyleConfiguration style)
         {
@@ -147,15 +178,18 @@ namespace Archon.Engine.Map
 
             if (borderDispatcher != null)
             {
-                var engineBorderMode = ConvertBorderMode(style.borders.defaultBorderMode);
+                // Set the rendering mode from VisualStyles (single source of truth)
+                borderDispatcher.SetBorderRenderingMode(style.borders.renderingMode);
 
-                // Set all border parameters at once to avoid redundant DetectBorders() calls
-                borderDispatcher.SetBorderParameters(
-                    engineBorderMode,
-                    style.borders.countryBorderThickness,
-                    style.borders.provinceBorderThickness,
-                    style.borders.borderAntiAliasing,
-                    updateBorders: false  // Don't update yet - we'll do it after populating owner texture
+                // Set border mode (which borders to show)
+                var engineBorderMode = ConvertBorderMode(style.borders.borderMode);
+                borderDispatcher.SetBorderMode(engineBorderMode);
+
+                // Set pixel-perfect parameters from VisualStyleConfiguration
+                borderDispatcher.SetPixelPerfectParameters(
+                    style.borders.pixelPerfectCountryThickness,
+                    style.borders.pixelPerfectProvinceThickness,
+                    style.borders.pixelPerfectAntiAliasing
                 );
 
                 if (style.borders.enableBordersOnStartup)
@@ -186,7 +220,7 @@ namespace Archon.Engine.Map
                     borderDispatcher.DetectBorders();
                     if (logStyleApplication)
                     {
-                        ArchonLogger.Log($"VisualStyleManager: Applied {style.borders.defaultBorderMode} border mode (country: {style.borders.countryBorderThickness}px, province: {style.borders.provinceBorderThickness}px, AA: {style.borders.borderAntiAliasing:F1}) from visual style", "map_rendering");
+                        ArchonLogger.Log($"VisualStyleManager: Applied borders - Rendering: {style.borders.renderingMode}, Mode: {style.borders.borderMode}", "map_rendering");
                     }
                 }
             }
@@ -315,21 +349,21 @@ namespace Archon.Engine.Map
         }
 
         /// <summary>
-        /// Convert VisualStyleConfiguration BorderMode enum to ENGINE BorderMode enum
+        /// Convert VisualStyleConfiguration BorderModeType enum to ENGINE BorderMode enum
         /// </summary>
-        private BorderMode ConvertBorderMode(VisualStyleConfiguration.BorderStyle.BorderMode mode)
+        private BorderMode ConvertBorderMode(VisualStyleConfiguration.BorderStyle.BorderModeType mode)
         {
             switch (mode)
             {
-                case VisualStyleConfiguration.BorderStyle.BorderMode.Province:
+                case VisualStyleConfiguration.BorderStyle.BorderModeType.Province:
                     return BorderMode.Province;
-                case VisualStyleConfiguration.BorderStyle.BorderMode.Country:
+                case VisualStyleConfiguration.BorderStyle.BorderModeType.Country:
                     return BorderMode.Country;
-                case VisualStyleConfiguration.BorderStyle.BorderMode.Thick:
+                case VisualStyleConfiguration.BorderStyle.BorderModeType.Thick:
                     return BorderMode.Thick;
-                case VisualStyleConfiguration.BorderStyle.BorderMode.Dual:
+                case VisualStyleConfiguration.BorderStyle.BorderModeType.Dual:
                     return BorderMode.Dual;
-                case VisualStyleConfiguration.BorderStyle.BorderMode.None:
+                case VisualStyleConfiguration.BorderStyle.BorderModeType.None:
                     return BorderMode.None;
                 default:
                     return BorderMode.Dual;
@@ -349,16 +383,16 @@ namespace Archon.Engine.Map
 
             ApplyStyle(newStyle);
 
-            // Apply border configuration with new thickness and anti-aliasing
+            // Apply border configuration from VisualStyles
             if (borderDispatcher != null)
             {
-                var engineBorderMode = ConvertBorderMode(newStyle.borders.defaultBorderMode);
-                borderDispatcher.SetBorderParameters(
-                    engineBorderMode,
-                    newStyle.borders.countryBorderThickness,
-                    newStyle.borders.provinceBorderThickness,
-                    newStyle.borders.borderAntiAliasing,
-                    updateBorders: true  // Update immediately
+                borderDispatcher.SetBorderRenderingMode(newStyle.borders.renderingMode);
+                var engineBorderMode = ConvertBorderMode(newStyle.borders.borderMode);
+                borderDispatcher.SetBorderMode(engineBorderMode);
+                borderDispatcher.SetPixelPerfectParameters(
+                    newStyle.borders.pixelPerfectCountryThickness,
+                    newStyle.borders.pixelPerfectProvinceThickness,
+                    newStyle.borders.pixelPerfectAntiAliasing
                 );
             }
         }
@@ -409,18 +443,19 @@ namespace Archon.Engine.Map
                 mapModeManager.UpdateMaterial(runtimeMaterial);
             }
 
-            // Regenerate borders with thickness and anti-aliasing from ScriptableObject
+            // Apply border rendering mode and regenerate borders from ScriptableObject
             if (borderDispatcher != null)
             {
-                var engineBorderMode = ConvertBorderMode(style.borders.defaultBorderMode);
-                ArchonLogger.Log($"VisualStyleManager.ReloadMaterialFromAsset: Calling BorderComputeDispatcher.SetBorderParameters (mode: {engineBorderMode}, country: {style.borders.countryBorderThickness}px, province: {style.borders.provinceBorderThickness}px, AA: {style.borders.borderAntiAliasing:F1})", "map_rendering");
-                borderDispatcher.SetBorderParameters(
-                    engineBorderMode,
-                    style.borders.countryBorderThickness,
-                    style.borders.provinceBorderThickness,
-                    style.borders.borderAntiAliasing,
-                    updateBorders: true  // Update immediately
+                borderDispatcher.SetBorderRenderingMode(style.borders.renderingMode);
+                var engineBorderMode = ConvertBorderMode(style.borders.borderMode);
+                borderDispatcher.SetBorderMode(engineBorderMode);
+                borderDispatcher.SetPixelPerfectParameters(
+                    style.borders.pixelPerfectCountryThickness,
+                    style.borders.pixelPerfectProvinceThickness,
+                    style.borders.pixelPerfectAntiAliasing
                 );
+
+                ArchonLogger.Log($"VisualStyleManager.ReloadMaterialFromAsset: Applied borders - Rendering: {style.borders.renderingMode}, Mode: {style.borders.borderMode}", "map_rendering");
             }
 
             ArchonLogger.Log("VisualStyleManager.ReloadMaterialFromAsset: Complete - style reloaded from ScriptableObject", "map_rendering");

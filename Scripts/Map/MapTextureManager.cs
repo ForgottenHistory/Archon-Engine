@@ -40,8 +40,16 @@ namespace Map.Rendering
         public RenderTexture DetailIndexTexture => visualTextures?.DetailIndexTexture;
         public RenderTexture DetailMaskTexture => visualTextures?.DetailMaskTexture;
         public Texture2D ProvinceColorPalette => paletteManager?.ProvinceColorPalette;
-        public RenderTexture DistanceFieldTexture => dynamicTextures?.DistanceFieldTexture;
-        public RenderTexture DualBorderTexture => dynamicTextures?.DualBorderTexture;
+        // Border textures - each mode has dedicated texture
+        public RenderTexture DistanceFieldBorderTexture => dynamicTextures?.DistanceFieldBorderTexture;
+        public RenderTexture PixelPerfectBorderTexture => dynamicTextures?.PixelPerfectBorderTexture;
+
+        // Legacy accessors for backwards compatibility
+        [System.Obsolete("Use DistanceFieldBorderTexture instead")]
+        public RenderTexture DistanceFieldTexture => dynamicTextures?.DistanceFieldBorderTexture;
+        [System.Obsolete("Use PixelPerfectBorderTexture instead")]
+        public RenderTexture DualBorderTexture => dynamicTextures?.PixelPerfectBorderTexture;
+
         public RenderTexture HighlightTexture => dynamicTextures?.HighlightTexture;
         public RenderTexture FogOfWarTexture => dynamicTextures?.FogOfWarTexture;
 

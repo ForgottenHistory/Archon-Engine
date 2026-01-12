@@ -9,7 +9,7 @@
 float4 RenderBorderDebugMode(float2 uv)
 {
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
-    float borderMask = SAMPLE_TEXTURE2D(_BorderMaskTexture, sampler_BorderMaskTexture, correctedUV).r;
+    float borderMask = SAMPLE_TEXTURE2D(_PixelPerfectBorderTexture, sampler_PixelPerfectBorderTexture, correctedUV).r;
 
     if (borderMask < 0.01)
     {

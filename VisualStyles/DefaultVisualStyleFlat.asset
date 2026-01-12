@@ -15,15 +15,24 @@ MonoBehaviour:
   styleName: Default
   description: Default visual style
   borders:
+    renderingMode: 3
     countryBorderColor: {r: 0, g: 0, b: 0, a: 1}
     countryBorderStrength: 1
-    countryBorderThickness: 1
     provinceBorderColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
     provinceBorderStrength: 0.5
-    provinceBorderThickness: 1
-    borderAntiAliasing: 0
     enableBordersOnStartup: 1
-    defaultBorderMode: 3
+    borderMode: 3
+    pixelPerfectCountryThickness: 3
+    pixelPerfectProvinceThickness: 1
+    pixelPerfectAntiAliasing: 1
+    edgeWidth: 0.5
+    gradientWidth: 2
+    edgeSmoothness: 0.2
+    edgeColorMultiplier: 0.7
+    gradientColorMultiplier: 0.85
+    edgeAlpha: 1
+    gradientAlphaInside: 0.5
+    gradientAlphaOutside: 0.3
   mapModes:
     oceanColor: {r: 0.098, g: 0.157, b: 0.439, a: 1}
     unownedLandColor: {r: 0.8, g: 0.7, b: 0.5, a: 1}

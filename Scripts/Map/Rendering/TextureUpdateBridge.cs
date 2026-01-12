@@ -22,6 +22,8 @@ namespace Map.Rendering
         private MapTextureManager textureManager;
         private MapTexturePopulator texturePopulator;
         private ProvinceMapping provinceMapping;
+        private OwnerTextureDispatcher ownerTextureDispatcher;
+        private BorderComputeDispatcher borderDispatcher;
 
         // Batching for performance
         private HashSet<ushort> pendingProvinceUpdates = new HashSet<ushort>();
@@ -38,6 +40,10 @@ namespace Map.Rendering
             this.textureManager = textureManager;
             this.texturePopulator = texturePopulator;
             this.provinceMapping = provinceMapping;
+
+            // Find rendering dispatchers for border updates
+            ownerTextureDispatcher = FindFirstObjectByType<OwnerTextureDispatcher>();
+            borderDispatcher = FindFirstObjectByType<BorderComputeDispatcher>();
 
             if (gameState?.EventBus != null)
             {
@@ -102,6 +108,17 @@ namespace Map.Rendering
 
             // Apply texture changes
             textureManager.ApplyTextureChanges();
+
+            // Update owner texture and regenerate borders
+            if (ownerTextureDispatcher != null && gameState?.ProvinceQueries != null)
+            {
+                ownerTextureDispatcher.PopulateOwnerTexture(gameState.ProvinceQueries);
+            }
+
+            if (borderDispatcher != null)
+            {
+                borderDispatcher.DetectBorders();
+            }
 
             // Clear the batch
             pendingProvinceUpdates.Clear();

@@ -1223,6 +1223,22 @@ PrefabInstance:
       propertyPath: 'speedMultipliers.Array.data[9]'
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1291186125858655196, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
+      propertyPath: renderingMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1291186125858655196, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
+      propertyPath: countryBorderWidth
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1291186125858655196, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
+      propertyPath: provinceBorderWidth
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060526945886628004, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
+      propertyPath: activeStyle
+      value: 
+      objectReference: {fileID: 11400000, guid: f271bb7aea32f084bbbf9f66b01c00fa, type: 2}
     - target: {fileID: 2060526945886628004, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
       propertyPath: mapMeshRenderer
       value: 
