@@ -1,7 +1,6 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2026-01-08
-**Version:** 2.0 (Burst-Compiled Pathfinding & AI)
+**Last Updated:** 2026-01-12
 
 This document lists all implemented features in the Archon Engine organized by category.
 
@@ -207,11 +206,12 @@ This document lists all implemented features in the Archon Engine organized by c
 ## Map Rendering Infrastructure
 
 - **MapTextureManager** - Facade coordinator for all map textures
+- **MapRendererRegistry** - Central registry for pluggable renderer implementations (6 systems)
 - **CoreTextureSet** - Core textures: Province ID, Owner, Color, Development
 - **VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map, Texture2DArray (27 detail textures)
 - **DynamicTextureSet** - Dynamic textures: Border, BorderMask (R8 sparse), Highlight RenderTextures
 - **PaletteTextureManager** - Color palette texture with HSV distribution
-- **BorderComputeDispatcher** - Orchestrates border rendering across three modes
+- **BorderComputeDispatcher** - Orchestrates border rendering across three modes (delegates to IBorderRenderer)
 - **BorderCurveExtractor** - Extract border pixel chains from province pairs, apply RDP simplification + Chaikin smoothing
 - **BorderCurveCache** - Cache smooth polyline segments with runtime styles (static geometry + dynamic appearance)
 - **BorderMeshGenerator** - Generate triangle strip geometry from polylines
@@ -220,6 +220,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
 - **TerrainBlendMapGenerator** - Imperator Rome-style 4-channel blend map generation (DetailIndexTexture + DetailMaskTexture)
 - **DetailTextureArrayLoader** - Loads 512x512 detail textures from Assets/Data/textures/terrain_detail/
+- **ShaderCompositorBase** - Abstract base for layer compositing implementations
 
 ---
 
@@ -247,9 +248,11 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Political Map Mode** - Country ownership visualization with color palette
 - **Terrain Map Mode** - Imperator Rome-style terrain rendering with smooth blending
 - **Debug Map Modes** - Heightmap and normal map debug visualization
-- **IMapModeHandler Interface** - Extensible interface for custom modes
+- **IMapModeHandler Interface** - Extensible interface for custom map mode DATA
+- **IMapModeColorizer Interface** - Pluggable colorization (separate from data handling)
 - **MapModeManager** - Runtime switching between visualization modes
 - **GradientMapMode Base Class** - Reusable gradient engine for numeric province data
+- **GradientMapModeColorizer** - Default 3-color gradient colorization via GPU compute
 - **ColorGradient** - Configurable color interpolation (red-to-yellow, etc.)
 - **Dirty Flag Optimization** - Skip texture updates when data unchanged
 
@@ -271,6 +274,38 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Border Configuration** - Per-style border colors, thickness, and anti-aliasing
 - **Development Gradients** - Configurable 5-tier color progressions
 - **Engine-Game Separation** - Engine provides infrastructure, game defines visuals
+- **Two-Level Customization** - Fine-grained (pluggable interfaces) or complete override (custom material)
+
+---
+
+## Pluggable Rendering Architecture (Pattern 20)
+
+- **MapRendererRegistry** - Central registry for all pluggable rendering implementations
+- **Interface + Base Class + Default** - Consistent pattern across all 6 rendering systems
+- **Runtime Switching** - Change renderers without restart via registry
+- **String ID References** - VisualStyleConfiguration references renderers by ID
+- **Backwards Compatible** - Enum-based selection maps to renderer IDs
+
+### Pluggable Renderer Interfaces
+
+- **IBorderRenderer** - Border generation (DistanceField, PixelPerfect, MeshGeometry implementations)
+- **IHighlightRenderer** - Province selection/hover highlighting (Default GPU compute)
+- **IFogOfWarRenderer** - Fog of war visualization (Default GPU compute)
+- **ITerrainRenderer** - Terrain blend map generation (Default 4-channel)
+- **IMapModeColorizer** - Map mode colorization (Gradient 3-color implementation)
+- **IShaderCompositor** - Layer compositing with configurable blend modes
+
+### Shader Compositor System
+
+- **Compositing.hlsl** - Shader-side layer compositing utilities
+- **6 Blend Modes** - Normal, Multiply, Screen, Overlay, Additive, SoftLight
+- **Per-Layer Configuration** - Enable/disable and blend mode per layer
+- **4 Preset Compositors:**
+  - **DefaultShaderCompositor** - All layers, normal blend
+  - **MinimalShaderCompositor** - No fog/overlay (performance mode)
+  - **StylizedShaderCompositor** - Multiply borders, additive highlights (EU4-like)
+  - **CinematicShaderCompositor** - Overlay blends, high contrast (screenshots)
+- **C# + Shader Hybrid** - C# configures material properties, shader reads blend modes
 
 ---
 
@@ -361,9 +396,11 @@ This document lists all implemented features in the Archon Engine organized by c
 
 - **BorderDetection.compute** - Dual border generation (country + province)
 - **TerrainBlendMapGenerator.compute** - 4-channel terrain blend map generation with configurable sampling
+- **Compositing.hlsl** - Modular layer compositing with 6 blend modes (Normal, Multiply, Screen, Overlay, Additive, SoftLight)
 - **MapModeTerrain.hlsl** - Imperator Rome manual bilinear filtering + detail texture blending
 - **MapFallback.shader** - Pink fallback for missing visual styles
 - **MapModeCommon.hlsl** - Shared utilities (ID decoding, sampling)
+- **DefaultCommon.hlsl** - Shared compositor parameters and layer enable flags
 
 ---
 
@@ -388,15 +425,4 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ---
 
-## Quick Stats
-
-- **Systems** - TimeManager, ProvinceSystem, CountrySystem, DiplomacySystem, UnitSystem, PathfindingSystem, AdjacencySystem, ResourceSystem, ModifierSystem, AISystem
-- **Documentation** - architecture docs + session logs + file registries
-
----
-
-**Total cleanup:** 4 files deleted, ~1,450 lines removed, codebase simplified to 3 clear rendering modes.
-
----
-
-*Updated: 2026-01-08*
+*Updated: 2026-01-12*

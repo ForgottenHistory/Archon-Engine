@@ -1,486 +1,181 @@
-# Engine-Game Separation Architecture
-**Purpose:** Define what belongs in the reusable ArchonEngine vs game-specific logic
+# Engine-Game Separation
+
+**Status:** Production Standard
 
 ---
 
-## Philosophy: Mechanisms vs Policy
+## Core Principle
 
-> **Engine provides mechanisms (HOW).
-> Game defines policy (WHAT).**
+**ENGINE provides mechanisms (HOW), GAME defines policy (WHAT).**
 
-**Engine says:** "Here's how to change province state deterministically"
-**Game says:** "When you build a farm, development increases by 1"
-
-**Engine says:** "Here's how to render 10k provinces at 200 FPS"
-**Game says:** "Color provinces by income (red = poor, green = rich)"
-
-**Engine says:** "Here's how to process commands over network"
-**Game says:** "Declaring war costs 10 prestige and requires a valid CB"
+ENGINE is a reusable foundation. GAME is the specific implementation. The same ENGINE should support different games (space strategy, fantasy conquest, modern warfare) with different policies.
 
 ---
 
-## Engine Extension Points
+## The Separation
 
-**The engine defines INTERFACES. The game IMPLEMENTS them.**
+### ENGINE Layer (Mechanism)
+- Generic primitives and data structures
+- Rendering infrastructure
+- Input handling
+- Networking infrastructure
+- Save/load framework
+- Command execution
 
-### 1. Game Systems Interface
+**ENGINE asks:** "How do I store province state?" "How do I render a map?" "How do I process commands?"
 
-```csharp
-// ArchonEngine/Core/Interfaces/IGameSystem.cs
-namespace ArchonEngine.Core
-{
-    public interface IGameSystem
-    {
-        void Initialize(GameState state);
-        void OnHourlyTick(HourlyTickEvent evt);
-        void OnDailyTick(DailyTickEvent evt);
-        void OnMonthlyTick(MonthlyTickEvent evt);
-        void OnYearlyTick(YearlyTickEvent evt);
-        void Shutdown();
-    }
-}
+### GAME Layer (Policy)
+- Game-specific formulas and rules
+- Colors, visuals, UI content
+- AI behavior and goals
+- Victory conditions
+- Balance values
 
-// Game/Systems/EconomySystem.cs
-namespace Game.Systems
-{
-    public class EconomySystem : IGameSystem
-    {
-        public void OnMonthlyTick(MonthlyTickEvent evt)
-        {
-            // Game-specific: collect taxes, pay maintenance
-            CollectTaxes();
-            PayMaintenanceCosts();
-        }
-    }
-}
-```
-
-### 2. Map Mode Interface (Already Exists!)
-
-```csharp
-// ArchonEngine/Map/MapModes/IMapModeHandler.cs
-namespace ArchonEngine.Map
-{
-    public interface IMapModeHandler
-    {
-        void UpdateTexture(RenderTexture target);
-        void OnEnter();
-        void OnExit();
-    }
-}
-
-// Game/MapModes/EconomyMapMode.cs
-namespace Game.MapModes
-{
-    public class EconomyMapMode : IMapModeHandler
-    {
-        public void UpdateTexture(RenderTexture target)
-        {
-            // Game-specific: color by income
-            foreach (var province in provinces)
-            {
-                Color color = IncomeToColor(province.income);
-                target.SetPixel(x, y, color);
-            }
-        }
-    }
-}
-```
-
-### 3. Command Interface (Already Exists!)
-
-```csharp
-// ArchonEngine/Core/Commands/ICommand.cs
-namespace ArchonEngine.Core
-{
-    public interface ICommand
-    {
-        void Execute(GameState state);
-        bool Validate(GameState state);
-        uint GetChecksum();
-        void Dispose();
-    }
-}
-
-// Game/Commands/BuildBuildingCommand.cs
-namespace Game.Commands
-{
-    public class BuildBuildingCommand : ICommand
-    {
-        private ushort provinceId;
-        private ushort buildingId;
-
-        public void Execute(GameState state)
-        {
-            // Game-specific: build building, pay cost
-            var province = state.ProvinceSystem.GetProvinceState(provinceId);
-            province.development += buildingDefinitions[buildingId].developmentBonus;
-            state.ProvinceSystem.SetProvinceState(provinceId, province);
-        }
-    }
-}
-```
-
-### 4. Save/Load Interface (Future)
-
-```csharp
-// ArchonEngine/Core/Persistence/ISaveSystem.cs
-namespace ArchonEngine.Core
-{
-    public interface ISaveSystem
-    {
-        void SaveGame(string path, GameState state);
-        GameState LoadGame(string path);
-        byte[] SerializeGameState(GameState state);
-        GameState DeserializeGameState(byte[] data);
-    }
-}
-
-// Implementation provided by engine, game just calls it
-saveSystem.SaveGame("autosave.bin", gameState);
-```
-
-### 5. Mod Loader Interface (Future)
-
-```csharp
-// ArchonEngine/Core/Modding/IModLoader.cs
-namespace ArchonEngine.Core
-{
-    public interface IModLoader
-    {
-        void LoadMod(string modPath);
-        T GetDefinition<T>(string id) where T : IDefinition;
-        void RegisterDefinition<T>(T definition) where T : IDefinition;
-    }
-}
-
-// Game defines what's moddable
-public class BuildingDefinition : IDefinition
-{
-    public string id;
-    public FixedPoint64 cost;
-    public FixedPoint64 incomeBonus;
-    public int developmentRequirement;
-}
-```
-
-### 6. Localization System (Add This)
-
-```csharp
-// ArchonEngine/Utils/Localization/ILocalizationSystem.cs
-namespace ArchonEngine.Utils
-{
-    public interface ILocalizationSystem
-    {
-        string GetText(string key);
-        string GetText(string key, params object[] args);
-        void SetLanguage(string languageCode);
-        void LoadLocalization(string path);
-    }
-}
-
-// Engine provides YAML parser (already have it)
-// Game provides localization files
-// en.yaml:
-//   building.farm: "Farm"
-//   building.farm.desc: "Produces food (+{0} income)"
-```
+**GAME asks:** "What is the tax formula?" "What color is France?" "When does a country surrender?"
 
 ---
 
-## What the Engine Abstracts (The Hard Problems)
+## Why This Matters
 
-### ✅ Already Solved by Engine
+### Reusability
+Same ENGINE can power different games:
+- Grand strategy (EU4-like)
+- Space 4X
+- Fantasy conquest
+- Modern political simulation
 
-1. **Multiplayer Determinism**
-   - FixedPoint64 for all math (no float/double)
-   - Command pattern for state changes
-   - Checksum validation
-   - **Game just implements ICommand**
+Each game implements different policies using the same mechanisms.
 
-2. **Performance at Scale**
-   - 10k provinces at 200+ FPS
-   - GPU compute shaders for visuals
-   - Burst compilation, NativeArray
-   - Hot/cold data separation
-   - **Game just uses ProvinceSystem API**
+### Maintainability
+Changes to game balance don't touch ENGINE code. Changes to rendering don't affect game rules. Clear boundaries reduce bugs.
 
-3. **Event-Driven Architecture**
-   - Zero-allocation EventBus
-   - Frame-coherent processing
-   - Event pooling
-   - **Game just subscribes to events**
-
-4. **Map Interaction**
-   - Texture-based province selection (<1ms)
-   - GPU rendering pipeline
-   - Map mode switching
-   - **Game just implements IMapModeHandler**
-
-5. **Data Loading**
-   - JSON5 parsing
-   - Burst-optimized loaders
-   - Registry system
-   - **Game just provides data files**
-
-6. **Time Management**
-   - Tick-based progression
-   - 360-day calendar
-   - Speed controls
-   - **Game just subscribes to tick events**
-
-### 🟡 Should Add to Engine
-
-7. **Save/Load System**
-   - Serialize GameState (80KB for 10k provinces)
-   - Command history for rollback
-   - RNG state preservation
-   - **Auto-serialize all ProvinceState, CountryState**
-
-8. **Mod Support**
-   - Definition loading from JSON5
-   - Mod override system
-   - **Game defines IDefinition types**
-
-9. **Localization**
-   - YAML localization (engine has parser)
-   - Language switching
-   - String formatting
-   - **Game provides translation files**
-
-10. **Performance Profiling**
-    - Built-in profiler hooks
-    - Performance report generation
-    - **Game uses for optimization**
+### Testability
+ENGINE mechanisms can be tested in isolation. GAME policies can be tested with mock ENGINE.
 
 ---
 
-## Using the Engine in Future Projects
+## Extension Points
 
-**Scenario: Building a different grand strategy game**
+ENGINE provides interfaces that GAME implements:
 
-### Step 1: Import Package
-```
-1. Create new Unity project
-2. Import ArchonEngine-v1.0.unitypackage
-3. You now have 28k lines of infrastructure
-```
-
-### Step 2: Define Game Systems
-```csharp
-// MyNewGame/Systems/SpaceEconomySystem.cs
-using ArchonEngine.Core;
-
-public class SpaceEconomySystem : IGameSystem
-{
-    public void OnMonthlyTick(MonthlyTickEvent evt)
-    {
-        // Different game rules, same engine
-        CollectStarbaseTaxes();
-        ProcessTradeLanes();
-    }
-}
-```
-
-### Step 3: Create Content
-```json5
-// MyNewGame/Data/starbases.json5
-{
-  "starbase_mining": {
-    "cost": 500,
-    "incomeBonus": 10,
-    "requirements": { "minerals": 1 }
-  }
-}
-```
-
-### Step 4: Implement Map Modes
-```csharp
-// MyNewGame/MapModes/InfluenceMapMode.cs
-using ArchonEngine.Map;
-
-public class InfluenceMapMode : IMapModeHandler
-{
-    public void UpdateTexture(RenderTexture target)
-    {
-        // Color by empire influence (new game mechanic)
-    }
-}
-```
-
-### Step 5: Bootstrap
-```csharp
-// MyNewGame/GameBootstrap.cs
-void Start()
-{
-    var gameState = new GameState();
-    gameState.RegisterSystem(new SpaceEconomySystem());
-    gameState.RegisterSystem(new FleetSystem());
-    gameState.Initialize();
-}
-```
-
-**You've built a completely different game using the same engine!**
+| Category | ENGINE Provides | GAME Implements |
+|----------|-----------------|-----------------|
+| Game Systems | IGameSystem lifecycle | Economy, Buildings, Military |
+| Map Modes | IMapModeHandler contract | Political, Economic, Diplomatic modes |
+| Commands | ICommand interface | DeclareWar, BuildBuilding, etc. |
+| Definitions | IDefinition loading | Building types, unit types, etc. |
+| Rendering | IRenderer interfaces | Custom borders, fog, effects |
 
 ---
 
-## Benefits of This Separation
+## Import Rules
 
-### For Current Project (Archon)
-- ✅ Clear separation of concerns
-- ✅ Engine code is battle-tested foundation
-- ✅ Game code is pure gameplay logic
-- ✅ Easy to understand what's what
+Strict hierarchy prevents circular dependencies:
 
-### For Future Projects
-- ✅ Import package = infrastructure for free
-- ✅ Focus on game design, not engine work
-- ✅ Proven architecture
-- ✅ Multiplayer-ready out of the box
+**CORE (Simulation):**
+- Cannot import Map or Game
+- Pure simulation logic
+- Deterministic operations only
 
-### For Maintenance
-- ✅ Engine bugs fixed once, all projects benefit
-- ✅ Engine improvements (e.g., better save/load) benefit all projects
-- ✅ Game-specific bugs isolated to Game/ folder
-- ✅ Clear ownership (engine team vs game team in studio context)
+**MAP (Presentation):**
+- Can import Core
+- Cannot import Game
+- Reads simulation state for rendering
 
-### For Learning
-- ✅ Other devs can use your engine
-- ✅ Portfolio piece: "I built a grand strategy engine"
-- ✅ Potential asset store product
-- ✅ Case study for "how to architect game engines"
+**GAME (Policy):**
+- Can import Core and Map
+- Defines all game-specific behavior
+- Owns initialization order
+
+**Rule:** Dependencies flow downward only. CORE → MAP → GAME.
 
 ---
 
-## Engine Design Principles
+## Data Ownership
 
-### 1. **Mechanisms, Not Policy**
-```csharp
-// ❌ Engine should NOT have this
-public FixedPoint64 CalculateTax(Province p) {
-    return p.development * FixedPoint64.FromFraction(5, 10); // Hard-coded formula
-}
+### ENGINE Owns
+- Province state primitives (owner, controller, terrain)
+- Country state primitives (exists, tag)
+- Command processing
+- Event bus
+- Time management
 
-// ✅ Engine should have this
-public ProvinceState GetProvinceState(ushort id);
-public void SetProvinceState(ushort id, ProvinceState state);
-
-// ✅ Game implements formula
-public FixedPoint64 CalculateTax(ProvinceState state) {
-    return state.development * taxRate; // Game's formula
-}
-```
-
-### 2. **Flexible, But Opinionated**
-```
-✅ Opinionated: "Use FixedPoint64 for determinism"
-✅ Flexible: "But you define the formulas"
-
-✅ Opinionated: "Use GPU compute shaders for visuals"
-✅ Flexible: "But you create the map modes"
-
-✅ Opinionated: "Use command pattern for state changes"
-✅ Flexible: "But you define the commands"
-```
-
-### 3. **Abstract Hard Problems**
-```
-✅ Multiplayer determinism → FixedPoint64, command pattern
-✅ Performance at scale → GPU, Burst, NativeArray
-✅ State management → ProvinceSystem, CountrySystem
-✅ Event architecture → EventBus
-✅ Data persistence → Save/load system
-```
-
-### 4. **Clear Extension Points**
-```csharp
-// Engine defines interfaces
-public interface IGameSystem { ... }
-public interface IMapModeHandler { ... }
-public interface ICommand { ... }
-public interface IDefinition { ... }
-
-// Game implements
-public class EconomySystem : IGameSystem { ... }
-public class EconomyMapMode : IMapModeHandler { ... }
-public class BuildBuildingCommand : ICommand { ... }
-```
-
-### 5. **Zero Game Logic in Engine**
-```csharp
-// ❌ This belongs in Game/, not Engine/
-public class BuildingSystem {
-    public void BuildFarm(ushort provinceId) {
-        // Game-specific logic in engine = bad
-    }
-}
-
-// ✅ Engine provides primitives
-public class ProvinceSystem {
-    public void SetProvinceState(ushort id, ProvinceState state) {
-        // Generic mechanism
-    }
-}
-
-// ✅ Game uses primitives
-public class BuildingSystem : IGameSystem {
-    public void BuildFarm(ushort provinceId) {
-        var state = provinceSystem.GetProvinceState(provinceId);
-        state.development += farmDefinition.developmentBonus;
-        provinceSystem.SetProvinceState(provinceId, state);
-    }
-}
-```
+### GAME Owns
+- Game-specific province data (development, buildings)
+- Game-specific country data (treasury, relations)
+- All formulas and balance values
+- UI content and styling
+- AI decision making
 
 ---
 
-## Success Criteria
+## Initialization Pattern
 
-**The engine is well-designed if:**
-
-1. ✅ **A new developer can build a different game in 1 week**
-   - Import package
-   - Implement IGameSystem
-   - Create data files
-   - Works!
-
-2. ✅ **The engine has zero mentions of game-specific concepts**
-   - No "farms" or "armies" or "trade" in engine code
-   - Only generic concepts: provinces, countries, commands, events
-
-3. ✅ **Game logic never calls engine internals**
-   - All engine access through public APIs
-   - No `provinceSystem.provinceStates[id]` in game code
-   - Only `provinceSystem.GetProvinceState(id)`
-
-4. ✅ **You can export as Unity package and it works**
-   - No missing dependencies
-   - No hard-coded paths
-   - Clean namespace separation
-
-5. ✅ **Documentation is clear about what belongs where**
-   - "Want to change tax formula? → Game layer"
-   - "Want to optimize rendering? → Engine layer"
+GAME layer controls all initialization order:
+- ENGINE systems initialize through GAME coordinator
+- Avoids rogue Start/Awake methods
+- Clear dependency chain
+- Predictable load order
 
 ---
 
-## Related Documents
+## Common Mistakes
 
-**Engine Architecture:**
-- [master-architecture-document.md](master-architecture-document.md) - Technical implementation details
-- [ARCHITECTURE_OVERVIEW.md](ARCHITECTURE_OVERVIEW.md) - System status overview
-- [Core/FILE_REGISTRY.md](../../Scripts/Core/FILE_REGISTRY.md) - Core layer files
-- [Map/FILE_REGISTRY.md](../../Scripts/Map/FILE_REGISTRY.md) - Map layer files
+**Putting policy in ENGINE:**
+- Tax formula in ENGINE → Should be in GAME
+- Country colors in ENGINE → Should be in GAME
+- Building definitions in ENGINE → Should be in GAME
 
-**Design Guides:**
-- [core-data-access-guide.md](core-data-access-guide.md) - How to access game state
-- [data-flow-architecture.md](data-flow-architecture.md) - How data flows through systems
-- [performance-architecture-guide.md](performance-architecture-guide.md) - Performance patterns
-
-**Learning Docs:**
-- [../Log/learnings/unity-compute-shader-coordination.md](../Log/learnings/unity-compute-shader-coordination.md) - GPU patterns
-- [../Log/learnings/unity-gpu-debugging-guide.md](../Log/learnings/unity-gpu-debugging-guide.md) - GPU debugging
+**Putting mechanism in GAME:**
+- Province storage reimplemented → Use ENGINE's ProvinceSystem
+- Custom event system → Use ENGINE's EventBus
+- Duplicate rendering logic → Use ENGINE's pluggable renderers
 
 ---
 
-*Last Updated: 2025-10-10*
+## Design Principles
+
+### Mechanisms, Not Policy
+ENGINE provides generic state access. GAME defines what to do with state.
+
+### Flexible, But Opinionated
+- Opinionated: "Use FixedPoint64 for determinism"
+- Flexible: "But you define the formulas"
+
+### Abstract Hard Problems
+ENGINE solves: determinism, performance, state management, events, persistence.
+GAME focuses on: gameplay, content, balance.
+
+### Zero Game Logic in ENGINE
+No game-specific concepts (farms, armies, trade) in ENGINE code. Only generic concepts: provinces, countries, commands, events.
+
+---
+
+## Trade-offs
+
+| Aspect | Benefit | Cost |
+|--------|---------|------|
+| Strict separation | Reusable ENGINE | More interfaces to implement |
+| Interface contracts | Clear boundaries | Indirection overhead |
+| Layer hierarchy | No circular deps | Can't call "up" the hierarchy |
+
+---
+
+## Success Metric
+
+**Can you build a different game in one week using the same ENGINE?**
+
+If yes: Separation is working.
+If no: Too much policy leaked into ENGINE.
+
+---
+
+## Related Patterns
+
+- **Pattern 1 (Engine-Game Separation):** This document
+- **Pattern 20 (Pluggable Implementation):** How GAME extends ENGINE rendering
+- **Pattern 2 (Command Pattern):** How state changes flow through layers
+
+---
+
+*Mechanism belongs in ENGINE. Policy belongs in GAME. Never mix them.*

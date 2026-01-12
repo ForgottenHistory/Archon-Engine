@@ -1,294 +1,174 @@
 # Visual Styles Architecture
 
-**Last Updated:** 2025-10-15
-**Status:** ✅ Implemented and Architecture Compliant
+**Status:** Production Standard
 
-## Problem Statement
+---
 
-Map visualization shaders contained hardcoded GAME policy (colors, gradients, visualization rules) in the ENGINE layer, violating the engine-game separation principle.
+## Core Problem
 
-## Solution: Complete Material Ownership
+Map visualization involves both mechanism (how to render) and policy (what to render). Without clear separation, ENGINE becomes polluted with GAME-specific decisions about colors, blending, and visual effects.
 
-**GAME owns the entire Material + Shader, ENGINE just renders it**
+---
 
-### Architecture Flow
+## Core Principle: Two-Level Customization
 
-**GAME Layer (Policy)**:
-- VisualStyleConfiguration.asset (ScriptableObject references complete style)
-- EU3MapMaterial.mat (Material with textures bound by ENGINE)
-- EU3MapShader.shader (Complete shader with all map modes)
-- MapMode*.hlsl (Political, Terrain, Development visualization logic)
+ENGINE provides rendering infrastructure with pluggable extension points. GAME customizes at two levels:
 
-**ENGINE Layer (Mechanism)**:
-- MapFallback.shader (Minimal pink "missing style" fallback)
-- VisualStyleManager (applies GAME material to MeshRenderer)
-- MapTextureManager (binds simulation textures to GAME material)
-- BorderComputeDispatcher (generates border data via compute shader)
+### Level 1: Fine-Grained Control
+Customize individual rendering systems while using ENGINE's shader infrastructure.
 
-**Key Principle:** ENGINE provides **rendering infrastructure** (textures, compute shaders, mesh renderer), GAME provides **complete visual style** (shader + material + configuration)
+**Pluggable Systems:**
+- Border generation (algorithm, texture format)
+- Selection/highlight visualization
+- Fog of war rendering
+- Terrain blending
+- Map mode colorization (separate from map mode DATA)
+- Layer compositing (blend modes, visibility, order)
 
-### Dependency Flow (Clean)
+**Trade-offs:**
+- Pro: Leverage ENGINE's tested compositing shader
+- Pro: Mix and match different implementations
+- Pro: Runtime switching without shader recompilation
+- Con: Constrained to ENGINE's layer model
 
-Clean dependency hierarchy:
-- CORE (simulation) - No imports
-- MAP (rendering infra) - No imports from GAME
-- GAME (visual policy) - Imports Core + Map, provides shaders/materials
+### Level 2: Complete Override
+Provide entirely custom shader and material for complete visual control.
 
-**No circular dependencies:** ENGINE never imports from GAME
+**What GAME Controls:**
+- Complete shader code
+- All rendering effects
+- Custom layer ordering
+- Custom blend algorithms
+- Post-processing effects
 
-## Implementation Details
+**Trade-offs:**
+- Pro: Total visual control
+- Pro: Can ignore ENGINE's layer model entirely
+- Con: Must handle all compositing logic
+- Con: More maintenance burden
 
-### GAME Layer Components
+---
 
-#### VisualStyleConfiguration.cs (ScriptableObject)
-**Purpose:** Complete visual style definition
+## Architecture Constraints
 
-**Contains:**
-- Material mapMaterial - Reference to complete material (REQUIRED)
-- BorderStyle borders - Border colors and strengths
-- MapModeColors mapModes - Ocean, unowned, development gradient
-- DevelopmentGradient - 5-tier color progression
-- Terrain adjustments (brightness, saturation)
+**ENGINE Never Imports GAME:**
+- ENGINE provides interfaces + default implementations
+- GAME registers custom implementations via registry
+- Configuration references implementations by string ID
 
-**Pattern:** ScriptableObject asset, swappable at runtime
-**Location:** `Game/VisualStyles/VisualStyleConfiguration.cs`
+**Textures Are Universal:**
+- ENGINE binds simulation textures (province IDs, owners, borders, etc.)
+- Any shader can use these textures
+- Texture format is ENGINE contract, visual interpretation is GAME policy
 
-#### VisualStyleManager.cs (MonoBehaviour)
-**Purpose:** Applies visual styles to ENGINE rendering system
+**Initialization Order:**
+- GAME registers custom implementations during startup
+- ENGINE uses whatever is registered (or defaults)
+- Visual style can switch at runtime
 
-**Key Method:** `ApplyStyle(VisualStyleConfiguration style)`
-1. Swaps MeshRenderer.material to style's material
-2. Sets shader parameters from configuration
-3. Configures ENGINE BorderComputeDispatcher
+---
 
-**Runtime:** Supports `SwitchStyle()` for on-the-fly swapping
-**Location:** `Game/VisualStyles/VisualStyleManager.cs`
+## Pattern 20: Pluggable Implementation
 
-#### EU3MapShader.shader (Complete Shader)
-**Shader Name:** `Archon/EU3Classic`
+Each rendering system follows the same pattern:
 
-**Includes:** All map mode visualization logic
-- MapModeCommon.hlsl - Utilities
-- MapModePolitical.hlsl - Political mode
-- MapModeTerrain.hlsl - Terrain mode
-- MapModeDevelopment.hlsl - Development mode
+**Interface:** Contract for what the system does
+**Base Class:** Common utilities and template methods
+**Default Implementations:** ENGINE-provided working solutions
+**Registry:** Central lookup by string ID
+**Configuration:** References by ID, with backwards-compatible enum fallback
 
-**Configurable via:** Material parameters (set by VisualStyleConfiguration)
-**Location:** `Game/VisualStyles/EU3Classic/EU3MapShader.shader`
+This enables GAME to replace any single system without touching others.
 
-#### Map Mode Shaders (.hlsl files)
-- MapModeCommon.hlsl - Shared utilities (province ID decoding, owner sampling)
-- MapModePolitical.hlsl - Political visualization (country colors)
-- MapModeTerrain.hlsl - Terrain visualization (terrain.bmp colors)
-- MapModeDevelopment.hlsl - Development gradient (configurable 5-tier)
+---
 
-**Location:** `Game/Shaders/MapModes/`
-**Note:** These are GAME POLICY - different games visualize differently
+## Layer Compositing Model
 
-### ENGINE Layer Components
+Render layers combine in a defined order:
+1. Base terrain/colors
+2. Borders (province, country)
+3. Highlights (selection, hover)
+4. Fog of war
+5. Overlay effects
 
-#### MapFallback.shader
-**Purpose:** Minimal fallback when no GAME style is configured
-**Renders:** Pink/magenta to indicate missing visual style
-**Location:** `Archon-Engine/Shaders/MapFallback.shader`
-**Status:** Never used if GAME properly configured
+Each layer supports configurable blend modes:
+- Normal (alpha lerp)
+- Multiply (darkening)
+- Screen (lightening)
+- Overlay (contrast)
+- Additive
+- Soft light
 
-#### MapTextureManager (Extension Point)
-**Provides:** `BindTexturesToMaterial(Material material)` method
+Layers can be enabled/disabled independently for performance or visual style.
 
-**Binds:** Simulation textures to GAME's material
-- ProvinceIDTexture, ProvinceOwnerTexture, BorderTexture, etc.
+---
 
-**Design:** ENGINE doesn't care what shader is used, just binds textures
-**Location:** `Archon-Engine/Scripts/Map/MapTextureManager.cs`
+## When to Use Each Level
 
-#### BorderComputeDispatcher
-**Provides:** Border generation via GPU compute shader
+**Use Level 1 (Pluggable Interfaces) When:**
+- Customizing one or few systems
+- Want ENGINE's compositor handling layer blending
+- Need runtime switching between presets
+- Don't need exotic rendering effects
 
-**Modes:** Province, Country, Thick, **Dual** (recommended)
+**Use Level 2 (Custom Material) When:**
+- Need fundamentally different rendering approach
+- Custom post-processing required
+- Layer model doesn't fit your visual style
+- Building completely unique visual identity
 
-**Output:** BorderTexture (RG16: R=country borders, G=province borders)
-**Location:** `Archon-Engine/Scripts/Map/Rendering/BorderComputeDispatcher.cs`
+**Combine Both When:**
+- Custom material for unique look
+- Still register custom renderers for texture generation
 
-### Border System (Dual-Border Implementation)
+---
 
-**Texture Format:** `RG16`
-- **R channel:** Country borders (between different owners)
-- **G channel:** Province borders (between same-owner provinces)
+## Key Trade-offs
 
-**Compute Shader:** `BorderDetection.compute` kernel `DetectDualBorders`
-- Generates both border types in single GPU pass
-- Efficient border generation
+| Aspect | Level 1 (Pluggable) | Level 2 (Custom Material) |
+|--------|---------------------|--------------------------|
+| Control | Per-system | Complete |
+| Maintenance | Lower | Higher |
+| Flexibility | Constrained to layer model | Unlimited |
+| Runtime switching | Easy (registry swap) | Material swap only |
+| Testing burden | Shared with ENGINE | All on GAME |
 
-**Shader Rendering:** Layered approach
-- Province borders first (lighter, configurable)
-- Country borders on top (darker, configurable)
+---
 
-**Configuration:** Set via VisualStyleConfiguration (GAME policy)
-
-## Benefits
-
-### Architecture
-- Clean separation - No ENGINE→GAME imports
-- Single responsibility - ENGINE renders, GAME defines visuals
-- Extensible - Add new styles without touching ENGINE
-
-### Gameplay
-- Modular graphics - Swap entire visual style via ScriptableObject
-- Runtime switching - Change styles in settings menu
-- Multiple styles - Ship EU3, Imperator, Modern together
-- Modder-friendly - Create shader + material + config asset
-
-### Performance
-- Dual borders - Both types in single compute pass
-- Material swapping - Instant style changes
-- Configurable params - No shader recompilation needed
-
-## How to Create a New Visual Style
-
-### Example: "Imperator Rome" Style
-
-1. **Create folder structure:** `Assets/Game/VisualStyles/ImperatorRome/`
-2. **Copy EU3 shader as base:** Copy EU3MapShader.shader to ImperatorMapShader.shader
-3. **Customize shader:** Change shader name, modify map mode logic, add custom effects
-4. **Create Material in Unity:** Create material asset, assign shader
-5. **Create VisualStyleConfiguration asset:** Create asset, assign mapMaterial, configure colors
-6. **Use in scene:** Assign to VisualStyleManager.activeStyle or swap at runtime
-
-### What Makes a Valid Visual Style
-
-**Required:**
-- Shader that accepts ENGINE textures (ProvinceIDTexture, etc.)
-- Material referencing that shader
-- VisualStyleConfiguration with material reference
-
-**Optional:**
-- Custom map mode logic (different visualization algorithms)
-- Custom effects (terrain blending, lighting, post-processing)
-- Custom color schemes (parameter-based or shader-based)
+## Guarantees
 
 **ENGINE Guarantees:**
-- Will bind simulation textures to your material
-- Will call your shader with correct geometry
-- Will provide border data via BorderTexture
+- Simulation textures bound to material
+- Registered renderers called appropriately
+- Default implementations always available
+- Runtime renderer switching supported
 
-## Integration with Existing Systems
-
-### Initialization Flow (GAME Controls Sequence)
-
-**HegemonInitializer** (GAME layer) orchestrates the entire flow:
-
-**Step 1:** Load simulation data
-**Step 2:** Apply visual style BEFORE map loads
-- Material swapped to EU3Classic
-- Border colors/strengths set
-- Border mode NOT applied yet (BorderDispatcher doesn't exist)
-
-**Step 3:** Initialize map
-- BorderComputeDispatcher created by ENGINE
-- Border system initialized (but no borders generated)
-- Textures bound to EU3Classic material
-
-**Step 4:** Apply border configuration
-- Reads defaultBorderMode from VisualStyleConfiguration
-- Calls BorderComputeDispatcher.SetBorderMode(Dual)
-- Calls BorderComputeDispatcher.DetectBorders()
-- Dual borders generated and visible
-
-**Key Principle:** Visual style applied in TWO phases:
-1. **Phase 1:** Material swap + shader parameters (before ENGINE components exist)
-2. **Phase 2:** Border generation (after ENGINE BorderDispatcher exists)
-
-### Map Modes (C# Side)
-- **PoliticalMapMode.cs** - Updates CountryColorPalette texture
-- **TerrainMapMode.cs** - Uses static ProvinceColorTexture
-- **DevelopmentMapMode.cs** - Updates ProvinceDevelopmentTexture
-- These work with **any** visual style (ENGINE textures are universal)
-
-### Material Binding Flow
-
-ENGINE MapRenderingCoordinator.SetupMaterial():
-- Uses GAME's material if available
-- Fallback to MapFallbackShader if not (should never happen if GAME properly configured)
-
-ENGINE MapTextureManager.BindTexturesToMaterial():
-- Binds simulation textures to the runtime material
-
-### Runtime Style Switching
-
-Settings menu can call `visualStyleManager.SwitchStyle(newStyle)` for instant visual style changes. Borders regenerate automatically.
-
-## File Locations
-
-### GAME Layer
-```
-Assets/Game/
-├── VisualStyles/
-│   ├── VisualStyleConfiguration.cs
-│   ├── VisualStyleManager.cs
-│   └── EU3Classic/
-│       ├── EU3MapShader.shader
-│       └── EU3MapMaterial.mat (created in Unity)
-├── Shaders/
-│   └── MapModes/
-│       ├── MapModeCommon.hlsl
-│       ├── MapModePolitical.hlsl
-│       ├── MapModeTerrain.hlsl
-│       └── MapModeDevelopment.hlsl
-```
-
-### ENGINE Layer
-```
-Assets/Archon-Engine/
-├── Shaders/
-│   └── MapFallback.shader
-├── Scripts/Map/
-│   ├── MapTextureManager.cs (BindTexturesToMaterial)
-│   └── Rendering/BorderComputeDispatcher.cs
-```
-
-## Testing Checklist
-
-When implementing/testing visual styles:
-
-- ENGINE MapFallback.shader renders pink (missing style indicator)
-- GAME EU3MapShader compiles without errors
-- Material created and shader assigned correctly
-- VisualStyleConfiguration has material reference
-- VisualStyleManager applies style successfully
-- Map renders with correct colors/borders
-- Dual borders working (country + province)
-- Runtime style switching works
-- No ENGINE→GAME imports in codebase
-
-## Future Extensions
-
-### Planned Visual Styles
-- **EU3 Classic** (Implemented) - Clean borders, simple colors
-- **Imperator Rome** (Planned) - Soft borders, terrain blending
-- **Modern/Minimal** (Planned) - Flat colors, thin borders
-- **High Contrast** (Planned) - Accessibility-focused
-
-### Potential Features
-- Custom border shaders - Animated, glowing, thickness-variable
-- Terrain blending - Smooth province color transitions
-- Lighting effects - Height-based shading, directional lighting
-- Seasonal variations - Summer/winter color palettes
-- Fog of War styles - Different unexplored area visualizations
-
-## Related Documentation
-
-- **Engine-Game Separation Audit:** `Archon-Engine/Docs/engine-game-separation-audit.md`
-- **Master Architecture:** `Archon-Engine/Docs/Engine/master-architecture-document.md`
-- **GAME Layer Registry:** `Game/FILE_REGISTRY.md`
-- **MAP Layer Registry:** `Archon-Engine/Scripts/Map/FILE_REGISTRY.md`
+**GAME Must Provide:**
+- Configuration asset with style settings
+- Custom implementations registered before use
+- Material that accepts ENGINE texture names (if using Level 2)
 
 ---
 
-**Architecture Status:** ✅ COMPLIANT
-**Implementation Status:** ✅ COMPLETE
-**Separation Level:** GAME owns complete visual policy, ENGINE provides rendering infrastructure
+## Anti-Patterns
+
+**Don't:** Fork ENGINE shaders to customize visuals
+**Do:** Implement pluggable interface or provide custom material
+
+**Don't:** Hardcode GAME-specific blend modes in ENGINE
+**Do:** Make blend modes configurable via compositor
+
+**Don't:** Create ENGINE→GAME dependencies
+**Do:** Use interface + registry pattern
 
 ---
 
-*Last Updated: 2025-10-15*
+## Related Patterns
+
+- **Pattern 1 (Engine-Game Separation):** Philosophy this implements
+- **Pattern 7 (Registry):** Data lookup; this extends to implementation lookup
+- **Pattern 20 (Pluggable Implementation):** Full pattern documentation
+
+---
+
+*Visual policy belongs in GAME. Rendering mechanism belongs in ENGINE.*

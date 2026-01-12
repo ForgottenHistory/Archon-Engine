@@ -13,6 +13,7 @@
 
 ## Rendering/
 - **Map.Rendering.MapTextureManager** - Facade coordinator for all map textures (delegates to texture sets)
+- **Map.Rendering.MapRendererRegistry** - Central registry for all pluggable renderer implementations (Pattern 20)
 - **Map.Rendering.CoreTextureSet** - Core textures: Province ID (RenderTexture), Owner (RenderTexture), Color (Texture2D), Development (RenderTexture UAV-enabled for GPU writes)
 - **Map.Rendering.VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map, Texture2DArray (27 terrain detail textures)
 - **Map.Rendering.DynamicTextureSet** - [BURST] Dynamic textures with mode-aware binding: DistanceField/DualBorder RenderTextures, Highlight, FogOfWar
@@ -24,14 +25,20 @@
 - **Map.Rendering.TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
 - **Map.Rendering.MapTexturePopulator** - Populate textures from loaded map data
 - **Map.Rendering.BillboardAtlasGenerator** - Generate texture atlases for billboard rendering
-- **Map.Rendering.FogOfWarSystem** - Fog of war rendering system
+- **Map.Rendering.FogOfWarSystem** - Fog of war rendering system (legacy, see IFogOfWarRenderer)
 - **Map.Rendering.InstancedBillboardRenderer** - Instanced rendering for billboards (units, buildings)
 - **Map.Rendering.NormalMapGenerator** - Generate normal maps from heightmaps for 3D terrain
 - **Map.Rendering.TreeInstanceGenerator** - Generate tree instance positions and types
 - **Map.Rendering.TreeInstanceRenderer** - Render trees using GPU instancing
 
-### Rendering/Border/
-- **Map.Rendering.BorderComputeDispatcher** - [OPTIMIZED] Orchestrates border rendering: conditionally loads curves only for MeshGeometry mode, skips for shader modes (~0ms for ShaderDistanceField)
+### Rendering/Border/ (Pluggable via IBorderRenderer)
+- **Map.Rendering.Border.IBorderRenderer** - Interface for pluggable border generation (Pattern 20)
+- **Map.Rendering.Border.BorderRendererBase** - Abstract base with common utilities
+- **Map.Rendering.Border.BorderRendererContext** - Initialization context struct
+- **Map.Rendering.Border.Implementations.DistanceFieldBorderRenderer** - JFA distance field implementation
+- **Map.Rendering.Border.Implementations.PixelPerfectBorderRenderer** - Pixel-perfect border implementation
+- **Map.Rendering.Border.Implementations.MeshGeometryBorderRenderer** - Triangle strip mesh implementation
+- **Map.Rendering.BorderComputeDispatcher** - [OPTIMIZED] Orchestrates border rendering via IBorderRenderer from registry
 - **Map.Rendering.BorderEnums** - Shared enums: BorderMode, BorderRenderingMode (single source of truth)
 - **Map.Rendering.BorderCurveExtractor** - [BURST] Extract border curves with 3x Burst jobs: median filter (8x faster), pixel mapping rebuild (14x faster), border pixel detection (2x faster). Only runs for MeshGeometry mode.
 - **Map.Rendering.BorderCurveCache** - Cache smooth polyline segments with runtime styles (static geometry + dynamic appearance pattern)
@@ -49,7 +56,34 @@
 - **Map.Rendering.BorderMeshRenderer** - Render border meshes (MeshGeometry mode only)
 - **Map.Rendering.BorderTextureDebug** - Debug visualization for border textures
 
-### Rendering/Terrain/
+### Rendering/Highlight/ (Pluggable via IHighlightRenderer)
+- **Map.Rendering.Highlight.IHighlightRenderer** - Interface for pluggable highlight rendering
+- **Map.Rendering.Highlight.HighlightRendererBase** - Abstract base with common utilities
+- **Map.Rendering.Highlight.HighlightRendererContext** - Initialization context struct
+- **Map.Rendering.Highlight.Implementations.DefaultHighlightRenderer** - Default GPU compute implementation
+
+### Rendering/FogOfWar/ (Pluggable via IFogOfWarRenderer)
+- **Map.Rendering.FogOfWar.IFogOfWarRenderer** - Interface for pluggable fog of war rendering
+- **Map.Rendering.FogOfWar.FogOfWarRendererBase** - Abstract base with common utilities
+- **Map.Rendering.FogOfWar.FogOfWarRendererContext** - Initialization context struct
+- **Map.Rendering.FogOfWar.Implementations.DefaultFogOfWarRenderer** - Default GPU compute implementation
+
+### Rendering/Compositing/ (Pluggable via IShaderCompositor)
+- **Map.Rendering.Compositing.IShaderCompositor** - Interface for pluggable layer compositing
+- **Map.Rendering.Compositing.ShaderCompositorBase** - Abstract base with material property utilities
+- **Map.Rendering.Compositing.CompositorContext** - Initialization context struct
+- **Map.Rendering.Compositing.CompositorConfig** - Layer visibility and blend mode configuration
+- **Map.Rendering.Compositing.BlendMode** - Enum: Normal, Multiply, Screen, Overlay, Additive, SoftLight
+- **Map.Rendering.Compositing.Implementations.DefaultShaderCompositor** - All layers, normal blend
+- **Map.Rendering.Compositing.Implementations.MinimalShaderCompositor** - No fog/overlay (performance)
+- **Map.Rendering.Compositing.Implementations.StylizedShaderCompositor** - Multiply borders, additive highlights (EU4-like)
+- **Map.Rendering.Compositing.Implementations.CinematicShaderCompositor** - Overlay blends, high contrast
+
+### Rendering/Terrain/ (Pluggable via ITerrainRenderer)
+- **Map.Rendering.Terrain.ITerrainRenderer** - Interface for pluggable terrain blend map generation
+- **Map.Rendering.Terrain.TerrainRendererBase** - Abstract base with common utilities
+- **Map.Rendering.Terrain.TerrainRendererContext** - Initialization context struct
+- **Map.Rendering.Terrain.Implementations.DefaultTerrainRenderer** - Default 4-channel blend implementation
 - **Map.Rendering.Terrain.TerrainBlendMapGenerator** - [GPU] Imperator Rome-style 4-channel blend map generation: samples ProvinceIDTexture in configurable radius (default 5x5), counts terrain types via ProvinceTerrainBuffer, outputs DetailIndexTexture (RGBA8: 4 indices) + DetailMaskTexture (RGBA8: 4 weights). Configurable sample radius and blend sharpness. (~50-100ms at load time)
 - **Map.Rendering.Terrain.ProvinceTerrainAnalyzer** - [GPU] Analyze terrain.bmp per province, generate ProvinceTerrainBuffer (65536 entries, uint per province). Feeds TerrainBlendMapGenerator.
 
@@ -62,14 +96,21 @@
 ---
 
 ## MapModes/
-- **Map.MapModes.IMapModeHandler** - Interface for map mode implementations
+- **Map.MapModes.IMapModeHandler** - Interface for map mode DATA (what values provinces have)
 - **Map.MapModes.MapModeManager** - Switch between map modes (political, terrain, development)
 - **Map.MapModes.DebugMapModeHandler** - Generic handler for debug visualization modes
 - **Map.MapModes.MapModeDataTextures** - Manage textures for different map modes
 - **Map.MapModes.TextureUpdateScheduler** - Schedule texture updates to avoid frame spikes
 - **Map.MapModes.ColorGradient** - Color gradient utilities for map modes
-- **Map.MapModes.GradientMapMode** - [GPU] Base class for gradient-based map modes (GPU compute shader, ~1ms per update)
+- **Map.MapModes.GradientMapMode** - [GPU] Base class for gradient-based map modes (uses IMapModeColorizer from registry)
 - **Map.MapModes.GradientComputeDispatcher** - [GPU] Dispatch gradient colorization compute shader (manages ComputeBuffers)
+
+### MapModes/Colorization/ (Pluggable via IMapModeColorizer)
+- **Map.MapModes.Colorization.IMapModeColorizer** - Interface for pluggable map mode colorization (separate from data)
+- **Map.MapModes.Colorization.MapModeColorizerBase** - Abstract base with common utilities
+- **Map.MapModes.Colorization.MapModeColorizerContext** - Initialization context struct
+- **Map.MapModes.Colorization.ColorizationStyleParams** - Color configuration parameters
+- **Map.MapModes.Colorization.Implementations.GradientMapModeColorizer** - Default 3-color gradient via GPU compute
 
 ---
 
@@ -83,7 +124,13 @@
 ---
 
 ## VisualStyles/
-- **Map.VisualStyles.VisualStyleConfiguration** - ScriptableObject defining complete visual style (material, borders, fog of war, colors)
+- **Map.VisualStyles.VisualStyleConfiguration** - ScriptableObject defining complete visual style with pluggable renderer references:
+  - BorderStyle - customRendererId references IBorderRenderer
+  - HighlightStyle - customRendererId references IHighlightRenderer
+  - FogOfWarStyle - customRendererId references IFogOfWarRenderer
+  - TerrainStyle - customRendererId references ITerrainRenderer
+  - MapModeColorizerStyle - customColorizerId references IMapModeColorizer
+  - CompositorStyle - customCompositorId references IShaderCompositor
 - **Map.VisualStyles.VisualStyleManager** - Applies styles to renderer, binds textures, F5 reload support
 
 ---
@@ -155,11 +202,13 @@
 
 ## Quick Reference
 **Update province visual?** → TextureUpdateBridge listens to events → Updates MapTextureManager
-**Add new map mode?** → Implement IMapModeHandler → Register in MapModeManager
+**Add new map mode?** → Implement IMapModeHandler (data) + optionally IMapModeColorizer (colors)
 **Select province at mouse?** → ProvinceSelector.GetProvinceAtMouse() (texture lookup)
-**Generate borders?** → BorderComputeDispatcher (GPU compute shader)
+**Generate borders?** → BorderComputeDispatcher → IBorderRenderer from MapRendererRegistry
 **Load map from file?** → MapDataLoader.LoadFromBitmap()
 **Province neighbors?** → GPUProvinceNeighborDetector for large maps
+**Custom renderer?** → Implement I*Renderer interface → Register in MapRendererRegistry → Reference by ID in VisualStyleConfiguration
+**Available pluggable systems?** → IBorderRenderer, IHighlightRenderer, IFogOfWarRenderer, ITerrainRenderer, IMapModeColorizer, IShaderCompositor
 
 ---
 
@@ -180,6 +229,5 @@ Map.MapRenderer (renders)
 
 ---
 
-*Updated: 2025-11-17*
-*Added: VisualStyles system, NormalMapGenerator, Tree rendering, Terrain texture loaders, SubdividedPlaneMeshGenerator*
-*Fixed: All sections now use proper markdown formatting (dashes for line breaks)*
+*Updated: 2026-01-12*
+*Added: Pluggable Rendering Architecture (Pattern 20) - 6 pluggable renderer interfaces (IBorderRenderer, IHighlightRenderer, IFogOfWarRenderer, ITerrainRenderer, IMapModeColorizer, IShaderCompositor), MapRendererRegistry, Compositing system with blend modes*

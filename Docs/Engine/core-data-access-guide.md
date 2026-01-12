@@ -1,186 +1,172 @@
 # Core Data Access Guide
-## How to Get Data from Core in Archon's Architecture
 
-**Implementation Status:** ✅ Implemented (ProvinceState, ProvinceColdData, hot/cold separation)
-
----
-
-## Overview
-
-Archon uses a **dual-layer architecture**:
-- **Core Layer (CPU)**: Deterministic simulation with hot data (compact structs)
-- **Map Layer (GPU)**: High-performance presentation reading from Core
-
-This guide explains how to properly access Core simulation data for any purpose - rendering, UI, AI, etc.
+**Status:** Production Standard
 
 ---
 
-## Architecture Principles
+## Core Principle
+
+**Core owns data. Query layer provides access. Map layer reads, never writes.**
+
+---
+
+## Architecture Overview
 
 ### The Right Way
 ```
 Your Code → GameState → Query Classes → Core Systems → Data
 ```
 
-### Wrong Way (Don't Do This)
+### The Wrong Way
 ```
-Your Code → Direct System Access → Data
+Your Code → Direct System Access → Data (bypasses validation, breaks encapsulation)
 ```
 
-### Core Owns Data, Map Reads Data
-- Core systems (ProvinceSystem, CountrySystem) own authoritative data
-- Map layer reads from Core via queries for rendering
-- Never store Core data copies in Map layer
+---
+
+## Access Hierarchy
+
+### GameState (Entry Point)
+Central coordinator providing access to all systems and queries.
+
+**Always access data through GameState**, never directly through systems.
+
+### Query Classes (Read Access)
+Optimized read-only access to simulation data:
+- Basic queries: Direct array lookups (instant)
+- Computed queries: Calculated on-demand
+- Cached queries: Expensive calculations cached per frame
+
+### Systems (Data Owners)
+Own authoritative data. Modify only through commands.
 
 ---
 
-## Getting Started: The Central Hub
+## Query Types
 
-All Core data access goes through `GameState`:
+### Basic Queries (Ultra-Fast)
+Direct access to hot data. No computation.
 
-**Pattern**: Get GameState instance, access query interfaces (ProvinceQueries, CountryQueries), verify initialization status before accessing
+Examples:
+- Get province owner
+- Get province terrain
+- Get country color
+- Check entity existence
 
----
+### Computed Queries (On-Demand)
+Calculate from multiple sources when requested.
 
-## Data Access Patterns
+Examples:
+- Get all provinces owned by country
+- Filter provinces by criteria
+- Cross-system lookups
 
-### 1. Basic Queries (Ultra-Fast)
+**Remember:** Dispose NativeArrays when done.
 
-Direct access to hot data with no computation. Examples include getting province owner, development, terrain, checking existence, and country data like colors and tags.
+### Cached Queries (Expensive)
+Results cached automatically for performance.
 
-### 2. Computed Queries (On-Demand)
+Examples:
+- Total development for country
+- Province counts
+- Aggregate statistics
 
-Calculations performed when requested. Examples include getting all provinces owned by a country or filtering provinces by criteria. Remember to dispose NativeArrays using `using` statement or manual disposal.
-
-### 3. Cross-System Queries
-
-Combines multiple systems. Examples include getting the color of the country that owns a province, getting the tag of the province owner, or checking if two provinces share the same owner.
-
-### 4. Cached Queries (Expensive Calculations)
-
-These are cached automatically for performance. Examples include total development, province count, and average development for countries.
-
----
-
-## Province Development Calculation
-
-Development is calculated as: **BaseTax + BaseProduction + BaseManpower** (capped at 255)
-
-The calculation happens in Core during data loading. To get the final development value, use province queries. Individual components are stored in cold data (ProvinceInitialState) and accessed through the province history system if needed.
+Cache cleared when underlying data changes.
 
 ---
 
-## Common Use Cases
+## Data Layers
 
-### Use Case 1: Map Rendering (GPU Textures)
+### Hot Data (Frequent Access)
+- Compact structs in contiguous arrays
+- Accessed every frame or tick
+- Available through query layer
 
-Pattern for map modes updating GPU textures:
-- Get GameState reference
-- Access ProvinceQueries
-- Get all province IDs
-- Update color palette based on Core data
-- Apply changes to texture manager
-
-**Other common patterns**: UI Display (query owner/dev/terrain for panels), AI Decision Making (evaluate strength via total development), Data Analysis/Statistics (aggregate queries for reporting). All follow the same GameState → ProvinceQueries/CountryQueries pattern.
+### Cold Data (Rare Access)
+- Detailed information, history, flavor text
+- Loaded on-demand
+- Separate storage from hot path
 
 ---
 
-## Performance Guidelines
-
-### Memory Management
-
-Always use `using` for automatic disposal or manual try-finally blocks to ensure NativeArrays are disposed. Never forget to dispose - memory leaks will occur.
+## Memory Management
 
 ### Allocator Choice
+- **Temp:** Short-lived, same frame
+- **TempJob:** Passed between frames/jobs
+- **Persistent:** Permanent data
 
-- **Allocator.Temp**: For short-lived data (within same frame)
-- **Allocator.TempJob**: For data passed between frames or jobs (remember to dispose later)
-- **Allocator.Persistent**: For permanent data (rare, must dispose manually when no longer needed)
+### Disposal Rule
+**Always dispose NativeArrays.** Memory leaks crash builds.
 
-### Caching Considerations
-
-- Certain queries are automatically cached (like total development)
-- Invalidate cache when data changes
-- Clear all cache periodically at end of major game events
+Use `using` statements or explicit disposal.
 
 ---
 
-## Anti-Patterns (DON'T DO THESE)
+## State Changes
 
-### Direct System Access
-Don't bypass the query layer by accessing systems directly.
+### Read: Query Layer
+Query classes for read-only access.
 
-### Storing Core Data in Map Layer
-Map layer should not store Core data - always read fresh from Core instead.
+### Write: Command Pattern
+All modifications flow through commands:
+- Validate before execute
+- Serialize for networking
+- Deterministic execution
 
-### Forgetting to Dispose Native Arrays
-Always dispose NativeArrays to prevent memory leaks.
-
-### CPU Processing of Millions of Pixels
-Use GPU compute shaders instead of CPU loops for pixel processing.
-
----
-
-## Advanced Topics
-
-### Command Pattern for State Changes
-
-Use commands to modify Core state with Execute, Serialize, and Validate methods. Try executing command through GameState and query the updated state.
-
-### Event-Driven Updates
-
-Subscribe to events through GameState EventBus to react to changes in game state.
-
-### Hot vs Cold Data
-
-- **Hot data**: Available through queries (compact ProvinceState) - frequently accessed
-- **Cold data**: Historical events and detailed info - accessed rarely
+**Never modify Core data directly.**
 
 ---
 
-## Key Script Files Reference
+## Event-Driven Updates
 
-| Component | Location | Purpose |
-|-----------|----------|---------|
-| **GameState.cs** | `Core/` | Central coordinator, entry point for all Core data |
-| **ProvinceSystem.cs** | `Core/Systems/` | Province data owner (compact ProvinceState in NativeArray) |
-| **CountrySystem.cs** | `Core/Systems/` | Country data owner (hot/cold data separation) |
-| **ProvinceQueries.cs** | `Core/Queries/` | Optimized province data access (fast basic, moderate computed queries) |
-| **CountryQueries.cs** | `Core/Queries/` | Optimized country data access (cached queries) |
-| **ProvinceState.cs** | `Core/Data/` | Compact struct (owner, controller, development, terrain, flags) |
-| **ICommand.cs** | `Core/Commands/` | Command interface for state changes |
-| **EventBus.cs** | `Core/` | Inter-system communication |
-
-**File Organization Pattern**: `Core/Systems/` (data owners) → `Core/Queries/` (read access) → `Core/Commands/` (write operations) → `Core/Data/` (structures)
-
-**Integration Points**: Map Layer → Queries only | State Changes → Commands | Communication → EventBus | Data Flow: Raw → Jobs → InitialState → ProvinceState → Queries
+Subscribe to events through EventBus to react to state changes:
+- ProvinceOwnershipChanged
+- DevelopmentChanged
+- Tick events (hourly, daily, monthly)
 
 ---
 
-## Related Documents
+## Anti-Patterns
 
-- **MapMode System Architecture** - Shows practical usage of Core data access in map rendering
-- **Master Architecture Document** - Architecture context and dual-layer system overview
+| Don't | Do Instead |
+|-------|------------|
+| Access systems directly | Use GameState + Queries |
+| Store Core data in Map layer | Read fresh from Core |
+| Forget to dispose NativeArrays | Always dispose |
+| Modify Core data directly | Use Commands |
+| CPU process millions of pixels | Use GPU compute shaders |
+
+---
+
+## Key Trade-offs
+
+| Approach | Benefit | Cost |
+|----------|---------|------|
+| Query layer abstraction | Encapsulation, optimization | Slight indirection |
+| Cached queries | Fast repeated access | Memory for cache |
+| Command pattern | Validation, networking | Boilerplate |
+| Hot/cold separation | Cache efficiency | Complexity |
+
+---
 
 ## Summary
 
-1. **Always access Core data through `GameState` and Query classes**
+1. **Always access through GameState and Query classes**
 2. **Never access systems directly**
-3. **Use appropriate Allocator types and dispose native arrays**
-4. **Let Core own the data, read it for presentation**
-5. **Use Commands for state changes, Events for notifications**
-6. **Cache is handled automatically for expensive queries**
-
-This architecture ensures:
-- **Performance**: Query layer is optimized for common access patterns
-- **Determinism**: Core simulation remains predictable
-- **Modularity**: Clear separation between simulation and presentation
-- **Scalability**: Handles many provinces efficiently
+3. **Dispose NativeArrays**
+4. **Use Commands for state changes**
+5. **Subscribe to Events for notifications**
 
 ---
 
-**Remember**: Core is the single source of truth. Map layer renders what Core tells it. Everything else reads from Core through the Query system.
+## Related Patterns
+
+- **Pattern 2 (Command Pattern):** State modifications
+- **Pattern 3 (Event-Driven):** Change notifications
+- **Pattern 4 (Hot/Cold Separation):** Data organization
+- **Pattern 17 (Single Source of Truth):** Core owns data
 
 ---
 
-*Last Updated: 2025-10-15*
+*Core is the single source of truth. Query to read. Command to write.*

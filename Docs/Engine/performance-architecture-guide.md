@@ -1,473 +1,193 @@
-# Grand Strategy Game Performance Architecture Guide
-## Avoiding Late-Game Performance Collapse
+# Performance Architecture Guide
 
-**📊 Implementation Status:** ⚠️ Partially Implemented (Hot/cold separation ✅, load balancing ✅, zero-blocking UI ✅, pre-allocation policy documented ✅)
+**Status:** Production Standard
 
-**🔄 Recent Update (2025-10-15):** Added pre-allocation policy (Principle 4) - HOI4's malloc lock lesson. Zero allocations during gameplay enforced by profiling.
+---
 
-> **📚 Architecture Context:** This document focuses on performance patterns. See [master-architecture-document.md](master-architecture-document.md) for the dual-layer architecture foundation.
+## Core Principle
 
-## Executive Summary
-Grand strategy games face unique performance challenges that compound over time. A game can maintain excellent performance early but degrade significantly in late game, even when paused. This document explains why this happens and how to architect systems to maintain performance throughout the entire game lifecycle.
+**Design for the end state from day one. Late-game performance collapse is preventable.**
 
-## The Late-Game Performance Problem
+---
 
-### Why Performance Degrades Over Time
+## The Problem
 
-**Early Game:**
-- Fewer active provinces
-- Minimal history
-- Simple diplomatic web
-- Fast performance
+Grand strategy games face compounding performance challenges:
 
-**Late Game:**
-- Many active provinces
-- Extensive history per province
-- Complex diplomatic webs
-- Performance degradation (even when PAUSED)
+**Early game:** Few active provinces, minimal history, simple relationships. Fast.
 
-### Common Causes of Slowdown
+**Late game:** Many provinces, extensive history, complex webs. Slow - even when PAUSED.
 
-1. **Data accumulation without cleanup**
-2. **O(n²) algorithms that scale poorly**
-3. **Memory fragmentation from long-term allocations**
-4. **Cache misses from scattered data access**
-5. **UI systems that touch entire game state every frame**
+**Root causes:**
+- Data accumulation without cleanup
+- O(n²) algorithms that scale poorly
+- Memory fragmentation
+- Cache misses from scattered data
+- UI touching entire game state every frame
 
-## Core Architecture Principles
+---
 
-### Principle 1: Design for the End State
-**Wrong approach**: "We'll optimize when it becomes a problem"
-**Right approach**: "Architecture assumes worst-case from day one"
+## Core Principles
 
-**Bad Pattern:**
-- Nested loops over all provinces
-- O(n²) complexity
-- Works with small datasets, fails at scale
+### Principle 1: Design for Scale
+**Wrong:** "We'll optimize when it becomes a problem"
+**Right:** "Architecture assumes worst-case from day one"
 
-**Good Pattern:**
-- Pre-computed adjacency lists
-- Parallel processing where possible
-- Linear complexity algorithms
+Profile at target scale regularly. Don't wait for problems.
 
-### Principle 2: Separate Hot, Warm, and Cold Data
-Data "temperature" is determined by **access frequency**, not importance.
+### Principle 2: Hot/Cold Data Separation
+Data "temperature" = access frequency, not importance.
 
-**Hot Data**: Read/written every frame or every tick
-- Example: Owner ID (read every frame for rendering)
-- Storage: Tightly-packed structs in contiguous arrays
+**Hot:** Every frame/tick → Compact structs, contiguous arrays
+**Warm:** Occasional → Can stay in main struct if space permits
+**Cold:** Rare → Separate storage, loaded on-demand
 
-**Warm Data**: Accessed occasionally (events, tooltips, calculations)
-- Example: Development, terrain, fortification (used in calculations)
-- Storage: Can remain in main simulation struct if space permits
-
-**Cold Data**: Rarely accessed (history, detailed statistics, flavor text)
-- Example: Historical records, building details, modifier descriptions
-- Storage: Separate dictionaries, loaded on-demand, can page to disk
-
-> **See:** [master-architecture-document.md](master-architecture-document.md) and [core-data-access-guide.md](core-data-access-guide.md) for complete hot/cold data architecture.
-
-**Key Benefits:**
-- Engine state and game state are separate but parallel
-- Engine operations access minimal data for rendering/networking
-- Game operations access both layers as needed
-- Cold data separation prevents cache pollution
+**Benefit:** Hot data fits in cache. Cold data doesn't pollute it.
 
 ### Principle 3: Fixed-Size Data Structures
-Dynamic growth is the enemy of performance.
+Dynamic growth is the enemy.
 
-**Bad Pattern:**
-- Unbounded lists that grow forever
-- Memory accumulation over time
-- Performance degrades with age
+**Bad:** Unbounded lists that grow forever
+**Good:** Ring buffers with automatic compression
 
-**Good Pattern:**
-- Fixed-size ring buffers
-- Automatic compression of old data
-- Bounded memory regardless of game length
+**Result:** Bounded memory regardless of game length.
 
-### Principle 4: Pre-Allocation Policy (Zero Allocations During Gameplay)
-**Paradox Lesson:** HOI4 discovered parallel code became sequential due to malloc lock contention.
+### Principle 4: Pre-Allocation (Zero Allocations During Gameplay)
+**Industry lesson:** Malloc lock destroys parallelism.
 
-**The Problem:**
+**The problem:**
 - Memory allocator uses global lock
 - All threads wait for allocation
 - Parallel code becomes sequential
-- Performance collapses under threading
 
-**The Solution:**
-- Pre-allocate temporary buffers at initialization
+**The solution:**
+- Pre-allocate at initialization
 - Clear and reuse during gameplay
 - Zero allocations = zero lock contention = full parallelism
 
-#### Core Rules
+---
 
-**Initialization Phase:**
-- Allocate all temporary buffers with persistent lifetime
-- Size for worst-case usage
-- Store as system-level fields
+## System-Specific Patterns
 
-**Gameplay Phase:**
-- Clear buffers (cheap operation, no allocation)
-- Reuse existing allocations
-- Zero new memory requests
+### Map Rendering
+**Problem:** Update every province mesh every frame.
+**Solution:** GPU textures + single draw call.
 
-**Loading/Setup Phase:**
-- Temporary allocations allowed
-- Not performance-critical
-- Cleaned up before gameplay
+### Province Selection
+**Problem:** Physics raycast against thousands of colliders.
+**Solution:** Texture lookup - single read, near-instant.
 
-#### Allocator Strategy
-
-**Long-Lived (Persistent):**
-- Temporary buffers reused each frame
-- System state data
-- Allocated once at initialization
-
-**Short-Lived (Temporary):**
-- Loading/initialization only
-- Never in hot paths
-- Banned from gameplay code
-
-**Managed Heap:**
-- Cold data only
-- UI systems
-- Non-gameplay code
-
-#### Decision Framework
-
-**Before Adding Collection:**
-- Is this accessed every frame? → Pre-allocate at initialization
-- Is this temporary? → Clear and reuse, don't recreate
-- Is this in hot path? → Must be persistent, verified by profiler
-- Can this grow unbounded? → Use fixed-size with ring buffer pattern
-
-#### Enforcement Strategy
-
-**Code Review Requirements:**
-- All gameplay collections must be persistent lifetime
-- Hot path methods verified zero allocations
-- Temporary allocators banned from gameplay
-
-**Profiling Requirements:**
-- Zero allocations during gameplay (profiler confirmed)
-- Any allocation in hot path = critical bug
-- Regular profiling sessions to catch regressions
-
-**Pattern Recognition:**
-- Initialization = allocate once
-- Gameplay = clear and reuse
-- Cleanup = dispose at system shutdown
-
-#### Why This Matters
-
-**Performance Impact:**
-- Malloc lock destroys parallelism (HOI4's hard lesson)
-- Pre-allocation maintains full parallel speedup
-- Zero allocation = predictable performance
-
-**Design Philosophy:**
-- Pay upfront cost at initialization
-- Zero ongoing cost during gameplay
-- Architecture prevents performance regression
-
-## System-Specific Optimizations
-
-### Map Rendering System
-
-**Traditional Approach Problem:**
-- Update every province mesh every frame
-- Multiple draw calls per province
-- Massive performance overhead at scale
-
-**GPU-Driven Solution:**
-- All province data in textures
-- Single draw call for entire map
-- GPU shader handles all visual processing
-- Dramatic performance improvement
-
-### Province Selection System
-
-**Raycast Problem:**
-- Physics system checks thousands of colliders
-- Significant overhead per click
-- Scales poorly
-
-**Texture-Based Solution:**
-- Convert screen position to UV coordinates
-- Single texture read for province ID
-- Near-instant response time
-- Scales perfectly
-
-### UI and Tooltip System
-
-**Recalculation Problem:**
-- Expensive calculations every frame
-- Touches many provinces for single tooltip
-- Performance impact while hovering
-
-**Frame-Coherent Caching Solution:**
-- Cache calculation results per frame
-- Clear cache when frame changes
-- Reuse cached data within frame
-- Minimal overhead for cached lookups
+### UI/Tooltips
+**Problem:** Expensive calculations every frame.
+**Solution:** Frame-coherent caching - compute once, reuse within frame.
 
 ### History System
-
-**Unbounded Growth Problem:**
-- Events accumulate indefinitely
-- Memory and iteration overhead
-- Performance degrades over time
-
-**Tiered Compression Solution:**
-- Recent history: Full detail (ring buffer)
-- Medium-term: Compressed representation
-- Long-term: Statistical summary only
-- Automatic aging and compression
+**Problem:** Unbounded event accumulation.
+**Solution:** Tiered compression (recent=full, medium=compressed, old=summary).
 
 ### Game State Updates
+**Problem:** Process all provinces every tick.
+**Solution:** Dirty flags - update only what changed.
 
-**Update Everything Problem:**
-- Process all provinces every tick
-- Wasteful even when nothing changed
-- Scales linearly with province count
+---
 
-**Dirty Flag Solution:**
-- Track only changed provinces
-- Update only dirty entries
-- Clear flags after processing
-- Scales with changes, not total count
+## Memory Layout
 
-See [time-system-architecture.md](time-system-architecture.md) for layered update frequencies that work with dirty flags.
+### Structure by Access Pattern
 
-## Memory Architecture
-
-### Memory Layout Strategy
-
-**Simulation State:**
-- Compact province data in contiguous arrays
-- Fixed-size structs for cache efficiency
-
-**Cold Data:**
-- Loaded on-demand
-- Can page to disk
-- Separate from hot path
-
-**GPU Textures (VRAM):**
-- Province ID map
-- Owner/controller textures
-- Color palettes
-- Border cache
-
-**History Storage:**
-- Ring buffers with compression
-- Bounded size regardless of game length
-
-**Presentation Data:**
-- Not synchronized with simulation
-- Visual-only information
-
-### Memory Layout Philosophy: Structure Data by Access Pattern
-
-**The Key Question:** "How is this data typically accessed?"
-
-#### Array of Structures (AoS) vs Structure of Arrays (SoA)
-
-**Use AoS when:**
-- Operations access multiple fields together
-- Fields are tightly related
-- Network synchronization is needed
+**Array of Structures (AoS):** When operations need multiple fields together.
+- Most simulation operations
 - Cache line fits entire struct
+- Default choice for grand strategy
 
-**Use SoA when:**
-- Frequently iterate single field across all elements
-- Field access is isolated
-- Profiling shows bottleneck
+**Structure of Arrays (SoA):** When iterating single field across all elements.
+- Rare in practice
+- Profile before splitting
+- Don't optimize prematurely
 
-**For Grand Strategy:**
-- Most operations need multiple fields together
-- AoS is typically optimal
-- Don't split prematurely - profile first
+### The Real Enemy: Pointers
 
-#### Cache Efficiency: The Real Enemy is Pointers
+Pointers scatter data across memory → cache misses.
 
-**Performance killer:** Pointers that scatter data across memory
+**Bad:** References in hot structures
+**Good:** Value types only, contiguous layout
 
-**Bad Pattern:**
-- References/pointers in hot structures
-- Heap allocations mixed with stack data
-- Cache misses from pointer chasing
+---
 
-**Good Pattern:**
-- Value types only (primitives, no references)
-- Contiguous memory layout
-- Separate cold data storage
-
-**Key Principle:** Keep simulation state as value types only to ensure cache-friendly performance.
-
-## Profiling and Metrics
-
-### Key Performance Indicators
-
-Monitor critical systems:
-- Frame time targets
-- Selection response time
-- Tooltip calculation time
-- Draw call counts
-- Memory usage
-
-Profile each major system separately to identify bottlenecks.
-
-### Performance Budget Allocation
-
-Allocate frame time carefully across systems:
-- Map rendering
-- Game logic
-- UI updates
-- Province selection
-- Tooltips
-- Reserve for spikes
-
-## Anti-Patterns to Avoid
+## Anti-Patterns
 
 | Anti-Pattern | Problem | Solution |
 |--------------|---------|----------|
-| **"It Works For Now"** | O(n) operations scale poorly | Design for scale from start |
-| **"Invisible O(n²)"** | Hidden quadratic complexity | Pre-compute adjacency lists |
-| **"Death by Thousand Cuts"** | Many small allocations per frame | Pre-allocate pools (see Principle 4) |
-| **"Allocator.Temp in Hot Path"** | Malloc lock serializes parallel code | Use Allocator.Persistent, reuse buffers |
-| **"Update Everything"** | Processing unchanged data every tick | Dirty flag systems (see [time-system-architecture.md](time-system-architecture.md)) |
-| **"Premature SoA Optimization"** | Splitting data that's used together | Profile first, optimize only if needed |
-| **"Float in Simulation"** | Non-deterministic across platforms | Use fixed-point math |
-| **"Interface-Typed Collections"** | Storing structs boxes every item | Use generic wrapper pattern |
-| **"Reflection in Hot Path"** | Reflection boxes all parameters | Use virtual methods |
+| "It works for now" | O(n) scales poorly | Design for scale |
+| Invisible O(n²) | Hidden quadratic complexity | Pre-compute adjacencies |
+| Death by thousand cuts | Many small allocations | Pre-allocate pools |
+| Allocator.Temp in hot path | Malloc lock | Persistent allocators, reuse |
+| Update everything | Processing unchanged data | Dirty flags |
+| Premature SoA | Splitting data used together | Profile first |
+| Float in simulation | Non-deterministic | Fixed-point math |
+| Interface-typed collections | Boxing allocations | Generic wrapper pattern |
 
-### Case Study: EventBus Zero-Allocation Pattern
+---
 
-**Problem:** EventBus allocated heavily per frame due to boxing struct events.
+## Key Trade-offs
 
-**Failed Approach:** Reflection-based processing still caused boxing.
+| Decision | Benefit | Cost |
+|----------|---------|------|
+| Pre-allocation | Zero runtime allocation | Higher initial memory |
+| Hot/cold split | Cache efficiency | Access complexity |
+| Fixed-size buffers | Bounded memory | May need reallocation if undersized |
+| Dirty flags | Process only changes | Flag management overhead |
+| GPU for visuals | Massive parallelism | GPU programming complexity |
 
-**Solution:** EventQueue<T> wrapper pattern:
-- Internal interface for polymorphism
-- Type-specific wrapper keeps Queue<T> concrete
-- Virtual method calls don't box value types
-- Direct delegate invocation
+---
 
-**Key Insight:** Virtual method calls don't box value types. Use interface with virtual methods, not interface-typed collections.
+## Decision Framework
 
-See [data-flow-architecture.md](data-flow-architecture.md) for complete EventBus implementation.
+**Before adding a collection:**
+1. Is this accessed every frame? → Pre-allocate
+2. Is this temporary? → Clear and reuse
+3. Is this in hot path? → Must be persistent
+4. Can this grow unbounded? → Use ring buffer
 
-## Implementation Checklist
+**Before optimizing memory layout:**
+1. Is this core simulation state? → Keep compact
+2. Do operations need multiple fields? → Keep together (AoS)
+3. Have you profiled? → Don't optimize without data
+4. Is complexity worth it? → Reconsider if marginal gains
 
-### Phase 1: Foundation (Prevent Problems)
-- [x] Design data structures for 10,000+ provinces
-- [x] Separate hot/cold data (ProvinceState vs ProvinceColdData)
-- [x] Implement GPU-based rendering
-- [x] Use fixed-size allocations
-- [ ] Profile from day one
+---
 
-### Phase 2: Optimization (Maximize Performance)
-- [ ] Implement dirty flag systems
-- [ ] Add frame-coherent caching
-- [ ] Use compute shaders for parallel work
-- [ ] Optimize memory layout
-- [ ] Add LOD systems
+## Validation
 
-### Phase 3: Scaling (Handle Growth)
-- [ ] Implement history compression
-- [ ] Add data pagination
-- [ ] Create progressive loading
-- [ ] Implement spatial partitioning
-- [ ] Add performance auto-scaling
+Regular profiling at target scale:
+- Frame time budget allocation
+- Memory usage bounds
+- Selection response time
+- Zero allocations during gameplay (profiler confirmed)
 
-### Phase 4: Polish (Maintain Performance)
-- [ ] Add performance budgets
-- [ ] Implement automatic profiling
-- [ ] Create performance regression tests
-- [ ] Add debug visualizations
-- [ ] Document performance constraints
+**Any allocation in hot path = critical bug.**
 
-## Testing for Scale
+---
 
-### Stress Test Scenarios
+## Summary
 
-**Large-Scale Performance Test:**
-- Create maximum province count
-- Simulate extended gameplay
-- Measure average frame time
-- Assert performance targets
-
-**Province Selection Test:**
-- Create large province set
-- Measure selection response time
-- Assert sub-millisecond target
-
-**Memory Bounds Test:**
-- Create large province set
-- Simulate extended gameplay
-- Measure total memory usage
-- Assert memory budget
-
-**Determinism Test:**
-- Create identical game states
-- Execute identical commands
-- Compare final checksums
-- Assert perfect match
-
-## Practical Optimization Decision Tree
-
-**When considering memory layout optimizations:**
-
-1. **Is this core simulation state?**
-   - Yes → Keep in compact state struct if possible
-   - No → Separate storage (cold data, presentation data)
-
-2. **Do operations need multiple fields together?**
-   - Yes → Keep fields together (AoS)
-   - No → Consider splitting (SoA)
-
-3. **Have you profiled and confirmed a bottleneck?**
-   - No → Don't optimize yet
-   - Yes → Proceed with targeted optimization
-
-4. **Will this make the code significantly more complex?**
-   - Yes → Reconsider if the gains justify the cost
-   - No → Implement if profiling justifies it
-
-**Remember:** Compact simulation structs are already highly optimized. Most performance work should focus on:
-- GPU compute shaders for visual processing
-- Dirty flag systems to minimize work
-- Frame-coherent caching for expensive calculations
-- Fixed-size data structures to prevent unbounded growth
-
-Don't prematurely split data structures based on textbook advice. Profile first.
-
-## Conclusion
-
-Late-game performance collapse is not inevitable. By designing for the end state, separating hot and cold data, using GPU-driven rendering, and implementing proper caching strategies, you can maintain excellent performance throughout the entire game lifecycle.
-
-The key is to **architect for scale from day one** rather than trying to optimize after problems appear. Every system should be designed with the question: "What happens at maximum scale?"
-
-Remember: Sustained performance comes from architecture, not post-hoc optimization.
-
-**Most Important Principles:**
-1. **Compact simulation state** - cache-friendly, network-friendly
+1. **Compact simulation state** - cache-friendly
 2. **GPU for visuals** - single draw call, compute shaders
-3. **Fixed-point math** - deterministic for multiplayer
-4. **Pre-allocation** - zero allocations during gameplay (HOI4's malloc lock lesson)
-5. **Dirty flags** - only update what changed
-6. **Ring buffers** - prevent unbounded growth
-7. **Profile before optimizing** - don't split data structures prematurely
+3. **Fixed-point math** - deterministic
+4. **Pre-allocation** - zero gameplay allocations
+5. **Dirty flags** - update only changes
+6. **Ring buffers** - bounded growth
+7. **Profile before optimizing** - data-driven decisions
 
 ---
 
-## Related Documents
+## Related Patterns
 
-- **[master-architecture-document.md](master-architecture-document.md)** - Overview of dual-layer architecture
-- **[core-data-access-guide.md](core-data-access-guide.md)** - How to access hot and cold data
-- **[time-system-architecture.md](time-system-architecture.md)** - Layered update frequencies and dirty flag systems
+- **Pattern 4 (Hot/Cold Separation):** Data temperature
+- **Pattern 10 (Frame-Coherent Caching):** UI optimization
+- **Pattern 11 (Dirty Flags):** Update minimization
+- **Pattern 12 (Pre-Allocation):** Zero allocations
 
 ---
 
-*Last Updated: 2025-10-15*
+*Architecture prevents late-game collapse. Design for scale from day one.*
