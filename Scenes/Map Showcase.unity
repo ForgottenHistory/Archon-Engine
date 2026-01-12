@@ -1238,7 +1238,7 @@ PrefabInstance:
     - target: {fileID: 2060526945886628004, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
       propertyPath: activeStyle
       value: 
-      objectReference: {fileID: 11400000, guid: f271bb7aea32f084bbbf9f66b01c00fa, type: 2}
+      objectReference: {fileID: 11400000, guid: a9be1e4d27436f245ad4f5b3e5cb7f2e, type: 2}
     - target: {fileID: 2060526945886628004, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
       propertyPath: mapMeshRenderer
       value: 

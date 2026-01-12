@@ -467,7 +467,8 @@ borders.customRendererId = "MyStylized";  // References custom by ID
 **Current Implementations:**
 - `IBorderRenderer` - Border generation (DistanceField, PixelPerfect, MeshGeometry, None)
 - `IHighlightRenderer` - Selection/hover highlighting (Default)
-- Future: `IFogOfWarRenderer`, `ITerrainRenderer`
+- `IFogOfWarRenderer` - Fog of war visibility rendering (Default)
+- `ITerrainRenderer` - Terrain blend map generation (Default 4-channel)
 
 **Related Patterns:**
 - Pattern 1 (Engine-Game Separation) - Philosophy this implements

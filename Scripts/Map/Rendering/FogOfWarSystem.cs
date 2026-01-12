@@ -1,6 +1,7 @@
 using UnityEngine;
 using Core.Queries;
 using Utils;
+using Map.Rendering.FogOfWar;
 
 namespace Map.Rendering
 {
@@ -34,6 +35,9 @@ namespace Map.Rendering
 
         private bool isInitialized = false;
         private bool fogEnabled = false;
+
+        // Pluggable renderer support
+        private bool rendererRegistered = false;
 
         /// <summary>
         /// Initialize fog of war system
@@ -79,7 +83,54 @@ namespace Map.Rendering
             }
 
             isInitialized = true;
+
+            // Register default fog of war renderer with registry
+            RegisterDefaultRenderer();
+
             ArchonLogger.Log($"FogOfWarSystem: Initialized for {provinceCount} provinces (fog disabled until player selection)", "map_rendering");
+        }
+
+        /// <summary>
+        /// Register ENGINE's default fog of war renderer with MapRendererRegistry.
+        /// GAME layer can register additional custom renderers via MapRendererRegistry.Instance.RegisterFogOfWarRenderer().
+        /// </summary>
+        private void RegisterDefaultRenderer()
+        {
+            if (rendererRegistered) return;
+
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null)
+            {
+                ArchonLogger.LogWarning("FogOfWarSystem: MapRendererRegistry not found, cannot register renderer", "map_rendering");
+                return;
+            }
+
+            // Build context for renderer initialization
+            var context = new FogOfWarRendererContext
+            {
+                FogOfWarCompute = fogOfWarCompute,
+                ProvinceQueries = provinceQueries,
+                MaxProvinces = provinceCount
+            };
+
+            // Create and register default renderer
+            var defaultRenderer = new DefaultFogOfWarRenderer(fogOfWarCompute);
+            defaultRenderer.Initialize(textureManager, context);
+            registry.RegisterFogOfWarRenderer(defaultRenderer);
+
+            rendererRegistered = true;
+            ArchonLogger.Log("FogOfWarSystem: Registered default fog of war renderer", "map_rendering");
+        }
+
+        /// <summary>
+        /// Get the active fog of war renderer from registry.
+        /// </summary>
+        public IFogOfWarRenderer GetActiveFogOfWarRenderer(string rendererId = null)
+        {
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null) return null;
+
+            return registry.GetFogOfWarRenderer(rendererId);
         }
 
         /// <summary>

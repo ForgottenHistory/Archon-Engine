@@ -234,12 +234,20 @@ namespace Archon.Engine.Map
         [Tooltip("Province selection and hover highlight settings")]
         public HighlightStyle highlights = new HighlightStyle();
 
+        [Header("Terrain Blending")]
+        [Tooltip("Terrain blend map generation settings")]
+        public TerrainBlendStyle terrainBlend = new TerrainBlendStyle();
+
         /// <summary>
         /// Fog of War visual configuration
         /// </summary>
         [System.Serializable]
         public class FogOfWarSettings
         {
+            [Header("Custom Renderer (Advanced)")]
+            [Tooltip("Override with custom renderer ID from MapRendererRegistry.\nLeave empty to use Default renderer.\nGAME layer can register custom renderers (stylized fog, animated clouds, etc.).")]
+            public string customRendererId = "";
+
             [Header("Fog of War")]
             [Tooltip("Enable fog of war effect")]
             public bool enabled = true;
@@ -271,6 +279,16 @@ namespace Archon.Engine.Map
             [Tooltip("Animation speed of drifting fog (0 = static, higher = faster drift)")]
             [Range(0f, 2f)]
             public float noiseSpeed = 0.1f;
+
+            /// <summary>
+            /// Get the effective renderer ID (custom or default).
+            /// </summary>
+            public string GetEffectiveRendererId()
+            {
+                if (!string.IsNullOrEmpty(customRendererId))
+                    return customRendererId;
+                return "Default";
+            }
         }
 
         /// <summary>
@@ -329,6 +347,36 @@ namespace Archon.Engine.Map
             [Tooltip("Overall highlight opacity multiplier")]
             [Range(0f, 1f)]
             public float opacityMultiplier = 1.0f;
+
+            /// <summary>
+            /// Get the effective renderer ID (custom or default).
+            /// </summary>
+            public string GetEffectiveRendererId()
+            {
+                if (!string.IsNullOrEmpty(customRendererId))
+                    return customRendererId;
+                return "Default";
+            }
+        }
+
+        /// <summary>
+        /// Terrain blend map generation configuration
+        /// </summary>
+        [System.Serializable]
+        public class TerrainBlendStyle
+        {
+            [Header("Custom Renderer (Advanced)")]
+            [Tooltip("Override with custom renderer ID from MapRendererRegistry.\nLeave empty to use Default renderer.\nGAME layer can register custom renderers (8-channel blending, stylized, etc.).")]
+            public string customRendererId = "";
+
+            [Header("Blend Map Generation")]
+            [Tooltip("Sample radius for terrain blending (2 = 5x5, 5 = 11x11). Higher = smoother transitions.")]
+            [Range(1, 10)]
+            public int sampleRadius = 2;
+
+            [Tooltip("Blend sharpness (1.0 = linear, >1 = sharper transitions, <1 = softer).")]
+            [Range(0.1f, 5f)]
+            public float blendSharpness = 1.0f;
 
             /// <summary>
             /// Get the effective renderer ID (custom or default).

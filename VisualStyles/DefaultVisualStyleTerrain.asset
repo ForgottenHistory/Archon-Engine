@@ -16,12 +16,16 @@ MonoBehaviour:
   description: Default visual style
   borders:
     renderingMode: 3
+    customRendererId: 
     countryBorderColor: {r: 0, g: 0, b: 0, a: 1}
     countryBorderStrength: 1
     provinceBorderColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
     provinceBorderStrength: 1
     enableBordersOnStartup: 1
     borderMode: 3
+    pixelPerfectCountryThickness: 3
+    pixelPerfectProvinceThickness: 1
+    pixelPerfectAntiAliasing: 1
     edgeWidth: 0.5
     gradientWidth: 2
     edgeSmoothness: 0.2
@@ -47,6 +51,7 @@ MonoBehaviour:
     overlayStrength: 0
     countryColorSaturation: 1
   fogOfWar:
+    customRendererId: 
     enabled: 0
     unexploredColor: {r: 0.05, g: 0.05, b: 0.05, a: 1}
     exploredTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -61,3 +66,14 @@ MonoBehaviour:
     tessellationFactor: 32
     tessellationMinDistance: 10
     tessellationMaxDistance: 1000
+  highlights:
+    customRendererId: 
+    selectionColor: {r: 1, g: 0.84, b: 0, a: 0.4}
+    hoverColor: {r: 1, g: 1, b: 1, a: 0.3}
+    defaultMode: 0
+    borderThickness: 2
+    opacityMultiplier: 1
+  terrainBlend:
+    customRendererId: 
+    sampleRadius: 2
+    blendSharpness: 1

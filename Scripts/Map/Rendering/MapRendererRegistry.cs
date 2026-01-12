@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using Map.Rendering.Border;
 using Map.Rendering.Highlight;
+using Map.Rendering.FogOfWar;
+using Map.Rendering.Terrain;
 
 namespace Map.Rendering
 {
@@ -31,9 +33,13 @@ namespace Map.Rendering
         private Dictionary<string, IHighlightRenderer> highlightRenderers = new Dictionary<string, IHighlightRenderer>();
         private string defaultHighlightRendererId = "Default";
 
-        // Future: FogOfWar, Terrain renderers
-        // private Dictionary<string, IFogOfWarRenderer> fogOfWarRenderers;
-        // private Dictionary<string, ITerrainRenderer> terrainRenderers;
+        // Fog of War Renderers
+        private Dictionary<string, IFogOfWarRenderer> fogOfWarRenderers = new Dictionary<string, IFogOfWarRenderer>();
+        private string defaultFogOfWarRendererId = "Default";
+
+        // Terrain Renderers
+        private Dictionary<string, ITerrainRenderer> terrainRenderers = new Dictionary<string, ITerrainRenderer>();
+        private string defaultTerrainRendererId = "Default";
 
         public bool IsInitialized { get; private set; }
 
@@ -60,7 +66,7 @@ namespace Map.Rendering
             }
 
             IsInitialized = true;
-            ArchonLogger.Log($"MapRendererRegistry initialized with {borderRenderers.Count} border renderer(s), {highlightRenderers.Count} highlight renderer(s)", "map_rendering");
+            ArchonLogger.Log($"MapRendererRegistry initialized with {borderRenderers.Count} border, {highlightRenderers.Count} highlight, {fogOfWarRenderers.Count} fog, {terrainRenderers.Count} terrain renderer(s)", "map_rendering");
         }
 
         #region Border Renderers
@@ -279,6 +285,206 @@ namespace Map.Rendering
 
         #endregion
 
+        #region Fog of War Renderers
+
+        /// <summary>
+        /// Register a fog of war renderer implementation.
+        /// ENGINE registers defaults; GAME can register customs.
+        /// </summary>
+        public void RegisterFogOfWarRenderer(IFogOfWarRenderer renderer)
+        {
+            if (renderer == null)
+            {
+                ArchonLogger.LogWarning("Attempted to register null fog of war renderer", "map_rendering");
+                return;
+            }
+
+            string id = renderer.RendererId;
+            if (fogOfWarRenderers.ContainsKey(id))
+            {
+                ArchonLogger.LogWarning($"Fog of war renderer '{id}' already registered. Replacing.", "map_rendering");
+            }
+
+            fogOfWarRenderers[id] = renderer;
+            ArchonLogger.Log($"Registered fog of war renderer: {id} ({renderer.DisplayName})", "map_rendering");
+        }
+
+        /// <summary>
+        /// Unregister a fog of war renderer.
+        /// </summary>
+        public bool UnregisterFogOfWarRenderer(string rendererId)
+        {
+            if (fogOfWarRenderers.TryGetValue(rendererId, out var renderer))
+            {
+                renderer.Dispose();
+                fogOfWarRenderers.Remove(rendererId);
+                ArchonLogger.Log($"Unregistered fog of war renderer: {rendererId}", "map_rendering");
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Get a fog of war renderer by ID.
+        /// Returns null if not found.
+        /// </summary>
+        public IFogOfWarRenderer GetFogOfWarRenderer(string rendererId)
+        {
+            if (string.IsNullOrEmpty(rendererId))
+            {
+                rendererId = defaultFogOfWarRendererId;
+            }
+
+            if (fogOfWarRenderers.TryGetValue(rendererId, out var renderer))
+            {
+                return renderer;
+            }
+
+            ArchonLogger.LogWarning($"Fog of war renderer '{rendererId}' not found. Available: {string.Join(", ", fogOfWarRenderers.Keys)}", "map_rendering");
+            return null;
+        }
+
+        /// <summary>
+        /// Get the default fog of war renderer.
+        /// </summary>
+        public IFogOfWarRenderer GetDefaultFogOfWarRenderer()
+        {
+            return GetFogOfWarRenderer(defaultFogOfWarRendererId);
+        }
+
+        /// <summary>
+        /// Set which fog of war renderer ID is the default.
+        /// </summary>
+        public void SetDefaultFogOfWarRenderer(string rendererId)
+        {
+            if (fogOfWarRenderers.ContainsKey(rendererId))
+            {
+                defaultFogOfWarRendererId = rendererId;
+            }
+            else
+            {
+                ArchonLogger.LogWarning($"Cannot set default fog to unknown renderer: {rendererId}", "map_rendering");
+            }
+        }
+
+        /// <summary>
+        /// Get all available fog of war renderer IDs.
+        /// </summary>
+        public IEnumerable<string> GetAvailableFogOfWarRenderers()
+        {
+            return fogOfWarRenderers.Keys;
+        }
+
+        /// <summary>
+        /// Check if a fog of war renderer is registered.
+        /// </summary>
+        public bool HasFogOfWarRenderer(string rendererId)
+        {
+            return fogOfWarRenderers.ContainsKey(rendererId);
+        }
+
+        #endregion
+
+        #region Terrain Renderers
+
+        /// <summary>
+        /// Register a terrain renderer implementation.
+        /// ENGINE registers defaults; GAME can register customs.
+        /// </summary>
+        public void RegisterTerrainRenderer(ITerrainRenderer renderer)
+        {
+            if (renderer == null)
+            {
+                ArchonLogger.LogWarning("Attempted to register null terrain renderer", "map_rendering");
+                return;
+            }
+
+            string id = renderer.RendererId;
+            if (terrainRenderers.ContainsKey(id))
+            {
+                ArchonLogger.LogWarning($"Terrain renderer '{id}' already registered. Replacing.", "map_rendering");
+            }
+
+            terrainRenderers[id] = renderer;
+            ArchonLogger.Log($"Registered terrain renderer: {id} ({renderer.DisplayName})", "map_rendering");
+        }
+
+        /// <summary>
+        /// Unregister a terrain renderer.
+        /// </summary>
+        public bool UnregisterTerrainRenderer(string rendererId)
+        {
+            if (terrainRenderers.TryGetValue(rendererId, out var renderer))
+            {
+                renderer.Dispose();
+                terrainRenderers.Remove(rendererId);
+                ArchonLogger.Log($"Unregistered terrain renderer: {rendererId}", "map_rendering");
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Get a terrain renderer by ID.
+        /// Returns null if not found.
+        /// </summary>
+        public ITerrainRenderer GetTerrainRenderer(string rendererId)
+        {
+            if (string.IsNullOrEmpty(rendererId))
+            {
+                rendererId = defaultTerrainRendererId;
+            }
+
+            if (terrainRenderers.TryGetValue(rendererId, out var renderer))
+            {
+                return renderer;
+            }
+
+            ArchonLogger.LogWarning($"Terrain renderer '{rendererId}' not found. Available: {string.Join(", ", terrainRenderers.Keys)}", "map_rendering");
+            return null;
+        }
+
+        /// <summary>
+        /// Get the default terrain renderer.
+        /// </summary>
+        public ITerrainRenderer GetDefaultTerrainRenderer()
+        {
+            return GetTerrainRenderer(defaultTerrainRendererId);
+        }
+
+        /// <summary>
+        /// Set which terrain renderer ID is the default.
+        /// </summary>
+        public void SetDefaultTerrainRenderer(string rendererId)
+        {
+            if (terrainRenderers.ContainsKey(rendererId))
+            {
+                defaultTerrainRendererId = rendererId;
+            }
+            else
+            {
+                ArchonLogger.LogWarning($"Cannot set default terrain to unknown renderer: {rendererId}", "map_rendering");
+            }
+        }
+
+        /// <summary>
+        /// Get all available terrain renderer IDs.
+        /// </summary>
+        public IEnumerable<string> GetAvailableTerrainRenderers()
+        {
+            return terrainRenderers.Keys;
+        }
+
+        /// <summary>
+        /// Check if a terrain renderer is registered.
+        /// </summary>
+        public bool HasTerrainRenderer(string rendererId)
+        {
+            return terrainRenderers.ContainsKey(rendererId);
+        }
+
+        #endregion
+
         void OnDestroy()
         {
             // Dispose all registered border renderers
@@ -294,6 +500,20 @@ namespace Map.Rendering
                 renderer?.Dispose();
             }
             highlightRenderers.Clear();
+
+            // Dispose all registered fog of war renderers
+            foreach (var renderer in fogOfWarRenderers.Values)
+            {
+                renderer?.Dispose();
+            }
+            fogOfWarRenderers.Clear();
+
+            // Dispose all registered terrain renderers
+            foreach (var renderer in terrainRenderers.Values)
+            {
+                renderer?.Dispose();
+            }
+            terrainRenderers.Clear();
 
             if (Instance == this)
             {

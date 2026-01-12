@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using Utils;
+using Map.Rendering;
 
 namespace Map.Rendering.Terrain
 {
@@ -49,6 +50,9 @@ namespace Map.Rendering.Terrain
         private static readonly int SampleRadiusID = Shader.PropertyToID("SampleRadius");
         private static readonly int BlendSharpnessID = Shader.PropertyToID("BlendSharpness");
 
+        // Pluggable renderer support
+        private bool rendererRegistered = false;
+
         void Awake()
         {
             if (terrainBlendMapCompute == null)
@@ -58,6 +62,60 @@ namespace Map.Rendering.Terrain
             }
 
             generateKernel = terrainBlendMapCompute.FindKernel("GenerateBlendMaps");
+        }
+
+        /// <summary>
+        /// Initialize and register default terrain renderer with MapRendererRegistry.
+        /// Call this during map initialization.
+        /// </summary>
+        public void Initialize(MapTextureManager textureManager)
+        {
+            RegisterDefaultRenderer(textureManager);
+        }
+
+        /// <summary>
+        /// Register ENGINE's default terrain renderer with MapRendererRegistry.
+        /// GAME layer can register additional custom renderers via MapRendererRegistry.Instance.RegisterTerrainRenderer().
+        /// </summary>
+        private void RegisterDefaultRenderer(MapTextureManager textureManager)
+        {
+            if (rendererRegistered) return;
+
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null)
+            {
+                ArchonLogger.LogWarning("TerrainBlendMapGenerator: MapRendererRegistry not found, cannot register renderer", "map_rendering");
+                return;
+            }
+
+            // Build context for renderer initialization
+            var context = new TerrainRendererContext
+            {
+                TerrainBlendMapCompute = terrainBlendMapCompute,
+                TerrainRGBLookup = null, // Can be set if needed
+                MaxTerrainTypes = 32
+            };
+
+            // Create and register default renderer
+            var defaultRenderer = new DefaultTerrainRenderer(terrainBlendMapCompute);
+            defaultRenderer.Initialize(textureManager, context);
+            defaultRenderer.SetSampleRadius(sampleRadius);
+            defaultRenderer.SetBlendSharpness(blendSharpness);
+            registry.RegisterTerrainRenderer(defaultRenderer);
+
+            rendererRegistered = true;
+            ArchonLogger.Log("TerrainBlendMapGenerator: Registered default terrain renderer", "map_rendering");
+        }
+
+        /// <summary>
+        /// Get the active terrain renderer from registry.
+        /// </summary>
+        public ITerrainRenderer GetActiveTerrainRenderer(string rendererId = null)
+        {
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null) return null;
+
+            return registry.GetTerrainRenderer(rendererId);
         }
 
         /// <summary>
