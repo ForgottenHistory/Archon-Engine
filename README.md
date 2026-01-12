@@ -124,6 +124,9 @@ A minimal working game template demonstrating ENGINE patterns. Use it as a learn
 
 StarterKit demonstrates the recommended patterns without the complexity of a full game implementation. See [Scripts/StarterKit/README.md](Scripts/StarterKit/README.md) for details.
 
+![StarterKit](Promotion-Assets/Images/StarterKit.png)
+*Work in progress. Generated template data as I can't share real game data, for obvious reasons.*
+
 ## Development Status
 
 **Core Engine (Complete):**
@@ -143,7 +146,7 @@ As in, practical implementation of core systems.
 - 3D terrain tessallation and smart texturing for realistic terrain
 
 ![early-3d-map](Promotion-Assets/Images/simple_terrain.png)
-Simple province terrain, auto terrain assignment from texture
+*Simple province terrain, auto terrain assignment from texture*
 
 **Planned Features:**
 - Multiplayer (lockstep command synchronization)
