@@ -2,7 +2,7 @@
 
 A Unity-based game engine for grand strategy games, built around a dual-layer architecture that separates deterministic simulation from GPU-accelerated presentation.
 
-![Archon-Engine](Images/hero2.png)
+![Archon-Engine](Promotion-Assets/Images/hero2.png)
 
 APIs should be stable by 2026 Q1. Until a release pops up, production use is discouraged. Free open-source game demo will be released in 2026 Q2 to showcase practical integration.
 
@@ -16,7 +16,7 @@ There is no *"How To Get Started"* guide yet, partly because I'm trying to figur
 
 Documentation is extensive and I *try* to keep it up to date. However expect some sloppyness.
 
-![Flat-Map](Images/flat_map.png)
+![Flat-Map](Promotion-Assets/Images/flat_map.png)
 2D map loaded using Europa Universalis 4 data.
 
 ## Why
@@ -42,20 +42,20 @@ Archon-Engine is designed to be generic infrastructure, providing everything you
 
 **Dual-Layer Design**
 ```
-┌─────────────────────────────────┐
-│   Map Layer (Presentation)      │
+┌──────────────────────────────────┐
+│   Map Layer (Presentation)       │
 │   - Texture-based rendering      │
 │   - GPU compute shaders          │
 │   - Single draw call             │
-└───────────┬─────────────────────┘
+└───────────┬──────────────────────┘
             │ Events (one-way)
             ↓
-┌─────────────────────────────────┐
-│   Core Layer (Simulation)       │
+┌──────────────────────────────────┐
+│   Core Layer (Simulation)        │
 │   - 8-byte province structs      │
 │   - Fixed-point deterministic    │
 │   - Command pattern              │
-└─────────────────────────────────┘
+└──────────────────────────────────┘
 ```
 
 **Key Design Decisions**
@@ -120,7 +120,7 @@ As in, practical implementation of core systems.
 - Vector like borders, razor thin
 - 3D terrain tessallation and smart texturing for realistic terrain
 
-![early-3d-map](Images/simple_terrain.png)
+![early-3d-map](Promotion-Assets/Images/simple_terrain.png)
 Simple province terrain, auto terrain assignment from texture
 
 **Planned Features:**
@@ -138,10 +138,10 @@ Simple province terrain, auto terrain assignment from texture
 
 ## Screenshots
 
-![early-3d-map](Images/early_3d_map.png)
+![early-3d-map](Promotion-Assets/Images/early_3d_map.png)
 WIP 3D map with texturing
 
-![Heightmap-example](Images/tessallation_heightmap.png)
+![Heightmap-example](Promotion-Assets/Images/tessallation_heightmap.png)
 3D tessallated terrain WIP.
 
 ## Technical Requirements
