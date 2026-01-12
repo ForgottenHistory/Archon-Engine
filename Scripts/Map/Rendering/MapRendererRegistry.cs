@@ -4,6 +4,7 @@ using Map.Rendering.Border;
 using Map.Rendering.Highlight;
 using Map.Rendering.FogOfWar;
 using Map.Rendering.Terrain;
+using Map.MapModes.Colorization;
 
 namespace Map.Rendering
 {
@@ -41,6 +42,10 @@ namespace Map.Rendering
         private Dictionary<string, ITerrainRenderer> terrainRenderers = new Dictionary<string, ITerrainRenderer>();
         private string defaultTerrainRendererId = "Default";
 
+        // Map Mode Colorizers
+        private Dictionary<string, IMapModeColorizer> mapModeColorizers = new Dictionary<string, IMapModeColorizer>();
+        private string defaultMapModeColorizerId = "Gradient";
+
         public bool IsInitialized { get; private set; }
 
         void Awake()
@@ -66,7 +71,7 @@ namespace Map.Rendering
             }
 
             IsInitialized = true;
-            ArchonLogger.Log($"MapRendererRegistry initialized with {borderRenderers.Count} border, {highlightRenderers.Count} highlight, {fogOfWarRenderers.Count} fog, {terrainRenderers.Count} terrain renderer(s)", "map_rendering");
+            ArchonLogger.Log($"MapRendererRegistry initialized with {borderRenderers.Count} border, {highlightRenderers.Count} highlight, {fogOfWarRenderers.Count} fog, {terrainRenderers.Count} terrain, {mapModeColorizers.Count} colorizer(s)", "map_rendering");
         }
 
         #region Border Renderers
@@ -485,6 +490,106 @@ namespace Map.Rendering
 
         #endregion
 
+        #region Map Mode Colorizers
+
+        /// <summary>
+        /// Register a map mode colorizer implementation.
+        /// ENGINE registers defaults; GAME can register customs.
+        /// </summary>
+        public void RegisterMapModeColorizer(IMapModeColorizer colorizer)
+        {
+            if (colorizer == null)
+            {
+                ArchonLogger.LogWarning("Attempted to register null map mode colorizer", "map_modes");
+                return;
+            }
+
+            string id = colorizer.ColorizerId;
+            if (mapModeColorizers.ContainsKey(id))
+            {
+                ArchonLogger.LogWarning($"Map mode colorizer '{id}' already registered. Replacing.", "map_modes");
+            }
+
+            mapModeColorizers[id] = colorizer;
+            ArchonLogger.Log($"Registered map mode colorizer: {id} ({colorizer.DisplayName})", "map_modes");
+        }
+
+        /// <summary>
+        /// Unregister a map mode colorizer.
+        /// </summary>
+        public bool UnregisterMapModeColorizer(string colorizerId)
+        {
+            if (mapModeColorizers.TryGetValue(colorizerId, out var colorizer))
+            {
+                colorizer.Dispose();
+                mapModeColorizers.Remove(colorizerId);
+                ArchonLogger.Log($"Unregistered map mode colorizer: {colorizerId}", "map_modes");
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Get a map mode colorizer by ID.
+        /// Returns null if not found.
+        /// </summary>
+        public IMapModeColorizer GetMapModeColorizer(string colorizerId)
+        {
+            if (string.IsNullOrEmpty(colorizerId))
+            {
+                colorizerId = defaultMapModeColorizerId;
+            }
+
+            if (mapModeColorizers.TryGetValue(colorizerId, out var colorizer))
+            {
+                return colorizer;
+            }
+
+            ArchonLogger.LogWarning($"Map mode colorizer '{colorizerId}' not found. Available: {string.Join(", ", mapModeColorizers.Keys)}", "map_modes");
+            return null;
+        }
+
+        /// <summary>
+        /// Get the default map mode colorizer.
+        /// </summary>
+        public IMapModeColorizer GetDefaultMapModeColorizer()
+        {
+            return GetMapModeColorizer(defaultMapModeColorizerId);
+        }
+
+        /// <summary>
+        /// Set which colorizer ID is the default.
+        /// </summary>
+        public void SetDefaultMapModeColorizer(string colorizerId)
+        {
+            if (mapModeColorizers.ContainsKey(colorizerId))
+            {
+                defaultMapModeColorizerId = colorizerId;
+            }
+            else
+            {
+                ArchonLogger.LogWarning($"Cannot set default colorizer to unknown: {colorizerId}", "map_modes");
+            }
+        }
+
+        /// <summary>
+        /// Get all available map mode colorizer IDs.
+        /// </summary>
+        public IEnumerable<string> GetAvailableMapModeColorizers()
+        {
+            return mapModeColorizers.Keys;
+        }
+
+        /// <summary>
+        /// Check if a map mode colorizer is registered.
+        /// </summary>
+        public bool HasMapModeColorizer(string colorizerId)
+        {
+            return mapModeColorizers.ContainsKey(colorizerId);
+        }
+
+        #endregion
+
         void OnDestroy()
         {
             // Dispose all registered border renderers
@@ -514,6 +619,13 @@ namespace Map.Rendering
                 renderer?.Dispose();
             }
             terrainRenderers.Clear();
+
+            // Dispose all registered map mode colorizers
+            foreach (var colorizer in mapModeColorizers.Values)
+            {
+                colorizer?.Dispose();
+            }
+            mapModeColorizers.Clear();
 
             if (Instance == this)
             {

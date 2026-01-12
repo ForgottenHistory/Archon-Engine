@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Collections;
 using Core.Queries;
 using Map.Rendering;
+using Map.MapModes.Colorization;
 
 namespace Map.MapModes
 {
@@ -42,8 +43,9 @@ namespace Map.MapModes
         // Dirty flag for optimization - skip updates when data hasn't changed
         private bool isDirty = true;
 
-        // GPU compute shader dispatcher
-        private GradientComputeDispatcher computeDispatcher;
+        // Pluggable colorizer from registry (replaces hardcoded GradientComputeDispatcher)
+        private IMapModeColorizer colorizer;
+        private bool colorizerInitialized = false;
 
         /// <summary>
         /// Mark this map mode as dirty (needs recalculation)
@@ -62,11 +64,43 @@ namespace Map.MapModes
         {
             isDirty = true; // Always update when activated
 
-            // Initialize GPU compute dispatcher on first activation
-            if (computeDispatcher == null)
+            // Get colorizer from registry on first activation (Pattern 20: Pluggable Implementation)
+            if (colorizer == null)
             {
-                computeDispatcher = new GradientComputeDispatcher();
+                var registry = MapRendererRegistry.Instance;
+                if (registry != null)
+                {
+                    // Get default colorizer (or custom if configured)
+                    colorizer = registry.GetDefaultMapModeColorizer();
+                }
+
+                // Fallback: create default colorizer directly if registry not available
+                if (colorizer == null)
+                {
+                    ArchonLogger.LogWarning("GradientMapMode: Registry not available, creating fallback GradientMapModeColorizer", "map_modes");
+                    colorizer = new GradientMapModeColorizer();
+                }
             }
+        }
+
+        /// <summary>
+        /// Initialize the colorizer if not already done.
+        /// Called lazily when first update is needed.
+        /// </summary>
+        private void EnsureColorizerInitialized(MapModeDataTextures dataTextures)
+        {
+            if (colorizerInitialized || colorizer == null) return;
+
+            var context = new MapModeColorizerContext
+            {
+                TextureManager = null, // Not needed for basic colorization
+                MapWidth = dataTextures.ProvinceDevelopmentTexture?.width ?? 0,
+                MapHeight = dataTextures.ProvinceDevelopmentTexture?.height ?? 0,
+                MaxProvinces = 65536
+            };
+
+            colorizer.Initialize(context);
+            colorizerInitialized = true;
         }
 
         // IMapModeHandler implementation
@@ -219,7 +253,7 @@ namespace Map.MapModes
 
         /// <summary>
         /// Update texture with gradient colors based on province values
-        /// Uses GPU compute shader for maximum performance (~1ms vs 105ms CPU)
+        /// Uses pluggable colorizer from registry (Pattern 20) for GPU compute
         /// </summary>
         private void UpdateGradientTexture(MapModeDataTextures dataTextures, NativeArray<ushort> provinces,
                                           ProvinceQueries provinceQueries, ProvinceMapping provinceMapping,
@@ -232,12 +266,15 @@ namespace Map.MapModes
                 return;
             }
 
-            // Check GPU compute dispatcher is available
-            if (computeDispatcher == null || !computeDispatcher.IsInitialized)
+            // Check colorizer is available
+            if (colorizer == null)
             {
-                ArchonLogger.LogError($"{Name}: GPU compute dispatcher not initialized!", "map_modes");
+                ArchonLogger.LogError($"{Name}: Colorizer not available!", "map_modes");
                 return;
             }
+
+            // Ensure colorizer is initialized (lazy init)
+            EnsureColorizerInitialized(dataTextures);
 
             // Get gradient from concrete implementation
             var gradient = GetGradient();
@@ -293,14 +330,19 @@ namespace Map.MapModes
                 return;
             }
 
-            // Dispatch GPU compute shader
-            computeDispatcher.Dispatch(
-                provinceIDTexture,
-                outputTexture,
-                provinceValues,
-                gradient,
-                OceanColor
-            );
+            // Build style params for colorizer
+            var styleParams = new ColorizationStyleParams
+            {
+                Gradient = gradient,
+                OceanColor = OceanColor,
+                NoDataColor = UnknownColor,
+                DiscreteBands = 0,
+                ShowValueLabels = false,
+                AnimationTime = Time.time
+            };
+
+            // Dispatch via pluggable colorizer
+            colorizer.Colorize(provinceIDTexture, outputTexture, provinceValues, styleParams);
         }
 
         /// <summary>
@@ -357,13 +399,16 @@ namespace Map.MapModes
         }
 
         /// <summary>
-        /// Dispose GPU resources
+        /// Dispose resources
         /// Call when map mode is no longer needed (e.g., scene cleanup)
+        /// Note: Colorizer is managed by MapRendererRegistry, only clear local reference
         /// </summary>
         public void Dispose()
         {
-            computeDispatcher?.Dispose();
-            computeDispatcher = null;
+            // Don't dispose colorizer - it's owned by MapRendererRegistry
+            // Just clear local reference
+            colorizer = null;
+            colorizerInitialized = false;
         }
     }
 }

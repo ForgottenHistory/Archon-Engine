@@ -238,6 +238,10 @@ namespace Archon.Engine.Map
         [Tooltip("Terrain blend map generation settings")]
         public TerrainBlendStyle terrainBlend = new TerrainBlendStyle();
 
+        [Header("Map Mode Colorization")]
+        [Tooltip("Map mode colorization settings (gradient/discrete bands/custom)")]
+        public MapModeColorizerStyle mapModeColorizer = new MapModeColorizerStyle();
+
         /// <summary>
         /// Fog of War visual configuration
         /// </summary>
@@ -386,6 +390,39 @@ namespace Archon.Engine.Map
                 if (!string.IsNullOrEmpty(customRendererId))
                     return customRendererId;
                 return "Default";
+            }
+        }
+
+        /// <summary>
+        /// Map mode colorization configuration
+        /// </summary>
+        [System.Serializable]
+        public class MapModeColorizerStyle
+        {
+            [Header("Custom Colorizer (Advanced)")]
+            [Tooltip("Override with custom colorizer ID from MapRendererRegistry.\nLeave empty to use Gradient (default).\nGAME layer can register custom colorizers (discrete bands, multi-gradient, patterns, etc.).")]
+            public string customColorizerId = "";
+
+            [Header("Colorization Settings")]
+            [Tooltip("Number of discrete color bands (0 = continuous gradient, 3-10 = discrete steps).\nOnly used by colorizers that support discrete modes.")]
+            [Range(0, 10)]
+            public int discreteBands = 0;
+
+            [Tooltip("Show value labels on provinces (for data-heavy map modes).")]
+            public bool showValueLabels = false;
+
+            [Header("Special Colors")]
+            [Tooltip("Color for provinces with no data (value < 0).")]
+            public Color noDataColor = new Color(0.25f, 0.25f, 0.25f, 1f);
+
+            /// <summary>
+            /// Get the effective colorizer ID (custom or default gradient).
+            /// </summary>
+            public string GetEffectiveColorizerId()
+            {
+                if (!string.IsNullOrEmpty(customColorizerId))
+                    return customColorizerId;
+                return "Gradient";
             }
         }
 

@@ -469,6 +469,7 @@ borders.customRendererId = "MyStylized";  // References custom by ID
 - `IHighlightRenderer` - Selection/hover highlighting (Default)
 - `IFogOfWarRenderer` - Fog of war visibility rendering (Default)
 - `ITerrainRenderer` - Terrain blend map generation (Default 4-channel)
+- `IMapModeColorizer` - Map mode colorization (Gradient 3-color)
 
 **Related Patterns:**
 - Pattern 1 (Engine-Game Separation) - Philosophy this implements

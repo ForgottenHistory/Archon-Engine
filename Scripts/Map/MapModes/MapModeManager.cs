@@ -4,6 +4,7 @@ using Core;
 using Core.Queries;
 using Map.Rendering;
 using Map.Core;
+using Map.MapModes.Colorization;
 
 namespace Map.MapModes
 {
@@ -106,9 +107,45 @@ namespace Map.MapModes
             InitializeModeHandlers();
             InitializeUpdateScheduler();
 
+            // Register default colorizer with MapRendererRegistry (Pattern 20)
+            RegisterDefaultColorizer();
+
             isInitialized = true;
 
             ArchonLogger.Log("MapModeManager initialized - ready for GAME to register handlers and set mode", "map_initialization");
+        }
+
+        /// <summary>
+        /// Register ENGINE's default map mode colorizer with MapRendererRegistry.
+        /// GAME layer can register additional custom colorizers via MapRendererRegistry.Instance.RegisterMapModeColorizer().
+        /// </summary>
+        private void RegisterDefaultColorizer()
+        {
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null)
+            {
+                ArchonLogger.LogWarning("MapModeManager: MapRendererRegistry not found, cannot register default colorizer", "map_modes");
+                return;
+            }
+
+            // Only register if not already registered
+            if (!registry.HasMapModeColorizer("Gradient"))
+            {
+                var defaultColorizer = new GradientMapModeColorizer();
+
+                // Initialize colorizer with context
+                var context = new MapModeColorizerContext
+                {
+                    TextureManager = Object.FindFirstObjectByType<MapTextureManager>(),
+                    MapWidth = dataTextures?.ProvinceDevelopmentTexture?.width ?? 5632,
+                    MapHeight = dataTextures?.ProvinceDevelopmentTexture?.height ?? 2048,
+                    MaxProvinces = 65536
+                };
+                defaultColorizer.Initialize(context);
+
+                registry.RegisterMapModeColorizer(defaultColorizer);
+                ArchonLogger.Log("MapModeManager: Registered default gradient colorizer", "map_initialization");
+            }
         }
 
         private void InitializeTextures()
