@@ -470,6 +470,7 @@ borders.customRendererId = "MyStylized";  // References custom by ID
 - `IFogOfWarRenderer` - Fog of war visibility rendering (Default)
 - `ITerrainRenderer` - Terrain blend map generation (Default 4-channel)
 - `IMapModeColorizer` - Map mode colorization (Gradient 3-color)
+- `IShaderCompositor` - Layer compositing (Default, Minimal, Stylized, Cinematic)
 
 **Related Patterns:**
 - Pattern 1 (Engine-Game Separation) - Philosophy this implements

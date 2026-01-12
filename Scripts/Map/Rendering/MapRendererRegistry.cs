@@ -4,6 +4,7 @@ using Map.Rendering.Border;
 using Map.Rendering.Highlight;
 using Map.Rendering.FogOfWar;
 using Map.Rendering.Terrain;
+using Map.Rendering.Compositing;
 using Map.MapModes.Colorization;
 
 namespace Map.Rendering
@@ -46,6 +47,10 @@ namespace Map.Rendering
         private Dictionary<string, IMapModeColorizer> mapModeColorizers = new Dictionary<string, IMapModeColorizer>();
         private string defaultMapModeColorizerId = "Gradient";
 
+        // Shader Compositors
+        private Dictionary<string, IShaderCompositor> shaderCompositors = new Dictionary<string, IShaderCompositor>();
+        private string defaultShaderCompositorId = "Default";
+
         public bool IsInitialized { get; private set; }
 
         void Awake()
@@ -71,7 +76,7 @@ namespace Map.Rendering
             }
 
             IsInitialized = true;
-            ArchonLogger.Log($"MapRendererRegistry initialized with {borderRenderers.Count} border, {highlightRenderers.Count} highlight, {fogOfWarRenderers.Count} fog, {terrainRenderers.Count} terrain, {mapModeColorizers.Count} colorizer(s)", "map_rendering");
+            ArchonLogger.Log($"MapRendererRegistry initialized with {borderRenderers.Count} border, {highlightRenderers.Count} highlight, {fogOfWarRenderers.Count} fog, {terrainRenderers.Count} terrain, {mapModeColorizers.Count} colorizer, {shaderCompositors.Count} compositor(s)", "map_rendering");
         }
 
         #region Border Renderers
@@ -590,6 +595,106 @@ namespace Map.Rendering
 
         #endregion
 
+        #region Shader Compositors
+
+        /// <summary>
+        /// Register a shader compositor implementation.
+        /// ENGINE registers defaults; GAME can register customs.
+        /// </summary>
+        public void RegisterShaderCompositor(IShaderCompositor compositor)
+        {
+            if (compositor == null)
+            {
+                ArchonLogger.LogWarning("Attempted to register null shader compositor", "map_rendering");
+                return;
+            }
+
+            string id = compositor.CompositorId;
+            if (shaderCompositors.ContainsKey(id))
+            {
+                ArchonLogger.LogWarning($"Shader compositor '{id}' already registered. Replacing.", "map_rendering");
+            }
+
+            shaderCompositors[id] = compositor;
+            ArchonLogger.Log($"Registered shader compositor: {id} ({compositor.DisplayName})", "map_rendering");
+        }
+
+        /// <summary>
+        /// Unregister a shader compositor.
+        /// </summary>
+        public bool UnregisterShaderCompositor(string compositorId)
+        {
+            if (shaderCompositors.TryGetValue(compositorId, out var compositor))
+            {
+                compositor.Dispose();
+                shaderCompositors.Remove(compositorId);
+                ArchonLogger.Log($"Unregistered shader compositor: {compositorId}", "map_rendering");
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Get a shader compositor by ID.
+        /// Returns null if not found.
+        /// </summary>
+        public IShaderCompositor GetShaderCompositor(string compositorId)
+        {
+            if (string.IsNullOrEmpty(compositorId))
+            {
+                compositorId = defaultShaderCompositorId;
+            }
+
+            if (shaderCompositors.TryGetValue(compositorId, out var compositor))
+            {
+                return compositor;
+            }
+
+            ArchonLogger.LogWarning($"Shader compositor '{compositorId}' not found. Available: {string.Join(", ", shaderCompositors.Keys)}", "map_rendering");
+            return null;
+        }
+
+        /// <summary>
+        /// Get the default shader compositor.
+        /// </summary>
+        public IShaderCompositor GetDefaultShaderCompositor()
+        {
+            return GetShaderCompositor(defaultShaderCompositorId);
+        }
+
+        /// <summary>
+        /// Set which compositor ID is the default.
+        /// </summary>
+        public void SetDefaultShaderCompositor(string compositorId)
+        {
+            if (shaderCompositors.ContainsKey(compositorId))
+            {
+                defaultShaderCompositorId = compositorId;
+            }
+            else
+            {
+                ArchonLogger.LogWarning($"Cannot set default compositor to unknown: {compositorId}", "map_rendering");
+            }
+        }
+
+        /// <summary>
+        /// Get all available shader compositor IDs.
+        /// </summary>
+        public IEnumerable<string> GetAvailableShaderCompositors()
+        {
+            return shaderCompositors.Keys;
+        }
+
+        /// <summary>
+        /// Check if a shader compositor is registered.
+        /// </summary>
+        public bool HasShaderCompositor(string compositorId)
+        {
+            return shaderCompositors.ContainsKey(compositorId);
+        }
+
+        #endregion
+
         void OnDestroy()
         {
             // Dispose all registered border renderers
@@ -626,6 +731,13 @@ namespace Map.Rendering
                 colorizer?.Dispose();
             }
             mapModeColorizers.Clear();
+
+            // Dispose all registered shader compositors
+            foreach (var compositor in shaderCompositors.Values)
+            {
+                compositor?.Dispose();
+            }
+            shaderCompositors.Clear();
 
             if (Instance == this)
             {

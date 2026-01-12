@@ -242,6 +242,10 @@ namespace Archon.Engine.Map
         [Tooltip("Map mode colorization settings (gradient/discrete bands/custom)")]
         public MapModeColorizerStyle mapModeColorizer = new MapModeColorizerStyle();
 
+        [Header("Shader Compositing")]
+        [Tooltip("How render layers are combined (borders, highlights, fog, etc.)")]
+        public CompositorStyle compositor = new CompositorStyle();
+
         /// <summary>
         /// Fog of War visual configuration
         /// </summary>
@@ -423,6 +427,44 @@ namespace Archon.Engine.Map
                 if (!string.IsNullOrEmpty(customColorizerId))
                     return customColorizerId;
                 return "Gradient";
+            }
+        }
+
+        /// <summary>
+        /// Shader compositing configuration
+        /// Controls how render layers (borders, highlights, fog, etc.) are combined
+        /// </summary>
+        [System.Serializable]
+        public class CompositorStyle
+        {
+            [Header("Custom Compositor (Advanced)")]
+            [Tooltip("Override with custom compositor ID from MapRendererRegistry.\nLeave empty to use Default compositor.\nGAME layer can register custom compositors (Stylized, Minimal, Cinematic, etc.).")]
+            public string customCompositorId = "";
+
+            [Header("Layer Visibility")]
+            [Tooltip("Enable normal map lighting effects.")]
+            public bool enableLighting = true;
+
+            [Tooltip("Enable border rendering layer.")]
+            public bool enableBorders = true;
+
+            [Tooltip("Enable highlight/selection layer.")]
+            public bool enableHighlights = true;
+
+            [Tooltip("Enable fog of war layer.")]
+            public bool enableFogOfWar = true;
+
+            [Tooltip("Enable overlay texture layer (paper/parchment).")]
+            public bool enableOverlay = true;
+
+            /// <summary>
+            /// Get the effective compositor ID (custom or default).
+            /// </summary>
+            public string GetEffectiveCompositorId()
+            {
+                if (!string.IsNullOrEmpty(customCompositorId))
+                    return customCompositorId;
+                return "Default";
             }
         }
 
