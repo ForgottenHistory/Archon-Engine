@@ -63,7 +63,12 @@
 ---
 
 ## Commands/
-- **Core.Commands.ICommand** - Base command interface: Execute, Validate, GetChecksum, Dispose
+- **Core.Commands.ICommand** - Base command interface: Validate, Execute, Undo, Serialize/Deserialize
+- **Core.Commands.BaseCommand** - Abstract base with common utilities and logging
+- **Core.Commands.CommandResult** - Execution result struct with success/error info
+- **Core.Commands.ICommandFactory** - Factory interface for creating commands from string input
+- **Core.Commands.CommandMetadataAttribute** - Attribute for auto-discovery (name, aliases, description, examples)
+- **Core.Commands.CommandRegistry** - Auto-discovery registry with multi-assembly support
 - **Core.Commands.IProvinceCommand** - Province-specific command interface
 - **Core.Commands.ChangeOwnerCommand** - Change province ownership
 - **Core.Commands.ProvinceCommands** - Collection of common province commands

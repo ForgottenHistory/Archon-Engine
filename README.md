@@ -94,13 +94,35 @@ Archon-Engine is designed to be generic infrastructure, providing everything you
 Assets/Archon-Engine/
 ├── Scripts/
 │   ├── Core/           # Deterministic simulation layer
-│   └── Map/            # GPU-accelerated presentation
+│   ├── Map/            # GPU-accelerated presentation
+│   └── StarterKit      # Scripts to start from/look at
 ├── Shaders/            # Compute shaders for rendering
 └── Docs/
+
     ├── Engine/         # Architecture documentation
     ├── Planning/       # Future features
     └── Log/            # Development journal
 ```
+
+## StarterKit
+
+A minimal working game template demonstrating ENGINE patterns. Use it as a learning reference or starting point for new games. Currently WIP.
+
+**Scene:** `Assets/Archon-Engine/Scenes/StarterKit.unity`
+
+**What's Included (WORK IN PROGRESS):**
+- **EconomySystem** - Simple gold economy (1 gold/province/month + building bonuses)
+- **UnitSystem** - Military units with movement and combat stats
+- **BuildingSystem** - Province buildings with instant construction
+- **AISystem** - Basic AI that builds in owned provinces
+- **Command Pattern** - All state changes through commands (add_gold, create_unit, build, etc.)
+- **UI Components** - Country selection, resource bar, province info, unit management
+
+**Data Files:**
+- Unit types: `Template-Data/units/*.json5`
+- Building types: `Template-Data/buildings/*.json5`
+
+StarterKit demonstrates the recommended patterns without the complexity of a full game implementation. See [Scripts/StarterKit/README.md](Scripts/StarterKit/README.md) for details.
 
 ## Development Status
 
