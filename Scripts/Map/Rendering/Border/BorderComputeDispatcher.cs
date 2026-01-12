@@ -3,6 +3,7 @@ using UnityEngine.Rendering;
 using Core.Systems;
 using Map.Rendering.Border;
 using ProvinceSystemType = Core.Systems.ProvinceSystem;
+using Core.Queries;
 
 namespace Map.Rendering
 {
@@ -71,6 +72,13 @@ namespace Map.Rendering
         private float pixelPerfectAntiAliasing = 0f;
 
         private BorderDebugUtility debugUtility;
+
+        // Pluggable renderer support
+        private bool renderersRegistered = false;
+        private IBorderRenderer activeBorderRenderer;
+
+        // Context for renderer initialization
+        private BorderRendererContext rendererContext;
 
         void Awake()
         {
@@ -247,6 +255,119 @@ namespace Map.Rendering
 
                 ArchonLogger.Log($"BorderComputeDispatcher: Bound border textures, mode={renderingMode} (shader={shaderMode})", "map_initialization");
             }
+
+            // Register ENGINE default renderers with registry
+            RegisterDefaultRenderers(adjacencySystem, provinceSystem, countrySystem, provinceMapping, mapPlaneTransform);
+        }
+
+        /// <summary>
+        /// Register ENGINE's default border renderers with MapRendererRegistry.
+        /// Called during smooth border initialization.
+        /// GAME layer can register additional custom renderers via MapRendererRegistry.Instance.RegisterBorderRenderer().
+        /// </summary>
+        private void RegisterDefaultRenderers(AdjacencySystem adjacencySystem, ProvinceSystemType provinceSystem,
+            CountrySystem countrySystem, ProvinceMapping provinceMapping, Transform mapPlaneTransform)
+        {
+            if (renderersRegistered) return;
+
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null)
+            {
+                ArchonLogger.LogWarning("BorderComputeDispatcher: MapRendererRegistry not found, cannot register renderers", "map_initialization");
+                return;
+            }
+
+            // Build context for renderer initialization
+            rendererContext = new BorderRendererContext
+            {
+                AdjacencySystem = adjacencySystem,
+                ProvinceSystem = provinceSystem,
+                CountrySystem = countrySystem,
+                ProvinceMapping = provinceMapping,
+                MapPlaneTransform = mapPlaneTransform,
+                BorderDetectionCompute = borderDetectionCompute,
+                BorderSDFCompute = borderSDFCompute
+            };
+
+            // Register None renderer
+            var noneRenderer = new NoneBorderRenderer();
+            noneRenderer.Initialize(textureManager, rendererContext);
+            registry.RegisterBorderRenderer(noneRenderer);
+
+            // Register Distance Field renderer
+            var distanceFieldRenderer = new DistanceFieldBorderRenderer(distanceFieldGenerator);
+            distanceFieldRenderer.Initialize(textureManager, rendererContext);
+            registry.RegisterBorderRenderer(distanceFieldRenderer);
+
+            // Register Pixel Perfect renderer
+            var pixelPerfectRenderer = new PixelPerfectBorderRenderer(borderDetectionCompute);
+            pixelPerfectRenderer.Initialize(textureManager, rendererContext);
+            registry.RegisterBorderRenderer(pixelPerfectRenderer);
+
+            // Register Mesh Geometry renderer
+            var meshGeometryRenderer = new MeshGeometryBorderRenderer();
+            meshGeometryRenderer.Initialize(textureManager, rendererContext);
+            registry.RegisterBorderRenderer(meshGeometryRenderer);
+
+            // Set default based on current mode
+            string defaultId = MapRendererRegistry.MapBorderModeToRendererId(renderingMode);
+            registry.SetDefaultBorderRenderer(defaultId);
+
+            // Initialize the registry
+            registry.Initialize();
+
+            renderersRegistered = true;
+            ArchonLogger.Log($"BorderComputeDispatcher: Registered {4} ENGINE default border renderers", "map_initialization");
+        }
+
+        /// <summary>
+        /// Get the currently active border renderer from registry.
+        /// </summary>
+        public IBorderRenderer GetActiveBorderRenderer()
+        {
+            if (activeBorderRenderer != null)
+                return activeBorderRenderer;
+
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null)
+                return null;
+
+            string rendererId = MapRendererRegistry.MapBorderModeToRendererId(renderingMode);
+            return registry.GetBorderRenderer(rendererId);
+        }
+
+        /// <summary>
+        /// Set the active border renderer by ID.
+        /// Used by VisualStyleManager to switch renderers.
+        /// </summary>
+        public void SetActiveBorderRenderer(string rendererId, ProvinceQueries provinceQueries = null)
+        {
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null)
+            {
+                ArchonLogger.LogWarning("BorderComputeDispatcher: Cannot set active renderer - registry not found", "map_rendering");
+                return;
+            }
+
+            var renderer = registry.GetBorderRenderer(rendererId);
+            if (renderer == null)
+            {
+                ArchonLogger.LogWarning($"BorderComputeDispatcher: Renderer '{rendererId}' not found in registry", "map_rendering");
+                return;
+            }
+
+            activeBorderRenderer = renderer;
+
+            // Generate borders with the new renderer
+            var parameters = new BorderGenerationParams
+            {
+                Mode = borderMode,
+                ForceRegenerate = false,
+                ProvinceQueries = provinceQueries
+            };
+            renderer.GenerateBorders(parameters);
+
+            ArchonLogger.Log($"BorderComputeDispatcher: Set active border renderer to '{rendererId}'", "map_rendering");
         }
 
         /// <summary>

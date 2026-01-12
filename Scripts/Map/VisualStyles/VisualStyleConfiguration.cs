@@ -40,6 +40,10 @@ namespace Archon.Engine.Map
             [Tooltip("How borders are rendered:\n• PixelPerfect: Sharp 1px borders (retro aesthetic)\n• DistanceField: Smooth anti-aliased borders (modern look)\n• MeshGeometry: 3D mesh borders (resolution-independent)")]
             public BorderRenderingMode renderingMode = BorderRenderingMode.ShaderDistanceField;
 
+            [Header("Custom Renderer (Advanced)")]
+            [Tooltip("Override with custom renderer ID from MapRendererRegistry.\nLeave empty to use renderingMode above.\nGAME layer can register custom renderers via MapRendererRegistry.")]
+            public string customRendererId = "";
+
             [Header("Country Borders")]
             public Color countryBorderColor = Color.black;
             [Range(0f, 1f)]
@@ -113,6 +117,33 @@ namespace Archon.Engine.Map
                 Thick,
                 Dual,
                 None
+            }
+
+            /// <summary>
+            /// Get the effective renderer ID (custom or mapped from enum).
+            /// Custom ID takes priority if set.
+            /// </summary>
+            public string GetEffectiveRendererId()
+            {
+                if (!string.IsNullOrEmpty(customRendererId))
+                    return customRendererId;
+
+                return MapRenderingModeToId(renderingMode);
+            }
+
+            /// <summary>
+            /// Map BorderRenderingMode enum to renderer ID string.
+            /// </summary>
+            private static string MapRenderingModeToId(BorderRenderingMode mode)
+            {
+                return mode switch
+                {
+                    BorderRenderingMode.None => "None",
+                    BorderRenderingMode.ShaderDistanceField => "DistanceField",
+                    BorderRenderingMode.ShaderPixelPerfect => "PixelPerfect",
+                    BorderRenderingMode.MeshGeometry => "MeshGeometry",
+                    _ => "DistanceField"
+                };
             }
         }
 

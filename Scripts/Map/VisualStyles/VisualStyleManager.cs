@@ -1,5 +1,6 @@
 using UnityEngine;
 using Map.Rendering;
+using Map.Rendering.Border;
 using Map.MapModes;
 using Core;
 
@@ -167,7 +168,8 @@ namespace Archon.Engine.Map
 
         /// <summary>
         /// Apply border configuration from style (called after map initialization when BorderDispatcher exists)
-        /// Sets rendering mode, border mode, and triggers border generation
+        /// Sets rendering mode, border mode, and triggers border generation.
+        /// Supports custom renderer IDs from MapRendererRegistry.
         /// </summary>
         public void ApplyBorderConfiguration(VisualStyleConfiguration style)
         {
@@ -178,8 +180,39 @@ namespace Archon.Engine.Map
 
             if (borderDispatcher != null)
             {
-                // Set the rendering mode from VisualStyles (single source of truth)
-                borderDispatcher.SetBorderRenderingMode(style.borders.renderingMode);
+                // Get the effective renderer ID (custom or from enum)
+                string effectiveRendererId = style.borders.GetEffectiveRendererId();
+
+                // Check if using a custom renderer via registry
+                var registry = MapRendererRegistry.Instance;
+                bool usingCustomRenderer = registry != null &&
+                                          !string.IsNullOrEmpty(style.borders.customRendererId) &&
+                                          registry.HasBorderRenderer(style.borders.customRendererId);
+
+                if (usingCustomRenderer)
+                {
+                    // Use registry-based renderer selection
+                    var gameState = FindFirstObjectByType<GameState>();
+                    borderDispatcher.SetActiveBorderRenderer(effectiveRendererId, gameState?.ProvinceQueries);
+
+                    // Apply style params to the renderer
+                    var renderer = registry.GetBorderRenderer(effectiveRendererId);
+                    if (renderer != null && runtimeMaterial != null)
+                    {
+                        var styleParams = BuildBorderStyleParams(style.borders);
+                        renderer.ApplyToMaterial(runtimeMaterial, styleParams);
+                    }
+
+                    if (logStyleApplication)
+                    {
+                        ArchonLogger.Log($"VisualStyleManager: Using custom renderer '{effectiveRendererId}' from registry", "map_rendering");
+                    }
+                }
+                else
+                {
+                    // Use legacy enum-based rendering mode
+                    borderDispatcher.SetBorderRenderingMode(style.borders.renderingMode);
+                }
 
                 // Set border mode (which borders to show)
                 var engineBorderMode = ConvertBorderMode(style.borders.borderMode);
@@ -220,7 +253,7 @@ namespace Archon.Engine.Map
                     borderDispatcher.DetectBorders();
                     if (logStyleApplication)
                     {
-                        ArchonLogger.Log($"VisualStyleManager: Applied borders - Rendering: {style.borders.renderingMode}, Mode: {style.borders.borderMode}", "map_rendering");
+                        ArchonLogger.Log($"VisualStyleManager: Applied borders - Renderer: {effectiveRendererId}, Mode: {style.borders.borderMode}", "map_rendering");
                     }
                 }
             }
@@ -228,6 +261,26 @@ namespace Archon.Engine.Map
             {
                 ArchonLogger.LogWarning("VisualStyleManager: BorderDispatcher not found - cannot apply border configuration", "map_rendering");
             }
+        }
+
+        /// <summary>
+        /// Build BorderStyleParams from VisualStyleConfiguration.BorderStyle
+        /// </summary>
+        private BorderStyleParams BuildBorderStyleParams(VisualStyleConfiguration.BorderStyle borders)
+        {
+            return new BorderStyleParams
+            {
+                CountryBorderColor = borders.countryBorderColor,
+                ProvinceBorderColor = borders.provinceBorderColor,
+                CountryBorderStrength = borders.countryBorderStrength,
+                ProvinceBorderStrength = borders.provinceBorderStrength,
+                PixelPerfectCountryThickness = borders.pixelPerfectCountryThickness,
+                PixelPerfectProvinceThickness = borders.pixelPerfectProvinceThickness,
+                PixelPerfectAntiAliasing = borders.pixelPerfectAntiAliasing,
+                EdgeWidth = borders.edgeWidth,
+                GradientWidth = borders.gradientWidth,
+                EdgeSmoothness = borders.edgeSmoothness
+            };
         }
 
 
@@ -372,6 +425,7 @@ namespace Archon.Engine.Map
 
         /// <summary>
         /// Runtime style switching (for settings menu, etc.)
+        /// Supports custom renderer IDs from MapRendererRegistry.
         /// </summary>
         public void SwitchStyle(VisualStyleConfiguration newStyle)
         {
@@ -386,7 +440,29 @@ namespace Archon.Engine.Map
             // Apply border configuration from VisualStyles
             if (borderDispatcher != null)
             {
-                borderDispatcher.SetBorderRenderingMode(newStyle.borders.renderingMode);
+                string effectiveRendererId = newStyle.borders.GetEffectiveRendererId();
+                var registry = MapRendererRegistry.Instance;
+                bool usingCustomRenderer = registry != null &&
+                                          !string.IsNullOrEmpty(newStyle.borders.customRendererId) &&
+                                          registry.HasBorderRenderer(newStyle.borders.customRendererId);
+
+                if (usingCustomRenderer)
+                {
+                    var gameState = FindFirstObjectByType<GameState>();
+                    borderDispatcher.SetActiveBorderRenderer(effectiveRendererId, gameState?.ProvinceQueries);
+
+                    var renderer = registry.GetBorderRenderer(effectiveRendererId);
+                    if (renderer != null && runtimeMaterial != null)
+                    {
+                        var styleParams = BuildBorderStyleParams(newStyle.borders);
+                        renderer.ApplyToMaterial(runtimeMaterial, styleParams);
+                    }
+                }
+                else
+                {
+                    borderDispatcher.SetBorderRenderingMode(newStyle.borders.renderingMode);
+                }
+
                 var engineBorderMode = ConvertBorderMode(newStyle.borders.borderMode);
                 borderDispatcher.SetBorderMode(engineBorderMode);
                 borderDispatcher.SetPixelPerfectParameters(
@@ -446,7 +522,29 @@ namespace Archon.Engine.Map
             // Apply border rendering mode and regenerate borders from ScriptableObject
             if (borderDispatcher != null)
             {
-                borderDispatcher.SetBorderRenderingMode(style.borders.renderingMode);
+                string effectiveRendererId = style.borders.GetEffectiveRendererId();
+                var registry = MapRendererRegistry.Instance;
+                bool usingCustomRenderer = registry != null &&
+                                          !string.IsNullOrEmpty(style.borders.customRendererId) &&
+                                          registry.HasBorderRenderer(style.borders.customRendererId);
+
+                if (usingCustomRenderer)
+                {
+                    var gameState = FindFirstObjectByType<GameState>();
+                    borderDispatcher.SetActiveBorderRenderer(effectiveRendererId, gameState?.ProvinceQueries);
+
+                    var renderer = registry.GetBorderRenderer(effectiveRendererId);
+                    if (renderer != null && runtimeMaterial != null)
+                    {
+                        var styleParams = BuildBorderStyleParams(style.borders);
+                        renderer.ApplyToMaterial(runtimeMaterial, styleParams);
+                    }
+                }
+                else
+                {
+                    borderDispatcher.SetBorderRenderingMode(style.borders.renderingMode);
+                }
+
                 var engineBorderMode = ConvertBorderMode(style.borders.borderMode);
                 borderDispatcher.SetBorderMode(engineBorderMode);
                 borderDispatcher.SetPixelPerfectParameters(
@@ -455,7 +553,7 @@ namespace Archon.Engine.Map
                     style.borders.pixelPerfectAntiAliasing
                 );
 
-                ArchonLogger.Log($"VisualStyleManager.ReloadMaterialFromAsset: Applied borders - Rendering: {style.borders.renderingMode}, Mode: {style.borders.borderMode}", "map_rendering");
+                ArchonLogger.Log($"VisualStyleManager.ReloadMaterialFromAsset: Applied borders - Renderer: {effectiveRendererId}, Mode: {style.borders.borderMode}", "map_rendering");
             }
 
             ArchonLogger.Log("VisualStyleManager.ReloadMaterialFromAsset: Complete - style reloaded from ScriptableObject", "map_rendering");
