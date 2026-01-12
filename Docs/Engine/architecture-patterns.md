@@ -2,13 +2,13 @@
 
 **Purpose:** Catalog of proven architectural patterns used throughout the Archon Engine
 **Status:** Production Standard
-**Last Updated:** 2025-11-17
+**Last Updated:** 2026-01-12
 
 ---
 
 ## Overview
 
-This document catalogs the 19 core architectural patterns that make Archon Engine scalable, maintainable, and reusable. Each pattern solves specific problems encountered in grand strategy game development.
+This document catalogs the 20 core architectural patterns that make Archon Engine scalable, maintainable, and reusable. Each pattern solves specific problems encountered in grand strategy game development.
 
 **Why Patterns Matter:**
 - Consistent solutions to recurring problems
@@ -406,6 +406,76 @@ This document catalogs the 19 core architectural patterns that make Archon Engin
 
 ---
 
+## Pattern 20: Pluggable Implementation Pattern (Interface + Registry)
+
+**Principle:** ENGINE provides interfaces + default implementations; GAME registers custom implementations via registry
+
+**Components:**
+1. **Interface** (e.g., `IBorderRenderer`, `IHighlightRenderer`) - Contract for implementations
+2. **Base Class** (e.g., `BorderRendererBase`) - Common utilities, template methods
+3. **Registry** (`MapRendererRegistry`) - Central registration and lookup by string ID
+4. **Default Implementations** - ENGINE provides working defaults
+5. **Configuration** (e.g., `VisualStyleConfiguration`) - References renderers by string ID
+
+**Pattern Flow:**
+```
+ENGINE defines interface → ENGINE registers defaults → GAME registers customs → Config references by ID
+```
+
+**Example - Border Rendering:**
+```csharp
+// Interface (ENGINE)
+public interface IBorderRenderer {
+    string RendererId { get; }
+    void GenerateBorders(BorderGenerationParams parameters);
+}
+
+// Default implementation (ENGINE)
+public class DistanceFieldBorderRenderer : BorderRendererBase { ... }
+
+// Custom implementation (GAME)
+public class MyStylizedBorderRenderer : BorderRendererBase { ... }
+
+// Registration (GAME initialization)
+MapRendererRegistry.Instance.RegisterBorderRenderer(new MyStylizedBorderRenderer());
+
+// Configuration (VisualStyleConfiguration asset)
+borders.customRendererId = "MyStylized";  // References custom by ID
+```
+
+**Backwards Compatibility:**
+- Empty `customRendererId` falls back to enum-based selection
+- `GetEffectiveRendererId()` handles mapping
+
+**When to Use:**
+- ENGINE provides capability with reasonable defaults
+- GAME may want completely different implementation
+- Multiple valid approaches exist (not just parameter tweaks)
+- Examples: Border rendering, highlight effects, fog visualization
+
+**When NOT to Use:**
+- Simple parameter customization (use VisualStyleConfiguration directly)
+- No foreseeable need for custom implementations
+- Performance-critical paths where interface indirection matters
+
+**Benefits:**
+- GAME extends without modifying ENGINE
+- Clean separation of mechanism (ENGINE) and policy (GAME)
+- Runtime switching between implementations
+- Discoverable (registry lists available renderers)
+
+**Current Implementations:**
+- `IBorderRenderer` - Border generation (DistanceField, PixelPerfect, MeshGeometry, None)
+- `IHighlightRenderer` - Selection/hover highlighting (Default)
+- Future: `IFogOfWarRenderer`, `ITerrainRenderer`
+
+**Related Patterns:**
+- Pattern 1 (Engine-Game Separation) - Philosophy this implements
+- Pattern 7 (Registry) - Data lookup; this is implementation lookup
+- Pattern 6 (Facade) - Often coordinates pluggable renderers
+
+---
+
 ## Pattern Selection Guide
 
 **Need to change game state?** → Pattern 2 (Command Pattern)
@@ -439,6 +509,8 @@ This document catalogs the 19 core architectural patterns that make Archon Engin
 **One authoritative data source?** → Pattern 17 (Single Source of Truth)
 
 **Complex initialization sequence?** → Pattern 18 (Coordinator)
+
+**GAME needs custom implementation of ENGINE capability?** → Pattern 20 (Pluggable Implementation)
 
 ---
 
@@ -489,5 +561,5 @@ This document catalogs the 19 core architectural patterns that make Archon Engin
 
 ---
 
-*Last Updated: 2025-11-17*
+*Last Updated: 2026-01-12*
 *These patterns are battle-tested and production-ready. Use them.*

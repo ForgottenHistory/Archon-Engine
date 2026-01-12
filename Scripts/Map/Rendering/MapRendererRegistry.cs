@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Map.Rendering.Border;
+using Map.Rendering.Highlight;
 
 namespace Map.Rendering
 {
@@ -26,8 +27,11 @@ namespace Map.Rendering
         private Dictionary<string, IBorderRenderer> borderRenderers = new Dictionary<string, IBorderRenderer>();
         private string defaultBorderRendererId = "DistanceField";
 
-        // Future: Highlight, FogOfWar, Terrain renderers
-        // private Dictionary<string, IHighlightRenderer> highlightRenderers;
+        // Highlight Renderers
+        private Dictionary<string, IHighlightRenderer> highlightRenderers = new Dictionary<string, IHighlightRenderer>();
+        private string defaultHighlightRendererId = "Default";
+
+        // Future: FogOfWar, Terrain renderers
         // private Dictionary<string, IFogOfWarRenderer> fogOfWarRenderers;
         // private Dictionary<string, ITerrainRenderer> terrainRenderers;
 
@@ -56,7 +60,7 @@ namespace Map.Rendering
             }
 
             IsInitialized = true;
-            ArchonLogger.Log($"MapRendererRegistry initialized with {borderRenderers.Count} border renderer(s)", "map_rendering");
+            ArchonLogger.Log($"MapRendererRegistry initialized with {borderRenderers.Count} border renderer(s), {highlightRenderers.Count} highlight renderer(s)", "map_rendering");
         }
 
         #region Border Renderers
@@ -175,14 +179,121 @@ namespace Map.Rendering
 
         #endregion
 
+        #region Highlight Renderers
+
+        /// <summary>
+        /// Register a highlight renderer implementation.
+        /// ENGINE registers defaults; GAME can register customs.
+        /// </summary>
+        public void RegisterHighlightRenderer(IHighlightRenderer renderer)
+        {
+            if (renderer == null)
+            {
+                ArchonLogger.LogWarning("Attempted to register null highlight renderer", "map_rendering");
+                return;
+            }
+
+            string id = renderer.RendererId;
+            if (highlightRenderers.ContainsKey(id))
+            {
+                ArchonLogger.LogWarning($"Highlight renderer '{id}' already registered. Replacing.", "map_rendering");
+            }
+
+            highlightRenderers[id] = renderer;
+            ArchonLogger.Log($"Registered highlight renderer: {id} ({renderer.DisplayName})", "map_rendering");
+        }
+
+        /// <summary>
+        /// Unregister a highlight renderer.
+        /// </summary>
+        public bool UnregisterHighlightRenderer(string rendererId)
+        {
+            if (highlightRenderers.TryGetValue(rendererId, out var renderer))
+            {
+                renderer.Dispose();
+                highlightRenderers.Remove(rendererId);
+                ArchonLogger.Log($"Unregistered highlight renderer: {rendererId}", "map_rendering");
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Get a highlight renderer by ID.
+        /// Returns null if not found.
+        /// </summary>
+        public IHighlightRenderer GetHighlightRenderer(string rendererId)
+        {
+            if (string.IsNullOrEmpty(rendererId))
+            {
+                rendererId = defaultHighlightRendererId;
+            }
+
+            if (highlightRenderers.TryGetValue(rendererId, out var renderer))
+            {
+                return renderer;
+            }
+
+            ArchonLogger.LogWarning($"Highlight renderer '{rendererId}' not found. Available: {string.Join(", ", highlightRenderers.Keys)}", "map_rendering");
+            return null;
+        }
+
+        /// <summary>
+        /// Get the default highlight renderer.
+        /// </summary>
+        public IHighlightRenderer GetDefaultHighlightRenderer()
+        {
+            return GetHighlightRenderer(defaultHighlightRendererId);
+        }
+
+        /// <summary>
+        /// Set which highlight renderer ID is the default.
+        /// </summary>
+        public void SetDefaultHighlightRenderer(string rendererId)
+        {
+            if (highlightRenderers.ContainsKey(rendererId))
+            {
+                defaultHighlightRendererId = rendererId;
+            }
+            else
+            {
+                ArchonLogger.LogWarning($"Cannot set default highlight to unknown renderer: {rendererId}", "map_rendering");
+            }
+        }
+
+        /// <summary>
+        /// Get all available highlight renderer IDs.
+        /// </summary>
+        public IEnumerable<string> GetAvailableHighlightRenderers()
+        {
+            return highlightRenderers.Keys;
+        }
+
+        /// <summary>
+        /// Check if a highlight renderer is registered.
+        /// </summary>
+        public bool HasHighlightRenderer(string rendererId)
+        {
+            return highlightRenderers.ContainsKey(rendererId);
+        }
+
+        #endregion
+
         void OnDestroy()
         {
-            // Dispose all registered renderers
+            // Dispose all registered border renderers
             foreach (var renderer in borderRenderers.Values)
             {
                 renderer?.Dispose();
             }
             borderRenderers.Clear();
+
+            // Dispose all registered highlight renderers
+            foreach (var renderer in highlightRenderers.Values)
+            {
+                renderer?.Dispose();
+            }
+            highlightRenderers.Clear();
 
             if (Instance == this)
             {

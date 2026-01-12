@@ -1,5 +1,6 @@
 using UnityEngine;
 using Map.Rendering;
+using Map.Rendering.Highlight;
 
 namespace Archon.Engine.Map
 {
@@ -229,6 +230,10 @@ namespace Archon.Engine.Map
         [Tooltip("3D terrain height displacement settings")]
         public TessellationSettings tessellation = new TessellationSettings();
 
+        [Header("Highlight/Selection")]
+        [Tooltip("Province selection and hover highlight settings")]
+        public HighlightStyle highlights = new HighlightStyle();
+
         /// <summary>
         /// Fog of War visual configuration
         /// </summary>
@@ -293,6 +298,47 @@ namespace Archon.Engine.Map
             [Tooltip("Distance where tessellation becomes minimal (typical: 300-500)")]
             [Range(50f, 1000f)]
             public float tessellationMaxDistance = 500.0f;
+        }
+
+        /// <summary>
+        /// Highlight/Selection visual configuration
+        /// </summary>
+        [System.Serializable]
+        public class HighlightStyle
+        {
+            [Header("Custom Renderer (Advanced)")]
+            [Tooltip("Override with custom renderer ID from MapRendererRegistry.\nLeave empty to use Default renderer.\nGAME layer can register custom renderers (glow, pulse, etc.).")]
+            public string customRendererId = "";
+
+            [Header("Selection Colors")]
+            [Tooltip("Color for selected province")]
+            public Color selectionColor = new Color(1f, 0.84f, 0f, 0.4f); // Gold with transparency
+
+            [Tooltip("Color for hovered province")]
+            public Color hoverColor = new Color(1f, 1f, 1f, 0.3f); // White with transparency
+
+            [Header("Highlight Mode")]
+            [Tooltip("How highlights are rendered:\n• Fill: Fill entire province\n• BorderOnly: Only highlight borders")]
+            public HighlightMode defaultMode = HighlightMode.Fill;
+
+            [Header("Settings")]
+            [Tooltip("Border thickness for BorderOnly mode (1-5 pixels)")]
+            [Range(1f, 5f)]
+            public float borderThickness = 2.0f;
+
+            [Tooltip("Overall highlight opacity multiplier")]
+            [Range(0f, 1f)]
+            public float opacityMultiplier = 1.0f;
+
+            /// <summary>
+            /// Get the effective renderer ID (custom or default).
+            /// </summary>
+            public string GetEffectiveRendererId()
+            {
+                if (!string.IsNullOrEmpty(customRendererId))
+                    return customRendererId;
+                return "Default";
+            }
         }
 
         /// <summary>

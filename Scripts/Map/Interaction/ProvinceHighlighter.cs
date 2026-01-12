@@ -1,5 +1,6 @@
 using UnityEngine;
 using Map.Rendering;
+using Map.Rendering.Highlight;
 using Utils;
 
 namespace Map.Interaction
@@ -36,6 +37,9 @@ namespace Map.Interaction
         // State tracking
         private ushort currentHighlightedProvince = 0;
         private Color currentHighlightColor = Color.clear;
+
+        // Pluggable renderer support
+        private bool rendererRegistered = false;
 
         public enum HighlightMode
         {
@@ -97,10 +101,55 @@ namespace Map.Interaction
         {
             textureManager = manager;
 
+            // Register default highlight renderer with registry
+            RegisterDefaultRenderer();
+
             if (logOperations)
             {
                 ArchonLogger.Log("ProvinceHighlighter: Initialized with texture manager", "map_initialization");
             }
+        }
+
+        /// <summary>
+        /// Register ENGINE's default highlight renderer with MapRendererRegistry.
+        /// GAME layer can register additional custom renderers via MapRendererRegistry.Instance.RegisterHighlightRenderer().
+        /// </summary>
+        private void RegisterDefaultRenderer()
+        {
+            if (rendererRegistered) return;
+
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null)
+            {
+                ArchonLogger.LogWarning("ProvinceHighlighter: MapRendererRegistry not found, cannot register renderer", "map_initialization");
+                return;
+            }
+
+            // Build context for renderer initialization
+            var context = new HighlightRendererContext
+            {
+                HighlightCompute = highlightCompute,
+                ProvinceMapping = null // Can be set later if needed
+            };
+
+            // Register default renderer
+            var defaultRenderer = new DefaultHighlightRenderer(highlightCompute);
+            defaultRenderer.Initialize(textureManager, context);
+            registry.RegisterHighlightRenderer(defaultRenderer);
+
+            rendererRegistered = true;
+            ArchonLogger.Log("ProvinceHighlighter: Registered default highlight renderer", "map_initialization");
+        }
+
+        /// <summary>
+        /// Get the active highlight renderer from registry.
+        /// </summary>
+        public IHighlightRenderer GetActiveHighlightRenderer(string rendererId = null)
+        {
+            var registry = MapRendererRegistry.Instance;
+            if (registry == null) return null;
+
+            return registry.GetHighlightRenderer(rendererId);
         }
 
         /// <summary>
