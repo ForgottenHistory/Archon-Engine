@@ -7,6 +7,11 @@ namespace Map.Rendering
     /// Manages runtime-generated dynamic textures
     /// Border, Highlight, and Fog of War RenderTextures for effects
     /// Extracted from MapTextureManager for single responsibility
+    ///
+    /// BORDER TEXTURE ARCHITECTURE (Clean Separation):
+    /// - DistanceFieldBorderTexture: Used by ShaderDistanceField mode (smooth JFA borders)
+    /// - PixelPerfectBorderTexture: Used by ShaderPixelPerfect mode (sharp 1px borders)
+    /// Each mode has its own dedicated texture - no sharing/reusing between modes.
     /// </summary>
     public class DynamicTextureSet
     {
@@ -14,21 +19,28 @@ namespace Map.Rendering
         private readonly int mapHeight;
         private readonly bool logCreation;
 
-        // Dynamic render textures
-        private RenderTexture distanceFieldTexture;     // JFA distance field for smooth borders (ShaderDistanceField mode)
-        private RenderTexture dualBorderTexture;        // Dual-channel pixel-perfect borders (ShaderPixelPerfect mode): R=country, G=province
+        // Dynamic render textures - each border mode has dedicated texture
+        private RenderTexture distanceFieldBorderTexture;   // Mode 1: JFA distance field (R=country, G=province)
+        private RenderTexture pixelPerfectBorderTexture;    // Mode 2: Sharp 1px borders (R=country, G=province)
         private RenderTexture highlightTexture;
         private RenderTexture fogOfWarTexture;
 
-        // Shader property IDs (keep shader names unchanged for compatibility)
-        private static readonly int BorderTexID = Shader.PropertyToID("_BorderTexture");
-        private static readonly int BorderMaskTexID = Shader.PropertyToID("_BorderMaskTexture");
+        // Shader property IDs - dedicated names per mode (no sharing)
+        private static readonly int DistanceFieldBorderTexID = Shader.PropertyToID("_DistanceFieldBorderTexture");
+        private static readonly int PixelPerfectBorderTexID = Shader.PropertyToID("_PixelPerfectBorderTexture");
         private static readonly int HighlightTexID = Shader.PropertyToID("_HighlightTexture");
         private static readonly int FogOfWarTexID = Shader.PropertyToID("_FogOfWarTexture");
 
         // Public accessors
-        public RenderTexture DistanceFieldTexture => distanceFieldTexture;
-        public RenderTexture DualBorderTexture => dualBorderTexture;
+        public RenderTexture DistanceFieldBorderTexture => distanceFieldBorderTexture;
+        public RenderTexture PixelPerfectBorderTexture => pixelPerfectBorderTexture;
+
+        // Legacy accessor for backwards compatibility during transition
+        [System.Obsolete("Use DistanceFieldBorderTexture or PixelPerfectBorderTexture instead")]
+        public RenderTexture DistanceFieldTexture => distanceFieldBorderTexture;
+        [System.Obsolete("Use PixelPerfectBorderTexture instead")]
+        public RenderTexture DualBorderTexture => pixelPerfectBorderTexture;
+
         public RenderTexture HighlightTexture => highlightTexture;
         public RenderTexture FogOfWarTexture => fogOfWarTexture;
 
@@ -44,19 +56,18 @@ namespace Map.Rendering
         /// </summary>
         public void CreateTextures()
         {
-            CreateDistanceFieldTexture();
-            CreateDualBorderTexture();
+            CreateDistanceFieldBorderTexture();
+            CreatePixelPerfectBorderTexture();
             CreateHighlightTexture();
             CreateFogOfWarTexture();
         }
 
         /// <summary>
-        /// Create distance field texture for JFA-based smooth border rendering
+        /// Create distance field border texture for JFA-based smooth border rendering (Mode 1)
         /// R channel = country border distance, G channel = province border distance
         /// Uses R8G8B8A8_UNorm for maximum UAV compatibility across platforms
-        /// (R16G16_UNorm causes TYPELESS format on some platforms - see explicit-graphics-format.md)
         /// </summary>
-        private void CreateDistanceFieldTexture()
+        private void CreateDistanceFieldBorderTexture()
         {
             var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight,
                 UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, 0);
@@ -64,34 +75,30 @@ namespace Map.Rendering
             descriptor.useMipMap = false;
             descriptor.autoGenerateMips = false;
 
-            distanceFieldTexture = new RenderTexture(descriptor);
-            distanceFieldTexture.name = "DistanceField_RenderTexture";
-            distanceFieldTexture.filterMode = FilterMode.Bilinear; // Bilinear + smoothstep gradient = crisp thin borders
-            distanceFieldTexture.wrapMode = TextureWrapMode.Clamp;
-            distanceFieldTexture.Create();
+            distanceFieldBorderTexture = new RenderTexture(descriptor);
+            distanceFieldBorderTexture.name = "DistanceFieldBorder_RenderTexture";
+            distanceFieldBorderTexture.filterMode = FilterMode.Bilinear; // Bilinear + smoothstep gradient = crisp thin borders
+            distanceFieldBorderTexture.wrapMode = TextureWrapMode.Clamp;
+            distanceFieldBorderTexture.Create();
 
             // Clear to black (no borders)
-            RenderTexture.active = distanceFieldTexture;
+            RenderTexture.active = distanceFieldBorderTexture;
             GL.Clear(true, true, Color.black);
             RenderTexture.active = null;
 
             if (logCreation)
             {
-                ArchonLogger.Log($"DynamicTextureSet: Created DistanceField RenderTexture {mapWidth}x{mapHeight} R8G8B8A8_UNorm (UAV-compatible)", "map_initialization");
+                ArchonLogger.Log($"DynamicTextureSet: Created DistanceFieldBorder {mapWidth}x{mapHeight} R8G8B8A8_UNorm (Bilinear)", "map_initialization");
             }
         }
 
         /// <summary>
-        /// Create dual-channel border texture for pixel-perfect border rendering
+        /// Create pixel-perfect border texture for sharp 1px border rendering (Mode 2)
         /// R channel = country borders (different owners)
         /// G channel = province borders (same owner, different provinces)
-        /// Memory: ~16MB for 8192x4096 map (R8G8B8A8 for UAV compatibility)
-        ///
-        /// IMPORTANT: Uses R8G8B8A8_UNorm instead of R8_UNorm to prevent TYPELESS format
-        /// R8_UNorm with enableRandomWrite becomes TYPELESS on some platforms
-        /// See: explicit-graphics-format.md decision doc
+        /// Uses R8G8B8A8_UNorm for UAV compatibility, Point filtering for sharp edges
         /// </summary>
-        private void CreateDualBorderTexture()
+        private void CreatePixelPerfectBorderTexture()
         {
             var descriptor = new RenderTextureDescriptor(mapWidth, mapHeight,
                 UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm, 0);
@@ -99,29 +106,27 @@ namespace Map.Rendering
             descriptor.useMipMap = false;
             descriptor.autoGenerateMips = false;
 
-            dualBorderTexture = new RenderTexture(descriptor);
-            dualBorderTexture.name = "DualBorder_RenderTexture";
-            dualBorderTexture.wrapMode = TextureWrapMode.Clamp;
-            dualBorderTexture.Create();
+            pixelPerfectBorderTexture = new RenderTexture(descriptor);
+            pixelPerfectBorderTexture.name = "PixelPerfectBorder_RenderTexture";
+            pixelPerfectBorderTexture.wrapMode = TextureWrapMode.Clamp;
+            pixelPerfectBorderTexture.Create();
 
             // CRITICAL: Set filterMode AFTER Create() to ensure it takes effect
-            // RenderTexture filterMode must be set after creation for proper GPU state
-            dualBorderTexture.filterMode = FilterMode.Point; // Point filtering for pixel-perfect borders (no interpolation)
+            pixelPerfectBorderTexture.filterMode = FilterMode.Point; // Point filtering for pixel-perfect borders
 
             // Clear to black (no borders detected yet)
-            RenderTexture.active = dualBorderTexture;
+            RenderTexture.active = pixelPerfectBorderTexture;
             GL.Clear(true, true, Color.black);
             RenderTexture.active = null;
 
             if (logCreation)
             {
-                ArchonLogger.Log($"DynamicTextureSet: Created DualBorder RenderTexture {mapWidth}x{mapHeight} - Requested: R8G8B8A8_UNorm, Actual: {dualBorderTexture.graphicsFormat}", "map_initialization");
+                ArchonLogger.Log($"DynamicTextureSet: Created PixelPerfectBorder {mapWidth}x{mapHeight} R8G8B8A8_UNorm (Point)", "map_initialization");
             }
         }
 
         /// <summary>
         /// Create highlight render texture for selection effects
-        /// Uses explicit GraphicsFormat.R8G8B8A8_UNorm to prevent TYPELESS format
         /// </summary>
         private void CreateHighlightTexture()
         {
@@ -144,14 +149,13 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.Log($"DynamicTextureSet: Created Highlight RenderTexture {mapWidth}x{mapHeight} R8G8B8A8_UNorm", "map_initialization");
+                ArchonLogger.Log($"DynamicTextureSet: Created Highlight {mapWidth}x{mapHeight} R8G8B8A8_UNorm", "map_initialization");
             }
         }
 
         /// <summary>
-        /// Create fog of war render texture in R8_UNorm format
+        /// Create fog of war render texture
         /// Single channel: 0.0 = unexplored, 0.5 = explored, 1.0 = visible
-        /// Uses explicit GraphicsFormat.R8_UNorm to prevent TYPELESS format
         /// </summary>
         private void CreateFogOfWarTexture()
         {
@@ -174,51 +178,62 @@ namespace Map.Rendering
 
             if (logCreation)
             {
-                ArchonLogger.Log($"DynamicTextureSet: Created FogOfWar RenderTexture {mapWidth}x{mapHeight} R8_UNorm", "map_initialization");
+                ArchonLogger.Log($"DynamicTextureSet: Created FogOfWar {mapWidth}x{mapHeight} R8_UNorm", "map_initialization");
             }
         }
 
         /// <summary>
-        /// Bind dynamic textures to material
-        /// Default binding uses distance field texture (ShaderDistanceField mode)
+        /// Bind all dynamic textures to material
+        /// Both border textures are always bound - shader selects which to use based on _BorderRenderingMode
         /// </summary>
         public void BindToMaterial(Material material)
         {
             if (material == null) return;
 
-            // Default: bind distanceFieldTexture for ShaderDistanceField mode
-            material.SetTexture(BorderTexID, distanceFieldTexture);
+            // Bind both border textures - shader picks which to use based on mode
+            material.SetTexture(DistanceFieldBorderTexID, distanceFieldBorderTexture);
+            material.SetTexture(PixelPerfectBorderTexID, pixelPerfectBorderTexture);
+
+            // Bind other textures
             material.SetTexture(HighlightTexID, highlightTexture);
             material.SetTexture(FogOfWarTexID, fogOfWarTexture);
 
             if (logCreation)
             {
-                ArchonLogger.Log("DynamicTextureSet: Bound dynamic textures to material (DistanceField mode)", "map_initialization");
+                ArchonLogger.Log("DynamicTextureSet: Bound all dynamic textures to material", "map_initialization");
             }
         }
 
         /// <summary>
-        /// Bind border texture based on rendering mode
-        /// Call this when switching border rendering modes
+        /// Bind distance field border texture to material (Mode 1: ShaderDistanceField)
         /// </summary>
-        public void BindBorderTexture(Material material, bool usePixelPerfect)
+        public void BindDistanceFieldTextures(Material material)
         {
             if (material == null) return;
-
-            // ShaderDistanceField mode uses distanceFieldTexture (JFA SDF, smooth anti-aliased)
-            // ShaderPixelPerfect mode uses dualBorderTexture (R=country, G=province, 1-pixel borders)
-            RenderTexture borderTex = usePixelPerfect ? dualBorderTexture : distanceFieldTexture;
-            material.SetTexture(BorderTexID, borderTex);
+            material.SetTexture(DistanceFieldBorderTexID, distanceFieldBorderTexture);
 
             if (logCreation)
             {
-                string modeName = usePixelPerfect ? "PixelPerfect (DualBorder)" : "DistanceField (SDF)";
-                ArchonLogger.Log($"DynamicTextureSet: Bound _BorderTexture to {modeName} mode", "map_rendering");
+                ArchonLogger.Log("DynamicTextureSet: Bound DistanceFieldBorderTexture", "map_rendering");
             }
         }
 
         /// <summary>
-        /// Set border visual style on material
+        /// Bind pixel perfect border texture to material (Mode 2: ShaderPixelPerfect)
+        /// </summary>
+        public void BindPixelPerfectTextures(Material material)
+        {
+            if (material == null) return;
+            material.SetTexture(PixelPerfectBorderTexID, pixelPerfectBorderTexture);
+
+            if (logCreation)
+            {
+                ArchonLogger.Log("DynamicTextureSet: Bound PixelPerfectBorderTexture", "map_rendering");
+            }
+        }
+
+        /// <summary>
+        /// Set border visual style on material (colors and strengths)
         /// </summary>
         public void SetBorderStyle(Material material, Color countryBorderColor, float countryBorderStrength,
                                     Color provinceBorderColor, float provinceBorderStrength)
@@ -250,11 +265,6 @@ namespace Map.Rendering
             material.SetFloat("_EdgeAlpha", edgeAlpha);
             material.SetFloat("_GradientAlphaInside", gradientAlphaInside);
             material.SetFloat("_GradientAlphaOutside", gradientAlphaOutside);
-
-            if (logCreation)
-            {
-                ArchonLogger.Log($"DynamicTextureSet: Set distance field border params (edge={edgeWidth}, gradient={gradientWidth}, smoothness={edgeSmoothness})", "map_rendering");
-            }
         }
 
         /// <summary>
@@ -262,8 +272,8 @@ namespace Map.Rendering
         /// </summary>
         public void Release()
         {
-            if (distanceFieldTexture != null) distanceFieldTexture.Release();
-            if (dualBorderTexture != null) dualBorderTexture.Release();
+            if (distanceFieldBorderTexture != null) distanceFieldBorderTexture.Release();
+            if (pixelPerfectBorderTexture != null) pixelPerfectBorderTexture.Release();
             if (highlightTexture != null) highlightTexture.Release();
             if (fogOfWarTexture != null) fogOfWarTexture.Release();
         }

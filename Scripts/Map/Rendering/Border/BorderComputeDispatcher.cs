@@ -26,46 +26,18 @@ namespace Map.Rendering
         [SerializeField] private ComputeShader borderSDFCompute;
 
         [Header("Border Settings")]
-        [SerializeField] private BorderMode borderMode = BorderMode.Province;
-        [SerializeField] private int countryBorderThickness = 1;
-        [SerializeField] private int provinceBorderThickness = 0;
-        [SerializeField] private float borderAntiAliasing = 1.0f;
+        [Tooltip("Which borders to show (set via VisualStyles for runtime control)")]
+        [SerializeField] private BorderMode borderMode = BorderMode.Dual;
         [SerializeField] private bool autoUpdateBorders = true;
 
         [Header("Rendering Mode")]
+        [Tooltip("How borders are rendered (set via VisualStyles for runtime control)")]
         [SerializeField] private BorderRenderingMode renderingMode = BorderRenderingMode.ShaderDistanceField;
-        [SerializeField] private float countryBorderWidth = 0.5f;
-        [SerializeField] private float provinceBorderWidth = 0.5f;
 
-        [Header("AAA Distance Field Border Settings")]
-        [Tooltip("Sharp border thickness in pixels (0.5 = razor-thin, 2.0 = thick)")]
-        [SerializeField] private float edgeWidth = 0.5f;
-
-        [Tooltip("Soft gradient falloff distance in pixels (creates outer glow effect)")]
-        [SerializeField] private float gradientWidth = 2.0f;
-
-        [Tooltip("Anti-aliasing smoothness factor (0.1 = crisp, 0.5 = soft)")]
-        [SerializeField] private float edgeSmoothness = 0.2f;
-
-        [Tooltip("Edge color darkening multiplier (0.0 = black, 1.0 = province color)")]
-        [Range(0f, 1f)]
-        [SerializeField] private float edgeColorMul = 0.7f;
-
-        [Tooltip("Gradient color darkening multiplier (0.0 = black, 1.0 = province color)")]
-        [Range(0f, 1f)]
-        [SerializeField] private float gradientColorMul = 0.85f;
-
-        [Tooltip("Edge layer opacity (0.0 = transparent, 1.0 = opaque)")]
-        [Range(0f, 1f)]
-        [SerializeField] private float edgeAlpha = 1.0f;
-
-        [Tooltip("Gradient layer opacity inside border (0.0 = transparent, 1.0 = opaque)")]
-        [Range(0f, 1f)]
-        [SerializeField] private float gradientAlphaInside = 0.5f;
-
-        [Tooltip("Gradient layer opacity outside border (0.0 = transparent, 1.0 = opaque)")]
-        [Range(0f, 1f)]
-        [SerializeField] private float gradientAlphaOutside = 0.3f;
+        // NOTE: Visual parameters (colors, widths, distance field settings) are now
+        // controlled via VisualStyleConfiguration - the single source of truth for visuals.
+        // BorderComputeDispatcher only handles the technical rendering mode selection
+        // and compute shader orchestration.
 
         public BorderMode CurrentBorderMode => borderMode;
 
@@ -92,6 +64,12 @@ namespace Map.Rendering
         private BorderShaderManager shaderManager;
         private BorderParameterBinder parameterBinder;
         private BorderStyleUpdater styleUpdater;
+
+        // Pixel-perfect mode parameters (set via VisualStyleConfiguration)
+        private int pixelPerfectCountryThickness = 1;
+        private int pixelPerfectProvinceThickness = 0;
+        private float pixelPerfectAntiAliasing = 0f;
+
         private BorderDebugUtility debugUtility;
 
         void Awake()
@@ -124,31 +102,15 @@ namespace Map.Rendering
 
         /// <summary>
         /// Sync Unity serialized fields to parameter binder
-        /// Call this after changing parameters in inspector
+        /// NOTE: Visual parameters now come from VisualStyleConfiguration
         /// </summary>
         private void SyncParametersToHelper()
         {
             if (parameterBinder == null) return;
 
             parameterBinder.BorderMode = borderMode;
-            parameterBinder.CountryBorderThickness = countryBorderThickness;
-            parameterBinder.ProvinceBorderThickness = provinceBorderThickness;
-            parameterBinder.BorderAntiAliasing = borderAntiAliasing;
             parameterBinder.AutoUpdateBorders = autoUpdateBorders;
             parameterBinder.RenderingMode = renderingMode;
-            parameterBinder.CountryBorderWidth = countryBorderWidth;
-            parameterBinder.ProvinceBorderWidth = provinceBorderWidth;
-
-            parameterBinder.SetDistanceFieldParameters(
-                edgeWidth,
-                gradientWidth,
-                edgeSmoothness,
-                edgeColorMul,
-                gradientColorMul,
-                edgeAlpha,
-                gradientAlphaInside,
-                gradientAlphaOutside
-            );
         }
 
         /// <summary>
@@ -261,6 +223,46 @@ namespace Map.Rendering
                     GeneratePixelPerfectBorders();
                     break;
             }
+
+            // Bind the correct border textures to the material based on rendering mode
+            Material mapMaterial = null;
+            var mapPlane = GameObject.Find("MapPlane");
+            if (mapPlane != null)
+            {
+                var renderer = mapPlane.GetComponent<MeshRenderer>();
+                if (renderer != null)
+                {
+                    mapMaterial = renderer.sharedMaterial;
+                }
+            }
+
+            if (mapMaterial != null && textureManager?.DynamicTextures != null)
+            {
+                // Bind both border textures - shader selects based on _BorderRenderingMode
+                textureManager.DynamicTextures.BindToMaterial(mapMaterial);
+
+                // Set shader mode: 0=None, 1=DistanceField, 2=PixelPerfect, 3=MeshGeometry
+                int shaderMode = GetShaderModeValue(renderingMode);
+                mapMaterial.SetInt("_BorderRenderingMode", shaderMode);
+
+                ArchonLogger.Log($"BorderComputeDispatcher: Bound border textures, mode={renderingMode} (shader={shaderMode})", "map_initialization");
+            }
+        }
+
+        /// <summary>
+        /// Convert BorderRenderingMode enum to shader integer value
+        /// Shader values: 0=None, 1=DistanceField, 2=PixelPerfect, 3=MeshGeometry
+        /// </summary>
+        private int GetShaderModeValue(BorderRenderingMode mode)
+        {
+            switch (mode)
+            {
+                case BorderRenderingMode.None: return 0;
+                case BorderRenderingMode.ShaderDistanceField: return 1;
+                case BorderRenderingMode.ShaderPixelPerfect: return 2;
+                case BorderRenderingMode.MeshGeometry: return 3;
+                default: return 0;
+            }
         }
 
         /// <summary>
@@ -277,22 +279,23 @@ namespace Map.Rendering
             if (!smoothBordersInitialized)
                 return;
 
-            // Bind correct border texture to material based on mode
-            Material mapMaterial = textureManager?.GetComponent<MeshRenderer>()?.sharedMaterial;
-            if (mapMaterial == null)
+            // Find the map plane's material
+            Material mapMaterial = null;
+            var mapPlane = GameObject.Find("MapPlane");
+            if (mapPlane != null)
             {
-                // Try to find map plane renderer
-                var mapPlane = GameObject.Find("MapPlane");
-                if (mapPlane != null)
+                var renderer = mapPlane.GetComponent<MeshRenderer>();
+                if (renderer != null)
                 {
-                    mapMaterial = mapPlane.GetComponent<MeshRenderer>()?.sharedMaterial;
+                    mapMaterial = renderer.sharedMaterial;
                 }
             }
 
-            if (mapMaterial != null && textureManager?.DynamicTextures != null)
+            // Update shader mode value
+            if (mapMaterial != null)
             {
-                bool usePixelPerfect = (mode == BorderRenderingMode.ShaderPixelPerfect);
-                textureManager.DynamicTextures.BindBorderTexture(mapMaterial, usePixelPerfect);
+                int shaderMode = GetShaderModeValue(mode);
+                mapMaterial.SetInt("_BorderRenderingMode", shaderMode);
             }
 
             // Regenerate borders for new mode
@@ -321,41 +324,45 @@ namespace Map.Rendering
 
         /// <summary>
         /// Generate pixel-perfect borders using DetectDualBorders kernel
-        /// Writes to DualBorderTexture (R=country, G=province)
+        /// Writes to PixelPerfectBorderTexture (R=country, G=province)
         /// </summary>
         public void GeneratePixelPerfectBorders()
         {
-            ArchonLogger.Log($"BorderComputeDispatcher.GeneratePixelPerfectBorders: Called! shaderManager.IsInitialized()={shaderManager.IsInitialized()}", "map_rendering");
-
             if (!shaderManager.IsInitialized())
             {
                 ArchonLogger.LogWarning("BorderComputeDispatcher: Cannot generate pixel-perfect borders - shaders not initialized", "map_rendering");
                 return;
             }
 
-            if (textureManager == null || textureManager.DualBorderTexture == null)
+            if (textureManager == null || textureManager.PixelPerfectBorderTexture == null)
             {
-                ArchonLogger.LogWarning($"BorderComputeDispatcher: Cannot generate pixel-perfect borders - textureManager={textureManager != null}, DualBorderTexture={textureManager?.DualBorderTexture != null}", "map_rendering");
+                ArchonLogger.LogWarning("BorderComputeDispatcher: Cannot generate pixel-perfect borders - texture not available", "map_rendering");
                 return;
             }
 
             var shader = shaderManager.BorderDetectionShader;
             int kernel = shaderManager.DetectDualBordersKernel;
 
+            // Set map dimensions (required by compute shader)
+            shader.SetInt("MapWidth", textureManager.MapWidth);
+            shader.SetInt("MapHeight", textureManager.MapHeight);
+
+            // Set border thickness parameters from serialized fields
+            shader.SetInt("CountryBorderThickness", pixelPerfectCountryThickness);
+            shader.SetInt("ProvinceBorderThickness", pixelPerfectProvinceThickness);
+            shader.SetFloat("BorderAntiAliasing", pixelPerfectAntiAliasing);
+
             // Bind textures
             shader.SetTexture(kernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
             shader.SetTexture(kernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
-            shader.SetTexture(kernel, "DualBorderTexture", textureManager.DualBorderTexture);
+            shader.SetTexture(kernel, "DualBorderTexture", textureManager.PixelPerfectBorderTexture);
 
             // Dispatch compute shader
             int threadGroupsX = Mathf.CeilToInt(textureManager.MapWidth / (float)THREAD_GROUP_SIZE);
             int threadGroupsY = Mathf.CeilToInt(textureManager.MapHeight / (float)THREAD_GROUP_SIZE);
             shader.Dispatch(kernel, threadGroupsX, threadGroupsY, 1);
 
-            if (logPerformance)
-            {
-                ArchonLogger.Log("BorderComputeDispatcher: Generated pixel-perfect borders", "map_rendering");
-            }
+            ArchonLogger.Log("BorderComputeDispatcher: Generated pixel-perfect borders", "map_rendering");
         }
 
         /// <summary>
@@ -374,33 +381,6 @@ namespace Map.Rendering
                 GeneratePixelPerfectBorders();
             }
             // MeshGeometry mode doesn't need per-frame updates
-        }
-
-        /// <summary>
-        /// Bind distance field border parameters to material
-        /// </summary>
-        public void BindDistanceFieldBorderParams(Material material)
-        {
-            SyncParametersToHelper();
-            parameterBinder.BindDistanceFieldBorderParams(textureManager, material);
-        }
-
-        /// <summary>
-        /// Set multiple border parameters at once
-        /// </summary>
-        public void SetBorderParameters(BorderMode mode, int countryThickness, int provinceThickness, float antiAliasing, bool updateBorders = true)
-        {
-            borderMode = mode;
-            countryBorderThickness = countryThickness;
-            provinceBorderThickness = provinceThickness;
-            borderAntiAliasing = antiAliasing;
-
-            SyncParametersToHelper();
-
-            if (updateBorders && autoUpdateBorders)
-            {
-                DetectBorders();
-            }
         }
 
         /// <summary>
@@ -425,6 +405,25 @@ namespace Map.Rendering
             if (autoUpdateBorders)
             {
                 DetectBorders();
+            }
+        }
+
+        /// <summary>
+        /// Set pixel-perfect mode parameters (called from VisualStyleManager)
+        /// </summary>
+        /// <param name="countryThickness">Country border thickness in pixels (0 = 1px thin)</param>
+        /// <param name="provinceThickness">Province border thickness in pixels (0 = 1px thin)</param>
+        /// <param name="antiAliasing">Anti-aliasing gradient width (0 = sharp, 1-2 = smooth)</param>
+        public void SetPixelPerfectParameters(int countryThickness, int provinceThickness, float antiAliasing)
+        {
+            pixelPerfectCountryThickness = Mathf.Clamp(countryThickness, 0, 5);
+            pixelPerfectProvinceThickness = Mathf.Clamp(provinceThickness, 0, 5);
+            pixelPerfectAntiAliasing = Mathf.Clamp(antiAliasing, 0f, 2f);
+
+            // Regenerate borders if in pixel-perfect mode
+            if (renderingMode == BorderRenderingMode.ShaderPixelPerfect && autoUpdateBorders)
+            {
+                GeneratePixelPerfectBorders();
             }
         }
 

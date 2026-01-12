@@ -13,10 +13,11 @@ Shader "Archon/DefaultFlat"
         _ProvinceColorPalette ("Province Color Palette (256x1 RGBA32)", 2D) = "white" {}
         _CountryColorPalette ("Country Color Palette (1024x1 RGBA32)", 2D) = "white" {}
 
-        // Generated render textures
-        _BorderTexture ("Border Texture (R8)", 2D) = "black" {}
-        _BorderMaskTexture ("Border Mask Texture (R8)", 2D) = "black" {}
-        _BorderDistanceTexture ("Border Distance Texture (RG8 1/4 res)", 2D) = "white" {}
+        // Border textures - each mode has dedicated texture
+        _DistanceFieldBorderTexture ("Distance Field Borders (RG8)", 2D) = "black" {}
+        _PixelPerfectBorderTexture ("Pixel Perfect Borders (RG8)", 2D) = "black" {}
+
+        // Other generated render textures
         _HighlightTexture ("Highlight Texture (ARGB32)", 2D) = "black" {}
         _FogOfWarTexture ("Fog of War Texture (R8)", 2D) = "white" {}
 
@@ -24,6 +25,8 @@ Shader "Archon/DefaultFlat"
         [Enum(Political, 0, Terrain, 1, Development, 2, Culture, 3, OwnerDebug, 4)] _MapMode ("Map Mode", Int) = 0
 
         // Border visualization (configurable from VisualStyleConfiguration)
+        // 0=None, 1=DistanceField, 2=PixelPerfect, 3=MeshGeometry
+        [Enum(None, 0, DistanceField, 1, PixelPerfect, 2, MeshGeometry, 3)] _BorderRenderingMode ("Border Rendering Mode", Int) = 1
         _CountryBorderStrength ("Country Border Strength", Range(0, 1)) = 1.0
         _CountryBorderColor ("Country Border Color", Color) = (0, 0, 0, 1)
         _ProvinceBorderStrength ("Province Border Strength", Range(0, 1)) = 0.5

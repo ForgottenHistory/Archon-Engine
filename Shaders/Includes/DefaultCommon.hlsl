@@ -16,7 +16,8 @@ CBUFFER_START(UnityPerMaterial)
     float4 _NormalMapTexture_ST;
     float4 _ProvinceColorPalette_ST;
     float4 _CountryColorPalette_ST;
-    float4 _BorderTexture_ST;
+    float4 _DistanceFieldBorderTexture_ST;
+    float4 _PixelPerfectBorderTexture_ST;
     float4 _HighlightTexture_ST;
     float4 _MainTex_ST;
 
@@ -29,6 +30,8 @@ CBUFFER_START(UnityPerMaterial)
     float _TessellationMinDistance;
 
     // Border parameters (configurable from VisualStyleConfiguration)
+    // Mode values: 0=None, 1=ShaderDistanceField, 2=ShaderPixelPerfect, 3=MeshGeometry
+    int _BorderRenderingMode;
     float _CountryBorderStrength;
     float4 _CountryBorderColor;
     float _ProvinceBorderStrength;
@@ -126,9 +129,9 @@ TEXTURE2D(_DetailMaskTexture); SAMPLER(sampler_DetailMaskTexture);    // RGBA8: 
 TEXTURE2D(_ProvinceColorPalette); SAMPLER(sampler_ProvinceColorPalette);
 TEXTURE2D(_CountryColorPalette); SAMPLER(sampler_CountryColorPalette);
 TEXTURE2D(_TerrainColorPalette); SAMPLER(sampler_TerrainColorPalette);
-TEXTURE2D(_BorderTexture); SAMPLER(sampler_BorderTexture);
-TEXTURE2D(_BorderMaskTexture); SAMPLER(sampler_BorderMaskTexture);
-TEXTURE2D(_BorderDistanceTexture); SAMPLER(sampler_BorderDistanceTexture);
+// Border textures - each mode has its own dedicated texture
+TEXTURE2D(_DistanceFieldBorderTexture); SAMPLER(sampler_DistanceFieldBorderTexture);  // Mode 1: JFA distance field (R=country, G=province)
+TEXTURE2D(_PixelPerfectBorderTexture); SAMPLER(sampler_PixelPerfectBorderTexture);    // Mode 2: Sharp 1px borders (R=country, G=province)
 TEXTURE2D(_HighlightTexture); SAMPLER(sampler_HighlightTexture);
 TEXTURE2D(_FogOfWarTexture); SAMPLER(sampler_FogOfWarTexture);
 TEXTURE2D(_OverlayTexture); SAMPLER(sampler_OverlayTexture);

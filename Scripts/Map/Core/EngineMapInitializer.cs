@@ -179,8 +179,8 @@ namespace Map.Core
                 yield break;
             }
 
-            // Set rendering mode to ShaderDistanceField (smooth anti-aliased borders)
-            borderDispatcher.SetBorderRenderingMode(BorderRenderingMode.ShaderDistanceField);
+            // Border rendering mode is set via inspector on BorderComputeDispatcher component
+            // Available modes: ShaderDistanceField, ShaderPixelPerfect, MeshGeometry, None
 
             // Initialize smooth borders with distance field generator
             borderDispatcher.InitializeSmoothBorders(

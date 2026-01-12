@@ -1,4 +1,5 @@
 using UnityEngine;
+using Map.Rendering;
 
 namespace Archon.Engine.Map
 {
@@ -30,36 +31,82 @@ namespace Archon.Engine.Map
 
         /// <summary>
         /// Border visual configuration
+        /// Single source of truth for all border rendering settings
         /// </summary>
         [System.Serializable]
         public class BorderStyle
         {
+            [Header("Rendering Mode")]
+            [Tooltip("How borders are rendered:\n• PixelPerfect: Sharp 1px borders (retro aesthetic)\n• DistanceField: Smooth anti-aliased borders (modern look)\n• MeshGeometry: 3D mesh borders (resolution-independent)")]
+            public BorderRenderingMode renderingMode = BorderRenderingMode.ShaderDistanceField;
+
             [Header("Country Borders")]
             public Color countryBorderColor = Color.black;
             [Range(0f, 1f)]
+            [Tooltip("Visibility strength (0 = hidden, 1 = fully visible)")]
             public float countryBorderStrength = 1.0f;
-            [Tooltip("Country border thickness in pixels (0 = thin 1px, 1-5 = progressively thicker)")]
-            [Range(0, 5)]
-            public int countryBorderThickness = 1;
 
             [Header("Province Borders")]
             public Color provinceBorderColor = new Color(0.3f, 0.3f, 0.3f, 1f);
             [Range(0f, 1f)]
+            [Tooltip("Visibility strength (0 = hidden, 1 = fully visible)")]
             public float provinceBorderStrength = 0.5f;
-            [Tooltip("Province border thickness in pixels (0 = thin 1px, 1-5 = progressively thicker)")]
-            [Range(0, 5)]
-            public int provinceBorderThickness = 0;
-
-            [Header("Border Quality")]
-            [Tooltip("Enable anti-aliasing for smooth border edges (0 = off, 1-2 = smooth)")]
-            [Range(0f, 2f)]
-            public float borderAntiAliasing = 1.0f;
 
             [Header("Border Behavior")]
             public bool enableBordersOnStartup = true;
-            public BorderMode defaultBorderMode = BorderMode.Dual;  // Dual is recommended (shows both country + province borders)
+            [Tooltip("Which borders to display:\n• Dual: Both country and province (recommended)\n• Country: Only borders between nations\n• Province: All province boundaries")]
+            public BorderModeType borderMode = BorderModeType.Dual;
 
-            public enum BorderMode
+            [Header("Pixel Perfect Settings (for PixelPerfect mode only)")]
+            [Tooltip("Thickness of country borders in pixels (0 = 1px thin border)")]
+            [Range(0, 5)]
+            public int pixelPerfectCountryThickness = 1;
+
+            [Tooltip("Thickness of province borders in pixels (0 = 1px thin border)")]
+            [Range(0, 5)]
+            public int pixelPerfectProvinceThickness = 0;
+
+            [Tooltip("Anti-aliasing gradient width (0 = sharp edges, 1-2 = smooth)")]
+            [Range(0f, 2f)]
+            public float pixelPerfectAntiAliasing = 0f;
+
+            [Header("Distance Field Settings (for DistanceField mode only)")]
+            [Tooltip("Width of the sharp border edge in pixels")]
+            [Range(0.1f, 3f)]
+            public float edgeWidth = 0.5f;
+
+            [Tooltip("Soft gradient falloff distance in pixels (outer glow)")]
+            [Range(0f, 5f)]
+            public float gradientWidth = 2.0f;
+
+            [Tooltip("Anti-aliasing smoothness (lower = crisper, higher = softer)")]
+            [Range(0.1f, 1f)]
+            public float edgeSmoothness = 0.2f;
+
+            [Tooltip("Edge color darkening (0 = black, 1 = border color)")]
+            [Range(0f, 1f)]
+            public float edgeColorMultiplier = 0.7f;
+
+            [Tooltip("Gradient color darkening (0 = black, 1 = border color)")]
+            [Range(0f, 1f)]
+            public float gradientColorMultiplier = 0.85f;
+
+            [Tooltip("Edge opacity")]
+            [Range(0f, 1f)]
+            public float edgeAlpha = 1.0f;
+
+            [Tooltip("Gradient opacity inside border")]
+            [Range(0f, 1f)]
+            public float gradientAlphaInside = 0.5f;
+
+            [Tooltip("Gradient opacity outside border")]
+            [Range(0f, 1f)]
+            public float gradientAlphaOutside = 0.3f;
+
+            /// <summary>
+            /// Border mode - what borders to show (mirrors ENGINE enum for serialization)
+            /// </summary>
+            public enum BorderModeType
             {
                 Province,
                 Country,
@@ -222,9 +269,14 @@ namespace Archon.Engine.Map
         /// </summary>
         void OnValidate()
         {
-            // Clamp values to valid ranges
+            // Clamp border values
             borders.countryBorderStrength = Mathf.Clamp01(borders.countryBorderStrength);
             borders.provinceBorderStrength = Mathf.Clamp01(borders.provinceBorderStrength);
+            borders.edgeWidth = Mathf.Clamp(borders.edgeWidth, 0.1f, 3f);
+            borders.gradientWidth = Mathf.Clamp(borders.gradientWidth, 0f, 5f);
+            borders.edgeSmoothness = Mathf.Clamp(borders.edgeSmoothness, 0.1f, 1f);
+
+            // Clamp map mode values
             mapModes.terrainBrightness = Mathf.Clamp(mapModes.terrainBrightness, 0.5f, 2.0f);
             mapModes.terrainSaturation = Mathf.Clamp(mapModes.terrainSaturation, 0f, 2.0f);
 
@@ -244,13 +296,25 @@ namespace Archon.Engine.Map
             style.styleName = "Default";
             style.description = "ENGINE default style - basic rendering with configurable parameters";
 
-            // Standard borders
+            // Border rendering mode
+            style.borders.renderingMode = BorderRenderingMode.ShaderDistanceField;
+            style.borders.borderMode = BorderStyle.BorderModeType.Dual;
+
+            // Border colors and strengths
             style.borders.countryBorderColor = Color.black;
             style.borders.countryBorderStrength = 1.0f;
-            style.borders.countryBorderThickness = 1;
             style.borders.provinceBorderColor = new Color(0.3f, 0.3f, 0.3f);
             style.borders.provinceBorderStrength = 0.5f;
-            style.borders.provinceBorderThickness = 0;
+
+            // Distance field defaults (smooth modern borders)
+            style.borders.edgeWidth = 0.5f;
+            style.borders.gradientWidth = 2.0f;
+            style.borders.edgeSmoothness = 0.2f;
+            style.borders.edgeColorMultiplier = 0.7f;
+            style.borders.gradientColorMultiplier = 0.85f;
+            style.borders.edgeAlpha = 1.0f;
+            style.borders.gradientAlphaInside = 0.5f;
+            style.borders.gradientAlphaOutside = 0.3f;
 
             // Standard colors
             style.mapModes.oceanColor = new Color(0.098f, 0.157f, 0.439f); // Dark blue
@@ -268,6 +332,7 @@ namespace Archon.Engine.Map
             ArchonLogger.Log($"Description: {description}", "map_rendering");
             ArchonLogger.Log($"Material: {(mapMaterial != null ? mapMaterial.name : "MISSING!")}", "map_rendering");
             ArchonLogger.Log($"Shader: {(mapMaterial != null ? mapMaterial.shader.name : "N/A")}", "map_rendering");
+            ArchonLogger.Log($"Border Rendering: {borders.renderingMode}, Mode: {borders.borderMode}", "map_rendering");
             ArchonLogger.Log($"Country Borders: {borders.countryBorderColor} @ {borders.countryBorderStrength:P0}", "map_rendering");
             ArchonLogger.Log($"Province Borders: {borders.provinceBorderColor} @ {borders.provinceBorderStrength:P0}", "map_rendering");
             ArchonLogger.Log($"Ocean Color: {mapModes.oceanColor}", "map_rendering");

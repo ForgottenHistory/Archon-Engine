@@ -169,9 +169,10 @@ void DetectCountryBorders(uint3 id : SV_DispatchThreadID)
     float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
     uint currentProvince = DecodeProvinceID(currentEncoded);
 
-    // Get owner ID (assuming R16 format, stored in red channel)
+    // Get owner ID (R32_SFloat format, stores raw owner ID as float)
+    // ProvinceOwnerTexture stores raw owner IDs (e.g., 151.0, 731.0)
     float currentOwnerData = ProvinceOwnerTexture[id.xy].r;
-    uint currentOwner = (uint)(currentOwnerData * 255.0 + 0.5);
+    uint currentOwner = (uint)(currentOwnerData + 0.5);
 
     // Initialize border detection
     bool isBorder = false;
@@ -195,9 +196,9 @@ void DetectCountryBorders(uint3 id : SV_DispatchThreadID)
         // Different province?
         if (currentProvince != neighborProvince)
         {
-            // Get neighbor owner
+            // Get neighbor owner (R32_SFloat format, raw owner ID)
             float neighborOwnerData = ProvinceOwnerTexture[neighborPos].r;
-            uint neighborOwner = (uint)(neighborOwnerData * 255.0 + 0.5);
+            uint neighborOwner = (uint)(neighborOwnerData + 0.5);
 
             // Only mark as border if different owners
             if (currentOwner != neighborOwner)
@@ -233,9 +234,10 @@ void DetectDualBorders(uint3 id : SV_DispatchThreadID)
     float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
     uint currentProvince = DecodeProvinceID(currentEncoded);
 
-    // Get owner ID (R16 format, stored in red channel)
+    // Get owner ID (R32_SFloat format, stores raw owner ID as float)
+    // ProvinceOwnerTexture stores raw owner IDs (e.g., 151.0, 731.0)
     float currentOwnerData = ProvinceOwnerTexture[id.xy].r;
-    uint currentOwner = (uint)(currentOwnerData * 65535.0 + 0.5);
+    uint currentOwner = (uint)(currentOwnerData + 0.5);
 
     // Initialize border strengths
     float provinceStrength = 0.0;
@@ -279,7 +281,7 @@ void DetectDualBorders(uint3 id : SV_DispatchThreadID)
 
                 // Get neighbor owner
                 float neighborOwnerData = ProvinceOwnerTexture[neighborPos].r;
-                uint neighborOwner = (uint)(neighborOwnerData * 65535.0 + 0.5);
+                uint neighborOwner = (uint)(neighborOwnerData + 0.5);
 
                 // Different owner? Mark as country border
                 if (currentOwner != neighborOwner)
@@ -329,7 +331,7 @@ void DetectDualBorders(uint3 id : SV_DispatchThreadID)
 
                     // Get neighbor owner
                     float neighborOwnerData = ProvinceOwnerTexture[neighborPos].r;
-                    uint neighborOwner = (uint)(neighborOwnerData * 65535.0 + 0.5);
+                    uint neighborOwner = (uint)(neighborOwnerData + 0.5);
 
                     // Different owner?
                     if (currentOwner != neighborOwner)
