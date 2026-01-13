@@ -7,6 +7,7 @@ using Core.Registries;
 using Core.Modifiers;
 using Core.Resources;
 using Core.Units;
+using Core.Localization;
 using System;
 using System.Collections.Generic;
 
@@ -325,6 +326,7 @@ namespace Core
                 Units?.Dispose();
                 Pathfinding?.Dispose();  // Dispose NativeList<ushort> neighborBuffer
                 EventBus?.Dispose();
+                LocalizationManager.Shutdown();
 
                 // Clean up GAME layer systems (AISystem, EconomySystem, etc.)
                 if (registeredGameSystems != null)

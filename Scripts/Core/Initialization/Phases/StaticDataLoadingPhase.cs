@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Core.Loaders;
+using Core.Localization;
 
 namespace Core.Initialization.Phases
 {
@@ -17,6 +18,13 @@ namespace Core.Initialization.Phases
         public IEnumerator ExecuteAsync(InitializationContext context)
         {
             context.ReportProgress(5f, "Loading static data...");
+
+            // Load localization first - makes strings available for all other systems
+            context.ReportProgress(5.5f, "Loading localization...");
+            yield return null;
+
+            var localisationPath = System.IO.Path.Combine(context.Settings.DataDirectory, "localisation");
+            LocalizationManager.Initialize(localisationPath, "english");
 
             context.ReportProgress(6f, "Loading religions...");
             yield return null;
@@ -60,6 +68,9 @@ namespace Core.Initialization.Phases
 
             context.ReportProgress(15f, "Static data ready");
 
+            // Get localization stats
+            var (locLanguages, locEntries, _) = LocalizationManager.GetStatistics();
+
             // Emit static data ready event
             context.EventBus.Emit(new StaticDataReadyEvent
             {
@@ -67,6 +78,8 @@ namespace Core.Initialization.Phases
                 CultureCount = context.Registries.Cultures.Count,
                 TradeGoodCount = context.Registries.TradeGoods.Count,
                 TerrainCount = context.Registries.Terrains.Count,
+                LocalizationLanguages = locLanguages,
+                LocalizationEntries = locEntries,
                 TimeStamp = Time.time
             });
             context.EventBus.ProcessEvents();
@@ -74,7 +87,8 @@ namespace Core.Initialization.Phases
             if (context.EnableDetailedLogging)
             {
                 ArchonLogger.Log($"Phase complete: Static data loaded - {context.Registries.Religions.Count} religions, " +
-                                $"{context.Registries.Cultures.Count} cultures, {context.Registries.TradeGoods.Count} trade goods", "core_data_loading");
+                                $"{context.Registries.Cultures.Count} cultures, {context.Registries.TradeGoods.Count} trade goods, " +
+                                $"{locEntries} localization entries ({locLanguages} languages)", "core_data_loading");
             }
         }
 
@@ -95,6 +109,8 @@ namespace Core.Initialization.Phases
         public int CultureCount;
         public int TradeGoodCount;
         public int TerrainCount;
+        public int LocalizationLanguages;
+        public int LocalizationEntries;
         public float TimeStamp { get; set; }
     }
 }

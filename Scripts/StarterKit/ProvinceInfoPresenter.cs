@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Localization;
 
 namespace StarterKit
 {
@@ -32,11 +33,12 @@ namespace StarterKit
             var provinceQueries = gameState.ProvinceQueries;
             var countryQueries = gameState.CountryQueries;
 
-            // Province name (TODO: implement province name system)
-            nameLabel.text = $"Province {provinceID}";
+            // Province name - try localization first (PROV1, PROV2, etc.)
+            string provinceName = LocalizationManager.Get($"PROV{provinceID}");
+            nameLabel.text = provinceName;
 
             // Province ID
-            idLabel.text = $"ID: {provinceID}";
+            idLabel.text = $"{LocalizationManager.Get("UI_PROVINCE_ID")}: {provinceID}";
 
             // Get owner info
             ushort ownerID = provinceQueries.GetOwner(provinceID);
@@ -45,13 +47,15 @@ namespace StarterKit
                 string ownerTag = countryQueries.GetTag(ownerID);
                 Color32 ownerColor = countryQueries.GetColor(ownerID);
 
-                ownerLabel.text = string.IsNullOrEmpty(ownerTag) ? $"Country {ownerID}" : ownerTag;
+                // Try to get localized country name, fallback to tag
+                string countryName = LocalizationManager.Get(ownerTag);
+                ownerLabel.text = countryName;
                 ownerColorIndicator.style.backgroundColor = (Color)ownerColor;
                 ownerColorIndicator.style.display = DisplayStyle.Flex;
             }
             else
             {
-                ownerLabel.text = "Unowned";
+                ownerLabel.text = LocalizationManager.Get("UI_UNOWNED");
                 ownerColorIndicator.style.display = DisplayStyle.None;
             }
         }

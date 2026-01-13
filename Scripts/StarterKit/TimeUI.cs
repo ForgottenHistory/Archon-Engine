@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
 using Core.Systems;
+using Core.Localization;
 
 namespace StarterKit
 {
@@ -136,7 +137,7 @@ namespace StarterKit
             // Pause button
             pauseButton = new Button(OnPauseClicked);
             pauseButton.name = "pause-button";
-            pauseButton.text = "Pause";
+            pauseButton.text = LocalizationManager.Get("UI_PAUSE");
             pauseButton.style.marginBottom = 8f;
             pauseButton.style.width = new StyleLength(new Length(100, LengthUnit.Percent));
             container.Add(pauseButton);
@@ -181,7 +182,9 @@ namespace StarterKit
             // Update pause button
             if (pauseButton != null)
             {
-                pauseButton.text = timeManager.IsPaused ? "Resume" : "Pause";
+                pauseButton.text = timeManager.IsPaused
+                    ? LocalizationManager.Get("UI_RESUME")
+                    : LocalizationManager.Get("UI_PAUSE");
             }
 
             // Highlight active speed button

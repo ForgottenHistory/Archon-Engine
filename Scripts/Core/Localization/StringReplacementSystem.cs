@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 
-namespace ParadoxParser.YAML
+namespace Core.Localization
 {
     /// <summary>
     /// Advanced string replacement system for dynamic localization

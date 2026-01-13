@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 
-namespace ParadoxParser.YAML
+namespace Core.Localization
 {
     /// <summary>
     /// Multi-language extraction utilities for localization management

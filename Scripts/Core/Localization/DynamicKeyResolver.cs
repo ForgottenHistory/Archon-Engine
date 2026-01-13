@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 
-namespace ParadoxParser.YAML
+namespace Core.Localization
 {
     /// <summary>
     /// Dynamic key resolution system for complex localization scenarios
@@ -112,7 +112,7 @@ namespace ParadoxParser.YAML
         public static ResolutionResult ResolveDynamicKey(
             FixedString128Bytes keyPattern,
             ResolutionContext context,
-            /*ParadoxParser.YAML.MultiLanguageExtractor.MultiLanguageResult multiLangResult,*/
+            MultiLanguageExtractor.MultiLanguageResult multiLangResult,
             FixedString64Bytes preferredLanguage)
         {
             var result = new ResolutionResult { Success = false };
@@ -136,8 +136,7 @@ namespace ParadoxParser.YAML
                 uint keyHash = HashString128(result.ResolvedKey, context.CaseSensitive);
                 if (context.KeyMappings.TryGetValue(keyHash, out uint mappedHash))
                 {
-                    /*if (TryGetValueByHash(multiLangResult, preferredLanguage, mappedHash, out result.ResolvedValue))*/
-                    if (false)
+                    if (TryGetValueByHash(multiLangResult, preferredLanguage, mappedHash, out result.ResolvedValue))
                     {
                         result.Success = true;
                         result.ResolutionSteps++;
@@ -146,8 +145,7 @@ namespace ParadoxParser.YAML
                 }
 
                 // Step 3: Direct lookup
-                /*if (TryGetValueByKey(multiLangResult, preferredLanguage, result.ResolvedKey, out result.ResolvedValue))*/
-                if (false)
+                if (TryGetValueByKey(multiLangResult, preferredLanguage, result.ResolvedKey, out result.ResolvedValue))
                 {
                     result.Success = true;
                     result.ResolutionSteps++;
@@ -155,8 +153,7 @@ namespace ParadoxParser.YAML
                 }
 
                 // Step 4: Hierarchical resolution with prefixes
-                /*if (TryResolveWithPrefixes(result.ResolvedKey, context, multiLangResult, preferredLanguage, out result.ResolvedValue))*/
-                if (false)
+                if (TryResolveWithPrefixes(result.ResolvedKey, context, multiLangResult, preferredLanguage, out result.ResolvedValue))
                 {
                     result.Success = true;
                     result.UsedFallback = true;
@@ -167,8 +164,7 @@ namespace ParadoxParser.YAML
                 // Step 5: Wildcard resolution
                 if (context.AllowWildcards)
                 {
-                    /*if (TryResolveWithWildcards(result.ResolvedKey, context, multiLangResult, preferredLanguage, out result.ResolvedValue))*/
-                    if (false)
+                    if (TryResolveWithWildcards(result.ResolvedKey, context, multiLangResult, preferredLanguage, out result.ResolvedValue))
                     {
                         result.Success = true;
                         result.UsedWildcard = true;
@@ -180,8 +176,7 @@ namespace ParadoxParser.YAML
                 // Step 6: Scope-based fallback
                 if (context.CurrentScope.Length > 0)
                 {
-                    /*if (TryResolveWithScope(result.ResolvedKey, context, multiLangResult, preferredLanguage, out result.ResolvedValue))*/
-                    if (false)
+                    if (TryResolveWithScope(result.ResolvedKey, context, multiLangResult, preferredLanguage, out result.ResolvedValue))
                     {
                         result.Success = true;
                         result.UsedFallback = true;
@@ -204,7 +199,7 @@ namespace ParadoxParser.YAML
         public static NativeArray<ResolutionResult> BatchResolveDynamicKeys(
             NativeArray<FixedString128Bytes> keyPatterns,
             ResolutionContext context,
-            /*ParadoxParser.YAML.MultiLanguageExtractor.MultiLanguageResult multiLangResult,*/
+            MultiLanguageExtractor.MultiLanguageResult multiLangResult,
             FixedString64Bytes preferredLanguage,
             Allocator allocator)
         {
@@ -212,8 +207,7 @@ namespace ParadoxParser.YAML
 
             for (int i = 0; i < keyPatterns.Length; i++)
             {
-                /*results[i] = ResolveDynamicKey(keyPatterns[i], context, multiLangResult, preferredLanguage);*/
-                results[i] = new ResolutionResult { Success = false };
+                results[i] = ResolveDynamicKey(keyPatterns[i], context, multiLangResult, preferredLanguage);
             }
 
             return results;
@@ -250,15 +244,14 @@ namespace ParadoxParser.YAML
             DynamicKeyPattern pattern,
             NativeArray<FixedString512Bytes> variableValues,
             ResolutionContext context,
-            /*ParadoxParser.YAML.MultiLanguageExtractor.MultiLanguageResult multiLangResult,*/
+            MultiLanguageExtractor.MultiLanguageResult multiLangResult,
             FixedString64Bytes preferredLanguage)
         {
             // Substitute variables in pattern
             var resolvedKey = SubstitutePatternVariables(pattern, variableValues);
 
             // Use standard resolution
-            /*return ResolveDynamicKey(resolvedKey, context, multiLangResult, preferredLanguage);*/
-            return new ResolutionResult { Success = false };
+            return ResolveDynamicKey(resolvedKey, context, multiLangResult, preferredLanguage);
         }
 
         /// <summary>
@@ -321,7 +314,7 @@ namespace ParadoxParser.YAML
         private static bool TryResolveWithPrefixes(
             FixedString128Bytes key,
             ResolutionContext context,
-            /*ParadoxParser.YAML.MultiLanguageExtractor.MultiLanguageResult multiLangResult,*/
+            MultiLanguageExtractor.MultiLanguageResult multiLangResult,
             FixedString64Bytes preferredLanguage,
             out FixedString512Bytes value)
         {
@@ -345,8 +338,7 @@ namespace ParadoxParser.YAML
                     prefixedKey.Append(key[i]);
                 }
 
-                /*if (TryGetValueByKey(multiLangResult, preferredLanguage, prefixedKey, out value))*/
-                if (false)
+                if (TryGetValueByKey(multiLangResult, preferredLanguage, prefixedKey, out value))
                 {
                     return true;
                 }
@@ -361,7 +353,7 @@ namespace ParadoxParser.YAML
         private static bool TryResolveWithWildcards(
             FixedString128Bytes key,
             ResolutionContext context,
-            /*ParadoxParser.YAML.MultiLanguageExtractor.MultiLanguageResult multiLangResult,*/
+            MultiLanguageExtractor.MultiLanguageResult multiLangResult,
             FixedString64Bytes preferredLanguage,
             out FixedString512Bytes value)
         {
@@ -369,9 +361,7 @@ namespace ParadoxParser.YAML
 
             // Try replacing parts with wildcards
             var wildcardKey = CreateWildcardVariant(key);
-            /*return TryGetValueByKey(multiLangResult, preferredLanguage, wildcardKey, out value);*/
-            value = default;
-            return false;
+            return TryGetValueByKey(multiLangResult, preferredLanguage, wildcardKey, out value);
         }
 
         /// <summary>
@@ -380,7 +370,7 @@ namespace ParadoxParser.YAML
         private static bool TryResolveWithScope(
             FixedString128Bytes key,
             ResolutionContext context,
-            /*ParadoxParser.YAML.MultiLanguageExtractor.MultiLanguageResult multiLangResult,*/
+            MultiLanguageExtractor.MultiLanguageResult multiLangResult,
             FixedString64Bytes preferredLanguage,
             out FixedString512Bytes value)
         {
@@ -402,9 +392,7 @@ namespace ParadoxParser.YAML
                 scopedKey.Append(key[i]);
             }
 
-            /*return TryGetValueByKey(multiLangResult, preferredLanguage, scopedKey, out value);*/
-            value = default;
-            return false;
+            return TryGetValueByKey(multiLangResult, preferredLanguage, scopedKey, out value);
         }
 
         /// <summary>
@@ -412,7 +400,7 @@ namespace ParadoxParser.YAML
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryGetValueByKey(
-            /*ParadoxParser.YAML.MultiLanguageExtractor.MultiLanguageResult multiLangResult,*/
+            MultiLanguageExtractor.MultiLanguageResult multiLangResult,
             FixedString64Bytes preferredLanguage,
             FixedString128Bytes key,
             out FixedString512Bytes value)
@@ -425,23 +413,19 @@ namespace ParadoxParser.YAML
             }
 
             uint keyHash = HashString(keyStr, false);
-            /*return ParadoxParser.YAML.MultiLanguageExtractor.TryGetLocalizedString(
-                multiLangResult, preferredLanguage, keyHash, out value, out _);*/
-            value = default;
-            return false;
+            return MultiLanguageExtractor.TryGetLocalizedString(
+                multiLangResult, preferredLanguage, keyHash, out value, out _);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryGetValueByHash(
-            /*ParadoxParser.YAML.MultiLanguageExtractor.MultiLanguageResult multiLangResult,*/
+            MultiLanguageExtractor.MultiLanguageResult multiLangResult,
             FixedString64Bytes preferredLanguage,
             uint keyHash,
             out FixedString512Bytes value)
         {
-            /*return ParadoxParser.YAML.MultiLanguageExtractor.TryGetLocalizedString(
-                multiLangResult, preferredLanguage, keyHash, out value, out _);*/
-            value = default;
-            return false;
+            return MultiLanguageExtractor.TryGetLocalizedString(
+                multiLangResult, preferredLanguage, keyHash, out value, out _);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Localization;
 using Core.Units;
 using Map.Interaction;
 using System.Collections.Generic;
@@ -132,7 +133,7 @@ namespace StarterKit
             panelContainer.style.minWidth = 180f;
 
             // Header
-            headerLabel = new Label("Units");
+            headerLabel = new Label(LocalizationManager.Get("UI_UNITS"));
             headerLabel.style.fontSize = fontSize;
             headerLabel.style.color = textColor;
             headerLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
@@ -146,7 +147,7 @@ namespace StarterKit
             panelContainer.Add(unitsListContainer);
 
             // No units label
-            noUnitsLabel = new Label("No units");
+            noUnitsLabel = new Label(LocalizationManager.Get("UI_NO_UNITS"));
             noUnitsLabel.style.fontSize = fontSize - 2;
             noUnitsLabel.style.color = labelColor;
             noUnitsLabel.style.unityFontStyleAndWeight = FontStyle.Italic;
@@ -154,7 +155,9 @@ namespace StarterKit
 
             // Create unit button
             createUnitButton = new Button(OnCreateUnitClicked);
-            createUnitButton.text = "+ Create Infantry";
+            string infantryName = LocalizationManager.Get("UNIT_INFANTRY");
+            if (infantryName == "UNIT_INFANTRY") infantryName = "Infantry"; // Fallback
+            createUnitButton.text = $"+ {LocalizationManager.Get("UI_CREATE_UNIT")} ({infantryName})";
             createUnitButton.style.marginTop = 4f;
             createUnitButton.style.paddingTop = 6f;
             createUnitButton.style.paddingBottom = 6f;
@@ -297,15 +300,18 @@ namespace StarterKit
             // Unit info container
             var infoContainer = new VisualElement();
 
-            // Unit name/type
-            string typeName = unitType?.Name ?? $"Unit #{unitId}";
+            // Unit name/type - try localization first
+            string typeName = unitType != null
+                ? LocalizationManager.Get($"UNIT_{unitType.StringID.ToUpperInvariant()}")
+                : $"Unit #{unitId}";
+            if (typeName.StartsWith("UNIT_") && unitType != null) typeName = unitType.Name; // Fallback
             var nameLabel = new Label(typeName);
             nameLabel.style.fontSize = fontSize - 1;
             nameLabel.style.color = textColor;
             infoContainer.Add(nameLabel);
 
             // Strength/morale
-            var statsLabel = new Label($"Str: {state.strength}% | Mor: {state.morale}%");
+            var statsLabel = new Label($"{LocalizationManager.Get("UI_STRENGTH")}: {state.strength}% | {LocalizationManager.Get("UI_MORALE")}: {state.morale}%");
             statsLabel.style.fontSize = fontSize - 3;
             statsLabel.style.color = labelColor;
             infoContainer.Add(statsLabel);

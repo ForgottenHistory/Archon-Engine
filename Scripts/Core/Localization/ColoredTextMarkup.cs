@@ -4,7 +4,7 @@ using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace ParadoxParser.YAML
+namespace Core.Localization
 {
     /// <summary>
     /// Colored text markup system for rich text localization

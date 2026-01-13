@@ -1,0 +1,12 @@
+﻿l_english:
+ TERRAIN_plains:0 "Plains"
+ TERRAIN_farmlands:0 "Farmlands"
+ TERRAIN_hills:0 "Hills"
+ TERRAIN_mountains:0 "Mountains"
+ TERRAIN_forest:0 "Forest"
+ TERRAIN_jungle:0 "Jungle"
+ TERRAIN_marsh:0 "Marsh"
+ TERRAIN_desert:0 "Desert"
+ TERRAIN_ocean:0 "Ocean"
+ TERRAIN_sea:0 "Sea"
+ TERRAIN_coastal_sea:0 "Coastal Sea"

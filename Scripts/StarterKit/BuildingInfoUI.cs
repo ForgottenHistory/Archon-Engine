@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Localization;
 using Map.Interaction;
 using System.Collections.Generic;
 
@@ -129,7 +130,7 @@ namespace StarterKit
             panelContainer.style.minWidth = 180f;
 
             // Header
-            headerLabel = new Label("Buildings");
+            headerLabel = new Label(LocalizationManager.Get("UI_BUILDINGS"));
             headerLabel.style.fontSize = fontSize;
             headerLabel.style.color = textColor;
             headerLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
@@ -137,7 +138,7 @@ namespace StarterKit
             panelContainer.Add(headerLabel);
 
             // Gold bonus label
-            goldBonusLabel = new Label("Gold Bonus: +0");
+            goldBonusLabel = new Label($"{LocalizationManager.Get("UI_GOLD_BONUS")}: +0");
             goldBonusLabel.style.fontSize = fontSize - 2;
             goldBonusLabel.style.color = new Color(1f, 0.85f, 0.3f, 1f); // Gold color
             goldBonusLabel.style.marginBottom = 8f;
@@ -150,7 +151,7 @@ namespace StarterKit
             panelContainer.Add(buildingsListContainer);
 
             // No buildings label
-            noBuildingsLabel = new Label("No buildings");
+            noBuildingsLabel = new Label(LocalizationManager.Get("UI_NO_BUILDINGS"));
             noBuildingsLabel.style.fontSize = fontSize - 2;
             noBuildingsLabel.style.color = labelColor;
             noBuildingsLabel.style.unityFontStyleAndWeight = FontStyle.Italic;
@@ -212,7 +213,7 @@ namespace StarterKit
 
             // Update gold bonus
             int goldBonus = buildingSystem.GetProvinceGoldBonus(selectedProvinceID);
-            goldBonusLabel.text = $"Gold Bonus: +{goldBonus}";
+            goldBonusLabel.text = $"{LocalizationManager.Get("UI_GOLD_BONUS")}: +{goldBonus}";
 
             // Get buildings in province
             var buildings = buildingSystem.GetProvinceBuildings(selectedProvinceID);
@@ -302,7 +303,10 @@ namespace StarterKit
             bool canBuild = buildingSystem.CanConstruct(selectedProvinceID, buildingType.StringID, out var reason);
 
             var button = new Button(() => OnBuildClicked(buildingType.StringID));
-            button.text = $"+ Build {buildingType.Name} ({buildingType.Cost}g)";
+            // Try to get localized building name, fallback to type name
+            string buildingName = LocalizationManager.Get($"BUILDING_{buildingType.StringID.ToUpperInvariant()}");
+            if (buildingName.StartsWith("BUILDING_")) buildingName = buildingType.Name; // Fallback
+            button.text = $"+ {LocalizationManager.Get("UI_BUILD")} {buildingName} ({buildingType.Cost}g)";
             button.style.marginTop = 4f;
             button.style.paddingTop = 6f;
             button.style.paddingBottom = 6f;
