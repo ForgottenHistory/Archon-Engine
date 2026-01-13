@@ -8,33 +8,33 @@ namespace StarterKit.Commands
     /// <summary>
     /// StarterKit command: Create a unit at a province.
     /// </summary>
-    public class CreateUnitCommand : BaseCommand
+    [Command("create_unit",
+        Aliases = new[] { "unit", "spawn" },
+        Description = "Create a unit at a province",
+        Examples = new[] { "create_unit infantry 5", "unit cavalry 10" })]
+    public class CreateUnitCommand : SimpleCommand
     {
-        private ushort provinceId;
-        private string unitTypeId;
-        private ushort createdUnitId; // For undo
+        [Arg(0, "unitType")]
+        public string UnitTypeId { get; set; }
 
-        public CreateUnitCommand() { }
+        [Arg(1, "provinceId")]
+        public ushort ProvinceId { get; set; }
 
-        public CreateUnitCommand(ushort provinceId, string unitTypeId)
-        {
-            this.provinceId = provinceId;
-            this.unitTypeId = unitTypeId;
-        }
+        // For undo
+        private ushort createdUnitId;
 
         public override bool Validate(GameState gameState)
         {
             var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer == null || initializer.UnitSystem == null)
+            if (initializer?.UnitSystem == null)
                 return false;
 
             // Check unit type exists
-            var unitType = initializer.UnitSystem.GetUnitType(unitTypeId);
-            if (unitType == null)
+            if (initializer.UnitSystem.GetUnitType(UnitTypeId) == null)
                 return false;
 
             // Check province is owned by player
-            if (!initializer.UnitSystem.IsProvinceOwnedByPlayer(provinceId))
+            if (!initializer.UnitSystem.IsProvinceOwnedByPlayer(ProvinceId))
                 return false;
 
             return true;
@@ -49,16 +49,12 @@ namespace StarterKit.Commands
                 return;
             }
 
-            createdUnitId = initializer.UnitSystem.CreateUnit(provinceId, unitTypeId);
+            createdUnitId = initializer.UnitSystem.CreateUnit(ProvinceId, UnitTypeId);
 
             if (createdUnitId != 0)
-            {
-                LogExecution($"Created {unitTypeId} (ID={createdUnitId}) in province {provinceId}");
-            }
+                LogExecution($"Created {UnitTypeId} (ID={createdUnitId}) in province {ProvinceId}");
             else
-            {
-                ArchonLogger.LogWarning($"CreateUnitCommand: Failed to create {unitTypeId} in province {provinceId}", "starter_kit");
-            }
+                ArchonLogger.LogWarning($"CreateUnitCommand: Failed to create {UnitTypeId}", "starter_kit");
         }
 
         public override void Undo(GameState gameState)
@@ -66,56 +62,8 @@ namespace StarterKit.Commands
             if (createdUnitId == 0) return;
 
             var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.UnitSystem == null) return;
-
-            initializer.UnitSystem.DisbandUnit(createdUnitId);
-            LogExecution($"Undid unit creation (disbanded unit {createdUnitId})");
-        }
-
-        public override void Serialize(System.IO.BinaryWriter writer)
-        {
-            writer.Write(provinceId);
-            writer.Write(unitTypeId ?? "");
-        }
-
-        public override void Deserialize(System.IO.BinaryReader reader)
-        {
-            provinceId = reader.ReadUInt16();
-            unitTypeId = reader.ReadString();
-        }
-    }
-
-    /// <summary>
-    /// Factory for creating CreateUnitCommand from console input.
-    /// </summary>
-    [CommandMetadata("create_unit",
-        Aliases = new[] { "unit", "spawn" },
-        Description = "Create a unit at a province",
-        Usage = "create_unit <unitType> <provinceId>",
-        Examples = new[] { "create_unit infantry 5", "unit cavalry 10" })]
-    public class CreateUnitCommandFactory : ICommandFactory
-    {
-        public bool TryCreateCommand(string[] args, GameState gameState, out ICommand command, out string errorMessage)
-        {
-            command = null;
-            errorMessage = null;
-
-            if (args.Length < 2)
-            {
-                errorMessage = "Usage: create_unit <unitType> <provinceId>";
-                return false;
-            }
-
-            string unitTypeId = args[0];
-
-            if (!ushort.TryParse(args[1], out ushort provinceId))
-            {
-                errorMessage = $"Invalid province ID: '{args[1]}'";
-                return false;
-            }
-
-            command = new CreateUnitCommand(provinceId, unitTypeId);
-            return true;
+            initializer?.UnitSystem?.DisbandUnit(createdUnitId);
+            LogExecution($"Undid unit creation (disbanded {createdUnitId})");
         }
     }
 }

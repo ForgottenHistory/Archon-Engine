@@ -7,33 +7,29 @@ namespace StarterKit.Commands
 {
     /// <summary>
     /// StarterKit command: Add or remove gold from player treasury.
-    /// Uses simple int-based economy (not FixedPoint64).
+    /// Demonstrates SimpleCommand pattern - no separate factory class needed.
     /// </summary>
-    public class AddGoldCommand : BaseCommand
+    [Command("add_gold",
+        Aliases = new[] { "gold" },
+        Description = "Add or remove gold from treasury",
+        Examples = new[] { "add_gold 100", "add_gold -50" })]
+    public class AddGoldCommand : SimpleCommand
     {
-        private int amount;
-        private int previousGold; // For undo
+        [Arg(0, "amount")]
+        public int Amount { get; set; }
 
-        public AddGoldCommand() { }
-
-        public AddGoldCommand(int amount)
-        {
-            this.amount = amount;
-        }
+        // For undo support
+        private int previousGold;
 
         public override bool Validate(GameState gameState)
         {
             var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer == null || initializer.EconomySystem == null)
-            {
+            if (initializer?.EconomySystem == null)
                 return false;
-            }
 
             // If removing gold, check if enough exists
-            if (amount < 0 && initializer.EconomySystem.Gold < -amount)
-            {
+            if (Amount < 0 && initializer.EconomySystem.Gold < -Amount)
                 return false;
-            }
 
             return true;
         }
@@ -43,23 +39,19 @@ namespace StarterKit.Commands
             var initializer = Object.FindFirstObjectByType<Initializer>();
             if (initializer?.EconomySystem == null)
             {
-                ArchonLogger.LogError("AddGoldCommand: Initializer or EconomySystem not found", "starter_kit");
+                ArchonLogger.LogError("AddGoldCommand: EconomySystem not found", "starter_kit");
                 return;
             }
 
             var economy = initializer.EconomySystem;
             previousGold = economy.Gold;
 
-            if (amount >= 0)
-            {
-                economy.AddGold(amount);
-                LogExecution($"Added {amount} gold (total: {economy.Gold})");
-            }
+            if (Amount >= 0)
+                economy.AddGold(Amount);
             else
-            {
-                economy.RemoveGold(-amount);
-                LogExecution($"Removed {-amount} gold (total: {economy.Gold})");
-            }
+                economy.RemoveGold(-Amount);
+
+            LogExecution($"Gold changed by {Amount} (total: {economy.Gold})");
         }
 
         public override void Undo(GameState gameState)
@@ -68,8 +60,7 @@ namespace StarterKit.Commands
             if (initializer?.EconomySystem == null) return;
 
             var economy = initializer.EconomySystem;
-            int currentGold = economy.Gold;
-            int difference = previousGold - currentGold;
+            int difference = previousGold - economy.Gold;
 
             if (difference > 0)
                 economy.AddGold(difference);
@@ -77,48 +68,6 @@ namespace StarterKit.Commands
                 economy.RemoveGold(-difference);
 
             LogExecution($"Undid gold change (restored to {economy.Gold})");
-        }
-
-        public override void Serialize(System.IO.BinaryWriter writer)
-        {
-            writer.Write(amount);
-        }
-
-        public override void Deserialize(System.IO.BinaryReader reader)
-        {
-            amount = reader.ReadInt32();
-        }
-    }
-
-    /// <summary>
-    /// Factory for creating AddGoldCommand from console input.
-    /// </summary>
-    [CommandMetadata("add_gold",
-        Aliases = new[] { "gold" },
-        Description = "Add or remove gold from treasury",
-        Usage = "add_gold <amount>",
-        Examples = new[] { "add_gold 100", "add_gold -50" })]
-    public class AddGoldCommandFactory : ICommandFactory
-    {
-        public bool TryCreateCommand(string[] args, GameState gameState, out ICommand command, out string errorMessage)
-        {
-            command = null;
-            errorMessage = null;
-
-            if (args.Length < 1)
-            {
-                errorMessage = "Usage: add_gold <amount>";
-                return false;
-            }
-
-            if (!int.TryParse(args[0], out int amount))
-            {
-                errorMessage = $"Invalid amount: '{args[0]}'";
-                return false;
-            }
-
-            command = new AddGoldCommand(amount);
-            return true;
         }
     }
 }
