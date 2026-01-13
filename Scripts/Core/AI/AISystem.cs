@@ -245,12 +245,9 @@ namespace Core.AI
         }
 
         /// <summary>
-        /// Get goal registry (for debugging/testing).
+        /// Goal registry for auto-discovery and debugging.
         /// </summary>
-        public AIGoalRegistry GetGoalRegistry()
-        {
-            return goalRegistry;
-        }
+        public AIGoalRegistry GoalRegistry => goalRegistry;
 
         /// <summary>
         /// Get scheduling config (for debugging/testing).
