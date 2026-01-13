@@ -1,6 +1,5 @@
 using Core;
 using Core.Commands;
-using UnityEngine;
 using Utils;
 
 namespace StarterKit.Commands
@@ -23,12 +22,12 @@ namespace StarterKit.Commands
 
         public override bool Validate(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.EconomySystem == null)
+            var economy = Initializer.Instance?.EconomySystem;
+            if (economy == null)
                 return false;
 
             // If removing gold, check if enough exists
-            if (Amount < 0 && initializer.EconomySystem.Gold < -Amount)
+            if (Amount < 0 && economy.Gold < -Amount)
                 return false;
 
             return true;
@@ -36,14 +35,12 @@ namespace StarterKit.Commands
 
         public override void Execute(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.EconomySystem == null)
+            var economy = Initializer.Instance?.EconomySystem;
+            if (economy == null)
             {
                 ArchonLogger.LogError("AddGoldCommand: EconomySystem not found", "starter_kit");
                 return;
             }
-
-            var economy = initializer.EconomySystem;
             previousGold = economy.Gold;
 
             if (Amount >= 0)
@@ -56,10 +53,9 @@ namespace StarterKit.Commands
 
         public override void Undo(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.EconomySystem == null) return;
+            var economy = Initializer.Instance?.EconomySystem;
+            if (economy == null) return;
 
-            var economy = initializer.EconomySystem;
             int difference = previousGold - economy.Gold;
 
             if (difference > 0)

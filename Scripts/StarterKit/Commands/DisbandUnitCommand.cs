@@ -1,6 +1,5 @@
 using Core;
 using Core.Commands;
-using UnityEngine;
 using Utils;
 
 namespace StarterKit.Commands
@@ -23,40 +22,40 @@ namespace StarterKit.Commands
 
         public override bool Validate(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.UnitSystem == null)
+            var units = Initializer.Instance?.UnitSystem;
+            if (units == null)
                 return false;
 
             // Check unit exists (strength > 0 means unit is alive)
-            var unit = initializer.UnitSystem.GetUnit(UnitId);
+            var unit = units.GetUnit(UnitId);
             return unit.strength > 0;
         }
 
         public override void Execute(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.UnitSystem == null)
+            var units = Initializer.Instance?.UnitSystem;
+            if (units == null)
             {
                 ArchonLogger.LogError("DisbandUnitCommand: UnitSystem not found", "starter_kit");
                 return;
             }
 
             // Store state for potential undo
-            var unit = initializer.UnitSystem.GetUnit(UnitId);
+            var unit = units.GetUnit(UnitId);
             previousProvinceId = unit.provinceID;
             previousUnitTypeId = unit.unitTypeID;
 
-            initializer.UnitSystem.DisbandUnit(UnitId);
+            units.DisbandUnit(UnitId);
             LogExecution($"Disbanded unit {UnitId}");
         }
 
         public override void Undo(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.UnitSystem == null) return;
+            var units = Initializer.Instance?.UnitSystem;
+            if (units == null) return;
 
             // Recreate the unit (note: may get different ID)
-            ushort newUnitId = initializer.UnitSystem.CreateUnit(previousProvinceId, previousUnitTypeId);
+            ushort newUnitId = units.CreateUnit(previousProvinceId, previousUnitTypeId);
             LogExecution($"Undid disband (recreated as unit {newUnitId})");
         }
     }

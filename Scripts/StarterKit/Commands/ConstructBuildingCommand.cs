@@ -1,6 +1,5 @@
 using Core;
 using Core.Commands;
-using UnityEngine;
 using Utils;
 
 namespace StarterKit.Commands
@@ -22,29 +21,29 @@ namespace StarterKit.Commands
 
         public override bool Validate(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.BuildingSystem == null)
+            var buildings = Initializer.Instance?.BuildingSystem;
+            if (buildings == null)
                 return false;
 
-            return initializer.BuildingSystem.CanConstruct(ProvinceId, BuildingTypeId, out _);
+            return buildings.CanConstruct(ProvinceId, BuildingTypeId, out _);
         }
 
         public override void Execute(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.BuildingSystem == null)
+            var buildings = Initializer.Instance?.BuildingSystem;
+            if (buildings == null)
             {
                 ArchonLogger.LogError("ConstructBuildingCommand: BuildingSystem not found", "starter_kit");
                 return;
             }
 
-            bool success = initializer.BuildingSystem.Construct(ProvinceId, BuildingTypeId);
+            bool success = buildings.Construct(ProvinceId, BuildingTypeId);
 
             if (success)
                 LogExecution($"Constructed {BuildingTypeId} in province {ProvinceId}");
             else
             {
-                initializer.BuildingSystem.CanConstruct(ProvinceId, BuildingTypeId, out string reason);
+                buildings.CanConstruct(ProvinceId, BuildingTypeId, out string reason);
                 ArchonLogger.LogWarning($"ConstructBuildingCommand: Failed - {reason}", "starter_kit");
             }
         }

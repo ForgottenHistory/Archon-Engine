@@ -14,9 +14,17 @@ namespace StarterKit
     /// Coordinates EngineMapInitializer + StarterKit systems.
     /// Use this as the entry point for StarterKit scenes.
     /// Owns PlayerState and EconomySystem as plain classes.
+    ///
+    /// Access via Initializer.Instance for commands and other systems.
     /// </summary>
     public class Initializer : MonoBehaviour
     {
+        /// <summary>
+        /// Static instance for easy access from commands.
+        /// Set on Awake, cleared on OnDestroy.
+        /// </summary>
+        public static Initializer Instance { get; private set; }
+
         [Header("Engine References")]
         [SerializeField] private EngineMapInitializer engineMapInitializer;
 
@@ -51,6 +59,11 @@ namespace StarterKit
         public BuildingSystem BuildingSystem => buildingSystem;
         public AISystem AISystem => aiSystem;
 
+        void Awake()
+        {
+            Instance = this;
+        }
+
         void Start()
         {
             if (initializeOnStart)
@@ -65,6 +78,9 @@ namespace StarterKit
             buildingSystem?.Dispose();
             unitSystem?.Dispose();
             economySystem?.Dispose();
+
+            if (Instance == this)
+                Instance = null;
         }
 
         public void StartInitialization()

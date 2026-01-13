@@ -1,6 +1,5 @@
 using Core;
 using Core.Commands;
-using UnityEngine;
 using Utils;
 
 namespace StarterKit.Commands
@@ -25,12 +24,12 @@ namespace StarterKit.Commands
 
         public override bool Validate(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.UnitSystem == null)
+            var units = Initializer.Instance?.UnitSystem;
+            if (units == null)
                 return false;
 
             // Check unit exists (strength > 0 means unit is alive)
-            var unit = initializer.UnitSystem.GetUnit(UnitId);
+            var unit = units.GetUnit(UnitId);
             if (unit.strength == 0)
                 return false;
 
@@ -43,24 +42,23 @@ namespace StarterKit.Commands
 
         public override void Execute(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.UnitSystem == null)
+            var units = Initializer.Instance?.UnitSystem;
+            if (units == null)
             {
                 ArchonLogger.LogError("MoveUnitCommand: UnitSystem not found", "starter_kit");
                 return;
             }
 
-            var unit = initializer.UnitSystem.GetUnit(UnitId);
+            var unit = units.GetUnit(UnitId);
             previousProvinceId = unit.provinceID;
 
-            initializer.UnitSystem.MoveUnit(UnitId, TargetProvinceId);
+            units.MoveUnit(UnitId, TargetProvinceId);
             LogExecution($"Moved unit {UnitId} from {previousProvinceId} to {TargetProvinceId}");
         }
 
         public override void Undo(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            initializer?.UnitSystem?.MoveUnit(UnitId, previousProvinceId);
+            Initializer.Instance?.UnitSystem?.MoveUnit(UnitId, previousProvinceId);
             LogExecution($"Undid move (unit {UnitId} back to {previousProvinceId})");
         }
     }

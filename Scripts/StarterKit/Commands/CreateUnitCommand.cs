@@ -1,6 +1,5 @@
 using Core;
 using Core.Commands;
-using UnityEngine;
 using Utils;
 
 namespace StarterKit.Commands
@@ -25,16 +24,16 @@ namespace StarterKit.Commands
 
         public override bool Validate(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.UnitSystem == null)
+            var units = Initializer.Instance?.UnitSystem;
+            if (units == null)
                 return false;
 
             // Check unit type exists
-            if (initializer.UnitSystem.GetUnitType(UnitTypeId) == null)
+            if (units.GetUnitType(UnitTypeId) == null)
                 return false;
 
             // Check province is owned by player
-            if (!initializer.UnitSystem.IsProvinceOwnedByPlayer(ProvinceId))
+            if (!units.IsProvinceOwnedByPlayer(ProvinceId))
                 return false;
 
             return true;
@@ -42,14 +41,14 @@ namespace StarterKit.Commands
 
         public override void Execute(GameState gameState)
         {
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            if (initializer?.UnitSystem == null)
+            var units = Initializer.Instance?.UnitSystem;
+            if (units == null)
             {
                 ArchonLogger.LogError("CreateUnitCommand: UnitSystem not found", "starter_kit");
                 return;
             }
 
-            createdUnitId = initializer.UnitSystem.CreateUnit(ProvinceId, UnitTypeId);
+            createdUnitId = units.CreateUnit(ProvinceId, UnitTypeId);
 
             if (createdUnitId != 0)
                 LogExecution($"Created {UnitTypeId} (ID={createdUnitId}) in province {ProvinceId}");
@@ -61,8 +60,7 @@ namespace StarterKit.Commands
         {
             if (createdUnitId == 0) return;
 
-            var initializer = Object.FindFirstObjectByType<Initializer>();
-            initializer?.UnitSystem?.DisbandUnit(createdUnitId);
+            Initializer.Instance?.UnitSystem?.DisbandUnit(createdUnitId);
             LogExecution($"Undid unit creation (disbanded {createdUnitId})");
         }
     }
