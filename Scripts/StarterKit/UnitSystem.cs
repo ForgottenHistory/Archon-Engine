@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Core;
+using Core.Events;
 using Core.Loaders;
 using Core.Units;
 using Newtonsoft.Json.Linq;
@@ -30,6 +31,7 @@ namespace StarterKit
         private readonly GameState gameState;
         private readonly PlayerState playerState;
         private readonly bool logProgress;
+        private readonly CompositeDisposable subscriptions = new CompositeDisposable();
         private bool isDisposed;
 
         // Unit type registry (loaded from Template-Data/units/)
@@ -51,10 +53,10 @@ namespace StarterKit
             unitTypesByString = new Dictionary<string, UnitType>();
             unitTypesById = new Dictionary<ushort, UnitType>();
 
-            // Subscribe to unit events from Core
-            gameState.EventBus.Subscribe<UnitCreatedEvent>(OnCoreUnitCreated);
-            gameState.EventBus.Subscribe<UnitDestroyedEvent>(OnCoreUnitDestroyed);
-            gameState.EventBus.Subscribe<UnitMovedEvent>(OnCoreUnitMoved);
+            // Subscribe to unit events from Core (tokens auto-disposed on Dispose)
+            subscriptions.Add(gameState.EventBus.Subscribe<UnitCreatedEvent>(OnCoreUnitCreated));
+            subscriptions.Add(gameState.EventBus.Subscribe<UnitDestroyedEvent>(OnCoreUnitDestroyed));
+            subscriptions.Add(gameState.EventBus.Subscribe<UnitMovedEvent>(OnCoreUnitMoved));
 
             if (logProgress)
             {
@@ -316,10 +318,7 @@ namespace StarterKit
         {
             if (isDisposed) return;
 
-            gameState?.EventBus?.Unsubscribe<UnitCreatedEvent>(OnCoreUnitCreated);
-            gameState?.EventBus?.Unsubscribe<UnitDestroyedEvent>(OnCoreUnitDestroyed);
-            gameState?.EventBus?.Unsubscribe<UnitMovedEvent>(OnCoreUnitMoved);
-
+            subscriptions.Dispose();
             isDisposed = true;
         }
     }

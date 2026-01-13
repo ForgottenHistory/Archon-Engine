@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Core;
+using Core.Events;
 using Core.Systems;
 using Map.Core;
 using Map.Rendering.Terrain;
@@ -21,6 +22,7 @@ namespace StarterKit
         private readonly PlayerState playerState;
         private readonly BuildingSystem buildingSystem;
         private readonly bool logProgress;
+        private readonly CompositeDisposable subscriptions = new CompositeDisposable();
         private bool isDisposed;
 
         // Random for province selection
@@ -58,8 +60,8 @@ namespace StarterKit
                 }
             }
 
-            // Subscribe to monthly tick
-            gameState.EventBus.Subscribe<MonthlyTickEvent>(OnMonthlyTick);
+            // Subscribe to monthly tick (token auto-disposed on Dispose)
+            subscriptions.Add(gameState.EventBus.Subscribe<MonthlyTickEvent>(OnMonthlyTick));
 
             if (logProgress)
             {
@@ -265,7 +267,7 @@ namespace StarterKit
             if (isDisposed) return;
             isDisposed = true;
 
-            gameState?.EventBus?.Unsubscribe<MonthlyTickEvent>(OnMonthlyTick);
+            subscriptions.Dispose();
 
             if (logProgress)
             {

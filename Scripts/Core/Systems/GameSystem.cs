@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Core.Events;
 using UnityEngine;
 
 namespace Core.Systems
@@ -55,6 +57,11 @@ namespace Core.Systems
         /// Systems cannot be used until initialized
         /// </summary>
         public bool IsInitialized { get; private set; }
+
+        /// <summary>
+        /// Tracked event subscriptions for automatic cleanup
+        /// </summary>
+        private CompositeDisposable subscriptions;
 
         /// <summary>
         /// Get all systems this system depends on
@@ -123,6 +130,10 @@ namespace Core.Systems
                 return;
             }
 
+            // Dispose tracked subscriptions first
+            subscriptions?.Dispose();
+            subscriptions = null;
+
             OnShutdown();
             IsInitialized = false;
             ArchonLogger.Log($"{SystemName}: System shutdown", "core_simulation");
@@ -176,6 +187,46 @@ namespace Core.Systems
             {
                 ArchonLogger.LogError($"{SystemName}: System not initialized - cannot perform operation", "core_simulation");
             }
+        }
+
+        /// <summary>
+        /// Subscribe to an event with automatic cleanup on shutdown.
+        /// No need to manually unsubscribe - handled automatically.
+        ///
+        /// Usage:
+        /// protected override void OnInitialize()
+        /// {
+        ///     Subscribe<MonthlyTickEvent>(HandleMonthlyTick);
+        /// }
+        /// // No OnShutdown override needed for unsubscription
+        /// </summary>
+        protected void Subscribe<T>(Action<T> handler) where T : struct, IGameEvent
+        {
+            var gameState = GameState.Instance;
+            if (gameState?.EventBus == null)
+            {
+                LogSystemError($"Cannot subscribe to {typeof(T).Name} - EventBus not available");
+                return;
+            }
+
+            subscriptions ??= new CompositeDisposable();
+            subscriptions.Add(gameState.EventBus.Subscribe(handler));
+        }
+
+        /// <summary>
+        /// Subscribe to an event using a specific EventBus.
+        /// Useful when not using GameState.Instance.
+        /// </summary>
+        protected void Subscribe<T>(EventBus eventBus, Action<T> handler) where T : struct, IGameEvent
+        {
+            if (eventBus == null)
+            {
+                LogSystemError($"Cannot subscribe to {typeof(T).Name} - EventBus is null");
+                return;
+            }
+
+            subscriptions ??= new CompositeDisposable();
+            subscriptions.Add(eventBus.Subscribe(handler));
         }
 
         /// <summary>

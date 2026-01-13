@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Core;
+using Core.Events;
 using Core.Units;
 using Map.Core;
 using Map.Rendering;
@@ -28,6 +29,7 @@ namespace StarterKit
         private GameState gameState;
         private UnitSystem unitSystem;
         private ProvinceCenterLookup centerLookup;
+        private CompositeDisposable subscriptions;
 
         // GPU instancing data
         private Mesh quadMesh;
@@ -103,10 +105,11 @@ namespace StarterKit
             // Create rendering resources
             CreateRenderingResources();
 
-            // Subscribe to unit events
-            gameState.EventBus.Subscribe<UnitCreatedEvent>(OnUnitCreated);
-            gameState.EventBus.Subscribe<UnitDestroyedEvent>(OnUnitDestroyed);
-            gameState.EventBus.Subscribe<UnitMovedEvent>(OnUnitMoved);
+            // Subscribe to unit events (tokens auto-disposed on OnDestroy)
+            subscriptions = new CompositeDisposable();
+            subscriptions.Add(gameState.EventBus.Subscribe<UnitCreatedEvent>(OnUnitCreated));
+            subscriptions.Add(gameState.EventBus.Subscribe<UnitDestroyedEvent>(OnUnitDestroyed));
+            subscriptions.Add(gameState.EventBus.Subscribe<UnitMovedEvent>(OnUnitMoved));
 
             isInitialized = true;
             isDirty = true;
@@ -287,12 +290,7 @@ namespace StarterKit
 
         void OnDestroy()
         {
-            if (gameState?.EventBus != null)
-            {
-                gameState.EventBus.Unsubscribe<UnitCreatedEvent>(OnUnitCreated);
-                gameState.EventBus.Unsubscribe<UnitDestroyedEvent>(OnUnitDestroyed);
-                gameState.EventBus.Unsubscribe<UnitMovedEvent>(OnUnitMoved);
-            }
+            subscriptions?.Dispose();
 
             if (quadMesh != null)
                 Destroy(quadMesh);

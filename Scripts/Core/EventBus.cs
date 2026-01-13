@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.Events;
 using UnityEngine;
 
 namespace Core
@@ -47,9 +48,10 @@ namespace Core
         }
 
         /// <summary>
-        /// Subscribe to events of a specific type
+        /// Subscribe to events of a specific type.
+        /// Returns a token that can be disposed to unsubscribe.
         /// </summary>
-        public void Subscribe<T>(Action<T> handler) where T : struct, IGameEvent
+        public IDisposable Subscribe<T>(Action<T> handler) where T : struct, IGameEvent
         {
             var eventType = typeof(T);
 
@@ -60,6 +62,8 @@ namespace Core
             }
 
             ((EventQueue<T>)queue).AddListener(handler);
+
+            return new SubscriptionTokenGeneric<T>(this, handler);
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Events;
 
 namespace StarterKit
 {
@@ -29,6 +30,7 @@ namespace StarterKit
         private EconomySystem economySystem;
         private PlayerState playerState;
         private GameState gameState;
+        private CompositeDisposable subscriptions;
         private bool isInitialized;
 
         public bool IsInitialized => isInitialized;
@@ -47,16 +49,17 @@ namespace StarterKit
 
             InitializeUI();
 
-            // Subscribe to gold changes
+            // Subscribe to gold changes (C# event - manual cleanup)
             if (economySystem != null)
             {
                 economySystem.OnGoldChanged += OnGoldChanged;
             }
 
-            // Subscribe to player country selection
+            // Subscribe to player country selection (token auto-disposed on OnDestroy)
+            subscriptions = new CompositeDisposable();
             if (gameState?.EventBus != null)
             {
-                gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(OnPlayerCountrySelected);
+                subscriptions.Add(gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(OnPlayerCountrySelected));
             }
 
             isInitialized = true;
@@ -69,15 +72,14 @@ namespace StarterKit
 
         void OnDestroy()
         {
+            // C# event - manual cleanup
             if (economySystem != null)
             {
                 economySystem.OnGoldChanged -= OnGoldChanged;
             }
 
-            if (gameState?.EventBus != null)
-            {
-                gameState.EventBus.Unsubscribe<PlayerCountrySelectedEvent>(OnPlayerCountrySelected);
-            }
+            // EventBus subscriptions - auto-disposed
+            subscriptions?.Dispose();
         }
 
         private void OnPlayerCountrySelected(PlayerCountrySelectedEvent evt)

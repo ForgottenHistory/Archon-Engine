@@ -1,6 +1,7 @@
 using System;
 using Unity.Collections;
 using Core;
+using Core.Events;
 using Core.Systems;
 
 namespace StarterKit
@@ -14,6 +15,7 @@ namespace StarterKit
         private readonly GameState gameState;
         private readonly PlayerState playerState;
         private readonly bool logCollection;
+        private readonly CompositeDisposable subscriptions = new CompositeDisposable();
         private int gold;
         private bool isDisposed;
 
@@ -32,8 +34,8 @@ namespace StarterKit
             logCollection = log;
             gold = 0;
 
-            // Subscribe to monthly tick
-            gameState.EventBus.Subscribe<MonthlyTickEvent>(OnMonthlyTick);
+            // Subscribe to monthly tick (token auto-disposed on Dispose)
+            subscriptions.Add(gameState.EventBus.Subscribe<MonthlyTickEvent>(OnMonthlyTick));
 
             if (logCollection)
             {
@@ -54,7 +56,7 @@ namespace StarterKit
         {
             if (isDisposed) return;
 
-            gameState?.EventBus?.Unsubscribe<MonthlyTickEvent>(OnMonthlyTick);
+            subscriptions.Dispose();
             isDisposed = true;
         }
 
