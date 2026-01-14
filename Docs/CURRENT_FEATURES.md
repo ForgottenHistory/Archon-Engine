@@ -1,6 +1,6 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2026-01-12
+**Last Updated:** 2026-01-14
 
 This document lists all implemented features in the Archon Engine organized by category.
 
@@ -97,6 +97,13 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Managed Fallback** - MovementValidator support via managed code path when validation needed
 - **GetNeighbors** - O(1) neighbor lookup with sparse storage
 - **FindPath** - A* algorithm with ~0.1ms typical performance on 13k provinces
+- **IMovementCostCalculator** - Interface for custom movement cost calculation with PathContext
+- **PathOptions** - Configurable pathfinding: forbidden provinces, avoid provinces, max path length
+- **PathResult** - Structured result with PathStatus enum (Success, NoPath, StartInvalid, etc.)
+- **PathCache** - LRU cache with automatic invalidation on ownership changes
+- **FindPathWithOptions** - Advanced pathfinding with full configuration
+- **PathExists/GetDistance** - Convenience methods for quick queries
+- **Path Statistics** - TotalSearches, CacheHits, CacheHitRate tracking
 
 ---
 
@@ -116,6 +123,12 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Deterministic Scoring** - FixedPoint64 goal scores with ordered evaluation
 - **Command Pattern Integration** - AI uses player commands (DeclareWarCommand, BuildBuildingCommand)
 - **Performance** - 60+ FPS at 10x speed with tier scheduling and event-driven caching
+- **IGoalSelector** - Interface for custom goal selection strategies (weighted random, cooldowns, priority overrides)
+- **GoalConstraint System** - Declarative preconditions: MinProvinces, MinResource, AtWar, AtWarWith, DelegateConstraint
+- **AIStatistics** - Runtime statistics: TotalProcessed, TotalSkipped, TotalTimeouts, AverageProcessingTimeMs
+- **AIDebugInfo** - Per-country debug info: Tier, ActiveGoal, FailedConstraints
+- **Execution Timeout** - Configurable timeout for runaway goal execution
+- **Query Methods** - GetActiveGoal, GetCountriesByTier, GetCountryCountByTier, GetActiveAICount
 
 ---
 
@@ -137,8 +150,12 @@ This document lists all implemented features in the Archon Engine organized by c
 - **ResourceSystem** - Multi-resource treasury management with FixedPoint64 values
 - **ResourceDefinition** - Data structure for resource properties
 - **Resource Query API** - GetResource/AddResource/RemoveResource for any resource type
-- **Event System** - OnResourceChanged events for UI updates
+- **Event System** - EventBus integration for resource changes (ResourceChangedEvent)
 - **Unlimited Types** - Support for any number of resource types (gold, manpower, prestige, etc.)
+- **IResourceProvider** - Interface for custom resource calculation (income, expenses)
+- **ResourceCost** - Structured cost validation with CanAfford/TrySpend pattern
+- **Batch Operations** - AddResourceToAll, SetResourceForAll with single event
+- **HasSufficientResources** - Pre-validation for complex costs
 
 ---
 
@@ -173,11 +190,19 @@ This document lists all implemented features in the Archon Engine organized by c
 ## Time System
 
 - **Tick-Based Progression** - Frame-independent game time with fixed timesteps
-- **360-Day Calendar** - Consistent calendar system (12 months × 30 days)
+- **365-Day Calendar** - Consistent calendar system
 - **Layered Update Frequencies** - Hourly, daily, weekly, monthly, yearly tick events
 - **Game Speed Controls** - Pause, slow, normal, fast, very fast speeds
 - **Time Events** - EventBus integration for time-based system updates
 - **Dirty Flag Integration** - Only update systems when state changes
+- **ICalendar Interface** - Pluggable calendar system for custom calendars
+- **StandardCalendar** - Default 360-day implementation with era support
+- **CalendarConstants** - Single source of truth for time constants
+- **GameTime Struct** - Full comparison operators (<, >, <=, >=), IComparable<GameTime>
+- **GameTime Arithmetic** - AddHours, AddDays, AddMonths, AddYears
+- **GameTime Factory** - FromTotalHours, Create(year, month, day, hour)
+- **Duration Methods** - HoursBetween, DaysBetween for time calculations
+- **Era Formatting** - BC/AD year formatting via ICalendar.FormatYear
 
 ---
 
@@ -355,9 +380,15 @@ This document lists all implemented features in the Archon Engine organized by c
 
 - **ArchonLogger** - Categorized logging system with subsystems
 - **DeterministicRandom** - Seeded xorshift128+ RNG for deterministic gameplay
+  - **NextGaussian** - Normal distribution via Central Limit Theorem (sum of 12 uniforms)
+  - **NextWeightedElement/Index** - Weighted random selection with int[] or FixedPoint32[] weights
+  - **NextElementExcept** - Random selection with value or index exclusion
+  - **ToSeedPhrase/FromSeedPhrase** - Human-readable 8-word state export/import
 - **Strongly-Typed IDs** - Type-safe wrappers (ProvinceId, CountryId, BuildingId, etc.)
 - **Registry System** - Fast lookup for static game data
 - **CircularBuffer** - Bounded buffers for history and event storage
+- **Result<T>** - Railway-oriented error handling with Success/Failure pattern
+- **FluentValidator** - Chainable validation with Require, Ensure, WhenValid, Match
 
 ---
 
@@ -377,8 +408,75 @@ This document lists all implemented features in the Archon Engine organized by c
 - **CountryHotData** - Compact country state for cache efficiency
 - **CountryColdData** - Extended country metadata
 - **FixedPoint64** - 32.32 fixed-point for deterministic math
-- **FixedPoint32** - 16.16 fixed-point for compact storage
+  - IsZero, IsPositive, IsNegative properties
+  - Sqrt, Pow, Lerp, InverseLerp, Remap math functions
+  - Full comparison and arithmetic operators
+- **FixedPoint32** - 16.16 fixed-point for compact storage (full parity with FixedPoint64)
+  - FromFraction, FromFloat, FromDouble factory methods
+  - Division, modulo, Abs, Min, Max, Clamp, Floor, Ceiling, Round
+  - IEquatable, IComparable, ToBytes/FromBytes serialization
 - **FixedPoint2** - 2D vector with fixed-point components
+
+---
+
+## Adjacency System
+
+- **AdjacencySystem** - Province neighbor graph with managed and native storage
+- **NativeAdjacencyData** - Read-only struct for Burst job compatibility
+- **IsAdjacent** - O(1) HashSet lookup for neighbor check
+- **GetNeighbors** - Zero-allocation buffer version for hot paths
+- **GetNeighborsWhere** - Predicate-filtered neighbor query
+- **GetConnectedRegion** - BFS flood fill for connected province sets
+- **GetSharedBorderProvinces** - Find provinces where two countries touch
+- **IsBridgeProvince** - Detect strategic choke points (articulation points)
+- **FindBridgeProvinces** - Find all bridge provinces in a region
+- **AdjacencyStats** - Queryable statistics struct (ProvinceCount, AvgNeighbors, etc.)
+
+---
+
+## Localization System
+
+- **LocalizationSystem** - Central string localization manager
+- **ILocalizationProvider** - Interface for custom localization sources
+- **LocalizationKey** - Strongly-typed localization keys
+- **Placeholder Substitution** - {0}, {1} style parameter replacement
+- **Fallback Chain** - Key → Default language → Key itself
+- **Runtime Language Switching** - Change language without restart
+- **Batch Loading** - Load localization files efficiently
+
+---
+
+## Query System
+
+- **ProvinceQuery** - Fluent builder for province queries
+- **CountryQuery** - Fluent builder for country queries
+- **Query Operators** - Where, OrderBy, Take, Skip, First, Count, Any, All
+- **Logical Operators** - And, Or, Not for complex predicates
+- **ExecuteCount** - Count-only execution without allocation
+- **Short-Circuit Evaluation** - Any/All stop early when result known
+- **Frame-Coherent Results** - Cached results valid for current frame
+
+---
+
+## Caching Framework
+
+- **ICache<TKey, TValue>** - Generic caching interface
+- **LRUCache** - Least-recently-used eviction policy
+- **FrameCache** - Automatic invalidation on frame change
+- **TTLCache** - Time-to-live based expiration
+- **Cache Statistics** - Hits, misses, hit rate tracking
+- **Automatic Invalidation** - Event-based cache clearing
+
+---
+
+## Loader System
+
+- **ILoader<T>** - Interface for data loaders
+- **LoaderFactory** - Factory pattern for loader instantiation
+- **Async Loading** - Non-blocking data loading support
+- **Progress Reporting** - Load progress callbacks
+- **Error Handling** - Result<T> based error propagation
+- **Dependency Resolution** - Automatic loader ordering
 
 ---
 
@@ -425,4 +523,4 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ---
 
-*Updated: 2026-01-12*
+*Updated: 2026-01-14*
