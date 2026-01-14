@@ -13,28 +13,27 @@ namespace Core.Systems
     /// Uses A* algorithm to find shortest path between provinces.
     /// Burst-compiled for high performance with large maps.
     ///
-    /// MVP Implementation:
-    /// - All provinces cost 1 (uniform)
-    /// - Burst path when no validator (fast)
-    /// - Managed fallback with validator (flexible)
-    ///
-    /// Future Extensions (Options B/C):
-    /// - Batched parallel pathfinding for million-unit scale
-    /// - Hierarchical A* (HPA*) for very large maps
-    /// - Terrain-based movement costs
-    /// - Pre-computed blocked province sets for Burst validation
+    /// Features:
+    /// - IMovementCostCalculator for terrain/ownership-based costs
+    /// - PathOptions for forbidden zones and avoid preferences
+    /// - LRU path caching for repeated requests
+    /// - Burst path when using uniform costs (fast)
+    /// - Managed path with custom costs (flexible)
     ///
     /// Performance:
     /// - Burst: O(E log V) with binary heap, ~0.1ms typical
     /// - Pre-allocated collections, zero gameplay allocations
+    /// - LRU cache reduces redundant searches
     /// </summary>
     public delegate bool MovementValidator(ushort provinceID, ushort unitOwnerCountryID, ushort unitTypeID);
 
     public class PathfindingSystem : System.IDisposable
     {
         private AdjacencySystem adjacencySystem;
-        private MovementValidator movementValidator;
-        private bool isInitialized = false;
+        private MovementValidator legacyValidator; // For backward compatibility
+        private IMovementCostCalculator defaultCostCalculator;
+        private PathCache pathCache;
+        private bool isInitialized;
 
         // Native collections for Burst job (persistent, reused)
         private NativeMinHeap<PathfindingNode> openHeap;
@@ -44,16 +43,26 @@ namespace Core.Systems
         private NativeList<ushort> pathResult;
         private NativeList<ushort> neighborBuffer;
 
-        // Managed fallback collections (for validator case)
+        // Managed fallback collections (for validator/cost calculator case)
         private List<ushort> managedPathResult;
 
         private const int INITIAL_CAPACITY = 1024;
         private const int MAX_PATH_LENGTH = 256;
+        private const int DEFAULT_CACHE_SIZE = 256;
+
+        // Statistics
+        private int totalSearches;
+        private int cacheHits;
+
+        #region Initialization
 
         /// <summary>
-        /// Initialize pathfinding system with adjacency data
+        /// Initialize pathfinding system with adjacency data.
         /// </summary>
-        public void Initialize(AdjacencySystem adjacencies, MovementValidator validator = null)
+        /// <param name="adjacencies">Adjacency system for neighbor lookups</param>
+        /// <param name="validator">Legacy validator (deprecated, use IMovementCostCalculator)</param>
+        /// <param name="cacheSize">Size of path cache (0 to disable)</param>
+        public void Initialize(AdjacencySystem adjacencies, MovementValidator validator = null, int cacheSize = DEFAULT_CACHE_SIZE)
         {
             if (adjacencies == null || !adjacencies.IsInitialized)
             {
@@ -62,7 +71,8 @@ namespace Core.Systems
             }
 
             this.adjacencySystem = adjacencies;
-            this.movementValidator = validator;
+            this.legacyValidator = validator;
+            this.defaultCostCalculator = UniformCostCalculator.Instance;
 
             // Allocate native collections (persistent, reused across calls)
             openHeap = new NativeMinHeap<PathfindingNode>(INITIAL_CAPACITY, Allocator.Persistent);
@@ -75,48 +85,185 @@ namespace Core.Systems
             // Managed fallback
             managedPathResult = new List<ushort>(MAX_PATH_LENGTH);
 
-            this.isInitialized = true;
+            // Path cache
+            if (cacheSize > 0)
+            {
+                pathCache = new PathCache(cacheSize);
+            }
 
-            string validatorInfo = validator != null ? " with movement validator (managed mode)" : " (Burst mode)";
-            ArchonLogger.Log($"PathfindingSystem: Initialized{validatorInfo}", "core_simulation");
+            this.isInitialized = true;
+            this.totalSearches = 0;
+            this.cacheHits = 0;
+
+            string validatorInfo = validator != null ? " with legacy validator" : "";
+            string cacheInfo = cacheSize > 0 ? $", cache size {cacheSize}" : ", no cache";
+            ArchonLogger.Log($"PathfindingSystem: Initialized{validatorInfo}{cacheInfo}", "core_simulation");
         }
 
         /// <summary>
-        /// Find shortest path from start to goal using A*
-        /// Uses Burst when no validator, managed fallback otherwise.
+        /// Set the default cost calculator for all pathfinding requests.
+        /// </summary>
+        public void SetDefaultCostCalculator(IMovementCostCalculator calculator)
+        {
+            defaultCostCalculator = calculator ?? UniformCostCalculator.Instance;
+        }
+
+        #endregion
+
+        #region Main API
+
+        /// <summary>
+        /// Find shortest path from start to goal using default options.
         /// </summary>
         public List<ushort> FindPath(ushort start, ushort goal, ushort unitOwnerCountryID = 0, ushort unitTypeID = 0)
+        {
+            var options = PathOptions.Default;
+            options.Context = PathContext.Create(unitOwnerCountryID, unitTypeID);
+            return FindPathWithOptions(start, goal, options).Path;
+        }
+
+        /// <summary>
+        /// Find shortest path with full options.
+        /// </summary>
+        public PathResult FindPathWithOptions(ushort start, ushort goal, PathOptions options)
         {
             if (!isInitialized)
             {
                 ArchonLogger.LogError("PathfindingSystem: Not initialized", "core_simulation");
-                return new List<ushort>();
+                return PathResult.Error(PathStatus.NotInitialized);
             }
+
+            if (start == 0)
+                return PathResult.Error(PathStatus.InvalidStart);
+
+            if (goal == 0)
+                return PathResult.Error(PathStatus.InvalidGoal);
 
             if (start == goal)
-                return new List<ushort> { start };
+                return PathResult.TrivialPath(start);
 
-            if (start == 0 || goal == 0)
+            totalSearches++;
+
+            // Try cache first (only for simple paths without forbidden/avoid)
+            if (options.UseCache && pathCache != null &&
+                options.ForbiddenProvinces == null && options.AvoidProvinces == null)
             {
-                ArchonLogger.LogWarning($"PathfindingSystem: Invalid province ID (start={start}, goal={goal})", "core_simulation");
-                return new List<ushort>();
+                if (pathCache.TryGet(start, goal, out var cachedPath, out var cachedCost))
+                {
+                    cacheHits++;
+                    return PathResult.Found(cachedPath, cachedCost, 0, cached: true);
+                }
             }
 
-            // Use Burst path when no validator (common case for AI)
-            if (movementValidator == null)
+            // Determine which pathfinding method to use
+            PathResult result;
+
+            bool hasCustomCosts = options.CostCalculator != null && options.CostCalculator != UniformCostCalculator.Instance;
+            bool hasForbidden = options.ForbiddenProvinces != null && options.ForbiddenProvinces.Count > 0;
+            bool hasAvoid = options.AvoidProvinces != null && options.AvoidProvinces.Count > 0;
+            bool hasLegacyValidator = legacyValidator != null;
+
+            if (hasCustomCosts || hasForbidden || hasAvoid || hasLegacyValidator)
             {
-                return FindPathBurst(start, goal);
+                // Use managed pathfinding for complex cases
+                result = FindPathManaged(start, goal, options);
             }
             else
             {
-                return FindPathManaged(start, goal, unitOwnerCountryID, unitTypeID);
+                // Use Burst for simple uniform-cost paths
+                result = FindPathBurst(start, goal);
             }
+
+            // Cache successful results
+            if (result.Success && options.UseCache && pathCache != null &&
+                options.ForbiddenProvinces == null && options.AvoidProvinces == null)
+            {
+                pathCache.Add(start, goal, result.Path, result.TotalCost);
+            }
+
+            return result;
         }
 
         /// <summary>
-        /// Burst-compiled pathfinding (no movement validation)
+        /// Find path avoiding specific provinces (convenience method).
         /// </summary>
-        private List<ushort> FindPathBurst(ushort start, ushort goal)
+        public PathResult FindPathAvoiding(ushort start, ushort goal, HashSet<ushort> avoidProvinces)
+        {
+            var options = PathOptions.Default;
+            options.AvoidProvinces = avoidProvinces;
+            options.UseCache = false; // Don't cache paths with avoid set
+            return FindPathWithOptions(start, goal, options);
+        }
+
+        /// <summary>
+        /// Find path with forbidden provinces (convenience method).
+        /// </summary>
+        public PathResult FindPathWithForbidden(ushort start, ushort goal, HashSet<ushort> forbiddenProvinces)
+        {
+            var options = PathOptions.Default;
+            options.ForbiddenProvinces = forbiddenProvinces;
+            options.UseCache = false;
+            return FindPathWithOptions(start, goal, options);
+        }
+
+        /// <summary>
+        /// Check if a path exists between two provinces.
+        /// </summary>
+        public bool PathExists(ushort start, ushort goal)
+        {
+            return FindPathWithOptions(start, goal, PathOptions.Default).Success;
+        }
+
+        /// <summary>
+        /// Get the distance (number of provinces) between two provinces.
+        /// Returns -1 if no path exists.
+        /// </summary>
+        public int GetDistance(ushort start, ushort goal)
+        {
+            var result = FindPathWithOptions(start, goal, PathOptions.Default);
+            return result.Success ? result.Length - 1 : -1; // -1 because path includes start
+        }
+
+        #endregion
+
+        #region Cache Management
+
+        /// <summary>
+        /// Clear the path cache.
+        /// </summary>
+        public void ClearCache()
+        {
+            pathCache?.Clear();
+        }
+
+        /// <summary>
+        /// Invalidate cached paths that pass through a province.
+        /// Call when a province becomes blocked/unblocked.
+        /// </summary>
+        public void InvalidateCacheForProvince(ushort provinceId)
+        {
+            pathCache?.InvalidateProvince(provinceId);
+        }
+
+        /// <summary>
+        /// Get cache statistics.
+        /// </summary>
+        public string GetCacheStats()
+        {
+            if (pathCache == null)
+                return "PathCache: disabled";
+
+            return pathCache.GetStats();
+        }
+
+        #endregion
+
+        #region Burst Pathfinding
+
+        /// <summary>
+        /// Burst-compiled pathfinding (uniform costs, no validation).
+        /// </summary>
+        private PathResult FindPathBurst(ushort start, ushort goal)
         {
             // Clear collections
             openHeap.Clear();
@@ -144,10 +291,10 @@ namespace Core.Systems
 
             job.Schedule().Complete();
 
-            // Convert to managed list for API compatibility
+            // Convert to managed result
             if (pathResult.Length == 0)
             {
-                return new List<ushort>();
+                return PathResult.NotFound(closedSet.Count);
             }
 
             var result = new List<ushort>(pathResult.Length);
@@ -155,13 +302,20 @@ namespace Core.Systems
             {
                 result.Add(pathResult[i]);
             }
-            return result;
+
+            // Cost = path length - 1 (uniform cost)
+            var cost = FixedPoint64.FromInt(result.Count - 1);
+            return PathResult.Found(result, cost, closedSet.Count);
         }
 
+        #endregion
+
+        #region Managed Pathfinding
+
         /// <summary>
-        /// Managed pathfinding with movement validation
+        /// Managed pathfinding with cost calculator and options.
         /// </summary>
-        private List<ushort> FindPathManaged(ushort start, ushort goal, ushort unitOwnerCountryID, ushort unitTypeID)
+        private PathResult FindPathManaged(ushort start, ushort goal, PathOptions options)
         {
             // Clear collections
             openHeap.Clear();
@@ -170,24 +324,45 @@ namespace Core.Systems
             gScore.Clear();
             managedPathResult.Clear();
 
+            var costCalculator = options.GetEffectiveCostCalculator();
+            var context = options.Context;
+
+            // Check if start is traversable
+            if (!costCalculator.CanTraverse(start, context))
+            {
+                return PathResult.Error(PathStatus.InvalidStart);
+            }
+
             // Initialize start
             gScore[start] = FixedPoint64.Zero;
-            openHeap.Push(new PathfindingNode { provinceID = start, fScore = FixedPoint64.Zero });
+            var startH = costCalculator.GetHeuristic(start, goal);
+            openHeap.Push(new PathfindingNode { provinceID = start, fScore = startH });
 
-            while (!openHeap.IsEmpty)
+            int maxIterations = MAX_PATH_LENGTH * 100; // Safety limit
+            int iterations = 0;
+
+            while (!openHeap.IsEmpty && iterations++ < maxIterations)
             {
                 var current = openHeap.Pop();
 
                 if (current.provinceID == goal)
                 {
-                    ReconstructPath(current.provinceID, managedPathResult);
-                    return new List<ushort>(managedPathResult);
+                    var totalCost = gScore.TryGetValue(goal, out var cost) ? cost : FixedPoint64.Zero;
+                    ReconstructPath(goal, managedPathResult);
+                    return PathResult.Found(new List<ushort>(managedPathResult), totalCost, closedSet.Count);
                 }
 
                 if (closedSet.Contains(current.provinceID))
                     continue;
 
                 closedSet.Add(current.provinceID);
+
+                if (!gScore.TryGetValue(current.provinceID, out FixedPoint64 currentG))
+                    continue;
+
+                // Check max path length
+                if (options.MaxPathLength > 0 && currentG.ToInt() >= options.MaxPathLength)
+                    continue;
 
                 // Get neighbors
                 neighborBuffer.Clear();
@@ -200,22 +375,42 @@ namespace Core.Systems
                     if (closedSet.Contains(neighbor))
                         continue;
 
-                    // Check movement validation
-                    if (!movementValidator(neighbor, unitOwnerCountryID, unitTypeID))
+                    // Check forbidden
+                    if (options.ForbiddenProvinces != null && options.ForbiddenProvinces.Contains(neighbor))
                         continue;
 
-                    FixedPoint64 tentativeG = gScore[current.provinceID] + FixedPoint64.One;
+                    // Check legacy validator
+                    if (legacyValidator != null && !legacyValidator(neighbor, context.UnitOwnerCountryId, context.UnitTypeId))
+                        continue;
+
+                    // Check cost calculator traversability
+                    if (!costCalculator.CanTraverse(neighbor, context))
+                        continue;
+
+                    // Calculate cost
+                    FixedPoint64 moveCost = costCalculator.GetMovementCost(current.provinceID, neighbor, context);
+
+                    // Apply avoid penalty
+                    if (options.AvoidProvinces != null && options.AvoidProvinces.Contains(neighbor))
+                    {
+                        moveCost = moveCost * options.AvoidPenalty;
+                    }
+
+                    FixedPoint64 tentativeG = currentG + moveCost;
 
                     if (!gScore.TryGetValue(neighbor, out FixedPoint64 existingG) || tentativeG < existingG)
                     {
                         cameFrom[neighbor] = current.provinceID;
                         gScore[neighbor] = tentativeG;
-                        openHeap.Push(new PathfindingNode { provinceID = neighbor, fScore = tentativeG });
+
+                        var h = costCalculator.GetHeuristic(neighbor, goal);
+                        var f = tentativeG + h;
+                        openHeap.Push(new PathfindingNode { provinceID = neighbor, fScore = f });
                     }
                 }
             }
 
-            return new List<ushort>();
+            return PathResult.NotFound(closedSet.Count);
         }
 
         private void ReconstructPath(ushort goal, List<ushort> result)
@@ -232,7 +427,42 @@ namespace Core.Systems
             }
         }
 
+        #endregion
+
+        #region Properties & Statistics
+
         public bool IsInitialized => isInitialized;
+
+        /// <summary>Total pathfinding searches performed</summary>
+        public int TotalSearches => totalSearches;
+
+        /// <summary>Number of cache hits</summary>
+        public int CacheHits => cacheHits;
+
+        /// <summary>Cache hit rate (0-1)</summary>
+        public float CacheHitRate => totalSearches > 0 ? (float)cacheHits / totalSearches : 0f;
+
+        /// <summary>
+        /// Get system statistics as string.
+        /// </summary>
+        public string GetStats()
+        {
+            return $"PathfindingSystem: {totalSearches} searches, {cacheHits} cache hits ({CacheHitRate:P1})\n{GetCacheStats()}";
+        }
+
+        /// <summary>
+        /// Reset statistics.
+        /// </summary>
+        public void ResetStats()
+        {
+            totalSearches = 0;
+            cacheHits = 0;
+            pathCache?.ResetStats();
+        }
+
+        #endregion
+
+        #region Disposal
 
         public void Dispose()
         {
@@ -243,8 +473,13 @@ namespace Core.Systems
             if (pathResult.IsCreated) pathResult.Dispose();
             if (neighborBuffer.IsCreated) neighborBuffer.Dispose();
 
+            pathCache?.Clear();
+            pathCache = null;
+
             isInitialized = false;
         }
+
+        #endregion
     }
 
     /// <summary>
