@@ -181,6 +181,54 @@ namespace Core.Modifiers
         }
 
         /// <summary>
+        /// Iterate over modifiers from a specific source
+        /// </summary>
+        public void ForEachBySource(ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+        {
+            for (int i = 0; i < capacity; i++)
+            {
+                if (isActive[i] &&
+                    modifiers[i].Type == sourceType &&
+                    modifiers[i].SourceID == sourceId)
+                {
+                    action(modifiers[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Iterate over modifiers of a specific modifier type
+        /// </summary>
+        public void ForEachByModifierType(ushort modifierTypeId, Action<ModifierSource> action)
+        {
+            for (int i = 0; i < capacity; i++)
+            {
+                if (isActive[i] && modifiers[i].ModifierTypeId == modifierTypeId)
+                {
+                    action(modifiers[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Count modifiers from a specific source
+        /// </summary>
+        public int CountBySource(ModifierSource.SourceType sourceType, uint sourceId)
+        {
+            int count = 0;
+            for (int i = 0; i < capacity; i++)
+            {
+                if (isActive[i] &&
+                    modifiers[i].Type == sourceType &&
+                    modifiers[i].SourceID == sourceId)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        /// <summary>
         /// Dispose native collections
         /// </summary>
         public void Dispose()

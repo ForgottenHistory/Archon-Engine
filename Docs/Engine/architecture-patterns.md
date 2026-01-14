@@ -8,7 +8,7 @@
 
 ## Overview
 
-This document catalogs the 20 core architectural patterns that make Archon Engine scalable, maintainable, and reusable. Each pattern solves specific problems encountered in grand strategy game development.
+This document catalogs the 21 core architectural patterns that make Archon Engine scalable, maintainable, and reusable. Each pattern solves specific problems encountered in grand strategy game development.
 
 **Why Patterns Matter:**
 - Consistent solutions to recurring problems
@@ -479,6 +479,64 @@ borders.customRendererId = "MyStylized";  // References custom by ID
 
 ---
 
+## Pattern 21: Auto-Discovery Factory Pattern
+
+**Principle:** Interface + Attribute + Registry enables automatic discovery and ordered execution of factories
+
+**Components:**
+1. **Interface** (e.g., `ILoaderFactory`, `ICommandFactory`) - Contract for factories
+2. **Metadata Attribute** (e.g., `[LoaderMetadata]`, `[CommandMetadata]`) - Name, priority, metadata
+3. **Registry** (e.g., `LoaderRegistry`, `CommandRegistry`) - Auto-discovery via reflection, lookup, execution
+
+**Pattern Flow:**
+```
+Define interface → Add attribute to implementations → Registry scans assemblies → Execute in priority order
+```
+
+**Example - Data Loaders:**
+```csharp
+// Interface (ENGINE)
+public interface ILoaderFactory {
+    void Load(LoaderContext context);
+}
+
+// Implementation with attribute
+[LoaderMetadata("terrain", Priority = 10, Required = true)]
+public class TerrainLoader : ILoaderFactory {
+    public void Load(LoaderContext context) { ... }
+}
+
+// Auto-discovery and execution
+var registry = new LoaderRegistry();
+registry.DiscoverLoaders(Assembly.GetExecutingAssembly());
+registry.DiscoverLoaders(gameAssembly);  // GAME layer loaders
+registry.ExecuteAll(context);  // Priority order
+```
+
+**When to Use:**
+- Multiple implementations of same interface
+- GAME layer extends ENGINE capabilities
+- Order matters (priority/dependencies)
+- No manual wiring desired
+
+**Benefits:**
+- Zero manual registration (just add attribute)
+- GAME layer adds implementations seamlessly
+- Mod support (scan mod assemblies)
+- Centralized error handling
+- Priority-based ordering
+
+**Current Implementations:**
+- `LoaderRegistry` + `ILoaderFactory` - Data file loading
+- `CommandRegistry` + `ICommandFactory` - Debug/console commands
+- `AIGoalRegistry` + `[Goal]` attribute - AI goal discovery
+
+**Related Patterns:**
+- Pattern 7 (Registry) - Data lookup; this is factory lookup + execution
+- Pattern 20 (Pluggable Implementation) - Similar but without auto-discovery
+
+---
+
 ## Pattern Selection Guide
 
 **Need to change game state?** → Pattern 2 (Command Pattern)
@@ -514,6 +572,8 @@ borders.customRendererId = "MyStylized";  // References custom by ID
 **Complex initialization sequence?** → Pattern 18 (Coordinator)
 
 **GAME needs custom implementation of ENGINE capability?** → Pattern 20 (Pluggable Implementation)
+
+**Auto-discover factories across assemblies?** → Pattern 21 (Auto-Discovery Factory)
 
 ---
 
@@ -564,5 +624,5 @@ borders.customRendererId = "MyStylized";  // References custom by ID
 
 ---
 
-*Last Updated: 2026-01-12*
+*Last Updated: 2026-01-14*
 *These patterns are battle-tested and production-ready. Use them.*

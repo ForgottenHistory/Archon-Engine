@@ -6,6 +6,16 @@ using Core.Data;
 namespace Core.Modifiers
 {
     /// <summary>
+    /// Identifies the scope level a modifier comes from (for tooltips)
+    /// </summary>
+    public enum ModifierScopeLevel : byte
+    {
+        Province = 0,   // From province-local sources (buildings, etc.)
+        Country = 1,    // From country sources (policies, government, etc.)
+        Global = 2      // From global sources (events, etc.)
+    }
+
+    /// <summary>
     /// ENGINE: Central manager for all modifier scopes (global, country, province)
     /// Pattern used by: EU4 (modifier system), CK3 (effect manager), Stellaris (empire modifiers)
     ///
@@ -249,6 +259,192 @@ namespace Core.Modifiers
         public FixedPoint64 GetGlobalModifier(ushort modifierTypeId, FixedPoint64 baseValue)
         {
             return globalScope.ApplyModifier(modifierTypeId, baseValue);
+        }
+
+        #endregion
+
+        #region Query API
+
+        /// <summary>
+        /// Iterate over all province modifiers with full inheritance (Province + Country + Global)
+        /// Useful for tooltips showing all modifier sources affecting a province
+        /// </summary>
+        public void ForEachProvinceModifierWithInheritance(ushort provinceId, ushort countryId, Action<ModifierSource, ModifierScopeLevel> action)
+        {
+            // Global modifiers first
+            globalScope.ForEachLocalModifier(mod => action(mod, ModifierScopeLevel.Global));
+
+            // Country modifiers (if valid)
+            if (countryId < maxCountries)
+            {
+                countryScopes[countryId].ForEachLocalModifier(mod => action(mod, ModifierScopeLevel.Country));
+            }
+
+            // Province modifiers
+            if (provinceId < maxProvinces)
+            {
+                provinceScopes[provinceId].ForEachLocalModifier(mod => action(mod, ModifierScopeLevel.Province));
+            }
+        }
+
+        /// <summary>
+        /// Iterate over all country modifiers with global inheritance (Country + Global)
+        /// </summary>
+        public void ForEachCountryModifierWithInheritance(ushort countryId, Action<ModifierSource, ModifierScopeLevel> action)
+        {
+            // Global modifiers first
+            globalScope.ForEachLocalModifier(mod => action(mod, ModifierScopeLevel.Global));
+
+            // Country modifiers
+            if (countryId < maxCountries)
+            {
+                countryScopes[countryId].ForEachLocalModifier(mod => action(mod, ModifierScopeLevel.Country));
+            }
+        }
+
+        /// <summary>
+        /// Iterate over province modifiers of a specific modifier type (with inheritance)
+        /// Useful for tooltips showing all sources affecting a specific stat
+        /// </summary>
+        public void ForEachProvinceModifierByType(ushort provinceId, ushort countryId, ushort modifierTypeId, Action<ModifierSource, ModifierScopeLevel> action)
+        {
+            // Global modifiers
+            globalScope.ForEachLocalModifierByType(modifierTypeId, mod => action(mod, ModifierScopeLevel.Global));
+
+            // Country modifiers
+            if (countryId < maxCountries)
+            {
+                countryScopes[countryId].ForEachLocalModifierByType(modifierTypeId, mod => action(mod, ModifierScopeLevel.Country));
+            }
+
+            // Province modifiers
+            if (provinceId < maxProvinces)
+            {
+                provinceScopes[provinceId].ForEachLocalModifierByType(modifierTypeId, mod => action(mod, ModifierScopeLevel.Province));
+            }
+        }
+
+        /// <summary>
+        /// Iterate over province modifiers from a specific source (local only - not inherited)
+        /// Useful for UI showing what modifiers a specific building/tech adds
+        /// </summary>
+        public void ForEachProvinceModifierBySource(ushort provinceId, ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+        {
+            if (provinceId >= maxProvinces)
+                return;
+
+            provinceScopes[provinceId].ForEachLocalModifierBySource(sourceType, sourceId, action);
+        }
+
+        /// <summary>
+        /// Iterate over country modifiers from a specific source
+        /// </summary>
+        public void ForEachCountryModifierBySource(ushort countryId, ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+        {
+            if (countryId >= maxCountries)
+                return;
+
+            countryScopes[countryId].ForEachLocalModifierBySource(sourceType, sourceId, action);
+        }
+
+        /// <summary>
+        /// Iterate over global modifiers from a specific source
+        /// </summary>
+        public void ForEachGlobalModifierBySource(ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+        {
+            globalScope.ForEachLocalModifierBySource(sourceType, sourceId, action);
+        }
+
+        /// <summary>
+        /// Count province modifiers from a specific source
+        /// </summary>
+        public int CountProvinceModifiersBySource(ushort provinceId, ModifierSource.SourceType sourceType, uint sourceId)
+        {
+            if (provinceId >= maxProvinces)
+                return 0;
+
+            return provinceScopes[provinceId].CountLocalModifiersBySource(sourceType, sourceId);
+        }
+
+        /// <summary>
+        /// Count country modifiers from a specific source
+        /// </summary>
+        public int CountCountryModifiersBySource(ushort countryId, ModifierSource.SourceType sourceType, uint sourceId)
+        {
+            if (countryId >= maxCountries)
+                return 0;
+
+            return countryScopes[countryId].CountLocalModifiersBySource(sourceType, sourceId);
+        }
+
+        /// <summary>
+        /// Check if a source has any modifiers on a province
+        /// </summary>
+        public bool HasProvinceModifiersFromSource(ushort provinceId, ModifierSource.SourceType sourceType, uint sourceId)
+        {
+            return CountProvinceModifiersBySource(provinceId, sourceType, sourceId) > 0;
+        }
+
+        /// <summary>
+        /// Check if a source has any modifiers on a country
+        /// </summary>
+        public bool HasCountryModifiersFromSource(ushort countryId, ModifierSource.SourceType sourceType, uint sourceId)
+        {
+            return CountCountryModifiersBySource(countryId, sourceType, sourceId) > 0;
+        }
+
+        #endregion
+
+        #region Batch Removal
+
+        /// <summary>
+        /// Remove all modifiers from a province scope
+        /// Returns count of modifiers removed
+        /// </summary>
+        public int ClearProvinceModifiers(ushort provinceId)
+        {
+            if (provinceId >= maxProvinces)
+                return 0;
+
+            var scope = provinceScopes[provinceId];
+            int removed = scope.LocalModifierCount;
+            scope.Clear();
+            provinceScopes[provinceId] = scope; // Write back
+
+            return removed;
+        }
+
+        /// <summary>
+        /// Remove all modifiers from a country scope
+        /// Returns count of modifiers removed
+        /// </summary>
+        public int ClearCountryModifiers(ushort countryId)
+        {
+            if (countryId >= maxCountries)
+                return 0;
+
+            var scope = countryScopes[countryId];
+            int removed = scope.LocalModifierCount;
+            scope.Clear();
+            countryScopes[countryId] = scope; // Write back
+
+            // Mark owned provinces as dirty
+            MarkCountryProvincesDirty(countryId);
+
+            return removed;
+        }
+
+        /// <summary>
+        /// Remove all global modifiers
+        /// Returns count of modifiers removed
+        /// </summary>
+        public int ClearGlobalModifiers()
+        {
+            int removed = globalScope.LocalModifierCount;
+            globalScope.Clear();
+            MarkAllDirty();
+
+            return removed;
         }
 
         #endregion

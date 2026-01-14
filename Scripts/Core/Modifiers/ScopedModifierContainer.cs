@@ -175,6 +175,30 @@ namespace Core.Modifiers
         }
 
         /// <summary>
+        /// Iterate over local modifiers from a specific source
+        /// </summary>
+        public void ForEachLocalModifierBySource(ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+        {
+            localModifiers.ForEachBySource(sourceType, sourceId, action);
+        }
+
+        /// <summary>
+        /// Iterate over local modifiers of a specific modifier type
+        /// </summary>
+        public void ForEachLocalModifierByType(ushort modifierTypeId, Action<ModifierSource> action)
+        {
+            localModifiers.ForEachByModifierType(modifierTypeId, action);
+        }
+
+        /// <summary>
+        /// Count local modifiers from a specific source
+        /// </summary>
+        public int CountLocalModifiersBySource(ModifierSource.SourceType sourceType, uint sourceId)
+        {
+            return localModifiers.CountBySource(sourceType, sourceId);
+        }
+
+        /// <summary>
         /// Dispose native collections
         /// </summary>
         public void Dispose()
