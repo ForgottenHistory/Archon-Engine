@@ -264,8 +264,8 @@ Comprehensive audit of the CORE namespace (162 C# files) to find systems similar
 ## Completed
 
 - [x] TimeManager / Calendar System (Session 8)
-- [ ] FixedPoint64 / FixedPoint32 enhancements
-- [ ] ResourceSystem interfaces
+- [x] FixedPoint64 / FixedPoint32 enhancements (Session 9)
+- [x] ResourceSystem interfaces (Session 9)
 - [ ] PathfindingSystem improvements
 - [ ] AISystem flexibility
 
