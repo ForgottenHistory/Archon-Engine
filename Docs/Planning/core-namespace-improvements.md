@@ -101,37 +101,27 @@ Comprehensive audit of the CORE namespace (162 C# files) to find systems similar
 
 ## MEDIUM PRIORITY
 
-### 5. DeterministicRandom
+### 5. DeterministicRandom ✅ DONE (Session 11)
 **Location**: `Core/Data/DeterministicRandom.cs`
-**Current State**: Excellent API with most operations
 
-**Missing**:
-- No `NextGaussian()` for normal distribution
-- No `NextWeightedElement()` for weighted selection
-- No `NextElementExcept()` for exclusion
-- No seed phrase export/import for save files
-
-**Recommendation**:
-- Add Gaussian using Box-Muller transform
-- Add weighted selection
-- Add seed phrase for human-readable saves
+**Implemented:**
+- `NextGaussian()` - normal distribution (Central Limit Theorem)
+- `NextWeightedElement()` / `NextWeightedIndex()` - weighted selection
+- `NextElementExcept()` / `NextElementExceptIndices()` - exclusion
+- `ToSeedPhrase()` / `FromSeedPhrase()` - human-readable state
 
 ---
 
-### 6. AdjacencySystem
+### 6. AdjacencySystem ✅ DONE (Session 12)
 **Location**: `Core/Systems/AdjacencySystem.cs`
-**Current State**: Good foundation with native support
 
-**Missing**:
-- No `GetNeighborsByTerrain()` filtered query
-- No `GetConnectedRegion()` flood fill
-- No `GetSharedBorder(country1, country2)`
-- No bridge detection (critical provinces)
-- Statistics string-based, not queryable
-
-**Recommendation**:
-- Add region connectivity queries
-- Add `AdjacencyStats` struct instead of string
+**Implemented:**
+- `AdjacencyStats` struct for queryable statistics
+- `GetNeighborsWhere(predicate)` - filtered neighbor query
+- `GetConnectedRegion(start, predicate)` - BFS flood fill
+- `GetSharedBorderProvinces(owned, foreign)` - find border provinces
+- `IsBridgeProvince(province, predicate)` - critical choke point detection
+- `FindBridgeProvinces(region, predicate)` - find all bridge provinces
 
 ---
 
@@ -263,6 +253,8 @@ Comprehensive audit of the CORE namespace (162 C# files) to find systems similar
 - [x] ResourceSystem interfaces (Session 9)
 - [x] PathfindingSystem improvements (Session 10)
 - [x] AISystem flexibility (Session 11)
+- [x] DeterministicRandom enhancements (Session 11)
+- [x] AdjacencySystem queries (Session 12)
 
 ---
 

@@ -1,8 +1,33 @@
+using System;
 using System.Collections.Generic;
 using Unity.Collections;
 
 namespace Core.Systems
 {
+    /// <summary>
+    /// Queryable adjacency statistics struct.
+    /// </summary>
+    public struct AdjacencyStats
+    {
+        public int ProvinceCount;
+        public int TotalAdjacencyPairs;
+        public int MinNeighbors;
+        public int MaxNeighbors;
+        public int TotalNeighborEntries;
+
+        /// <summary>
+        /// Average neighbors per province.
+        /// </summary>
+        public float AverageNeighbors => ProvinceCount > 0 ? (float)TotalNeighborEntries / ProvinceCount : 0f;
+
+        /// <summary>
+        /// Get formatted summary string.
+        /// </summary>
+        public string GetSummary()
+        {
+            return $"AdjacencyStats: {ProvinceCount} provinces, {TotalAdjacencyPairs} pairs, avg {AverageNeighbors:F1} neighbors, range [{MinNeighbors}-{MaxNeighbors}]";
+        }
+    }
     /// <summary>
     /// Read-only native adjacency data for Burst jobs.
     /// Use this struct in IJob implementations for parallel graph algorithms.
@@ -209,6 +234,252 @@ namespace Core.Systems
             return neighbors.Count;
         }
 
+        // ========== FILTERED QUERIES ==========
+
+        /// <summary>
+        /// Get neighbors that match a predicate.
+        /// Example: GetNeighborsWhere(provinceId, id => provinceSystem.GetOwner(id) == enemyCountry)
+        /// </summary>
+        /// <param name="provinceId">Province to get neighbors for</param>
+        /// <param name="predicate">Filter function - returns true for neighbors to include</param>
+        /// <param name="resultBuffer">Pre-allocated list to fill (cleared before use)</param>
+        public void GetNeighborsWhere(ushort provinceId, Func<ushort, bool> predicate, List<ushort> resultBuffer)
+        {
+            resultBuffer.Clear();
+
+            if (!adjacencies.TryGetValue(provinceId, out HashSet<ushort> neighbors))
+                return;
+
+            foreach (ushort neighbor in neighbors)
+            {
+                if (predicate(neighbor))
+                    resultBuffer.Add(neighbor);
+            }
+        }
+
+        /// <summary>
+        /// Get neighbors that match a predicate (allocating version).
+        /// Prefer the buffer version for hot paths.
+        /// </summary>
+        public List<ushort> GetNeighborsWhere(ushort provinceId, Func<ushort, bool> predicate)
+        {
+            var result = new List<ushort>();
+            GetNeighborsWhere(provinceId, predicate, result);
+            return result;
+        }
+
+        // ========== REGION QUERIES ==========
+
+        /// <summary>
+        /// Get all provinces connected to a starting province that match a predicate.
+        /// Uses BFS flood fill. Returns the connected region including the start province.
+        ///
+        /// Example: Get all provinces owned by a country connected to capitalProvince
+        ///   GetConnectedRegion(capital, id => provinceSystem.GetOwner(id) == countryId)
+        /// </summary>
+        /// <param name="startProvince">Starting province for flood fill</param>
+        /// <param name="predicate">Filter - only provinces passing this are included and traversed</param>
+        /// <param name="resultBuffer">Pre-allocated set to fill (cleared before use)</param>
+        public void GetConnectedRegion(ushort startProvince, Func<ushort, bool> predicate, HashSet<ushort> resultBuffer)
+        {
+            resultBuffer.Clear();
+
+            // Start province must pass predicate
+            if (!predicate(startProvince))
+                return;
+
+            // BFS flood fill
+            var queue = new Queue<ushort>();
+            queue.Enqueue(startProvince);
+            resultBuffer.Add(startProvince);
+
+            while (queue.Count > 0)
+            {
+                ushort current = queue.Dequeue();
+
+                if (!adjacencies.TryGetValue(current, out HashSet<ushort> neighbors))
+                    continue;
+
+                foreach (ushort neighbor in neighbors)
+                {
+                    // Skip already visited
+                    if (resultBuffer.Contains(neighbor))
+                        continue;
+
+                    // Only include if predicate passes
+                    if (predicate(neighbor))
+                    {
+                        resultBuffer.Add(neighbor);
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get all provinces connected to a starting province (allocating version).
+        /// </summary>
+        public HashSet<ushort> GetConnectedRegion(ushort startProvince, Func<ushort, bool> predicate)
+        {
+            var result = new HashSet<ushort>();
+            GetConnectedRegion(startProvince, predicate, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Get provinces where two countries share a border.
+        /// Returns provinces from country1 that are adjacent to any province in country2.
+        ///
+        /// Example: Find where France borders Germany
+        ///   GetSharedBorderProvinces(frenchProvinces, germanProvinces, borderBuffer)
+        /// </summary>
+        /// <param name="ownedProvinces">Provinces belonging to first country</param>
+        /// <param name="foreignProvinces">Provinces belonging to second country</param>
+        /// <param name="resultBuffer">Pre-allocated list to fill with border provinces from ownedProvinces</param>
+        public void GetSharedBorderProvinces(
+            IEnumerable<ushort> ownedProvinces,
+            HashSet<ushort> foreignProvinces,
+            List<ushort> resultBuffer)
+        {
+            resultBuffer.Clear();
+
+            foreach (ushort owned in ownedProvinces)
+            {
+                if (!adjacencies.TryGetValue(owned, out HashSet<ushort> neighbors))
+                    continue;
+
+                foreach (ushort neighbor in neighbors)
+                {
+                    if (foreignProvinces.Contains(neighbor))
+                    {
+                        resultBuffer.Add(owned);
+                        break; // Found at least one foreign neighbor, move to next owned
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get provinces where two countries share a border (allocating version).
+        /// </summary>
+        public List<ushort> GetSharedBorderProvinces(IEnumerable<ushort> ownedProvinces, HashSet<ushort> foreignProvinces)
+        {
+            var result = new List<ushort>();
+            GetSharedBorderProvinces(ownedProvinces, foreignProvinces, result);
+            return result;
+        }
+
+        // ========== BRIDGE DETECTION ==========
+
+        /// <summary>
+        /// Check if a province is a "bridge" - removing it would disconnect the region.
+        ///
+        /// A bridge province has the property that the region becomes disconnected
+        /// if it's removed. Useful for strategic AI (critical choke points).
+        ///
+        /// Algorithm: Check if any two neighbors of the province can still reach
+        /// each other without going through this province.
+        /// </summary>
+        /// <param name="province">Province to check</param>
+        /// <param name="regionPredicate">Predicate defining the region (e.g., same owner)</param>
+        /// <returns>True if removing this province would disconnect the region</returns>
+        public bool IsBridgeProvince(ushort province, Func<ushort, bool> regionPredicate)
+        {
+            if (!adjacencies.TryGetValue(province, out HashSet<ushort> neighbors))
+                return false;
+
+            // Get neighbors that are in the same region
+            var regionNeighbors = new List<ushort>();
+            foreach (ushort neighbor in neighbors)
+            {
+                if (regionPredicate(neighbor))
+                    regionNeighbors.Add(neighbor);
+            }
+
+            // Need at least 2 neighbors in region for bridge detection to matter
+            if (regionNeighbors.Count < 2)
+                return false;
+
+            // Check if first neighbor can reach all others without going through this province
+            ushort start = regionNeighbors[0];
+
+            // Modified predicate that excludes the test province
+            bool ExcludingProvince(ushort p) => p != province && regionPredicate(p);
+
+            var reachable = GetConnectedRegion(start, ExcludingProvince);
+
+            // If any region neighbor is not reachable, this is a bridge
+            for (int i = 1; i < regionNeighbors.Count; i++)
+            {
+                if (!reachable.Contains(regionNeighbors[i]))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Find all bridge provinces within a region.
+        /// These are strategic choke points where losing control would split territory.
+        /// </summary>
+        /// <param name="regionProvinces">Set of provinces to check</param>
+        /// <param name="regionPredicate">Predicate defining what's in the region</param>
+        /// <param name="resultBuffer">Pre-allocated list to fill with bridge provinces</param>
+        public void FindBridgeProvinces(
+            IEnumerable<ushort> regionProvinces,
+            Func<ushort, bool> regionPredicate,
+            List<ushort> resultBuffer)
+        {
+            resultBuffer.Clear();
+
+            foreach (ushort province in regionProvinces)
+            {
+                if (IsBridgeProvince(province, regionPredicate))
+                    resultBuffer.Add(province);
+            }
+        }
+
+        // ========== STATISTICS ==========
+
+        /// <summary>
+        /// Get queryable adjacency statistics.
+        /// </summary>
+        public AdjacencyStats GetStats()
+        {
+            if (adjacencies.Count == 0)
+            {
+                return new AdjacencyStats
+                {
+                    ProvinceCount = 0,
+                    TotalAdjacencyPairs = 0,
+                    MinNeighbors = 0,
+                    MaxNeighbors = 0,
+                    TotalNeighborEntries = 0
+                };
+            }
+
+            int minNeighbors = int.MaxValue;
+            int maxNeighbors = 0;
+            int totalNeighbors = 0;
+
+            foreach (var kvp in adjacencies)
+            {
+                int count = kvp.Value.Count;
+                minNeighbors = Math.Min(minNeighbors, count);
+                maxNeighbors = Math.Max(maxNeighbors, count);
+                totalNeighbors += count;
+            }
+
+            return new AdjacencyStats
+            {
+                ProvinceCount = adjacencies.Count,
+                TotalAdjacencyPairs = totalAdjacencyPairs,
+                MinNeighbors = minNeighbors,
+                MaxNeighbors = maxNeighbors,
+                TotalNeighborEntries = totalNeighbors
+            };
+        }
+
         /// <summary>
         /// Check if system is initialized
         /// </summary>
@@ -225,32 +496,20 @@ namespace Core.Systems
         public int TotalAdjacencyPairs => totalAdjacencyPairs;
 
         /// <summary>
-        /// Get adjacency statistics for debugging
+        /// Get adjacency statistics for debugging (string format).
+        /// Prefer GetStats() for programmatic access.
         /// </summary>
         public string GetStatistics()
         {
-            if (adjacencies.Count == 0)
+            var stats = GetStats();
+            if (stats.ProvinceCount == 0)
                 return "AdjacencySystem: Not initialized";
 
-            int minNeighbors = int.MaxValue;
-            int maxNeighbors = 0;
-            int totalNeighbors = 0;
-
-            foreach (var kvp in adjacencies)
-            {
-                int count = kvp.Value.Count;
-                minNeighbors = System.Math.Min(minNeighbors, count);
-                maxNeighbors = System.Math.Max(maxNeighbors, count);
-                totalNeighbors += count;
-            }
-
-            float avgNeighbors = (float)totalNeighbors / adjacencies.Count;
-
             return $"AdjacencySystem Statistics:\n" +
-                   $"  Provinces: {adjacencies.Count}\n" +
-                   $"  Adjacency Pairs: {totalAdjacencyPairs}\n" +
-                   $"  Avg Neighbors: {avgNeighbors:F1}\n" +
-                   $"  Min/Max Neighbors: {minNeighbors}/{maxNeighbors}";
+                   $"  Provinces: {stats.ProvinceCount}\n" +
+                   $"  Adjacency Pairs: {stats.TotalAdjacencyPairs}\n" +
+                   $"  Avg Neighbors: {stats.AverageNeighbors:F1}\n" +
+                   $"  Min/Max Neighbors: {stats.MinNeighbors}/{stats.MaxNeighbors}";
         }
     }
 }
