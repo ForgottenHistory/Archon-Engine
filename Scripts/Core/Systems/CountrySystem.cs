@@ -132,6 +132,7 @@ namespace Core.Systems
         public bool HasCountryFlag(ushort countryId, byte flag) => dataManager.HasCountryFlag(countryId, flag);
         public NativeArray<ushort> GetAllCountryIds(Allocator allocator = Allocator.TempJob) => dataManager.GetAllCountryIds(allocator);
         public bool HasCountry(ushort countryId) => dataManager.HasCountry(countryId);
+        public bool HasTag(string tag) => dataManager.HasTag(tag);
         public void SetCountryColor(ushort countryId, Color32 newColor) => dataManager.SetCountryColor(countryId, newColor);
 
         // Old code removed - now handled by CountryDataManager and CountryStateLoader:

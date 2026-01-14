@@ -136,6 +136,9 @@
 ---
 
 ## Queries/
+- **Core.Queries.Query** - Static entry point for fluent query builders: `Query.Provinces(gameState)`, `Query.Countries(gameState)`
+- **Core.Queries.ProvinceQueryBuilder** - Fluent province filtering: OwnedBy, WithTerrain, IsLand, AdjacentTo, BorderingCountry, WithinDistance; terminal ops Execute, Count, Any, FirstOrDefault
+- **Core.Queries.CountryQueryBuilder** - Fluent country filtering: WithMinProvinces, WithMaxProvinces, BorderingCountry, HasProvinces, WithGraphicalCulture
 - **Core.Queries.ProvinceQueries** - Read-only province operations; includes distance queries (GetDistanceBetween, GetProvincesWithinDistance) and connected region queries (GetConnectedLandmasses, GetLandmassCount)
 - **Core.Queries.CountryQueries** - High-performance country access with frame-coherent caching; includes relationship queries (SharesBorder, GetBorderingCountries)
 
@@ -267,4 +270,4 @@
 ---
 
 *Updated: 2026-01-14*
-*Added: Graph/ namespace with GraphDistanceCalculator, BFSDistanceJob; enhanced Queries with distance, relationship, and connected region queries*
+*Added: Query/ProvinceQueryBuilder/CountryQueryBuilder fluent API; Graph/ namespace with GraphDistanceCalculator*

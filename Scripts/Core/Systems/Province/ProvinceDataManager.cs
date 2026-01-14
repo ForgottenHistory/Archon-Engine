@@ -114,6 +114,18 @@ namespace Core.Systems.Province
         }
 
         /// <summary>
+        /// Get province controller (who currently controls, may differ from owner during occupation)
+        /// </summary>
+        public ushort GetProvinceController(ushort provinceId)
+        {
+            if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
+                return UNOWNED_COUNTRY;
+
+            var states = snapshot.GetProvinceWriteBuffer();
+            return states[arrayIndex].controllerID;
+        }
+
+        /// <summary>
         /// Set province owner and emit events
         /// </summary>
         public void SetProvinceOwner(ushort provinceId, ushort newOwner)
