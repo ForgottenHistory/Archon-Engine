@@ -151,6 +151,19 @@
 ---
 
 ## Loaders/
+
+### Loader Factory Pattern
+- **Core.Loaders.ILoaderFactory** - Interface for auto-discoverable loaders; implement Load(LoaderContext)
+- **Core.Loaders.LoaderMetadataAttribute** - Attribute for loader metadata (name, priority, required flag)
+- **Core.Loaders.LoaderRegistry** - Auto-discovery registry; scans assemblies, executes in priority order
+- **Core.Loaders.LoaderContext** - Context passed to loaders (registries, data path, settings)
+
+### Loader Implementations
+- **Core.Loaders.TerrainLoader** - [LoaderMetadata] Load terrain definitions (priority 10, required)
+- **Core.Loaders.WaterProvinceLoaderFactory** - [LoaderMetadata] Load water province definitions (priority 20)
+- **Core.Loaders.WaterProvinceLoader** - Static utilities for water/terrain type queries
+
+### Other Loaders (not yet using factory pattern)
 - **Core.Loaders.ScenarioLoader** - Load scenario data (provinces, countries, initial state)
 - **Core.Loaders.BurstProvinceHistoryLoader** - Parallel province history loading with Burst
 - **Core.Loaders.BurstCountryLoader** - Parallel country data loading with Burst
@@ -158,10 +171,8 @@
 - **Core.Loaders.Json5ProvinceConverter** - Convert JSON5 province history with dated events
 - **Core.Loaders.Json5CountryConverter** - Convert JSON5 country data
 - **Core.Loaders.DefinitionLoader** - Load ALL provinces from definition.csv
-- **Core.Loaders.TerrainLoader** - Load terrain definitions
 - **Core.Loaders.CountryTagLoader** - Load country tag definitions
 - **Core.Loaders.ManifestLoader** - Load scenario manifests
-- **Core.Loaders.WaterProvinceLoader** - Load ocean/water province data
 
 ---
 

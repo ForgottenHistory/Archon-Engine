@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using Core.Systems;
 using Core.Registries;
 using Core.Loaders;
@@ -16,6 +17,11 @@ namespace Core.Initialization
         // Configuration
         public GameSettings Settings { get; set; }
         public bool EnableDetailedLogging { get; set; }
+
+        /// <summary>
+        /// Additional assemblies to scan for loaders (GAME layer uses this).
+        /// </summary>
+        public Assembly[] AdditionalLoaderAssemblies { get; set; }
 
         // Core Systems
         public GameState GameState { get; set; }

@@ -9,9 +9,21 @@ using Utils;
 namespace Core.Loaders
 {
     /// <summary>
-    /// Loads water province definitions and terrain data from JSON5 format
-    /// Integrates with the terrain system to properly distinguish water vs land provinces
-    /// Following dual-layer architecture - loads into simulation layer for GPU texture updates
+    /// Loader factory for water province definitions.
+    /// </summary>
+    [LoaderMetadata("water_provinces", Description = "Load water province definitions", Priority = 20)]
+    public class WaterProvinceLoaderFactory : ILoaderFactory
+    {
+        public void Load(LoaderContext context)
+        {
+            WaterProvinceLoader.LoadWaterProvinceData(context.DataPath);
+        }
+    }
+
+    /// <summary>
+    /// Loads water province definitions and terrain data from JSON5 format.
+    /// Integrates with the terrain system to properly distinguish water vs land provinces.
+    /// Following dual-layer architecture - loads into simulation layer for GPU texture updates.
     /// </summary>
     public static class WaterProvinceLoader
     {

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
 using Core.Loaders;
 using Core.Localization;
@@ -6,8 +7,8 @@ using Core.Localization;
 namespace Core.Initialization.Phases
 {
     /// <summary>
-    /// Phase 2: Load static game data (terrains, water provinces)
-    /// Loads all static reference data before loading dynamic province/country data
+    /// Phase 2: Load static game data via LoaderRegistry.
+    /// Discovers and executes loaders in priority order.
     /// </summary>
     public class StaticDataLoadingPhase : IInitializationPhase
     {
@@ -26,17 +27,35 @@ namespace Core.Initialization.Phases
             var localisationPath = System.IO.Path.Combine(context.Settings.DataDirectory, "localisation");
             LocalizationManager.Initialize(localisationPath, "english");
 
-            context.ReportProgress(8f, "Loading terrain types...");
+            context.ReportProgress(7f, "Discovering loaders...");
             yield return null;
 
-            // Load terrain types
-            TerrainLoader.LoadTerrains(context.Registries.Terrains, context.Settings.DataDirectory);
+            // Create and populate loader registry
+            var loaderRegistry = new LoaderRegistry();
+            loaderRegistry.DiscoverLoaders(Assembly.GetExecutingAssembly());
 
-            context.ReportProgress(13f, "Loading water province definitions...");
+            // Allow GAME layer to add loaders via context
+            if (context.AdditionalLoaderAssemblies != null)
+            {
+                loaderRegistry.DiscoverLoaders(context.AdditionalLoaderAssemblies);
+            }
+
+            context.ReportProgress(8f, "Executing loaders...");
             yield return null;
 
-            // Load water province definitions from default.json5 and terrain.json5
-            WaterProvinceLoader.LoadWaterProvinceData(context.Settings.DataDirectory);
+            // Execute all discovered loaders in priority order
+            var loaderContext = new LoaderContext(context.Registries, context.Settings.DataDirectory)
+            {
+                EnableDetailedLogging = context.EnableDetailedLogging
+            };
+
+            bool loadSuccess = loaderRegistry.ExecuteAll(loaderContext);
+
+            if (!loadSuccess)
+            {
+                context.ReportError("Static data loading failed - required loaders encountered errors");
+                yield break;
+            }
 
             context.ReportProgress(14f, "Validating static data...");
             yield return null;
@@ -57,6 +76,7 @@ namespace Core.Initialization.Phases
             context.EventBus.Emit(new StaticDataReadyEvent
             {
                 TerrainCount = context.Registries.Terrains.Count,
+                LoaderCount = loaderRegistry.Count,
                 LocalizationLanguages = locLanguages,
                 LocalizationEntries = locEntries,
                 TimeStamp = Time.time
@@ -65,25 +85,25 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.Log($"Phase complete: Static data loaded - {context.Registries.Terrains.Count} terrains, " +
+                ArchonLogger.Log($"Phase complete: Static data loaded via {loaderRegistry.Count} loaders - " +
+                                $"{context.Registries.Terrains.Count} terrains, " +
                                 $"{locEntries} localization entries ({locLanguages} languages)", "core_data_loading");
             }
         }
 
         public void Rollback(InitializationContext context)
         {
-            // Note: Registries don't have Clear() method - they're immutable once loaded
-            // On failure, entire GameState is recreated anyway
             ArchonLogger.Log("Rolling back static data loading phase", "core_data_loading");
         }
     }
 
     /// <summary>
-    /// Event emitted when static data loading completes
+    /// Event emitted when static data loading completes.
     /// </summary>
     public struct StaticDataReadyEvent : IGameEvent
     {
         public int TerrainCount;
+        public int LoaderCount;
         public int LocalizationLanguages;
         public int LocalizationEntries;
         public float TimeStamp { get; set; }

@@ -1,21 +1,25 @@
 using System.IO;
 using Core.Registries;
 using Utils;
-using UnityEngine;
 
 namespace Core.Loaders
 {
     /// <summary>
-    /// Loads terrain type definitions from data files
-    /// Terrain types are static data with no dependencies on other entities
-    /// Following data-linking-architecture.md specifications
+    /// Loads terrain type definitions from data files.
+    /// Terrain types are static data with no dependencies on other entities.
     /// </summary>
-    public static class TerrainLoader
+    [LoaderMetadata("terrain", Description = "Load terrain type definitions", Priority = 10, Required = true)]
+    public class TerrainLoader : ILoaderFactory
     {
+        public void Load(LoaderContext context)
+        {
+            LoadTerrains(context.Registries.Terrains, context.DataPath);
+        }
+
         /// <summary>
-        /// Load all terrain types from map/terrain.txt file
+        /// Load all terrain types from map/terrain.txt file.
         /// </summary>
-        public static void LoadTerrains(Registry<Core.Registries.TerrainData> terrainRegistry, string dataPath)
+        public static void LoadTerrains(Registry<TerrainData> terrainRegistry, string dataPath)
         {
             string terrainFilePath = Path.Combine(dataPath, "map", "terrain.txt");
 
@@ -37,7 +41,6 @@ namespace Core.Loaders
                 CreateDefaultTerrains(terrainRegistry);
             }
 
-            // If no terrains loaded, create defaults
             if (terrainRegistry.Count == 0)
             {
                 ArchonLogger.LogWarning("TerrainLoader: No terrains loaded, creating defaults", "core_data_loading");
@@ -45,17 +48,12 @@ namespace Core.Loaders
             }
         }
 
-        /// <summary>
-        /// Load terrain types from the terrain file
-        /// </summary>
-        private static void LoadTerrainFile(Registry<Core.Registries.TerrainData> terrainRegistry, string filePath)
+        private static void LoadTerrainFile(Registry<TerrainData> terrainRegistry, string filePath)
         {
             var content = File.ReadAllText(filePath);
 
-            // For now, create standard terrain types
-            // TODO: In a full implementation, this would parse the actual terrain file format
-
-            // Create basic terrain types with IDs matching common EU4/Paradox conventions
+            // Create standard terrain types
+            // TODO: Parse actual terrain file format
             RegisterTerrainIfNotExists(terrainRegistry, "ocean", "Ocean", 0);
             RegisterTerrainIfNotExists(terrainRegistry, "grasslands", "Grasslands", 1);
             RegisterTerrainIfNotExists(terrainRegistry, "hills", "Hills", 2);
@@ -75,28 +73,20 @@ namespace Core.Loaders
             RegisterTerrainIfNotExists(terrainRegistry, "jungle", "Jungle", 16);
         }
 
-        /// <summary>
-        /// Register a terrain type if it doesn't already exist
-        /// </summary>
-        private static void RegisterTerrainIfNotExists(Registry<Core.Registries.TerrainData> terrainRegistry, string key, string name, byte terrainId)
+        private static void RegisterTerrainIfNotExists(Registry<TerrainData> terrainRegistry, string key, string name, byte terrainId)
         {
             if (!terrainRegistry.Exists(key))
             {
-                var terrain = new Core.Registries.TerrainData
+                var terrain = new TerrainData
                 {
                     Name = name,
                     TerrainId = terrainId
                 };
-
                 terrainRegistry.Register(key, terrain);
             }
         }
 
-        /// <summary>
-        /// Create default terrain types if no data files found
-        /// Ensures the game can run even without complete data
-        /// </summary>
-        private static void CreateDefaultTerrains(Registry<Core.Registries.TerrainData> terrainRegistry)
+        private static void CreateDefaultTerrains(Registry<TerrainData> terrainRegistry)
         {
             var defaultTerrains = new[]
             {
@@ -116,12 +106,11 @@ namespace Core.Loaders
 
             foreach (var (key, name, terrainId) in defaultTerrains)
             {
-                var terrain = new Core.Registries.TerrainData
+                var terrain = new TerrainData
                 {
                     Name = name,
                     TerrainId = terrainId
                 };
-
                 terrainRegistry.Register(key, terrain);
             }
 
