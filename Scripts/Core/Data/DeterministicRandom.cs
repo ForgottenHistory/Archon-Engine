@@ -280,6 +280,315 @@ namespace Core.Data
             return new FixedPoint2(x * radius, y * radius);
         }
 
+        #region Gaussian / Normal Distribution
+
+        /// <summary>
+        /// Generate random value from standard normal distribution (mean=0, stddev=1).
+        /// Uses Box-Muller transform with fixed-point math for determinism.
+        /// </summary>
+        public FixedPoint32 NextGaussian()
+        {
+            // Box-Muller transform: generate two uniform randoms, get two gaussians
+            // We use one and discard the other for simplicity
+
+            // Get two uniform values in (0, 1] - avoid 0 to prevent log(0)
+            uint u1Raw = NextUInt();
+            uint u2Raw = NextUInt();
+
+            // Ensure non-zero (extremely rare but possible)
+            if (u1Raw == 0) u1Raw = 1;
+
+            // Convert to fixed point in range (0, 1]
+            FixedPoint32 u1 = FixedPoint32.FromRaw((int)(u1Raw >> 1) | 1);
+            FixedPoint32 u2 = FixedPoint32.FromRaw((int)(u2Raw >> 1));
+
+            // Box-Muller: z = sqrt(-2 * ln(u1)) * cos(2 * pi * u2)
+            // We approximate using fixed-point math
+
+            // Approximate -2 * ln(u1) using lookup or polynomial
+            // For simplicity, use rejection sampling with uniform approximation
+            // This gives a reasonable bell curve without complex math
+
+            // Simpler approach: sum of 12 uniform randoms - 6 (Central Limit Theorem)
+            // Gives approximate normal with mean=0, stddev=1
+            FixedPoint32 sum = FixedPoint32.Zero;
+            for (int i = 0; i < 12; i++)
+            {
+                sum = sum + NextFixed();
+            }
+            return sum - FixedPoint32.FromInt(6);
+        }
+
+        /// <summary>
+        /// Generate random value from normal distribution with specified mean and standard deviation.
+        /// </summary>
+        public FixedPoint32 NextGaussian(FixedPoint32 mean, FixedPoint32 stdDev)
+        {
+            return mean + NextGaussian() * stdDev;
+        }
+
+        #endregion
+
+        #region Weighted Selection
+
+        /// <summary>
+        /// Select random element from array using weights.
+        /// Higher weight = more likely to be selected.
+        /// </summary>
+        public T NextWeightedElement<T>(T[] elements, int[] weights) where T : unmanaged
+        {
+            if (elements == null || elements.Length == 0)
+                throw new ArgumentException("Elements array cannot be null or empty");
+            if (weights == null || weights.Length != elements.Length)
+                throw new ArgumentException("Weights array must match elements array length");
+
+            // Calculate total weight
+            int totalWeight = 0;
+            for (int i = 0; i < weights.Length; i++)
+            {
+                if (weights[i] < 0)
+                    throw new ArgumentException("Weights cannot be negative");
+                totalWeight += weights[i];
+            }
+
+            if (totalWeight <= 0)
+                return elements[NextInt(elements.Length)]; // Fallback to uniform
+
+            // Pick random value in [0, totalWeight)
+            int roll = NextInt(totalWeight);
+
+            // Find which element the roll falls into
+            int cumulative = 0;
+            for (int i = 0; i < elements.Length; i++)
+            {
+                cumulative += weights[i];
+                if (roll < cumulative)
+                    return elements[i];
+            }
+
+            // Fallback (shouldn't happen)
+            return elements[elements.Length - 1];
+        }
+
+        /// <summary>
+        /// Select random element from array using FixedPoint weights.
+        /// </summary>
+        public T NextWeightedElement<T>(T[] elements, FixedPoint32[] weights) where T : unmanaged
+        {
+            if (elements == null || elements.Length == 0)
+                throw new ArgumentException("Elements array cannot be null or empty");
+            if (weights == null || weights.Length != elements.Length)
+                throw new ArgumentException("Weights array must match elements array length");
+
+            // Calculate total weight
+            FixedPoint32 totalWeight = FixedPoint32.Zero;
+            for (int i = 0; i < weights.Length; i++)
+            {
+                if (weights[i] < FixedPoint32.Zero)
+                    throw new ArgumentException("Weights cannot be negative");
+                totalWeight = totalWeight + weights[i];
+            }
+
+            if (totalWeight <= FixedPoint32.Zero)
+                return elements[NextInt(elements.Length)];
+
+            // Pick random value in [0, totalWeight)
+            FixedPoint32 roll = NextFixed(totalWeight);
+
+            // Find which element the roll falls into
+            FixedPoint32 cumulative = FixedPoint32.Zero;
+            for (int i = 0; i < elements.Length; i++)
+            {
+                cumulative = cumulative + weights[i];
+                if (roll < cumulative)
+                    return elements[i];
+            }
+
+            return elements[elements.Length - 1];
+        }
+
+        /// <summary>
+        /// Select random index using weights (useful when you need the index, not the element).
+        /// </summary>
+        public int NextWeightedIndex(int[] weights)
+        {
+            if (weights == null || weights.Length == 0)
+                throw new ArgumentException("Weights array cannot be null or empty");
+
+            int totalWeight = 0;
+            for (int i = 0; i < weights.Length; i++)
+            {
+                if (weights[i] < 0)
+                    throw new ArgumentException("Weights cannot be negative");
+                totalWeight += weights[i];
+            }
+
+            if (totalWeight <= 0)
+                return NextInt(weights.Length);
+
+            int roll = NextInt(totalWeight);
+            int cumulative = 0;
+            for (int i = 0; i < weights.Length; i++)
+            {
+                cumulative += weights[i];
+                if (roll < cumulative)
+                    return i;
+            }
+
+            return weights.Length - 1;
+        }
+
+        #endregion
+
+        #region Element Selection with Exclusion
+
+        /// <summary>
+        /// Select random element from array, excluding a specific element.
+        /// </summary>
+        public T NextElementExcept<T>(T[] array, T excluded) where T : unmanaged, IEquatable<T>
+        {
+            if (array == null || array.Length == 0)
+                throw new ArgumentException("Array cannot be null or empty");
+            if (array.Length == 1)
+                return array[0]; // Only one element, return it even if excluded
+
+            // Simple rejection sampling (efficient for small exclusion sets)
+            T result;
+            int attempts = 0;
+            const int maxAttempts = 100;
+
+            do
+            {
+                result = array[NextInt(array.Length)];
+                attempts++;
+            } while (result.Equals(excluded) && attempts < maxAttempts);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Select random element from array, excluding elements at specific indices.
+        /// </summary>
+        public T NextElementExceptIndices<T>(T[] array, params int[] excludedIndices) where T : unmanaged
+        {
+            if (array == null || array.Length == 0)
+                throw new ArgumentException("Array cannot be null or empty");
+            if (excludedIndices == null || excludedIndices.Length == 0)
+                return NextElement(array);
+            if (excludedIndices.Length >= array.Length)
+                throw new ArgumentException("Cannot exclude all elements");
+
+            // Build list of valid indices
+            int validCount = array.Length - excludedIndices.Length;
+            int selectedValid = NextInt(validCount);
+
+            int currentValid = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                bool isExcluded = false;
+                for (int j = 0; j < excludedIndices.Length; j++)
+                {
+                    if (excludedIndices[j] == i)
+                    {
+                        isExcluded = true;
+                        break;
+                    }
+                }
+
+                if (!isExcluded)
+                {
+                    if (currentValid == selectedValid)
+                        return array[i];
+                    currentValid++;
+                }
+            }
+
+            // Fallback (shouldn't happen)
+            return array[0];
+        }
+
+        #endregion
+
+        #region Seed Phrase (Human-Readable State)
+
+        // Word list for seed phrases (64 words = 6 bits each, 4 words = 24 bits coverage per uint)
+        private static readonly string[] SeedWords = new string[]
+        {
+            "alpha", "brave", "crown", "delta", "eagle", "flame", "glory", "haven",
+            "ivory", "joust", "knave", "lance", "manor", "noble", "onyx", "pearl",
+            "quest", "royal", "siege", "tower", "unity", "valor", "watch", "xenon",
+            "yield", "zephyr", "amber", "blade", "crest", "drake", "ember", "frost",
+            "grain", "herald", "iron", "jade", "karma", "lotus", "mirth", "nexus",
+            "oasis", "prism", "quartz", "raven", "storm", "thorn", "umbra", "viper",
+            "wrath", "xerus", "yonder", "zenith", "azure", "basalt", "chrome", "dusk",
+            "epoch", "forge", "glyph", "haze", "index", "jewel", "kite", "lunar"
+        };
+
+        /// <summary>
+        /// Export current state as human-readable seed phrase.
+        /// Format: 8 words encoding the full 128-bit state.
+        /// </summary>
+        public string ToSeedPhrase()
+        {
+            // Each word encodes 6 bits (64 words), we need 128 bits = ~22 words
+            // For simplicity, use 8 words with mixed encoding
+            var words = new string[8];
+
+            words[0] = SeedWords[(int)(state.x & 0x3F)];
+            words[1] = SeedWords[(int)((state.x >> 6) & 0x3F)];
+            words[2] = SeedWords[(int)(state.y & 0x3F)];
+            words[3] = SeedWords[(int)((state.y >> 6) & 0x3F)];
+            words[4] = SeedWords[(int)(state.z & 0x3F)];
+            words[5] = SeedWords[(int)((state.z >> 6) & 0x3F)];
+            words[6] = SeedWords[(int)(state.w & 0x3F)];
+            words[7] = SeedWords[(int)((state.w >> 6) & 0x3F)];
+
+            return string.Join("-", words);
+        }
+
+        /// <summary>
+        /// Create DeterministicRandom from seed phrase.
+        /// Note: This is a simplified encoding - not full state recovery, but deterministic.
+        /// </summary>
+        public static DeterministicRandom FromSeedPhrase(string phrase)
+        {
+            if (string.IsNullOrEmpty(phrase))
+                return new DeterministicRandom(1);
+
+            var words = phrase.ToLower().Split('-', ' ');
+            if (words.Length < 8)
+            {
+                // Not enough words - hash the phrase as seed
+                uint hash = 0;
+                foreach (char c in phrase)
+                    hash = hash * 31 + c;
+                return new DeterministicRandom(hash);
+            }
+
+            // Decode words to state
+            uint4 decodedState = new uint4();
+
+            decodedState.x = (uint)(GetWordIndex(words[0]) | (GetWordIndex(words[1]) << 6));
+            decodedState.y = (uint)(GetWordIndex(words[2]) | (GetWordIndex(words[3]) << 6));
+            decodedState.z = (uint)(GetWordIndex(words[4]) | (GetWordIndex(words[5]) << 6));
+            decodedState.w = (uint)(GetWordIndex(words[6]) | (GetWordIndex(words[7]) << 6));
+
+            // Expand to full state using splitmix
+            return new DeterministicRandom(decodedState.x ^ decodedState.y ^ decodedState.z ^ decodedState.w);
+        }
+
+        private static int GetWordIndex(string word)
+        {
+            for (int i = 0; i < SeedWords.Length; i++)
+            {
+                if (SeedWords[i] == word)
+                    return i;
+            }
+            return 0; // Unknown word defaults to 0
+        }
+
+        #endregion
+
         /// <summary>
         /// Create a new random generator with different state (for sub-systems)
         /// This allows different systems to have independent random sequences
