@@ -22,13 +22,12 @@ namespace Core.AI
     /// - Example: Tier 0 (neighbors) every hour, Tier 3 (far) every 72 hours
     ///
     /// Hour-of-year tracking:
-    /// - 360 days × 24 hours = 8640 hours per year
-    /// - lastProcessedHour wraps at 8640
+    /// - 365 days × 24 hours = 8760 hours per year
+    /// - lastProcessedHour wraps at HOURS_PER_YEAR
     /// - Handles year wrap correctly
     /// </summary>
     public class AIScheduler
     {
-        private const int HOURS_PER_YEAR = 8640; // 360 days × 24 hours
 
         private AIGoalRegistry goalRegistry;
         private AISchedulingConfig config;
@@ -96,7 +95,7 @@ namespace Core.AI
             else
             {
                 // Year wrapped
-                elapsed = (HOURS_PER_YEAR - state.lastProcessedHour) + currentHourOfYear;
+                elapsed = (CalendarConstants.HOURS_PER_YEAR - state.lastProcessedHour) + currentHourOfYear;
             }
 
             return elapsed >= interval;
@@ -146,14 +145,15 @@ namespace Core.AI
         }
 
         /// <summary>
-        /// Calculate hour-of-year from day and hour.
-        /// Day is 1-30, hour is 0-23, month is 1-12.
+        /// Calculate hour-of-year from month, day, and hour.
+        /// Uses real month lengths via CalendarConstants.
         /// </summary>
         public static ushort CalculateHourOfYear(int month, int day, int hour)
         {
-            // Month 1-12, Day 1-30, Hour 0-23
-            int totalHours = ((month - 1) * 30 + (day - 1)) * 24 + hour;
-            return (ushort)(totalHours % HOURS_PER_YEAR);
+            // Use DAYS_BEFORE_MONTH for proper month offsets (handles variable month lengths)
+            int dayOfYear = CalendarConstants.DAYS_BEFORE_MONTH[month] + (day - 1);
+            int totalHours = dayOfYear * CalendarConstants.HOURS_PER_DAY + hour;
+            return (ushort)(totalHours % CalendarConstants.HOURS_PER_YEAR);
         }
     }
 }

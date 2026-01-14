@@ -10,20 +10,18 @@ namespace Core.Systems
     ///
     /// CRITICAL ARCHITECTURE REQUIREMENTS:
     /// - Fixed-point accumulator (NO float drift)
-    /// - 360-day year (30-day months, no leap years)
+    /// - Real Earth calendar (365 days, no leap years for determinism)
     /// - Tick counter for command synchronization
     /// - Exact fraction speed multipliers
     /// - NO Time.time dependencies (non-deterministic)
+    /// - ICalendar abstraction for custom calendars
     ///
     /// See: Assets/Docs/Engine/time-system-architecture.md
     /// </summary>
     public class TimeManager : MonoBehaviour
     {
-        // Time constants (deterministic 360-day year)
-        private const int HOURS_PER_DAY = 24;
-        private const int DAYS_PER_MONTH = 30;  // Simplified for determinism
-        private const int MONTHS_PER_YEAR = 12;
-        private const int DAYS_PER_YEAR = 360;  // 30 × 12 = 360 (NOT 365!)
+        // Calendar system (default = real Earth calendar)
+        private ICalendar calendar;
 
         // Performance: Max ticks per frame to prevent death spiral
         // If frame takes too long, defer ticks to next frame rather than piling on more work
@@ -83,18 +81,32 @@ namespace Core.Systems
         public bool IsInitialized => isInitialized;
 
         /// <summary>
-        /// Initialize the time manager with event bus and province system
+        /// Active calendar for date formatting and validation.
+        /// Default is StandardCalendar (real Earth calendar, 365 days).
+        /// GAME layer can provide custom calendars via Initialize().
         /// </summary>
-        public void Initialize(EventBus eventBus, ProvinceSystem provinceSystem = null)
+        public ICalendar Calendar => calendar;
+
+        /// <summary>
+        /// Initialize the time manager with event bus and optional calendar.
+        /// </summary>
+        /// <param name="eventBus">Event bus for time events</param>
+        /// <param name="provinceSystem">Optional province system for buffer swapping</param>
+        /// <param name="customCalendar">Optional custom calendar (default: StandardCalendar)</param>
+        public void Initialize(EventBus eventBus, ProvinceSystem provinceSystem = null, ICalendar customCalendar = null)
         {
             this.eventBus = eventBus;
             this.provinceSystem = provinceSystem;
 
-            // Set start date
-            year = startYear;
-            month = startMonth;
-            day = startDay;
-            hour = 0;
+            // Set up calendar (default to StandardCalendar if not provided)
+            calendar = customCalendar ?? new StandardCalendar();
+
+            // Set start date (validated against calendar)
+            var startDate = calendar.ClampToValidDate(startYear, startMonth, startDay, 0);
+            year = startDate.Year;
+            month = startDate.Month;
+            day = startDate.Day;
+            hour = startDate.Hour;
 
             gameSpeed = initialSpeed;
             accumulator = FixedPoint64.Zero;
@@ -169,7 +181,7 @@ namespace Core.Systems
             OnHourlyTick?.Invoke(hour);
             eventBus?.Emit(new HourlyTickEvent { GameTime = GetCurrentGameTime(), Tick = currentTick });
 
-            if (hour >= HOURS_PER_DAY)
+            if (hour >= calendar.HoursPerDay)
             {
                 hour = 0;
                 AdvanceDay();
@@ -194,7 +206,8 @@ namespace Core.Systems
                 eventBus?.Emit(new WeeklyTickEvent { GameTime = GetCurrentGameTime(), Tick = currentTick });
             }
 
-            if (day > DAYS_PER_MONTH)
+            // Check if we need to advance to next month (uses calendar for variable month lengths)
+            if (day > calendar.GetDaysInMonth(month))
             {
                 day = 1;
                 AdvanceMonth();
@@ -212,7 +225,7 @@ namespace Core.Systems
             OnMonthlyTick?.Invoke(month);
             eventBus?.Emit(new MonthlyTickEvent { GameTime = GetCurrentGameTime(), Tick = currentTick });
 
-            if (month > MONTHS_PER_YEAR)
+            if (month > calendar.MonthsPerYear)
             {
                 month = 1;
                 year++;
@@ -297,10 +310,12 @@ namespace Core.Systems
         /// </summary>
         public void SetGameTime(int newYear, int newMonth, int newDay, int newHour = 0)
         {
-            year = newYear;
-            month = Mathf.Clamp(newMonth, 1, MONTHS_PER_YEAR);
-            day = Mathf.Clamp(newDay, 1, DAYS_PER_MONTH);
-            hour = Mathf.Clamp(newHour, 0, HOURS_PER_DAY - 1);
+            // Use calendar to validate and clamp the date
+            var validDate = calendar.ClampToValidDate(newYear, newMonth, newDay, newHour);
+            year = validDate.Year;
+            month = validDate.Month;
+            day = validDate.Day;
+            hour = validDate.Hour;
 
             accumulator = FixedPoint64.Zero;
 
@@ -351,28 +366,40 @@ namespace Core.Systems
         }
 
         /// <summary>
-        /// Calculate total ticks since start date
+        /// Get formatted date string using active calendar.
+        /// Example: "11 November 1444 AD"
         /// </summary>
-        public ulong CalculateTotalTicks(int fromYear, int fromMonth, int fromDay)
+        public string GetFormattedDate()
         {
-            ulong totalHours = 0;
+            return calendar.FormatDate(GetCurrentGameTime());
+        }
 
-            // Calculate years
-            int yearDiff = year - fromYear;
-            totalHours += (ulong)(yearDiff * DAYS_PER_YEAR * HOURS_PER_DAY);
+        /// <summary>
+        /// Get compact formatted date string using active calendar.
+        /// Example: "11 Nov 1444"
+        /// </summary>
+        public string GetFormattedDateCompact()
+        {
+            return calendar.FormatDateCompact(GetCurrentGameTime());
+        }
 
-            // Calculate months
-            int monthDiff = month - fromMonth;
-            totalHours += (ulong)(monthDiff * DAYS_PER_MONTH * HOURS_PER_DAY);
+        /// <summary>
+        /// Get the name of the current month from the calendar.
+        /// </summary>
+        public string GetCurrentMonthName()
+        {
+            return calendar.GetMonthName(month);
+        }
 
-            // Calculate days
-            int dayDiff = day - fromDay;
-            totalHours += (ulong)(dayDiff * HOURS_PER_DAY);
-
-            // Add current hour
-            totalHours += (ulong)hour;
-
-            return totalHours;
+        /// <summary>
+        /// Calculate total hours between start date and current game time.
+        /// Uses proper month lengths via GameTime.ToTotalHours().
+        /// </summary>
+        public long CalculateTotalTicks(int fromYear, int fromMonth, int fromDay)
+        {
+            var fromTime = GameTime.Create(fromYear, fromMonth, fromDay, 0);
+            var currentTime = GetCurrentGameTime();
+            return currentTime.ToTotalHours() - fromTime.ToTotalHours();
         }
 
         // ====================================================================
@@ -410,20 +437,98 @@ namespace Core.Systems
     }
 
     /// <summary>
-    /// Represents a point in game time (deterministic calendar)
+    /// Represents a point in game time (deterministic calendar).
+    /// Supports real Earth calendar (365 days, variable month lengths).
+    /// All operations are deterministic for multiplayer compatibility.
     /// </summary>
     [System.Serializable]
-    public struct GameTime
+    public struct GameTime : System.IComparable<GameTime>, System.IEquatable<GameTime>
     {
         public int Year;
         public int Month;  // 1-12
-        public int Day;    // 1-30 (simplified 30-day months)
+        public int Day;    // 1-31 (depends on month)
         public int Hour;   // 0-23
 
-        public override string ToString()
+        // === Factory Methods ===
+
+        /// <summary>
+        /// Create a GameTime with specified components.
+        /// </summary>
+        public static GameTime Create(int year, int month, int day, int hour = 0)
         {
-            return $"{Year}.{Month:D2}.{Day:D2} {Hour:D2}:00";
+            return new GameTime { Year = year, Month = month, Day = day, Hour = hour };
         }
+
+        /// <summary>
+        /// Create GameTime from total hours since year 0.
+        /// Inverse of ToTotalHours().
+        /// </summary>
+        public static GameTime FromTotalHours(long totalHours)
+        {
+            int hoursPerDay = CalendarConstants.HOURS_PER_DAY;
+            int hoursPerYear = CalendarConstants.HOURS_PER_YEAR;
+
+            // Handle negative years
+            int year = (int)(totalHours / hoursPerYear);
+            long remainingHours = totalHours % hoursPerYear;
+
+            if (remainingHours < 0)
+            {
+                year--;
+                remainingHours += hoursPerYear;
+            }
+
+            // Convert remaining hours to day of year
+            int dayOfYear = (int)(remainingHours / hoursPerDay);
+            int hour = (int)(remainingHours % hoursPerDay);
+
+            // Convert day of year to month and day
+            int month = 1;
+            int day = dayOfYear + 1; // Days are 1-indexed
+
+            for (int m = 1; m <= 12; m++)
+            {
+                int daysInMonth = CalendarConstants.DAYS_IN_MONTH[m];
+                if (day <= daysInMonth)
+                {
+                    month = m;
+                    break;
+                }
+                day -= daysInMonth;
+            }
+
+            return new GameTime { Year = year, Month = month, Day = day, Hour = hour };
+        }
+
+        // === Conversion ===
+
+        /// <summary>
+        /// Convert to total hours since year 0.
+        /// Uses real month lengths (365-day year).
+        /// </summary>
+        public long ToTotalHours()
+        {
+            int hoursPerDay = CalendarConstants.HOURS_PER_DAY;
+            int hoursPerYear = CalendarConstants.HOURS_PER_YEAR;
+
+            long totalHours = (long)Year * hoursPerYear;
+
+            // Add hours for complete months
+            if (Month >= 1 && Month <= 12)
+            {
+                totalHours += CalendarConstants.DAYS_BEFORE_MONTH[Month] * hoursPerDay;
+            }
+
+            // Add hours for days (days are 1-indexed)
+            totalHours += (Day - 1) * hoursPerDay;
+
+            // Add hours
+            totalHours += Hour;
+
+            return totalHours;
+        }
+
+        // === Comparison Operators ===
 
         public static bool operator ==(GameTime a, GameTime b)
         {
@@ -435,9 +540,117 @@ namespace Core.Systems
             return !(a == b);
         }
 
+        public static bool operator <(GameTime a, GameTime b)
+        {
+            return a.CompareTo(b) < 0;
+        }
+
+        public static bool operator >(GameTime a, GameTime b)
+        {
+            return a.CompareTo(b) > 0;
+        }
+
+        public static bool operator <=(GameTime a, GameTime b)
+        {
+            return a.CompareTo(b) <= 0;
+        }
+
+        public static bool operator >=(GameTime a, GameTime b)
+        {
+            return a.CompareTo(b) >= 0;
+        }
+
+        public int CompareTo(GameTime other)
+        {
+            // Compare year first (most significant)
+            if (Year != other.Year) return Year.CompareTo(other.Year);
+            if (Month != other.Month) return Month.CompareTo(other.Month);
+            if (Day != other.Day) return Day.CompareTo(other.Day);
+            return Hour.CompareTo(other.Hour);
+        }
+
+        // === Arithmetic Operations ===
+
+        /// <summary>
+        /// Add hours (negative to subtract). Returns normalized GameTime.
+        /// </summary>
+        public GameTime AddHours(int hours)
+        {
+            return FromTotalHours(ToTotalHours() + hours);
+        }
+
+        /// <summary>
+        /// Add days (negative to subtract). Returns normalized GameTime.
+        /// </summary>
+        public GameTime AddDays(int days)
+        {
+            return FromTotalHours(ToTotalHours() + days * CalendarConstants.HOURS_PER_DAY);
+        }
+
+        /// <summary>
+        /// Add months (negative to subtract). Day is clamped if necessary.
+        /// </summary>
+        public GameTime AddMonths(int months)
+        {
+            int newMonth = Month + months;
+            int newYear = Year;
+
+            // Handle month overflow/underflow
+            while (newMonth > 12)
+            {
+                newMonth -= 12;
+                newYear++;
+            }
+            while (newMonth < 1)
+            {
+                newMonth += 12;
+                newYear--;
+            }
+
+            // Clamp day to valid range for new month
+            int maxDay = CalendarConstants.DAYS_IN_MONTH[newMonth];
+            int newDay = Day > maxDay ? maxDay : Day;
+
+            return new GameTime { Year = newYear, Month = newMonth, Day = newDay, Hour = Hour };
+        }
+
+        /// <summary>
+        /// Add years (negative to subtract).
+        /// </summary>
+        public GameTime AddYears(int years)
+        {
+            return new GameTime { Year = Year + years, Month = Month, Day = Day, Hour = Hour };
+        }
+
+        // === Duration Calculations ===
+
+        /// <summary>
+        /// Calculate hours between this and another GameTime (signed).
+        /// Positive if other is later, negative if other is earlier.
+        /// </summary>
+        public long HoursBetween(GameTime other)
+        {
+            return other.ToTotalHours() - ToTotalHours();
+        }
+
+        /// <summary>
+        /// Calculate days between this and another GameTime (signed, rounded down).
+        /// </summary>
+        public int DaysBetween(GameTime other)
+        {
+            return (int)(HoursBetween(other) / CalendarConstants.HOURS_PER_DAY);
+        }
+
+        // === Equality ===
+
         public override bool Equals(object obj)
         {
             return obj is GameTime time && this == time;
+        }
+
+        public bool Equals(GameTime other)
+        {
+            return this == other;
         }
 
         public override int GetHashCode()
@@ -445,22 +658,27 @@ namespace Core.Systems
             return Year * 1000000 + Month * 10000 + Day * 100 + Hour;
         }
 
-        /// <summary>
-        /// Convert to total hours since year 0
-        /// </summary>
-        public ulong ToTotalHours()
+        // === Formatting ===
+
+        public override string ToString()
         {
-            const int HOURS_PER_DAY = 24;
-            const int DAYS_PER_MONTH = 30;
-            const int DAYS_PER_YEAR = 360;
+            return $"{Year}.{Month:D2}.{Day:D2} {Hour:D2}:00";
+        }
 
-            ulong totalHours = 0;
-            totalHours += (ulong)(Year * DAYS_PER_YEAR * HOURS_PER_DAY);
-            totalHours += (ulong)((Month - 1) * DAYS_PER_MONTH * HOURS_PER_DAY);
-            totalHours += (ulong)((Day - 1) * HOURS_PER_DAY);
-            totalHours += (ulong)Hour;
+        /// <summary>
+        /// Format using specified calendar.
+        /// </summary>
+        public string ToString(ICalendar calendar)
+        {
+            return calendar.FormatDate(this);
+        }
 
-            return totalHours;
+        /// <summary>
+        /// Format compact using specified calendar.
+        /// </summary>
+        public string ToCompactString(ICalendar calendar)
+        {
+            return calendar.FormatDateCompact(this);
         }
     }
 }
