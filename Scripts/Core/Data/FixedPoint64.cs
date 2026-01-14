@@ -28,6 +28,28 @@ namespace Core.Data
         public static readonly FixedPoint64 Two = new FixedPoint64(ONE_RAW * 2);
         public static readonly FixedPoint64 MinValue = new FixedPoint64(long.MinValue);
         public static readonly FixedPoint64 MaxValue = new FixedPoint64(long.MaxValue);
+        public static readonly FixedPoint64 NegativeOne = new FixedPoint64(-ONE_RAW);
+        public static readonly FixedPoint64 Ten = new FixedPoint64(ONE_RAW * 10);
+        public static readonly FixedPoint64 Hundred = new FixedPoint64(ONE_RAW * 100);
+
+        // Convenience properties
+        /// <summary>True if value equals zero</summary>
+        public bool IsZero => RawValue == 0;
+
+        /// <summary>True if value is greater than zero</summary>
+        public bool IsPositive => RawValue > 0;
+
+        /// <summary>True if value is less than zero</summary>
+        public bool IsNegative => RawValue < 0;
+
+        /// <summary>True if value is greater than or equal to zero</summary>
+        public bool IsNonNegative => RawValue >= 0;
+
+        /// <summary>True if value is less than or equal to zero</summary>
+        public bool IsNonPositive => RawValue <= 0;
+
+        /// <summary>Returns the sign: -1, 0, or 1</summary>
+        public int Sign => RawValue > 0 ? 1 : (RawValue < 0 ? -1 : 0);
 
         // Construction
         private FixedPoint64(long rawValue)
@@ -202,6 +224,149 @@ namespace Core.Data
         public static FixedPoint64 Round(FixedPoint64 value)
         {
             return Floor(value + Half);
+        }
+
+        // === Advanced Math Functions ===
+
+        /// <summary>
+        /// Square root using Newton-Raphson method (deterministic, Burst-compatible)
+        /// Returns Zero for negative inputs
+        /// </summary>
+        public static FixedPoint64 Sqrt(FixedPoint64 value)
+        {
+            if (value.RawValue <= 0)
+                return Zero;
+
+            // Initial guess: half the value or 1, whichever is larger
+            long x = value.RawValue;
+            long guess = x >> 1;
+            if (guess == 0) guess = ONE_RAW;
+
+            // Newton-Raphson iterations (8 iterations gives full precision)
+            for (int i = 0; i < 8; i++)
+            {
+                // newGuess = (guess + value/guess) / 2
+                // In fixed-point: we need to be careful with the division
+                long quotient = (x << FRACTIONAL_BITS) / guess;
+                guess = (guess + quotient) >> 1;
+            }
+
+            return new FixedPoint64(guess);
+        }
+
+        /// <summary>
+        /// Integer exponentiation (value^exponent)
+        /// Deterministic, handles negative exponents
+        /// </summary>
+        public static FixedPoint64 Pow(FixedPoint64 value, int exponent)
+        {
+            if (exponent == 0)
+                return One;
+
+            if (exponent < 0)
+            {
+                // Negative exponent: 1 / value^(-exponent)
+                value = One / value;
+                exponent = -exponent;
+            }
+
+            // Binary exponentiation for efficiency
+            FixedPoint64 result = One;
+            while (exponent > 0)
+            {
+                if ((exponent & 1) == 1)
+                    result = result * value;
+                value = value * value;
+                exponent >>= 1;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Linear interpolation: a + (b - a) * t
+        /// When t=0 returns a, when t=1 returns b
+        /// </summary>
+        public static FixedPoint64 Lerp(FixedPoint64 a, FixedPoint64 b, FixedPoint64 t)
+        {
+            return a + (b - a) * t;
+        }
+
+        /// <summary>
+        /// Clamped linear interpolation (t clamped to 0-1)
+        /// </summary>
+        public static FixedPoint64 LerpClamped(FixedPoint64 a, FixedPoint64 b, FixedPoint64 t)
+        {
+            t = Clamp(t, Zero, One);
+            return a + (b - a) * t;
+        }
+
+        /// <summary>
+        /// Inverse linear interpolation: returns t where Lerp(a, b, t) = value
+        /// Returns 0 if a == b
+        /// </summary>
+        public static FixedPoint64 InverseLerp(FixedPoint64 a, FixedPoint64 b, FixedPoint64 value)
+        {
+            if (a.RawValue == b.RawValue)
+                return Zero;
+
+            return (value - a) / (b - a);
+        }
+
+        /// <summary>
+        /// Remap value from one range to another
+        /// Example: Remap(50, 0, 100, 0, 1) = 0.5
+        /// </summary>
+        public static FixedPoint64 Remap(FixedPoint64 value, FixedPoint64 inMin, FixedPoint64 inMax,
+                                         FixedPoint64 outMin, FixedPoint64 outMax)
+        {
+            FixedPoint64 t = InverseLerp(inMin, inMax, value);
+            return Lerp(outMin, outMax, t);
+        }
+
+        /// <summary>
+        /// Remap with clamping (output clamped to outMin-outMax range)
+        /// </summary>
+        public static FixedPoint64 RemapClamped(FixedPoint64 value, FixedPoint64 inMin, FixedPoint64 inMax,
+                                                 FixedPoint64 outMin, FixedPoint64 outMax)
+        {
+            FixedPoint64 t = InverseLerp(inMin, inMax, value);
+            return LerpClamped(outMin, outMax, t);
+        }
+
+        /// <summary>
+        /// Move towards target by a maximum delta
+        /// </summary>
+        public static FixedPoint64 MoveTowards(FixedPoint64 current, FixedPoint64 target, FixedPoint64 maxDelta)
+        {
+            FixedPoint64 diff = target - current;
+            if (Abs(diff) <= maxDelta)
+                return target;
+
+            return current + (diff.IsPositive ? maxDelta : -maxDelta);
+        }
+
+        /// <summary>
+        /// Returns the fractional part of the value (0 to 0.999...)
+        /// </summary>
+        public static FixedPoint64 Frac(FixedPoint64 value)
+        {
+            long fractional = value.RawValue & (ONE_RAW - 1);
+            if (value.RawValue < 0 && fractional != 0)
+                fractional = ONE_RAW - fractional;
+            return new FixedPoint64(fractional);
+        }
+
+        /// <summary>
+        /// Percentage: (value / total) * 100
+        /// Returns Zero if total is zero
+        /// </summary>
+        public static FixedPoint64 Percentage(FixedPoint64 value, FixedPoint64 total)
+        {
+            if (total.IsZero)
+                return Zero;
+
+            return (value / total) * Hundred;
         }
 
         // IEquatable implementation
