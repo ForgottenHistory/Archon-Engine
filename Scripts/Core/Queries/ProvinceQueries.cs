@@ -2,6 +2,7 @@ using Unity.Collections;
 using Unity.Mathematics;
 using Core.Systems;
 using Core.Data;
+using Core.Graph;
 
 namespace Core.Queries
 {
@@ -10,19 +11,27 @@ namespace Core.Queries
     /// Provides optimized queries for province information
     /// Performance: All basic queries <0.01ms, cached complex queries
     /// </summary>
-    public class ProvinceQueries
+    public class ProvinceQueries : System.IDisposable
     {
         private readonly Systems.ProvinceSystem provinceSystem;
         private readonly Systems.CountrySystem countrySystem;
+        private readonly Systems.AdjacencySystem adjacencySystem;
+
+        // Lazy-initialized distance calculator for graph queries
+        private GraphDistanceCalculator distanceCalculator;
+
+        // Reusable buffer for connected region queries
+        private NativeList<ushort> connectedRegionBuffer;
 
         // Performance monitoring
         private static int queryCount;
         private static float totalQueryTime;
 
-        public ProvinceQueries(Systems.ProvinceSystem provinceSystem, Systems.CountrySystem countrySystem)
+        public ProvinceQueries(Systems.ProvinceSystem provinceSystem, Systems.CountrySystem countrySystem, Systems.AdjacencySystem adjacencySystem = null)
         {
             this.provinceSystem = provinceSystem;
             this.countrySystem = countrySystem;
+            this.adjacencySystem = adjacencySystem;
         }
 
         #region Basic Queries (Ultra-fast, direct access)
@@ -351,6 +360,288 @@ namespace Core.Queries
         {
             queryCount = 0;
             totalQueryTime = 0f;
+        }
+
+        #endregion
+
+        #region Distance Queries (Graph-based)
+
+        /// <summary>
+        /// Get all provinces within N hops of a source province.
+        /// Requires AdjacencySystem to be available.
+        /// Returns native list that must be disposed by caller.
+        /// Performance target: less than 20ms for distance=10
+        /// </summary>
+        public NativeList<ushort> GetProvincesWithinDistance(
+            ushort sourceProvinceId,
+            byte maxDistance,
+            Allocator allocator = Allocator.TempJob)
+        {
+            var result = new NativeList<ushort>(64, allocator);
+
+            if (adjacencySystem == null)
+            {
+                ArchonLogger.LogWarning("ProvinceQueries: AdjacencySystem not available for distance queries", "core_simulation");
+                return result;
+            }
+
+            EnsureDistanceCalculatorInitialized();
+
+            distanceCalculator.CalculateDistancesFromProvince(
+                sourceProvinceId,
+                adjacencySystem.GetNativeData());
+
+            // Get all provinces within distance
+            using var tempResult = distanceCalculator.GetProvincesWithinDistance(maxDistance, Allocator.Temp);
+            for (int i = 0; i < tempResult.Length; i++)
+            {
+                result.Add(tempResult[i]);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get distance between two provinces (BFS hops).
+        /// Returns byte.MaxValue if unreachable or AdjacencySystem not available.
+        /// Performance target: less than 5ms
+        /// </summary>
+        public byte GetDistanceBetween(ushort province1, ushort province2)
+        {
+            if (adjacencySystem == null)
+            {
+                ArchonLogger.LogWarning("ProvinceQueries: AdjacencySystem not available for distance queries", "core_simulation");
+                return byte.MaxValue;
+            }
+
+            if (province1 == province2)
+                return 0;
+
+            EnsureDistanceCalculatorInitialized();
+
+            return distanceCalculator.GetDistanceBetween(province1, province2, adjacencySystem);
+        }
+
+        /// <summary>
+        /// Get distances from all provinces of a country.
+        /// Useful for influence calculations.
+        /// Returns byte.MaxValue for provinces that are unreachable.
+        /// Performance target: less than 30ms
+        /// </summary>
+        public void CalculateDistancesFromCountry(ushort countryId)
+        {
+            if (adjacencySystem == null)
+            {
+                ArchonLogger.LogWarning("ProvinceQueries: AdjacencySystem not available for distance queries", "core_simulation");
+                return;
+            }
+
+            EnsureDistanceCalculatorInitialized();
+
+            distanceCalculator.CalculateDistancesFromCountry(countryId, provinceSystem, adjacencySystem);
+        }
+
+        /// <summary>
+        /// Get province distance from the last CalculateDistancesFromCountry call.
+        /// Must call CalculateDistancesFromCountry first.
+        /// </summary>
+        public byte GetCachedProvinceDistance(ushort provinceId)
+        {
+            if (distanceCalculator == null || !distanceCalculator.IsInitialized)
+                return byte.MaxValue;
+
+            return distanceCalculator.GetProvinceDistance(provinceId);
+        }
+
+        private void EnsureDistanceCalculatorInitialized()
+        {
+            if (distanceCalculator == null)
+            {
+                distanceCalculator = new GraphDistanceCalculator();
+            }
+
+            if (!distanceCalculator.IsInitialized)
+            {
+                // Use Capacity for buffer size (accounts for sparse province IDs)
+                int maxProvinceId = provinceSystem.Capacity > 0 ? provinceSystem.Capacity : 20000;
+                int countryCount = countrySystem.CountryCount > 0 ? countrySystem.CountryCount : 500;
+                distanceCalculator.Initialize(maxProvinceId, countryCount);
+            }
+        }
+
+        #endregion
+
+        #region Connected Region Queries (Flood Fill)
+
+        /// <summary>
+        /// Find all provinces connected to source that belong to the same country.
+        /// Uses flood-fill through adjacency graph.
+        /// Returns native list that must be disposed by caller.
+        /// Performance target: less than 20ms
+        /// </summary>
+        public NativeList<ushort> GetConnectedProvincesOfSameOwner(
+            ushort sourceProvinceId,
+            Allocator allocator = Allocator.TempJob)
+        {
+            ushort ownerId = GetOwner(sourceProvinceId);
+            return GetConnectedProvincesWithOwner(sourceProvinceId, ownerId, allocator);
+        }
+
+        /// <summary>
+        /// Find all provinces connected to source that have a specific owner.
+        /// Uses flood-fill through adjacency graph.
+        /// Returns native list that must be disposed by caller.
+        /// Performance target: less than 20ms
+        /// </summary>
+        public NativeList<ushort> GetConnectedProvincesWithOwner(
+            ushort sourceProvinceId,
+            ushort targetOwnerId,
+            Allocator allocator = Allocator.TempJob)
+        {
+            var result = new NativeList<ushort>(64, allocator);
+
+            if (adjacencySystem == null)
+            {
+                ArchonLogger.LogWarning("ProvinceQueries: AdjacencySystem not available for connected region queries", "core_simulation");
+                return result;
+            }
+
+            // Check if source matches the target owner
+            if (GetOwner(sourceProvinceId) != targetOwnerId)
+                return result;
+
+            // Initialize buffer if needed
+            if (!connectedRegionBuffer.IsCreated)
+            {
+                connectedRegionBuffer = new NativeList<ushort>(256, Allocator.Persistent);
+            }
+
+            // BFS flood fill
+            var visited = new NativeHashSet<ushort>(256, Allocator.Temp);
+            connectedRegionBuffer.Clear();
+            connectedRegionBuffer.Add(sourceProvinceId);
+            visited.Add(sourceProvinceId);
+            result.Add(sourceProvinceId);
+
+            int queueIndex = 0;
+            while (queueIndex < connectedRegionBuffer.Length)
+            {
+                ushort current = connectedRegionBuffer[queueIndex++];
+
+                // Get neighbors
+                using var neighbors = adjacencySystem.GetNeighbors(current, Allocator.Temp);
+
+                for (int i = 0; i < neighbors.Length; i++)
+                {
+                    ushort neighbor = neighbors[i];
+
+                    if (visited.Contains(neighbor))
+                        continue;
+
+                    visited.Add(neighbor);
+
+                    // Check if neighbor has the target owner
+                    if (GetOwner(neighbor) == targetOwnerId)
+                    {
+                        connectedRegionBuffer.Add(neighbor);
+                        result.Add(neighbor);
+                    }
+                }
+            }
+
+            visited.Dispose();
+            return result;
+        }
+
+        /// <summary>
+        /// Find all connected landmasses owned by a country.
+        /// Returns a list of province groups (each group is a connected landmass).
+        /// Each inner list must be disposed by caller.
+        /// Performance target: less than 30ms
+        /// </summary>
+        public NativeList<NativeList<ushort>> GetConnectedLandmasses(
+            ushort countryId,
+            Allocator allocator = Allocator.TempJob)
+        {
+            var result = new NativeList<NativeList<ushort>>(4, allocator);
+
+            if (adjacencySystem == null)
+            {
+                ArchonLogger.LogWarning("ProvinceQueries: AdjacencySystem not available for connected region queries", "core_simulation");
+                return result;
+            }
+
+            // Get all provinces of the country
+            using var countryProvinces = GetCountryProvinces(countryId, Allocator.Temp);
+
+            if (countryProvinces.Length == 0)
+                return result;
+
+            // Track which provinces we've already assigned to a landmass
+            var assigned = new NativeHashSet<ushort>(countryProvinces.Length, Allocator.Temp);
+
+            for (int i = 0; i < countryProvinces.Length; i++)
+            {
+                ushort provinceId = countryProvinces[i];
+
+                if (assigned.Contains(provinceId))
+                    continue;
+
+                // Skip ocean provinces
+                if (IsOcean(provinceId))
+                {
+                    assigned.Add(provinceId);
+                    continue;
+                }
+
+                // Found a new landmass - flood fill to get all connected provinces
+                var landmass = GetConnectedProvincesWithOwner(provinceId, countryId, allocator);
+
+                // Mark all as assigned
+                for (int j = 0; j < landmass.Length; j++)
+                {
+                    assigned.Add(landmass[j]);
+                }
+
+                result.Add(landmass);
+            }
+
+            assigned.Dispose();
+            return result;
+        }
+
+        /// <summary>
+        /// Get number of separate landmasses owned by a country.
+        /// Useful for detecting if a country has disconnected territories.
+        /// Performance target: less than 30ms
+        /// </summary>
+        public int GetLandmassCount(ushort countryId)
+        {
+            using var landmasses = GetConnectedLandmasses(countryId, Allocator.Temp);
+            int count = landmasses.Length;
+
+            // Dispose inner lists
+            for (int i = 0; i < landmasses.Length; i++)
+            {
+                landmasses[i].Dispose();
+            }
+
+            return count;
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            distanceCalculator?.Dispose();
+            distanceCalculator = null;
+
+            if (connectedRegionBuffer.IsCreated)
+            {
+                connectedRegionBuffer.Dispose();
+            }
         }
 
         #endregion

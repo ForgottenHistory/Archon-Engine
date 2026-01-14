@@ -188,8 +188,8 @@ namespace Core
             Pathfinding = new PathfindingSystem();
 
             // 8. Query interfaces
-            ProvinceQueries = new ProvinceQueries(Provinces, Countries);
-            CountryQueries = new CountryQueries(Countries, Provinces);
+            ProvinceQueries = new ProvinceQueries(Provinces, Countries, Adjacencies);
+            CountryQueries = new CountryQueries(Countries, Provinces, Adjacencies);
 
             // 5. Initialize systems
             Provinces.Initialize(EventBus);

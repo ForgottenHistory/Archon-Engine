@@ -14,17 +14,23 @@ namespace Core.Queries
     {
         private readonly Systems.CountrySystem countrySystem;
         private readonly Systems.ProvinceSystem provinceSystem;
+        private readonly Systems.AdjacencySystem adjacencySystem;
 
         // Cache for expensive calculations
         private readonly System.Collections.Generic.Dictionary<ushort, CachedCountryData> cachedData;
         private float lastCacheUpdateTime;
         private const float CACHE_LIFETIME = 1.0f; // 1 second cache lifetime
 
-        public CountryQueries(Systems.CountrySystem countrySystem, Systems.ProvinceSystem provinceSystem)
+        // Reusable buffer for neighbor queries (avoids allocation in hot paths)
+        private readonly NativeList<ushort> neighborBuffer;
+
+        public CountryQueries(Systems.CountrySystem countrySystem, Systems.ProvinceSystem provinceSystem, Systems.AdjacencySystem adjacencySystem)
         {
             this.countrySystem = countrySystem;
             this.provinceSystem = provinceSystem;
+            this.adjacencySystem = adjacencySystem;
             this.cachedData = new System.Collections.Generic.Dictionary<ushort, CachedCountryData>();
+            this.neighborBuffer = new NativeList<ushort>(32, Allocator.Persistent);
         }
 
         #region Basic Queries (Ultra-fast, direct access)
@@ -187,28 +193,117 @@ namespace Core.Queries
         #region Country Relationships & Comparisons
 
         /// <summary>
-        /// Check if two countries share any border provinces
-        /// Performance target: <10ms for large countries
+        /// Check if two countries share any border provinces.
+        /// Uses AdjacencySystem to check if any province of country1 is adjacent to any province of country2.
+        /// Performance target: O(P × N) where P = provinces, N = ~6 neighbors. Target: less than 10ms.
         /// </summary>
         public bool SharesBorder(ushort countryId1, ushort countryId2)
         {
             if (countryId1 == countryId2)
                 return false;
 
+            if (countryId1 == 0 || countryId2 == 0)
+                return false; // Unowned doesn't share border
+
             var provinces1 = GetProvinces(countryId1, Allocator.Temp);
-            var provinces2 = GetProvinces(countryId2, Allocator.Temp);
 
-            // For now, simple approach - check if any provinces are adjacent
-            // In full implementation, this would use neighbor data
-            bool sharesBorder = false;
+            try
+            {
+                for (int i = 0; i < provinces1.Length; i++)
+                {
+                    ushort provinceId = provinces1[i];
 
-            // This is a placeholder - real implementation would use adjacency data
-            // from ProvinceNeighborDetector or similar system
+                    // Get neighbors using reusable buffer
+                    adjacencySystem.GetNeighbors(provinceId, neighborBuffer);
 
-            provinces1.Dispose();
-            provinces2.Dispose();
+                    for (int j = 0; j < neighborBuffer.Length; j++)
+                    {
+                        ushort neighborOwner = provinceSystem.GetProvinceOwner(neighborBuffer[j]);
+                        if (neighborOwner == countryId2)
+                        {
+                            return true; // Early exit on first match
+                        }
+                    }
+                }
+                return false;
+            }
+            finally
+            {
+                provinces1.Dispose();
+            }
+        }
 
-            return sharesBorder;
+        /// <summary>
+        /// Get all countries that share a border with the specified country.
+        /// Returns native list that must be disposed by caller.
+        /// Performance target: O(P × N) where P = provinces, N = ~6 neighbors. Target: less than 15ms.
+        /// </summary>
+        public NativeList<ushort> GetBorderingCountries(ushort countryId, Allocator allocator)
+        {
+            var result = new NativeList<ushort>(16, allocator);
+            GetBorderingCountries(countryId, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Get all countries that share a border with the specified country.
+        /// Zero-allocation variant - fills existing buffer.
+        /// Performance target: O(P × N) where P = provinces, N = ~6 neighbors. Target: less than 15ms.
+        /// </summary>
+        public void GetBorderingCountries(ushort countryId, NativeList<ushort> resultBuffer)
+        {
+            resultBuffer.Clear();
+
+            if (countryId == 0)
+                return; // Unowned has no meaningful borders
+
+            var provinces = GetProvinces(countryId, Allocator.Temp);
+
+            // Use a temporary set for deduplication
+            var uniqueNeighbors = new NativeHashSet<ushort>(32, Allocator.Temp);
+
+            try
+            {
+                for (int i = 0; i < provinces.Length; i++)
+                {
+                    ushort provinceId = provinces[i];
+
+                    // Get neighbors using reusable buffer
+                    adjacencySystem.GetNeighbors(provinceId, neighborBuffer);
+
+                    for (int j = 0; j < neighborBuffer.Length; j++)
+                    {
+                        ushort neighborOwner = provinceSystem.GetProvinceOwner(neighborBuffer[j]);
+
+                        // Skip self and unowned, add unique neighbors
+                        if (neighborOwner != countryId && neighborOwner != 0 && neighborOwner != ushort.MaxValue)
+                        {
+                            uniqueNeighbors.Add(neighborOwner);
+                        }
+                    }
+                }
+
+                // Copy unique neighbors to result
+                foreach (var neighbor in uniqueNeighbors)
+                {
+                    resultBuffer.Add(neighbor);
+                }
+            }
+            finally
+            {
+                provinces.Dispose();
+                uniqueNeighbors.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get the number of countries that share a border with the specified country.
+        /// Performance target: less than 15ms.
+        /// </summary>
+        public int GetBorderingCountryCount(ushort countryId)
+        {
+            using var neighbors = GetBorderingCountries(countryId, Allocator.Temp);
+            return neighbors.Length;
         }
 
         // REMOVED: CompareDevelopment()

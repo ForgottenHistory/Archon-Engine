@@ -136,8 +136,8 @@
 ---
 
 ## Queries/
-- **Core.Queries.ProvinceQueries** - Read-only province operations
-- **Core.Queries.CountryQueries** - High-performance country access with frame-coherent caching
+- **Core.Queries.ProvinceQueries** - Read-only province operations; includes distance queries (GetDistanceBetween, GetProvincesWithinDistance) and connected region queries (GetConnectedLandmasses, GetLandmassCount)
+- **Core.Queries.CountryQueries** - High-performance country access with frame-coherent caching; includes relationship queries (SharesBorder, GetBorderingCountries)
 
 ---
 
@@ -229,6 +229,12 @@
 
 ---
 
+## Graph/
+- **Core.Graph.GraphDistanceCalculator** - General-purpose BFS distance calculator for province graph; Burst-compiled via BFSDistanceJob; tracks both province and country distances
+- **Core.Graph.BFSDistanceJob** - Burst IJob for parallel BFS traversal using NativeAdjacencyData and NativeProvinceData
+
+---
+
 ## Common/
 - **Core.Common.Result** - Lightweight result type for success/failure operations (implicit bool conversion)
 - **Core.Common.Result<T>** - Generic result type carrying a value on success; includes Map, Then, OnSuccess, OnFailure
@@ -261,4 +267,4 @@
 ---
 
 *Updated: 2026-01-14*
-*Added: Common/Result types, Localization layer, Validation infrastructure, standardized result naming*
+*Added: Graph/ namespace with GraphDistanceCalculator, BFSDistanceJob; enhanced Queries with distance, relationship, and connected region queries*
