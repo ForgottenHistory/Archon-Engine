@@ -90,6 +90,17 @@ namespace Core.Diplomacy
             return activeWars.Count();
         }
 
+        /// <summary>
+        /// Check if a country is at war with anyone.
+        /// O(1) check using warsByCountry index.
+        /// </summary>
+        public static bool HasAnyWar(
+            ushort countryID,
+            NativeParallelMultiHashMap<ushort, ushort> warsByCountry)
+        {
+            return warsByCountry.ContainsKey(countryID);
+        }
+
         // ========== WAR STATE CHANGES ==========
 
         /// <summary>

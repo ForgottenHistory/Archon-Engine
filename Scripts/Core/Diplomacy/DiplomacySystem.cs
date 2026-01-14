@@ -136,6 +136,14 @@ namespace Core.Diplomacy
             return DiplomacyWarManager.IsAtWar(country1, country2, activeWars);
         }
 
+        /// <summary>
+        /// Check if a country is at war with anyone.
+        /// </summary>
+        public bool IsAtWar(ushort countryID)
+        {
+            return DiplomacyWarManager.HasAnyWar(countryID, warsByCountry);
+        }
+
         public List<ushort> GetEnemies(ushort countryID)
         {
             return DiplomacyWarManager.GetEnemies(countryID, warsByCountry);

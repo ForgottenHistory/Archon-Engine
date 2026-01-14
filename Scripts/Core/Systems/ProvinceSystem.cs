@@ -288,6 +288,7 @@ namespace Core.Systems
         public void SetProvinceState(ushort provinceId, ProvinceState state) => dataManager.SetProvinceState(provinceId, state);
         public NativeArray<ushort> GetCountryProvinces(ushort countryId, Allocator allocator = Allocator.TempJob) => dataManager.GetCountryProvinces(countryId, allocator);
         public void GetCountryProvinces(ushort countryId, NativeList<ushort> resultBuffer) => dataManager.GetCountryProvinces(countryId, resultBuffer);
+        public int GetProvinceCountForCountry(ushort countryId) => dataManager.GetProvinceCountForCountry(countryId);
         public NativeArray<ushort> GetAllProvinceIds(Allocator allocator = Allocator.TempJob) => dataManager.GetAllProvinceIds(allocator);
         public bool HasProvince(ushort provinceId) => dataManager.HasProvince(provinceId);
 

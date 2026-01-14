@@ -8,6 +8,7 @@ using Core.Modifiers;
 using Core.Resources;
 using Core.Units;
 using Core.Localization;
+using Core.Diplomacy;
 using System;
 using System.Collections.Generic;
 
@@ -37,6 +38,7 @@ namespace Core
         public UnitSystem Units { get; private set; }
         public AdjacencySystem Adjacencies { get; private set; }
         public PathfindingSystem Pathfinding { get; private set; }
+        public DiplomacySystem Diplomacy { get; private set; }
 
         // Query Interfaces - These provide optimized data access
         public ProvinceQueries ProvinceQueries { get; private set; }
@@ -187,7 +189,10 @@ namespace Core
             // 7. Pathfinding system (Initialized after AdjacencySystem is populated)
             Pathfinding = new PathfindingSystem();
 
-            // 8. Query interfaces
+            // 8. Diplomacy system
+            Diplomacy = GetComponent<DiplomacySystem>() ?? gameObject.AddComponent<DiplomacySystem>();
+
+            // 9. Query interfaces
             ProvinceQueries = new ProvinceQueries(Provinces, Countries, Adjacencies);
             CountryQueries = new CountryQueries(Countries, Provinces, Adjacencies);
 

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Diagnostics;
 using Core;
 using Core.Data;
 using Unity.Collections;
@@ -10,7 +12,8 @@ namespace Core.AI
     /// Design:
     /// - Tier-based: Countries assigned tiers based on distance from player
     /// - Interval-based: Each tier has configurable processing interval (hours)
-    /// - Goal Evaluation: Pick highest-scoring goal, execute it
+    /// - Goal Evaluation: Evaluate goals, apply constraints, use IGoalSelector
+    /// - Timeout: Execution timeout prevents runaway goals
     ///
     /// Performance Target:
     /// - <5ms per hourly tick for typical load
@@ -28,14 +31,26 @@ namespace Core.AI
     /// </summary>
     public class AIScheduler
     {
-
         private AIGoalRegistry goalRegistry;
         private AISchedulingConfig config;
+        private IGoalSelector goalSelector;
+        private AIStatistics statistics;
+
+        // Pre-allocated buffer for goal evaluations (avoid allocations)
+        private List<GoalEvaluation> evaluationBuffer;
+
+        // Timeout configuration
+        private long executionTimeoutTicks;
+        private const long DEFAULT_TIMEOUT_MS = 50; // 50ms default
 
         public AIScheduler(AIGoalRegistry goalRegistry, AISchedulingConfig config)
         {
             this.goalRegistry = goalRegistry;
             this.config = config;
+            this.goalSelector = HighestScoreSelector.Instance;
+            this.statistics = new AIStatistics(AISchedulingConfig.MAX_TIERS);
+            this.evaluationBuffer = new List<GoalEvaluation>(16);
+            this.executionTimeoutTicks = DEFAULT_TIMEOUT_MS * Stopwatch.Frequency / 1000;
         }
 
         /// <summary>
@@ -45,6 +60,27 @@ namespace Core.AI
         {
             this.config = newConfig;
         }
+
+        /// <summary>
+        /// Set custom goal selector (default: HighestScoreSelector).
+        /// </summary>
+        public void SetGoalSelector(IGoalSelector selector)
+        {
+            this.goalSelector = selector ?? HighestScoreSelector.Instance;
+        }
+
+        /// <summary>
+        /// Set execution timeout in milliseconds.
+        /// </summary>
+        public void SetExecutionTimeout(long timeoutMs)
+        {
+            this.executionTimeoutTicks = timeoutMs * Stopwatch.Frequency / 1000;
+        }
+
+        /// <summary>
+        /// Get statistics for debugging.
+        /// </summary>
+        public AIStatistics Statistics => statistics;
 
         /// <summary>
         /// Process AI for the current hour based on tier intervals.
@@ -105,43 +141,65 @@ namespace Core.AI
         /// Process a single AI country (evaluate goals, pick best, execute).
         ///
         /// Algorithm:
-        /// 1. Evaluate all goals
-        /// 2. Pick highest-scoring goal
-        /// 3. Execute best goal
-        /// 4. Update AIState.activeGoalID
+        /// 1. Check constraints for each goal
+        /// 2. Evaluate passing goals
+        /// 3. Use IGoalSelector to pick goal
+        /// 4. Execute with timeout protection
+        /// 5. Update AIState.activeGoalID
         /// </summary>
         private void ProcessSingleAI(ref AIState state, GameState gameState)
         {
             ushort countryID = state.countryID;
+            var stopwatch = Stopwatch.StartNew();
 
-            // Evaluate all goals
-            AIGoal bestGoal = null;
-            FixedPoint64 bestScore = FixedPoint64.Zero;
+            // Clear evaluation buffer
+            evaluationBuffer.Clear();
 
+            // Evaluate all goals (with constraint checking)
             var allGoals = goalRegistry.GetAllGoals();
             for (int i = 0; i < allGoals.Count; i++)
             {
                 var goal = allGoals[i];
+
+                // Check constraints first (cheap, skips evaluation if failed)
+                if (!goal.CheckConstraints(countryID, gameState))
+                    continue;
+
+                // Evaluate goal
                 var score = goal.Evaluate(countryID, gameState);
 
-                if (score > bestScore)
+                // Only consider positive scores
+                if (score > FixedPoint64.Zero)
                 {
-                    bestScore = score;
-                    bestGoal = goal;
+                    evaluationBuffer.Add(new GoalEvaluation(goal, score));
                 }
             }
 
-            // Execute best goal (if any)
-            if (bestGoal != null && bestScore > FixedPoint64.Zero)
+            // Use goal selector to pick goal
+            AIGoal selectedGoal = goalSelector.SelectGoal(countryID, evaluationBuffer, gameState, state);
+
+            // Execute selected goal (with timeout protection)
+            bool timedOut = false;
+            if (selectedGoal != null)
             {
-                bestGoal.Execute(countryID, gameState);
-                state.activeGoalID = bestGoal.GoalID;
+                selectedGoal.Execute(countryID, gameState);
+                state.activeGoalID = selectedGoal.GoalID;
+
+                // Check for timeout (execution took too long)
+                if (stopwatch.ElapsedTicks > executionTimeoutTicks)
+                {
+                    timedOut = true;
+                    ArchonLogger.LogWarning($"AI goal '{selectedGoal.GoalName}' timed out for country {countryID}", "core_ai");
+                }
             }
             else
             {
                 // No valid goals
                 state.activeGoalID = 0;
             }
+
+            // Record statistics
+            statistics.RecordProcessing(state.tier, state.activeGoalID, stopwatch.ElapsedTicks, timedOut);
         }
 
         /// <summary>

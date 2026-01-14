@@ -1,4 +1,5 @@
 using Core;
+using Core.Data;
 using Core.Systems;
 using Unity.Collections;
 using UnityEngine;
@@ -231,6 +232,11 @@ namespace Core.AI
         }
 
         /// <summary>
+        /// Alias for SetAIActive (naming consistency).
+        /// </summary>
+        public void SetAIEnabled(ushort countryID, bool enabled) => SetAIActive(countryID, enabled);
+
+        /// <summary>
         /// Get AI state for a country (readonly, for debugging).
         /// </summary>
         public AIState GetAIState(ushort countryID)
@@ -245,6 +251,134 @@ namespace Core.AI
         }
 
         /// <summary>
+        /// Get the active goal for a country.
+        /// </summary>
+        public AIGoal GetActiveGoal(ushort countryID)
+        {
+            if (countryID >= aiStates.Length)
+                return null;
+
+            var state = aiStates[countryID];
+            if (state.activeGoalID == 0)
+                return null;
+
+            return goalRegistry.GetGoal(state.activeGoalID);
+        }
+
+        /// <summary>
+        /// Get all countries in a specific tier.
+        /// </summary>
+        public System.Collections.Generic.List<ushort> GetCountriesByTier(byte tier)
+        {
+            var result = new System.Collections.Generic.List<ushort>();
+
+            if (!aiStates.IsCreated)
+                return result;
+
+            for (int i = 0; i < aiStates.Length; i++)
+            {
+                if (aiStates[i].tier == tier)
+                    result.Add((ushort)i);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get count of countries in a specific tier (no allocation).
+        /// </summary>
+        public int GetCountryCountByTier(byte tier)
+        {
+            if (!aiStates.IsCreated)
+                return 0;
+
+            int count = 0;
+            for (int i = 0; i < aiStates.Length; i++)
+            {
+                if (aiStates[i].tier == tier)
+                    count++;
+            }
+
+            return count;
+        }
+
+        /// <summary>
+        /// Get count of active AI countries.
+        /// </summary>
+        public int GetActiveAICount()
+        {
+            if (!aiStates.IsCreated)
+                return 0;
+
+            int count = 0;
+            for (int i = 0; i < aiStates.Length; i++)
+            {
+                if (aiStates[i].IsActive)
+                    count++;
+            }
+
+            return count;
+        }
+
+        /// <summary>
+        /// Set custom goal selector for AI processing.
+        /// </summary>
+        public void SetGoalSelector(IGoalSelector selector)
+        {
+            scheduler?.SetGoalSelector(selector);
+        }
+
+        /// <summary>
+        /// Set execution timeout for goal processing (milliseconds).
+        /// </summary>
+        public void SetExecutionTimeout(long timeoutMs)
+        {
+            scheduler?.SetExecutionTimeout(timeoutMs);
+        }
+
+        /// <summary>
+        /// Get debug info for a country's AI.
+        /// </summary>
+        public AIDebugInfo GetDebugInfo(ushort countryID, int currentHourOfYear)
+        {
+            var info = new AIDebugInfo
+            {
+                CountryID = countryID,
+                Tier = 255,
+                IsActive = false,
+                ActiveGoalID = 0,
+                ActiveGoalName = "None",
+                LastProcessedHour = 0,
+                HoursSinceProcessed = 0,
+                FailedConstraints = null
+            };
+
+            if (countryID >= aiStates.Length)
+                return info;
+
+            var state = aiStates[countryID];
+            info.Tier = state.tier;
+            info.IsActive = state.IsActive;
+            info.ActiveGoalID = state.activeGoalID;
+            info.LastProcessedHour = state.lastProcessedHour;
+
+            // Calculate hours since processed
+            if (currentHourOfYear >= state.lastProcessedHour)
+                info.HoursSinceProcessed = currentHourOfYear - state.lastProcessedHour;
+            else
+                info.HoursSinceProcessed = (CalendarConstants.HOURS_PER_YEAR - state.lastProcessedHour) + currentHourOfYear;
+
+            // Get goal name
+            if (state.activeGoalID != 0)
+            {
+                var goal = goalRegistry.GetGoal(state.activeGoalID);
+                info.ActiveGoalName = goal?.GoalName ?? "Unknown";
+            }
+
+            return info;
+        }
+
+        /// <summary>
         /// Goal registry for auto-discovery and debugging.
         /// </summary>
         public AIGoalRegistry GoalRegistry => goalRegistry;
@@ -255,6 +389,22 @@ namespace Core.AI
         public AISchedulingConfig GetSchedulingConfig()
         {
             return config;
+        }
+
+        /// <summary>
+        /// Get AI statistics.
+        /// </summary>
+        public AIStatistics GetStatistics()
+        {
+            return scheduler?.Statistics;
+        }
+
+        /// <summary>
+        /// Reset AI statistics.
+        /// </summary>
+        public void ResetStatistics()
+        {
+            scheduler?.Statistics?.Reset();
         }
 
         /// <summary>

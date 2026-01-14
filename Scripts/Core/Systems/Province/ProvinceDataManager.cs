@@ -269,6 +269,25 @@ namespace Core.Systems.Province
         }
 
         /// <summary>
+        /// Get count of provinces owned by a country (no allocation).
+        /// </summary>
+        public int GetProvinceCountForCountry(ushort countryId)
+        {
+            int count = 0;
+            var states = snapshot.GetProvinceWriteBuffer();
+
+            for (int i = 0; i < provinceCount; i++)
+            {
+                if (states[i].ownerID == countryId)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        /// <summary>
         /// Get all active province IDs
         /// </summary>
         public NativeArray<ushort> GetAllProvinceIds(Allocator allocator = Allocator.TempJob)
