@@ -12,7 +12,7 @@ namespace Core.Data
         /// <summary>
         /// Whether the loading operation was successful
         /// </summary>
-        public bool Success { get; private set; }
+        public bool IsSuccess { get; private set; }
 
         /// <summary>
         /// Error message if loading failed
@@ -32,16 +32,16 @@ namespace Core.Data
         /// <summary>
         /// Create a successful result
         /// </summary>
-        public static CountryDataLoadResult CreateSuccess(CountryDataCollection countries, LoadingStatistics stats = null)
+        public static CountryDataLoadResult Success(CountryDataCollection countries, LoadingStatistics stats = null)
         {
             if (countries == null)
             {
-                return CreateFailure("Country data collection is null");
+                return Failure("Country data collection is null");
             }
 
             return new CountryDataLoadResult
             {
-                Success = true,
+                IsSuccess = true,
                 ErrorMessage = null,
                 Countries = countries,
                 Statistics = stats ?? new LoadingStatistics()
@@ -51,11 +51,11 @@ namespace Core.Data
         /// <summary>
         /// Create a failed result
         /// </summary>
-        public static CountryDataLoadResult CreateFailure(string errorMessage)
+        public static CountryDataLoadResult Failure(string errorMessage)
         {
             return new CountryDataLoadResult
             {
-                Success = false,
+                IsSuccess = false,
                 ErrorMessage = errorMessage ?? "Unknown error occurred",
                 Countries = null,
                 Statistics = new LoadingStatistics()
@@ -72,7 +72,7 @@ namespace Core.Data
         /// </summary>
         public string GetSummary()
         {
-            if (!Success)
+            if (!IsSuccess)
             {
                 return $"Failed: {ErrorMessage}";
             }
@@ -88,7 +88,7 @@ namespace Core.Data
         {
             var issues = new List<string>();
 
-            if (!Success)
+            if (!IsSuccess)
             {
                 if (string.IsNullOrEmpty(ErrorMessage))
                     issues.Add("Failed result should have error message");

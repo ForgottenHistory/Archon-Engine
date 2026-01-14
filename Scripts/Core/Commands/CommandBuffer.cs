@@ -57,10 +57,10 @@ namespace Core.Commands
         public CommandBufferResult AddPredictedCommand(IProvinceCommand command)
         {
             if (isDisposed)
-                return CommandBufferResult.CreateFailure("CommandBuffer is disposed");
+                return CommandBufferResult.Failure("CommandBuffer is disposed");
 
             if (command == null)
-                return CommandBufferResult.CreateFailure("Command cannot be null");
+                return CommandBufferResult.Failure("Command cannot be null");
 
             try
             {
@@ -69,19 +69,19 @@ namespace Core.Commands
 
                 // Execute locally for immediate feedback
                 var submissionResult = processor.SubmitCommand(command);
-                if (!submissionResult.Success)
+                if (!submissionResult.IsSuccess)
                 {
-                    return CommandBufferResult.CreateFailure($"Command submission failed: {submissionResult.ErrorMessage}");
+                    return CommandBufferResult.Failure($"Command submission failed: {submissionResult.ErrorMessage}");
                 }
 
                 // Store for potential rollback
                 unconfirmedCommands.Enqueue(command);
 
-                return CommandBufferResult.CreateSuccess();
+                return CommandBufferResult.Success();
             }
             catch (Exception ex)
             {
-                return CommandBufferResult.CreateFailure($"Failed to add predicted command: {ex.Message}");
+                return CommandBufferResult.Failure($"Failed to add predicted command: {ex.Message}");
             }
         }
 
@@ -92,7 +92,7 @@ namespace Core.Commands
         public CommandBufferResult AddConfirmedCommand(IProvinceCommand command, uint serverTick)
         {
             if (isDisposed)
-                return CommandBufferResult.CreateFailure("CommandBuffer is disposed");
+                return CommandBufferResult.Failure("CommandBuffer is disposed");
 
             try
             {
@@ -100,7 +100,7 @@ namespace Core.Commands
                 if (serverTick <= confirmedTick)
                 {
                     ArchonLogger.LogWarning($"Received command for tick {serverTick} but already confirmed up to {confirmedTick}", "core_commands");
-                    return CommandBufferResult.CreateSuccess(); // Ignore old commands
+                    return CommandBufferResult.Success(); // Ignore old commands
                 }
 
                 // Store command for the specific tick
@@ -117,11 +117,11 @@ namespace Core.Commands
                     return ConfirmTick(serverTick);
                 }
 
-                return CommandBufferResult.CreateSuccess();
+                return CommandBufferResult.Success();
             }
             catch (Exception ex)
             {
-                return CommandBufferResult.CreateFailure($"Failed to add confirmed command: {ex.Message}");
+                return CommandBufferResult.Failure($"Failed to add confirmed command: {ex.Message}");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Core.Commands
 
                 return new TickProcessResult
                 {
-                    Success = true,
+                    IsSuccess = true,
                     ProcessedTick = predictedTick,
                     ConfirmedTick = confirmedTick,
                     CommandsProcessed = tickResult.CommandsProcessed,
@@ -160,7 +160,7 @@ namespace Core.Commands
             {
                 return new TickProcessResult
                 {
-                    Success = false,
+                    IsSuccess = false,
                     ErrorMessage = $"Tick processing failed: {ex.Message}"
                 };
             }
@@ -179,7 +179,7 @@ namespace Core.Commands
                 if (needsRollback)
                 {
                     var rollbackResult = PerformRollback(tickToConfirm);
-                    if (!rollbackResult.Success)
+                    if (!rollbackResult.IsSuccess)
                     {
                         return rollbackResult;
                     }
@@ -191,11 +191,11 @@ namespace Core.Commands
                 // Remove confirmed commands from unconfirmed queue
                 CleanupUnconfirmedCommands(tickToConfirm);
 
-                return CommandBufferResult.CreateSuccess();
+                return CommandBufferResult.Success();
             }
             catch (Exception ex)
             {
-                return CommandBufferResult.CreateFailure($"Failed to confirm tick {tickToConfirm}: {ex.Message}");
+                return CommandBufferResult.Failure($"Failed to confirm tick {tickToConfirm}: {ex.Message}");
             }
         }
 
@@ -210,7 +210,7 @@ namespace Core.Commands
                 var snapshot = FindStateSnapshot(rollbackToTick);
                 if (snapshot == null)
                 {
-                    return CommandBufferResult.CreateFailure($"No state snapshot available for rollback to tick {rollbackToTick}");
+                    return CommandBufferResult.Failure($"No state snapshot available for rollback to tick {rollbackToTick}");
                 }
 
                 // Restore the state
@@ -237,11 +237,11 @@ namespace Core.Commands
                 }
 
                 ArchonLogger.Log($"Performed rollback to tick {rollbackToTick}, re-simulated {predictedTick - rollbackToTick} frames", "core_commands");
-                return CommandBufferResult.CreateSuccess();
+                return CommandBufferResult.Success();
             }
             catch (Exception ex)
             {
-                return CommandBufferResult.CreateFailure($"Rollback failed: {ex.Message}");
+                return CommandBufferResult.Failure($"Rollback failed: {ex.Message}");
             }
         }
 
@@ -455,16 +455,16 @@ namespace Core.Commands
     // Result types for command buffer operations
     public struct CommandBufferResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public string ErrorMessage;
 
-        public static CommandBufferResult CreateSuccess() => new CommandBufferResult { Success = true };
-        public static CommandBufferResult CreateFailure(string error) => new CommandBufferResult { Success = false, ErrorMessage = error };
+        public static CommandBufferResult Success() => new CommandBufferResult { IsSuccess = true };
+        public static CommandBufferResult Failure(string error) => new CommandBufferResult { IsSuccess = false, ErrorMessage = error };
     }
 
     public struct TickProcessResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public string ErrorMessage;
         public uint ProcessedTick;
         public uint ConfirmedTick;

@@ -57,7 +57,7 @@ namespace Map.Tests
 
                 try
                 {
-                    Assert.IsTrue(result.Success, "Encoding should succeed");
+                    Assert.IsTrue(result.IsSuccess, "Encoding should succeed");
                     Assert.AreEqual(5, result.ProvinceCount, "Should have 5 provinces");
                     Assert.IsTrue(result.ColorToID.IsCreated, "ColorToID should be created");
                     Assert.IsTrue(result.IDToColor.IsCreated, "IDToColor should be created");
@@ -102,7 +102,7 @@ namespace Map.Tests
 
                 try
                 {
-                    Assert.IsTrue(result.Success, "Encoding should succeed");
+                    Assert.IsTrue(result.IsSuccess, "Encoding should succeed");
                     Assert.AreEqual(3, result.ProvinceCount, "Should have 3 provinces");
 
                     // Verify most frequent color gets lowest ID
@@ -142,7 +142,7 @@ namespace Map.Tests
 
                 var result = ProvinceIDEncoder.EncodeProvinceIDs(manyColors);
 
-                Assert.IsFalse(result.Success, "Should reject too many colors");
+                Assert.IsFalse(result.IsSuccess, "Should reject too many colors");
                 Assert.IsNotEmpty(result.ErrorMessage, "Should have error message");
                 Assert.That(result.ErrorMessage, Does.Contain("65534"), "Error should mention limit");
 
@@ -164,7 +164,7 @@ namespace Map.Tests
             {
                 var result = ProvinceIDEncoder.EncodeProvinceIDs(emptyColors);
 
-                Assert.IsFalse(result.Success, "Should fail for empty input");
+                Assert.IsFalse(result.IsSuccess, "Should fail for empty input");
                 Assert.IsNotEmpty(result.ErrorMessage, "Should have error message");
 
                 result.Dispose();
@@ -191,7 +191,7 @@ namespace Map.Tests
 
                 try
                 {
-                    Assert.IsTrue(result.Success, "Should handle duplicates");
+                    Assert.IsTrue(result.IsSuccess, "Should handle duplicates");
                     Assert.AreEqual(3, result.ProvinceCount, "Should have 3 unique colors");
 
                     // All unique colors should be mapped

@@ -38,7 +38,7 @@ namespace Core.Localization
             public FixedString512Bytes Value;
             public FixedString64Bytes ResolvedLanguage;
             public int FallbackLevel; // 0 = primary, 1+ = fallback levels
-            public bool Success;
+            public bool IsSuccess;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Core.Localization
             FallbackChain fallbackChain,
             uint keyHash)
         {
-            var result = new FallbackResult { Success = false };
+            var result = new FallbackResult { IsSuccess = false };
 
             for (int i = 0; i < fallbackChain.Languages.Length; i++)
             {
@@ -112,7 +112,7 @@ namespace Core.Localization
                 {
                     result.ResolvedLanguage = language;
                     result.FallbackLevel = i;
-                    result.Success = true;
+                    result.IsSuccess = true;
                     return result;
                 }
 
@@ -124,7 +124,7 @@ namespace Core.Localization
                     {
                         result.ResolvedLanguage = regionalFallback;
                         result.FallbackLevel = i;
-                        result.Success = true;
+                        result.IsSuccess = true;
                         return result;
                     }
                 }
@@ -190,7 +190,7 @@ namespace Core.Localization
             foreach (var key in testKeys)
             {
                 var result = ResolveWithFallback(multiLangResult, fallbackChain, key);
-                if (result.Success)
+                if (result.IsSuccess)
                 {
                     totalResolved++;
                     if (result.FallbackLevel == 0)

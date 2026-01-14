@@ -135,7 +135,7 @@ namespace Core.Localization
                 return cached;
 
             // Not initialized - return key
-            if (!_isInitialized || !_multiLangResult.Success)
+            if (!_isInitialized || !_multiLangResult.IsSuccess)
             {
                 return key;
             }
@@ -153,7 +153,7 @@ namespace Core.Localization
                 _multiLangResult, _fallbackChain, fixedKey);
 
             string value;
-            if (result.Success)
+            if (result.IsSuccess)
             {
                 value = result.Value.ToString();
             }
@@ -198,7 +198,7 @@ namespace Core.Localization
         /// </summary>
         public static bool HasKey(string key)
         {
-            if (!_isInitialized || !_multiLangResult.Success || string.IsNullOrEmpty(key))
+            if (!_isInitialized || !_multiLangResult.IsSuccess || string.IsNullOrEmpty(key))
                 return false;
 
             var fixedKey = new FixedString64Bytes();
@@ -211,7 +211,7 @@ namespace Core.Localization
             var result = LocalizationFallbackChain.ResolveWithFallback(
                 _multiLangResult, _fallbackChain, fixedKey);
 
-            return result.Success;
+            return result.IsSuccess;
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Core.Localization
         /// </summary>
         public static (int languages, int totalEntries, float completeness) GetStatistics()
         {
-            if (!_isInitialized || !_multiLangResult.Success)
+            if (!_isInitialized || !_multiLangResult.IsSuccess)
                 return (0, 0, 0f);
 
             MultiLanguageExtractor.GetLanguageStatistics(

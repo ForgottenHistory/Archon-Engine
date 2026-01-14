@@ -89,14 +89,14 @@ namespace Core.Commands
                 simulation.SetProvinceState(provinceID, currentState);
 
                 result.AffectedProvinces.Add(provinceID);
-                result.Success = true;
+                result.IsSuccess = true;
                 result.NewStateChecksum = simulation.GetStateChecksum();
 
                 return result;
             }
             catch (Exception ex)
             {
-                result.Success = false;
+                result.IsSuccess = false;
                 if (result.AffectedProvinces.IsCreated)
                     result.AffectedProvinces.Dispose();
 

@@ -17,7 +17,7 @@ namespace Core.Localization
         /// </summary>
         public struct YAMLParseResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public NativeHashMap<uint, FixedString512Bytes> LocalizationEntries;
             public FixedString64Bytes LanguageCode; // e.g., "l_english"
             public int EntriesFound;
@@ -59,7 +59,7 @@ namespace Core.Localization
             var result = new YAMLParseResult
             {
                 LocalizationEntries = new NativeHashMap<uint, FixedString512Bytes>(100, allocator),
-                Success = false,
+                IsSuccess = false,
                 EntriesFound = 0
             };
 
@@ -162,7 +162,7 @@ namespace Core.Localization
                     }
                 }
 
-                result.Success = true;
+                result.IsSuccess = true;
                 return result;
         }
 

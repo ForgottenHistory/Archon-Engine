@@ -93,7 +93,7 @@ namespace Tests.Integration
         {
             // Test default scenario creation
             var defaultResult = ScenarioLoader.CreateDefaultScenario();
-            Assert.IsTrue(defaultResult.Success, "Default scenario should create successfully");
+            Assert.IsTrue(defaultResult.IsSuccess, "Default scenario should create successfully");
             Assert.IsNotNull(defaultResult.Data, "Default scenario should have data");
 
             // Test example scenario creation

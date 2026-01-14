@@ -65,7 +65,7 @@ namespace Map.Tests
 
             try
             {
-                Assert.IsTrue(loadResult.Success, $"Province map loading should succeed: {loadResult.ErrorMessage}");
+                Assert.IsTrue(loadResult.IsSuccess, $"Province map loading should succeed: {loadResult.ErrorMessage}");
                 Assert.Greater(loadResult.ProvinceCount, 0, "Should load provinces");
 
                 // Use GPU for large maps, CPU for small test maps
@@ -89,7 +89,7 @@ namespace Map.Tests
                 }
                 try
                 {
-                    Assert.IsTrue(neighborResult.Success, "Neighbor detection should succeed");
+                    Assert.IsTrue(neighborResult.IsSuccess, "Neighbor detection should succeed");
                     Assert.Greater(neighborResult.TotalNeighborPairs, 0, "Should find neighbor pairs");
 
                     // Test metadata generation
@@ -97,7 +97,7 @@ namespace Map.Tests
 
                     try
                     {
-                        Assert.IsTrue(metadataResult.Success, "Metadata generation should succeed");
+                        Assert.IsTrue(metadataResult.IsSuccess, "Metadata generation should succeed");
 
                         ArchonLogger.Log($"Integration test successful:", "map_rendering");
                         ArchonLogger.Log($"  - Loaded {loadResult.ProvinceCount} provinces", "map_rendering");
@@ -126,7 +126,7 @@ namespace Map.Tests
             string invalidPath = "nonexistent/provinces.bmp";
             var loadResult = ProvinceMapLoader.LoadProvinceMap(invalidPath, textureManager);
 
-            Assert.IsFalse(loadResult.Success, "Should fail for invalid file");
+            Assert.IsFalse(loadResult.IsSuccess, "Should fail for invalid file");
             Assert.IsNotEmpty(loadResult.ErrorMessage, "Should have error message");
             Assert.That(loadResult.ErrorMessage, Does.Contain("not found").IgnoreCase,
                         "Error message should indicate file not found");
@@ -152,7 +152,7 @@ namespace Map.Tests
 
             try
             {
-                if (result.Success)
+                if (result.IsSuccess)
                 {
                     ArchonLogger.Log($"Complete map loading took {stopwatch.ElapsedMilliseconds}ms for {result.ProvinceCount} provinces", "map_rendering");
 
@@ -200,7 +200,7 @@ namespace Map.Tests
 
             try
             {
-                if (!result.Success)
+                if (!result.IsSuccess)
                 {
                     Assert.Ignore("Map loading failed, cannot test consistency");
                     return;
@@ -285,7 +285,7 @@ namespace Map.Tests
             try
             {
                 // Even if some stages fail, the result should indicate what succeeded and what failed
-                if (!result.Success)
+                if (!result.IsSuccess)
                 {
                     Assert.IsNotEmpty(result.ErrorMessage, "Failed result should have error message");
                     ArchonLogger.Log($"Expected partial failure: {result.ErrorMessage}", "map_rendering");
@@ -312,7 +312,7 @@ namespace Map.Tests
                 var smallResult = ProvinceMapLoader.LoadProvinceMap(smallMapPath, textureManager);
                 try
                 {
-                    ArchonLogger.Log($"Small map test: Success={smallResult.Success}, Provinces={smallResult.ProvinceCount}", "map_rendering");
+                    ArchonLogger.Log($"Small map test: Success={smallResult.IsSuccess}, Provinces={smallResult.ProvinceCount}", "map_rendering");
                 }
                 finally
                 {
@@ -327,7 +327,7 @@ namespace Map.Tests
                 var result = ProvinceMapLoader.LoadProvinceMap(provincesPath, textureManager);
                 try
                 {
-                    if (result.Success)
+                    if (result.IsSuccess)
                     {
                         // Count unique provinces by analyzing pixels
                         var provincePixelCounts = new System.Collections.Generic.Dictionary<ushort, int>();

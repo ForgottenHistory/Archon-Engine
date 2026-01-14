@@ -89,7 +89,7 @@ namespace Core.Data
     /// </summary>
     public struct ProvinceInitialStateLoadResult : IDisposable
     {
-        public bool Success;
+        public bool IsSuccess;
         public FixedString512Bytes ErrorMessage;
         public NativeArray<ProvinceInitialState> InitialStates;
         public int LoadedCount;
@@ -101,21 +101,21 @@ namespace Core.Data
                 InitialStates.Dispose();
         }
 
-        public static ProvinceInitialStateLoadResult Failed(string error)
+        public static ProvinceInitialStateLoadResult Failure(string error)
         {
             return new ProvinceInitialStateLoadResult
             {
-                Success = false,
+                IsSuccess = false,
                 ErrorMessage = new FixedString512Bytes(error),
                 InitialStates = default
             };
         }
 
-        public static ProvinceInitialStateLoadResult Successful(NativeArray<ProvinceInitialState> states, int failed)
+        public static ProvinceInitialStateLoadResult Success(NativeArray<ProvinceInitialState> states, int failed)
         {
             return new ProvinceInitialStateLoadResult
             {
-                Success = true,
+                IsSuccess = true,
                 InitialStates = states,
                 LoadedCount = states.Length,
                 FailedCount = failed

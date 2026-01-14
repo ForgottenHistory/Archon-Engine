@@ -29,7 +29,7 @@ namespace Core.Loaders
 
                 if (!json5Result.success)
                 {
-                    return ProvinceInitialStateLoadResult.Failed($"JSON5 loading failed: {json5Result.errorMessage}");
+                    return ProvinceInitialStateLoadResult.Failure($"JSON5 loading failed: {json5Result.errorMessage}");
                 }
 
                 ArchonLogger.Log($"JSON5 loading complete: {json5Result.loadedCount} provinces loaded", "core_data_loading");
@@ -42,17 +42,17 @@ namespace Core.Loaders
 
                 if (!burstResult.success)
                 {
-                    return ProvinceInitialStateLoadResult.Failed($"Burst processing failed: {burstResult.errorMessage}");
+                    return ProvinceInitialStateLoadResult.Failure($"Burst processing failed: {burstResult.errorMessage}");
                 }
 
                 ArchonLogger.Log($"Burst processing complete: {burstResult.processedCount} provinces processed", "core_data_loading");
 
                 // Convert to final result format
-                return ProvinceInitialStateLoadResult.Successful(burstResult.provinces, json5Result.failedCount);
+                return ProvinceInitialStateLoadResult.Success(burstResult.provinces, json5Result.failedCount);
             }
             catch (Exception e)
             {
-                return ProvinceInitialStateLoadResult.Failed($"Province loading failed: {e.Message}");
+                return ProvinceInitialStateLoadResult.Failure($"Province loading failed: {e.Message}");
             }
         }
 
@@ -64,7 +64,7 @@ namespace Core.Loaders
         {
             if (!json5Result.rawData.IsCreated || json5Result.rawData.Length == 0)
             {
-                return ProvinceProcessingResult.Failed("No raw province data to process");
+                return ProvinceProcessingResult.Failure("No raw province data to process");
             }
 
             // Prepare output array for processed provinces
@@ -96,7 +96,7 @@ namespace Core.Loaders
                 if (processedProvinces.IsCreated)
                     processedProvinces.Dispose();
 
-                return ProvinceProcessingResult.Failed($"Burst processing failed: {e.Message}");
+                return ProvinceProcessingResult.Failure($"Burst processing failed: {e.Message}");
             }
         }
     }

@@ -225,7 +225,7 @@ namespace Map.Province
                 }
             }
 
-            result.Success = true;
+            result.IsSuccess = true;
             result.ProvinceNeighbors = provinceNeighbors;
             result.ProvinceBounds = provinceBounds;
             result.CoastalProvinces = coastalSet;

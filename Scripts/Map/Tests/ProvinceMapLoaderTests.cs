@@ -48,7 +48,7 @@ namespace Map.Tests
 
             try
             {
-                Assert.IsTrue(result.Success, $"Loading should succeed: {result.ErrorMessage}");
+                Assert.IsTrue(result.IsSuccess, $"Loading should succeed: {result.ErrorMessage}");
                 Assert.Greater(result.ProvinceCount, 0, "Should find provinces");
                 Assert.Greater(result.Width, 0, "Width should be positive");
                 Assert.Greater(result.Height, 0, "Height should be positive");
@@ -69,7 +69,7 @@ namespace Map.Tests
             string invalidPath = "nonexistent/provinces.bmp";
             var result = ProvinceMapLoader.LoadProvinceMap(invalidPath, textureManager);
 
-            Assert.IsFalse(result.Success, "Should fail for invalid file");
+            Assert.IsFalse(result.IsSuccess, "Should fail for invalid file");
             Assert.IsNotEmpty(result.ErrorMessage, "Should have error message");
 
             // Shouldn't need disposal for failed result
@@ -90,7 +90,7 @@ namespace Map.Tests
             var result = ProvinceMapLoader.LoadProvinceMap(provincesPath, textureManager);
             try
             {
-                Assert.IsTrue(result.Success, "Should succeed loading valid file");
+                Assert.IsTrue(result.IsSuccess, "Should succeed loading valid file");
                 Assert.Greater(result.Width, 0, "Width should be positive");
                 Assert.Greater(result.Height, 0, "Height should be positive");
             }
@@ -114,7 +114,7 @@ namespace Map.Tests
             var result = ProvinceMapLoader.LoadProvinceMap(provincesPath, textureManager);
             try
             {
-                if (result.Success)
+                if (result.IsSuccess)
                 {
                     Assert.Greater(result.ProvinceCount, 0, "Should have positive province count");
                     Assert.Less(result.ProvinceCount, 65535, "Should not exceed maximum province limit");
@@ -211,7 +211,7 @@ namespace Map.Tests
 
             try
             {
-                if (result.Success)
+                if (result.IsSuccess)
                 {
                     ArchonLogger.Log($"Loading {result.ProvinceCount} provinces took {stopwatch.ElapsedMilliseconds}ms", "map_rendering");
 

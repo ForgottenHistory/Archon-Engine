@@ -21,7 +21,7 @@ namespace Map.Simulation
         /// </summary>
         public struct SimulationLoadResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public string ErrorMessage;
             public ProvinceSimulation Simulation;
             public SimulationMapData MapData;
@@ -142,7 +142,7 @@ namespace Map.Simulation
             // Use existing ProvinceMapParser
             var mapResult = ProvinceMapParser.ParseProvinceMap(bmpData, csvData, Allocator.TempJob);
 
-            if (!mapResult.Success)
+            if (!mapResult.IsSuccess)
             {
                 result.ErrorMessage = "Failed to parse province map with definition CSV";
                 return result;
@@ -167,7 +167,7 @@ namespace Map.Simulation
                 // Task 1.2.6: Store province pixel boundaries for GPU texture generation
                 result.MapData = CreateMapDataFromParserResult(mapResult, uniqueProvinces);
 
-                result.Success = true;
+                result.IsSuccess = true;
                 uniqueProvinces.Dispose();
 
                 ArchonLogger.Log($"Simulation loaded with {result.Simulation.ProvinceCount} provinces", "map_rendering");
@@ -198,7 +198,7 @@ namespace Map.Simulation
             }
 
             var pixelData = BMPParser.GetPixelData(bmpData, header);
-            if (!pixelData.Success)
+            if (!pixelData.IsSuccess)
             {
                 result.ErrorMessage = "Failed to extract pixel data from BMP";
                 return result;
@@ -208,7 +208,7 @@ namespace Map.Simulation
             {
                 // Extract unique colors and assign province IDs
                 var colorMapping = ExtractColorsAndAssignIDs(pixelData, maxProvinces);
-                if (!colorMapping.Success)
+                if (!colorMapping.IsSuccess)
                 {
                     result.ErrorMessage = colorMapping.ErrorMessage;
                     colorMapping.Dispose();
@@ -220,7 +220,7 @@ namespace Map.Simulation
                     // Create simulation from color mapping
                     result.Simulation = CreateSimulationFromColorMapping(colorMapping);
                     result.MapData = CreateMapDataFromPixelData(pixelData, colorMapping);
-                    result.Success = true;
+                    result.IsSuccess = true;
 
                     ArchonLogger.Log($"Simulation loaded with {result.Simulation.ProvinceCount} provinces (no CSV)", "map_rendering");
                 }
@@ -416,7 +416,7 @@ namespace Map.Simulation
         /// </summary>
         private struct ColorMappingResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public string ErrorMessage;
             public NativeHashMap<Color32, ushort> ColorToID;
             public NativeArray<ushort> UniqueIDs;
@@ -494,7 +494,7 @@ namespace Map.Simulation
             }
 
             colorArray.Dispose();
-            result.Success = true;
+            result.IsSuccess = true;
             return result;
         }
 

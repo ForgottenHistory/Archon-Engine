@@ -25,7 +25,7 @@ namespace Core.Loaders
         {
             if (!Directory.Exists(countriesDirectory))
             {
-                return Json5CountryLoadResult.Failed($"Country directory not found: {countriesDirectory}");
+                return Json5CountryLoadResult.Failure($"Country directory not found: {countriesDirectory}");
             }
 
             // Get all JSON5 files
@@ -33,7 +33,7 @@ namespace Core.Loaders
 
             if (files.Length == 0)
             {
-                return Json5CountryLoadResult.Failed("No country JSON5 files found");
+                return Json5CountryLoadResult.Failure("No country JSON5 files found");
             }
 
             ArchonLogger.Log($"Loading {files.Length} country JSON5 files...", "core_data_loading");
@@ -64,7 +64,7 @@ namespace Core.Loaders
 
             if (rawDataList.Count == 0)
             {
-                return Json5CountryLoadResult.Failed("No valid country data loaded");
+                return Json5CountryLoadResult.Failure("No valid country data loaded");
             }
 
             // Convert to NativeArray for burst processing

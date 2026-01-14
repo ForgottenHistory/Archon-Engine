@@ -30,7 +30,7 @@ namespace Core.Initialization.Phases
             // Load real country tags using ManifestLoader pattern
             var countryTagResult = CountryTagLoader.LoadCountryTags(context.Settings.DataDirectory);
 
-            if (!countryTagResult.Success)
+            if (!countryTagResult.IsSuccess)
             {
                 ArchonLogger.LogWarning($"Failed to load country tags: {countryTagResult.ErrorMessage}", "core_data_loading");
                 // Continue with limited functionality
@@ -85,7 +85,7 @@ namespace Core.Initialization.Phases
             yield return null;
 
             // Check if we have province history data
-            bool hasProvinceHistory = context.ProvinceInitialStates.Success &&
+            bool hasProvinceHistory = context.ProvinceInitialStates.IsSuccess &&
                                       context.ProvinceInitialStates.InitialStates.IsCreated &&
                                       context.ProvinceInitialStates.InitialStates.Length > 0;
 

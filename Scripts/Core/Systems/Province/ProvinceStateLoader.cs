@@ -34,7 +34,7 @@ namespace Core.Systems.Province
 
             var result = BurstProvinceHistoryLoader.LoadProvinceInitialStates(dataDirectory);
 
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
                 ArchonLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}", "core_simulation");
                 return;
@@ -63,7 +63,7 @@ namespace Core.Systems.Province
 
             var result = BurstProvinceHistoryLoader.LoadProvinceInitialStates(dataDirectory);
 
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
                 ArchonLogger.LogError($"Failed to load province initial states: {result.ErrorMessage}", "core_simulation");
                 return result;

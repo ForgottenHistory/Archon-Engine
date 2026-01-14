@@ -31,9 +31,9 @@ namespace Map.Loading.Bitmaps
             public byte CompressionMethod;
             public byte FilterMethod;
             public byte InterlaceMethod;
-            public bool Success;
+            public bool IsSuccess;
 
-            public bool IsValid => Success && Width > 0 && Height > 0 && CompressionMethod == 0;
+            public bool IsValid => IsSuccess && Width > 0 && Height > 0 && CompressionMethod == 0;
             public bool IsSupported => BitDepth == 8 && (ColorType == 0 || ColorType == 2 || ColorType == 3 || ColorType == 6);
             public int BytesPerPixel => ColorType switch
             {
@@ -56,7 +56,7 @@ namespace Map.Loading.Bitmaps
             public NativeArray<byte> DecodedPixels;  // Decompressed and unfiltered pixel data
             public PNGHeader Header;
             public Color32[] Palette;    // For indexed color images
-            public bool Success;
+            public bool IsSuccess;
 
             public void Dispose()
             {
@@ -86,7 +86,7 @@ namespace Map.Loading.Bitmaps
         {
             if (fileData.Length < 33 || !IsPNG(fileData)) // 8 sig + 25 minimum IHDR chunk
             {
-                return new PNGHeader { Success = false };
+                return new PNGHeader { IsSuccess = false };
             }
 
             // First chunk should be IHDR at offset 8
@@ -97,7 +97,7 @@ namespace Map.Loading.Bitmaps
             // IHDR = 0x49484452
             if (chunkType != 0x49484452 || chunkLength != 13)
             {
-                return new PNGHeader { Success = false };
+                return new PNGHeader { IsSuccess = false };
             }
 
             // IHDR data starts at offset 16
@@ -110,7 +110,7 @@ namespace Map.Loading.Bitmaps
                 CompressionMethod = fileData[26],
                 FilterMethod = fileData[27],
                 InterlaceMethod = fileData[28],
-                Success = true
+                IsSuccess = true
             };
         }
 
@@ -122,14 +122,14 @@ namespace Map.Loading.Bitmaps
             var header = ParseHeader(fileData);
             if (!header.IsValid || !header.IsSupported)
             {
-                return new PNGPixelData { Success = false };
+                return new PNGPixelData { IsSuccess = false };
             }
 
             if (header.InterlaceMethod != 0)
             {
                 // Interlaced PNGs not supported yet
                 ArchonLogger.LogWarning("Interlaced PNG not supported", "map_rendering");
-                return new PNGPixelData { Success = false };
+                return new PNGPixelData { IsSuccess = false };
             }
 
             try
@@ -140,14 +140,14 @@ namespace Map.Loading.Bitmaps
 
                 if (compressedData.Length == 0)
                 {
-                    return new PNGPixelData { Success = false };
+                    return new PNGPixelData { IsSuccess = false };
                 }
 
                 // Decompress using zlib (skip 2-byte zlib header)
                 byte[] decompressed = DecompressZlib(compressedData);
                 if (decompressed == null)
                 {
-                    return new PNGPixelData { Success = false };
+                    return new PNGPixelData { IsSuccess = false };
                 }
 
                 // Calculate expected size (includes filter byte per row)
@@ -157,7 +157,7 @@ namespace Map.Loading.Bitmaps
 
                 if (decompressed.Length < expectedSize)
                 {
-                    return new PNGPixelData { Success = false };
+                    return new PNGPixelData { IsSuccess = false };
                 }
 
                 // Unfilter and store in NativeArray
@@ -169,13 +169,13 @@ namespace Map.Loading.Bitmaps
                     DecodedPixels = pixels,
                     Header = header,
                     Palette = palette,
-                    Success = true
+                    IsSuccess = true
                 };
             }
             catch (Exception e)
             {
                 ArchonLogger.LogError($"PNG parse error: {e.Message}", "map_rendering");
-                return new PNGPixelData { Success = false };
+                return new PNGPixelData { IsSuccess = false };
             }
         }
 
@@ -187,7 +187,7 @@ namespace Map.Loading.Bitmaps
         {
             r = g = b = 0;
 
-            if (!pixelData.Success || x < 0 || x >= pixelData.Header.Width || y < 0 || y >= pixelData.Header.Height)
+            if (!pixelData.IsSuccess || x < 0 || x >= pixelData.Header.Width || y < 0 || y >= pixelData.Header.Height)
                 return false;
 
             int bytesPerPixel = pixelData.Header.BytesPerPixel;
@@ -259,7 +259,7 @@ namespace Map.Loading.Bitmaps
         {
             var uniqueColors = new NativeHashSet<int>(1000, allocator);
 
-            if (!pixelData.Success)
+            if (!pixelData.IsSuccess)
                 return uniqueColors;
 
             int width = pixelData.Header.Width;
@@ -286,7 +286,7 @@ namespace Map.Loading.Bitmaps
         {
             var matchingPixels = new NativeList<PixelCoord>(100, allocator);
 
-            if (!pixelData.Success)
+            if (!pixelData.IsSuccess)
                 return matchingPixels;
 
             int width = pixelData.Header.Width;

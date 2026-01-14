@@ -111,7 +111,7 @@ namespace Core.Commands
     /// </summary>
     public struct CommandExecutionResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public NativeList<ushort> AffectedProvinces;
         public uint NewStateChecksum;
 

@@ -44,7 +44,7 @@ namespace Map.Tests.Simulation
             Assert.IsTrue(validationResult.IsValid, "Command should be valid");
 
             var executionResult = command.Execute(testSimulation);
-            Assert.IsTrue(executionResult.Success, "Command should execute successfully");
+            Assert.IsTrue(executionResult.IsSuccess, "Command should execute successfully");
 
             var newState = testSimulation.GetProvinceState(1);
             Assert.AreEqual(50, newState.ownerID, "Owner should be updated");
@@ -109,7 +109,7 @@ namespace Map.Tests.Simulation
             var command = new ChangeOwnerCommand(1, 100, 1, 75, 75);
 
             var submissionResult = commandProcessor.SubmitCommand(command);
-            Assert.IsTrue(submissionResult.Success, "Command submission should succeed");
+            Assert.IsTrue(submissionResult.IsSuccess, "Command submission should succeed");
 
             var tickResult = commandProcessor.ProcessTick();
             Assert.AreEqual(1, tickResult.CommandsExecuted, "Should execute one command");
@@ -125,7 +125,7 @@ namespace Map.Tests.Simulation
             var command = new ChangeOwnerCommand(1, 100, 999, 75, 75); // Invalid province
 
             var submissionResult = commandProcessor.SubmitCommand(command);
-            Assert.IsFalse(submissionResult.Success, "Invalid command submission should fail");
+            Assert.IsFalse(submissionResult.IsSuccess, "Invalid command submission should fail");
         }
 
         [Test]
@@ -139,12 +139,12 @@ namespace Map.Tests.Simulation
             };
 
             var batchResult = CommandSerializer.SerializeCommandBatch(commands, 1, 100, Allocator.Temp);
-            Assert.IsTrue(batchResult.Success, "Batch serialization should succeed");
+            Assert.IsTrue(batchResult.IsSuccess, "Batch serialization should succeed");
 
             try
             {
                 var deserializeResult = CommandSerializer.DeserializeCommandBatch(batchResult.Buffer);
-                Assert.IsTrue(deserializeResult.Success, "Batch deserialization should succeed");
+                Assert.IsTrue(deserializeResult.IsSuccess, "Batch deserialization should succeed");
 
                 Assert.AreEqual(3, deserializeResult.Commands.Count, "Should have 3 commands");
                 Assert.AreEqual(1, deserializeResult.Header.Tick, "Header tick should match");
@@ -348,7 +348,7 @@ namespace Map.Tests.Simulation
             try
             {
                 var result = CommandSerializer.DeserializeCommand(buffer, 0);
-                Assert.IsFalse(result.Success, "Unknown command type should fail deserialization");
+                Assert.IsFalse(result.IsSuccess, "Unknown command type should fail deserialization");
             }
             finally
             {

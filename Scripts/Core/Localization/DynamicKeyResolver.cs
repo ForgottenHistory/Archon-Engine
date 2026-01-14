@@ -59,7 +59,7 @@ namespace Core.Localization
             public FixedString512Bytes ResolvedValue;
             public FixedString128Bytes ResolvedKey;
             public int ResolutionSteps; // Number of resolution steps taken
-            public bool Success;
+            public bool IsSuccess;
             public bool UsedFallback;
             public bool UsedWildcard;
         }
@@ -115,7 +115,7 @@ namespace Core.Localization
             MultiLanguageExtractor.MultiLanguageResult multiLangResult,
             FixedString64Bytes preferredLanguage)
         {
-            var result = new ResolutionResult { Success = false };
+            var result = new ResolutionResult { IsSuccess = false };
 
             try
             {
@@ -138,7 +138,7 @@ namespace Core.Localization
                 {
                     if (TryGetValueByHash(multiLangResult, preferredLanguage, mappedHash, out result.ResolvedValue))
                     {
-                        result.Success = true;
+                        result.IsSuccess = true;
                         result.ResolutionSteps++;
                         return result;
                     }
@@ -147,7 +147,7 @@ namespace Core.Localization
                 // Step 3: Direct lookup
                 if (TryGetValueByKey(multiLangResult, preferredLanguage, result.ResolvedKey, out result.ResolvedValue))
                 {
-                    result.Success = true;
+                    result.IsSuccess = true;
                     result.ResolutionSteps++;
                     return result;
                 }
@@ -155,7 +155,7 @@ namespace Core.Localization
                 // Step 4: Hierarchical resolution with prefixes
                 if (TryResolveWithPrefixes(result.ResolvedKey, context, multiLangResult, preferredLanguage, out result.ResolvedValue))
                 {
-                    result.Success = true;
+                    result.IsSuccess = true;
                     result.UsedFallback = true;
                     result.ResolutionSteps += 2;
                     return result;
@@ -166,7 +166,7 @@ namespace Core.Localization
                 {
                     if (TryResolveWithWildcards(result.ResolvedKey, context, multiLangResult, preferredLanguage, out result.ResolvedValue))
                     {
-                        result.Success = true;
+                        result.IsSuccess = true;
                         result.UsedWildcard = true;
                         result.ResolutionSteps += 3;
                         return result;
@@ -178,7 +178,7 @@ namespace Core.Localization
                 {
                     if (TryResolveWithScope(result.ResolvedKey, context, multiLangResult, preferredLanguage, out result.ResolvedValue))
                     {
-                        result.Success = true;
+                        result.IsSuccess = true;
                         result.UsedFallback = true;
                         result.ResolutionSteps += 2;
                         return result;
@@ -187,7 +187,7 @@ namespace Core.Localization
             }
             catch (Exception)
             {
-                result.Success = false;
+                result.IsSuccess = false;
             }
 
             return result;

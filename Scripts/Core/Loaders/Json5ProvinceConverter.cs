@@ -24,7 +24,7 @@ namespace Core.Loaders
 
             if (!Directory.Exists(provincesDir))
             {
-                return Json5ProvinceLoadResult.Failed($"Province history directory not found: {provincesDir}");
+                return Json5ProvinceLoadResult.Failure($"Province history directory not found: {provincesDir}");
             }
 
             // Get all JSON5 files
@@ -32,7 +32,7 @@ namespace Core.Loaders
 
             if (files.Length == 0)
             {
-                return Json5ProvinceLoadResult.Failed("No province JSON5 files found");
+                return Json5ProvinceLoadResult.Failure("No province JSON5 files found");
             }
 
             ArchonLogger.Log($"Loading {files.Length} province JSON5 files...", "core_data_loading");
@@ -63,7 +63,7 @@ namespace Core.Loaders
 
             if (rawDataList.Count == 0)
             {
-                return Json5ProvinceLoadResult.Failed("No valid province data loaded");
+                return Json5ProvinceLoadResult.Failure("No valid province data loaded");
             }
 
             // Convert to NativeArray for burst processing

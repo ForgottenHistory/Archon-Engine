@@ -50,7 +50,7 @@ namespace Core.Localization
             public FixedString512Bytes ProcessedString;
             public int ReplacementsMade;
             public int UnresolvedReferences;
-            public bool Success;
+            public bool IsSuccess;
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Core.Localization
                 ProcessedString = inputString,
                 ReplacementsMade = 0,
                 UnresolvedReferences = 0,
-                Success = true
+                IsSuccess = true
             };
 
             if (inputString.Length == 0)

@@ -93,7 +93,7 @@ namespace Core.Data
             };
         }
 
-        public static Json5CountryLoadResult Failed(string error)
+        public static Json5CountryLoadResult Failure(string error)
         {
             return new Json5CountryLoadResult
             {

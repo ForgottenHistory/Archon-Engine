@@ -25,9 +25,9 @@ namespace Core.Loaders
 
             var result = loader.LoadManifest(manifestPath);
 
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
-                return CountryTagLoadResult.CreateFailed(result.ErrorMessage);
+                return CountryTagLoadResult.Failure(result.ErrorMessage);
             }
 
             // Validate country tag format
@@ -62,7 +62,7 @@ namespace Core.Loaders
 
             ArchonLogger.Log($"CountryTagLoader: Loaded {validTags.Count} valid country tags", "core_data_loading");
 
-            return CountryTagLoadResult.CreateSuccess(validTags, errors);
+            return CountryTagLoadResult.Success(validTags, errors);
         }
 
         /// <summary>
@@ -83,26 +83,26 @@ namespace Core.Loaders
     /// </summary>
     public struct CountryTagLoadResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public Dictionary<string, string> CountryTags;
         public List<string> Errors;
         public string ErrorMessage;
 
-        public static CountryTagLoadResult CreateSuccess(Dictionary<string, string> tags, List<string> errors)
+        public static CountryTagLoadResult Success(Dictionary<string, string> tags, List<string> errors)
         {
             return new CountryTagLoadResult
             {
-                Success = true,
+                IsSuccess = true,
                 CountryTags = tags,
                 Errors = errors
             };
         }
 
-        public static CountryTagLoadResult CreateFailed(string error)
+        public static CountryTagLoadResult Failure(string error)
         {
             return new CountryTagLoadResult
             {
-                Success = false,
+                IsSuccess = false,
                 ErrorMessage = error,
                 Errors = new List<string> { error }
             };

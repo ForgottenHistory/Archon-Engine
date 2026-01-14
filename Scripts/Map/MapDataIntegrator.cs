@@ -106,7 +106,7 @@ namespace Map.Integration
                 textureManager
             );
 
-            if (!loadResult.Success)
+            if (!loadResult.IsSuccess)
             {
                 ArchonLogger.LogError($"Failed to load province bitmap: {loadResult.ErrorMessage}", "map_rendering");
 
@@ -135,7 +135,7 @@ namespace Map.Integration
                 ArchonLogger.Log("Detecting province neighbors...", "map_rendering");
                 var neighborResult = ProvinceNeighborDetector.DetectNeighbors(loadResult, includeOceanNeighbors);
 
-                if (neighborResult.Success)
+                if (neighborResult.IsSuccess)
                 {
                     ProvinceNeighborDetector.LogNeighborStatistics(neighborResult);
 
@@ -154,7 +154,7 @@ namespace Map.Integration
                 ArchonLogger.Log("Generating province metadata...", "map_rendering");
                 var metadataResult = ProvinceMetadataGenerator.GenerateMetadata(loadResult, metadataManager.NeighborResult, generateConvexHulls);
 
-                if (metadataResult.Success)
+                if (metadataResult.IsSuccess)
                 {
                     ArchonLogger.Log($"Province metadata generation complete for {metadataResult.ProvinceMetadata.Count} provinces", "map_rendering");
 
@@ -466,12 +466,12 @@ namespace Map.Integration
             }
 
             // Dispose neighbor and metadata results through metadata manager accessors
-            if (metadataManager?.NeighborResult.Success == true)
+            if (metadataManager?.NeighborResult.IsSuccess == true)
             {
                 metadataManager.NeighborResult.Dispose();
             }
 
-            if (metadataManager?.MetadataResult.Success == true)
+            if (metadataManager?.MetadataResult.IsSuccess == true)
             {
                 metadataManager.MetadataResult.Dispose();
             }

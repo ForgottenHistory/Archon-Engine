@@ -56,9 +56,9 @@ namespace Map.Loading.Bitmaps
         {
             public BMPFileHeader FileHeader;
             public BMPInfoHeader InfoHeader;
-            public bool Success;
+            public bool IsSuccess;
 
-            public bool IsValid => Success && FileHeader.IsValid && InfoHeader.IsValid && InfoHeader.IsSupported;
+            public bool IsValid => IsSuccess && FileHeader.IsValid && InfoHeader.IsValid && InfoHeader.IsSupported;
             public int Width => InfoHeader.Width;
             public int Height => InfoHeader.AbsoluteHeight;
             public int BitsPerPixel => InfoHeader.BitsPerPixel;
@@ -75,7 +75,7 @@ namespace Map.Loading.Bitmaps
         {
             public NativeSlice<byte> RawData;
             public BMPHeader Header;
-            public bool Success;
+            public bool IsSuccess;
 
             public void Dispose()
             {
@@ -100,7 +100,7 @@ namespace Map.Loading.Bitmaps
         {
             if (fileData.Length < 54) // Minimum BMP size (14 + 40 bytes)
             {
-                return new BMPHeader { Success = false };
+                return new BMPHeader { IsSuccess = false };
             }
 
             unsafe
@@ -137,7 +137,7 @@ namespace Map.Loading.Bitmaps
                 {
                     FileHeader = fileHeader,
                     InfoHeader = infoHeader,
-                    Success = true
+                    IsSuccess = true
                 };
             }
         }
@@ -159,12 +159,12 @@ namespace Map.Loading.Bitmaps
         {
             if (!header.IsValid)
             {
-                return new BMPPixelData { Success = false };
+                return new BMPPixelData { IsSuccess = false };
             }
 
             if (fileData.Length < header.PixelDataOffset + header.PixelDataSize)
             {
-                return new BMPPixelData { Success = false };
+                return new BMPPixelData { IsSuccess = false };
             }
 
             var pixelDataSlice = fileData.Slice((int)header.PixelDataOffset, (int)header.PixelDataSize);
@@ -173,7 +173,7 @@ namespace Map.Loading.Bitmaps
             {
                 RawData = pixelDataSlice,
                 Header = header,
-                Success = true
+                IsSuccess = true
             };
         }
 
@@ -186,7 +186,7 @@ namespace Map.Loading.Bitmaps
         {
             r = g = b = 0;
 
-            if (!pixelData.Success || x < 0 || x >= pixelData.Header.Width || y < 0 || y >= pixelData.Header.Height)
+            if (!pixelData.IsSuccess || x < 0 || x >= pixelData.Header.Width || y < 0 || y >= pixelData.Header.Height)
                 return false;
 
             var header = pixelData.Header;
@@ -248,7 +248,7 @@ namespace Map.Loading.Bitmaps
         {
             var uniqueColors = new NativeHashSet<int>(1000, allocator);
 
-            if (!pixelData.Success)
+            if (!pixelData.IsSuccess)
                 return uniqueColors;
 
             int width = pixelData.Header.Width;
@@ -276,7 +276,7 @@ namespace Map.Loading.Bitmaps
         {
             var matchingPixels = new NativeList<PixelCoord>(100, allocator);
 
-            if (!pixelData.Success)
+            if (!pixelData.IsSuccess)
                 return matchingPixels;
 
             int width = pixelData.Header.Width;

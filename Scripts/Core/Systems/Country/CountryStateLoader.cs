@@ -25,7 +25,7 @@ namespace Core.Systems.Country
         /// </summary>
         public void InitializeFromCountryData(CountryDataLoadResult countryDataResult)
         {
-            if (!countryDataResult.Success)
+            if (!countryDataResult.IsSuccess)
             {
                 ArchonLogger.LogError($"Cannot initialize from failed country data: {countryDataResult.ErrorMessage}", "core_simulation");
                 return;

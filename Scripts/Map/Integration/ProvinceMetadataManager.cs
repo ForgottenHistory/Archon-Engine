@@ -31,7 +31,7 @@ namespace Map.Integration
         {
             neighborResult = result;
 
-            if (result.Success)
+            if (result.IsSuccess)
             {
                 UpdateCoastalFlags();
             }
@@ -44,7 +44,7 @@ namespace Map.Integration
         {
             metadataResult = result;
 
-            if (result.Success)
+            if (result.IsSuccess)
             {
                 UpdateTerrainFlags();
             }
@@ -55,7 +55,7 @@ namespace Map.Integration
         /// </summary>
         private void UpdateCoastalFlags()
         {
-            if (!neighborResult.Success)
+            if (!neighborResult.IsSuccess)
                 return;
 
             foreach (var kvp in neighborResult.ProvinceNeighbors)
@@ -92,7 +92,7 @@ namespace Map.Integration
         /// </summary>
         private void UpdateTerrainFlags()
         {
-            if (!metadataResult.Success)
+            if (!metadataResult.IsSuccess)
                 return;
 
             foreach (var kvp in metadataResult.ProvinceMetadata)
@@ -118,7 +118,7 @@ namespace Map.Integration
         /// </summary>
         public HashSet<ushort> GetNeighbors(ushort provinceID)
         {
-            if (!neighborResult.Success)
+            if (!neighborResult.IsSuccess)
             {
                 ArchonLogger.LogWarning("ProvinceMetadataManager: Neighbor data not available", "map_rendering");
                 return new HashSet<ushort>();
@@ -154,7 +154,7 @@ namespace Map.Integration
         /// </summary>
         public ProvinceMetadataGenerator.ProvinceMetadata GetMetadata(ushort provinceID)
         {
-            if (!metadataResult.Success)
+            if (!metadataResult.IsSuccess)
             {
                 ArchonLogger.LogWarning("ProvinceMetadataManager: Metadata not available", "map_rendering");
                 return default;
@@ -195,7 +195,7 @@ namespace Map.Integration
             var provinces = new List<ushort>();
 
             // Query metadata result instead of ProvinceData (which doesn't have terrainType field)
-            if (!metadataResult.Success)
+            if (!metadataResult.IsSuccess)
             {
                 ArchonLogger.LogWarning("ProvinceMetadataManager: Cannot query by terrain - metadata not available", "map_rendering");
                 return provinces;

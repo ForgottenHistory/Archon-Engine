@@ -32,7 +32,7 @@ namespace Core.Loaders
 
                 if (!json5Result.success)
                 {
-                    return CountryDataLoadResult.CreateFailure($"JSON5 loading failed: {json5Result.errorMessage}");
+                    return CountryDataLoadResult.Failure($"JSON5 loading failed: {json5Result.errorMessage}");
                 }
 
                 ArchonLogger.Log($"JSON5 loading complete: {json5Result.loadedCount} countries loaded", "core_data_loading");
@@ -43,7 +43,7 @@ namespace Core.Loaders
                 if (!burstResult.success)
                 {
                     json5Result.Dispose();
-                    return CountryDataLoadResult.CreateFailure($"Burst processing failed: {burstResult.errorMessage}");
+                    return CountryDataLoadResult.Failure($"Burst processing failed: {burstResult.errorMessage}");
                 }
 
                 ArchonLogger.Log($"Burst processing complete: {burstResult.processedCount} countries processed", "core_data_loading");
@@ -68,16 +68,16 @@ namespace Core.Loaders
 
                 if (countryCollection != null)
                 {
-                    return CountryDataLoadResult.CreateSuccess(countryCollection, stats);
+                    return CountryDataLoadResult.Success(countryCollection, stats);
                 }
                 else
                 {
-                    return CountryDataLoadResult.CreateFailure("Failed to create country collection");
+                    return CountryDataLoadResult.Failure("Failed to create country collection");
                 }
             }
             catch (Exception e)
             {
-                return CountryDataLoadResult.CreateFailure($"Country loading failed: {e.Message}");
+                return CountryDataLoadResult.Failure($"Country loading failed: {e.Message}");
             }
         }
 
@@ -90,7 +90,7 @@ namespace Core.Loaders
         {
             if (!json5Result.rawData.IsCreated || json5Result.rawData.Length == 0)
             {
-                return CountryProcessingResult.Failed("No raw country data to process");
+                return CountryProcessingResult.Failure("No raw country data to process");
             }
 
             // Prepare output array for hot data only (burst-compatible)
@@ -122,7 +122,7 @@ namespace Core.Loaders
                 if (processedHotData.IsCreated)
                     processedHotData.Dispose();
 
-                return CountryProcessingResult.Failed($"Burst processing failed: {e.Message}");
+                return CountryProcessingResult.Failure($"Burst processing failed: {e.Message}");
             }
         }
 

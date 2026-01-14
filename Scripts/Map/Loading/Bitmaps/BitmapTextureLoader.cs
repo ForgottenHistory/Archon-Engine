@@ -57,7 +57,7 @@ namespace Map.Loading.Bitmaps
                 // Load bitmap using Burst-compiled loader
                 var bitmapResult = await bmpLoader.LoadBMPAsync(bitmapPath);
 
-                if (!bitmapResult.Success)
+                if (!bitmapResult.IsSuccess)
                 {
                     ArchonLogger.LogWarning($"{GetLoaderName()}: Failed to load bitmap: {bitmapResult.ErrorMessage}", "map_initialization");
                     return;

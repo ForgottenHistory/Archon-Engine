@@ -44,7 +44,7 @@ namespace Core.Localization
             public NativeList<ColoredTextSegment> Segments;
             public FixedString512Bytes UnityRichText;
             public FixedString512Bytes PlainText;
-            public bool Success;
+            public bool IsSuccess;
 
             public void Dispose()
             {
@@ -87,12 +87,12 @@ namespace Core.Localization
             var result = new MarkupResult
             {
                 Segments = new NativeList<ColoredTextSegment>(16, allocator),
-                Success = false
+                IsSuccess = false
             };
 
             if (input.Length == 0)
             {
-                result.Success = true;
+                result.IsSuccess = true;
                 return result;
             }
 
@@ -114,7 +114,7 @@ namespace Core.Localization
                 // Convert results back to FixedStrings
                 result.PlainText = BufferToFixedString(plainTextBuffer, parseResult.PlainTextLength);
                 result.UnityRichText = BufferToFixedString(richTextBuffer, parseResult.RichTextLength);
-                result.Success = true;
+                result.IsSuccess = true;
 
                 workingBuffer.Dispose();
                 plainTextBuffer.Dispose();
@@ -123,7 +123,7 @@ namespace Core.Localization
             catch (Exception)
             {
                 result.Dispose();
-                result.Success = false;
+                result.IsSuccess = false;
             }
 
             return result;
@@ -137,7 +137,7 @@ namespace Core.Localization
             var result = ParseMarkup(input, Allocator.Temp);
             try
             {
-                return result.Success ? result.UnityRichText : input;
+                return result.IsSuccess ? result.UnityRichText : input;
             }
             finally
             {
@@ -153,7 +153,7 @@ namespace Core.Localization
             var result = ParseMarkup(input, Allocator.Temp);
             try
             {
-                return result.Success ? result.PlainText : input;
+                return result.IsSuccess ? result.PlainText : input;
             }
             finally
             {

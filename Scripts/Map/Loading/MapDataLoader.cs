@@ -117,7 +117,7 @@ namespace Map.Loading
                 // Load province map for visual data only (Core already has the simulation data)
                 var provinceResult = await provinceProcessor.LoadProvinceMapAsync(bmpPath, definitionPath);
 
-                if (!provinceResult.Success)
+                if (!provinceResult.IsSuccess)
                 {
                     ArchonLogger.LogError($"MapDataLoader: Failed to load province bitmap: {provinceResult.ErrorMessage}", "map_initialization");
                     return null;
@@ -188,7 +188,7 @@ namespace Map.Loading
                 // Load province map using modular system
                 var provinceResult = await provinceProcessor.LoadProvinceMapAsync(bmpPath, definitionPath);
 
-                if (!provinceResult.Success)
+                if (!provinceResult.IsSuccess)
                 {
                     ArchonLogger.LogError($"MapDataLoader: Failed to load province map: {provinceResult.ErrorMessage}", "map_initialization");
                     return null;

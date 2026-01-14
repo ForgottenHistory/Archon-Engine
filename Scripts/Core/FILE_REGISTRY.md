@@ -229,5 +229,36 @@
 
 ---
 
-*Updated: 2026-01-08*
-*Added: Burst-compiled pathfinding, BFS distance calculator, NativeMinHeap, native data structs*
+## Common/
+- **Core.Common.Result** - Lightweight result type for success/failure operations (implicit bool conversion)
+- **Core.Common.Result<T>** - Generic result type carrying a value on success; includes Map, Then, OnSuccess, OnFailure
+- **Core.Common.ResultExtensions** - Combine, CombineAll, Try utilities for result composition
+
+> **Result Pattern Convention:** All result types use `Success(...)` and `Failure(...)` factory methods.
+> Domain-specific result types (e.g., ScenarioLoadResult, ProvinceInitialStateLoadResult) follow this naming.
+
+---
+
+## Localization/
+- **Core.Localization.LocalizationManager** - Static facade for localization (Get, HasKey, SetLanguage)
+- **Core.Localization.YAMLTokenizer** - Burst-compatible YAML tokenizer for Paradox-style localization files
+- **Core.Localization.YAMLParser** - Parse tokenized YAML into key-value pairs with FNV-1a hashing
+- **Core.Localization.MultiLanguageExtractor** - Extract all languages from localization directory
+- **Core.Localization.LocalizationFallbackChain** - Language fallback (e.g., french → english)
+- **Core.Localization.StringReplacementSystem** - Replace $PARAM$ placeholders in localized strings
+- **Core.Localization.DynamicKeyResolver** - Resolve dynamic keys like PROV[id] or [scope.key]
+- **Core.Localization.ColoredTextMarkup** - Parse Paradox color tags (#Y, #R) to Unity rich text
+
+---
+
+## Validation/
+- **Core.Validation.Validate** - Fluent validation entry point: `Validate.For(gameState)`
+- **Core.Validation.ValidationBuilder** - Chainable validation builder for commands
+- **Core.Validation.ProvinceValidationExtensions** - Province validations: Exists, OwnedBy, NotOwnedBy
+- **Core.Validation.CountryValidationExtensions** - Country validations: Exists, IsAtWarWith
+- **Core.Validation.CommonValidationExtensions** - Common: IsPositive, IsInRange, NotNull
+
+---
+
+*Updated: 2026-01-14*
+*Added: Common/Result types, Localization layer, Validation infrastructure, standardized result naming*

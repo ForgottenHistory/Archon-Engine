@@ -304,7 +304,7 @@ namespace Map.Core
         // Simplified conversion methods (moved from MapGenerator)
         private ProvinceMapping ConvertProvinceResultToMapping(ProvinceMapResult provinceResult, MapTextureManager textureManager)
         {
-            if (!provinceResult.Success)
+            if (!provinceResult.IsSuccess)
                 return null;
 
             var mapping = new ProvinceMapping();
@@ -329,7 +329,7 @@ namespace Map.Core
 
         private ProvinceMapping ConvertProvinceResultWithSimulationData(ProvinceMapResult provinceResult, MapTextureManager textureManager, GameState gameState)
         {
-            if (!provinceResult.Success || gameState == null)
+            if (!provinceResult.IsSuccess || gameState == null)
                 return null;
 
             var mapping = new ProvinceMapping();

@@ -115,7 +115,7 @@ namespace Core.Systems
                 return;
             }
 
-            if (!loadResult.Success)
+            if (!loadResult.IsSuccess)
             {
                 ArchonLogger.LogError($"Cannot initialize from failed load result: {loadResult.ErrorMessage}", "core_simulation");
                 return;
@@ -226,7 +226,7 @@ namespace Core.Systems
                 return;
             }
 
-            if (!loadResult.Success)
+            if (!loadResult.IsSuccess)
             {
                 ArchonLogger.LogWarning($"Cannot apply states from failed load result: {loadResult.ErrorMessage}", "core_simulation");
                 return;
@@ -306,7 +306,7 @@ namespace Core.Systems
             if (!isInitialized)
             {
                 ArchonLogger.LogError("ProvinceSystem not initialized - call Initialize() first", "core_simulation");
-                return ProvinceInitialStateLoadResult.Failed("ProvinceSystem not initialized");
+                return ProvinceInitialStateLoadResult.Failure("ProvinceSystem not initialized");
             }
             return stateLoader.LoadProvinceInitialStatesForLinking(dataDirectory);
         }

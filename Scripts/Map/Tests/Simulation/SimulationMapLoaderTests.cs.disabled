@@ -40,7 +40,7 @@ namespace Map.Tests.Simulation
         {
             var result = SimulationMapLoader.LoadSimulationFromBitmap("nonexistent.bmp");
 
-            Assert.IsFalse(result.Success, "Should fail for missing file");
+            Assert.IsFalse(result.IsSuccess, "Should fail for missing file");
             Assert.IsNotNull(result.ErrorMessage);
             Assert.That(result.ErrorMessage.ToLower().Contains("not found"));
         }
@@ -61,7 +61,7 @@ namespace Map.Tests.Simulation
 
             try
             {
-                Assert.IsTrue(result.Success, $"Load should succeed. Error: {result.ErrorMessage}");
+                Assert.IsTrue(result.IsSuccess, $"Load should succeed. Error: {result.ErrorMessage}");
                 Assert.IsNotNull(result.Simulation, "Simulation should be created");
                 Assert.IsTrue(result.Simulation.IsInitialized, "Simulation should be initialized");
                 Assert.Greater(result.Simulation.ProvinceCount, 0, "Should have provinces");
@@ -105,7 +105,7 @@ namespace Map.Tests.Simulation
 
             try
             {
-                Assert.IsTrue(result.Success, $"Load should succeed. Error: {result.ErrorMessage}");
+                Assert.IsTrue(result.IsSuccess, $"Load should succeed. Error: {result.ErrorMessage}");
                 Assert.AreEqual(3, result.Simulation.ProvinceCount, "Should have 3 provinces (excluding ocean)");
 
                 // Verify specific provinces exist (ocean ID 0 is reserved but not in simulation)
@@ -139,7 +139,7 @@ namespace Map.Tests.Simulation
             // Try to load with very small max provinces limit
             var result = SimulationMapLoader.LoadSimulationFromBitmap(testMapPath, null, maxProvinces: 100);
 
-            Assert.IsFalse(result.Success, "Should fail when too many provinces");
+            Assert.IsFalse(result.IsSuccess, "Should fail when too many provinces");
             Assert.IsNotNull(result.ErrorMessage);
             Assert.That(result.ErrorMessage.ToLower().Contains("too many"));
 
@@ -160,12 +160,12 @@ namespace Map.Tests.Simulation
 
             // Should pass with reasonable limit
             var result1 = SimulationMapLoader.LoadSimulationFromBitmap(testMapPath, null, maxProvinces: 10000);
-            Assert.IsTrue(result1.Success, "Should pass with adequate limit");
+            Assert.IsTrue(result1.IsSuccess, "Should pass with adequate limit");
             result1.Dispose();
 
             // Should fail with tiny limit that would exceed memory target
             var result2 = SimulationMapLoader.LoadSimulationFromBitmap(testMapPath, null, maxProvinces: 50);
-            Assert.IsFalse(result2.Success, "Should fail when exceeding memory target");
+            Assert.IsFalse(result2.IsSuccess, "Should fail when exceeding memory target");
             result2.Dispose();
         }
 
@@ -185,7 +185,7 @@ namespace Map.Tests.Simulation
 
             try
             {
-                Assert.IsTrue(result.Success);
+                Assert.IsTrue(result.IsSuccess);
 
                 // Find bounds for each color region
                 bool foundRedBounds = false, foundGreenBounds = false;
@@ -236,7 +236,7 @@ namespace Map.Tests.Simulation
             });
 
             var result = SimulationMapLoader.LoadSimulationFromBitmap(testMapPath);
-            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.IsSuccess);
 
             // Verify resources are allocated
             Assert.IsNotNull(result.Simulation);
@@ -265,7 +265,7 @@ namespace Map.Tests.Simulation
 
             try
             {
-                Assert.IsTrue(result.Success);
+                Assert.IsTrue(result.IsSuccess);
 
                 // Ocean should not be in simulation layer (handled by GPU textures)
                 Assert.IsFalse(result.Simulation.HasProvince(0), "Ocean should not be in simulation");

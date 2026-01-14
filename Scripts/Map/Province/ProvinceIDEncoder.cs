@@ -16,7 +16,7 @@ namespace Map.Province
         /// </summary>
         public struct EncodingResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public int ProvinceCount;
             public NativeHashMap<Color32, ushort> ColorToID;
             public NativeHashMap<ushort, Color32> IDToColor;
@@ -113,7 +113,7 @@ namespace Map.Province
                 return result;
             }
 
-            result.Success = true;
+            result.IsSuccess = true;
             // Don't count ocean (ID 0) as a province
             result.ProvinceCount = reserveOceanID ? result.ColorToID.Count - 1 : result.ColorToID.Count;
 

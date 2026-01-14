@@ -71,7 +71,7 @@ namespace Map.Province
         /// </summary>
         public struct MetadataResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public NativeHashMap<ushort, ProvinceMetadata> ProvinceMetadata;
             public string ErrorMessage;
 
@@ -102,7 +102,7 @@ namespace Map.Province
         {
             var result = new MetadataResult();
 
-            if (!loadResult.Success)
+            if (!loadResult.IsSuccess)
             {
                 result.ErrorMessage = "Invalid load result provided";
                 return result;
@@ -138,7 +138,7 @@ namespace Map.Province
                 }
                 provincePixelGroups.Dispose();
 
-                result.Success = true;
+                result.IsSuccess = true;
                 LogMetadataStatistics(result);
 
             }
@@ -485,7 +485,7 @@ namespace Map.Province
         private static TerrainType ClassifyTerrain(ProvinceMetadata metadata, ProvinceNeighborDetector.NeighborResult neighborResult)
         {
             // Check if coastal
-            if (neighborResult.Success && neighborResult.CoastalProvinces.Contains(metadata.ProvinceID))
+            if (neighborResult.IsSuccess && neighborResult.CoastalProvinces.Contains(metadata.ProvinceID))
             {
                 // Small coastal provinces might be islands
                 if (metadata.PixelCount < 50)
@@ -522,7 +522,7 @@ namespace Map.Province
         /// </summary>
         private static void LogMetadataStatistics(MetadataResult result)
         {
-            if (!result.Success) return;
+            if (!result.IsSuccess) return;
 
             int totalProvinces = result.ProvinceMetadata.Count;
             int totalPixels = 0;

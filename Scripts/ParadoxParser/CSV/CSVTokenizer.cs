@@ -51,18 +51,18 @@ namespace ParadoxParser.CSV
         /// </summary>
         public struct CSVTokenizeResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public int TokensGenerated;
             public int BytesProcessed;
             public int ErrorRow;
             public int ErrorColumn;
             public NativeSlice<byte> ErrorContext;
 
-            public static CSVTokenizeResult Successful(int tokensGenerated, int bytesProcessed)
+            public static CSVTokenizeResult Success(int tokensGenerated, int bytesProcessed)
             {
                 return new CSVTokenizeResult
                 {
-                    Success = true,
+                    IsSuccess = true,
                     TokensGenerated = tokensGenerated,
                     BytesProcessed = bytesProcessed,
                     ErrorRow = 0,
@@ -70,11 +70,11 @@ namespace ParadoxParser.CSV
                 };
             }
 
-            public static CSVTokenizeResult Failed(int errorRow, int errorColumn, NativeSlice<byte> errorContext)
+            public static CSVTokenizeResult Failure(int errorRow, int errorColumn, NativeSlice<byte> errorContext)
             {
                 return new CSVTokenizeResult
                 {
-                    Success = false,
+                    IsSuccess = false,
                     TokensGenerated = 0,
                     BytesProcessed = 0,
                     ErrorRow = errorRow,
@@ -92,7 +92,7 @@ namespace ParadoxParser.CSV
             NativeList<CSVToken> tokens)
         {
             if (csvData.Length == 0)
-                return CSVTokenizeResult.Successful(0, 0);
+                return CSVTokenizeResult.Success(0, 0);
 
             int position = 0;
             int row = 1;
@@ -135,10 +135,10 @@ namespace ParadoxParser.CSV
 
                 // Parse field
                 var fieldResult = ParseField(csvData, position, row, column);
-                if (!fieldResult.Success)
+                if (!fieldResult.IsSuccess)
                 {
                     var errorContext = csvData.Slice(Math.Max(0, position - 10), Math.Min(20, csvData.Length - Math.Max(0, position - 10)));
-                    return CSVTokenizeResult.Failed(row, column, errorContext);
+                    return CSVTokenizeResult.Failure(row, column, errorContext);
                 }
 
                 tokens.Add(fieldResult.Token);
@@ -159,7 +159,7 @@ namespace ParadoxParser.CSV
             tokens.Add(eofToken);
             tokenCount++;
 
-            return CSVTokenizeResult.Successful(tokenCount, position);
+            return CSVTokenizeResult.Success(tokenCount, position);
         }
 
         /// <summary>
@@ -167,25 +167,25 @@ namespace ParadoxParser.CSV
         /// </summary>
         private struct FieldParseResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public CSVToken Token;
             public int NextPosition;
             public int NextColumn;
 
-            public static FieldParseResult Successful(CSVToken token, int nextPosition, int nextColumn)
+            public static FieldParseResult Success(CSVToken token, int nextPosition, int nextColumn)
             {
                 return new FieldParseResult
                 {
-                    Success = true,
+                    IsSuccess = true,
                     Token = token,
                     NextPosition = nextPosition,
                     NextColumn = nextColumn
                 };
             }
 
-            public static FieldParseResult Failed()
+            public static FieldParseResult Failure()
             {
-                return new FieldParseResult { Success = false };
+                return new FieldParseResult { IsSuccess = false };
             }
         }
 
@@ -235,7 +235,7 @@ namespace ParadoxParser.CSV
                         // End of quoted field
                         var fieldData = csvData.Slice(fieldStart, position - fieldStart);
                         var token = CSVToken.Create(CSVTokenType.QuotedField, fieldData, row, startColumn);
-                        return FieldParseResult.Successful(token, position + 1, column + 1);
+                        return FieldParseResult.Success(token, position + 1, column + 1);
                     }
                 }
                 else if (csvData[position] == (byte)'\n')
@@ -261,7 +261,7 @@ namespace ParadoxParser.CSV
             }
 
             // Unclosed quoted field
-            return FieldParseResult.Failed();
+            return FieldParseResult.Failure();
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace ParadoxParser.CSV
 
             var fieldData = csvData.Slice(fieldStart, fieldEnd - fieldStart);
             var token = CSVToken.Create(CSVTokenType.Field, fieldData, row, startColumn);
-            return FieldParseResult.Successful(token, position, column);
+            return FieldParseResult.Success(token, position, column);
         }
 
         /// <summary>

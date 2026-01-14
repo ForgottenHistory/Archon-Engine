@@ -20,7 +20,7 @@ namespace Map.Loading.Bitmaps
             public float MinHeight;
             public float MaxHeight;
             public float HeightRange;
-            public bool Success;
+            public bool IsSuccess;
 
             public int Width => PixelData.Header.Width;
             public int Height => PixelData.Header.Height;
@@ -49,14 +49,14 @@ namespace Map.Loading.Bitmaps
             var bmpHeader = BMPParser.ParseHeader(bmpFileData);
             if (!bmpHeader.IsValid)
             {
-                return new HeightmapResult { Success = false };
+                return new HeightmapResult { IsSuccess = false };
             }
 
             // Get pixel data
             var pixelData = BMPParser.GetPixelData(bmpFileData, bmpHeader);
-            if (!pixelData.Success)
+            if (!pixelData.IsSuccess)
             {
-                return new HeightmapResult { Success = false };
+                return new HeightmapResult { IsSuccess = false };
             }
 
             int width = pixelData.Header.Width;
@@ -97,7 +97,7 @@ namespace Map.Loading.Bitmaps
                 MinHeight = minHeight,
                 MaxHeight = maxHeight,
                 HeightRange = heightRange,
-                Success = true
+                IsSuccess = true
             };
         }
 
@@ -109,7 +109,7 @@ namespace Map.Loading.Bitmaps
         {
             height = 0f;
 
-            if (!heightmap.Success || x < 0 || x >= heightmap.Width || y < 0 || y >= heightmap.Height)
+            if (!heightmap.IsSuccess || x < 0 || x >= heightmap.Width || y < 0 || y >= heightmap.Height)
                 return false;
 
             int index = y * heightmap.Width + x;
@@ -140,7 +140,7 @@ namespace Map.Loading.Bitmaps
         {
             height = 0f;
 
-            if (!heightmap.Success)
+            if (!heightmap.IsSuccess)
                 return false;
 
             // Get integer coordinates and fractional parts
@@ -184,7 +184,7 @@ namespace Map.Loading.Bitmaps
         {
             slope = 0f;
 
-            if (!heightmap.Success)
+            if (!heightmap.IsSuccess)
                 return false;
 
             // Sample neighboring heights for gradient calculation
@@ -293,7 +293,7 @@ namespace Map.Loading.Bitmaps
         /// </summary>
         public static HeightmapStats CalculateStats(HeightmapResult heightmap)
         {
-            if (!heightmap.Success)
+            if (!heightmap.IsSuccess)
                 return new HeightmapStats { IsValid = false };
 
             float totalHeight = 0f;

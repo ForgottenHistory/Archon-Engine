@@ -42,7 +42,7 @@ namespace Map.Loading.Bitmaps
             }
             catch (Exception ex)
             {
-                return Task.FromResult(new BMPLoadResult { Success = false, ErrorMessage = $"Failed to load BMP file: {ex.Message}" });
+                return Task.FromResult(new BMPLoadResult { IsSuccess = false, ErrorMessage = $"Failed to load BMP file: {ex.Message}" });
             }
 
             // Use Allocator.Persistent because data survives >4 frames in async processing
@@ -56,14 +56,14 @@ namespace Map.Loading.Bitmaps
                 var header = BMPParser.ParseHeader(fileData);
                 if (!header.IsValid)
                 {
-                    return Task.FromResult(new BMPLoadResult { Success = false, ErrorMessage = "Invalid BMP header" });
+                    return Task.FromResult(new BMPLoadResult { IsSuccess = false, ErrorMessage = "Invalid BMP header" });
                 }
 
                 // Get pixel data
                 var pixelData = BMPParser.GetPixelData(fileData, header);
-                if (!pixelData.Success)
+                if (!pixelData.IsSuccess)
                 {
-                    return Task.FromResult(new BMPLoadResult { Success = false, ErrorMessage = "Failed to extract pixel data" });
+                    return Task.FromResult(new BMPLoadResult { IsSuccess = false, ErrorMessage = "Failed to extract pixel data" });
                 }
 
                 ReportProgress(0, 1, "Processing pixels with Burst jobs...");
@@ -83,7 +83,7 @@ namespace Map.Loading.Bitmaps
 
                 var result = new BMPLoadResult
                 {
-                    Success = true,
+                    IsSuccess = true,
                     PixelData = persistentPixelData,
                     UniqueColors = uniqueColors,
                     Width = header.Width,
@@ -129,8 +129,8 @@ namespace Map.Loading.Bitmaps
         /// </summary>
         private PersistentBMPPixelData CopyPixelDataToPersistentMemory(BMPParser.BMPPixelData originalData)
         {
-            if (!originalData.Success || originalData.RawData.Length == 0)
-                return new PersistentBMPPixelData { Success = false };
+            if (!originalData.IsSuccess || originalData.RawData.Length == 0)
+                return new PersistentBMPPixelData { IsSuccess = false };
 
             // Create a persistent copy of the pixel data
             // Use Allocator.Persistent because data survives >4 frames in coroutine processing
@@ -143,7 +143,7 @@ namespace Map.Loading.Bitmaps
             {
                 RawData = persistentData,
                 Header = originalData.Header,
-                Success = true
+                IsSuccess = true
             };
         }
 
@@ -164,7 +164,7 @@ namespace Map.Loading.Bitmaps
     /// </summary>
     public struct BMPLoadResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public string ErrorMessage;
         public PersistentBMPPixelData PixelData;
         public NativeHashSet<int> UniqueColors;
@@ -178,16 +178,16 @@ namespace Map.Loading.Bitmaps
         /// </summary>
         public BMPParser.BMPPixelData GetPixelData()
         {
-            if (Success && PixelData.Success)
+            if (IsSuccess && PixelData.IsSuccess)
             {
                 return new BMPParser.BMPPixelData
                 {
                     RawData = new NativeSlice<byte>(PixelData.RawData),
                     Header = PixelData.Header,
-                    Success = true
+                    IsSuccess = true
                 };
             }
-            return new BMPParser.BMPPixelData { Success = false };
+            return new BMPParser.BMPPixelData { IsSuccess = false };
         }
 
         public void Dispose()
@@ -204,7 +204,7 @@ namespace Map.Loading.Bitmaps
     {
         public NativeArray<byte> RawData;
         public BMPParser.BMPHeader Header;
-        public bool Success;
+        public bool IsSuccess;
 
         public void Dispose()
         {

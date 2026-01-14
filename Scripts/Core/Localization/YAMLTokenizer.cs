@@ -57,7 +57,7 @@ namespace Core.Localization
         /// </summary>
         public struct YAMLTokenizeResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public int TokensGenerated;
             public int BytesProcessed;
             public int Line;
@@ -89,7 +89,7 @@ namespace Core.Localization
         {
             if (!tokens.IsCreated || yamlDataLength == 0)
             {
-                return new YAMLTokenizeResult { Success = false };
+                return new YAMLTokenizeResult { IsSuccess = false };
             }
 
             tokens.Clear();
@@ -318,7 +318,7 @@ namespace Core.Localization
 
             return new YAMLTokenizeResult
             {
-                Success = true,
+                IsSuccess = true,
                 TokensGenerated = tokens.Length,
                 BytesProcessed = pos,
                 Line = line,

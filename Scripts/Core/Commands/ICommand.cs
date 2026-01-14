@@ -135,26 +135,26 @@ namespace Core.Commands
     /// </summary>
     public struct CommandResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public string ErrorMessage;
         public float ExecutionTimeMs;
         public int EventsEmitted;
 
-        public static CommandResult Successful(float executionTime = 0f, int eventsEmitted = 0)
+        public static CommandResult Success(float executionTime = 0f, int eventsEmitted = 0)
         {
             return new CommandResult
             {
-                Success = true,
+                IsSuccess = true,
                 ExecutionTimeMs = executionTime,
                 EventsEmitted = eventsEmitted
             };
         }
 
-        public static CommandResult Failed(string error)
+        public static CommandResult Failure(string error)
         {
             return new CommandResult
             {
-                Success = false,
+                IsSuccess = false,
                 ErrorMessage = error
             };
         }

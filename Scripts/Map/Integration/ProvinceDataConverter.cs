@@ -21,7 +21,7 @@ namespace Map.Integration
         /// </summary>
         public static void ConvertLoadResult(ProvinceMapLoader.LoadResult loadResult, ProvinceDataManager dataManager)
         {
-            if (!loadResult.Success || dataManager == null)
+            if (!loadResult.IsSuccess || dataManager == null)
             {
                 ArchonLogger.LogError("ProvinceDataConverter: Invalid parameters - loadResult or dataManager is null", "map_rendering");
                 return;

@@ -17,7 +17,7 @@ namespace ParadoxParser.CSV
         /// </summary>
         public struct CSVParseResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public NativeArray<uint> HeaderHashes; // Hashed column names
             public NativeArray<CSVRow> Rows;
             public int RowCount;
@@ -38,11 +38,11 @@ namespace ParadoxParser.CSV
                 }
             }
 
-            public static CSVParseResult Failed(NativeSlice<byte> errorContext)
+            public static CSVParseResult Failure(NativeSlice<byte> errorContext)
             {
                 return new CSVParseResult
                 {
-                    Success = false,
+                    IsSuccess = false,
                     ErrorContext = errorContext
                 };
             }
@@ -84,9 +84,9 @@ namespace ParadoxParser.CSV
             var tokens = new NativeList<CSVTokenizer.CSVToken>(1000, Allocator.Temp);
             var tokenizeResult = CSVTokenizer.Tokenize(csvData, tokens);
 
-            if (!tokenizeResult.Success)
+            if (!tokenizeResult.IsSuccess)
             {
-                return CSVParseResult.Failed(tokenizeResult.ErrorContext);
+                return CSVParseResult.Failure(tokenizeResult.ErrorContext);
             }
 
             // Parse tokens into structured data
@@ -102,7 +102,7 @@ namespace ParadoxParser.CSV
             bool hasHeader)
         {
             if (tokens.Length == 0)
-                return CSVParseResult.Failed(new NativeSlice<byte>());
+                return CSVParseResult.Failure(new NativeSlice<byte>());
 
             // First pass: count rows and columns
             int rowCount = 0;
@@ -139,7 +139,7 @@ namespace ParadoxParser.CSV
             }
 
             if (rowCount == 0 || maxColumns == 0)
-                return CSVParseResult.Failed(new NativeSlice<byte>());
+                return CSVParseResult.Failure(new NativeSlice<byte>());
 
             // Allocate result structures
             int dataRowCount = hasHeader ? rowCount - 1 : rowCount;
@@ -225,7 +225,7 @@ namespace ParadoxParser.CSV
 
             return new CSVParseResult
             {
-                Success = true,
+                IsSuccess = true,
                 HeaderHashes = headerHashes,
                 Rows = rows,
                 RowCount = Math.Min(currentRow, dataRowCount),

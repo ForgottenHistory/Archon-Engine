@@ -29,14 +29,14 @@ namespace Map.Loading.Bitmaps
             public int Height;
             public int BitsPerPixel;
             public ImageFormat Format;
-            public bool Success;
+            public bool IsSuccess;
             public bool HasPalette;
 
             // Original format-specific headers (only one is valid)
             public BMPParser.BMPHeader BMPHeader;
             public PNGParser.PNGHeader PNGHeader;
 
-            public bool IsValid => Success && Width > 0 && Height > 0;
+            public bool IsValid => IsSuccess && Width > 0 && Height > 0;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Map.Loading.Bitmaps
         {
             public ImageFormat Format;
             public ImageHeader Header;
-            public bool Success;
+            public bool IsSuccess;
 
             // Only one of these is valid, depending on Format
             public BMPParser.BMPPixelData BMPData;
@@ -109,7 +109,7 @@ namespace Map.Loading.Bitmaps
                         Height = bmpHeader.Height,
                         BitsPerPixel = bmpHeader.BitsPerPixel,
                         Format = ImageFormat.BMP,
-                        Success = bmpHeader.IsValid,
+                        IsSuccess = bmpHeader.IsValid,
                         HasPalette = bmpHeader.BitsPerPixel == 8,
                         BMPHeader = bmpHeader
                     };
@@ -122,13 +122,13 @@ namespace Map.Loading.Bitmaps
                         Height = pngHeader.Height,
                         BitsPerPixel = pngHeader.BitDepth * (pngHeader.ColorType == 2 ? 3 : pngHeader.ColorType == 6 ? 4 : 1),
                         Format = ImageFormat.PNG,
-                        Success = pngHeader.IsValid && pngHeader.IsSupported,
+                        IsSuccess = pngHeader.IsValid && pngHeader.IsSupported,
                         HasPalette = pngHeader.HasPalette,
                         PNGHeader = pngHeader
                     };
 
                 default:
-                    return new ImageHeader { Success = false, Format = ImageFormat.Unknown };
+                    return new ImageHeader { IsSuccess = false, Format = ImageFormat.Unknown };
             }
         }
 
@@ -145,7 +145,7 @@ namespace Map.Loading.Bitmaps
                     var bmpHeader = BMPParser.ParseHeader(fileData);
                     if (!bmpHeader.IsValid)
                     {
-                        return new ImagePixelData { Success = false, Format = ImageFormat.BMP };
+                        return new ImagePixelData { IsSuccess = false, Format = ImageFormat.BMP };
                     }
 
                     var bmpPixelData = BMPParser.GetPixelData(fileData, bmpHeader);
@@ -158,11 +158,11 @@ namespace Map.Loading.Bitmaps
                             Height = bmpHeader.Height,
                             BitsPerPixel = bmpHeader.BitsPerPixel,
                             Format = ImageFormat.BMP,
-                            Success = bmpPixelData.Success,
+                            IsSuccess = bmpPixelData.IsSuccess,
                             HasPalette = bmpHeader.BitsPerPixel == 8,
                             BMPHeader = bmpHeader
                         },
-                        Success = bmpPixelData.Success,
+                        IsSuccess = bmpPixelData.IsSuccess,
                         BMPData = bmpPixelData
                     };
 
@@ -177,16 +177,16 @@ namespace Map.Loading.Bitmaps
                             Height = pngData.Header.Height,
                             BitsPerPixel = pngData.Header.BitDepth * (pngData.Header.ColorType == 2 ? 3 : pngData.Header.ColorType == 6 ? 4 : 1),
                             Format = ImageFormat.PNG,
-                            Success = pngData.Success,
+                            IsSuccess = pngData.IsSuccess,
                             HasPalette = pngData.Header.HasPalette,
                             PNGHeader = pngData.Header
                         },
-                        Success = pngData.Success,
+                        IsSuccess = pngData.IsSuccess,
                         PNGData = pngData
                     };
 
                 default:
-                    return new ImagePixelData { Success = false, Format = ImageFormat.Unknown };
+                    return new ImagePixelData { IsSuccess = false, Format = ImageFormat.Unknown };
             }
         }
 

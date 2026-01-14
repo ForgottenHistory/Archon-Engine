@@ -22,7 +22,7 @@ namespace Map.Loading.Bitmaps
             public NativeHashMap<int, int> ProvinceIDToColor; // Province ID -> RGB
             public NativeArray<int> UniqueProvinceIDs;
             public int ProvinceCount;
-            public bool Success;
+            public bool IsSuccess;
 
             public void Dispose()
             {
@@ -43,7 +43,7 @@ namespace Map.Loading.Bitmaps
             public NativeHashMap<int, int> ProvinceIDToColor; // Province ID -> RGB
             public NativeArray<int> UniqueProvinceIDs;
             public int ProvinceCount;
-            public bool Success;
+            public bool IsSuccess;
             public ImageParser.ImageFormat Format;
 
             public int Width => PixelData.Width;
@@ -69,17 +69,17 @@ namespace Map.Loading.Bitmaps
         {
             // Auto-detect and parse image
             var pixelData = ImageParser.Parse(imageFileData, allocator);
-            if (!pixelData.Success)
+            if (!pixelData.IsSuccess)
             {
-                return new UnifiedProvinceMapResult { Success = false };
+                return new UnifiedProvinceMapResult { IsSuccess = false };
             }
 
             // Parse definition CSV
             var csvResult = CSVParser.Parse(new NativeSlice<byte>(definitionCsvData), Allocator.Temp, hasHeader: true);
-            if (!csvResult.Success)
+            if (!csvResult.IsSuccess)
             {
                 pixelData.Dispose();
-                return new UnifiedProvinceMapResult { Success = false };
+                return new UnifiedProvinceMapResult { IsSuccess = false };
             }
 
             try
@@ -94,7 +94,7 @@ namespace Map.Loading.Bitmaps
                     ProvinceIDToColor = provinceIDToColor,
                     UniqueProvinceIDs = uniqueProvinceIDs,
                     ProvinceCount = provinceCount,
-                    Success = true,
+                    IsSuccess = true,
                     Format = pixelData.Format
                 };
             }
@@ -114,9 +114,9 @@ namespace Map.Loading.Bitmaps
         {
             // Auto-detect and parse image
             var pixelData = ImageParser.Parse(imageFileData, allocator);
-            if (!pixelData.Success)
+            if (!pixelData.IsSuccess)
             {
-                return new UnifiedProvinceMapResult { Success = false };
+                return new UnifiedProvinceMapResult { IsSuccess = false };
             }
 
             // Collect unique colors from the image to build basic mappings
@@ -143,7 +143,7 @@ namespace Map.Loading.Bitmaps
                 ProvinceIDToColor = provinceIDToColor,
                 UniqueProvinceIDs = uniqueProvinceIDs,
                 ProvinceCount = uniqueColors.Count,
-                Success = true,
+                IsSuccess = true,
                 Format = pixelData.Format
             };
         }
@@ -156,7 +156,7 @@ namespace Map.Loading.Bitmaps
         {
             provinceID = -1;
 
-            if (!mapResult.Success)
+            if (!mapResult.IsSuccess)
                 return false;
 
             if (ImageParser.TryGetPixelRGBPacked(mapResult.PixelData, x, y, out int rgb))
@@ -190,22 +190,22 @@ namespace Map.Loading.Bitmaps
             var bmpHeader = BMPParser.ParseHeader(bmpFileData);
             if (!bmpHeader.IsValid)
             {
-                return new ProvinceMapResult { Success = false };
+                return new ProvinceMapResult { IsSuccess = false };
             }
 
             // Get pixel data
             var pixelData = BMPParser.GetPixelData(bmpFileData, bmpHeader);
-            if (!pixelData.Success)
+            if (!pixelData.IsSuccess)
             {
-                return new ProvinceMapResult { Success = false };
+                return new ProvinceMapResult { IsSuccess = false };
             }
 
             // Parse definition CSV
             var csvResult = CSVParser.Parse(definitionCsvData, Allocator.Temp, hasHeader: true);
-            if (!csvResult.Success)
+            if (!csvResult.IsSuccess)
             {
                 pixelData.Dispose();
-                return new ProvinceMapResult { Success = false };
+                return new ProvinceMapResult { IsSuccess = false };
             }
 
             try
@@ -220,7 +220,7 @@ namespace Map.Loading.Bitmaps
                     ProvinceIDToColor = provinceIDToColor,
                     UniqueProvinceIDs = uniqueProvinceIDs,
                     ProvinceCount = provinceCount,
-                    Success = true
+                    IsSuccess = true
                 };
             }
             finally
@@ -237,7 +237,7 @@ namespace Map.Loading.Bitmaps
         {
             provinceID = -1;
 
-            if (!mapResult.Success)
+            if (!mapResult.IsSuccess)
                 return false;
 
             if (BMPParser.TryGetPixelRGBPacked(mapResult.PixelData, x, y, out int rgb))
@@ -255,7 +255,7 @@ namespace Map.Loading.Bitmaps
         {
             var pixels = new NativeList<PixelCoord>(1000, allocator);
 
-            if (!mapResult.Success)
+            if (!mapResult.IsSuccess)
                 return pixels;
 
             // Get the RGB color for this province
@@ -287,7 +287,7 @@ namespace Map.Loading.Bitmaps
         /// </summary>
         public static ProvinceStats CalculateProvinceStats(ProvinceMapResult mapResult, int provinceID)
         {
-            if (!mapResult.Success)
+            if (!mapResult.IsSuccess)
                 return new ProvinceStats { IsValid = false };
 
             using var pixels = FindProvincePixels(mapResult, provinceID, Allocator.Temp);
@@ -405,7 +405,7 @@ namespace Map.Loading.Bitmaps
         /// </summary>
         public static ProvinceMapValidationResult ValidateProvinceMap(ProvinceMapResult mapResult, Allocator allocator)
         {
-            if (!mapResult.Success)
+            if (!mapResult.IsSuccess)
                 return new ProvinceMapValidationResult { IsValid = false };
 
             var unmappedColors = new NativeList<int>(100, allocator);

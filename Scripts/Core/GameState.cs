@@ -242,7 +242,7 @@ namespace Core
                 resultMessage = GetCommandSuccessMessage(command);
 
                 // Emit command executed event for systems that need to react
-                EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), Success = true });
+                EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), IsSuccess = true });
 
                 return true;
             }
@@ -250,7 +250,7 @@ namespace Core
             {
                 resultMessage = $"Execution error: {e.Message}";
                 ArchonLogger.LogError($"Command execution failed: {command.GetType().Name} - {e.Message}", "core_simulation");
-                EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), Success = false, Error = e.Message });
+                EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), IsSuccess = false, Error = e.Message });
                 return false;
             }
         }
@@ -383,7 +383,7 @@ namespace Core
     public struct CommandExecutedEvent : IGameEvent
     {
         public System.Type CommandType;
-        public bool Success;
+        public bool IsSuccess;
         public string Error;
         public float TimeStamp { get; set; }
     }

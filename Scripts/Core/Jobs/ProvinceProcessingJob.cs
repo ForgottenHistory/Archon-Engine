@@ -147,7 +147,7 @@ namespace Core.Jobs
             };
         }
 
-        public static ProvinceProcessingResult Failed(string error)
+        public static ProvinceProcessingResult Failure(string error)
         {
             return new ProvinceProcessingResult
             {

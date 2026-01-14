@@ -17,26 +17,26 @@ namespace Core.Loaders
         /// </summary>
         public struct ScenarioLoadResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public string ErrorMessage;
             public ScenarioData Data;
             public LoadingStatistics Statistics;
 
-            public static ScenarioLoadResult CreateSuccess(ScenarioData data, LoadingStatistics stats = default)
+            public static ScenarioLoadResult Success(ScenarioData data, LoadingStatistics stats = default)
             {
                 return new ScenarioLoadResult
                 {
-                    Success = true,
+                    IsSuccess = true,
                     Data = data,
                     Statistics = stats
                 };
             }
 
-            public static ScenarioLoadResult CreateFailure(string error)
+            public static ScenarioLoadResult Failure(string error)
             {
                 return new ScenarioLoadResult
                 {
-                    Success = false,
+                    IsSuccess = false,
                     ErrorMessage = error
                 };
             }
@@ -138,7 +138,7 @@ namespace Core.Loaders
             {
                 if (!System.IO.File.Exists(filePath))
                 {
-                    return ScenarioLoadResult.CreateFailure($"Scenario file not found: {filePath}");
+                    return ScenarioLoadResult.Failure($"Scenario file not found: {filePath}");
                 }
 
                 var json = System.IO.File.ReadAllText(filePath);
@@ -146,7 +146,7 @@ namespace Core.Loaders
 
                 if (data == null)
                 {
-                    return ScenarioLoadResult.CreateFailure("Failed to parse scenario JSON");
+                    return ScenarioLoadResult.Failure("Failed to parse scenario JSON");
                 }
 
                 var stats = new LoadingStatistics
@@ -158,11 +158,11 @@ namespace Core.Loaders
                     Warnings = new List<string>()
                 };
 
-                return ScenarioLoadResult.CreateSuccess(data, stats);
+                return ScenarioLoadResult.Success(data, stats);
             }
             catch (System.Exception e)
             {
-                return ScenarioLoadResult.CreateFailure($"Error loading scenario: {e.Message}");
+                return ScenarioLoadResult.Failure($"Error loading scenario: {e.Message}");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Core.Loaders
                 Warnings = new List<string>()
             };
 
-            return ScenarioLoadResult.CreateSuccess(data, stats);
+            return ScenarioLoadResult.Success(data, stats);
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace Map.Province
         /// </summary>
         public struct NeighborResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public NativeHashMap<ushort, ProvinceNeighborData> ProvinceNeighbors;
             public NativeHashMap<ushort, ProvinceBounds> ProvinceBounds;
             public NativeHashSet<ushort> CoastalProvinces;
@@ -73,7 +73,7 @@ namespace Map.Province
         {
             var result = new NeighborResult();
 
-            if (!loadResult.Success || loadResult.ProvincePixels.Length == 0)
+            if (!loadResult.IsSuccess || loadResult.ProvincePixels.Length == 0)
             {
                 result.ErrorMessage = "Invalid load result provided";
                 return result;
@@ -123,7 +123,7 @@ namespace Map.Province
                 // Mark coastal flags in neighbor data
                 MarkCoastalFlags(provinceNeighbors, coastalProvinces);
 
-                result.Success = true;
+                result.IsSuccess = true;
                 result.ProvinceNeighbors = provinceNeighbors;
                 result.ProvinceBounds = provinceBounds;
                 result.CoastalProvinces = coastalProvinces;
@@ -509,7 +509,7 @@ namespace Map.Province
         /// </summary>
         public static void LogNeighborStatistics(NeighborResult result)
         {
-            if (!result.Success) return;
+            if (!result.IsSuccess) return;
 
             int totalNeighbors = 0;
             int minNeighbors = int.MaxValue;

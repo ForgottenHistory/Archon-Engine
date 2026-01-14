@@ -30,7 +30,7 @@ namespace Core.Loaders
             {
                 var error = $"Manifest file not found: {manifestFilePath}";
                 errors.Add(error);
-                return ManifestLoadResult.CreateFailed(error);
+                return ManifestLoadResult.Failure(error);
             }
 
             try
@@ -43,14 +43,14 @@ namespace Core.Loaders
 
                 ArchonLogger.Log($"ManifestLoader: Loaded {manifest.Count} entries from manifest", "core_data_loading");
 
-                return ManifestLoadResult.CreateSuccess(manifest, errors);
+                return ManifestLoadResult.Success(manifest, errors);
             }
             catch (Exception e)
             {
                 var error = $"Failed to load manifest {manifestFilePath}: {e.Message}";
                 errors.Add(error);
                 ArchonLogger.LogError(error, "core_data_loading");
-                return ManifestLoadResult.CreateFailed(error);
+                return ManifestLoadResult.Failure(error);
             }
         }
 
@@ -160,26 +160,26 @@ namespace Core.Loaders
     /// </summary>
     public struct ManifestLoadResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public Dictionary<string, string> Manifest;
         public List<string> Errors;
         public string ErrorMessage;
 
-        public static ManifestLoadResult CreateSuccess(Dictionary<string, string> manifest, List<string> errors)
+        public static ManifestLoadResult Success(Dictionary<string, string> manifest, List<string> errors)
         {
             return new ManifestLoadResult
             {
-                Success = true,
+                IsSuccess = true,
                 Manifest = new Dictionary<string, string>(manifest),
                 Errors = new List<string>(errors)
             };
         }
 
-        public static ManifestLoadResult CreateFailed(string error)
+        public static ManifestLoadResult Failure(string error)
         {
             return new ManifestLoadResult
             {
-                Success = false,
+                IsSuccess = false,
                 ErrorMessage = error,
                 Errors = new List<string> { error }
             };

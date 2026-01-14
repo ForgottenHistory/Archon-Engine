@@ -26,7 +26,7 @@ namespace Core.Initialization.Phases
             var countryTagResult = CountryTagLoader.LoadCountryTags(context.Settings.DataDirectory);
             Dictionary<string, string> tagMapping = null;
 
-            if (countryTagResult.Success)
+            if (countryTagResult.IsSuccess)
             {
                 tagMapping = countryTagResult.CountryTags;
                 ArchonLogger.Log($"Loaded {tagMapping.Count} country tag mappings", "core_data_loading");
@@ -43,7 +43,7 @@ namespace Core.Initialization.Phases
             var countriesPath = System.IO.Path.Combine(context.Settings.DataDirectory, "common", "countries");
             var countryDataResult = BurstCountryLoader.LoadAllCountries(countriesPath, tagMapping);
 
-            if (!countryDataResult.Success)
+            if (!countryDataResult.IsSuccess)
             {
                 // No country data - this is OK for map-only mode
                 ArchonLogger.LogWarning($"Country loading failed: {countryDataResult.ErrorMessage}", "core_data_loading");

@@ -48,7 +48,7 @@ namespace Core.Initialization.Phases
             context.ReportProgress(69f, "Validating scenario...");
             yield return null;
 
-            if (!scenarioResult.Success)
+            if (!scenarioResult.IsSuccess)
             {
                 ArchonLogger.LogWarning($"Scenario loading failed: {scenarioResult.ErrorMessage}, using default", "core_data_loading");
                 scenarioResult = ScenarioLoader.CreateDefaultScenario();

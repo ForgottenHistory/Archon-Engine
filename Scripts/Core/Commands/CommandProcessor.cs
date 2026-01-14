@@ -48,10 +48,10 @@ namespace Core.Commands
         public CommandSubmissionResult SubmitCommand(IProvinceCommand command)
         {
             if (isDisposed)
-                return CommandSubmissionResult.CreateFailure("CommandProcessor is disposed");
+                return CommandSubmissionResult.Failure("CommandProcessor is disposed");
 
             if (command == null)
-                return CommandSubmissionResult.CreateFailure("Command cannot be null");
+                return CommandSubmissionResult.Failure("Command cannot be null");
 
             // Validate command structure
             try
@@ -61,12 +61,12 @@ namespace Core.Commands
 
                 if (serializedSize <= 0 || serializedSize > 256)
                 {
-                    return CommandSubmissionResult.CreateFailure($"Invalid serialized size: {serializedSize}");
+                    return CommandSubmissionResult.Failure($"Invalid serialized size: {serializedSize}");
                 }
             }
             catch (Exception ex)
             {
-                return CommandSubmissionResult.CreateFailure($"Command structure validation failed: {ex.Message}");
+                return CommandSubmissionResult.Failure($"Command structure validation failed: {ex.Message}");
             }
 
             // Pre-validate against current game state
@@ -74,7 +74,7 @@ namespace Core.Commands
             if (!validationResult.IsValid)
             {
                 validationFailures++;
-                return CommandSubmissionResult.CreateFailure($"Validation failed: {validationResult.ErrorMessage}");
+                return CommandSubmissionResult.Failure($"Validation failed: {validationResult.ErrorMessage}");
             }
 
             // Set execution tick if not set
@@ -84,7 +84,7 @@ namespace Core.Commands
             }
 
             pendingCommands.Enqueue(command);
-            return CommandSubmissionResult.CreateSuccess();
+            return CommandSubmissionResult.Success();
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Core.Commands
                 try
                 {
                     var executionResult = ExecuteCommand(command);
-                    if (executionResult.Success)
+                    if (executionResult.IsSuccess)
                     {
                         result.CommandsExecuted++;
 
@@ -215,12 +215,12 @@ namespace Core.Commands
             if (!validationResult.IsValid)
             {
                 ArchonLogger.LogWarning($"Command validation failed at execution time: {validationResult.ErrorMessage}", "core_commands");
-                return new CommandExecutionResult { Success = false };
+                return new CommandExecutionResult { IsSuccess = false };
             }
 
             // Execute the command
             var result = command.Execute(simulation);
-            if (result.Success)
+            if (result.IsSuccess)
             {
                 commandsExecuted++;
             }
@@ -273,12 +273,12 @@ namespace Core.Commands
     /// </summary>
     public struct CommandSubmissionResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public string ErrorMessage;
 
-        public static CommandSubmissionResult CreateSuccess() => new CommandSubmissionResult { Success = true };
-        public static CommandSubmissionResult CreateFailure(string message) =>
-            new CommandSubmissionResult { Success = false, ErrorMessage = message };
+        public static CommandSubmissionResult Success() => new CommandSubmissionResult { IsSuccess = true };
+        public static CommandSubmissionResult Failure(string message) =>
+            new CommandSubmissionResult { IsSuccess = false, ErrorMessage = message };
     }
 
     /// <summary>

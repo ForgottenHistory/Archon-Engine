@@ -18,7 +18,7 @@ namespace Map.Loading
         /// </summary>
         public struct LoadResult
         {
-            public bool Success;
+            public bool IsSuccess;
             public int ProvinceCount;
             public int Width;
             public int Height;
@@ -64,11 +64,11 @@ namespace Map.Loading
                 var processor = new ProvinceMapProcessor();
                 var result = await processor.LoadProvinceMapAsync(bitmapPath, definitionCsvPath);
 
-                if (!result.Success)
+                if (!result.IsSuccess)
                 {
                     return new LoadResult
                     {
-                        Success = false,
+                        IsSuccess = false,
                         ErrorMessage = result.ErrorMessage
                     };
                 }
@@ -119,7 +119,7 @@ namespace Map.Loading
 
                 var legacyResult = new LoadResult
                 {
-                    Success = true,
+                    IsSuccess = true,
                     ProvinceCount = result.HasDefinitions ? result.Definitions.AllDefinitions.Length : result.ProvinceMappings.ColorToProvinceID.Count,
                     Width = result.BMPData.Width,
                     Height = result.BMPData.Height,
@@ -137,7 +137,7 @@ namespace Map.Loading
             {
                 return new LoadResult
                 {
-                    Success = false,
+                    IsSuccess = false,
                     ErrorMessage = $"Exception in compatibility layer: {e.Message}"
                 };
             }

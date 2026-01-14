@@ -28,19 +28,19 @@ namespace Core.Commands
         public static SerializationResult SerializeCommand(IProvinceCommand command, NativeArray<byte> buffer, int offset)
         {
             if (command == null)
-                return SerializationResult.CreateFailure("Command is null");
+                return SerializationResult.Failure("Command is null");
 
             if (!buffer.IsCreated)
-                return SerializationResult.CreateFailure("Buffer is not created");
+                return SerializationResult.Failure("Buffer is not created");
 
             try
             {
                 int bytesWritten = command.Serialize(buffer, offset);
-                return SerializationResult.CreateSuccess(bytesWritten);
+                return SerializationResult.Success(bytesWritten);
             }
             catch (Exception ex)
             {
-                return SerializationResult.CreateFailure($"Serialization failed: {ex.Message}");
+                return SerializationResult.Failure($"Serialization failed: {ex.Message}");
             }
         }
 
@@ -50,10 +50,10 @@ namespace Core.Commands
         public static DeserializationResult DeserializeCommand(NativeArray<byte> buffer, int offset)
         {
             if (!buffer.IsCreated)
-                return DeserializationResult.CreateFailure("Buffer is not created");
+                return DeserializationResult.Failure("Buffer is not created");
 
             if (offset >= buffer.Length)
-                return DeserializationResult.CreateFailure("Offset beyond buffer length");
+                return DeserializationResult.Failure("Offset beyond buffer length");
 
             try
             {
@@ -62,7 +62,7 @@ namespace Core.Commands
 
                 if (!commandFactories.TryGetValue(commandType, out var factory))
                 {
-                    return DeserializationResult.CreateFailure($"Unknown command type: {commandType}");
+                    return DeserializationResult.Failure($"Unknown command type: {commandType}");
                 }
 
                 // Create command instance
@@ -71,11 +71,11 @@ namespace Core.Commands
                 // Deserialize the command
                 int bytesRead = command.Deserialize(buffer, offset);
 
-                return DeserializationResult.CreateSuccess(command, bytesRead);
+                return DeserializationResult.Success(command, bytesRead);
             }
             catch (Exception ex)
             {
-                return DeserializationResult.CreateFailure($"Deserialization failed: {ex.Message}");
+                return DeserializationResult.Failure($"Deserialization failed: {ex.Message}");
             }
         }
 
@@ -90,7 +90,7 @@ namespace Core.Commands
             Allocator allocator = Allocator.Temp)
         {
             if (commands == null || commands.Count == 0)
-                return BatchSerializationResult.CreateFailure("No commands to serialize");
+                return BatchSerializationResult.Failure("No commands to serialize");
 
             try
             {
@@ -134,11 +134,11 @@ namespace Core.Commands
                 header.Checksum = batchChecksum;
                 header.Serialize(buffer, 0);
 
-                return BatchSerializationResult.CreateSuccess(buffer, totalSize);
+                return BatchSerializationResult.Success(buffer, totalSize);
             }
             catch (Exception ex)
             {
-                return BatchSerializationResult.CreateFailure($"Batch serialization failed: {ex.Message}");
+                return BatchSerializationResult.Failure($"Batch serialization failed: {ex.Message}");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Core.Commands
         public static BatchDeserializationResult DeserializeCommandBatch(NativeArray<byte> buffer)
         {
             if (!buffer.IsCreated)
-                return BatchDeserializationResult.CreateFailure("Buffer is not created");
+                return BatchDeserializationResult.Failure("Buffer is not created");
 
             try
             {
@@ -159,7 +159,7 @@ namespace Core.Commands
                 // Validate buffer size
                 if (buffer.Length < header.TotalSize)
                 {
-                    return BatchDeserializationResult.CreateFailure($"Buffer too small: expected {header.TotalSize}, got {buffer.Length}");
+                    return BatchDeserializationResult.Failure($"Buffer too small: expected {header.TotalSize}, got {buffer.Length}");
                 }
 
                 // Deserialize commands
@@ -170,12 +170,12 @@ namespace Core.Commands
                 for (int i = 0; i < header.CommandCount; i++)
                 {
                     var result = DeserializeCommand(buffer, offset);
-                    if (!result.Success)
+                    if (!result.IsSuccess)
                     {
                         // Cleanup partially deserialized commands
                         foreach (var cmd in commands)
                             cmd?.Dispose();
-                        return BatchDeserializationResult.CreateFailure($"Failed to deserialize command {i}: {result.ErrorMessage}");
+                        return BatchDeserializationResult.Failure($"Failed to deserialize command {i}: {result.ErrorMessage}");
                     }
 
                     commands.Add(result.Command);
@@ -188,14 +188,14 @@ namespace Core.Commands
                 {
                     foreach (var cmd in commands)
                         cmd?.Dispose();
-                    return BatchDeserializationResult.CreateFailure($"Checksum mismatch: expected {header.Checksum:X8}, got {calculatedChecksum:X8}");
+                    return BatchDeserializationResult.Failure($"Checksum mismatch: expected {header.Checksum:X8}, got {calculatedChecksum:X8}");
                 }
 
-                return BatchDeserializationResult.CreateSuccess(commands, header);
+                return BatchDeserializationResult.Success(commands, header);
             }
             catch (Exception ex)
             {
-                return BatchDeserializationResult.CreateFailure($"Batch deserialization failed: {ex.Message}");
+                return BatchDeserializationResult.Failure($"Batch deserialization failed: {ex.Message}");
             }
         }
 
@@ -306,50 +306,50 @@ namespace Core.Commands
     // Result types for serialization operations
     public struct SerializationResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public string ErrorMessage;
         public int BytesWritten;
 
-        public static SerializationResult CreateSuccess(int bytes) => new SerializationResult { Success = true, BytesWritten = bytes };
-        public static SerializationResult CreateFailure(string error) => new SerializationResult { Success = false, ErrorMessage = error };
+        public static SerializationResult Success(int bytes) => new SerializationResult { IsSuccess = true, BytesWritten = bytes };
+        public static SerializationResult Failure(string error) => new SerializationResult { IsSuccess = false, ErrorMessage = error };
     }
 
     public struct DeserializationResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public string ErrorMessage;
         public IProvinceCommand Command;
         public int BytesRead;
 
-        public static DeserializationResult CreateSuccess(IProvinceCommand command, int bytes) =>
-            new DeserializationResult { Success = true, Command = command, BytesRead = bytes };
-        public static DeserializationResult CreateFailure(string error) =>
-            new DeserializationResult { Success = false, ErrorMessage = error };
+        public static DeserializationResult Success(IProvinceCommand command, int bytes) =>
+            new DeserializationResult { IsSuccess = true, Command = command, BytesRead = bytes };
+        public static DeserializationResult Failure(string error) =>
+            new DeserializationResult { IsSuccess = false, ErrorMessage = error };
     }
 
     public struct BatchSerializationResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public string ErrorMessage;
         public NativeArray<byte> Buffer;
         public int TotalSize;
 
-        public static BatchSerializationResult CreateSuccess(NativeArray<byte> buffer, int size) =>
-            new BatchSerializationResult { Success = true, Buffer = buffer, TotalSize = size };
-        public static BatchSerializationResult CreateFailure(string error) =>
-            new BatchSerializationResult { Success = false, ErrorMessage = error };
+        public static BatchSerializationResult Success(NativeArray<byte> buffer, int size) =>
+            new BatchSerializationResult { IsSuccess = true, Buffer = buffer, TotalSize = size };
+        public static BatchSerializationResult Failure(string error) =>
+            new BatchSerializationResult { IsSuccess = false, ErrorMessage = error };
     }
 
     public struct BatchDeserializationResult
     {
-        public bool Success;
+        public bool IsSuccess;
         public string ErrorMessage;
         public List<IProvinceCommand> Commands;
         public BatchHeader Header;
 
-        public static BatchDeserializationResult CreateSuccess(List<IProvinceCommand> commands, BatchHeader header) =>
-            new BatchDeserializationResult { Success = true, Commands = commands, Header = header };
-        public static BatchDeserializationResult CreateFailure(string error) =>
-            new BatchDeserializationResult { Success = false, ErrorMessage = error };
+        public static BatchDeserializationResult Success(List<IProvinceCommand> commands, BatchHeader header) =>
+            new BatchDeserializationResult { IsSuccess = true, Commands = commands, Header = header };
+        public static BatchDeserializationResult Failure(string error) =>
+            new BatchDeserializationResult { IsSuccess = false, ErrorMessage = error };
     }
 }

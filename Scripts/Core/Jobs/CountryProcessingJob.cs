@@ -128,7 +128,7 @@ namespace Core.Jobs
             };
         }
 
-        public static CountryProcessingResult Failed(string error)
+        public static CountryProcessingResult Failure(string error)
         {
             return new CountryProcessingResult
             {

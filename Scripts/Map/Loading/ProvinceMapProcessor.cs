@@ -35,7 +35,7 @@ namespace Map.Loading
             public ProvinceMappings ProvinceMappings;
             public ProvinceDefinitions Definitions;
             public bool HasDefinitions;
-            public bool Success;
+            public bool IsSuccess;
             public string ErrorMessage;
 
             // Track original data arrays for disposal
@@ -80,12 +80,12 @@ namespace Map.Loading
             {
                 if (isUnified)
                 {
-                    if (unifiedPixelData.Success)
+                    if (unifiedPixelData.IsSuccess)
                         unifiedPixelData.Dispose();
                 }
                 else
                 {
-                    if (bmpPixelData.Success)
+                    if (bmpPixelData.IsSuccess)
                         bmpPixelData.Dispose();
                 }
             }
@@ -199,7 +199,7 @@ namespace Map.Loading
                 {
                     return new ProvinceMapResult
                     {
-                        Success = false,
+                        IsSuccess = false,
                         ErrorMessage = $"Image file not found: {imagePath} (tried .bmp and .png)"
                     };
                 }
@@ -214,7 +214,7 @@ namespace Map.Loading
                     imageData.Dispose();
                     return new ProvinceMapResult
                     {
-                        Success = false,
+                        IsSuccess = false,
                         ErrorMessage = $"Unknown image format: {actualImagePath}"
                     };
                 }
@@ -239,18 +239,18 @@ namespace Map.Loading
                         // Parse with definitions using unified parser
                         var parseResult = ProvinceMapParser.ParseProvinceMapUnified(imageData, csvData, Allocator.Persistent);
 
-                        if (!parseResult.Success)
+                        if (!parseResult.IsSuccess)
                         {
                             return new ProvinceMapResult
                             {
-                                Success = false,
+                                IsSuccess = false,
                                 ErrorMessage = "Failed to parse province map with definitions"
                             };
                         }
 
                         return new ProvinceMapResult
                         {
-                            Success = true,
+                            IsSuccess = true,
                             BMPData = BMPData.FromUnifiedPixelData(parseResult.PixelData),
                             ProvinceMappings = new ProvinceMappings
                             {
@@ -269,18 +269,18 @@ namespace Map.Loading
                         // Parse image only without definitions using unified parser
                         var parseResult = ProvinceMapParser.ParseProvinceMapImageOnly(imageData, Allocator.Persistent);
 
-                        if (!parseResult.Success)
+                        if (!parseResult.IsSuccess)
                         {
                             return new ProvinceMapResult
                             {
-                                Success = false,
+                                IsSuccess = false,
                                 ErrorMessage = $"Failed to parse {format} image"
                             };
                         }
 
                         return new ProvinceMapResult
                         {
-                            Success = true,
+                            IsSuccess = true,
                             BMPData = BMPData.FromUnifiedPixelData(parseResult.PixelData),
                             ProvinceMappings = new ProvinceMappings
                             {
@@ -304,7 +304,7 @@ namespace Map.Loading
             {
                 return new ProvinceMapResult
                 {
-                    Success = false,
+                    IsSuccess = false,
                     ErrorMessage = $"Exception during province map loading: {ex.Message}"
                 };
             }

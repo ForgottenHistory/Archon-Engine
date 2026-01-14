@@ -82,7 +82,7 @@ namespace Core.Data
             };
         }
 
-        public static Json5ProvinceLoadResult Failed(string error)
+        public static Json5ProvinceLoadResult Failure(string error)
         {
             return new Json5ProvinceLoadResult
             {

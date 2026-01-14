@@ -65,7 +65,7 @@ namespace Core.Initialization.Phases
 
             context.ProvinceInitialStates = BurstProvinceHistoryLoader.LoadProvinceInitialStates(context.Settings.DataDirectory);
 
-            if (!context.ProvinceInitialStates.Success)
+            if (!context.ProvinceInitialStates.IsSuccess)
             {
                 // No history data - use definitions only
                 ArchonLogger.LogWarning($"Province history not loaded: {context.ProvinceInitialStates.ErrorMessage}", "core_data_loading");
@@ -129,7 +129,7 @@ namespace Core.Initialization.Phases
         public void Rollback(InitializationContext context)
         {
             // Dispose province initial states if loaded
-            if (context.ProvinceInitialStates.Success)
+            if (context.ProvinceInitialStates.IsSuccess)
             {
                 context.ProvinceInitialStates.Dispose();
             }

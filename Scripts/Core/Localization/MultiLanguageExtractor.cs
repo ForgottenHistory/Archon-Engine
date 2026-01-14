@@ -21,7 +21,7 @@ namespace Core.Localization
             public NativeList<FixedString64Bytes> AvailableLanguages;
             public FixedString64Bytes DefaultLanguage;
             public int TotalEntries;
-            public bool Success;
+            public bool IsSuccess;
 
             public void Dispose()
             {
@@ -56,7 +56,7 @@ namespace Core.Localization
             {
                 LanguageData = new NativeHashMap<FixedString64Bytes, YAMLParser.YAMLParseResult>(languageFiles.Count, allocator),
                 AvailableLanguages = new NativeList<FixedString64Bytes>(languageFiles.Count, allocator),
-                Success = false,
+                IsSuccess = false,
                 TotalEntries = 0
             };
 
@@ -71,11 +71,11 @@ namespace Core.Localization
                     var tokens = new NativeList<YAMLTokenizer.YAMLToken>(1000, Allocator.Temp);
                     var tokenizeResult = YAMLTokenizer.TokenizeYAML(fileData, tokens);
 
-                    if (tokenizeResult.Success)
+                    if (tokenizeResult.IsSuccess)
                     {
                         var parseResult = YAMLParser.ParseYAML(fileData, tokens.AsArray(), allocator);
 
-                        if (parseResult.Success)
+                        if (parseResult.IsSuccess)
                         {
                             var langKey = new FixedString64Bytes();
                             for (int i = 0; i < Math.Min(langCode.Length, 63); i++)
@@ -98,12 +98,12 @@ namespace Core.Localization
                     tokens.Dispose();
                 }
 
-                result.Success = result.AvailableLanguages.Length > 0;
+                result.IsSuccess = result.AvailableLanguages.Length > 0;
             }
             catch (Exception)
             {
                 result.Dispose();
-                result.Success = false;
+                result.IsSuccess = false;
             }
 
             return result;
