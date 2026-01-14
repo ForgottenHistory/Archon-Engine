@@ -238,6 +238,103 @@ namespace Core.Queries
         }
 
         /// <summary>
+        /// Get all provinces that border a specific country (adjacent to but not owned by).
+        /// Useful for finding invasion targets, border fortification candidates, etc.
+        /// Returns native list that must be disposed by caller.
+        /// Performance target: less than 15ms
+        /// </summary>
+        public NativeList<ushort> GetProvincesBorderingCountry(ushort countryId, Allocator allocator = Allocator.TempJob)
+        {
+            var result = new NativeList<ushort>(64, allocator);
+
+            if (adjacencySystem == null)
+            {
+                ArchonLogger.LogWarning("ProvinceQueries: AdjacencySystem not available for border queries", "core_simulation");
+                return result;
+            }
+
+            // Get all provinces of the target country
+            using var countryProvinces = GetCountryProvinces(countryId, Allocator.Temp);
+
+            // Track unique bordering provinces to avoid duplicates
+            var borderingSet = new NativeHashSet<ushort>(64, Allocator.Temp);
+
+            try
+            {
+                for (int i = 0; i < countryProvinces.Length; i++)
+                {
+                    using var neighbors = adjacencySystem.GetNeighbors(countryProvinces[i], Allocator.Temp);
+
+                    for (int j = 0; j < neighbors.Length; j++)
+                    {
+                        ushort neighbor = neighbors[j];
+                        ushort neighborOwner = GetOwner(neighbor);
+
+                        // Province borders the country if adjacent but owned by someone else
+                        if (neighborOwner != countryId && !borderingSet.Contains(neighbor))
+                        {
+                            borderingSet.Add(neighbor);
+                            result.Add(neighbor);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                borderingSet.Dispose();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get all provinces that border a specific country, filtered by owner.
+        /// Example: Get all YOUR provinces that border enemy country X.
+        /// Returns native list that must be disposed by caller.
+        /// Performance target: less than 15ms
+        /// </summary>
+        public NativeList<ushort> GetProvincesBorderingCountry(ushort countryId, ushort filterOwnerId, Allocator allocator = Allocator.TempJob)
+        {
+            var result = new NativeList<ushort>(32, allocator);
+
+            if (adjacencySystem == null)
+            {
+                ArchonLogger.LogWarning("ProvinceQueries: AdjacencySystem not available for border queries", "core_simulation");
+                return result;
+            }
+
+            using var countryProvinces = GetCountryProvinces(countryId, Allocator.Temp);
+            var borderingSet = new NativeHashSet<ushort>(64, Allocator.Temp);
+
+            try
+            {
+                for (int i = 0; i < countryProvinces.Length; i++)
+                {
+                    using var neighbors = adjacencySystem.GetNeighbors(countryProvinces[i], Allocator.Temp);
+
+                    for (int j = 0; j < neighbors.Length; j++)
+                    {
+                        ushort neighbor = neighbors[j];
+                        ushort neighborOwner = GetOwner(neighbor);
+
+                        // Only include if owned by the filter owner
+                        if (neighborOwner == filterOwnerId && !borderingSet.Contains(neighbor))
+                        {
+                            borderingSet.Add(neighbor);
+                            result.Add(neighbor);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                borderingSet.Dispose();
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Get provinces owned by countries with a specific tag pattern
         /// Example: Get all provinces owned by countries with tags starting with "GER"
         /// Returns native array that must be disposed by caller

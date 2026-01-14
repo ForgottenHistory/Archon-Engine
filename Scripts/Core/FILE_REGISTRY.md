@@ -139,7 +139,7 @@
 - **Core.Queries.Query** - Static entry point for fluent query builders: `Query.Provinces(gameState)`, `Query.Countries(gameState)`
 - **Core.Queries.ProvinceQueryBuilder** - Fluent province filtering: OwnedBy, WithTerrain, IsLand, AdjacentTo, BorderingCountry, WithinDistance; terminal ops Execute, Count, Any, FirstOrDefault
 - **Core.Queries.CountryQueryBuilder** - Fluent country filtering: WithMinProvinces, WithMaxProvinces, BorderingCountry, HasProvinces, WithGraphicalCulture
-- **Core.Queries.ProvinceQueries** - Read-only province operations; includes distance queries (GetDistanceBetween, GetProvincesWithinDistance) and connected region queries (GetConnectedLandmasses, GetLandmassCount)
+- **Core.Queries.ProvinceQueries** - Read-only province operations; includes distance queries (GetDistanceBetween, GetProvincesWithinDistance), connected region queries (GetConnectedLandmasses, GetLandmassCount), and border queries (GetProvincesBorderingCountry)
 - **Core.Queries.CountryQueries** - High-performance country access with frame-coherent caching; includes relationship queries (SharesBorder, GetBorderingCountries)
 
 ---
@@ -242,6 +242,10 @@
 - **Core.Common.Result** - Lightweight result type for success/failure operations (implicit bool conversion)
 - **Core.Common.Result<T>** - Generic result type carrying a value on success; includes Map, Then, OnSuccess, OnFailure
 - **Core.Common.ResultExtensions** - Combine, CombineAll, Try utilities for result composition
+- **Core.Common.FrameCache<TKey,TValue>** - Frame-coherent cache, auto-clears on frame change; use for multi-query-per-frame scenarios
+- **Core.Common.FrameCacheValue<TValue>** - Single-value frame cache (no key)
+- **Core.Common.TimedCache<TKey,TValue>** - Time-based cache with configurable lifetime; use for expensive calculations that change infrequently
+- **Core.Common.TimedCacheValue<TValue>** - Single-value timed cache (no key)
 
 > **Result Pattern Convention:** All result types use `Success(...)` and `Failure(...)` factory methods.
 > Domain-specific result types (e.g., ScenarioLoadResult, ProvinceInitialStateLoadResult) follow this naming.
