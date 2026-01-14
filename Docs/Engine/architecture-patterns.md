@@ -422,27 +422,6 @@ This document catalogs the 21 core architectural patterns that make Archon Engin
 ENGINE defines interface → ENGINE registers defaults → GAME registers customs → Config references by ID
 ```
 
-**Example - Border Rendering:**
-```csharp
-// Interface (ENGINE)
-public interface IBorderRenderer {
-    string RendererId { get; }
-    void GenerateBorders(BorderGenerationParams parameters);
-}
-
-// Default implementation (ENGINE)
-public class DistanceFieldBorderRenderer : BorderRendererBase { ... }
-
-// Custom implementation (GAME)
-public class MyStylizedBorderRenderer : BorderRendererBase { ... }
-
-// Registration (GAME initialization)
-MapRendererRegistry.Instance.RegisterBorderRenderer(new MyStylizedBorderRenderer());
-
-// Configuration (VisualStyleConfiguration asset)
-borders.customRendererId = "MyStylized";  // References custom by ID
-```
-
 **Backwards Compatibility:**
 - Empty `customRendererId` falls back to enum-based selection
 - `GetEffectiveRendererId()` handles mapping
@@ -491,26 +470,6 @@ borders.customRendererId = "MyStylized";  // References custom by ID
 **Pattern Flow:**
 ```
 Define interface → Add attribute to implementations → Registry scans assemblies → Execute in priority order
-```
-
-**Example - Data Loaders:**
-```csharp
-// Interface (ENGINE)
-public interface ILoaderFactory {
-    void Load(LoaderContext context);
-}
-
-// Implementation with attribute
-[LoaderMetadata("terrain", Priority = 10, Required = true)]
-public class TerrainLoader : ILoaderFactory {
-    public void Load(LoaderContext context) { ... }
-}
-
-// Auto-discovery and execution
-var registry = new LoaderRegistry();
-registry.DiscoverLoaders(Assembly.GetExecutingAssembly());
-registry.DiscoverLoaders(gameAssembly);  // GAME layer loaders
-registry.ExecuteAll(context);  // Priority order
 ```
 
 **When to Use:**
