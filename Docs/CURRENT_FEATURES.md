@@ -196,7 +196,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Time Events** - EventBus integration for time-based system updates
 - **Dirty Flag Integration** - Only update systems when state changes
 - **ICalendar Interface** - Pluggable calendar system for custom calendars
-- **StandardCalendar** - Default 360-day implementation with era support
+- **StandardCalendar** - Default 365-day implementation with era support
 - **CalendarConstants** - Single source of truth for time constants
 - **GameTime Struct** - Full comparison operators (<, >, <=, >=), IComparable<GameTime>
 - **GameTime Arithmetic** - AddHours, AddDays, AddMonths, AddYears
