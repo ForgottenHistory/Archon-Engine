@@ -66,28 +66,12 @@ namespace Core.Linking
         private void ValidateStaticData()
         {
             // Check that essential static data is loaded
-            // These are "missing data" errors - expected in map-only mode
-            if (registries.Religions.Count == 0)
-            {
-                AddMissingDataError("No religions loaded", "Static Data");
-            }
-
-            if (registries.Cultures.Count == 0)
-            {
-                AddMissingDataError("No cultures loaded", "Static Data");
-            }
-
-            if (registries.TradeGoods.Count == 0)
-            {
-                AddMissingDataError("No trade goods loaded", "Static Data");
-            }
-
             if (registries.Terrains.Count == 0)
             {
                 AddMissingDataError("No terrain types loaded", "Static Data");
             }
 
-            ArchonLogger.Log($"DataValidator: Static data validation complete - {registries.Religions.Count} religions, {registries.Cultures.Count} cultures, {registries.TradeGoods.Count} trade goods", "core_data_linking");
+            ArchonLogger.Log($"DataValidator: Static data validation complete - {registries.Terrains.Count} terrains", "core_data_linking");
         }
 
         /// <summary>
@@ -113,17 +97,6 @@ namespace Core.Linking
                 else if (country.Tag.Length != 3)
                 {
                     AddError($"Country tag '{country.Tag}' is not 3 characters", context);
-                }
-
-                // Validate references
-                if (country.PrimaryCultureId != 0 && !registries.Cultures.Exists(country.PrimaryCultureId))
-                {
-                    AddError($"Invalid primary culture ID {country.PrimaryCultureId}", context);
-                }
-
-                if (country.ReligionId != 0 && !registries.Religions.Exists(country.ReligionId))
-                {
-                    AddError($"Invalid religion ID {country.ReligionId}", context);
                 }
 
                 // Validate capital
@@ -197,22 +170,6 @@ namespace Core.Linking
                         // This could be valid in wartime scenarios
                         AddWarning($"Province controlled by {province.ControllerId} but owned by {province.OwnerId}", context);
                     }
-                }
-
-                // Validate static references
-                if (province.CultureId != 0 && !registries.Cultures.Exists(province.CultureId))
-                {
-                    AddError($"Invalid culture ID {province.CultureId}", context);
-                }
-
-                if (province.ReligionId != 0 && !registries.Religions.Exists(province.ReligionId))
-                {
-                    AddError($"Invalid religion ID {province.ReligionId}", context);
-                }
-
-                if (province.TradeGoodId != 0 && !registries.TradeGoods.Exists(province.TradeGoodId))
-                {
-                    AddError($"Invalid trade good ID {province.TradeGoodId}", context);
                 }
 
                 // Validate terrain
@@ -357,7 +314,7 @@ namespace Core.Linking
         public string GetValidationSummary()
         {
             return $"Validation Summary: {errors.Count} errors, {warnings.Count} warnings\n" +
-                   $"Static Data: {registries.Religions.Count} religions, {registries.Cultures.Count} cultures, {registries.TradeGoods.Count} trade goods\n" +
+                   $"Static Data: {registries.Terrains.Count} terrains\n" +
                    $"Entities: {registries.Countries.Count} countries, {registries.Provinces.Count} provinces";
         }
     }

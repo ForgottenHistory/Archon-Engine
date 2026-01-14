@@ -6,7 +6,7 @@ using Core.Localization;
 namespace Core.Initialization.Phases
 {
     /// <summary>
-    /// Phase 2: Load static game data (religions, cultures, trade goods, terrains)
+    /// Phase 2: Load static game data (terrains, water provinces)
     /// Loads all static reference data before loading dynamic province/country data
     /// </summary>
     public class StaticDataLoadingPhase : IInitializationPhase
@@ -26,25 +26,7 @@ namespace Core.Initialization.Phases
             var localisationPath = System.IO.Path.Combine(context.Settings.DataDirectory, "localisation");
             LocalizationManager.Initialize(localisationPath, "english");
 
-            context.ReportProgress(6f, "Loading religions...");
-            yield return null;
-
-            // Load religions
-            ReligionLoader.LoadReligions(context.Registries.Religions, context.Settings.DataDirectory);
-
-            context.ReportProgress(8f, "Loading cultures...");
-            yield return null;
-
-            // Load cultures
-            CultureLoader.LoadCultures(context.Registries.Cultures, context.Settings.DataDirectory);
-
-            context.ReportProgress(10f, "Loading trade goods...");
-            yield return null;
-
-            // Load trade goods
-            TradeGoodLoader.LoadTradeGoods(context.Registries.TradeGoods, context.Settings.DataDirectory);
-
-            context.ReportProgress(12f, "Loading terrain types...");
+            context.ReportProgress(8f, "Loading terrain types...");
             yield return null;
 
             // Load terrain types
@@ -74,9 +56,6 @@ namespace Core.Initialization.Phases
             // Emit static data ready event
             context.EventBus.Emit(new StaticDataReadyEvent
             {
-                ReligionCount = context.Registries.Religions.Count,
-                CultureCount = context.Registries.Cultures.Count,
-                TradeGoodCount = context.Registries.TradeGoods.Count,
                 TerrainCount = context.Registries.Terrains.Count,
                 LocalizationLanguages = locLanguages,
                 LocalizationEntries = locEntries,
@@ -86,8 +65,7 @@ namespace Core.Initialization.Phases
 
             if (context.EnableDetailedLogging)
             {
-                ArchonLogger.Log($"Phase complete: Static data loaded - {context.Registries.Religions.Count} religions, " +
-                                $"{context.Registries.Cultures.Count} cultures, {context.Registries.TradeGoods.Count} trade goods, " +
+                ArchonLogger.Log($"Phase complete: Static data loaded - {context.Registries.Terrains.Count} terrains, " +
                                 $"{locEntries} localization entries ({locLanguages} languages)", "core_data_loading");
             }
         }
@@ -105,9 +83,6 @@ namespace Core.Initialization.Phases
     /// </summary>
     public struct StaticDataReadyEvent : IGameEvent
     {
-        public int ReligionCount;
-        public int CultureCount;
-        public int TradeGoodCount;
         public int TerrainCount;
         public int LocalizationLanguages;
         public int LocalizationEntries;

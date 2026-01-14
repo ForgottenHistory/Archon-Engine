@@ -46,9 +46,6 @@
 ### Data/Ids/
 - **Core.Data.Ids.ProvinceId** - Type-safe province ID wrapper (ushort)
 - **Core.Data.Ids.CountryId** - Type-safe country ID wrapper (ushort)
-- **Core.Data.Ids.ReligionId** - Type-safe religion ID wrapper (ushort)
-- **Core.Data.Ids.CultureId** - Type-safe culture ID wrapper (ushort)
-- **Core.Data.Ids.TradeGoodId** - Type-safe trade good ID wrapper (ushort)
 - **Core.Data.Ids.TerrainId** - Type-safe terrain ID wrapper (ushort)
 - **Core.Data.Ids.BuildingId** - Type-safe building ID wrapper (ushort)
 
@@ -56,7 +53,7 @@
 - **Core.Data.Math.FixedPointMath** - FixedPoint32 (16.16 format), FixedPoint2 (2D vector)
 
 ### Data/SparseData/
-- **Core.Data.SparseData.IDefinition** - Base interface for definitions (buildings, modifiers, trade goods)
+- **Core.Data.SparseData.IDefinition** - Base interface for definitions (buildings, modifiers, etc.)
 - **Core.Data.SparseData.ISparseCollection** - Non-generic interface for sparse collection management
 - **Core.Data.SparseData.SparseCollectionManager** - Generic sparse storage with NativeParallelMultiHashMap
 
@@ -161,9 +158,6 @@
 - **Core.Loaders.Json5ProvinceConverter** - Convert JSON5 province history with dated events
 - **Core.Loaders.Json5CountryConverter** - Convert JSON5 country data
 - **Core.Loaders.DefinitionLoader** - Load ALL provinces from definition.csv
-- **Core.Loaders.ReligionLoader** - Load religion definitions
-- **Core.Loaders.CultureLoader** - Load culture definitions
-- **Core.Loaders.TradeGoodLoader** - Load trade good definitions
 - **Core.Loaders.TerrainLoader** - Load terrain definitions
 - **Core.Loaders.CountryTagLoader** - Load country tag definitions
 - **Core.Loaders.ManifestLoader** - Load scenario manifests

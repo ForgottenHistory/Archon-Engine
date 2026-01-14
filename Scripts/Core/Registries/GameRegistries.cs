@@ -11,9 +11,6 @@ namespace Core.Registries
     public class GameRegistries
     {
         // Static data registries (no dependencies)
-        public readonly Registry<ReligionData> Religions = new("Religion");
-        public readonly Registry<CultureData> Cultures = new("Culture");
-        public readonly Registry<TradeGoodData> TradeGoods = new("TradeGood");
         public readonly Registry<TerrainData> Terrains = new("Terrain");
         public readonly Registry<BuildingData> Buildings = new("Building");
         public readonly Registry<TechnologyData> Technologies = new("Technology");
@@ -38,9 +35,6 @@ namespace Core.Registries
         public string GetDiagnostics()
         {
             return $"GameRegistries Status:\n" +
-                   $"  {Religions.GetDiagnostics()}\n" +
-                   $"  {Cultures.GetDiagnostics()}\n" +
-                   $"  {TradeGoods.GetDiagnostics()}\n" +
                    $"  {Terrains.GetDiagnostics()}\n" +
                    $"  {Buildings.GetDiagnostics()}\n" +
                    $"  {Technologies.GetDiagnostics()}\n" +
@@ -57,21 +51,9 @@ namespace Core.Registries
             bool isValid = true;
 
             // Check that static data is loaded
-            if (Religions.Count == 0)
+            if (Terrains.Count == 0)
             {
-                ArchonLogger.LogError("GameRegistries validation failed: No religions loaded", "core_data_loading");
-                isValid = false;
-            }
-
-            if (Cultures.Count == 0)
-            {
-                ArchonLogger.LogError("GameRegistries validation failed: No cultures loaded", "core_data_loading");
-                isValid = false;
-            }
-
-            if (TradeGoods.Count == 0)
-            {
-                ArchonLogger.LogError("GameRegistries validation failed: No trade goods loaded", "core_data_loading");
+                ArchonLogger.LogError("GameRegistries validation failed: No terrains loaded", "core_data_loading");
                 isValid = false;
             }
 
@@ -82,24 +64,6 @@ namespace Core.Registries
     }
 
     // Placeholder data classes - these will be properly implemented in Phase 3
-    public class ReligionData
-    {
-        public string Name { get; set; }
-        public string IconPath { get; set; }
-    }
-
-    public class CultureData
-    {
-        public string Name { get; set; }
-        public string CultureGroup { get; set; }
-    }
-
-    public class TradeGoodData
-    {
-        public string Name { get; set; }
-        public float BasePrice { get; set; }
-    }
-
     public class TerrainData
     {
         public string Name { get; set; }

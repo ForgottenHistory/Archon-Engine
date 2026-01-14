@@ -39,11 +39,6 @@ namespace Core.Linking
             provinceData.OwnerId = ResolveCountryRef(rawData.OwnerTag.ToString(), $"{context} owner");
             provinceData.ControllerId = ResolveCountryRef(rawData.ControllerTag.ToString() ?? rawData.OwnerTag.ToString(), $"{context} controller");
 
-            // Resolve static data references
-            provinceData.CultureId = ResolveCultureRef(rawData.Culture.ToString(), $"{context} culture");
-            provinceData.ReligionId = ResolveReligionRef(rawData.Religion.ToString(), $"{context} religion");
-            provinceData.TradeGoodId = ResolveTradeGoodRef(rawData.TradeGood.ToString(), $"{context} trade good");
-
             // Copy other data
             provinceData.Name = $"Province {rawData.ProvinceID}"; // TODO: Load actual names
             provinceData.Development = rawData.Development;
@@ -62,7 +57,7 @@ namespace Core.Linking
             rawData.ControllerID = (ushort)provinceData.ControllerId;
             rawData.Terrain = provinceData.Terrain;
 
-            ArchonLogger.Log($"Resolved references for {context}: Owner={provinceData.OwnerId}, Culture={provinceData.CultureId}, Religion={provinceData.ReligionId}", "core_data_linking");
+            ArchonLogger.Log($"Resolved references for {context}: Owner={provinceData.OwnerId}", "core_data_linking");
         }
 
         /// <summary>
@@ -73,16 +68,6 @@ namespace Core.Linking
             var context = $"Country {countryData.Tag}";
 
             // Resolve static data references if they exist in raw data
-            if (rawCountryData.TryGetValue("primary_culture", out var primaryCulture))
-            {
-                countryData.PrimaryCultureId = ResolveCultureRef(primaryCulture.ToString(), $"{context} primary culture");
-            }
-
-            if (rawCountryData.TryGetValue("religion", out var religion))
-            {
-                countryData.ReligionId = ResolveReligionRef(religion.ToString(), $"{context} religion");
-            }
-
             if (rawCountryData.TryGetValue("government", out var government))
             {
                 countryData.GovernmentId = ResolveGovernmentRef(government.ToString(), $"{context} government");
@@ -105,7 +90,7 @@ namespace Core.Linking
                 }
             }
 
-            ArchonLogger.Log($"Resolved references for {context}: Culture={countryData.PrimaryCultureId}, Religion={countryData.ReligionId}", "core_data_linking");
+            ArchonLogger.Log($"Resolved references for {context}: Government={countryData.GovernmentId}", "core_data_linking");
         }
 
         /// <summary>
@@ -121,51 +106,6 @@ namespace Core.Linking
 
             AddError($"{context}: Unknown country '{tag}'");
             return CountryId.None;
-        }
-
-        /// <summary>
-        /// Resolve culture reference by name
-        /// </summary>
-        public CultureId ResolveCultureRef(string cultureName, string context)
-        {
-            if (string.IsNullOrEmpty(cultureName))
-                return CultureId.None;
-
-            if (registries.Cultures.TryGetId(cultureName, out ushort id))
-                return new CultureId(id);
-
-            AddWarning($"{context}: Unknown culture '{cultureName}', using default");
-            return CultureId.None;
-        }
-
-        /// <summary>
-        /// Resolve religion reference by name
-        /// </summary>
-        public ReligionId ResolveReligionRef(string religionName, string context)
-        {
-            if (string.IsNullOrEmpty(religionName))
-                return ReligionId.None;
-
-            if (registries.Religions.TryGetId(religionName, out ushort id))
-                return new ReligionId(id);
-
-            AddWarning($"{context}: Unknown religion '{religionName}', using default");
-            return ReligionId.None;
-        }
-
-        /// <summary>
-        /// Resolve trade good reference by name
-        /// </summary>
-        public TradeGoodId ResolveTradeGoodRef(string tradeGoodName, string context)
-        {
-            if (string.IsNullOrEmpty(tradeGoodName))
-                return TradeGoodId.None;
-
-            if (registries.TradeGoods.TryGetId(tradeGoodName, out ushort id))
-                return new TradeGoodId(id);
-
-            AddWarning($"{context}: Unknown trade good '{tradeGoodName}', using default");
-            return TradeGoodId.None;
         }
 
         /// <summary>

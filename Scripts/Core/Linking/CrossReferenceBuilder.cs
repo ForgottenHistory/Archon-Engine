@@ -31,7 +31,6 @@ namespace Core.Linking
             ArchonLogger.Log("CrossReferenceBuilder: Building all cross-references", "core_data_linking");
 
             BuildCountryProvinceReferences();
-            BuildCultureGroupReferences();
             BuildProvinceNeighborReferences();
             ValidateCrossReferences();
 
@@ -91,43 +90,6 @@ namespace Core.Linking
             }
 
             ArchonLogger.Log($"CrossReferenceBuilder: Built {ownedCount} ownership and {controlledCount} control relationships", "core_data_linking");
-        }
-
-        /// <summary>
-        /// Build culture group references (placeholder for future implementation)
-        /// </summary>
-        public void BuildCultureGroupReferences()
-        {
-            ArchonLogger.Log("CrossReferenceBuilder: Building culture group references", "core_data_linking");
-
-            // TODO: Implement when culture groups are added
-            // This would group cultures by their culture groups for efficient queries
-
-            var culturesByGroup = new Dictionary<string, List<ushort>>();
-
-            foreach (var culture in registries.Cultures.GetAll())
-            {
-                var cultureData = culture as CultureData;
-                if (cultureData?.CultureGroup != null)
-                {
-                    if (!culturesByGroup.ContainsKey(cultureData.CultureGroup))
-                    {
-                        culturesByGroup[cultureData.CultureGroup] = new List<ushort>();
-                    }
-
-                    // Find the culture ID
-                    foreach (var cultureId in registries.Cultures.GetAllIds())
-                    {
-                        if (registries.Cultures.Get(cultureId) == culture)
-                        {
-                            culturesByGroup[cultureData.CultureGroup].Add(cultureId);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            ArchonLogger.Log($"CrossReferenceBuilder: Grouped {registries.Cultures.Count} cultures into {culturesByGroup.Count} culture groups", "core_data_linking");
         }
 
         /// <summary>
