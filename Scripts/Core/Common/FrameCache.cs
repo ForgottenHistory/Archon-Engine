@@ -118,7 +118,7 @@ namespace Core.Common
     /// Use when caching a single expensive calculation per frame.
     ///
     /// Usage:
-    ///   private FrameCacheValue&lt;int&gt; totalProvinces = new();
+    ///   private FrameCacheValue{int} totalProvinces = new();
     ///
     ///   public int GetTotalProvinces()
     ///   {

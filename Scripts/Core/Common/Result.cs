@@ -17,7 +17,7 @@ namespace Core.Common
     /// </summary>
     /// <remarks>
     /// Prefer this over throwing exceptions for expected failure cases.
-    /// For operations returning a value, use Result&lt;T&gt; instead.
+    /// For operations returning a value, use Result{T} instead.
     /// </remarks>
     public readonly struct Result
     {

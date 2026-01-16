@@ -18,7 +18,7 @@ namespace StarterKit
     /// 1. Inherit from StarterKitPanel
     /// 2. Override CreateUI() to build your panel
     /// 3. Call base.Initialize(gameState) to set up
-    /// 4. Use Subscribe&lt;T&gt;() for event subscriptions (auto-disposed)
+    /// 4. Use Subscribe() for event subscriptions (auto-disposed)
     /// </summary>
     public abstract class StarterKitPanel : BasePanel
     {

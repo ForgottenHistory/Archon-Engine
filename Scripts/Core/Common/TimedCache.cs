@@ -156,7 +156,7 @@ namespace Core.Common
     /// Use when caching a single expensive calculation that doesn't change frequently.
     ///
     /// Usage:
-    ///   private TimedCacheValue&lt;Stats&gt; statsCache = new(lifetime: 5.0f);
+    ///   private TimedCacheValue{Stats} statsCache = new(lifetime: 5.0f);
     ///
     ///   public Stats GetStats()
     ///   {
