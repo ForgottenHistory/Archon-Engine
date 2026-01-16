@@ -29,7 +29,10 @@ namespace StarterKit
         private Label headerLabel;
         private VisualElement unitsListContainer;
         private Button createUnitButton;
+        private Button moveUnitsButton;
+        private Button cancelMoveButton;
         private Label noUnitsLabel;
+        private Label moveModeLabel;
 
         // References
         private GameState gameState;
@@ -41,6 +44,11 @@ namespace StarterKit
         // State
         private ushort selectedProvinceID;
         private List<VisualElement> unitEntries = new List<VisualElement>();
+
+        // Move mode state
+        private bool isInMoveMode;
+        private ushort moveSourceProvinceID;
+        private List<ushort> unitsToMove = new List<ushort>();
 
         public bool IsInitialized => isInitialized;
 
@@ -169,6 +177,40 @@ namespace StarterKit
             createUnitButton.style.paddingRight = 10f;
             panelContainer.Add(createUnitButton);
 
+            // Move units button
+            moveUnitsButton = new Button(OnMoveUnitsClicked);
+            moveUnitsButton.text = LocalizationManager.Get("UI_MOVE_UNITS");
+            if (moveUnitsButton.text == "UI_MOVE_UNITS") moveUnitsButton.text = "Move Units"; // Fallback
+            moveUnitsButton.style.marginTop = 4f;
+            moveUnitsButton.style.paddingTop = 6f;
+            moveUnitsButton.style.paddingBottom = 6f;
+            moveUnitsButton.style.paddingLeft = 10f;
+            moveUnitsButton.style.paddingRight = 10f;
+            moveUnitsButton.style.display = DisplayStyle.None;
+            panelContainer.Add(moveUnitsButton);
+
+            // Cancel move button (shown during move mode)
+            cancelMoveButton = new Button(OnCancelMoveClicked);
+            cancelMoveButton.text = LocalizationManager.Get("UI_CANCEL");
+            if (cancelMoveButton.text == "UI_CANCEL") cancelMoveButton.text = "Cancel"; // Fallback
+            cancelMoveButton.style.marginTop = 4f;
+            cancelMoveButton.style.paddingTop = 6f;
+            cancelMoveButton.style.paddingBottom = 6f;
+            cancelMoveButton.style.paddingLeft = 10f;
+            cancelMoveButton.style.paddingRight = 10f;
+            cancelMoveButton.style.backgroundColor = new Color(0.5f, 0.2f, 0.2f, 1f);
+            cancelMoveButton.style.display = DisplayStyle.None;
+            panelContainer.Add(cancelMoveButton);
+
+            // Move mode label (instruction text)
+            moveModeLabel = new Label("Click a province to move units");
+            moveModeLabel.style.fontSize = fontSize - 2;
+            moveModeLabel.style.color = new Color(1f, 0.8f, 0.2f, 1f); // Yellow for visibility
+            moveModeLabel.style.unityFontStyleAndWeight = FontStyle.Italic;
+            moveModeLabel.style.marginTop = 6f;
+            moveModeLabel.style.display = DisplayStyle.None;
+            panelContainer.Add(moveModeLabel);
+
             rootElement.Add(panelContainer);
         }
 
@@ -177,6 +219,13 @@ namespace StarterKit
             if (provinceID == 0)
             {
                 HandleSelectionCleared();
+                return;
+            }
+
+            // If in move mode, this click is the destination
+            if (isInMoveMode)
+            {
+                ExecuteMove(provinceID);
                 return;
             }
 
@@ -192,6 +241,12 @@ namespace StarterKit
 
         private void HandleSelectionCleared()
         {
+            // Cancel move mode if active
+            if (isInMoveMode)
+            {
+                ExitMoveMode();
+            }
+
             selectedProvinceID = 0;
             HidePanel();
         }
@@ -280,6 +335,25 @@ namespace StarterKit
             // Get units in province
             var unitIds = unitSystem.GetUnitsInProvince(selectedProvinceID);
 
+            // Check if there are player units (for move button)
+            bool hasPlayerUnits = false;
+            var playerState = Initializer.Instance?.PlayerState;
+            if (playerState != null && playerState.HasPlayerCountry)
+            {
+                foreach (var unitId in unitIds)
+                {
+                    var unit = unitSystem.GetUnit(unitId);
+                    if (unit.countryID == playerState.PlayerCountryId && unit.unitCount > 0)
+                    {
+                        hasPlayerUnits = true;
+                        break;
+                    }
+                }
+            }
+
+            // Show move button only if there are player units and not in move mode
+            moveUnitsButton.style.display = (hasPlayerUnits && !isInMoveMode) ? DisplayStyle.Flex : DisplayStyle.None;
+
             if (unitIds.Count == 0)
             {
                 noUnitsLabel.style.display = DisplayStyle.Flex;
@@ -354,5 +428,157 @@ namespace StarterKit
                 panelContainer.style.display = DisplayStyle.None;
             }
         }
+
+        #region Move Mode
+
+        private void OnMoveUnitsClicked()
+        {
+            if (selectedProvinceID == 0)
+            {
+                ArchonLogger.LogWarning("UnitInfoUI: No province selected for move", "starter_kit");
+                return;
+            }
+
+            EnterMoveMode();
+        }
+
+        private void OnCancelMoveClicked()
+        {
+            ExitMoveMode();
+        }
+
+        private void EnterMoveMode()
+        {
+            var playerState = Initializer.Instance?.PlayerState;
+            if (playerState == null || !playerState.HasPlayerCountry)
+            {
+                ArchonLogger.LogWarning("UnitInfoUI: Cannot enter move mode - no player country", "starter_kit");
+                return;
+            }
+
+            // Collect player units in selected province
+            unitsToMove.Clear();
+            var unitIds = unitSystem.GetUnitsInProvince(selectedProvinceID);
+            foreach (var unitId in unitIds)
+            {
+                var unit = unitSystem.GetUnit(unitId);
+                if (unit.countryID == playerState.PlayerCountryId && unit.unitCount > 0)
+                {
+                    unitsToMove.Add(unitId);
+                }
+            }
+
+            if (unitsToMove.Count == 0)
+            {
+                ArchonLogger.LogWarning("UnitInfoUI: No player units to move", "starter_kit");
+                return;
+            }
+
+            isInMoveMode = true;
+            moveSourceProvinceID = selectedProvinceID;
+
+            // Update UI
+            headerLabel.text = LocalizationManager.Get("UI_MOVE_MODE");
+            if (headerLabel.text == "UI_MOVE_MODE") headerLabel.text = "Move Mode";
+
+            createUnitButton.style.display = DisplayStyle.None;
+            moveUnitsButton.style.display = DisplayStyle.None;
+            cancelMoveButton.style.display = DisplayStyle.Flex;
+            moveModeLabel.style.display = DisplayStyle.Flex;
+
+            ArchonLogger.Log($"UnitInfoUI: Entered move mode with {unitsToMove.Count} units from province {moveSourceProvinceID}", "starter_kit");
+        }
+
+        private void ExitMoveMode()
+        {
+            isInMoveMode = false;
+            moveSourceProvinceID = 0;
+            unitsToMove.Clear();
+
+            // Restore UI
+            headerLabel.text = LocalizationManager.Get("UI_UNITS");
+            if (headerLabel.text == "UI_UNITS") headerLabel.text = "Units";
+
+            cancelMoveButton.style.display = DisplayStyle.None;
+            moveModeLabel.style.display = DisplayStyle.None;
+
+            // Refresh to restore proper button states
+            RefreshUnitsList();
+
+            ArchonLogger.Log("UnitInfoUI: Exited move mode", "starter_kit");
+        }
+
+        private void ExecuteMove(ushort targetProvinceID)
+        {
+            if (!isInMoveMode || moveSourceProvinceID == 0 || unitsToMove.Count == 0)
+            {
+                ArchonLogger.LogWarning("UnitInfoUI: Invalid move state", "starter_kit");
+                ExitMoveMode();
+                return;
+            }
+
+            // Same province - cancel
+            if (targetProvinceID == moveSourceProvinceID)
+            {
+                ArchonLogger.Log("UnitInfoUI: Same province selected, cancelling move", "starter_kit");
+                ExitMoveMode();
+                return;
+            }
+
+            // Check if pathfinding is available
+            if (gameState.Pathfinding == null || !gameState.Pathfinding.IsInitialized)
+            {
+                ArchonLogger.LogWarning("UnitInfoUI: Pathfinding not available", "starter_kit");
+                ExitMoveMode();
+                return;
+            }
+
+            // Check if movement queue is available
+            var movementQueue = gameState.Units?.MovementQueue;
+            if (movementQueue == null)
+            {
+                ArchonLogger.LogWarning("UnitInfoUI: MovementQueue not available", "starter_kit");
+                ExitMoveMode();
+                return;
+            }
+
+            // Check if path exists
+            var playerState = Initializer.Instance?.PlayerState;
+            ushort countryId = playerState?.PlayerCountryId ?? 0;
+
+            var path = gameState.Pathfinding.FindPath(moveSourceProvinceID, targetProvinceID, countryId);
+
+            if (path == null || path.Count < 2)
+            {
+                ArchonLogger.Log($"UnitInfoUI: No path from province {moveSourceProvinceID} to {targetProvinceID}", "starter_kit");
+                // Stay in move mode so player can try another destination
+                return;
+            }
+
+            // Issue movement orders for all units via Core's MovementQueue
+            int ordersIssued = 0;
+            foreach (var unitId in unitsToMove)
+            {
+                var unit = unitSystem.GetUnit(unitId);
+                if (unit.unitCount > 0) // Unit still exists
+                {
+                    // Get speed from unit type (days per province)
+                    var unitType = unitSystem.GetUnitType(unit.unitTypeID);
+                    int movementDays = unitType?.Speed ?? 2;
+
+                    // Start movement to first waypoint, passing full path for multi-hop
+                    ushort firstDestination = path[1]; // path[0] is current position
+                    movementQueue.StartMovement(unitId, firstDestination, movementDays, path);
+                    ordersIssued++;
+                }
+            }
+
+            ArchonLogger.Log($"UnitInfoUI: Issued {ordersIssued} movement orders from province {moveSourceProvinceID} to {targetProvinceID} (path length: {path.Count})", "starter_kit");
+
+            // Exit move mode (units will arrive over time)
+            ExitMoveMode();
+        }
+
+        #endregion
     }
 }

@@ -335,6 +335,14 @@ namespace StarterKit
             if (logProgress)
                 ArchonLogger.Log(gameState.Adjacencies.GetStatistics(), "starter_kit");
 
+            // Initialize pathfinding system now that adjacencies are ready
+            if (gameState.Pathfinding != null && gameState.Adjacencies.IsInitialized)
+            {
+                gameState.Pathfinding.Initialize(gameState.Adjacencies);
+                if (logProgress)
+                    ArchonLogger.Log("Initializer: PathfindingSystem initialized", "starter_kit");
+            }
+
             // Cleanup
             Object.Destroy(scannerObj);
 

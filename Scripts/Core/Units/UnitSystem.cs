@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Core.Data.SparseData;
 using Core.SaveLoad;
+using Core.Systems;
 
 namespace Core.Units
 {
@@ -86,6 +87,12 @@ namespace Core.Units
             // Initialize ID management
             availableIDs = new HashSet<ushort>();
             nextID = 1;  // Start at 1 (0 reserved for "no unit")
+
+            // Subscribe to daily tick for movement processing
+            if (eventBus != null)
+            {
+                eventBus.Subscribe<DailyTickEvent>(OnDailyTick);
+            }
 
             UnityEngine.Debug.Log($"[UnitSystem] Initialized with capacity {capacity}");
         }
@@ -541,10 +548,23 @@ namespace Core.Units
             unitCount = 0;
         }
 
+        // === Daily Tick Processing ===
+
+        private void OnDailyTick(DailyTickEvent evt)
+        {
+            movementQueue?.ProcessDailyTick();
+        }
+
         // === Disposal ===
 
         public void Dispose()
         {
+            // Unsubscribe from events
+            if (eventBus != null)
+            {
+                eventBus.Unsubscribe<DailyTickEvent>(OnDailyTick);
+            }
+
             if (units.IsCreated)
             {
                 units.Dispose();

@@ -21,6 +21,7 @@ namespace StarterKit
         public int Maintenance { get; set; }
         public int Attack { get; set; }
         public int Defense { get; set; }
+        public int Speed { get; set; } = 2; // Days per province movement (default 2)
     }
 
     /// <summary>
@@ -135,6 +136,8 @@ namespace StarterKit
                     unitType.Attack = statsObj["attack"].ToObject<int>();
                 if (statsObj["defense"] != null)
                     unitType.Defense = statsObj["defense"].ToObject<int>();
+                if (statsObj["speed"] != null)
+                    unitType.Speed = statsObj["speed"].ToObject<int>();
             }
 
             return unitType;

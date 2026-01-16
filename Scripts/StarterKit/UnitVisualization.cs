@@ -22,6 +22,9 @@ namespace StarterKit
         [Header("References")]
         [SerializeField] private BillboardAtlasGenerator atlasGenerator;
 
+        [Header("Path Rendering")]
+        [SerializeField] private bool enablePathLines = true;
+
         [Header("Debug")]
         [SerializeField] private bool logDebug = true;
 
@@ -30,6 +33,7 @@ namespace StarterKit
         private UnitSystem unitSystem;
         private ProvinceCenterLookup centerLookup;
         private CompositeDisposable subscriptions;
+        private UnitPathRenderer pathRenderer;
 
         // GPU instancing data
         private Mesh quadMesh;
@@ -100,6 +104,15 @@ namespace StarterKit
             {
                 ArchonLogger.LogError("UnitVisualization: Failed to initialize center lookup", "starter_kit");
                 return;
+            }
+
+            // Initialize path renderer for movement visualization
+            if (enablePathLines)
+            {
+                var pathRendererObj = new GameObject("UnitPathRenderer");
+                pathRendererObj.transform.SetParent(transform);
+                pathRenderer = pathRendererObj.AddComponent<UnitPathRenderer>();
+                pathRenderer.Initialize(gameState, centerLookup);
             }
 
             // Create rendering resources
