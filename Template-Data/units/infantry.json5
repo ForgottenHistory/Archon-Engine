@@ -1,5 +1,5 @@
 {
-  // Basic infantry unit for StarterKit demo
+  // Basic infantry unit for StarterKit demo (RISK-style simple combat)
   id: "infantry",
   name: "Infantry",
   category: "land",
@@ -14,11 +14,7 @@
   },
 
   stats: {
-    max_strength: 1000,
-    attack: 2,
-    defense: 2,
-    morale: 3,
-    speed: 2
+    speed: 2   // Days per province movement
   },
 
   visual: {

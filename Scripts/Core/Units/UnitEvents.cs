@@ -10,6 +10,7 @@ namespace Core.Units
         public ushort ProvinceID;
         public ushort CountryID;
         public ushort UnitTypeID;
+        public ushort UnitCount;
         public float TimeStamp { get; set; }
     }
 
@@ -27,7 +28,7 @@ namespace Core.Units
     }
 
     /// <summary>
-    /// Emitted when a unit moves to a new province (future - movement system)
+    /// Emitted when a unit moves to a new province
     /// </summary>
     public struct UnitMovedEvent : IGameEvent
     {
@@ -38,24 +39,14 @@ namespace Core.Units
     }
 
     /// <summary>
-    /// Emitted when unit strength changes (combat damage, reinforcement, etc.)
+    /// Emitted when unit count changes (combat, reinforcement, etc.)
+    /// RISK-style: Simple number changes instead of percentage-based strength/morale
     /// </summary>
-    public struct UnitStrengthChangedEvent : IGameEvent
+    public struct UnitCountChangedEvent : IGameEvent
     {
         public ushort UnitID;
-        public byte OldStrength;
-        public byte NewStrength;
-        public float TimeStamp { get; set; }
-    }
-
-    /// <summary>
-    /// Emitted when unit morale changes (combat, attrition, etc.)
-    /// </summary>
-    public struct UnitMoraleChangedEvent : IGameEvent
-    {
-        public ushort UnitID;
-        public byte OldMorale;
-        public byte NewMorale;
+        public ushort OldCount;
+        public ushort NewCount;
         public float TimeStamp { get; set; }
     }
 

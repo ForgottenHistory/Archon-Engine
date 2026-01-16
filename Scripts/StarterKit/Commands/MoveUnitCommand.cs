@@ -28,9 +28,9 @@ namespace StarterKit.Commands
             if (units == null)
                 return false;
 
-            // Check unit exists (strength > 0 means unit is alive)
+            // Check unit exists (unitCount > 0 means unit is alive)
             var unit = units.GetUnit(UnitId);
-            if (unit.strength == 0)
+            if (unit.unitCount == 0)
                 return false;
 
             // Check target province is valid

@@ -288,19 +288,27 @@ namespace StarterKit
 
             noUnitsLabel.style.display = DisplayStyle.None;
 
-            // Create entry for each unit
+            // Group units by type and sum troop counts (like buildings)
+            var unitsByType = new Dictionary<ushort, int>(); // unitTypeID -> total troops
             foreach (var unitId in unitIds)
             {
                 var unitState = unitSystem.GetUnit(unitId);
-                var unitType = unitSystem.GetUnitType(unitState.unitTypeID);
+                if (!unitsByType.ContainsKey(unitState.unitTypeID))
+                    unitsByType[unitState.unitTypeID] = 0;
+                unitsByType[unitState.unitTypeID] += unitState.unitCount;
+            }
 
-                var entry = CreateUnitEntry(unitId, unitState, unitType);
+            // Create entry for each unit type (stacked)
+            foreach (var kvp in unitsByType)
+            {
+                var unitType = unitSystem.GetUnitType(kvp.Key);
+                var entry = CreateUnitEntry(unitType, kvp.Value);
                 unitsListContainer.Add(entry);
                 unitEntries.Add(entry);
             }
         }
 
-        private VisualElement CreateUnitEntry(ushort unitId, UnitState state, UnitType unitType)
+        private VisualElement CreateUnitEntry(UnitType unitType, int totalTroops)
         {
             var entry = new VisualElement();
             entry.style.flexDirection = FlexDirection.Row;
@@ -317,46 +325,18 @@ namespace StarterKit
             entry.style.borderBottomLeftRadius = 3f;
             entry.style.borderBottomRightRadius = 3f;
 
-            // Unit info container
-            var infoContainer = new VisualElement();
-
-            // Unit name/type - try localization first
+            // Unit name/type with troop count
             string typeName = unitType != null
                 ? LocalizationManager.Get($"UNIT_{unitType.StringID.ToUpperInvariant()}")
-                : $"Unit #{unitId}";
+                : "Unknown";
             if (typeName.StartsWith("UNIT_") && unitType != null) typeName = unitType.Name; // Fallback
-            var nameLabel = new Label(typeName);
+
+            var nameLabel = new Label($"{typeName} x{totalTroops}");
             nameLabel.style.fontSize = fontSize - 1;
             nameLabel.style.color = textColor;
-            infoContainer.Add(nameLabel);
-
-            // Strength/morale
-            var statsLabel = new Label($"{LocalizationManager.Get("UI_STRENGTH")}: {state.strength}% | {LocalizationManager.Get("UI_MORALE")}: {state.morale}%");
-            statsLabel.style.fontSize = fontSize - 3;
-            statsLabel.style.color = labelColor;
-            infoContainer.Add(statsLabel);
-
-            entry.Add(infoContainer);
-
-            // Disband button
-            var disbandButton = new Button(() => OnDisbandClicked(unitId));
-            disbandButton.text = "X";
-            disbandButton.style.width = 20f;
-            disbandButton.style.height = 20f;
-            disbandButton.style.fontSize = 10;
-            disbandButton.style.paddingTop = 0f;
-            disbandButton.style.paddingBottom = 0f;
-            disbandButton.style.paddingLeft = 0f;
-            disbandButton.style.paddingRight = 0f;
-            entry.Add(disbandButton);
+            entry.Add(nameLabel);
 
             return entry;
-        }
-
-        private void OnDisbandClicked(ushort unitId)
-        {
-            unitSystem.DisbandUnit(unitId);
-            // List will auto-refresh via event
         }
 
         public void ShowPanel()

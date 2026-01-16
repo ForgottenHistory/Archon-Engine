@@ -93,10 +93,10 @@ namespace Core.Units
         // === Unit Creation ===
 
         /// <summary>
-        /// Create a new unit at full strength and morale.
+        /// Create a new unit with specified troop count (RISK-style).
         /// Returns the assigned unit ID (1-65535).
         /// </summary>
-        public ushort CreateUnit(ushort provinceID, ushort countryID, ushort unitTypeID)
+        public ushort CreateUnit(ushort provinceID, ushort countryID, ushort unitTypeID, ushort troopCount = 1)
         {
             // Get next available ID
             ushort unitID = AllocateUnitID();
@@ -108,7 +108,7 @@ namespace Core.Units
             }
 
             // Create unit state
-            UnitState unitState = UnitState.Create(provinceID, countryID, unitTypeID);
+            UnitState unitState = UnitState.Create(provinceID, countryID, unitTypeID, troopCount);
             units[unitID] = unitState;
             unitCount++;
 
@@ -124,25 +124,26 @@ namespace Core.Units
                     UnitID = unitID,
                     ProvinceID = provinceID,
                     CountryID = countryID,
-                    UnitTypeID = unitTypeID
+                    UnitTypeID = unitTypeID,
+                    UnitCount = troopCount
                 });
             }
 
-            UnityEngine.Debug.Log($"[UnitSystem] Created unit {unitID} (Type={unitTypeID}) in province {provinceID} for country {countryID}");
+            UnityEngine.Debug.Log($"[UnitSystem] Created unit {unitID} (Type={unitTypeID}, Count={troopCount}) in province {provinceID} for country {countryID}");
             return unitID;
         }
 
         /// <summary>
-        /// Create a unit with custom strength/morale (for loading saves, reinforcements, etc.)
+        /// Create a unit with custom stats (for loading saves, reinforcements, etc.)
         /// </summary>
-        public ushort CreateUnitWithStats(ushort provinceID, ushort countryID, ushort unitTypeID, byte strength, byte morale)
+        public ushort CreateUnitWithStats(ushort provinceID, ushort countryID, ushort unitTypeID, ushort unitCount)
         {
             ushort unitID = AllocateUnitID();
             if (unitID == 0) return 0;
 
-            UnitState unitState = UnitState.CreateWithStats(provinceID, countryID, unitTypeID, strength, morale);
+            UnitState unitState = UnitState.CreateWithStats(provinceID, countryID, unitTypeID, unitCount);
             units[unitID] = unitState;
-            unitCount++;
+            this.unitCount++;
 
             provinceUnits.Add(provinceID, unitID);
             countryUnits.Add(countryID, unitID);
@@ -212,7 +213,7 @@ namespace Core.Units
         {
             if (unitID == 0 || unitID >= capacity)
                 return false;
-            return units[unitID].strength > 0;  // strength=0 means destroyed/empty slot
+            return units[unitID].unitCount > 0;  // unitCount=0 means destroyed/empty slot
         }
 
         /// <summary>Get all unit IDs in a province (O(m) where m = units in province)</summary>
@@ -253,54 +254,50 @@ namespace Core.Units
 
         // === Modification ===
 
-        /// <summary>Set unit strength (0-100)</summary>
-        public void SetUnitStrength(ushort unitID, byte strength)
+        /// <summary>Set unit count (RISK-style troop count)</summary>
+        public void SetUnitCount(ushort unitID, ushort count)
         {
             if (!HasUnit(unitID)) return;
 
-            byte oldStrength = units[unitID].strength;
+            ushort oldCount = units[unitID].unitCount;
             UnitState unit = units[unitID];
-            unit.strength = strength;
+            unit.unitCount = count;
             units[unitID] = unit;
 
             // Emit event
-            if (eventBus != null && oldStrength != strength)
+            if (eventBus != null && oldCount != count)
             {
-                eventBus.Emit(new UnitStrengthChangedEvent
+                eventBus.Emit(new UnitCountChangedEvent
                 {
                     UnitID = unitID,
-                    OldStrength = oldStrength,
-                    NewStrength = strength
+                    OldCount = oldCount,
+                    NewCount = count
                 });
             }
 
-            // Auto-disband if strength reaches 0
-            if (strength == 0)
+            // Auto-disband if count reaches 0
+            if (count == 0)
             {
                 DisbandUnit(unitID, DestructionReason.Combat);
             }
         }
 
-        /// <summary>Set unit morale (0-100)</summary>
-        public void SetUnitMorale(ushort unitID, byte morale)
+        /// <summary>Add troops to unit (reinforcement)</summary>
+        public void AddTroops(ushort unitID, ushort amount)
         {
             if (!HasUnit(unitID)) return;
+            ushort currentCount = units[unitID].unitCount;
+            ushort newCount = (ushort)System.Math.Min(currentCount + amount, ushort.MaxValue);
+            SetUnitCount(unitID, newCount);
+        }
 
-            byte oldMorale = units[unitID].morale;
-            UnitState unit = units[unitID];
-            unit.morale = morale;
-            units[unitID] = unit;
-
-            // Emit event
-            if (eventBus != null && oldMorale != morale)
-            {
-                eventBus.Emit(new UnitMoraleChangedEvent
-                {
-                    UnitID = unitID,
-                    OldMorale = oldMorale,
-                    NewMorale = morale
-                });
-            }
+        /// <summary>Remove troops from unit (combat losses)</summary>
+        public void RemoveTroops(ushort unitID, ushort amount)
+        {
+            if (!HasUnit(unitID)) return;
+            ushort currentCount = units[unitID].unitCount;
+            ushort newCount = amount >= currentCount ? (ushort)0 : (ushort)(currentCount - amount);
+            SetUnitCount(unitID, newCount);
         }
 
         /// <summary>

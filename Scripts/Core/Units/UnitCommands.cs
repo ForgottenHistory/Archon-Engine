@@ -224,8 +224,7 @@ namespace Core.Units
                 savedUnitState.provinceID,
                 savedUnitState.countryID,
                 savedUnitState.unitTypeID,
-                savedUnitState.strength,
-                savedUnitState.morale
+                savedUnitState.unitCount
             );
 
             if (recreatedID != unitID)

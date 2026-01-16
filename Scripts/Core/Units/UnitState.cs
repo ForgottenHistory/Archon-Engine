@@ -10,7 +10,7 @@ namespace Core.Units
     /// - Fixed size (8 bytes) for cache efficiency and network transmission
     /// - No visual data (positions, sprites) - presentation layer responsibility
     /// - provinceID instead of coordinates - simulation layer doesn't know positions
-    /// - Percentage strength/morale (0-100) - sufficient granularity, saves space
+    /// - RISK-style: Simple unit count instead of percentage-based strength/morale
     ///
     /// MULTIPLAYER:
     /// - Deterministic layout (explicit struct layout)
@@ -33,50 +33,42 @@ namespace Core.Units
 
         // === Combat Stats (2 bytes) ===
 
-        /// <summary>Current strength (0-100%). 100 = full strength, 0 = destroyed</summary>
-        public byte strength;
-
-        /// <summary>Current morale (0-100%). Affects combat, breaks cause retreat</summary>
-        public byte morale;
+        /// <summary>Number of troops in this unit</summary>
+        public ushort unitCount;
 
         // === Factory Methods ===
 
-        /// <summary>Create a new unit at full strength and morale</summary>
-        public static UnitState Create(ushort provinceID, ushort countryID, ushort unitTypeID)
+        /// <summary>Create a new unit with specified troop count</summary>
+        public static UnitState Create(ushort provinceID, ushort countryID, ushort unitTypeID, ushort unitCount = 1)
         {
             return new UnitState
             {
                 provinceID = provinceID,
                 countryID = countryID,
                 unitTypeID = unitTypeID,
-                strength = 100,
-                morale = 100
+                unitCount = unitCount
             };
         }
 
-        /// <summary>Create a unit with custom strength/morale (for loading saves, reinforcements, etc.)</summary>
-        public static UnitState CreateWithStats(ushort provinceID, ushort countryID, ushort unitTypeID, byte strength, byte morale)
+        /// <summary>Create a unit with custom stats (for loading saves, reinforcements, etc.)</summary>
+        public static UnitState CreateWithStats(ushort provinceID, ushort countryID, ushort unitTypeID, ushort unitCount)
         {
             return new UnitState
             {
                 provinceID = provinceID,
                 countryID = countryID,
                 unitTypeID = unitTypeID,
-                strength = strength,
-                morale = morale
+                unitCount = unitCount
             };
         }
 
         // === Queries ===
 
-        /// <summary>Is this unit destroyed (strength = 0)?</summary>
-        public bool IsDestroyed => strength == 0;
+        /// <summary>Is this unit destroyed (unitCount = 0)?</summary>
+        public bool IsDestroyed => unitCount == 0;
 
-        /// <summary>Is this unit at full strength?</summary>
-        public bool IsFullStrength => strength == 100;
-
-        /// <summary>Is morale broken (ready to retreat)?</summary>
-        public bool IsMoraleBroken => morale < 20;  // Configurable threshold
+        /// <summary>Does this unit have troops?</summary>
+        public bool HasTroops => unitCount > 0;
 
         // === Serialization (for network/save) ===
 
@@ -87,8 +79,7 @@ namespace Core.Units
             BitConverter.GetBytes(provinceID).CopyTo(bytes, 0);
             BitConverter.GetBytes(countryID).CopyTo(bytes, 2);
             BitConverter.GetBytes(unitTypeID).CopyTo(bytes, 4);
-            bytes[6] = strength;
-            bytes[7] = morale;
+            BitConverter.GetBytes(unitCount).CopyTo(bytes, 6);
             return bytes;
         }
 
@@ -103,8 +94,7 @@ namespace Core.Units
                 provinceID = BitConverter.ToUInt16(bytes, 0),
                 countryID = BitConverter.ToUInt16(bytes, 2),
                 unitTypeID = BitConverter.ToUInt16(bytes, 4),
-                strength = bytes[6],
-                morale = bytes[7]
+                unitCount = BitConverter.ToUInt16(bytes, 6)
             };
         }
 
@@ -115,8 +105,7 @@ namespace Core.Units
             return provinceID == other.provinceID &&
                    countryID == other.countryID &&
                    unitTypeID == other.unitTypeID &&
-                   strength == other.strength &&
-                   morale == other.morale;
+                   unitCount == other.unitCount;
         }
 
         public override bool Equals(object obj) => obj is UnitState other && Equals(other);
@@ -128,8 +117,7 @@ namespace Core.Units
                 int hash = provinceID.GetHashCode();
                 hash = (hash * 397) ^ countryID.GetHashCode();
                 hash = (hash * 397) ^ unitTypeID.GetHashCode();
-                hash = (hash * 397) ^ strength.GetHashCode();
-                hash = (hash * 397) ^ morale.GetHashCode();
+                hash = (hash * 397) ^ unitCount.GetHashCode();
                 return hash;
             }
         }
@@ -139,7 +127,7 @@ namespace Core.Units
 
         public override string ToString()
         {
-            return $"Unit(Province={provinceID}, Country={countryID}, Type={unitTypeID}, Str={strength}%, Mor={morale}%)";
+            return $"Unit(Province={provinceID}, Country={countryID}, Type={unitTypeID}, Count={unitCount})";
         }
     }
 }

@@ -26,9 +26,9 @@ namespace StarterKit.Commands
             if (units == null)
                 return false;
 
-            // Check unit exists (strength > 0 means unit is alive)
+            // Check unit exists (unitCount > 0 means unit is alive)
             var unit = units.GetUnit(UnitId);
-            return unit.strength > 0;
+            return unit.unitCount > 0;
         }
 
         public override void Execute(GameState gameState)
