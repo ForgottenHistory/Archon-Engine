@@ -278,3 +278,5 @@
 
 *Updated: 2026-01-14*
 *Added: Query/ProvinceQueryBuilder/CountryQueryBuilder fluent API; Graph/ namespace with GraphDistanceCalculator*
+
+**Note:** Lua scripting is in separate `Scripting` assembly (optional, requires MOONSHARP_ENABLED). See `Scripts/Scripting/FILE_REGISTRY.md`.

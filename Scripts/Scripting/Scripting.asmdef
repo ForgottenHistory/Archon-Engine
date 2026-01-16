@@ -1,0 +1,20 @@
+{
+    "name": "Scripting",
+    "rootNamespace": "Scripting",
+    "references": [
+        "Core",
+        "Utils",
+        "MoonSharp"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "MOONSHARP_ENABLED"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

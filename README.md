@@ -173,9 +173,11 @@ WIP 3D map with texturing
 
 - Unity 2023.3+ (6000+, preferably latest LTS version)
 - Universal Render Pipeline (URP)
-- IL2CPP scripting backend
+- IL2CPP scripting backend (Mono is fine for development though)
 - Burst Compiler enabled
 - UI Toolkit
+
+Currently testing [MoonSharp](https://github.com/k0dep/MoonSharp.git#2.0.0) for Lua scripting. To enable, add MOONSHARP_ENABLED in Project Settings → Player → Scripting Define Symbols.
 
 ## License
 
