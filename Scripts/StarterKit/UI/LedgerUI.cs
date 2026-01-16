@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
 using Core.Events;
-using Core.Localization;
 using Core.Systems;
 using Core.Units;
+using Core.UI;
 using System.Collections.Generic;
 
 namespace StarterKit
@@ -14,38 +14,22 @@ namespace StarterKit
     /// Displays country name, provinces, units, gold in a sortable table.
     /// Toggle with L key or button.
     /// </summary>
-    [RequireComponent(typeof(UIDocument))]
-    public class LedgerUI : MonoBehaviour
+    public class LedgerUI : StarterKitPanel
     {
-        [Header("Styling")]
-        [SerializeField] private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.95f);
-        [SerializeField] private Color headerColor = new Color(0.2f, 0.2f, 0.3f, 1f);
-        [SerializeField] private Color textColor = Color.white;
-        [SerializeField] private Color playerRowColor = new Color(0.2f, 0.3f, 0.2f, 1f);
-        [SerializeField] private Color alternateRowColor = new Color(0.15f, 0.15f, 0.15f, 1f);
-        [SerializeField] private int fontSize = 14;
-
         [Header("Hotkey")]
         [SerializeField] private KeyCode toggleKey = KeyCode.L;
 
         // UI Elements
-        private UIDocument uiDocument;
-        private VisualElement rootElement;
-        private VisualElement panelContainer;
         private VisualElement headerRow;
         private ScrollView tableScrollView;
         private Button closeButton;
 
         // References
-        private GameState gameState;
         private EconomySystem economySystem;
         private UnitSystem unitSystem;
         private PlayerState playerState;
-        private CompositeDisposable subscriptions;
-        private bool isInitialized;
 
         // State
-        private bool isVisible;
         private List<VisualElement> rowElements = new List<VisualElement>();
 
         // Sorting
@@ -53,162 +37,92 @@ namespace StarterKit
         private SortColumn currentSortColumn = SortColumn.Provinces;
         private bool sortDescending = true;
 
-        public bool IsInitialized => isInitialized;
-        public bool IsVisible => isVisible;
+        // Column widths
+        private const float ColWidthName = 180f;
+        private const float ColWidthData = 80f;
 
         public void Initialize(GameState gameStateRef, EconomySystem economySystemRef, UnitSystem unitSystemRef, PlayerState playerStateRef)
         {
-            if (isInitialized)
-            {
-                ArchonLogger.LogWarning("LedgerUI: Already initialized!", "starter_kit");
-                return;
-            }
-
-            if (gameStateRef == null)
-            {
-                ArchonLogger.LogError("LedgerUI: Cannot initialize with null GameState!", "starter_kit");
-                return;
-            }
-
-            gameState = gameStateRef;
             economySystem = economySystemRef;
             unitSystem = unitSystemRef;
             playerState = playerStateRef;
 
-            InitializeUI();
-
-            // Subscribe to events via EventBus (auto-disposed on OnDestroy)
-            subscriptions = new CompositeDisposable();
-            if (gameState?.EventBus != null)
+            if (!base.Initialize(gameStateRef))
             {
-                subscriptions.Add(gameState.EventBus.Subscribe<GoldChangedEvent>(HandleGoldChanged));
-                subscriptions.Add(gameState.EventBus.Subscribe<ProvinceOwnershipChangedEvent>(HandleOwnershipChanged));
-                subscriptions.Add(gameState.EventBus.Subscribe<UnitCreatedEvent>(HandleUnitCreated));
-                subscriptions.Add(gameState.EventBus.Subscribe<UnitDestroyedEvent>(HandleUnitDestroyed));
+                return;
             }
 
-            isInitialized = true;
-            isVisible = false;
-            HidePanel();
+            // Subscribe to events via EventBus (auto-disposed on OnDestroy)
+            Subscribe<GoldChangedEvent>(HandleGoldChanged);
+            Subscribe<ProvinceOwnershipChangedEvent>(HandleOwnershipChanged);
+            Subscribe<UnitCreatedEvent>(HandleUnitCreated);
+            Subscribe<UnitDestroyedEvent>(HandleUnitDestroyed);
+
+            Hide();
 
             ArchonLogger.Log("LedgerUI: Initialized", "starter_kit");
         }
 
-        void OnDestroy()
-        {
-            subscriptions?.Dispose();
-        }
-
         void Update()
         {
-            if (!isInitialized) return;
+            if (!IsInitialized) return;
 
             // Toggle with hotkey
             if (Input.GetKeyDown(toggleKey))
             {
-                TogglePanel();
+                Toggle();
             }
         }
 
-        public void TogglePanel()
+        protected override void OnShow()
         {
-            if (isVisible)
-                HidePanel();
-            else
-                ShowPanel();
-        }
-
-        public void ShowPanel()
-        {
-            if (panelContainer == null) return;
-
             RefreshData();
-            panelContainer.style.display = DisplayStyle.Flex;
-            isVisible = true;
-        }
-
-        public void HidePanel()
-        {
-            if (panelContainer == null) return;
-
-            panelContainer.style.display = DisplayStyle.None;
-            isVisible = false;
         }
 
         // Event handlers - only refresh if visible
         private void HandleGoldChanged(GoldChangedEvent evt)
         {
-            if (isVisible) RefreshData();
+            if (IsVisible) RefreshData();
         }
 
         private void HandleOwnershipChanged(ProvinceOwnershipChangedEvent evt)
         {
-            if (isVisible) RefreshData();
+            if (IsVisible) RefreshData();
         }
 
         private void HandleUnitCreated(UnitCreatedEvent evt)
         {
-            if (isVisible) RefreshData();
+            if (IsVisible) RefreshData();
         }
 
         private void HandleUnitDestroyed(UnitDestroyedEvent evt)
         {
-            if (isVisible) RefreshData();
+            if (IsVisible) RefreshData();
         }
 
-        private void InitializeUI()
+        protected override void CreateUI()
         {
-            uiDocument = GetComponent<UIDocument>();
-            if (uiDocument == null)
-            {
-                ArchonLogger.LogError("LedgerUI: UIDocument not found!", "starter_kit");
-                return;
-            }
-
-            rootElement = uiDocument.rootVisualElement;
-            if (rootElement == null)
-            {
-                ArchonLogger.LogError("LedgerUI: Root VisualElement is null!", "starter_kit");
-                return;
-            }
-
             // Create panel container - centered overlay
-            panelContainer = new VisualElement();
-            panelContainer.name = "ledger-panel";
-            panelContainer.style.position = Position.Absolute;
-            panelContainer.style.left = new Length(50, LengthUnit.Percent);
-            panelContainer.style.top = new Length(50, LengthUnit.Percent);
-            panelContainer.style.translate = new Translate(new Length(-50, LengthUnit.Percent), new Length(-50, LengthUnit.Percent));
+            panelContainer = CreateStyledPanel("ledger-panel");
             panelContainer.style.width = 600f;
             panelContainer.style.maxHeight = 500f;
-            panelContainer.style.backgroundColor = backgroundColor;
-            panelContainer.style.borderTopLeftRadius = 8f;
-            panelContainer.style.borderTopRightRadius = 8f;
-            panelContainer.style.borderBottomLeftRadius = 8f;
-            panelContainer.style.borderBottomRightRadius = 8f;
-            panelContainer.style.paddingTop = 10f;
-            panelContainer.style.paddingBottom = 10f;
-            panelContainer.style.paddingLeft = 15f;
-            panelContainer.style.paddingRight = 15f;
+            UIHelper.SetBorderRadius(panelContainer, RadiusLg);
+            CenterPanel();
 
             // Title bar with close button
-            var titleBar = new VisualElement();
-            titleBar.style.flexDirection = FlexDirection.Row;
-            titleBar.style.justifyContent = Justify.SpaceBetween;
-            titleBar.style.alignItems = Align.Center;
-            titleBar.style.marginBottom = 10f;
+            var titleBar = CreateRow(Justify.SpaceBetween);
+            titleBar.style.marginBottom = SpacingMd;
 
-            var titleLabel = new Label("Ledger");
-            titleLabel.style.fontSize = fontSize + 4;
-            titleLabel.style.color = textColor;
-            titleLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+            var titleLabel = CreateHeader("Ledger");
             titleBar.Add(titleLabel);
 
-            closeButton = new Button(() => HidePanel());
+            closeButton = new Button(() => Hide());
             closeButton.text = "X";
-            closeButton.style.width = 24f;
-            closeButton.style.height = 24f;
-            closeButton.style.fontSize = fontSize;
+            closeButton.AddToClassList("button-close");
+            UIHelper.SetSize(closeButton, 24f, 24f);
+            closeButton.style.fontSize = FontSizeNormal;
+            closeButton.style.unityFontStyleAndWeight = FontStyle.Bold;
+            UIHelper.SetPadding(closeButton, 0);
             titleBar.Add(closeButton);
 
             panelContainer.Add(titleBar);
@@ -224,32 +138,24 @@ namespace StarterKit
             panelContainer.Add(tableScrollView);
 
             // Hotkey hint
-            var hintLabel = new Label($"Press '{toggleKey}' to toggle");
-            hintLabel.style.fontSize = fontSize - 2;
-            hintLabel.style.color = new Color(0.5f, 0.5f, 0.5f, 1f);
-            hintLabel.style.marginTop = 8f;
-            hintLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
+            var hintLabel = CreateLabelText($"Press '{toggleKey}' to toggle");
+            hintLabel.style.marginTop = SpacingMd;
+            UIHelper.SetTextAlign(hintLabel, TextAnchor.MiddleCenter);
             panelContainer.Add(hintLabel);
-
-            rootElement.Add(panelContainer);
         }
 
         private VisualElement CreateHeaderRow()
         {
-            var row = new VisualElement();
-            row.style.flexDirection = FlexDirection.Row;
-            row.style.backgroundColor = headerColor;
-            row.style.paddingTop = 6f;
-            row.style.paddingBottom = 6f;
-            row.style.paddingLeft = 8f;
-            row.style.paddingRight = 8f;
+            var row = CreateRow();
+            row.style.backgroundColor = BackgroundHeader;
+            UIHelper.SetPadding(row, SpacingSm, SpacingMd);
             row.style.marginBottom = 2f;
 
-            AddHeaderCell(row, "Country", 180f, SortColumn.Name);
-            AddHeaderCell(row, "Provinces", 80f, SortColumn.Provinces);
-            AddHeaderCell(row, "Units", 80f, SortColumn.Units);
-            AddHeaderCell(row, "Gold", 80f, SortColumn.Gold);
-            AddHeaderCell(row, "Income", 80f, SortColumn.Income);
+            AddHeaderCell(row, "Country", ColWidthName, SortColumn.Name);
+            AddHeaderCell(row, "Provinces", ColWidthData, SortColumn.Provinces);
+            AddHeaderCell(row, "Units", ColWidthData, SortColumn.Units);
+            AddHeaderCell(row, "Gold", ColWidthData, SortColumn.Gold);
+            AddHeaderCell(row, "Income", ColWidthData, SortColumn.Income);
 
             return row;
         }
@@ -259,15 +165,12 @@ namespace StarterKit
             var cell = new Button(() => OnHeaderClicked(column));
             cell.text = text + (currentSortColumn == column ? (sortDescending ? " ▼" : " ▲") : "");
             cell.style.width = width;
-            cell.style.fontSize = fontSize;
-            cell.style.color = textColor;
+            cell.style.fontSize = FontSizeNormal;
+            cell.style.color = TextPrimary;
             cell.style.unityFontStyleAndWeight = FontStyle.Bold;
             cell.style.unityTextAlign = TextAnchor.MiddleLeft;
             cell.style.backgroundColor = Color.clear;
-            cell.style.borderLeftWidth = 0;
-            cell.style.borderRightWidth = 0;
-            cell.style.borderTopWidth = 0;
-            cell.style.borderBottomWidth = 0;
+            UIHelper.RemoveBorders(cell);
             row.Add(cell);
         }
 
@@ -367,52 +270,34 @@ namespace StarterKit
         {
             bool isPlayer = playerState != null && data.CountryId == playerState.PlayerCountryId;
 
-            var row = new VisualElement();
-            row.style.flexDirection = FlexDirection.Row;
-            row.style.backgroundColor = isPlayer ? playerRowColor : (alternate ? alternateRowColor : Color.clear);
-            row.style.paddingTop = 4f;
-            row.style.paddingBottom = 4f;
-            row.style.paddingLeft = 8f;
-            row.style.paddingRight = 8f;
+            var row = CreateRow();
+            row.style.backgroundColor = isPlayer ? BackgroundRowPlayer : (alternate ? BackgroundRowAlt : Color.clear);
+            UIHelper.SetPadding(row, SpacingXs, SpacingMd);
 
             // Country color indicator + name
-            var nameContainer = new VisualElement();
-            nameContainer.style.flexDirection = FlexDirection.Row;
-            nameContainer.style.alignItems = Align.Center;
-            nameContainer.style.width = 180f;
+            var nameContainer = CreateRow();
+            nameContainer.style.width = ColWidthName;
 
-            var colorIndicator = new VisualElement();
-            colorIndicator.style.width = 12f;
-            colorIndicator.style.height = 12f;
-            colorIndicator.style.marginRight = 6f;
-            colorIndicator.style.backgroundColor = GetCountryColor(data.CountryId);
-            colorIndicator.style.borderTopLeftRadius = 2f;
-            colorIndicator.style.borderTopRightRadius = 2f;
-            colorIndicator.style.borderBottomLeftRadius = 2f;
-            colorIndicator.style.borderBottomRightRadius = 2f;
+            var colorIndicator = CreateColorIndicator(GetCountryColor(data.CountryId), 12f);
             nameContainer.Add(colorIndicator);
 
-            var nameLabel = new Label(data.Name + (isPlayer ? " (You)" : ""));
-            nameLabel.style.fontSize = fontSize;
-            nameLabel.style.color = textColor;
+            var nameLabel = CreateText(data.Name + (isPlayer ? " (You)" : ""));
             nameContainer.Add(nameLabel);
 
             row.Add(nameContainer);
 
-            AddDataCell(row, data.Provinces.ToString(), 80f);
-            AddDataCell(row, data.Units.ToString(), 80f);
-            AddDataCell(row, data.Gold.ToString(), 80f);
-            AddDataCell(row, $"+{data.Income}/mo", 80f);
+            AddDataCell(row, data.Provinces.ToString());
+            AddDataCell(row, data.Units.ToString());
+            AddDataCell(row, data.Gold.ToString());
+            AddDataCell(row, $"+{data.Income}/mo");
 
             return row;
         }
 
-        private void AddDataCell(VisualElement row, string text, float width)
+        private void AddDataCell(VisualElement row, string text)
         {
-            var cell = new Label(text);
-            cell.style.width = width;
-            cell.style.fontSize = fontSize;
-            cell.style.color = textColor;
+            var cell = CreateText(text);
+            cell.style.width = ColWidthData;
             cell.style.unityTextAlign = TextAnchor.MiddleLeft;
             row.Add(cell);
         }

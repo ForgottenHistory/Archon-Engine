@@ -2,66 +2,43 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Map.Interaction;
 using Core;
+using Core.UI;
 
 namespace StarterKit
 {
     /// <summary>
-    /// Simple debug country selection UI for starter kit.
+    /// STARTERKIT - Simple country selection UI.
     /// Click map to select country, click Start to begin.
     /// Emits PlayerCountrySelectedEvent when started.
     /// </summary>
-    [RequireComponent(typeof(UIDocument))]
-    public class CountrySelectionUI : MonoBehaviour
+    public class CountrySelectionUI : StarterKitPanel
     {
-        [Header("Styling")]
-        [SerializeField] private Color backgroundColor = new Color(0f, 0f, 0f, 0.7f);
-        [SerializeField] private Color textColor = Color.white;
-        [SerializeField] private int fontSize = 24;
-        [SerializeField] private Color buttonColor = new Color(0.3f, 0.6f, 0.9f, 1f);
-
         [Header("Highlight")]
         [SerializeField] private Color countryHighlightColor = new Color(1f, 0.84f, 0f, 0.5f);
+        [SerializeField] private Color buttonColor = new Color(0.3f, 0.6f, 0.9f, 1f);
 
         [Header("Debug")]
         [SerializeField] private bool logSelection = true;
 
         // UI Elements
-        private UIDocument uiDocument;
-        private VisualElement rootElement;
-        private VisualElement container;
+        private VisualElement contentBox;
         private Label instructionLabel;
         private Button startButton;
 
         // References
         private ProvinceSelector provinceSelector;
         private ProvinceHighlighter provinceHighlighter;
-        private GameState gameState;
         private PlayerState playerState;
 
         // State
         private ushort selectedCountryId;
         private bool hasSelectedCountry;
-        private bool isInitialized;
 
-        public bool IsInitialized => isInitialized;
         public bool HasSelectedCountry => hasSelectedCountry;
         public ushort SelectedCountryId => selectedCountryId;
 
         public void Initialize(GameState gameStateRef, PlayerState playerStateRef)
         {
-            if (isInitialized)
-            {
-                ArchonLogger.LogWarning("CountrySelectionUI: Already initialized!", "starter_kit");
-                return;
-            }
-
-            if (gameStateRef == null)
-            {
-                ArchonLogger.LogError("CountrySelectionUI: Cannot initialize with null GameState!", "starter_kit");
-                return;
-            }
-
-            gameState = gameStateRef;
             playerState = playerStateRef;
 
             // Find engine components
@@ -80,10 +57,12 @@ namespace StarterKit
                 return;
             }
 
-            InitializeUI();
-            provinceSelector.OnProvinceClicked += HandleProvinceClicked;
+            if (!base.Initialize(gameStateRef))
+            {
+                return;
+            }
 
-            isInitialized = true;
+            provinceSelector.OnProvinceClicked += HandleProvinceClicked;
 
             if (logSelection)
             {
@@ -91,66 +70,38 @@ namespace StarterKit
             }
         }
 
-        void OnDestroy()
+        protected override void OnDestroy()
         {
             if (provinceSelector != null)
             {
                 provinceSelector.OnProvinceClicked -= HandleProvinceClicked;
             }
 
-            if (startButton != null)
-            {
-                startButton.clicked -= OnStartClicked;
-            }
+            base.OnDestroy();
         }
 
-        private void InitializeUI()
+        protected override void CreateUI()
         {
-            uiDocument = GetComponent<UIDocument>();
-            if (uiDocument == null)
-            {
-                ArchonLogger.LogError("CountrySelectionUI: UIDocument not found!", "starter_kit");
-                return;
-            }
+            // Container at bottom of screen, full width for centering
+            panelContainer = new VisualElement();
+            panelContainer.name = "country-selection-container";
+            panelContainer.style.position = Position.Absolute;
+            panelContainer.style.left = 0;
+            panelContainer.style.right = 0;
+            panelContainer.style.bottom = 20f;
+            panelContainer.style.alignItems = Align.Center;
+            panelContainer.style.flexDirection = FlexDirection.Column;
 
-            rootElement = uiDocument.rootVisualElement;
-            if (rootElement == null)
-            {
-                ArchonLogger.LogError("CountrySelectionUI: Root VisualElement is null!", "starter_kit");
-                return;
-            }
-
-            // Container at bottom of screen
-            container = new VisualElement();
-            container.name = "country-selection-container";
-            container.style.position = Position.Absolute;
-            container.style.left = 0;
-            container.style.right = 0;
-            container.style.bottom = 20f;
-            container.style.alignItems = Align.Center;
-            container.style.flexDirection = FlexDirection.Column;
-
-            // Content box
-            var contentBox = new VisualElement();
-            contentBox.name = "content-box";
-            contentBox.style.backgroundColor = backgroundColor;
-            contentBox.style.paddingTop = 15f;
-            contentBox.style.paddingBottom = 15f;
-            contentBox.style.paddingLeft = 30f;
-            contentBox.style.paddingRight = 30f;
-            contentBox.style.borderTopLeftRadius = 8f;
-            contentBox.style.borderTopRightRadius = 8f;
-            contentBox.style.borderBottomLeftRadius = 8f;
-            contentBox.style.borderBottomRightRadius = 8f;
+            // Content box with styling
+            contentBox = CreateStyledPanel("content-box");
+            UIHelper.SetBorderRadius(contentBox, RadiusLg);
+            UIHelper.SetPadding(contentBox, SpacingLg, 30f);
             contentBox.style.alignItems = Align.Center;
 
             // Instruction label
-            instructionLabel = new Label("Choose a country");
+            instructionLabel = CreateHeader("Choose a country");
             instructionLabel.name = "instruction-label";
-            instructionLabel.style.fontSize = fontSize;
-            instructionLabel.style.color = textColor;
-            instructionLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
-            instructionLabel.style.marginBottom = 20f;
+            instructionLabel.style.marginBottom = SpacingLg;
             instructionLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
             instructionLabel.style.whiteSpace = WhiteSpace.Normal;
             contentBox.Add(instructionLabel);
@@ -159,22 +110,15 @@ namespace StarterKit
             startButton = new Button(OnStartClicked);
             startButton.name = "start-button";
             startButton.text = "Start";
-            startButton.style.fontSize = fontSize - 4;
-            startButton.style.color = textColor;
+            startButton.style.fontSize = FontSizeHeader - 4;
+            startButton.style.color = TextPrimary;
             startButton.style.backgroundColor = buttonColor;
-            startButton.style.paddingTop = 12f;
-            startButton.style.paddingBottom = 12f;
-            startButton.style.paddingLeft = 40f;
-            startButton.style.paddingRight = 40f;
-            startButton.style.borderTopLeftRadius = 6f;
-            startButton.style.borderTopRightRadius = 6f;
-            startButton.style.borderBottomLeftRadius = 6f;
-            startButton.style.borderBottomRightRadius = 6f;
+            UIHelper.SetPadding(startButton, 12f, 40f);
+            UIHelper.SetBorderRadius(startButton, RadiusMd);
             startButton.SetEnabled(false);
             contentBox.Add(startButton);
 
-            container.Add(contentBox);
-            rootElement.Add(container);
+            panelContainer.Add(contentBox);
 
             if (logSelection)
             {
@@ -268,10 +212,7 @@ namespace StarterKit
             });
 
             // Hide UI
-            if (container != null)
-            {
-                container.style.display = DisplayStyle.None;
-            }
+            Hide();
 
             if (logSelection)
             {

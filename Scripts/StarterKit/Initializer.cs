@@ -234,8 +234,8 @@ namespace StarterKit
 
             if (timeUI != null && timeManager != null)
             {
-                timeUI.Initialize(timeManager);
-                gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(evt => timeUI.ShowUI());
+                timeUI.Initialize(gameState, timeManager);
+                gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(evt => timeUI.Show());
             }
 
             yield return null;
@@ -395,7 +395,7 @@ namespace StarterKit
 
                 // Refresh ledger if visible
                 if (ledgerUI != null && ledgerUI.IsVisible)
-                    ledgerUI.ShowPanel(); // This refreshes the data
+                    ledgerUI.Show(); // This refreshes the data via OnShow()
 
                 if (logProgress)
                     ArchonLogger.Log("Initializer: Post-load finalization complete", "starter_kit");

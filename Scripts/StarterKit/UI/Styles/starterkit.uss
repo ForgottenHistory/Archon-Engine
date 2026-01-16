@@ -1,0 +1,276 @@
+/* ====================================================================
+   STARTERKIT UI STYLESHEET
+   Common styles for all StarterKit UI panels.
+   ==================================================================== */
+
+/* ====================================================================
+   VARIABLES (USS Custom Properties)
+   ==================================================================== */
+:root {
+    --bg-panel: rgba(25, 25, 25, 0.9);
+    --bg-panel-light: rgba(40, 40, 40, 0.9);
+    --bg-header: rgba(50, 50, 75, 1);
+    --bg-row-alt: rgba(38, 38, 38, 1);
+    --bg-row-player: rgba(50, 75, 50, 1);
+    --bg-button: rgba(64, 64, 64, 1);
+    --bg-button-hover: rgba(89, 89, 89, 1);
+    --bg-button-disabled: rgba(45, 45, 45, 1);
+
+    --text-primary: rgb(255, 255, 255);
+    --text-secondary: rgb(178, 178, 178);
+    --text-label: rgb(128, 128, 128);
+    --text-gold: rgb(255, 217, 77);
+    --text-income: rgb(128, 255, 128);
+    --text-warning: rgb(255, 204, 51);
+
+    --font-size-normal: 14px;
+    --font-size-small: 12px;
+    --font-size-large: 18px;
+    --font-size-header: 20px;
+
+    --spacing-xs: 4px;
+    --spacing-sm: 6px;
+    --spacing-md: 10px;
+    --spacing-lg: 15px;
+
+    --radius-sm: 3px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+}
+
+/* ====================================================================
+   PANEL CONTAINERS
+   ==================================================================== */
+.panel {
+    background-color: var(--bg-panel);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    position: absolute;
+}
+
+.panel-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.panel-content {
+    flex-grow: 1;
+}
+
+/* ====================================================================
+   TYPOGRAPHY
+   ==================================================================== */
+.text-primary {
+    color: var(--text-primary);
+    font-size: var(--font-size-normal);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+    font-size: var(--font-size-normal);
+}
+
+.text-label {
+    color: var(--text-label);
+    font-size: var(--font-size-small);
+}
+
+.text-gold {
+    color: var(--text-gold);
+}
+
+.text-income {
+    color: var(--text-income);
+}
+
+.text-header {
+    color: var(--text-primary);
+    font-size: var(--font-size-header);
+    -unity-font-style: bold;
+}
+
+.text-title {
+    color: var(--text-primary);
+    font-size: var(--font-size-large);
+    -unity-font-style: bold;
+}
+
+.text-italic {
+    -unity-font-style: italic;
+}
+
+.text-bold {
+    -unity-font-style: bold;
+}
+
+/* ====================================================================
+   BUTTONS
+   ==================================================================== */
+.button {
+    background-color: var(--bg-button);
+    color: var(--text-primary);
+    font-size: var(--font-size-normal);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border-width: 0;
+    margin-top: var(--spacing-xs);
+}
+
+.button:hover {
+    background-color: var(--bg-button-hover);
+}
+
+.button:disabled {
+    background-color: var(--bg-button-disabled);
+    color: var(--text-label);
+}
+
+.button-close {
+    width: 24px;
+    height: 24px;
+    font-size: var(--font-size-normal);
+    -unity-font-style: bold;
+    padding: 0;
+    margin-left: var(--spacing-md);
+}
+
+.button-toolbar {
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin: 0 var(--spacing-xs);
+    border-radius: var(--radius-sm);
+}
+
+/* ====================================================================
+   ROWS AND LISTS
+   ==================================================================== */
+.row {
+    flex-direction: row;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.row-header {
+    background-color: var(--bg-header);
+    padding: var(--spacing-sm) var(--spacing-sm);
+    margin-bottom: 2px;
+}
+
+.row-alt {
+    background-color: var(--bg-row-alt);
+}
+
+.row-player {
+    background-color: var(--bg-row-player);
+}
+
+.row-entry {
+    background-color: rgba(50, 50, 50, 0.5);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+/* ====================================================================
+   COLOR INDICATORS
+   ==================================================================== */
+.color-indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    margin-right: var(--spacing-sm);
+}
+
+.color-indicator-small {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin-right: var(--spacing-sm);
+}
+
+/* ====================================================================
+   LAYOUT UTILITIES
+   ==================================================================== */
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+/* ====================================================================
+   SPACING UTILITIES
+   ==================================================================== */
+.mt-xs { margin-top: var(--spacing-xs); }
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+
+.mb-xs { margin-bottom: var(--spacing-xs); }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+
+.ml-sm { margin-left: var(--spacing-sm); }
+.mr-sm { margin-right: var(--spacing-sm); }
+
+/* ====================================================================
+   SPECIFIC PANEL POSITIONS
+   ==================================================================== */
+.panel-bottom-left {
+    left: 10px;
+    bottom: 10px;
+}
+
+.panel-bottom-left-units {
+    left: 10px;
+    bottom: 200px;
+}
+
+.panel-bottom-left-buildings {
+    left: 10px;
+    bottom: 360px;
+}
+
+.panel-top-right {
+    right: 10px;
+    top: 10px;
+}
+
+.panel-top-center {
+    left: 50%;
+    top: 10px;
+    translate: -50% 0;
+}
+
+.panel-center {
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+}
+
+/* ====================================================================
+   SCROLLVIEW
+   ==================================================================== */
+.scroll-view {
+    flex-grow: 1;
+    max-height: 400px;
+}

@@ -3,6 +3,8 @@ using UnityEngine.UIElements;
 using Core;
 using Core.Events;
 using Core.Localization;
+using Core.Systems;
+using Core.UI;
 using Map.Interaction;
 using System.Collections.Generic;
 
@@ -13,19 +15,9 @@ namespace StarterKit
     /// Shows buildings in the selected province with option to construct new buildings.
     /// Pattern: UI Presenter Pattern - View Component
     /// </summary>
-    [RequireComponent(typeof(UIDocument))]
-    public class BuildingInfoUI : MonoBehaviour
+    public class BuildingInfoUI : StarterKitPanel
     {
-        [Header("Styling")]
-        [SerializeField] private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.9f);
-        [SerializeField] private Color textColor = Color.white;
-        [SerializeField] private Color labelColor = new Color(0.7f, 0.7f, 0.7f, 1f);
-        [SerializeField] private int fontSize = 14;
-
         // UI Elements
-        private UIDocument uiDocument;
-        private VisualElement rootElement;
-        private VisualElement panelContainer;
         private Label headerLabel;
         private Label goldBonusLabel;
         private VisualElement buildingsListContainer;
@@ -33,39 +25,29 @@ namespace StarterKit
         private Label noBuildingsLabel;
 
         // References
-        private GameState gameState;
         private BuildingSystem buildingSystem;
         private ProvinceSelector provinceSelector;
-        private CompositeDisposable subscriptions;
-        private bool isInitialized;
 
         // State
         private ushort selectedProvinceID;
         private List<VisualElement> buildingEntries = new List<VisualElement>();
         private List<Button> buildButtons = new List<Button>();
 
-        public bool IsInitialized => isInitialized;
-
         public void Initialize(GameState gameStateRef, BuildingSystem buildingSystemRef, ProvinceSelector provinceSelectorRef)
         {
-            if (isInitialized)
-            {
-                ArchonLogger.LogWarning("BuildingInfoUI: Already initialized!", "starter_kit");
-                return;
-            }
+            buildingSystem = buildingSystemRef;
+            provinceSelector = provinceSelectorRef;
 
-            if (gameStateRef == null || buildingSystemRef == null || provinceSelectorRef == null)
+            if (buildingSystemRef == null || provinceSelectorRef == null)
             {
                 ArchonLogger.LogError("BuildingInfoUI: Cannot initialize with null references!", "starter_kit");
                 return;
             }
 
-            gameState = gameStateRef;
-            buildingSystem = buildingSystemRef;
-            provinceSelector = provinceSelectorRef;
-
-            // Initialize UI
-            InitializeUI();
+            if (!base.Initialize(gameStateRef))
+            {
+                return;
+            }
 
             // Subscribe to province selection events
             provinceSelector.OnProvinceClicked += HandleProvinceClicked;
@@ -75,22 +57,16 @@ namespace StarterKit
             // Subscribe to building events for auto-refresh
             buildingSystem.OnBuildingConstructed += HandleBuildingConstructed;
 
-            // Subscribe to gold changes via EventBus (auto-disposed on OnDestroy)
-            subscriptions = new CompositeDisposable();
-            if (gameState?.EventBus != null)
-            {
-                subscriptions.Add(gameState.EventBus.Subscribe<GoldChangedEvent>(HandleGoldChanged));
-            }
-
-            isInitialized = true;
+            // Subscribe to gold changes via EventBus
+            Subscribe<GoldChangedEvent>(HandleGoldChanged);
 
             // Hide until province selected
-            HidePanel();
+            Hide();
 
             ArchonLogger.Log("BuildingInfoUI: Initialized", "starter_kit");
         }
 
-        void OnDestroy()
+        protected override void OnDestroy()
         {
             if (provinceSelector != null)
             {
@@ -104,68 +80,34 @@ namespace StarterKit
                 buildingSystem.OnBuildingConstructed -= HandleBuildingConstructed;
             }
 
-            // EventBus subscriptions - auto-disposed
-            subscriptions?.Dispose();
+            base.OnDestroy();
         }
 
-        private void InitializeUI()
+        protected override void CreateUI()
         {
-            uiDocument = GetComponent<UIDocument>();
-            if (uiDocument == null)
-            {
-                ArchonLogger.LogError("BuildingInfoUI: UIDocument not found!", "starter_kit");
-                return;
-            }
-
-            rootElement = uiDocument.rootVisualElement;
-            if (rootElement == null)
-            {
-                ArchonLogger.LogError("BuildingInfoUI: Root VisualElement is null!", "starter_kit");
-                return;
-            }
-
             // Create panel container - positioned above units panel (bottom left)
-            panelContainer = new VisualElement();
-            panelContainer.name = "building-info-panel";
-            panelContainer.style.position = Position.Absolute;
-            panelContainer.style.left = 10f;
-            panelContainer.style.bottom = 360f; // Above units panel
-            panelContainer.style.backgroundColor = backgroundColor;
-            panelContainer.style.paddingTop = 10f;
-            panelContainer.style.paddingBottom = 10f;
-            panelContainer.style.paddingLeft = 12f;
-            panelContainer.style.paddingRight = 12f;
-            panelContainer.style.borderTopLeftRadius = 6f;
-            panelContainer.style.borderTopRightRadius = 6f;
-            panelContainer.style.borderBottomLeftRadius = 6f;
-            panelContainer.style.borderBottomRightRadius = 6f;
-            panelContainer.style.minWidth = 180f;
+            panelContainer = CreateStyledPanel("building-info-panel", minWidth: 180f);
+            PositionPanel(bottom: 360f, left: 10f);
 
             // Header
-            headerLabel = new Label(LocalizationManager.Get("UI_BUILDINGS"));
-            headerLabel.style.fontSize = fontSize;
-            headerLabel.style.color = textColor;
-            headerLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
-            headerLabel.style.marginBottom = 4f;
+            headerLabel = CreateTitle(LocalizationManager.Get("UI_BUILDINGS"));
+            headerLabel.style.marginBottom = SpacingXs;
             panelContainer.Add(headerLabel);
 
             // Gold bonus label
-            goldBonusLabel = new Label($"{LocalizationManager.Get("UI_GOLD_BONUS")}: +0");
-            goldBonusLabel.style.fontSize = fontSize - 2;
-            goldBonusLabel.style.color = new Color(1f, 0.85f, 0.3f, 1f); // Gold color
-            goldBonusLabel.style.marginBottom = 8f;
+            goldBonusLabel = CreateGoldText($"{LocalizationManager.Get("UI_GOLD_BONUS")}: +0");
+            goldBonusLabel.style.fontSize = FontSizeSmall;
+            goldBonusLabel.style.marginBottom = SpacingMd;
             panelContainer.Add(goldBonusLabel);
 
             // Buildings list container
             buildingsListContainer = new VisualElement();
             buildingsListContainer.name = "buildings-list";
-            buildingsListContainer.style.marginBottom = 8f;
+            buildingsListContainer.style.marginBottom = SpacingMd;
             panelContainer.Add(buildingsListContainer);
 
             // No buildings label
-            noBuildingsLabel = new Label(LocalizationManager.Get("UI_NO_BUILDINGS"));
-            noBuildingsLabel.style.fontSize = fontSize - 2;
-            noBuildingsLabel.style.color = labelColor;
+            noBuildingsLabel = CreateLabelText(LocalizationManager.Get("UI_NO_BUILDINGS"));
             noBuildingsLabel.style.unityFontStyleAndWeight = FontStyle.Italic;
             buildingsListContainer.Add(noBuildingsLabel);
 
@@ -173,8 +115,6 @@ namespace StarterKit
             buildButtonsContainer = new VisualElement();
             buildButtonsContainer.name = "build-buttons";
             panelContainer.Add(buildButtonsContainer);
-
-            rootElement.Add(panelContainer);
         }
 
         private void HandleProvinceClicked(ushort provinceID)
@@ -188,7 +128,7 @@ namespace StarterKit
             selectedProvinceID = provinceID;
             RefreshBuildingsList();
             RefreshBuildButtons();
-            ShowPanel();
+            Show();
         }
 
         private void HandleProvinceDeselected(ushort provinceID)
@@ -199,7 +139,7 @@ namespace StarterKit
         private void HandleSelectionCleared()
         {
             selectedProvinceID = 0;
-            HidePanel();
+            Hide();
         }
 
         private void HandleBuildingConstructed(ushort provinceId, ushort buildingTypeId)
@@ -213,15 +153,12 @@ namespace StarterKit
 
         private void HandleGoldChanged(GoldChangedEvent evt)
         {
-            // Only refresh if panel is visible and player's gold changed
             if (selectedProvinceID == 0) return;
             if (buildingSystem == null) return;
 
-            // Check if this is for the player's country
             var playerState = buildingSystem.PlayerState;
             if (playerState == null || evt.CountryId != playerState.PlayerCountryId) return;
 
-            // Refresh build buttons to update enabled/disabled state
             RefreshBuildButtons();
         }
 
@@ -266,31 +203,16 @@ namespace StarterKit
 
         private VisualElement CreateBuildingEntry(BuildingType buildingType, int count)
         {
-            var entry = new VisualElement();
-            entry.style.flexDirection = FlexDirection.Row;
-            entry.style.alignItems = Align.Center;
-            entry.style.justifyContent = Justify.SpaceBetween;
-            entry.style.marginBottom = 4f;
-            entry.style.paddingTop = 4f;
-            entry.style.paddingBottom = 4f;
-            entry.style.paddingLeft = 6f;
-            entry.style.paddingRight = 6f;
-            entry.style.backgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
-            entry.style.borderTopLeftRadius = 3f;
-            entry.style.borderTopRightRadius = 3f;
-            entry.style.borderBottomLeftRadius = 3f;
-            entry.style.borderBottomRightRadius = 3f;
+            var entry = CreateRowEntry();
 
             // Building name with count
-            var nameLabel = new Label($"{buildingType.Name} x{count}");
-            nameLabel.style.fontSize = fontSize - 1;
-            nameLabel.style.color = textColor;
+            var nameLabel = CreateText($"{buildingType.Name} x{count}");
+            nameLabel.style.fontSize = FontSizeNormal - 1;
             entry.Add(nameLabel);
 
             // Effect info
-            var effectLabel = new Label($"+{buildingType.GoldOutput * count} gold");
-            effectLabel.style.fontSize = fontSize - 2;
-            effectLabel.style.color = new Color(1f, 0.85f, 0.3f, 1f);
+            var effectLabel = CreateGoldText($"+{buildingType.GoldOutput * count} gold");
+            effectLabel.style.fontSize = FontSizeSmall;
             entry.Add(effectLabel);
 
             return entry;
@@ -328,18 +250,14 @@ namespace StarterKit
         {
             bool canBuild = buildingSystem.CanConstruct(selectedProvinceID, buildingType.StringID, out var reason);
 
-            var button = new Button(() => OnBuildClicked(buildingType.StringID));
-            // Try to get localized building name, fallback to type name
             string buildingName = LocalizationManager.Get($"BUILDING_{buildingType.StringID.ToUpperInvariant()}");
-            if (buildingName.StartsWith("BUILDING_")) buildingName = buildingType.Name; // Fallback
-            button.text = $"+ {LocalizationManager.Get("UI_BUILD")} {buildingName} ({buildingType.Cost}g)";
-            button.style.marginTop = 4f;
-            button.style.paddingTop = 6f;
-            button.style.paddingBottom = 6f;
-            button.style.paddingLeft = 10f;
-            button.style.paddingRight = 10f;
+            if (buildingName.StartsWith("BUILDING_")) buildingName = buildingType.Name;
 
-            // Disable if can't build
+            var button = CreateStyledButton(
+                $"+ {LocalizationManager.Get("UI_BUILD")} {buildingName} ({buildingType.Cost}g)",
+                () => OnBuildClicked(buildingType.StringID));
+            button.style.marginTop = SpacingXs;
+
             button.SetEnabled(canBuild);
             if (!canBuild)
             {
@@ -362,22 +280,6 @@ namespace StarterKit
             if (!success)
             {
                 ArchonLogger.LogWarning("BuildingInfoUI: Failed to construct building", "starter_kit");
-            }
-        }
-
-        public void ShowPanel()
-        {
-            if (panelContainer != null)
-            {
-                panelContainer.style.display = DisplayStyle.Flex;
-            }
-        }
-
-        public void HidePanel()
-        {
-            if (panelContainer != null)
-            {
-                panelContainer.style.display = DisplayStyle.None;
             }
         }
     }

@@ -171,10 +171,11 @@ WIP 3D map with texturing
 
 ## Technical Requirements
 
-- Unity 2023.3+
+- Unity 2023.3+ (6000+, preferably latest LTS version)
 - Universal Render Pipeline (URP)
 - IL2CPP scripting backend
 - Burst Compiler enabled
+- UI Toolkit
 
 ## License
 

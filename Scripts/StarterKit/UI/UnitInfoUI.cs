@@ -3,7 +3,9 @@ using UnityEngine.UIElements;
 using Core;
 using Core.Events;
 using Core.Localization;
+using Core.Systems;
 using Core.Units;
+using Core.UI;
 using Map.Interaction;
 using System.Collections.Generic;
 
@@ -14,19 +16,9 @@ namespace StarterKit
     /// Shows units in the selected province with option to create new units.
     /// Pattern: UI Presenter Pattern - View Component
     /// </summary>
-    [RequireComponent(typeof(UIDocument))]
-    public class UnitInfoUI : MonoBehaviour
+    public class UnitInfoUI : StarterKitPanel
     {
-        [Header("Styling")]
-        [SerializeField] private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.9f);
-        [SerializeField] private Color textColor = Color.white;
-        [SerializeField] private Color labelColor = new Color(0.7f, 0.7f, 0.7f, 1f);
-        [SerializeField] private int fontSize = 14;
-
         // UI Elements
-        private UIDocument uiDocument;
-        private VisualElement rootElement;
-        private VisualElement panelContainer;
         private Label headerLabel;
         private VisualElement unitsListContainer;
         private Button createUnitButton;
@@ -36,12 +28,9 @@ namespace StarterKit
         private Label moveModeLabel;
 
         // References
-        private GameState gameState;
         private UnitSystem unitSystem;
         private EconomySystem economySystem;
         private ProvinceSelector provinceSelector;
-        private CompositeDisposable subscriptions;
-        private bool isInitialized;
 
         // State
         private ushort selectedProvinceID;
@@ -52,29 +41,22 @@ namespace StarterKit
         private ushort moveSourceProvinceID;
         private List<ushort> unitsToMove = new List<ushort>();
 
-        public bool IsInitialized => isInitialized;
-
         public void Initialize(GameState gameStateRef, UnitSystem unitSystemRef, ProvinceSelector provinceSelectorRef, EconomySystem economySystemRef = null)
         {
-            if (isInitialized)
-            {
-                ArchonLogger.LogWarning("UnitInfoUI: Already initialized!", "starter_kit");
-                return;
-            }
+            unitSystem = unitSystemRef;
+            economySystem = economySystemRef;
+            provinceSelector = provinceSelectorRef;
 
-            if (gameStateRef == null || unitSystemRef == null || provinceSelectorRef == null)
+            if (unitSystemRef == null || provinceSelectorRef == null)
             {
                 ArchonLogger.LogError("UnitInfoUI: Cannot initialize with null references!", "starter_kit");
                 return;
             }
 
-            gameState = gameStateRef;
-            economySystem = economySystemRef;
-            unitSystem = unitSystemRef;
-            provinceSelector = provinceSelectorRef;
-
-            // Initialize UI
-            InitializeUI();
+            if (!base.Initialize(gameStateRef))
+            {
+                return;
+            }
 
             // Subscribe to province selection events
             provinceSelector.OnProvinceClicked += HandleProvinceClicked;
@@ -86,22 +68,17 @@ namespace StarterKit
             unitSystem.OnUnitDestroyed += HandleUnitDestroyed;
             unitSystem.OnUnitMoved += HandleUnitMoved;
 
-            // Subscribe to gold changes via EventBus (auto-disposed on OnDestroy)
-            subscriptions = new CompositeDisposable();
-            if (gameState?.EventBus != null)
-            {
-                subscriptions.Add(gameState.EventBus.Subscribe<GoldChangedEvent>(HandleGoldChanged));
-            }
-
-            isInitialized = true;
+            // Subscribe to EventBus events
+            Subscribe<GoldChangedEvent>(HandleGoldChanged);
+            Subscribe<ProvinceOwnershipChangedEvent>(HandleOwnershipChanged);
 
             // Hide until province selected
-            HidePanel();
+            Hide();
 
             ArchonLogger.Log("UnitInfoUI: Initialized", "starter_kit");
         }
 
-        void OnDestroy()
+        protected override void OnDestroy()
         {
             if (provinceSelector != null)
             {
@@ -117,113 +94,68 @@ namespace StarterKit
                 unitSystem.OnUnitMoved -= HandleUnitMoved;
             }
 
-            // EventBus subscriptions - auto-disposed
-            subscriptions?.Dispose();
+            base.OnDestroy();
         }
 
-        private void InitializeUI()
+        protected override void CreateUI()
         {
-            uiDocument = GetComponent<UIDocument>();
-            if (uiDocument == null)
-            {
-                ArchonLogger.LogError("UnitInfoUI: UIDocument not found!", "starter_kit");
-                return;
-            }
-
-            rootElement = uiDocument.rootVisualElement;
-            if (rootElement == null)
-            {
-                ArchonLogger.LogError("UnitInfoUI: Root VisualElement is null!", "starter_kit");
-                return;
-            }
-
             // Create panel container - positioned above province info (bottom left, higher up)
-            panelContainer = new VisualElement();
-            panelContainer.name = "unit-info-panel";
-            panelContainer.style.position = Position.Absolute;
-            panelContainer.style.left = 10f;
-            panelContainer.style.bottom = 200f; // Above province info panel
-            panelContainer.style.backgroundColor = backgroundColor;
-            panelContainer.style.paddingTop = 10f;
-            panelContainer.style.paddingBottom = 10f;
-            panelContainer.style.paddingLeft = 12f;
-            panelContainer.style.paddingRight = 12f;
-            panelContainer.style.borderTopLeftRadius = 6f;
-            panelContainer.style.borderTopRightRadius = 6f;
-            panelContainer.style.borderBottomLeftRadius = 6f;
-            panelContainer.style.borderBottomRightRadius = 6f;
-            panelContainer.style.minWidth = 180f;
+            panelContainer = CreateStyledPanel("unit-info-panel", minWidth: 180f);
+            PositionPanel(bottom: 200f, left: 10f);
 
             // Header
-            headerLabel = new Label(LocalizationManager.Get("UI_UNITS"));
-            headerLabel.style.fontSize = fontSize;
-            headerLabel.style.color = textColor;
-            headerLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
-            headerLabel.style.marginBottom = 8f;
+            headerLabel = CreateTitle(LocalizationManager.Get("UI_UNITS"));
+            headerLabel.style.marginBottom = SpacingMd;
             panelContainer.Add(headerLabel);
 
             // Units list container
             unitsListContainer = new VisualElement();
             unitsListContainer.name = "units-list";
-            unitsListContainer.style.marginBottom = 8f;
+            unitsListContainer.style.marginBottom = SpacingMd;
             panelContainer.Add(unitsListContainer);
 
             // No units label
-            noUnitsLabel = new Label(LocalizationManager.Get("UI_NO_UNITS"));
-            noUnitsLabel.style.fontSize = fontSize - 2;
-            noUnitsLabel.style.color = labelColor;
+            noUnitsLabel = CreateLabelText(LocalizationManager.Get("UI_NO_UNITS"));
             noUnitsLabel.style.unityFontStyleAndWeight = FontStyle.Italic;
             unitsListContainer.Add(noUnitsLabel);
 
             // Create unit button
-            createUnitButton = new Button(OnCreateUnitClicked);
-            string infantryName = LocalizationManager.Get("UNIT_INFANTRY");
-            if (infantryName == "UNIT_INFANTRY") infantryName = "Infantry"; // Fallback
             var infantryType = unitSystem.GetUnitType("infantry");
             int infantryCost = infantryType?.Cost ?? 20;
-            createUnitButton.text = $"+ {LocalizationManager.Get("UI_CREATE_UNIT")} ({infantryName}) - {infantryCost}g";
-            createUnitButton.style.marginTop = 4f;
-            createUnitButton.style.paddingTop = 6f;
-            createUnitButton.style.paddingBottom = 6f;
-            createUnitButton.style.paddingLeft = 10f;
-            createUnitButton.style.paddingRight = 10f;
+            string infantryName = LocalizationManager.Get("UNIT_INFANTRY");
+            if (infantryName == "UNIT_INFANTRY") infantryName = "Infantry";
+
+            createUnitButton = CreateStyledButton(
+                $"+ {LocalizationManager.Get("UI_CREATE_UNIT")} ({infantryName}) - {infantryCost}g",
+                OnCreateUnitClicked);
+            createUnitButton.style.marginTop = SpacingXs;
             panelContainer.Add(createUnitButton);
 
             // Move units button
-            moveUnitsButton = new Button(OnMoveUnitsClicked);
-            moveUnitsButton.text = LocalizationManager.Get("UI_MOVE_UNITS");
-            if (moveUnitsButton.text == "UI_MOVE_UNITS") moveUnitsButton.text = "Move Units"; // Fallback
-            moveUnitsButton.style.marginTop = 4f;
-            moveUnitsButton.style.paddingTop = 6f;
-            moveUnitsButton.style.paddingBottom = 6f;
-            moveUnitsButton.style.paddingLeft = 10f;
-            moveUnitsButton.style.paddingRight = 10f;
+            string moveText = LocalizationManager.Get("UI_MOVE_UNITS");
+            if (moveText == "UI_MOVE_UNITS") moveText = "Move Units";
+            moveUnitsButton = CreateStyledButton(moveText, OnMoveUnitsClicked);
+            moveUnitsButton.style.marginTop = SpacingXs;
             moveUnitsButton.style.display = DisplayStyle.None;
             panelContainer.Add(moveUnitsButton);
 
             // Cancel move button (shown during move mode)
-            cancelMoveButton = new Button(OnCancelMoveClicked);
-            cancelMoveButton.text = LocalizationManager.Get("UI_CANCEL");
-            if (cancelMoveButton.text == "UI_CANCEL") cancelMoveButton.text = "Cancel"; // Fallback
-            cancelMoveButton.style.marginTop = 4f;
-            cancelMoveButton.style.paddingTop = 6f;
-            cancelMoveButton.style.paddingBottom = 6f;
-            cancelMoveButton.style.paddingLeft = 10f;
-            cancelMoveButton.style.paddingRight = 10f;
+            string cancelText = LocalizationManager.Get("UI_CANCEL");
+            if (cancelText == "UI_CANCEL") cancelText = "Cancel";
+            cancelMoveButton = CreateStyledButton(cancelText, OnCancelMoveClicked);
+            cancelMoveButton.style.marginTop = SpacingXs;
             cancelMoveButton.style.backgroundColor = new Color(0.5f, 0.2f, 0.2f, 1f);
             cancelMoveButton.style.display = DisplayStyle.None;
             panelContainer.Add(cancelMoveButton);
 
             // Move mode label (instruction text)
             moveModeLabel = new Label("Click a province to move units");
-            moveModeLabel.style.fontSize = fontSize - 2;
-            moveModeLabel.style.color = new Color(1f, 0.8f, 0.2f, 1f); // Yellow for visibility
+            moveModeLabel.style.fontSize = FontSizeSmall;
+            moveModeLabel.style.color = TextWarning;
             moveModeLabel.style.unityFontStyleAndWeight = FontStyle.Italic;
-            moveModeLabel.style.marginTop = 6f;
+            moveModeLabel.style.marginTop = SpacingSm;
             moveModeLabel.style.display = DisplayStyle.None;
             panelContainer.Add(moveModeLabel);
-
-            rootElement.Add(panelContainer);
         }
 
         private void HandleProvinceClicked(ushort provinceID)
@@ -243,7 +175,7 @@ namespace StarterKit
 
             selectedProvinceID = provinceID;
             RefreshUnitsList();
-            ShowPanel();
+            Show();
         }
 
         private void HandleProvinceDeselected(ushort provinceID)
@@ -253,19 +185,17 @@ namespace StarterKit
 
         private void HandleSelectionCleared()
         {
-            // Cancel move mode if active
             if (isInMoveMode)
             {
                 ExitMoveMode();
             }
 
             selectedProvinceID = 0;
-            HidePanel();
+            Hide();
         }
 
         private void HandleUnitCreated(ushort unitId)
         {
-            // Refresh if the unit is in our selected province
             if (selectedProvinceID != 0)
             {
                 var unit = unitSystem.GetUnit(unitId);
@@ -278,7 +208,6 @@ namespace StarterKit
 
         private void HandleUnitDestroyed(ushort unitId)
         {
-            // Always refresh when unit destroyed (we don't know where it was)
             if (selectedProvinceID != 0)
             {
                 RefreshUnitsList();
@@ -287,7 +216,6 @@ namespace StarterKit
 
         private void HandleUnitMoved(ushort unitId, ushort fromProvince, ushort toProvince)
         {
-            // Refresh if the unit moved to/from our selected province
             if (selectedProvinceID != 0 &&
                 (fromProvince == selectedProvinceID || toProvince == selectedProvinceID))
             {
@@ -297,38 +225,32 @@ namespace StarterKit
 
         private void HandleGoldChanged(GoldChangedEvent evt)
         {
-            // Only refresh if panel is visible
             if (selectedProvinceID == 0) return;
 
-            // Check if this is for the player's country
             var playerState = Initializer.Instance?.PlayerState;
             if (playerState == null || evt.CountryId != playerState.PlayerCountryId) return;
 
-            // Update create button enabled state based on new gold amount
             UpdateCreateButtonState();
+        }
+
+        private void HandleOwnershipChanged(ProvinceOwnershipChangedEvent evt)
+        {
+            if (selectedProvinceID == 0 || evt.ProvinceId != selectedProvinceID) return;
+            RefreshUnitsList();
         }
 
         private void UpdateCreateButtonState()
         {
             if (createUnitButton == null || economySystem == null) return;
 
-            // Get unit cost
             var infantryType = unitSystem?.GetUnitType("infantry");
             int cost = infantryType?.Cost ?? 20;
 
-            // Enable/disable based on gold
             bool canAfford = economySystem.Gold >= cost;
             bool isOwnedByPlayer = unitSystem?.IsProvinceOwnedByPlayer(selectedProvinceID) ?? false;
 
             createUnitButton.SetEnabled(canAfford && isOwnedByPlayer);
-            if (!canAfford)
-            {
-                createUnitButton.tooltip = $"Not enough gold (need {cost}g)";
-            }
-            else
-            {
-                createUnitButton.tooltip = "";
-            }
+            createUnitButton.tooltip = !canAfford ? $"Not enough gold (need {cost}g)" : "";
         }
 
         private void OnCreateUnitClicked()
@@ -339,11 +261,9 @@ namespace StarterKit
                 return;
             }
 
-            // Get unit cost
             var infantryType = unitSystem.GetUnitType("infantry");
             int cost = infantryType?.Cost ?? 20;
 
-            // Check and deduct gold
             if (economySystem != null)
             {
                 if (!economySystem.RemoveGold(cost))
@@ -353,12 +273,10 @@ namespace StarterKit
                 }
             }
 
-            // Create infantry at selected province
             ushort unitId = unitSystem.CreateUnit(selectedProvinceID, "infantry");
 
             if (unitId == 0)
             {
-                // Refund gold if creation failed
                 economySystem?.AddGold(cost);
                 ArchonLogger.LogWarning("UnitInfoUI: Failed to create unit", "starter_kit");
             }
@@ -380,7 +298,6 @@ namespace StarterKit
             bool isOwnedByPlayer = unitSystem.IsProvinceOwnedByPlayer(selectedProvinceID);
             createUnitButton.style.display = isOwnedByPlayer ? DisplayStyle.Flex : DisplayStyle.None;
 
-            // Update enabled state based on gold
             if (isOwnedByPlayer)
             {
                 UpdateCreateButtonState();
@@ -416,8 +333,8 @@ namespace StarterKit
 
             noUnitsLabel.style.display = DisplayStyle.None;
 
-            // Group units by type and sum troop counts (like buildings)
-            var unitsByType = new Dictionary<ushort, int>(); // unitTypeID -> total troops
+            // Group units by type and sum troop counts
+            var unitsByType = new Dictionary<ushort, int>();
             foreach (var unitId in unitIds)
             {
                 var unitState = unitSystem.GetUnit(unitId);
@@ -438,49 +355,18 @@ namespace StarterKit
 
         private VisualElement CreateUnitEntry(UnitType unitType, int totalTroops)
         {
-            var entry = new VisualElement();
-            entry.style.flexDirection = FlexDirection.Row;
-            entry.style.alignItems = Align.Center;
-            entry.style.justifyContent = Justify.SpaceBetween;
-            entry.style.marginBottom = 4f;
-            entry.style.paddingTop = 4f;
-            entry.style.paddingBottom = 4f;
-            entry.style.paddingLeft = 6f;
-            entry.style.paddingRight = 6f;
-            entry.style.backgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
-            entry.style.borderTopLeftRadius = 3f;
-            entry.style.borderTopRightRadius = 3f;
-            entry.style.borderBottomLeftRadius = 3f;
-            entry.style.borderBottomRightRadius = 3f;
+            var entry = CreateRowEntry();
 
-            // Unit name/type with troop count
             string typeName = unitType != null
                 ? LocalizationManager.Get($"UNIT_{unitType.StringID.ToUpperInvariant()}")
                 : "Unknown";
-            if (typeName.StartsWith("UNIT_") && unitType != null) typeName = unitType.Name; // Fallback
+            if (typeName.StartsWith("UNIT_") && unitType != null) typeName = unitType.Name;
 
-            var nameLabel = new Label($"{typeName} x{totalTroops}");
-            nameLabel.style.fontSize = fontSize - 1;
-            nameLabel.style.color = textColor;
+            var nameLabel = CreateText($"{typeName} x{totalTroops}");
+            nameLabel.style.fontSize = FontSizeNormal - 1;
             entry.Add(nameLabel);
 
             return entry;
-        }
-
-        public void ShowPanel()
-        {
-            if (panelContainer != null)
-            {
-                panelContainer.style.display = DisplayStyle.Flex;
-            }
-        }
-
-        public void HidePanel()
-        {
-            if (panelContainer != null)
-            {
-                panelContainer.style.display = DisplayStyle.None;
-            }
         }
 
         #region Move Mode
@@ -510,7 +396,6 @@ namespace StarterKit
                 return;
             }
 
-            // Collect player units in selected province
             unitsToMove.Clear();
             var unitIds = unitSystem.GetUnitsInProvince(selectedProvinceID);
             foreach (var unitId in unitIds)
@@ -532,8 +417,9 @@ namespace StarterKit
             moveSourceProvinceID = selectedProvinceID;
 
             // Update UI
-            headerLabel.text = LocalizationManager.Get("UI_MOVE_MODE");
-            if (headerLabel.text == "UI_MOVE_MODE") headerLabel.text = "Move Mode";
+            string moveModeText = LocalizationManager.Get("UI_MOVE_MODE");
+            if (moveModeText == "UI_MOVE_MODE") moveModeText = "Move Mode";
+            headerLabel.text = moveModeText;
 
             createUnitButton.style.display = DisplayStyle.None;
             moveUnitsButton.style.display = DisplayStyle.None;
@@ -550,13 +436,13 @@ namespace StarterKit
             unitsToMove.Clear();
 
             // Restore UI
-            headerLabel.text = LocalizationManager.Get("UI_UNITS");
-            if (headerLabel.text == "UI_UNITS") headerLabel.text = "Units";
+            string unitsText = LocalizationManager.Get("UI_UNITS");
+            if (unitsText == "UI_UNITS") unitsText = "Units";
+            headerLabel.text = unitsText;
 
             cancelMoveButton.style.display = DisplayStyle.None;
             moveModeLabel.style.display = DisplayStyle.None;
 
-            // Refresh to restore proper button states
             RefreshUnitsList();
 
             ArchonLogger.Log("UnitInfoUI: Exited move mode", "starter_kit");
@@ -571,7 +457,6 @@ namespace StarterKit
                 return;
             }
 
-            // Same province - cancel
             if (targetProvinceID == moveSourceProvinceID)
             {
                 ArchonLogger.Log("UnitInfoUI: Same province selected, cancelling move", "starter_kit");
@@ -579,7 +464,6 @@ namespace StarterKit
                 return;
             }
 
-            // Check if pathfinding is available
             if (gameState.Pathfinding == null || !gameState.Pathfinding.IsInitialized)
             {
                 ArchonLogger.LogWarning("UnitInfoUI: Pathfinding not available", "starter_kit");
@@ -587,7 +471,6 @@ namespace StarterKit
                 return;
             }
 
-            // Check if movement queue is available
             var movementQueue = gameState.Units?.MovementQueue;
             if (movementQueue == null)
             {
@@ -596,7 +479,6 @@ namespace StarterKit
                 return;
             }
 
-            // Check if path exists
             var playerState = Initializer.Instance?.PlayerState;
             ushort countryId = playerState?.PlayerCountryId ?? 0;
 
@@ -605,23 +487,19 @@ namespace StarterKit
             if (path == null || path.Count < 2)
             {
                 ArchonLogger.Log($"UnitInfoUI: No path from province {moveSourceProvinceID} to {targetProvinceID}", "starter_kit");
-                // Stay in move mode so player can try another destination
                 return;
             }
 
-            // Issue movement orders for all units via Core's MovementQueue
             int ordersIssued = 0;
             foreach (var unitId in unitsToMove)
             {
                 var unit = unitSystem.GetUnit(unitId);
-                if (unit.unitCount > 0) // Unit still exists
+                if (unit.unitCount > 0)
                 {
-                    // Get speed from unit type (days per province)
                     var unitType = unitSystem.GetUnitType(unit.unitTypeID);
                     int movementDays = unitType?.Speed ?? 2;
 
-                    // Start movement to first waypoint, passing full path for multi-hop
-                    ushort firstDestination = path[1]; // path[0] is current position
+                    ushort firstDestination = path[1];
                     movementQueue.StartMovement(unitId, firstDestination, movementDays, path);
                     ordersIssued++;
                 }
@@ -629,7 +507,6 @@ namespace StarterKit
 
             ArchonLogger.Log($"UnitInfoUI: Issued {ordersIssued} movement orders from province {moveSourceProvinceID} to {targetProvinceID} (path length: {path.Count})", "starter_kit");
 
-            // Exit move mode (units will arrive over time)
             ExitMoveMode();
         }
 

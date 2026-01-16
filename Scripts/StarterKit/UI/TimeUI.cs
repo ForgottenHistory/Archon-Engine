@@ -3,149 +3,86 @@ using UnityEngine.UIElements;
 using Core;
 using Core.Systems;
 using Core.Localization;
+using Core.UI;
 
 namespace StarterKit
 {
     /// <summary>
-    /// Simple time control UI for StarterKit.
+    /// STARTERKIT - Simple time control UI.
     /// Shows date/time, pause button, and speed buttons.
     /// Positioned in top-left corner.
     /// </summary>
-    [RequireComponent(typeof(UIDocument))]
-    public class TimeUI : MonoBehaviour
+    public class TimeUI : StarterKitPanel
     {
-        [Header("Styling")]
-        [SerializeField] private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.9f);
-        [SerializeField] private Color textColor = Color.white;
+        [Header("Speed Settings")]
         [SerializeField] private Color activeSpeedColor = new Color(0.3f, 0.7f, 0.3f, 1f);
-        [SerializeField] private int fontSize = 16;
 
         // UI Elements
-        private UIDocument uiDocument;
-        private VisualElement rootElement;
-        private VisualElement container;
         private Label dateTimeLabel;
         private Button pauseButton;
-        private VisualElement speedButtonContainer;
         private Button[] speedButtons;
 
         // Configuration
-        private int[] speeds = { 1, 2, 3, 4, 5, 10, 50, 100 }; // Default speeds
+        private int[] speeds = { 1, 2, 3, 4, 5, 10, 50, 100 };
 
         // References
         private TimeManager timeManager;
-        private bool isInitialized;
 
-        public bool IsInitialized => isInitialized;
-
-        public void Initialize(TimeManager timeManagerRef, int[] customSpeeds = null)
+        public void Initialize(GameState gameStateRef, TimeManager timeManagerRef, int[] customSpeeds = null)
         {
-            if (isInitialized)
-            {
-                ArchonLogger.LogWarning("TimeUI: Already initialized!", "starter_kit");
-                return;
-            }
+            timeManager = timeManagerRef;
 
-            if (timeManagerRef == null)
+            if (timeManager == null)
             {
                 ArchonLogger.LogError("TimeUI: Cannot initialize with null TimeManager!", "starter_kit");
                 return;
             }
 
-            timeManager = timeManagerRef;
-
             if (customSpeeds != null && customSpeeds.Length > 0)
                 speeds = customSpeeds;
 
-            InitializeUI();
-
-            isInitialized = true;
+            if (!base.Initialize(gameStateRef))
+            {
+                return;
+            }
 
             // Hide until country selected
-            HideUI();
+            Hide();
 
             ArchonLogger.Log("TimeUI: Initialized", "starter_kit");
         }
 
         void Update()
         {
-            if (!isInitialized || timeManager == null)
+            if (!IsInitialized || timeManager == null)
                 return;
 
             UpdateDisplay();
         }
 
-        void OnDestroy()
+        protected override void CreateUI()
         {
-            // Clean up button callbacks
-            if (pauseButton != null)
-                pauseButton.clicked -= OnPauseClicked;
-
-            if (speedButtons != null)
-            {
-                for (int i = 0; i < speedButtons.Length; i++)
-                {
-                    int level = i + 1;
-                    speedButtons[i].clicked -= () => OnSpeedClicked(level);
-                }
-            }
-        }
-
-        private void InitializeUI()
-        {
-            uiDocument = GetComponent<UIDocument>();
-            if (uiDocument == null)
-            {
-                ArchonLogger.LogError("TimeUI: UIDocument not found!", "starter_kit");
-                return;
-            }
-
-            rootElement = uiDocument.rootVisualElement;
-            if (rootElement == null)
-            {
-                ArchonLogger.LogError("TimeUI: Root VisualElement is null!", "starter_kit");
-                return;
-            }
-
             // Container at top-left
-            container = new VisualElement();
-            container.name = "time-ui";
-            container.style.position = Position.Absolute;
-            container.style.top = 10f;
-            container.style.left = 10f;
-            container.style.backgroundColor = backgroundColor;
-            container.style.paddingTop = 10f;
-            container.style.paddingBottom = 10f;
-            container.style.paddingLeft = 15f;
-            container.style.paddingRight = 15f;
-            container.style.borderTopLeftRadius = 6f;
-            container.style.borderTopRightRadius = 6f;
-            container.style.borderBottomLeftRadius = 6f;
-            container.style.borderBottomRightRadius = 6f;
-            container.style.flexDirection = FlexDirection.Column;
-            container.style.alignItems = Align.FlexStart;
+            panelContainer = CreateStyledPanel("time-ui");
+            UIHelper.SetFlexColumn(panelContainer, Justify.FlexStart, Align.FlexStart);
+            PositionPanel(top: 10f, left: 10f);
 
             // Date/time label
-            dateTimeLabel = new Label("0001.01.01 00:00");
+            dateTimeLabel = CreateHeader("0001.01.01 00:00");
             dateTimeLabel.name = "datetime-label";
-            dateTimeLabel.style.fontSize = fontSize + 2;
-            dateTimeLabel.style.color = textColor;
-            dateTimeLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
-            dateTimeLabel.style.marginBottom = 10f;
-            container.Add(dateTimeLabel);
+            dateTimeLabel.style.marginBottom = SpacingMd;
+            panelContainer.Add(dateTimeLabel);
 
             // Pause button
-            pauseButton = new Button(OnPauseClicked);
+            pauseButton = CreateStyledButton(LocalizationManager.Get("UI_PAUSE"), OnPauseClicked);
             pauseButton.name = "pause-button";
-            pauseButton.text = LocalizationManager.Get("UI_PAUSE");
-            pauseButton.style.marginBottom = 8f;
+            pauseButton.style.marginBottom = SpacingMd;
             pauseButton.style.width = new StyleLength(new Length(100, LengthUnit.Percent));
-            container.Add(pauseButton);
+            panelContainer.Add(pauseButton);
 
             // Speed buttons container
-            speedButtonContainer = new VisualElement();
+            var speedButtonContainer = CreateRow();
             speedButtonContainer.name = "speed-buttons";
-            speedButtonContainer.style.flexDirection = FlexDirection.Row;
             speedButtonContainer.style.flexWrap = Wrap.Wrap;
 
             // Create speed buttons from speeds array
@@ -155,19 +92,16 @@ namespace StarterKit
             {
                 int speed = speeds[i];
 
-                var btn = new Button();
-                btn.text = $"{speed}x";
-                btn.style.marginRight = 4f;
-                btn.style.marginBottom = 4f;
+                var btn = CreateStyledButton($"{speed}x", () => OnSpeedClicked(speed));
+                btn.style.marginRight = SpacingXs;
+                btn.style.marginBottom = SpacingXs;
                 btn.style.minWidth = 40f;
-                btn.clicked += () => OnSpeedClicked(speed);
 
                 speedButtons[i] = btn;
                 speedButtonContainer.Add(btn);
             }
 
-            container.Add(speedButtonContainer);
-            rootElement.Add(container);
+            panelContainer.Add(speedButtonContainer);
         }
 
         private void UpdateDisplay()
@@ -193,48 +127,21 @@ namespace StarterKit
                 int currentSpeed = timeManager.GameSpeed;
                 for (int i = 0; i < speedButtons.Length; i++)
                 {
-                    if (speeds[i] == currentSpeed)
-                    {
-                        speedButtons[i].style.backgroundColor = activeSpeedColor;
-                    }
-                    else
-                    {
-                        speedButtons[i].style.backgroundColor = StyleKeyword.Null;
-                    }
+                    speedButtons[i].style.backgroundColor = (speeds[i] == currentSpeed)
+                        ? activeSpeedColor
+                        : BackgroundButton;
                 }
             }
         }
 
         private void OnPauseClicked()
         {
-            if (timeManager != null)
-            {
-                timeManager.TogglePause();
-            }
+            timeManager?.TogglePause();
         }
 
         private void OnSpeedClicked(int speed)
         {
-            if (timeManager != null)
-            {
-                timeManager.SetSpeed(speed);
-            }
-        }
-
-        public void ShowUI()
-        {
-            if (container != null)
-            {
-                container.style.display = DisplayStyle.Flex;
-            }
-        }
-
-        public void HideUI()
-        {
-            if (container != null)
-            {
-                container.style.display = DisplayStyle.None;
-            }
+            timeManager?.SetSpeed(speed);
         }
     }
 }
