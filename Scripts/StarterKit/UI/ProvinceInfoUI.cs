@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Unity.Collections;
 using Core;
+using Core.Events;
+using Core.Systems;
 using Map.Core;
 using Map.Interaction;
 using Map.Rendering.Terrain;
@@ -61,6 +63,7 @@ namespace StarterKit
         private EconomySystem economySystem;
         private PlayerState playerState;
         private TerrainRGBLookup terrainLookup;
+        private CompositeDisposable subscriptions;
         private bool isInitialized;
 
         // State
@@ -110,6 +113,14 @@ namespace StarterKit
             provinceSelector.OnProvinceHovered += HandleProvinceHovered;
             provinceSelector.OnSelectionCleared += HandleSelectionCleared;
 
+            // Subscribe to events via EventBus (auto-disposed on OnDestroy)
+            subscriptions = new CompositeDisposable();
+            if (gameState?.EventBus != null)
+            {
+                subscriptions.Add(gameState.EventBus.Subscribe<GoldChangedEvent>(HandleGoldChanged));
+                subscriptions.Add(gameState.EventBus.Subscribe<ProvinceOwnershipChangedEvent>(HandleOwnershipChanged));
+            }
+
             isInitialized = true;
 
             // Hide until province selected
@@ -141,6 +152,9 @@ namespace StarterKit
                 provinceSelector.OnProvinceHovered -= HandleProvinceHovered;
                 provinceSelector.OnSelectionCleared -= HandleSelectionCleared;
             }
+
+            // EventBus subscriptions - auto-disposed
+            subscriptions?.Dispose();
         }
 
         private void InitializeUI()
@@ -327,6 +341,27 @@ namespace StarterKit
             currentProvinceID = 0;
             provinceHighlighter?.ClearHighlight();
             HidePanel();
+        }
+
+        private void HandleGoldChanged(GoldChangedEvent evt)
+        {
+            // Only refresh if panel is visible
+            if (currentProvinceID == 0) return;
+
+            // Check if this is for the player's country
+            if (playerState == null || evt.CountryId != playerState.PlayerCountryId) return;
+
+            // Update colonize button enabled state
+            UpdateColonizeButton();
+        }
+
+        private void HandleOwnershipChanged(ProvinceOwnershipChangedEvent evt)
+        {
+            // Only refresh if panel is showing the changed province
+            if (currentProvinceID == 0 || evt.ProvinceId != currentProvinceID) return;
+
+            // Refresh the entire panel to show new owner
+            UpdatePanel();
         }
 
         private void OnCloseClicked()

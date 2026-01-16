@@ -38,6 +38,7 @@ namespace StarterKit
         [SerializeField] private UnitInfoUI unitInfoUI;
         [SerializeField] private BuildingInfoUI buildingInfoUI;
         [SerializeField] private LedgerUI ledgerUI;
+        [SerializeField] private ToolbarUI toolbarUI;
 
         [Header("Visualization")]
         [SerializeField] private UnitVisualization unitVisualization;
@@ -116,6 +117,8 @@ namespace StarterKit
                 buildingInfoUI = FindFirstObjectByType<BuildingInfoUI>();
             if (ledgerUI == null)
                 ledgerUI = FindFirstObjectByType<LedgerUI>();
+            if (toolbarUI == null)
+                toolbarUI = FindFirstObjectByType<ToolbarUI>();
             if (unitVisualization == null)
                 unitVisualization = FindFirstObjectByType<UnitVisualization>();
 
@@ -201,6 +204,18 @@ namespace StarterKit
 
             // Hook up SaveManager for StarterKit systems
             SetupSaveManager(gameState);
+
+            yield return null;
+
+            // Initialize toolbar UI
+            if (logProgress)
+                ArchonLogger.Log("Initializing toolbar UI...", "starter_kit");
+
+            if (toolbarUI != null)
+            {
+                var saveManager = FindFirstObjectByType<SaveManager>();
+                toolbarUI.Initialize(gameState, ledgerUI, saveManager);
+            }
 
             yield return null;
 

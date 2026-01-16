@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Events;
 using Core.Localization;
 using Core.Units;
 using Map.Interaction;
@@ -39,6 +40,7 @@ namespace StarterKit
         private UnitSystem unitSystem;
         private EconomySystem economySystem;
         private ProvinceSelector provinceSelector;
+        private CompositeDisposable subscriptions;
         private bool isInitialized;
 
         // State
@@ -84,6 +86,13 @@ namespace StarterKit
             unitSystem.OnUnitDestroyed += HandleUnitDestroyed;
             unitSystem.OnUnitMoved += HandleUnitMoved;
 
+            // Subscribe to gold changes via EventBus (auto-disposed on OnDestroy)
+            subscriptions = new CompositeDisposable();
+            if (gameState?.EventBus != null)
+            {
+                subscriptions.Add(gameState.EventBus.Subscribe<GoldChangedEvent>(HandleGoldChanged));
+            }
+
             isInitialized = true;
 
             // Hide until province selected
@@ -107,6 +116,9 @@ namespace StarterKit
                 unitSystem.OnUnitDestroyed -= HandleUnitDestroyed;
                 unitSystem.OnUnitMoved -= HandleUnitMoved;
             }
+
+            // EventBus subscriptions - auto-disposed
+            subscriptions?.Dispose();
         }
 
         private void InitializeUI()
@@ -283,6 +295,42 @@ namespace StarterKit
             }
         }
 
+        private void HandleGoldChanged(GoldChangedEvent evt)
+        {
+            // Only refresh if panel is visible
+            if (selectedProvinceID == 0) return;
+
+            // Check if this is for the player's country
+            var playerState = Initializer.Instance?.PlayerState;
+            if (playerState == null || evt.CountryId != playerState.PlayerCountryId) return;
+
+            // Update create button enabled state based on new gold amount
+            UpdateCreateButtonState();
+        }
+
+        private void UpdateCreateButtonState()
+        {
+            if (createUnitButton == null || economySystem == null) return;
+
+            // Get unit cost
+            var infantryType = unitSystem?.GetUnitType("infantry");
+            int cost = infantryType?.Cost ?? 20;
+
+            // Enable/disable based on gold
+            bool canAfford = economySystem.Gold >= cost;
+            bool isOwnedByPlayer = unitSystem?.IsProvinceOwnedByPlayer(selectedProvinceID) ?? false;
+
+            createUnitButton.SetEnabled(canAfford && isOwnedByPlayer);
+            if (!canAfford)
+            {
+                createUnitButton.tooltip = $"Not enough gold (need {cost}g)";
+            }
+            else
+            {
+                createUnitButton.tooltip = "";
+            }
+        }
+
         private void OnCreateUnitClicked()
         {
             if (selectedProvinceID == 0)
@@ -331,6 +379,12 @@ namespace StarterKit
             // Show/hide create button based on province ownership
             bool isOwnedByPlayer = unitSystem.IsProvinceOwnedByPlayer(selectedProvinceID);
             createUnitButton.style.display = isOwnedByPlayer ? DisplayStyle.Flex : DisplayStyle.None;
+
+            // Update enabled state based on gold
+            if (isOwnedByPlayer)
+            {
+                UpdateCreateButtonState();
+            }
 
             // Get units in province
             var unitIds = unitSystem.GetUnitsInProvince(selectedProvinceID);

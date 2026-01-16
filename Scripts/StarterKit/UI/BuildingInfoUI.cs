@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Events;
 using Core.Localization;
 using Map.Interaction;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace StarterKit
         private GameState gameState;
         private BuildingSystem buildingSystem;
         private ProvinceSelector provinceSelector;
+        private CompositeDisposable subscriptions;
         private bool isInitialized;
 
         // State
@@ -73,6 +75,13 @@ namespace StarterKit
             // Subscribe to building events for auto-refresh
             buildingSystem.OnBuildingConstructed += HandleBuildingConstructed;
 
+            // Subscribe to gold changes via EventBus (auto-disposed on OnDestroy)
+            subscriptions = new CompositeDisposable();
+            if (gameState?.EventBus != null)
+            {
+                subscriptions.Add(gameState.EventBus.Subscribe<GoldChangedEvent>(HandleGoldChanged));
+            }
+
             isInitialized = true;
 
             // Hide until province selected
@@ -94,6 +103,9 @@ namespace StarterKit
             {
                 buildingSystem.OnBuildingConstructed -= HandleBuildingConstructed;
             }
+
+            // EventBus subscriptions - auto-disposed
+            subscriptions?.Dispose();
         }
 
         private void InitializeUI()
@@ -197,6 +209,20 @@ namespace StarterKit
                 RefreshBuildingsList();
                 RefreshBuildButtons();
             }
+        }
+
+        private void HandleGoldChanged(GoldChangedEvent evt)
+        {
+            // Only refresh if panel is visible and player's gold changed
+            if (selectedProvinceID == 0) return;
+            if (buildingSystem == null) return;
+
+            // Check if this is for the player's country
+            var playerState = buildingSystem.PlayerState;
+            if (playerState == null || evt.CountryId != playerState.PlayerCountryId) return;
+
+            // Refresh build buttons to update enabled/disabled state
+            RefreshBuildButtons();
         }
 
         private void RefreshBuildingsList()

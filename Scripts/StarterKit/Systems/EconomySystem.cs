@@ -110,15 +110,12 @@ namespace StarterKit
                 int newGold = oldGold + income;
                 countryGold[countryId] = newGold;
 
-                // Fire event only for player
-                if (playerState != null && countryId == playerState.PlayerCountryId)
-                {
-                    OnGoldChanged?.Invoke(oldGold, newGold);
+                // Emit gold changed event
+                EmitGoldChanged(countryId, oldGold, newGold);
 
-                    if (logCollection)
-                    {
-                        ArchonLogger.Log($"EconomySystem: Collected {income} gold ({baseIncome} base + {buildingBonus} buildings) from {provinceCount} provinces (Total: {newGold})", "starter_kit");
-                    }
+                if (logCollection && playerState != null && countryId == playerState.PlayerCountryId)
+                {
+                    ArchonLogger.Log($"EconomySystem: Collected {income} gold ({baseIncome} base + {buildingBonus} buildings) from {provinceCount} provinces (Total: {newGold})", "starter_kit");
                 }
             }
         }
@@ -203,10 +200,7 @@ namespace StarterKit
             int newGold = oldGold + amount;
             countryGold[countryId] = newGold;
 
-            if (playerState != null && countryId == playerState.PlayerCountryId)
-            {
-                OnGoldChanged?.Invoke(oldGold, newGold);
-            }
+            EmitGoldChanged(countryId, oldGold, newGold);
         }
 
         /// <summary>
@@ -232,11 +226,28 @@ namespace StarterKit
             int newGold = currentGold - amount;
             countryGold[countryId] = newGold;
 
+            EmitGoldChanged(countryId, currentGold, newGold);
+            return true;
+        }
+
+        /// <summary>
+        /// Emit gold changed event via EventBus and C# event
+        /// </summary>
+        private void EmitGoldChanged(ushort countryId, int oldGold, int newGold)
+        {
+            // Emit via EventBus for all listeners
+            gameState.EventBus.Emit(new GoldChangedEvent
+            {
+                CountryId = countryId,
+                OldValue = oldGold,
+                NewValue = newGold
+            });
+
+            // Also fire C# event for backward compatibility (player only)
             if (playerState != null && countryId == playerState.PlayerCountryId)
             {
-                OnGoldChanged?.Invoke(currentGold, newGold);
+                OnGoldChanged?.Invoke(oldGold, newGold);
             }
-            return true;
         }
 
         /// <summary>

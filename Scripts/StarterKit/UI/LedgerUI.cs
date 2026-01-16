@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Events;
 using Core.Localization;
+using Core.Systems;
+using Core.Units;
 using System.Collections.Generic;
 
 namespace StarterKit
@@ -38,6 +41,7 @@ namespace StarterKit
         private EconomySystem economySystem;
         private UnitSystem unitSystem;
         private PlayerState playerState;
+        private CompositeDisposable subscriptions;
         private bool isInitialized;
 
         // State
@@ -73,11 +77,26 @@ namespace StarterKit
 
             InitializeUI();
 
+            // Subscribe to events via EventBus (auto-disposed on OnDestroy)
+            subscriptions = new CompositeDisposable();
+            if (gameState?.EventBus != null)
+            {
+                subscriptions.Add(gameState.EventBus.Subscribe<GoldChangedEvent>(HandleGoldChanged));
+                subscriptions.Add(gameState.EventBus.Subscribe<ProvinceOwnershipChangedEvent>(HandleOwnershipChanged));
+                subscriptions.Add(gameState.EventBus.Subscribe<UnitCreatedEvent>(HandleUnitCreated));
+                subscriptions.Add(gameState.EventBus.Subscribe<UnitDestroyedEvent>(HandleUnitDestroyed));
+            }
+
             isInitialized = true;
             isVisible = false;
             HidePanel();
 
             ArchonLogger.Log("LedgerUI: Initialized", "starter_kit");
+        }
+
+        void OnDestroy()
+        {
+            subscriptions?.Dispose();
         }
 
         void Update()
@@ -114,6 +133,27 @@ namespace StarterKit
 
             panelContainer.style.display = DisplayStyle.None;
             isVisible = false;
+        }
+
+        // Event handlers - only refresh if visible
+        private void HandleGoldChanged(GoldChangedEvent evt)
+        {
+            if (isVisible) RefreshData();
+        }
+
+        private void HandleOwnershipChanged(ProvinceOwnershipChangedEvent evt)
+        {
+            if (isVisible) RefreshData();
+        }
+
+        private void HandleUnitCreated(UnitCreatedEvent evt)
+        {
+            if (isVisible) RefreshData();
+        }
+
+        private void HandleUnitDestroyed(UnitDestroyedEvent evt)
+        {
+            if (isVisible) RefreshData();
         }
 
         private void InitializeUI()

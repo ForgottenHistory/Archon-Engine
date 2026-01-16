@@ -50,6 +50,9 @@ namespace StarterKit
         // Events
         public event Action<ushort, ushort> OnBuildingConstructed; // provinceId, buildingTypeId
 
+        // Public accessor for UI
+        public PlayerState PlayerState => playerState;
+
         public BuildingSystem(GameState gameStateRef, PlayerState playerStateRef, EconomySystem economySystemRef, bool log = true)
         {
             gameState = gameStateRef;

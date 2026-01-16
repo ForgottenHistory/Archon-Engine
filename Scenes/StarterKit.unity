@@ -146,10 +146,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 431118}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f99601b3225f66c4890778a94b3d5521, type: 3}
+  m_Script: {fileID: 11500000, guid: 229b3c36dd5645344a49170417687c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitHeight: 1.5
+  unitHeight: 2
   badgeScale: 4
   atlasGenerator: {fileID: 431121}
   enablePathLines: 1
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 73886532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38aa984fcdf7a0f4388fd5bc4e968099, type: 3}
+  m_Script: {fileID: 11500000, guid: 456886e2f209a0a4f9686f9be13645f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 225263829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 600915a1631a9224f841fe4a2fd7b10f, type: 3}
+  m_Script: {fileID: 11500000, guid: feb09516ee8303d4d8d53c3789805d4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
@@ -509,12 +509,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   engineMapInitializer: {fileID: 698265895}
   countrySelectionUI: {fileID: 1920970333}
-  resourceBarUI: {fileID: 1719354840}
+  resourceBarUI: {fileID: 1719354843}
   timeUI: {fileID: 225263830}
   provinceInfoUI: {fileID: 1221213957}
   unitInfoUI: {fileID: 73886533}
   buildingInfoUI: {fileID: 1161543647}
-  ledgerUI: {fileID: 0}
+  ledgerUI: {fileID: 1456546912}
+  toolbarUI: {fileID: 1053708175}
   unitVisualization: {fileID: 431119}
   initializeOnStart: 1
   logProgress: 1
@@ -554,6 +555,75 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4493609015990042284, guid: cdfb68fba67a5464ea31c5f9fb50aad5, type: 3}
   m_PrefabInstance: {fileID: 4981941025701172849}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1053708174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1053708177}
+  - component: {fileID: 1053708176}
+  - component: {fileID: 1053708175}
+  m_Layer: 0
+  m_Name: ToolbarUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1053708175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053708174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e89feab80181132449fad2da1fa5aab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
+  buttonColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  buttonHoverColor: {r: 0.35, g: 0.35, b: 0.35, a: 1}
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  fontSize: 14
+--- !u!114 &1053708176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053708174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 4916e544b871de14bb98836a4377f8e7, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 0}
+  m_SortingOrder: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+--- !u!4 &1053708177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053708174}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17.913025, y: -441.1258, z: -263.4595}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1161543646
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +651,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1161543646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba91673108022da49b5a2e41d8114b6d, type: 3}
+  m_Script: {fileID: 11500000, guid: f24d2ff2dab7bb849aa733d9fd8b73c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
@@ -683,7 +753,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1221213953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75dfd906ec515314ea38893e9d4ed94d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f5404ecba71f0048bfe52125a146f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
@@ -720,7 +790,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1456546911}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 327fdc64913212f458671cd96235e61d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7de552f4d1323814b8f5bae83260146d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.95}
@@ -878,7 +948,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1719354842}
   - component: {fileID: 1719354841}
-  - component: {fileID: 1719354840}
+  - component: {fileID: 1719354843}
   m_Layer: 0
   m_Name: ResourceBarUI
   m_TagString: Untagged
@@ -886,23 +956,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1719354840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719354839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d81020a2546ef947827b1bc1881dfad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  goldColor: {r: 1, g: 0.84, b: 0, a: 1}
-  incomeColor: {r: 0.5, g: 1, b: 0.5, a: 1}
-  fontSize: 18
 --- !u!114 &1719354841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -937,6 +990,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1719354843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719354839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea77db28722a31e49b4c9d24b755e4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  goldColor: {r: 1, g: 0.84, b: 0, a: 1}
+  incomeColor: {r: 0.5, g: 1, b: 0.5, a: 1}
+  fontSize: 18
 --- !u!1 &1920970331
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +1034,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1920970331}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: debf7c565fab53d4f8c2186c58b833a7, type: 3}
+  m_Script: {fileID: 11500000, guid: fd5799399ad436c418d1c8bf0ab871d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundColor: {r: 0, g: 0, b: 0, a: 0.7}
@@ -1369,3 +1439,4 @@ SceneRoots:
   - {fileID: 73886535}
   - {fileID: 1161543649}
   - {fileID: 1456546914}
+  - {fileID: 1053708177}
