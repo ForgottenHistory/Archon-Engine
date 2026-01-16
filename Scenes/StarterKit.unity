@@ -152,6 +152,7 @@ MonoBehaviour:
   unitHeight: 1.5
   badgeScale: 4
   atlasGenerator: {fileID: 431121}
+  enablePathLines: 1
   logDebug: 1
 --- !u!4 &431120
 Transform:
@@ -513,6 +514,7 @@ MonoBehaviour:
   provinceInfoUI: {fileID: 1221213957}
   unitInfoUI: {fileID: 73886533}
   buildingInfoUI: {fileID: 1161543647}
+  ledgerUI: {fileID: 0}
   unitVisualization: {fileID: 431119}
   initializeOnStart: 1
   logProgress: 1
@@ -691,6 +693,77 @@ MonoBehaviour:
   headerFontSize: 18
   hoverHighlightColor: {r: 1, g: 1, b: 1, a: 0.3}
   selectionHighlightColor: {r: 1, g: 0.84, b: 0, a: 0.5}
+--- !u!1 &1456546911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1456546914}
+  - component: {fileID: 1456546913}
+  - component: {fileID: 1456546912}
+  m_Layer: 0
+  m_Name: LedgerUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1456546912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456546911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327fdc64913212f458671cd96235e61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.95}
+  headerColor: {r: 0.2, g: 0.2, b: 0.3, a: 1}
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  playerRowColor: {r: 0.2, g: 0.3, b: 0.2, a: 1}
+  alternateRowColor: {r: 0.15, g: 0.15, b: 0.15, a: 1}
+  fontSize: 14
+  toggleKey: 108
+--- !u!114 &1456546913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456546911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 4916e544b871de14bb98836a4377f8e7, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 0}
+  m_SortingOrder: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+--- !u!4 &1456546914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456546911}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17.913025, y: -441.1258, z: -263.4595}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1474470897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,6 +1340,10 @@ PrefabInstance:
       propertyPath: gameSettings
       value: 
       objectReference: {fileID: 11400000, guid: e3093190015160b46a01e6682885d9d5, type: 2}
+    - target: {fileID: 7231547361058388065, guid: 684e568ecb72c734ea3c6c241975cb77, type: 3}
+      propertyPath: quickLoadKey
+      value: 290
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1291,3 +1368,4 @@ SceneRoots:
   - {fileID: 1221213956}
   - {fileID: 73886535}
   - {fileID: 1161543649}
+  - {fileID: 1456546914}

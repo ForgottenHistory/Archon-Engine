@@ -381,5 +381,47 @@ namespace Map.Core
             ArchonLogger.Log($"MapSystemCoordinator: Province mapping complete - {totalBitmapProvinces} in bitmap, {validatedProvinces} validated, {skippedProvinces} skipped", "map_initialization");
             return mapping;
         }
+
+        /// <summary>
+        /// Refresh all map visuals from current simulation state.
+        /// Call after loading a save game or any bulk state change.
+        /// </summary>
+        public void RefreshAllVisuals()
+        {
+            var gameState = GameState.Instance;
+            if (gameState == null)
+            {
+                ArchonLogger.LogWarning("MapSystemCoordinator: Cannot refresh visuals - GameState not available", "map_rendering");
+                return;
+            }
+
+            if (logSystemProgress)
+                ArchonLogger.Log("MapSystemCoordinator: Refreshing all map visuals...", "map_rendering");
+
+            // 1. Refresh owner texture (province colors from ownership)
+            if (ownerTextureDispatcher != null && gameState.ProvinceQueries != null)
+            {
+                ownerTextureDispatcher.PopulateOwnerTexture(gameState.ProvinceQueries);
+                if (logSystemProgress)
+                    ArchonLogger.Log("MapSystemCoordinator: Owner texture refreshed", "map_rendering");
+            }
+
+            // 2. Refresh borders
+            if (borderDispatcher != null)
+            {
+                borderDispatcher.DetectBorders();
+                if (logSystemProgress)
+                    ArchonLogger.Log("MapSystemCoordinator: Borders refreshed", "map_rendering");
+            }
+
+            // 3. Force texture update bridge to process any pending updates
+            if (textureUpdateBridge != null)
+            {
+                textureUpdateBridge.ForceUpdate();
+            }
+
+            if (logSystemProgress)
+                ArchonLogger.Log("MapSystemCoordinator: All map visuals refreshed", "map_rendering");
+        }
     }
 }

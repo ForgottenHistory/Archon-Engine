@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Unity.Collections;
 using Core;
 using Core.Events;
@@ -244,6 +245,54 @@ namespace StarterKit
         public IEnumerable<ushort> GetCountriesWithGold()
         {
             return countryGold.Keys;
+        }
+
+        // ====================================================================
+        // SERIALIZATION
+        // ====================================================================
+
+        /// <summary>
+        /// Serialize economy state to byte array
+        /// </summary>
+        public byte[] Serialize()
+        {
+            using (var ms = new MemoryStream())
+            using (var writer = new BinaryWriter(ms))
+            {
+                writer.Write(countryGold.Count);
+                foreach (var kvp in countryGold)
+                {
+                    writer.Write(kvp.Key);
+                    writer.Write(kvp.Value);
+                }
+                return ms.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Deserialize economy state from byte array
+        /// </summary>
+        public void Deserialize(byte[] data)
+        {
+            if (data == null || data.Length == 0) return;
+
+            using (var ms = new MemoryStream(data))
+            using (var reader = new BinaryReader(ms))
+            {
+                countryGold.Clear();
+                int count = reader.ReadInt32();
+                for (int i = 0; i < count; i++)
+                {
+                    ushort countryId = reader.ReadUInt16();
+                    int gold = reader.ReadInt32();
+                    countryGold[countryId] = gold;
+                }
+
+                if (logCollection)
+                {
+                    ArchonLogger.Log($"EconomySystem: Loaded gold for {count} countries", "starter_kit");
+                }
+            }
         }
     }
 }

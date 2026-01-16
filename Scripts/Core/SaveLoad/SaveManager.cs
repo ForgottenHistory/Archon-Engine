@@ -36,6 +36,16 @@ namespace Core.SaveLoad
         [Tooltip("Enable debug logging for save/load operations")]
         public bool logSaveLoadOperations = true;
 
+        [Header("Hotkeys")]
+        [Tooltip("Key for quick save")]
+        public KeyCode quickSaveKey = KeyCode.F6;
+
+        [Tooltip("Key for quick load")]
+        public KeyCode quickLoadKey = KeyCode.F7;
+
+        [Tooltip("Enable hotkey handling (disable if using custom input system)")]
+        public bool enableHotkeys = true;
+
         // Save file directory (platform-specific)
         private string saveDirectory;
 
@@ -75,17 +85,21 @@ namespace Core.SaveLoad
 
         void Update()
         {
-            // F6 - Quicksave
-            if (Input.GetKeyDown(KeyCode.F6))
+            if (!enableHotkeys) return;
+
+            // Quick save
+            if (Input.GetKeyDown(quickSaveKey))
             {
-                ArchonLogger.Log("SaveManager: F6 pressed - Quicksaving...", "core_saveload");
+                if (logSaveLoadOperations)
+                    ArchonLogger.Log($"SaveManager: {quickSaveKey} pressed - Quicksaving...", "core_saveload");
                 QuickSave();
             }
 
-            // F7 - Quickload
-            if (Input.GetKeyDown(KeyCode.F7))
+            // Quick load
+            if (Input.GetKeyDown(quickLoadKey))
             {
-                ArchonLogger.Log("SaveManager: F7 pressed - Quickloading...", "core_saveload");
+                if (logSaveLoadOperations)
+                    ArchonLogger.Log($"SaveManager: {quickLoadKey} pressed - Quickloading...", "core_saveload");
                 QuickLoad();
             }
         }

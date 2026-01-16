@@ -183,6 +183,14 @@ namespace StarterKit
             }
         }
 
+        /// <summary>
+        /// Force refresh the display (called after load)
+        /// </summary>
+        public void RefreshDisplay()
+        {
+            UpdateDisplay();
+        }
+
         public void ShowBar()
         {
             if (barContainer != null)

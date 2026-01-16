@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Core;
+using Core.SaveLoad;
 using Core.Systems;
 using Map.Core;
 using Map.Interaction;
@@ -197,6 +199,11 @@ namespace StarterKit
 
             yield return null;
 
+            // Hook up SaveManager for StarterKit systems
+            SetupSaveManager(gameState);
+
+            yield return null;
+
             // Initialize resource bar UI
             if (logProgress)
                 ArchonLogger.Log("Initializing resource bar UI...", "starter_kit");
@@ -282,6 +289,105 @@ namespace StarterKit
 
             if (logProgress)
                 ArchonLogger.Log("=== StarterKit initialization complete ===", "starter_kit");
+        }
+
+        /// <summary>
+        /// Hook up SaveManager callbacks for StarterKit systems
+        /// </summary>
+        private void SetupSaveManager(GameState gameState)
+        {
+            var saveManager = FindFirstObjectByType<SaveManager>();
+            if (saveManager == null)
+            {
+                if (logProgress)
+                    ArchonLogger.LogWarning("Initializer: SaveManager not found - save/load disabled", "starter_kit");
+                return;
+            }
+
+            if (logProgress)
+                ArchonLogger.Log("Setting up SaveManager hooks...", "starter_kit");
+
+            // Hook up PlayerState serialization
+            saveManager.OnSerializePlayerState = () =>
+            {
+                using (var ms = new MemoryStream())
+                using (var writer = new BinaryWriter(ms))
+                {
+                    // PlayerState
+                    byte[] playerData = playerState?.Serialize();
+                    writer.Write(playerData?.Length ?? 0);
+                    if (playerData != null) writer.Write(playerData);
+
+                    // EconomySystem
+                    byte[] economyData = economySystem?.Serialize();
+                    writer.Write(economyData?.Length ?? 0);
+                    if (economyData != null) writer.Write(economyData);
+
+                    // BuildingSystem
+                    byte[] buildingData = buildingSystem?.Serialize();
+                    writer.Write(buildingData?.Length ?? 0);
+                    if (buildingData != null) writer.Write(buildingData);
+
+                    return ms.ToArray();
+                }
+            };
+
+            saveManager.OnDeserializePlayerState = (data) =>
+            {
+                if (data == null || data.Length == 0) return;
+
+                using (var ms = new MemoryStream(data))
+                using (var reader = new BinaryReader(ms))
+                {
+                    // PlayerState
+                    int playerLen = reader.ReadInt32();
+                    if (playerLen > 0)
+                    {
+                        byte[] playerData = reader.ReadBytes(playerLen);
+                        playerState?.Deserialize(playerData);
+                    }
+
+                    // EconomySystem
+                    int economyLen = reader.ReadInt32();
+                    if (economyLen > 0)
+                    {
+                        byte[] economyData = reader.ReadBytes(economyLen);
+                        economySystem?.Deserialize(economyData);
+                    }
+
+                    // BuildingSystem
+                    int buildingLen = reader.ReadInt32();
+                    if (buildingLen > 0)
+                    {
+                        byte[] buildingData = reader.ReadBytes(buildingLen);
+                        buildingSystem?.Deserialize(buildingData);
+                    }
+                }
+            };
+
+            // Hook up post-load finalization (refresh UI, etc.)
+            saveManager.OnPostLoadFinalize = () =>
+            {
+                if (logProgress)
+                    ArchonLogger.Log("Initializer: Post-load finalization...", "starter_kit");
+
+                // CRITICAL: Refresh all map visuals from loaded state
+                var mapCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
+                mapCoordinator?.RefreshAllVisuals();
+
+                // Refresh resource bar UI
+                resourceBarUI?.RefreshDisplay();
+
+                // Refresh ledger if visible
+                if (ledgerUI != null && ledgerUI.IsVisible)
+                    ledgerUI.ShowPanel(); // This refreshes the data
+
+                if (logProgress)
+                    ArchonLogger.Log("Initializer: Post-load finalization complete", "starter_kit");
+            };
+
+            if (logProgress)
+                ArchonLogger.Log("SaveManager hooks configured (F6=Save, F7=Load)", "starter_kit");
         }
 
         /// <summary>

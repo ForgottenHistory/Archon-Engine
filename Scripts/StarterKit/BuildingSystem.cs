@@ -347,5 +347,73 @@ namespace StarterKit
                 ArchonLogger.Log("BuildingSystem: Disposed", "starter_kit");
             }
         }
+
+        // ====================================================================
+        // SERIALIZATION
+        // ====================================================================
+
+        /// <summary>
+        /// Serialize building state to byte array
+        /// </summary>
+        public byte[] Serialize()
+        {
+            using (var ms = new MemoryStream())
+            using (var writer = new BinaryWriter(ms))
+            {
+                // Write province buildings
+                writer.Write(provinceBuildings.Count);
+                foreach (var kvp in provinceBuildings)
+                {
+                    writer.Write(kvp.Key); // provinceId
+                    var buildingCounts = kvp.Value.BuildingCounts;
+                    writer.Write(buildingCounts?.Count ?? 0);
+                    if (buildingCounts != null)
+                    {
+                        foreach (var building in buildingCounts)
+                        {
+                            writer.Write(building.Key);   // buildingTypeId
+                            writer.Write(building.Value); // count
+                        }
+                    }
+                }
+                return ms.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Deserialize building state from byte array
+        /// </summary>
+        public void Deserialize(byte[] data)
+        {
+            if (data == null || data.Length == 0) return;
+
+            using (var ms = new MemoryStream(data))
+            using (var reader = new BinaryReader(ms))
+            {
+                provinceBuildings.Clear();
+                int provinceCount = reader.ReadInt32();
+                for (int i = 0; i < provinceCount; i++)
+                {
+                    ushort provinceId = reader.ReadUInt16();
+                    int buildingCount = reader.ReadInt32();
+                    var buildingCounts = new Dictionary<ushort, int>();
+                    for (int j = 0; j < buildingCount; j++)
+                    {
+                        ushort buildingTypeId = reader.ReadUInt16();
+                        int count = reader.ReadInt32();
+                        buildingCounts[buildingTypeId] = count;
+                    }
+                    provinceBuildings[provinceId] = new ProvinceBuildingData
+                    {
+                        BuildingCounts = buildingCounts
+                    };
+                }
+
+                if (logProgress)
+                {
+                    ArchonLogger.Log($"BuildingSystem: Loaded buildings for {provinceCount} provinces", "starter_kit");
+                }
+            }
+        }
     }
 }

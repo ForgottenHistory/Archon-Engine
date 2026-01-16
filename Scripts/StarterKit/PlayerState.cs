@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.IO;
 using Core;
 
 namespace StarterKit
@@ -71,6 +72,43 @@ namespace StarterKit
         public bool IsPlayerCountry(ushort countryId)
         {
             return HasPlayerCountry && countryId == playerCountryId;
+        }
+
+        // ====================================================================
+        // SERIALIZATION
+        // ====================================================================
+
+        /// <summary>
+        /// Serialize player state to byte array
+        /// </summary>
+        public byte[] Serialize()
+        {
+            using (var ms = new MemoryStream())
+            using (var writer = new BinaryWriter(ms))
+            {
+                writer.Write(playerCountryId);
+                return ms.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Deserialize player state from byte array
+        /// </summary>
+        public void Deserialize(byte[] data)
+        {
+            if (data == null || data.Length == 0) return;
+
+            using (var ms = new MemoryStream(data))
+            using (var reader = new BinaryReader(ms))
+            {
+                playerCountryId = reader.ReadUInt16();
+
+                if (logStateChanges)
+                {
+                    string tag = gameState?.CountryQueries?.GetTag(playerCountryId) ?? playerCountryId.ToString();
+                    ArchonLogger.Log($"PlayerState: Loaded player country {tag} (ID: {playerCountryId})", "starter_kit");
+                }
+            }
         }
     }
 }
