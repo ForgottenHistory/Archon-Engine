@@ -63,8 +63,8 @@ namespace Map.Rendering
         public void CreateTextures()
         {
             CreateProvinceTerrainTexture();
-            // NOTE: TerrainTypeTexture generated AFTER terrain.bmp is loaded
-            // via GenerateTerrainTypeTexture() called by TerrainBitmapLoader
+            // NOTE: TerrainTypeTexture generated AFTER terrain image is loaded
+            // via GenerateTerrainTypeTexture() called by TerrainImageLoader
             LoadTerrainDetailArray();
             GenerateDetailNoiseTexture();
             CreateHeightmapTexture();

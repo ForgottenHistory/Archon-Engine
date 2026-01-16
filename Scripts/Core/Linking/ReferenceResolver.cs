@@ -43,8 +43,9 @@ namespace Core.Linking
             provinceData.Name = $"Province {rawData.ProvinceID}"; // TODO: Load actual names
             provinceData.Development = rawData.Development;
 
-            // Resolve terrain type using water province definitions (Phase 3: Linking)
-            provinceData.Terrain = WaterProvinceLoader.GetTerrainTypeForProvince(rawData.ProvinceID);
+            // Terrain is set later by ProvinceTerrainAnalyzer (Map layer) based on terrain.bmp analysis
+            // Default to 1 (grasslands) - will be overwritten during map loading
+            provinceData.Terrain = 1;
 
             provinceData.Flags = rawData.Flags;
             provinceData.BaseTax = rawData.BaseTax;

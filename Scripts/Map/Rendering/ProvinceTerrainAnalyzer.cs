@@ -60,7 +60,7 @@ namespace Map.Rendering
             }
 
             bitmapReader = new TerrainBitmapReader(logAnalysis);
-            overrideApplicator = new TerrainOverrideApplicator(logAnalysis);
+            overrideApplicator = new TerrainOverrideApplicator(dataDirectory, logAnalysis);
         }
 
         /// <summary>

@@ -7,24 +7,22 @@ using Utils;
 namespace Map.Rendering.Terrain
 {
     /// <summary>
-    /// ENGINE: Loads and caches terrain_rgb.json5 mappings
-    /// Provides fast RGB → Terrain Type Index lookups
-    /// Terrain type indices are determined by ORDER in terrain_rgb.json5 (0, 1, 2, 3...)
+    /// ENGINE: Loads terrain.json5 and provides fast RGB → Terrain Type Index lookups.
+    /// Uses terrain.json5 as single source of truth (same as TerrainLoader and TerrainColorMapper).
+    /// Terrain type indices are determined by ORDER in terrain.json5 categories section.
     /// </summary>
     public class TerrainRGBLookup
     {
         private Dictionary<(byte r, byte g, byte b), uint> rgbToTerrainType;
         private Dictionary<uint, string> terrainTypeToName;
-        private Dictionary<uint, bool> terrainTypeOwnable; // ownable flag per terrain
+        private Dictionary<uint, bool> terrainTypeOwnable; // is_water=true means not ownable
         private uint terrainCount;
         private bool isInitialized = false;
 
         /// <summary>
-        /// Load terrain_rgb.json5 and build lookup tables
-        /// Must be called before using any lookup methods
+        /// Load terrain.json5 and build lookup tables.
+        /// Uses same file and parsing as TerrainLoader to guarantee identical index assignment.
         /// </summary>
-        /// <param name="dataDirectory">Data directory path (e.g., from GameSettings.DataDirectory)</param>
-        /// <param name="logProgress">Whether to log progress messages</param>
         public bool Initialize(string dataDirectory = null, bool logProgress = true)
         {
             if (isInitialized)
@@ -38,73 +36,87 @@ namespace Map.Rendering.Terrain
 
             try
             {
-                // Use provided data directory or fall back to default
                 if (string.IsNullOrEmpty(dataDirectory))
                 {
                     dataDirectory = System.IO.Path.Combine(Application.dataPath, "Data");
                 }
 
-                // Load RGB mappings from terrain_rgb.json5
-                string terrainRgbPath = System.IO.Path.Combine(dataDirectory, "map", "terrain_rgb.json5");
-                if (!System.IO.File.Exists(terrainRgbPath))
+                // Load from terrain.json5 (single source of truth)
+                string terrainPath = System.IO.Path.Combine(dataDirectory, "map", "terrain.json5");
+                if (!System.IO.File.Exists(terrainPath))
                 {
-                    ArchonLogger.LogError($"TerrainRGBLookup: terrain_rgb.json5 not found at {terrainRgbPath}", "map_rendering");
+                    ArchonLogger.LogError($"TerrainRGBLookup: terrain.json5 not found at {terrainPath}", "map_rendering");
                     return false;
                 }
 
-                JObject terrainRgbData = Json5Loader.LoadJson5File(terrainRgbPath);
-
-                if (terrainRgbData == null)
+                JObject terrainData = Json5Loader.LoadJson5File(terrainPath);
+                if (terrainData == null)
                 {
-                    ArchonLogger.LogError("TerrainRGBLookup: Failed to parse terrain_rgb.json5", "map_rendering");
+                    ArchonLogger.LogError("TerrainRGBLookup: Failed to parse terrain.json5", "map_rendering");
                     return false;
                 }
 
-                // Assign terrain type indices based on ORDER in terrain_rgb.json5
+                // Parse categories section (same as TerrainLoader)
+                var categories = terrainData["categories"] as JObject;
+                if (categories == null)
+                {
+                    ArchonLogger.LogError("TerrainRGBLookup: No 'categories' section in terrain.json5", "map_rendering");
+                    return false;
+                }
+
+                // Assign terrain type indices based on ORDER in categories
                 uint terrainTypeIndex = 0;
-                foreach (var terrainProperty in terrainRgbData.Properties())
+                foreach (var property in categories.Properties())
                 {
-                    string terrainName = terrainProperty.Name;
+                    string terrainName = property.Name;
+                    var terrainObj = property.Value as JObject;
 
-                    if (terrainProperty.Value is JObject terrainObj)
+                    if (terrainObj == null)
+                        continue;
+
+                    // Parse color array
+                    var colorArray = terrainObj["color"] as JArray;
+                    if (colorArray == null || colorArray.Count < 3)
                     {
-                        var colorArray = Json5Loader.GetIntArray(terrainObj, "color");
-                        string typeName = terrainObj["type"]?.ToString();
+                        ArchonLogger.LogWarning($"TerrainRGBLookup: No color for terrain '{terrainName}'", "map_rendering");
+                        terrainTypeIndex++;
+                        continue;
+                    }
 
-                        // Parse ownable field (defaults to true if not specified)
-                        bool ownable = true;
-                        if (terrainObj["ownable"] != null)
+                    byte r = (byte)colorArray[0].Value<int>();
+                    byte g = (byte)colorArray[1].Value<int>();
+                    byte b = (byte)colorArray[2].Value<int>();
+
+                    // Check explicit ownable field, fallback to !is_water
+                    bool ownable = true;
+                    if (terrainObj["ownable"] != null)
+                    {
+                        ownable = terrainObj["ownable"].Value<bool>();
+                    }
+                    else
+                    {
+                        bool isWater = terrainObj["is_water"]?.Value<bool>() ?? false;
+                        ownable = !isWater;
+                    }
+
+                    if (!rgbToTerrainType.ContainsKey((r, g, b)))
+                    {
+                        rgbToTerrainType[(r, g, b)] = terrainTypeIndex;
+                        terrainTypeToName[terrainTypeIndex] = terrainName;
+                        terrainTypeOwnable[terrainTypeIndex] = ownable;
+
+                        if (logProgress)
                         {
-                            ownable = terrainObj["ownable"].Value<bool>();
-                        }
-
-                        if (colorArray.Count >= 3)
-                        {
-                            byte r = (byte)colorArray[0];
-                            byte g = (byte)colorArray[1];
-                            byte b = (byte)colorArray[2];
-
-                            // Only add if RGB doesn't already exist (handle duplicates like savannah/drylands both at 0,0,0)
-                            if (!rgbToTerrainType.ContainsKey((r, g, b)))
-                            {
-                                rgbToTerrainType[(r, g, b)] = terrainTypeIndex;
-                                terrainTypeToName[terrainTypeIndex] = terrainName;
-                                terrainTypeOwnable[terrainTypeIndex] = ownable;
-
-                                if (logProgress)
-                                {
-                                    string ownableStr = ownable ? "" : ", ownable=false";
-                                    ArchonLogger.Log($"TerrainRGBLookup: Terrain mapping - RGB({r},{g},{b}) → T{terrainTypeIndex} ({terrainName}, type={typeName}{ownableStr})", "map_rendering");
-                                }
-
-                                terrainTypeIndex++;
-                            }
-                            else if (logProgress)
-                            {
-                                ArchonLogger.LogWarning($"TerrainRGBLookup: Duplicate RGB({r},{g},{b}) for {terrainName} (already mapped)", "map_rendering");
-                            }
+                            string ownableStr = ownable ? "" : ", ownable=false";
+                            ArchonLogger.Log($"TerrainRGBLookup: RGB({r},{g},{b}) → T{terrainTypeIndex} ({terrainName}{ownableStr})", "map_rendering");
                         }
                     }
+                    else if (logProgress)
+                    {
+                        ArchonLogger.LogWarning($"TerrainRGBLookup: Duplicate RGB({r},{g},{b}) for {terrainName}", "map_rendering");
+                    }
+
+                    terrainTypeIndex++;
                 }
 
                 terrainCount = terrainTypeIndex;
@@ -112,14 +124,14 @@ namespace Map.Rendering.Terrain
 
                 if (logProgress)
                 {
-                    ArchonLogger.Log($"TerrainRGBLookup: Built RGB→Terrain lookup with {rgbToTerrainType.Count} mappings", "map_rendering");
+                    ArchonLogger.Log($"TerrainRGBLookup: Loaded {terrainCount} terrain types from terrain.json5", "map_rendering");
                 }
 
                 return true;
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"TerrainRGBLookup: Failed to build RGB lookup: {e.Message}\nStack trace: {e.StackTrace}", "map_rendering");
+                ArchonLogger.LogError($"TerrainRGBLookup: Failed to initialize: {e.Message}", "map_rendering");
                 return false;
             }
         }

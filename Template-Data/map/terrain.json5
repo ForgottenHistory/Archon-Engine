@@ -1,18 +1,20 @@
 {
   // Template terrain definitions
-  // Matching terrain_rgb.json5
+  // Single source of truth for terrain types, colors, and properties
 
   categories: {
     ocean: {
       color: [8, 31, 130],
       sound_type: "sea",
       is_water: true,
+      ownable: false,
       movement_cost: 1.0
     },
     inland_ocean: {
       color: [55, 90, 220],
       sound_type: "sea",
       is_water: true,
+      ownable: false,
       movement_cost: 1.0
     },
     grasslands: {

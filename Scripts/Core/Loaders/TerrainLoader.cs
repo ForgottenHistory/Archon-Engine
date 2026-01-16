@@ -1,12 +1,16 @@
 using System.IO;
 using Core.Registries;
-using Utils;
+using Newtonsoft.Json.Linq;
 
 namespace Core.Loaders
 {
     /// <summary>
-    /// Loads terrain type definitions from data files.
-    /// Terrain types are static data with no dependencies on other entities.
+    /// Loads terrain type definitions from terrain.json5.
+    /// This is the single source of truth for terrain definitions.
+    /// TerrainColorMapper (Map layer) should use the same file.
+    ///
+    /// Terrain IDs are assigned sequentially based on order in the file,
+    /// ensuring consistency between Core and Map layers.
     /// </summary>
     [LoaderMetadata("terrain", Description = "Load terrain type definitions", Priority = 10, Required = true)]
     public class TerrainLoader : ILoaderFactory
@@ -17,23 +21,23 @@ namespace Core.Loaders
         }
 
         /// <summary>
-        /// Load all terrain types from map/terrain.txt file.
+        /// Load all terrain types from map/terrain.json5 file.
         /// </summary>
         public static void LoadTerrains(Registry<TerrainData> terrainRegistry, string dataPath)
         {
-            string terrainFilePath = Path.Combine(dataPath, "map", "terrain.txt");
+            string terrainFilePath = Path.Combine(dataPath, "map", "terrain.json5");
 
             if (!File.Exists(terrainFilePath))
             {
-                ArchonLogger.LogWarning($"Terrain file not found: {terrainFilePath}", "core_data_loading");
+                ArchonLogger.LogWarning($"TerrainLoader: terrain.json5 not found at {terrainFilePath}, using defaults", "core_data_loading");
                 CreateDefaultTerrains(terrainRegistry);
                 return;
             }
 
             try
             {
-                LoadTerrainFile(terrainRegistry, terrainFilePath);
-                ArchonLogger.Log($"TerrainLoader: Loaded terrain file, {terrainRegistry.Count} terrains registered", "core_data_loading");
+                LoadTerrainJson5(terrainRegistry, terrainFilePath);
+                ArchonLogger.Log($"TerrainLoader: Loaded {terrainRegistry.Count} terrains from terrain.json5", "core_data_loading");
             }
             catch (System.Exception e)
             {
@@ -48,70 +52,120 @@ namespace Core.Loaders
             }
         }
 
-        private static void LoadTerrainFile(Registry<TerrainData> terrainRegistry, string filePath)
+        private static void LoadTerrainJson5(Registry<TerrainData> terrainRegistry, string filePath)
         {
-            var content = File.ReadAllText(filePath);
+            var json = Json5Loader.LoadJson5File(filePath);
+            var categories = json["categories"] as JObject;
 
-            // Create standard terrain types
-            // TODO: Parse actual terrain file format
-            RegisterTerrainIfNotExists(terrainRegistry, "ocean", "Ocean", 0);
-            RegisterTerrainIfNotExists(terrainRegistry, "grasslands", "Grasslands", 1);
-            RegisterTerrainIfNotExists(terrainRegistry, "hills", "Hills", 2);
-            RegisterTerrainIfNotExists(terrainRegistry, "mountains", "Mountains", 3);
-            RegisterTerrainIfNotExists(terrainRegistry, "woods", "Woods", 4);
-            RegisterTerrainIfNotExists(terrainRegistry, "forest", "Forest", 5);
-            RegisterTerrainIfNotExists(terrainRegistry, "marsh", "Marsh", 6);
-            RegisterTerrainIfNotExists(terrainRegistry, "desert", "Desert", 7);
-            RegisterTerrainIfNotExists(terrainRegistry, "coastal_desert", "Coastal Desert", 8);
-            RegisterTerrainIfNotExists(terrainRegistry, "steppes", "Steppes", 9);
-            RegisterTerrainIfNotExists(terrainRegistry, "farmlands", "Farmlands", 10);
-            RegisterTerrainIfNotExists(terrainRegistry, "drylands", "Drylands", 11);
-            RegisterTerrainIfNotExists(terrainRegistry, "highlands", "Highlands", 12);
-            RegisterTerrainIfNotExists(terrainRegistry, "arctic", "Arctic", 13);
-            RegisterTerrainIfNotExists(terrainRegistry, "glacial", "Glacial", 14);
-            RegisterTerrainIfNotExists(terrainRegistry, "tropical", "Tropical", 15);
-            RegisterTerrainIfNotExists(terrainRegistry, "jungle", "Jungle", 16);
-        }
-
-        private static void RegisterTerrainIfNotExists(Registry<TerrainData> terrainRegistry, string key, string name, byte terrainId)
-        {
-            if (!terrainRegistry.Exists(key))
+            if (categories == null)
             {
+                ArchonLogger.LogWarning("TerrainLoader: No 'categories' section found in terrain.json5", "core_data_loading");
+                return;
+            }
+
+            byte terrainId = 0;
+            foreach (var property in categories.Properties())
+            {
+                string key = property.Name;
+                var terrainObj = property.Value as JObject;
+
+                if (terrainObj == null)
+                    continue;
+
+                // Parse terrain properties
                 var terrain = new TerrainData
                 {
-                    Name = name,
-                    TerrainId = terrainId
+                    TerrainId = terrainId,
+                    Name = FormatTerrainName(key),
+                    IsWater = GetBool(terrainObj, "is_water", false),
+                    MovementCost = GetFloat(terrainObj, "movement_cost", 1.0f),
+                    DefenceBonus = GetInt(terrainObj, "defence", 0),
+                    SupplyLimit = GetInt(terrainObj, "supply_limit", 5)
                 };
+
+                // Parse color if present (for reference, mainly used by Map layer)
+                var colorArray = terrainObj["color"] as JArray;
+                if (colorArray != null && colorArray.Count >= 3)
+                {
+                    terrain.ColorR = (byte)colorArray[0].Value<int>();
+                    terrain.ColorG = (byte)colorArray[1].Value<int>();
+                    terrain.ColorB = (byte)colorArray[2].Value<int>();
+                }
+
                 terrainRegistry.Register(key, terrain);
+                terrainId++;
             }
+        }
+
+        private static string FormatTerrainName(string key)
+        {
+            // Convert snake_case to Title Case
+            // e.g., "inland_ocean" -> "Inland Ocean"
+            if (string.IsNullOrEmpty(key))
+                return key;
+
+            var words = key.Split('_');
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (words[i].Length > 0)
+                {
+                    words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
+                }
+            }
+            return string.Join(" ", words);
+        }
+
+        private static bool GetBool(JObject obj, string key, bool defaultValue)
+        {
+            var token = obj[key];
+            return token?.Value<bool>() ?? defaultValue;
+        }
+
+        private static float GetFloat(JObject obj, string key, float defaultValue)
+        {
+            var token = obj[key];
+            return token?.Value<float>() ?? defaultValue;
+        }
+
+        private static int GetInt(JObject obj, string key, int defaultValue)
+        {
+            var token = obj[key];
+            return token?.Value<int>() ?? defaultValue;
         }
 
         private static void CreateDefaultTerrains(Registry<TerrainData> terrainRegistry)
         {
+            // Default terrains matching the typical terrain.json5 order
             var defaultTerrains = new[]
             {
-                ("ocean", "Ocean", (byte)0),
-                ("grasslands", "Grasslands", (byte)1),
-                ("hills", "Hills", (byte)2),
-                ("mountains", "Mountains", (byte)3),
-                ("woods", "Woods", (byte)4),
-                ("forest", "Forest", (byte)5),
-                ("marsh", "Marsh", (byte)6),
-                ("desert", "Desert", (byte)7),
-                ("steppes", "Steppes", (byte)9),
-                ("farmlands", "Farmlands", (byte)10),
-                ("arctic", "Arctic", (byte)13),
-                ("jungle", "Jungle", (byte)16)
+                ("ocean", "Ocean", true, 1.0f, 0, 0),
+                ("inland_ocean", "Inland Ocean", true, 1.0f, 0, 0),
+                ("grasslands", "Grasslands", false, 1.0f, 0, 8),
+                ("plains", "Plains", false, 1.0f, 0, 8),
+                ("hills", "Hills", false, 1.4f, 1, 5),
+                ("highlands", "Highlands", false, 1.3f, 1, 4),
+                ("mountain", "Mountain", false, 1.5f, 2, 3),
+                ("desert", "Desert", false, 1.1f, 0, 3),
+                ("forest", "Forest", false, 1.25f, 1, 4),
+                ("jungle", "Jungle", false, 1.4f, 1, 3),
+                ("marsh", "Marsh", false, 1.3f, 0, 3),
+                ("snow", "Snow", false, 1.6f, 2, 2),
             };
 
-            foreach (var (key, name, terrainId) in defaultTerrains)
+            byte id = 0;
+            foreach (var (key, name, isWater, moveCost, defence, supply) in defaultTerrains)
             {
                 var terrain = new TerrainData
                 {
+                    TerrainId = id,
                     Name = name,
-                    TerrainId = terrainId
+                    IsWater = isWater,
+                    MovementCost = moveCost,
+                    DefenceBonus = defence,
+                    SupplyLimit = supply
                 };
                 terrainRegistry.Register(key, terrain);
+                id++;
             }
 
             ArchonLogger.Log($"TerrainLoader: Created {defaultTerrains.Length} default terrains", "core_data_loading");

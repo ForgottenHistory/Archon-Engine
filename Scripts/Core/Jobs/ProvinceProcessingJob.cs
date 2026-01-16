@@ -54,13 +54,13 @@ namespace Core.Jobs
             // Pack boolean flags into Flags byte
             state.PackFlags(raw.isCity, raw.hre);
 
-            // Set default terrain (will be resolved in ReferenceResolver using water province data)
-            // Use terrain ID 1 (likely grassland/plains) instead of 0 (likely ocean)
+            // Set default terrain - will be overwritten by ProvinceTerrainAnalyzer (Map layer)
+            // Use terrain ID 1 (grasslands) instead of 0 (ocean)
             state.Terrain = 1;
 
             // Note: extraCost from raw data is not stored in ProvinceInitialState
             // It's part of the detailed province data, not the hot simulation state
-            // Terrain type is resolved in Phase 3 (ReferenceResolver) using WaterProvinceLoader data
+            // Terrain type is set by ProvinceTerrainAnalyzer based on terrain.bmp analysis
 
             // Calculate development
             state.CalculateDevelopment();

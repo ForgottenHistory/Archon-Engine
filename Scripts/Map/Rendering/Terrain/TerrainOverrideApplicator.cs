@@ -14,9 +14,11 @@ namespace Map.Rendering.Terrain
     public class TerrainOverrideApplicator
     {
         private bool logProgress;
+        private string dataDirectory;
 
-        public TerrainOverrideApplicator(bool logProgress = true)
+        public TerrainOverrideApplicator(string dataDirectory = null, bool logProgress = true)
         {
+            this.dataDirectory = dataDirectory ?? System.IO.Path.Combine(Application.dataPath, "Data");
             this.logProgress = logProgress;
         }
 
@@ -46,7 +48,7 @@ namespace Map.Rendering.Terrain
                 }
 
                 // Load terrain.json5 for overrides
-                string terrainJsonPath = System.IO.Path.Combine(Application.dataPath, "Data", "map", "terrain.json5");
+                string terrainJsonPath = System.IO.Path.Combine(dataDirectory, "map", "terrain.json5");
 
                 if (!System.IO.File.Exists(terrainJsonPath))
                 {
@@ -68,7 +70,7 @@ namespace Map.Rendering.Terrain
 
                 if (logProgress)
                 {
-                    ArchonLogger.Log($"TerrainOverrideApplicator: Loaded {categoryToIndex.Count} terrain type mappings from terrain_rgb.json5", "map_rendering");
+                    ArchonLogger.Log($"TerrainOverrideApplicator: Loaded {categoryToIndex.Count} category mappings from terrain.json5", "map_rendering");
                 }
 
                 // Parse "categories" section for terrain_override arrays
@@ -129,8 +131,8 @@ namespace Map.Rendering.Terrain
         }
 
         /// <summary>
-        /// Build terrain type name → index mapping from terrain_rgb.json5
-        /// Returns dictionary: typeName → terrainTypeIndex
+        /// Build category name → index mapping from terrain.json5 categories section
+        /// Returns dictionary: categoryName → terrainTypeIndex (based on ORDER in categories)
         /// </summary>
         private Dictionary<string, uint> BuildCategoryToIndexMapping()
         {
@@ -138,32 +140,30 @@ namespace Map.Rendering.Terrain
 
             try
             {
-                string terrainRgbPath = System.IO.Path.Combine(Application.dataPath, "Data", "map", "terrain_rgb.json5");
-                if (!System.IO.File.Exists(terrainRgbPath))
+                string terrainPath = System.IO.Path.Combine(dataDirectory, "map", "terrain.json5");
+                if (!System.IO.File.Exists(terrainPath))
                 {
-                    ArchonLogger.LogError($"TerrainOverrideApplicator: terrain_rgb.json5 not found at {terrainRgbPath}", "map_rendering");
+                    ArchonLogger.LogError($"TerrainOverrideApplicator: terrain.json5 not found at {terrainPath}", "map_rendering");
                     return null;
                 }
 
-                JObject terrainRgbData = Json5Loader.LoadJson5File(terrainRgbPath);
+                JObject terrainData = Json5Loader.LoadJson5File(terrainPath);
+                JObject categories = terrainData["categories"] as JObject;
 
-                // Build type name → index mapping (index = order in terrain_rgb.json5)
-                uint terrainTypeIndex = 0;
-                foreach (var terrainProperty in terrainRgbData.Properties())
+                if (categories == null)
                 {
-                    if (terrainProperty.Value is JObject terrainObj)
-                    {
-                        string typeName = terrainObj["type"]?.ToString();
-                        if (!string.IsNullOrEmpty(typeName))
-                        {
-                            // Map each terrain type name to its index (first occurrence wins)
-                            if (!categoryToIndex.ContainsKey(typeName))
-                            {
-                                categoryToIndex[typeName] = terrainTypeIndex;
-                            }
-                            terrainTypeIndex++;
-                        }
-                    }
+                    ArchonLogger.LogError("TerrainOverrideApplicator: No 'categories' section in terrain.json5", "map_rendering");
+                    return null;
+                }
+
+                // Build category name → index mapping (index = order in categories section)
+                // This matches exactly how TerrainRGBLookup assigns indices
+                uint terrainTypeIndex = 0;
+                foreach (var categoryProperty in categories.Properties())
+                {
+                    string categoryName = categoryProperty.Name;
+                    categoryToIndex[categoryName] = terrainTypeIndex;
+                    terrainTypeIndex++;
                 }
 
                 return categoryToIndex;

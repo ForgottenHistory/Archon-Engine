@@ -1,199 +1,180 @@
 using UnityEngine;
+using Unity.Collections;
 using Map.Rendering;
-using Map.Loading.Data;
+using Map.Rendering.Terrain;
 using Utils;
 
 namespace Map.Loading.Bitmaps
 {
     /// <summary>
-    /// Specialized loader for terrain.bmp files
-    /// Handles 8-bit indexed terrain bitmaps with terrain color mappings
+    /// Loads terrain.png (or terrain.bmp) and populates the terrain texture.
+    /// Uses ImageParser for unified BMP/PNG support.
+    /// Terrain colors from the image are used directly - TerrainRGBLookup converts to indices later.
     /// </summary>
-    public class TerrainBitmapLoader : BitmapTextureLoader
+    public class TerrainImageLoader
     {
-        protected override string GetBitmapFileName() => "terrain.bmp";
-        protected override string GetLoaderName() => "TerrainBitmapLoader";
+        private MapTextureManager textureManager;
+        private bool logProgress;
 
-        protected override void PopulateTexture(BMPLoadResult terrainData)
+        public void Initialize(MapTextureManager textures, bool enableLogging = true)
+        {
+            textureManager = textures;
+            logProgress = enableLogging;
+        }
+
+        /// <summary>
+        /// Load terrain image and populate terrain texture.
+        /// Tries terrain.png first, falls back to terrain.bmp.
+        /// </summary>
+        public void LoadAndPopulate(string mapDirectory)
         {
             if (textureManager == null || textureManager.ProvinceTerrainTexture == null)
             {
-                ArchonLogger.LogError("TerrainBitmapLoader: Cannot populate - texture manager or terrain texture not available", "map_initialization");
+                ArchonLogger.LogError("TerrainImageLoader: Texture manager or terrain texture not available", "map_initialization");
                 return;
             }
 
+            // Try PNG first, then BMP
+            string pngPath = System.IO.Path.Combine(mapDirectory, "terrain.png");
+            string bmpPath = System.IO.Path.Combine(mapDirectory, "terrain.bmp");
+
+            string imagePath = null;
+            if (System.IO.File.Exists(pngPath))
+            {
+                imagePath = pngPath;
+            }
+            else if (System.IO.File.Exists(bmpPath))
+            {
+                imagePath = bmpPath;
+            }
+            else
+            {
+                ArchonLogger.LogWarning($"TerrainImageLoader: No terrain image found (tried {pngPath} and {bmpPath})", "map_initialization");
+                return;
+            }
+
+            if (logProgress)
+            {
+                ArchonLogger.Log($"TerrainImageLoader: Loading {imagePath}", "map_initialization");
+            }
+
+            // Read file into NativeArray
+            byte[] fileBytes = System.IO.File.ReadAllBytes(imagePath);
+            var fileData = new NativeArray<byte>(fileBytes, Allocator.Temp);
+
+            try
+            {
+                // Parse image (auto-detects BMP vs PNG)
+                var pixelData = ImageParser.Parse(fileData, Allocator.Temp);
+
+                if (!pixelData.IsSuccess)
+                {
+                    ArchonLogger.LogError($"TerrainImageLoader: Failed to parse {imagePath}", "map_initialization");
+                    return;
+                }
+
+                if (logProgress)
+                {
+                    ArchonLogger.Log($"TerrainImageLoader: Parsed {pixelData.Header.Width}x{pixelData.Header.Height} image, format={pixelData.Format}", "map_initialization");
+                }
+
+                // Populate texture
+                PopulateTexture(pixelData);
+
+                // Dispose pixel data
+                pixelData.Dispose();
+            }
+            finally
+            {
+                fileData.Dispose();
+            }
+
+            if (logProgress)
+            {
+                ArchonLogger.Log("TerrainImageLoader: Terrain texture populated", "map_initialization");
+            }
+        }
+
+        private void PopulateTexture(ImageParser.ImagePixelData pixelData)
+        {
             var terrainTexture = textureManager.ProvinceTerrainTexture;
             int width = terrainTexture.width;
             int height = terrainTexture.height;
 
-            // Create pixel array for terrain texture
             var pixels = new Color32[width * height];
-            var pixelData = terrainData.GetPixelData();
+            int successCount = 0;
+            int failCount = 0;
 
-            if (logProgress)
+            // Track unique colors for debugging
+            var uniqueColors = new System.Collections.Generic.HashSet<int>();
+
+            for (int y = 0; y < height && y < pixelData.Header.Height; y++)
             {
-                ArchonLogger.Log($"TerrainBitmapLoader: Processing {terrainData.Width}x{terrainData.Height}, {terrainData.BitsPerPixel}bpp", "map_initialization");
-            }
-
-            int successfulReads = 0;
-            int failedReads = 0;
-
-            // Handle indexed color format (8-bit) vs direct RGB
-            if (terrainData.BitsPerPixel == 8)
-            {
-                // 8-bit indexed color - use REAL palette from BMP file
-                var palette = terrainData.Palette;
-
-                if (palette != null && palette.Length > 0)
+                for (int x = 0; x < width && x < pixelData.Header.Width; x++)
                 {
-                    if (logProgress)
-                    {
-                        ArchonLogger.Log($"TerrainBitmapLoader: Using BMP palette with {palette.Length} colors", "map_initialization");
+                    int textureIndex = y * width + x;
 
-                        // Print entire palette to compare with terrain_rgb.json5
-                        ArchonLogger.Log($"TerrainBitmapLoader: Extracted palette ({palette.Length} colors):", "map_initialization");
-                        for (int i = 0; i < palette.Length; i++)
-                        {
-                            ArchonLogger.Log($"  Palette[{i}] = RGB({palette[i].r},{palette[i].g},{palette[i].b})", "map_initialization");
-                        }
+                    if (ImageParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
+                    {
+                        pixels[textureIndex] = new Color32(r, g, b, 255);
+                        successCount++;
+
+                        // Track unique colors
+                        int packed = (r << 16) | (g << 8) | b;
+                        uniqueColors.Add(packed);
                     }
-
-                    // Track indices found for province 357 debugging
-                    System.Collections.Generic.Dictionary<byte, int> province357Indices = new System.Collections.Generic.Dictionary<byte, int>();
-
-                    // Read palette indices and convert to RGB using REAL palette colors
-                    for (int y = 0; y < height && y < terrainData.Height; y++)
+                    else
                     {
-                        for (int x = 0; x < width && x < terrainData.Width; x++)
-                        {
-                            int textureIndex = y * width + x;
-
-                            // Read palette index from bitmap
-                            if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte index, out byte _, out byte __))
-                            {
-                                // Log specific coordinate for province 357 debugging
-                                if (logProgress && x == 3162 && y == 865)
-                                {
-                                    ArchonLogger.Log($"TerrainBitmapLoader: Pixel at (3162,865) - Read index={index} → RGB({palette[index].r},{palette[index].g},{palette[index].b})", "map_initialization");
-                                }
-
-                                // Use REAL palette RGB color from BMP file
-                                if (index < palette.Length)
-                                {
-                                    pixels[textureIndex] = palette[index];
-
-                                    // Track indices for province 357 (check provinces.bmp at same coordinate)
-                                    // We'll log all unique indices found to see what's being read
-                                    if (!province357Indices.ContainsKey(index))
-                                    {
-                                        province357Indices[index] = 0;
-                                    }
-                                    province357Indices[index]++;
-                                }
-                                else
-                                {
-                                    pixels[textureIndex] = new Color32(0, 0, 0, 255); // Black for out-of-range
-                                }
-                                successfulReads++;
-                            }
-                            else
-                            {
-                                pixels[textureIndex] = new Color32(0, 0, 0, 255);
-                                failedReads++;
-                            }
-                        }
-                    }
-
-                    // Log all indices found in terrain.bmp
-                    if (logProgress)
-                    {
-                        ArchonLogger.Log($"TerrainBitmapLoader: Found {province357Indices.Count} unique terrain palette indices across entire map:", "map_initialization");
-                        foreach (var kvp in province357Indices)
-                        {
-                            byte idx = kvp.Key;
-                            int count = kvp.Value;
-                            ArchonLogger.Log($"  Index[{idx}] → RGB({palette[idx].r},{palette[idx].g},{palette[idx].b}) - {count} pixels", "map_initialization");
-                        }
-                    }
-                }
-                else
-                {
-                    // Fallback to TerrainColorMapper if no palette available
-                    ArchonLogger.LogWarning("TerrainBitmapLoader: No palette found in 8-bit BMP, using TerrainColorMapper fallback", "map_initialization");
-
-                    for (int y = 0; y < height && y < terrainData.Height; y++)
-                    {
-                        for (int x = 0; x < width && x < terrainData.Width; x++)
-                        {
-                            int textureIndex = y * width + x;
-
-                            if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte index, out byte _, out byte __))
-                            {
-                                pixels[textureIndex] = TerrainColorMapper.GetTerrainColor(index);
-                                successfulReads++;
-                            }
-                            else
-                            {
-                                pixels[textureIndex] = TerrainColorMapper.GetDefaultTerrainColor();
-                                failedReads++;
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                // Direct RGB format (24-bit or 32-bit)
-                for (int y = 0; y < height && y < terrainData.Height; y++)
-                {
-                    for (int x = 0; x < width && x < terrainData.Width; x++)
-                    {
-                        int textureIndex = y * width + x;
-
-                        if (BMPParser.TryGetPixelRGB(pixelData, x, y, out byte r, out byte g, out byte b))
-                        {
-                            pixels[textureIndex] = new Color32(r, g, b, 255);
-                            successfulReads++;
-                        }
-                        else
-                        {
-                            pixels[textureIndex] = TerrainColorMapper.GetDefaultTerrainColor();
-                            failedReads++;
-                        }
+                        pixels[textureIndex] = new Color32(86, 124, 27, 255); // Default grasslands
+                        failCount++;
                     }
                 }
             }
 
             if (logProgress)
             {
-                ArchonLogger.Log($"TerrainBitmapLoader: Read stats - Success: {successfulReads}, Failed: {failedReads}", "map_initialization");
+                ArchonLogger.Log($"TerrainImageLoader: Read {successCount} pixels, {failCount} failed, {uniqueColors.Count} unique colors", "map_initialization");
 
-                // Sample some terrain colors to verify
-                Color32 sample1 = pixels[width * height / 4];
-                Color32 sample2 = pixels[width * height / 2];
-                Color32 sample3 = pixels[width * height * 3 / 4];
-                ArchonLogger.Log($"TerrainBitmapLoader: Texture samples - [{sample1.r},{sample1.g},{sample1.b}] [{sample2.r},{sample2.g},{sample2.b}] [{sample3.r},{sample3.g},{sample3.b}]", "map_initialization");
+                // Log unique colors found
+                ArchonLogger.Log($"TerrainImageLoader: Unique terrain colors found:", "map_initialization");
+                foreach (int packed in uniqueColors)
+                {
+                    byte r = (byte)((packed >> 16) & 0xFF);
+                    byte g = (byte)((packed >> 8) & 0xFF);
+                    byte b = (byte)(packed & 0xFF);
+                    ArchonLogger.Log($"  RGB({r},{g},{b})", "map_initialization");
+                }
             }
 
-            // Apply terrain colors to texture
+            // Apply to texture
             terrainTexture.SetPixels32(pixels);
-            ApplyTextureAndSync(terrainTexture);
+            terrainTexture.Apply(false);
+            GL.Flush();
 
-            // Verify the texture stored the pixel correctly by reading it back
-            if (logProgress)
-            {
-                Color32 verifyPixel = terrainTexture.GetPixel(3162, 865);
-                ArchonLogger.Log($"TerrainBitmapLoader: VERIFY texture at (3162,865) after upload = RGB({verifyPixel.r},{verifyPixel.g},{verifyPixel.b})", "map_initialization");
-            }
-
-            // Generate terrain type texture (R8, terrain indices) from terrain colors
-            // Must happen AFTER terrain.bmp is loaded into ProvinceTerrainTexture
-            if (logProgress)
-            {
-                ArchonLogger.Log("TerrainBitmapLoader: Generating terrain type texture from loaded terrain colors", "map_initialization");
-            }
-
+            // Generate terrain type texture from colors
             textureManager.GenerateTerrainTypeTexture();
+
+            // Rebind textures to materials
+            RebindTextures();
+        }
+
+        private void RebindTextures()
+        {
+            var mapRenderer = Object.FindFirstObjectByType<Rendering.MapRenderer>();
+            if (mapRenderer != null)
+            {
+                var material = mapRenderer.GetMaterial();
+                if (material != null)
+                {
+                    textureManager.BindTexturesToMaterial(material);
+                }
+            }
+
+            var coordinator = Object.FindFirstObjectByType<Rendering.MapRenderingCoordinator>();
+            if (coordinator != null && coordinator.MapMaterial != null)
+            {
+                textureManager.BindTexturesToMaterial(coordinator.MapMaterial);
+            }
         }
     }
 }

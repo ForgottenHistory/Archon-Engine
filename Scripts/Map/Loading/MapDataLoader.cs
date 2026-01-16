@@ -24,7 +24,7 @@ namespace Map.Loading
         private MapTextureManager textureManager;
 
         // Specialized bitmap loaders (replaces manual loading code)
-        private TerrainBitmapLoader terrainLoader;
+        private TerrainImageLoader terrainLoader;
         private HeightmapBitmapLoader heightmapLoader;
         private NormalMapBitmapLoader normalMapLoader;
 
@@ -50,7 +50,7 @@ namespace Map.Loading
             }
 
             // Initialize specialized bitmap loaders
-            terrainLoader = new TerrainBitmapLoader();
+            terrainLoader = new TerrainImageLoader();
             terrainLoader.Initialize(textures, logLoadingProgress);
 
             heightmapLoader = new HeightmapBitmapLoader();
@@ -128,12 +128,12 @@ namespace Map.Loading
                     ArchonLogger.Log($"MapDataLoader: Successfully loaded province bitmap with {provinceResult.BMPData.Width}x{provinceResult.BMPData.Height} pixels", "map_initialization");
                 }
 
-                // Load supplementary bitmaps in parallel using specialized loaders
-                await Task.WhenAll(
-                    terrainLoader.LoadAndPopulateAsync(bmpPath),
-                    heightmapLoader.LoadAndPopulateAsync(bmpPath)
-                    // Note: Normal map is now generated from heightmap, not loaded from file
-                );
+                // Load terrain image (PNG or BMP)
+                string mapDirectory = System.IO.Path.GetDirectoryName(bmpPath);
+                terrainLoader.LoadAndPopulate(mapDirectory);
+
+                // Load heightmap
+                await heightmapLoader.LoadAndPopulateAsync(bmpPath);
 
                 // NOTE: Terrain analysis moved to after ProvinceIDTexture population
                 // See AnalyzeProvinceTerrainAfterMapInit() - called by MapSystemCoordinator
@@ -204,12 +204,12 @@ namespace Map.Loading
                     }
                 }
 
-                // Load supplementary bitmaps in parallel using specialized loaders
-                await Task.WhenAll(
-                    terrainLoader.LoadAndPopulateAsync(bmpPath),
-                    heightmapLoader.LoadAndPopulateAsync(bmpPath)
-                    // Note: Normal map is now generated from heightmap, not loaded from file
-                );
+                // Load terrain image (PNG or BMP)
+                string mapDirectory = System.IO.Path.GetDirectoryName(bmpPath);
+                terrainLoader.LoadAndPopulate(mapDirectory);
+
+                // Load heightmap
+                await heightmapLoader.LoadAndPopulateAsync(bmpPath);
 
                 // Generate normal map from heightmap (GPU compute shader)
                 textureManager.GenerateNormalMapFromHeightmap(

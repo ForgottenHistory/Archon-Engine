@@ -160,8 +160,6 @@
 
 ### Loader Implementations
 - **Core.Loaders.TerrainLoader** - [LoaderMetadata] Load terrain definitions (priority 10, required)
-- **Core.Loaders.WaterProvinceLoaderFactory** - [LoaderMetadata] Load water province definitions (priority 20)
-- **Core.Loaders.WaterProvinceLoader** - Static utilities for water/terrain type queries
 
 ### Other Loaders (not yet using factory pattern)
 - **Core.Loaders.ScenarioLoader** - Load scenario data (provinces, countries, initial state)

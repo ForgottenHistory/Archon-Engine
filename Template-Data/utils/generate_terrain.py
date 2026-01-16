@@ -4,15 +4,16 @@ Generate terrain map for Archon Engine.
 
 Creates:
 - terrain.bmp: RGB image where each hexagon province = one terrain type
-- terrain_rgb.json5: Terrain type definitions with RGB colors
 
-Terrain is assigned per-hexagon based on heightmap, matching province boundaries.
-RGB colors must match terrain_rgb.json5 exactly for the shader to work.
+Reads terrain definitions from terrain.json5 (single source of truth).
+RGB colors must match terrain.json5 exactly for the shader to work.
 """
 
 import math
 import argparse
 import random
+import re
+import json
 from pathlib import Path
 
 try:
@@ -22,25 +23,69 @@ except ImportError:
     exit(1)
 
 
-# Terrain type definitions matching terrain_rgb.json5
-# Format: name -> (index, rgb, type_category)
-TERRAIN_TYPES = {
-    "grasslands":         (0,  (86, 124, 27),   "grasslands"),
-    "hills":              (1,  (0, 86, 6),      "hills"),
-    "desert_mountain":    (2,  (112, 74, 31),   "mountain"),
-    "desert":             (3,  (206, 169, 99),  "desert"),
-    "plains":             (4,  (200, 214, 107), "grasslands"),
-    "mountain":           (5,  (65, 42, 17),    "mountain"),
-    "marsh":              (6,  (75, 147, 174),  "marsh"),
-    "forest":             (7,  (42, 55, 22),    "forest"),
-    "ocean":              (8,  (8, 31, 130),    "ocean"),
-    "snow":               (9,  (255, 255, 255), "mountain"),
-    "inland_ocean":       (10, (55, 90, 220),   "inland_ocean"),
-    "coastal_desert":     (11, (203, 191, 103), "coastal_desert"),
-    "savannah":           (12, (180, 160, 80),  "savannah"),
-    "highlands":          (13, (23, 23, 23),    "highlands"),
-    "jungle":             (14, (254, 254, 254), "jungle"),
-}
+# Terrain colors loaded from terrain.json5
+TERRAIN_COLORS = {}  # name -> (r, g, b)
+
+
+def load_terrain_colors(terrain_json5_path: Path) -> dict:
+    """
+    Load terrain colors from terrain.json5 (single source of truth).
+    Returns dict of terrain_name -> (r, g, b)
+    """
+    if not terrain_json5_path.exists():
+        print(f"ERROR: terrain.json5 not found at {terrain_json5_path}")
+        print("Using default colors...")
+        return get_default_terrain_colors()
+
+    content = terrain_json5_path.read_text(encoding='utf-8')
+
+    # Strip comments (// style)
+    content = re.sub(r'//.*$', '', content, flags=re.MULTILINE)
+
+    # Convert JSON5 unquoted keys to quoted keys for standard JSON parsing
+    # Match word characters followed by colon (but not inside strings)
+    content = re.sub(r'(\s)(\w+)(\s*:)', r'\1"\2"\3', content)
+
+    # Remove trailing commas before } or ]
+    content = re.sub(r',(\s*[}\]])', r'\1', content)
+
+    try:
+        data = json.loads(content)
+    except json.JSONDecodeError as e:
+        print(f"ERROR: Failed to parse terrain.json5: {e}")
+        print("Using default colors...")
+        return get_default_terrain_colors()
+
+    categories = data.get('categories', {})
+    colors = {}
+
+    for name, props in categories.items():
+        if 'color' in props and len(props['color']) >= 3:
+            colors[name] = tuple(props['color'][:3])
+
+    print(f"Loaded {len(colors)} terrain colors from terrain.json5")
+    return colors
+
+
+def get_default_terrain_colors() -> dict:
+    """Fallback default colors if terrain.json5 not found."""
+    return {
+        "ocean":          (8, 31, 130),
+        "inland_ocean":   (55, 90, 220),
+        "grasslands":     (86, 124, 27),
+        "plains":         (200, 214, 107),
+        "hills":          (0, 86, 6),
+        "highlands":      (23, 23, 23),
+        "mountain":       (65, 42, 17),
+        "desert_mountain": (112, 74, 31),
+        "snow":           (255, 255, 255),
+        "desert":         (206, 169, 99),
+        "coastal_desert": (203, 191, 103),
+        "savannah":       (180, 160, 80),
+        "forest":         (42, 55, 22),
+        "jungle":         (254, 254, 254),
+        "marsh":          (75, 147, 174),
+    }
 
 
 class PerlinNoise:
@@ -87,10 +132,16 @@ class PerlinNoise:
 
 
 def get_terrain_rgb(terrain_name: str) -> tuple[int, int, int]:
-    """Get RGB color for a terrain type."""
-    if terrain_name in TERRAIN_TYPES:
-        return TERRAIN_TYPES[terrain_name][1]
-    return TERRAIN_TYPES["grasslands"][1]
+    """Get RGB color for a terrain type from loaded colors."""
+    global TERRAIN_COLORS
+    if terrain_name in TERRAIN_COLORS:
+        return TERRAIN_COLORS[terrain_name]
+    # Fallback to grasslands or first available
+    if "grasslands" in TERRAIN_COLORS:
+        return TERRAIN_COLORS["grasslands"]
+    if TERRAIN_COLORS:
+        return next(iter(TERRAIN_COLORS.values()))
+    return (86, 124, 27)  # Default grasslands
 
 
 def determine_terrain_for_hex(
@@ -295,9 +346,9 @@ def generate_terrain_map(
             terrain_counts[terrain_name] = terrain_counts.get(terrain_name, 0) + 1
             hex_count += 1
 
-    # Save terrain map
-    terrain_path = output_dir / "terrain.bmp"
-    terrain_img.save(terrain_path, "BMP")
+    # Save terrain map as PNG (simple RGB, no palette confusion)
+    terrain_path = output_dir / "terrain.png"
+    terrain_img.save(terrain_path, "PNG")
     print(f"Saved: {terrain_path}")
 
     # Print distribution
@@ -307,33 +358,11 @@ def generate_terrain_map(
         print(f"  {terrain}: {count} ({pct:.1f}%)")
 
 
-def generate_terrain_json5(output_dir: Path) -> None:
-    """Generate terrain_rgb.json5 with terrain definitions."""
-    json5_path = output_dir / "terrain_rgb.json5"
-
-    lines = [
-        "// RGB → Terrain Type Mapping",
-        "// These RGB colors are extracted from terrain.bmp's palette",
-        "// Paint terrain.bmp with these exact RGB values in any editor",
-        "",
-        "{"
-    ]
-
-    entries = []
-    for name, (idx, rgb, type_cat) in TERRAIN_TYPES.items():
-        entries.append(f'  {name}: {{ type: "{type_cat}", color: [{rgb[0]}, {rgb[1]}, {rgb[2]}] }}')
-
-    lines.append(",\n".join(entries))
-    lines.append("}")
-
-    with open(json5_path, 'w', encoding='utf-8') as f:
-        f.write("\n".join(lines))
-        f.write("\n")
-
-    print(f"Saved: {json5_path}")
 
 
 def main():
+    global TERRAIN_COLORS
+
     parser = argparse.ArgumentParser(
         description='Generate terrain map for Archon Engine'
     )
@@ -363,6 +392,10 @@ def main():
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    # Load terrain colors from terrain.json5 (single source of truth)
+    terrain_json5_path = output_dir / "terrain.json5"
+    TERRAIN_COLORS = load_terrain_colors(terrain_json5_path)
+
     heightmap_path = Path(args.heightmap)
     if not heightmap_path.is_absolute():
         heightmap_path = output_dir / heightmap_path
@@ -379,8 +412,6 @@ def main():
         seed=args.seed,
         sea_level=args.sea_level
     )
-
-    generate_terrain_json5(output_dir)
 
     print("\nDone!")
 

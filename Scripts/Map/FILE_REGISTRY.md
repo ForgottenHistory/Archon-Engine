@@ -147,7 +147,7 @@
 - **Map.Loading.Bitmaps.BitmapTextureLoader** - Base bitmap texture loading utilities
 - **Map.Loading.Bitmaps.HeightmapBitmapLoader** - Load heightmap bitmap (R8 grayscale)
 - **Map.Loading.Bitmaps.NormalMapBitmapLoader** - Load normal map bitmap (RGB24)
-- **Map.Loading.Bitmaps.TerrainBitmapLoader** - Load terrain bitmap
+- **Map.Loading.Bitmaps.TerrainImageLoader** - Load terrain image (PNG or BMP), uses ImageParser
 
 ### Loading/Data/
 - **Map.Loading.Data.TerrainColorMapper** - Map terrain colors to terrain types

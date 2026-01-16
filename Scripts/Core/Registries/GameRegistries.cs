@@ -68,6 +68,17 @@ namespace Core.Registries
     {
         public string Name { get; set; }
         public byte TerrainId { get; set; }
+
+        // Terrain properties (loaded from terrain.json5)
+        public bool IsWater { get; set; }
+        public float MovementCost { get; set; } = 1.0f;
+        public int DefenceBonus { get; set; }
+        public int SupplyLimit { get; set; } = 5;
+
+        // Color (from terrain.json5, for Map layer reference)
+        public byte ColorR { get; set; }
+        public byte ColorG { get; set; }
+        public byte ColorB { get; set; }
     }
 
     public class BuildingData

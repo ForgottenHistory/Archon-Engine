@@ -6,7 +6,7 @@
   version: 1,
 
   cost: {
-    gold: 10
+    gold: 20
   },
 
   maintenance: {

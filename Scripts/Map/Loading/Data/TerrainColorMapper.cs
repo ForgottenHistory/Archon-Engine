@@ -1,122 +1,114 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
+using Core.Loaders;
+using Newtonsoft.Json.Linq;
 using Utils;
 
 namespace Map.Loading.Data
 {
     /// <summary>
-    /// Centralized terrain index to color mapping for indexed terrain bitmaps
-    /// Loads terrain colors from terrain_rgb.json5 at runtime
-    /// Maps terrain names to indices and RGB colors
+    /// Centralized terrain index to color mapping for indexed terrain bitmaps.
+    /// Loads terrain colors from terrain.json5 at runtime.
+    /// Uses same JSON parsing as TerrainLoader to guarantee identical index assignment.
+    /// Maps: terrain name ↔ index ↔ RGB color
     /// </summary>
     public static class TerrainColorMapper
     {
-        private static Dictionary<byte, Color32> terrainColors;
-        private static Dictionary<int, byte> colorToIndex;  // RGB packed -> index
-        private static Color32 defaultTerrainColor = new Color32(86, 124, 27, 255); // grasslands
+        private static Dictionary<byte, Color32> terrainColors;      // index → color
+        private static Dictionary<int, byte> colorToIndex;           // RGB packed → index
+        private static Dictionary<string, byte> nameToIndex;         // name → index
+        private static Dictionary<byte, string> indexToName;         // index → name
+        private static Color32 defaultTerrainColor = new Color32(86, 124, 27, 255);
         private static bool isInitialized = false;
 
         /// <summary>
-        /// Initialize terrain colors from terrain_rgb.json5 file
-        /// Must be called before using any terrain color lookups
+        /// Initialize terrain colors from terrain.json5 file.
+        /// Uses Json5Loader (same as TerrainLoader) to guarantee identical iteration order.
         /// </summary>
         public static void Initialize(string dataDirectory)
         {
             terrainColors = new Dictionary<byte, Color32>();
             colorToIndex = new Dictionary<int, byte>();
+            nameToIndex = new Dictionary<string, byte>();
+            indexToName = new Dictionary<byte, string>();
 
-            string terrainRgbPath = Path.Combine(dataDirectory, "map", "terrain_rgb.json5");
+            string terrainPath = Path.Combine(dataDirectory, "map", "terrain.json5");
 
-            if (!File.Exists(terrainRgbPath))
+            if (!File.Exists(terrainPath))
             {
-                ArchonLogger.LogWarning($"TerrainColorMapper: terrain_rgb.json5 not found at {terrainRgbPath}, using defaults", "map_initialization");
-                LoadDefaultColors();
+                ArchonLogger.LogWarning($"TerrainColorMapper: terrain.json5 not found at {terrainPath}", "map_initialization");
                 isInitialized = true;
                 return;
             }
 
             try
             {
-                string json5Content = File.ReadAllText(terrainRgbPath);
-                ParseTerrainRgbJson5(json5Content);
-                ArchonLogger.Log($"TerrainColorMapper: Loaded {terrainColors.Count} terrain colors from {terrainRgbPath}", "map_initialization");
+                LoadTerrainJson5(terrainPath);
+                ArchonLogger.Log($"TerrainColorMapper: Loaded {terrainColors.Count} terrain colors from terrain.json5", "map_initialization");
             }
             catch (System.Exception e)
             {
-                ArchonLogger.LogError($"TerrainColorMapper: Failed to parse terrain_rgb.json5: {e.Message}", "map_initialization");
-                LoadDefaultColors();
+                ArchonLogger.LogError($"TerrainColorMapper: Failed to parse terrain.json5: {e.Message}", "map_initialization");
             }
 
             isInitialized = true;
         }
 
         /// <summary>
-        /// Parse terrain_rgb.json5 content and populate color mappings
-        /// Simple regex-based parser for the specific JSON5 format
+        /// Parse terrain.json5 using Json5Loader - identical to TerrainLoader.
+        /// JObject.Properties() preserves JSON key order, ensuring consistent index assignment.
         /// </summary>
-        private static void ParseTerrainRgbJson5(string content)
+        private static void LoadTerrainJson5(string filePath)
         {
-            // Match pattern: name: { type: "...", color: [r, g, b] }
-            var regex = new Regex(@"(\w+):\s*\{\s*type:\s*""[^""]*"",\s*color:\s*\[(\d+),\s*(\d+),\s*(\d+)\]\s*\}");
-            var matches = regex.Matches(content);
+            var json = Json5Loader.LoadJson5File(filePath);
+            var categories = json["categories"] as JObject;
 
-            byte index = 0;
-            foreach (Match match in matches)
+            if (categories == null)
             {
-                string name = match.Groups[1].Value;
-                byte r = byte.Parse(match.Groups[2].Value);
-                byte g = byte.Parse(match.Groups[3].Value);
-                byte b = byte.Parse(match.Groups[4].Value);
-
-                Color32 color = new Color32(r, g, b, 255);
-                terrainColors[index] = color;
-
-                // Build reverse lookup
-                int packedColor = (r << 16) | (g << 8) | b;
-                colorToIndex[packedColor] = index;
-
-                index++;
+                ArchonLogger.LogWarning("TerrainColorMapper: No 'categories' section found in terrain.json5", "map_initialization");
+                return;
             }
 
-            // Set default to first terrain (grasslands)
+            byte terrainId = 0;
+            foreach (var property in categories.Properties())
+            {
+                string key = property.Name;
+                var terrainObj = property.Value as JObject;
+
+                if (terrainObj == null)
+                    continue;
+
+                // Parse color array
+                var colorArray = terrainObj["color"] as JArray;
+                if (colorArray == null || colorArray.Count < 3)
+                {
+                    ArchonLogger.LogWarning($"TerrainColorMapper: No color defined for terrain '{key}'", "map_initialization");
+                    terrainId++;
+                    continue;
+                }
+
+                byte r = (byte)colorArray[0].Value<int>();
+                byte g = (byte)colorArray[1].Value<int>();
+                byte b = (byte)colorArray[2].Value<int>();
+
+                Color32 color = new Color32(r, g, b, 255);
+
+                // Build all lookups
+                terrainColors[terrainId] = color;
+                nameToIndex[key] = terrainId;
+                indexToName[terrainId] = key;
+
+                int packedColor = (r << 16) | (g << 8) | b;
+                colorToIndex[packedColor] = terrainId;
+
+                terrainId++;
+            }
+
+            // Set default to first terrain
             if (terrainColors.Count > 0 && terrainColors.TryGetValue(0, out Color32 first))
             {
                 defaultTerrainColor = first;
-            }
-        }
-
-        /// <summary>
-        /// Load hardcoded default colors as fallback
-        /// </summary>
-        private static void LoadDefaultColors()
-        {
-            terrainColors = new Dictionary<byte, Color32>
-            {
-                [0] = new Color32(86, 124, 27, 255),      // grasslands
-                [1] = new Color32(0, 86, 6, 255),         // hills
-                [2] = new Color32(112, 74, 31, 255),      // desert_mountain
-                [3] = new Color32(206, 169, 99, 255),     // desert
-                [4] = new Color32(200, 214, 107, 255),    // plains
-                [5] = new Color32(65, 42, 17, 255),       // mountain
-                [6] = new Color32(75, 147, 174, 255),     // marsh
-                [7] = new Color32(42, 55, 22, 255),       // forest
-                [8] = new Color32(8, 31, 130, 255),       // ocean
-                [9] = new Color32(255, 255, 255, 255),    // snow
-                [10] = new Color32(55, 90, 220, 255),     // inland_ocean
-                [11] = new Color32(203, 191, 103, 255),   // coastal_desert
-                [12] = new Color32(180, 160, 80, 255),    // savannah
-                [13] = new Color32(23, 23, 23, 255),      // highlands
-                [14] = new Color32(254, 254, 254, 255),   // jungle
-            };
-
-            // Build reverse lookup
-            colorToIndex = new Dictionary<int, byte>();
-            foreach (var kvp in terrainColors)
-            {
-                int packed = (kvp.Value.r << 16) | (kvp.Value.g << 8) | kvp.Value.b;
-                colorToIndex[packed] = kvp.Key;
             }
         }
 
@@ -149,7 +141,34 @@ namespace Map.Loading.Data
         }
 
         /// <summary>
-        /// Get default terrain color (grasslands)
+        /// Try to get terrain index from terrain name (e.g., "ocean", "grasslands")
+        /// </summary>
+        public static bool TryGetTerrainIndexByName(string terrainName, out byte index)
+        {
+            EnsureInitialized();
+            return nameToIndex.TryGetValue(terrainName, out index);
+        }
+
+        /// <summary>
+        /// Try to get terrain name from terrain index
+        /// </summary>
+        public static bool TryGetTerrainName(byte terrainIndex, out string name)
+        {
+            EnsureInitialized();
+            return indexToName.TryGetValue(terrainIndex, out name);
+        }
+
+        /// <summary>
+        /// Get terrain name from index, or "unknown" if not found
+        /// </summary>
+        public static string GetTerrainName(byte terrainIndex)
+        {
+            EnsureInitialized();
+            return indexToName.TryGetValue(terrainIndex, out string name) ? name : "unknown";
+        }
+
+        /// <summary>
+        /// Get default terrain color
         /// </summary>
         public static Color32 GetDefaultTerrainColor()
         {
@@ -176,14 +195,18 @@ namespace Map.Loading.Data
         }
 
         /// <summary>
-        /// Check if initialized, use defaults if not
+        /// Check if initialized - logs warning if not
         /// </summary>
         private static void EnsureInitialized()
         {
             if (!isInitialized)
             {
-                ArchonLogger.LogWarning("TerrainColorMapper: Not initialized, using default colors", "map_initialization");
-                LoadDefaultColors();
+                ArchonLogger.LogWarning("TerrainColorMapper: Not initialized! Call Initialize() first.", "map_initialization");
+                // Initialize empty dictionaries to prevent null reference
+                terrainColors ??= new Dictionary<byte, Color32>();
+                colorToIndex ??= new Dictionary<int, byte>();
+                nameToIndex ??= new Dictionary<string, byte>();
+                indexToName ??= new Dictionary<byte, string>();
                 isInitialized = true;
             }
         }

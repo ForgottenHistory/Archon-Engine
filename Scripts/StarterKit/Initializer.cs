@@ -235,7 +235,7 @@ namespace StarterKit
                         if (logProgress)
                             ArchonLogger.Log("Initializing unit info UI (post country selection)...", "starter_kit");
 
-                        unitInfoUI.Initialize(gameState, unitSystem, selector);
+                        unitInfoUI.Initialize(gameState, unitSystem, selector, economySystem);
                     }
 
                     if (buildingInfoUI != null && buildingSystem != null)

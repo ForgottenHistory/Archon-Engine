@@ -34,6 +34,7 @@ namespace StarterKit
         // References
         private GameState gameState;
         private UnitSystem unitSystem;
+        private EconomySystem economySystem;
         private ProvinceSelector provinceSelector;
         private bool isInitialized;
 
@@ -43,7 +44,7 @@ namespace StarterKit
 
         public bool IsInitialized => isInitialized;
 
-        public void Initialize(GameState gameStateRef, UnitSystem unitSystemRef, ProvinceSelector provinceSelectorRef)
+        public void Initialize(GameState gameStateRef, UnitSystem unitSystemRef, ProvinceSelector provinceSelectorRef, EconomySystem economySystemRef = null)
         {
             if (isInitialized)
             {
@@ -58,6 +59,7 @@ namespace StarterKit
             }
 
             gameState = gameStateRef;
+            economySystem = economySystemRef;
             unitSystem = unitSystemRef;
             provinceSelector = provinceSelectorRef;
 
@@ -157,7 +159,9 @@ namespace StarterKit
             createUnitButton = new Button(OnCreateUnitClicked);
             string infantryName = LocalizationManager.Get("UNIT_INFANTRY");
             if (infantryName == "UNIT_INFANTRY") infantryName = "Infantry"; // Fallback
-            createUnitButton.text = $"+ {LocalizationManager.Get("UI_CREATE_UNIT")} ({infantryName})";
+            var infantryType = unitSystem.GetUnitType("infantry");
+            int infantryCost = infantryType?.Cost ?? 20;
+            createUnitButton.text = $"+ {LocalizationManager.Get("UI_CREATE_UNIT")} ({infantryName}) - {infantryCost}g";
             createUnitButton.style.marginTop = 4f;
             createUnitButton.style.paddingTop = 6f;
             createUnitButton.style.paddingBottom = 6f;
@@ -232,11 +236,27 @@ namespace StarterKit
                 return;
             }
 
+            // Get unit cost
+            var infantryType = unitSystem.GetUnitType("infantry");
+            int cost = infantryType?.Cost ?? 20;
+
+            // Check and deduct gold
+            if (economySystem != null)
+            {
+                if (!economySystem.RemoveGold(cost))
+                {
+                    ArchonLogger.Log($"UnitInfoUI: Not enough gold to recruit unit (need {cost}g, have {economySystem.Gold}g)", "starter_kit");
+                    return;
+                }
+            }
+
             // Create infantry at selected province
             ushort unitId = unitSystem.CreateUnit(selectedProvinceID, "infantry");
 
             if (unitId == 0)
             {
+                // Refund gold if creation failed
+                economySystem?.AddGold(cost);
                 ArchonLogger.LogWarning("UnitInfoUI: Failed to create unit", "starter_kit");
             }
         }
