@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
-using ParadoxParser.CSV;
+using Core.Loaders;
 
 namespace Map.Loading.Bitmaps
 {

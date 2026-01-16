@@ -2,6 +2,24 @@
 
 **Last Updated:** 2026-01-14
 
+---
+
+## TL;DR
+
+**Core:** 8-byte province structs, fixed-point math, command pattern, zero-allocation EventBus, double-buffer snapshots
+
+**Systems:** Provinces, countries, diplomacy (wars/treaties/opinions), units with pathfinding, resources, modifiers, AI with tier scheduling
+
+**Map:** Texture-based rendering, three border modes (distance field/mesh/pixelated), terrain blending, map modes, visual styles
+
+**Infrastructure:** JSON5 loading, phase-based init, save/load, localization, Burst compilation, sparse collections
+
+**Not Implemented:** Multiplayer networking, modding system
+
+---
+
+## Detailed Feature List
+
 This document lists all implemented features in the Archon Engine organized by category.
 
 ---

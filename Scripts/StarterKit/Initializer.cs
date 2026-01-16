@@ -21,11 +21,17 @@ namespace StarterKit
     /// </summary>
     public class Initializer : MonoBehaviour
     {
+        #region Static Instance
+
         /// <summary>
         /// Static instance for easy access from commands.
         /// Set on Awake, cleared on OnDestroy.
         /// </summary>
         public static Initializer Instance { get; private set; }
+
+        #endregion
+
+        #region Serialized Fields
 
         [Header("Engine References")]
         [SerializeField] private EngineMapInitializer engineMapInitializer;
@@ -47,6 +53,10 @@ namespace StarterKit
         [SerializeField] private bool initializeOnStart = true;
         [SerializeField] private bool logProgress = true;
 
+        #endregion
+
+        #region Private Fields & Public Properties
+
         // Owned systems (plain classes)
         private PlayerState playerState;
         private EconomySystem economySystem;
@@ -62,6 +72,10 @@ namespace StarterKit
         public UnitSystem UnitSystem => unitSystem;
         public BuildingSystem BuildingSystem => buildingSystem;
         public AISystem AISystem => aiSystem;
+
+        #endregion
+
+        #region Unity Lifecycle
 
         void Awake()
         {
@@ -94,6 +108,10 @@ namespace StarterKit
                 StartCoroutine(InitializeSequence());
             }
         }
+
+        #endregion
+
+        #region Initialization Sequence
 
         private IEnumerator InitializeSequence()
         {
@@ -306,6 +324,10 @@ namespace StarterKit
                 ArchonLogger.Log("=== StarterKit initialization complete ===", "starter_kit");
         }
 
+        #endregion
+
+        #region Save/Load Setup
+
         /// <summary>
         /// Hook up SaveManager callbacks for StarterKit systems
         /// </summary>
@@ -405,6 +427,10 @@ namespace StarterKit
                 ArchonLogger.Log("SaveManager hooks configured (F6=Save, F7=Load)", "starter_kit");
         }
 
+        #endregion
+
+        #region Province Adjacency Scanning
+
         /// <summary>
         /// Scan province adjacencies using FastAdjacencyScanner
         /// Populates GameState.Adjacencies with border data for colonization neighbor checks
@@ -482,5 +508,7 @@ namespace StarterKit
 
             yield return null;
         }
+
+        #endregion
     }
 }

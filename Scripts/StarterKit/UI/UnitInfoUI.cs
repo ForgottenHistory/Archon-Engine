@@ -14,7 +14,7 @@ namespace StarterKit
     /// <summary>
     /// STARTERKIT - Unit information panel
     /// Shows units in the selected province with option to create new units.
-    /// Pattern: UI Presenter Pattern - View Component
+    /// Movement logic is handled by UnitMoveHandler.
     /// </summary>
     public class UnitInfoUI : StarterKitPanel
     {
@@ -31,15 +31,11 @@ namespace StarterKit
         private UnitSystem unitSystem;
         private EconomySystem economySystem;
         private ProvinceSelector provinceSelector;
+        private UnitMoveHandler moveHandler;
 
         // State
         private ushort selectedProvinceID;
         private List<VisualElement> unitEntries = new List<VisualElement>();
-
-        // Move mode state
-        private bool isInMoveMode;
-        private ushort moveSourceProvinceID;
-        private List<ushort> unitsToMove = new List<ushort>();
 
         public void Initialize(GameState gameStateRef, UnitSystem unitSystemRef, ProvinceSelector provinceSelectorRef, EconomySystem economySystemRef = null)
         {
@@ -57,6 +53,10 @@ namespace StarterKit
             {
                 return;
             }
+
+            // Create move handler
+            moveHandler = new UnitMoveHandler(gameState, unitSystem);
+            moveHandler.OnMoveComplete = RefreshUnitsList;
 
             // Subscribe to province selection events
             provinceSelector.OnProvinceClicked += HandleProvinceClicked;
@@ -156,7 +156,12 @@ namespace StarterKit
             moveModeLabel.style.marginTop = SpacingSm;
             moveModeLabel.style.display = DisplayStyle.None;
             panelContainer.Add(moveModeLabel);
+
+            // Pass UI elements to move handler
+            moveHandler?.SetUIElements(headerLabel, createUnitButton, moveUnitsButton, cancelMoveButton, moveModeLabel);
         }
+
+        #region Event Handlers
 
         private void HandleProvinceClicked(ushort provinceID)
         {
@@ -166,10 +171,9 @@ namespace StarterKit
                 return;
             }
 
-            // If in move mode, this click is the destination
-            if (isInMoveMode)
+            // If in move mode, delegate to handler
+            if (moveHandler != null && moveHandler.HandleProvinceClick(provinceID))
             {
-                ExecuteMove(provinceID);
                 return;
             }
 
@@ -185,9 +189,9 @@ namespace StarterKit
 
         private void HandleSelectionCleared()
         {
-            if (isInMoveMode)
+            if (moveHandler != null && moveHandler.IsInMoveMode)
             {
-                ExitMoveMode();
+                moveHandler.ExitMoveMode();
             }
 
             selectedProvinceID = 0;
@@ -239,6 +243,10 @@ namespace StarterKit
             RefreshUnitsList();
         }
 
+        #endregion
+
+        #region Unit Creation
+
         private void UpdateCreateButtonState()
         {
             if (createUnitButton == null || economySystem == null) return;
@@ -282,6 +290,10 @@ namespace StarterKit
             }
         }
 
+        #endregion
+
+        #region Unit Display
+
         private void RefreshUnitsList()
         {
             if (selectedProvinceID == 0 || unitSystem == null)
@@ -307,23 +319,9 @@ namespace StarterKit
             var unitIds = unitSystem.GetUnitsInProvince(selectedProvinceID);
 
             // Check if there are player units (for move button)
-            bool hasPlayerUnits = false;
-            var playerState = Initializer.Instance?.PlayerState;
-            if (playerState != null && playerState.HasPlayerCountry)
-            {
-                foreach (var unitId in unitIds)
-                {
-                    var unit = unitSystem.GetUnit(unitId);
-                    if (unit.countryID == playerState.PlayerCountryId && unit.unitCount > 0)
-                    {
-                        hasPlayerUnits = true;
-                        break;
-                    }
-                }
-            }
-
-            // Show move button only if there are player units and not in move mode
-            moveUnitsButton.style.display = (hasPlayerUnits && !isInMoveMode) ? DisplayStyle.Flex : DisplayStyle.None;
+            bool hasPlayerUnits = HasPlayerUnitsInProvince(unitIds);
+            bool inMoveMode = moveHandler?.IsInMoveMode ?? false;
+            moveUnitsButton.style.display = (hasPlayerUnits && !inMoveMode) ? DisplayStyle.Flex : DisplayStyle.None;
 
             if (unitIds.Count == 0)
             {
@@ -353,6 +351,21 @@ namespace StarterKit
             }
         }
 
+        private bool HasPlayerUnitsInProvince(List<ushort> unitIds)
+        {
+            var playerState = Initializer.Instance?.PlayerState;
+            if (playerState == null || !playerState.HasPlayerCountry)
+                return false;
+
+            foreach (var unitId in unitIds)
+            {
+                var unit = unitSystem.GetUnit(unitId);
+                if (unit.countryID == playerState.PlayerCountryId && unit.unitCount > 0)
+                    return true;
+            }
+            return false;
+        }
+
         private VisualElement CreateUnitEntry(UnitType unitType, int totalTroops)
         {
             var entry = CreateRowEntry();
@@ -369,6 +382,8 @@ namespace StarterKit
             return entry;
         }
 
+        #endregion
+
         #region Move Mode
 
         private void OnMoveUnitsClicked()
@@ -379,135 +394,12 @@ namespace StarterKit
                 return;
             }
 
-            EnterMoveMode();
+            moveHandler?.TryEnterMoveMode(selectedProvinceID);
         }
 
         private void OnCancelMoveClicked()
         {
-            ExitMoveMode();
-        }
-
-        private void EnterMoveMode()
-        {
-            var playerState = Initializer.Instance?.PlayerState;
-            if (playerState == null || !playerState.HasPlayerCountry)
-            {
-                ArchonLogger.LogWarning("UnitInfoUI: Cannot enter move mode - no player country", "starter_kit");
-                return;
-            }
-
-            unitsToMove.Clear();
-            var unitIds = unitSystem.GetUnitsInProvince(selectedProvinceID);
-            foreach (var unitId in unitIds)
-            {
-                var unit = unitSystem.GetUnit(unitId);
-                if (unit.countryID == playerState.PlayerCountryId && unit.unitCount > 0)
-                {
-                    unitsToMove.Add(unitId);
-                }
-            }
-
-            if (unitsToMove.Count == 0)
-            {
-                ArchonLogger.LogWarning("UnitInfoUI: No player units to move", "starter_kit");
-                return;
-            }
-
-            isInMoveMode = true;
-            moveSourceProvinceID = selectedProvinceID;
-
-            // Update UI
-            string moveModeText = LocalizationManager.Get("UI_MOVE_MODE");
-            if (moveModeText == "UI_MOVE_MODE") moveModeText = "Move Mode";
-            headerLabel.text = moveModeText;
-
-            createUnitButton.style.display = DisplayStyle.None;
-            moveUnitsButton.style.display = DisplayStyle.None;
-            cancelMoveButton.style.display = DisplayStyle.Flex;
-            moveModeLabel.style.display = DisplayStyle.Flex;
-
-            ArchonLogger.Log($"UnitInfoUI: Entered move mode with {unitsToMove.Count} units from province {moveSourceProvinceID}", "starter_kit");
-        }
-
-        private void ExitMoveMode()
-        {
-            isInMoveMode = false;
-            moveSourceProvinceID = 0;
-            unitsToMove.Clear();
-
-            // Restore UI
-            string unitsText = LocalizationManager.Get("UI_UNITS");
-            if (unitsText == "UI_UNITS") unitsText = "Units";
-            headerLabel.text = unitsText;
-
-            cancelMoveButton.style.display = DisplayStyle.None;
-            moveModeLabel.style.display = DisplayStyle.None;
-
-            RefreshUnitsList();
-
-            ArchonLogger.Log("UnitInfoUI: Exited move mode", "starter_kit");
-        }
-
-        private void ExecuteMove(ushort targetProvinceID)
-        {
-            if (!isInMoveMode || moveSourceProvinceID == 0 || unitsToMove.Count == 0)
-            {
-                ArchonLogger.LogWarning("UnitInfoUI: Invalid move state", "starter_kit");
-                ExitMoveMode();
-                return;
-            }
-
-            if (targetProvinceID == moveSourceProvinceID)
-            {
-                ArchonLogger.Log("UnitInfoUI: Same province selected, cancelling move", "starter_kit");
-                ExitMoveMode();
-                return;
-            }
-
-            if (gameState.Pathfinding == null || !gameState.Pathfinding.IsInitialized)
-            {
-                ArchonLogger.LogWarning("UnitInfoUI: Pathfinding not available", "starter_kit");
-                ExitMoveMode();
-                return;
-            }
-
-            var movementQueue = gameState.Units?.MovementQueue;
-            if (movementQueue == null)
-            {
-                ArchonLogger.LogWarning("UnitInfoUI: MovementQueue not available", "starter_kit");
-                ExitMoveMode();
-                return;
-            }
-
-            var playerState = Initializer.Instance?.PlayerState;
-            ushort countryId = playerState?.PlayerCountryId ?? 0;
-
-            var path = gameState.Pathfinding.FindPath(moveSourceProvinceID, targetProvinceID, countryId);
-
-            if (path == null || path.Count < 2)
-            {
-                ArchonLogger.Log($"UnitInfoUI: No path from province {moveSourceProvinceID} to {targetProvinceID}", "starter_kit");
-                return;
-            }
-
-            int ordersIssued = 0;
-            foreach (var unitId in unitsToMove)
-            {
-                var unit = unitSystem.GetUnit(unitId);
-                if (unit.unitCount > 0)
-                {
-                    var unitType = unitSystem.GetUnitType(unit.unitTypeID);
-                    int movementDays = unitType?.Speed ?? 2;
-
-                    ushort firstDestination = path[1];
-                    movementQueue.StartMovement(unitId, firstDestination, movementDays, path);
-                    ordersIssued++;
-                }
-            }
-
-            ArchonLogger.Log($"UnitInfoUI: Issued {ordersIssued} movement orders from province {moveSourceProvinceID} to {targetProvinceID} (path length: {path.Count})", "starter_kit");
-
-            ExitMoveMode();
+            moveHandler?.ExitMoveMode();
         }
 
         #endregion

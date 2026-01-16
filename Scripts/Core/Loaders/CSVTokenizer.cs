@@ -2,13 +2,12 @@ using System;
 using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 
-namespace ParadoxParser.CSV
+namespace Core.Loaders
 {
     /// <summary>
-    /// High-performance CSV tokenizer for Paradox format (semicolon-delimited)
-    /// Supports Windows-1252 encoding and quoted fields
+    /// High-performance CSV tokenizer for Paradox format (semicolon-delimited).
+    /// Supports UTF-8 encoding and quoted fields.
     /// </summary>
     [BurstCompile(OptimizeFor = OptimizeFor.Performance)]
     public static class CSVTokenizer

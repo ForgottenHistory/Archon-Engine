@@ -33,6 +33,8 @@ namespace StarterKit
     /// </summary>
     public class BuildingSystem : IDisposable
     {
+        #region Fields & Properties
+
         private readonly GameState gameState;
         private readonly PlayerState playerState;
         private readonly EconomySystem economySystem;
@@ -53,6 +55,10 @@ namespace StarterKit
         // Public accessor for UI
         public PlayerState PlayerState => playerState;
 
+        #endregion
+
+        #region Constructor & Disposal
+
         public BuildingSystem(GameState gameStateRef, PlayerState playerStateRef, EconomySystem economySystemRef, bool log = true)
         {
             gameState = gameStateRef;
@@ -69,6 +75,10 @@ namespace StarterKit
                 ArchonLogger.Log("BuildingSystem: Initialized", "starter_kit");
             }
         }
+
+        #endregion
+
+        #region Building Type Loading
 
         /// <summary>
         /// Load building types from Template-Data/buildings/ directory.
@@ -133,6 +143,10 @@ namespace StarterKit
             }
         }
 
+        #endregion
+
+        #region Building Type Queries
+
         /// <summary>
         /// Get building type by string ID.
         /// </summary>
@@ -156,6 +170,10 @@ namespace StarterKit
         {
             return buildingTypesByString.Values;
         }
+
+        #endregion
+
+        #region Construction
 
         /// <summary>
         /// Check if a building can be constructed in a province.
@@ -266,6 +284,10 @@ namespace StarterKit
             return true;
         }
 
+        #endregion
+
+        #region Province Building Queries
+
         /// <summary>
         /// Get the count of a specific building type in a province.
         /// </summary>
@@ -336,6 +358,10 @@ namespace StarterKit
             return ownerID == playerState.PlayerCountryId;
         }
 
+        #endregion
+
+        #region Disposal
+
         public void Dispose()
         {
             if (isDisposed) return;
@@ -351,9 +377,9 @@ namespace StarterKit
             }
         }
 
-        // ====================================================================
-        // SERIALIZATION
-        // ====================================================================
+        #endregion
+
+        #region Serialization
 
         /// <summary>
         /// Serialize building state to byte array
@@ -418,5 +444,7 @@ namespace StarterKit
                 }
             }
         }
+
+        #endregion
     }
 }

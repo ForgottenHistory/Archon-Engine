@@ -3,11 +3,11 @@ using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Collections;
 
-namespace ParadoxParser.CSV
+namespace Core.Loaders
 {
     /// <summary>
-    /// High-performance CSV parser for Paradox files
-    /// Handles semicolon-delimited format with header detection
+    /// High-performance CSV parser for Paradox files.
+    /// Handles semicolon-delimited format with header detection.
     /// </summary>
     [BurstCompile(OptimizeFor = OptimizeFor.Performance)]
     public static class CSVParser
@@ -72,8 +72,8 @@ namespace ParadoxParser.CSV
         }
 
         /// <summary>
-        /// Parse CSV data with automatic header detection
-        /// Assumes UTF-8 encoding (preprocess with Python if needed)
+        /// Parse CSV data with automatic header detection.
+        /// Assumes UTF-8 encoding (preprocess with Python if needed).
         /// </summary>
         public static CSVParseResult Parse(
             NativeSlice<byte> csvData,
