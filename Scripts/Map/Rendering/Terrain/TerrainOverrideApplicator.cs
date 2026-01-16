@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Core;
 using Core.Loaders;
 using Newtonsoft.Json.Linq;
 using Utils;
@@ -18,7 +19,9 @@ namespace Map.Rendering.Terrain
 
         public TerrainOverrideApplicator(string dataDirectory = null, bool logProgress = true)
         {
-            this.dataDirectory = dataDirectory ?? System.IO.Path.Combine(Application.dataPath, "Data");
+            this.dataDirectory = dataDirectory
+                ?? GameSettings.Instance?.DataDirectory
+                ?? System.IO.Path.Combine(Application.dataPath, "Data");
             this.logProgress = logProgress;
         }
 

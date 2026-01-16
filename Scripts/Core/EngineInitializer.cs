@@ -102,6 +102,9 @@ namespace Core
                 return;
             }
 
+            // Register as active instance for global access
+            gameSettings.RegisterAsActive();
+
             ArchonLogger.Log("Starting game initialization...", "core_simulation");
             StartCoroutine(InitializeGameCoroutine());
         }

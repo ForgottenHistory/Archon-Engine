@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Core;
 using Core.Loaders;
 using Newtonsoft.Json.Linq;
 using Utils;
@@ -38,7 +39,8 @@ namespace Map.Rendering.Terrain
             {
                 if (string.IsNullOrEmpty(dataDirectory))
                 {
-                    dataDirectory = System.IO.Path.Combine(Application.dataPath, "Data");
+                    dataDirectory = GameSettings.Instance?.DataDirectory
+                        ?? System.IO.Path.Combine(Application.dataPath, "Data");
                 }
 
                 // Load from terrain.json5 (single source of truth)

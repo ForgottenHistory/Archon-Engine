@@ -35,6 +35,7 @@ namespace StarterKit
         [SerializeField] private ProvinceInfoUI provinceInfoUI;
         [SerializeField] private UnitInfoUI unitInfoUI;
         [SerializeField] private BuildingInfoUI buildingInfoUI;
+        [SerializeField] private LedgerUI ledgerUI;
 
         [Header("Visualization")]
         [SerializeField] private UnitVisualization unitVisualization;
@@ -111,6 +112,8 @@ namespace StarterKit
                 unitInfoUI = FindFirstObjectByType<UnitInfoUI>();
             if (buildingInfoUI == null)
                 buildingInfoUI = FindFirstObjectByType<BuildingInfoUI>();
+            if (ledgerUI == null)
+                ledgerUI = FindFirstObjectByType<LedgerUI>();
             if (unitVisualization == null)
                 unitVisualization = FindFirstObjectByType<UnitVisualization>();
 
@@ -168,7 +171,8 @@ namespace StarterKit
                 ArchonLogger.Log("Creating unit system...", "starter_kit");
 
             unitSystem = new UnitSystem(gameState, playerState, logProgress);
-            unitSystem.LoadUnitTypes("Assets/Archon-Engine/Template-Data/units");
+            var unitsPath = System.IO.Path.Combine(GameSettings.Instance.TemplateDataDirectory, "units");
+            unitSystem.LoadUnitTypes(unitsPath);
 
             yield return null;
 
@@ -177,7 +181,8 @@ namespace StarterKit
                 ArchonLogger.Log("Creating building system...", "starter_kit");
 
             buildingSystem = new BuildingSystem(gameState, playerState, economySystem, logProgress);
-            buildingSystem.LoadBuildingTypes("Assets/Archon-Engine/Template-Data/buildings");
+            var buildingsPath = System.IO.Path.Combine(GameSettings.Instance.TemplateDataDirectory, "buildings");
+            buildingSystem.LoadBuildingTypes(buildingsPath);
 
             // Link building system to economy for bonus calculation
             economySystem.SetBuildingSystem(buildingSystem);
@@ -252,6 +257,14 @@ namespace StarterKit
                             ArchonLogger.Log("Initializing unit visualization (post country selection)...", "starter_kit");
 
                         unitVisualization.Initialize(gameState, unitSystem);
+                    }
+
+                    if (ledgerUI != null)
+                    {
+                        if (logProgress)
+                            ArchonLogger.Log("Initializing ledger UI (post country selection)...", "starter_kit");
+
+                        ledgerUI.Initialize(gameState, economySystem, unitSystem, playerState);
                     }
                 });
             }

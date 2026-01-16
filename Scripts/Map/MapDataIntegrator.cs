@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Map.Rendering;
 using Map.Province;
 using Map.Loading;
+using Core;
 
 namespace Map.Integration
 {
@@ -21,7 +22,22 @@ namespace Map.Integration
 
         [Header("Settings")]
         [SerializeField] private bool autoSyncChanges = true;
-        [SerializeField] private string provinceBitmapPath = "Assets/Map/provinces.bmp";
+        [Tooltip("Leave empty to use GameSettings.MapDirectory/provinces.bmp")]
+        [SerializeField] private string provinceBitmapPath = "";
+
+        /// <summary>
+        /// Get the province bitmap path - uses GameSettings if inspector field is empty
+        /// </summary>
+        private string GetProvinceBitmapPath()
+        {
+            if (!string.IsNullOrEmpty(provinceBitmapPath))
+                return provinceBitmapPath;
+
+            if (GameSettings.Instance != null)
+                return System.IO.Path.Combine(GameSettings.Instance.MapDirectory, "provinces.bmp");
+
+            return "Assets/Map/provinces.bmp"; // Fallback
+        }
         [SerializeField] private bool detectNeighbors = true;
         [SerializeField] private bool includeOceanNeighbors = true;
         [SerializeField] private bool generateMetadata = true;
@@ -102,7 +118,7 @@ namespace Map.Integration
 
             // Load province bitmap using optimized ProvinceMapProcessor (via compatibility layer)
             var loadResult = ProvinceMapLoader.LoadProvinceMap(
-                provinceBitmapPath,
+                GetProvinceBitmapPath(),
                 textureManager
             );
 

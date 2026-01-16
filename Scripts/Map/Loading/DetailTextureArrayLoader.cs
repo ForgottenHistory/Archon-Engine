@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Utils;
+using Core;
 
 namespace Map.Loading
 {
@@ -23,7 +24,10 @@ namespace Map.Loading
     /// </summary>
     public static class DetailTextureArrayLoader
     {
-        private const string DetailTextureFolder = "Assets/Data/textures/terrain_detail";
+        private const string DefaultDetailTextureFolder = "Assets/Data/textures/terrain_detail";
+        private static string DetailTextureFolder => GameSettings.Instance != null
+            ? Path.Combine(GameSettings.Instance.DataDirectory, "textures", "terrain_detail")
+            : DefaultDetailTextureFolder;
         private const int DefaultTextureSize = 512;
         private const int MaxTerrainTypes = 256;
 

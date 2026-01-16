@@ -4,6 +4,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Burst;
 using Unity.Mathematics;
+using Core;
 
 namespace ProvinceSystem
 {
@@ -245,7 +246,9 @@ namespace ProvinceSystem
                 }
             }
 
-            string path = "Assets/adjacencies.csv";
+            string path = System.IO.Path.Combine(
+                GameSettings.Instance?.DataDirectory ?? "Assets/Data",
+                "adjacencies.csv");
             System.IO.File.WriteAllText(path, sb.ToString());
             ArchonLogger.Log($"Exported adjacencies to: {path}", "map_rendering");
 
@@ -265,11 +268,11 @@ namespace ProvinceSystem
     [BurstCompile]
     public struct AdjacencyScanJob : IJobParallelFor
     {
-        [ReadOnly] public NativeArray<Color32> pixels;
-        [ReadOnly] public int width;
-        [ReadOnly] public int height;
-        [ReadOnly] public float blackThreshold;
-        [ReadOnly] public bool ignoreDiagonals;
+        [Unity.Collections.ReadOnly] public NativeArray<Color32> pixels;
+        [Unity.Collections.ReadOnly] public int width;
+        [Unity.Collections.ReadOnly] public int height;
+        [Unity.Collections.ReadOnly] public float blackThreshold;
+        [Unity.Collections.ReadOnly] public bool ignoreDiagonals;
 
         [NativeDisableParallelForRestriction]
         public NativeParallelHashSet<ulong>.ParallelWriter adjacencyPairs;

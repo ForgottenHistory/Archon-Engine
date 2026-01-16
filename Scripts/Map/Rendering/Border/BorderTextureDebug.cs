@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 using System.IO;
+using Core;
 
 namespace Map.Rendering
 {
@@ -25,7 +26,8 @@ namespace Map.Rendering
                 return;
             }
 
-            string path = "Assets/Game/Debug/Screenshots/distance_field_texture.png";
+            string debugDir = GameSettings.Instance?.DebugOutputDirectory ?? "Assets/Game/Debug/Screenshots";
+            string path = Path.Combine(debugDir, "distance_field_texture.png");
             SaveRenderTextureToFile(textureManager.DistanceFieldTexture, path);
             AssetDatabase.Refresh();
             Debug.Log($"DistanceFieldTexture saved to {path}");

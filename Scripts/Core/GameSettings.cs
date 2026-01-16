@@ -3,14 +3,40 @@ using UnityEngine;
 namespace Core
 {
     /// <summary>
-    /// ScriptableObject configuration for game initialization and data loading
+    /// ScriptableObject configuration for game initialization and data loading.
+    /// Access via GameSettings.Instance after initialization.
     /// </summary>
     [CreateAssetMenu(fileName = "GameSettings", menuName = "Archon/Game Settings", order = 1)]
     public class GameSettings : ScriptableObject
     {
+        /// <summary>
+        /// Static instance for easy access from anywhere.
+        /// Set automatically when EngineInitializer loads settings.
+        /// </summary>
+        public static GameSettings Instance { get; private set; }
+
+        /// <summary>
+        /// Register this settings instance as the active one.
+        /// Called by EngineInitializer during initialization.
+        /// </summary>
+        public void RegisterAsActive()
+        {
+            Instance = this;
+            ArchonLogger.Log("GameSettings: Registered as active instance", "core_simulation");
+        }
+
         [Header("Data File Paths")]
         [Tooltip("Root data directory containing all game data")]
         public string DataDirectory = "Assets/Data";
+
+        [Tooltip("Template data directory for StarterKit (units, buildings, etc.)")]
+        public string TemplateDataDirectory = "Assets/Archon-Engine/Template-Data";
+
+        [Tooltip("Map data directory")]
+        public string MapDirectory = "Assets/Map";
+
+        [Tooltip("Debug/Screenshots output directory")]
+        public string DebugOutputDirectory = "Assets/Game/Debug/Screenshots";
 
         [Header("Loading Configuration")]
         [Tooltip("Enable parallel loading where possible")]

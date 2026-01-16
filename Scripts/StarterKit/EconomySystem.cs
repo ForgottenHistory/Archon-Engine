@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.Collections;
 using Core;
 using Core.Events;
@@ -9,6 +10,7 @@ namespace StarterKit
     /// <summary>
     /// Simple economy for StarterKit.
     /// 1 gold per province + building bonuses, collected monthly.
+    /// Tracks gold for ALL countries (for ledger display).
     /// </summary>
     public class EconomySystem : IDisposable
     {
@@ -16,13 +18,18 @@ namespace StarterKit
         private readonly PlayerState playerState;
         private readonly bool logCollection;
         private readonly CompositeDisposable subscriptions = new CompositeDisposable();
-        private int gold;
         private bool isDisposed;
+
+        // Gold storage for all countries
+        private Dictionary<ushort, int> countryGold = new Dictionary<ushort, int>();
 
         // Optional building system for bonus calculation
         private BuildingSystem buildingSystem;
 
-        public int Gold => gold;
+        /// <summary>
+        /// Player's gold (convenience property)
+        /// </summary>
+        public int Gold => GetCountryGold(playerState?.PlayerCountryId ?? 0);
 
         // Event for UI updates
         public event Action<int, int> OnGoldChanged; // oldValue, newValue
@@ -32,7 +39,6 @@ namespace StarterKit
             gameState = gameStateRef;
             playerState = playerStateRef;
             logCollection = log;
-            gold = 0;
 
             // Subscribe to monthly tick (token auto-disposed on Dispose)
             subscriptions.Add(gameState.EventBus.Subscribe<MonthlyTickEvent>(OnMonthlyTick));
@@ -62,15 +68,36 @@ namespace StarterKit
 
         private void OnMonthlyTick(MonthlyTickEvent evt)
         {
-            if (playerState == null || !playerState.HasPlayerCountry)
-                return;
-
-            CollectIncome();
+            // Collect income for ALL countries with provinces
+            CollectIncomeForAllCountries();
         }
 
-        private void CollectIncome()
+        private void CollectIncomeForAllCountries()
         {
-            ushort countryId = playerState.PlayerCountryId;
+            if (gameState?.Countries == null) return;
+
+            // Get all countries
+            var countries = gameState.Countries.GetAllCountryIds();
+            try
+            {
+                foreach (ushort countryId in countries)
+                {
+                    // Skip if country has no provinces
+                    int provinceCount = CountProvinces(countryId);
+                    if (provinceCount > 0)
+                    {
+                        CollectIncomeForCountry(countryId);
+                    }
+                }
+            }
+            finally
+            {
+                countries.Dispose();
+            }
+        }
+
+        private void CollectIncomeForCountry(ushort countryId)
+        {
             int provinceCount = CountProvinces(countryId);
             int baseIncome = provinceCount; // 1 gold per province
             int buildingBonus = CalculateBuildingBonus(countryId);
@@ -78,14 +105,19 @@ namespace StarterKit
 
             if (income > 0)
             {
-                int oldGold = gold;
-                gold += income;
+                int oldGold = GetCountryGold(countryId);
+                int newGold = oldGold + income;
+                countryGold[countryId] = newGold;
 
-                OnGoldChanged?.Invoke(oldGold, gold);
-
-                if (logCollection)
+                // Fire event only for player
+                if (playerState != null && countryId == playerState.PlayerCountryId)
                 {
-                    ArchonLogger.Log($"EconomySystem: Collected {income} gold ({baseIncome} base + {buildingBonus} buildings) from {provinceCount} provinces (Total: {gold})", "starter_kit");
+                    OnGoldChanged?.Invoke(oldGold, newGold);
+
+                    if (logCollection)
+                    {
+                        ArchonLogger.Log($"EconomySystem: Collected {income} gold ({baseIncome} base + {buildingBonus} buildings) from {provinceCount} provinces (Total: {newGold})", "starter_kit");
+                    }
                 }
             }
         }
@@ -123,39 +155,95 @@ namespace StarterKit
         }
 
         /// <summary>
-        /// Get monthly income (province count + building bonuses)
+        /// Get gold for a specific country.
+        /// </summary>
+        public int GetCountryGold(ushort countryId)
+        {
+            if (countryId == 0) return 0;
+            return countryGold.TryGetValue(countryId, out int gold) ? gold : 0;
+        }
+
+        /// <summary>
+        /// Get monthly income for a country (province count + building bonuses)
+        /// </summary>
+        public int GetMonthlyIncome(ushort countryId)
+        {
+            return CountProvinces(countryId) + CalculateBuildingBonus(countryId);
+        }
+
+        /// <summary>
+        /// Get monthly income for player (convenience)
         /// </summary>
         public int GetMonthlyIncome()
         {
             if (playerState == null || !playerState.HasPlayerCountry)
                 return 0;
 
-            ushort countryId = playerState.PlayerCountryId;
-            return CountProvinces(countryId) + CalculateBuildingBonus(countryId);
+            return GetMonthlyIncome(playerState.PlayerCountryId);
         }
 
         /// <summary>
-        /// Add gold (for commands/cheats)
+        /// Add gold to player (for commands/cheats)
         /// </summary>
         public void AddGold(int amount)
         {
-            int oldGold = gold;
-            gold += amount;
-            OnGoldChanged?.Invoke(oldGold, gold);
+            if (playerState == null || !playerState.HasPlayerCountry)
+                return;
+
+            AddGoldToCountry(playerState.PlayerCountryId, amount);
         }
 
         /// <summary>
-        /// Remove gold (returns false if insufficient)
+        /// Add gold to a specific country
+        /// </summary>
+        public void AddGoldToCountry(ushort countryId, int amount)
+        {
+            int oldGold = GetCountryGold(countryId);
+            int newGold = oldGold + amount;
+            countryGold[countryId] = newGold;
+
+            if (playerState != null && countryId == playerState.PlayerCountryId)
+            {
+                OnGoldChanged?.Invoke(oldGold, newGold);
+            }
+        }
+
+        /// <summary>
+        /// Remove gold from player (returns false if insufficient)
         /// </summary>
         public bool RemoveGold(int amount)
         {
-            if (gold < amount)
+            if (playerState == null || !playerState.HasPlayerCountry)
                 return false;
 
-            int oldGold = gold;
-            gold -= amount;
-            OnGoldChanged?.Invoke(oldGold, gold);
+            return RemoveGoldFromCountry(playerState.PlayerCountryId, amount);
+        }
+
+        /// <summary>
+        /// Remove gold from a specific country (returns false if insufficient)
+        /// </summary>
+        public bool RemoveGoldFromCountry(ushort countryId, int amount)
+        {
+            int currentGold = GetCountryGold(countryId);
+            if (currentGold < amount)
+                return false;
+
+            int newGold = currentGold - amount;
+            countryGold[countryId] = newGold;
+
+            if (playerState != null && countryId == playerState.PlayerCountryId)
+            {
+                OnGoldChanged?.Invoke(currentGold, newGold);
+            }
             return true;
+        }
+
+        /// <summary>
+        /// Get all countries with tracked gold (for ledger)
+        /// </summary>
+        public IEnumerable<ushort> GetCountriesWithGold()
+        {
+            return countryGold.Keys;
         }
     }
 }
