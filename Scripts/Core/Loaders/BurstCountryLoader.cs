@@ -166,10 +166,14 @@ namespace Core.Loaders
                 tag = raw.tag.ToString(),
                 displayName = raw.tag.ToString(), // Use tag as display name for now
                 graphicalCulture = raw.hasGraphicalCulture ? raw.graphicalCulture.ToString() : "westerngfx",
-                preferredReligion = raw.hasPreferredReligion ? raw.preferredReligion.ToString() : "",
-                color = raw.GetColor(), // Always store main color
-                revolutionaryColors = raw.hasRevolutionaryColors ? raw.GetRevolutionaryColor() : new Color32(0, 0, 0, 0) // Revolutionary colors only if present
+                color = raw.GetColor()
             };
+
+            // Store game-specific data in customData if present
+            if (raw.hasPreferredReligion)
+                coldData.SetCustomData("preferredReligion", raw.preferredReligion.ToString());
+            if (raw.hasRevolutionaryColors)
+                coldData.SetCustomData("revolutionaryColors", raw.GetRevolutionaryColor());
 
             return coldData;
         }

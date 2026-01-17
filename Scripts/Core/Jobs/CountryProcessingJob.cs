@@ -78,13 +78,14 @@ namespace Core.Jobs
 
         /// <summary>
         /// Apply default values for missing hot data
+        /// Note: Flags are generic and game layer defines their meaning.
+        /// Engine only sets structural data, not game-specific flags.
         /// </summary>
         private void ApplyDefaultHotValues(ref CountryHotData hotData, RawCountryData raw)
         {
-            // Set flags based on available data
-            hotData.SetFlag(CountryHotData.FLAG_HAS_HISTORICAL_IDEAS, raw.hasGraphicalCulture);
-            hotData.SetFlag(CountryHotData.FLAG_HAS_PREFERRED_RELIGION, raw.hasPreferredReligion);
-            hotData.SetFlag(CountryHotData.FLAG_HAS_REVOLUTIONARY_COLORS, raw.hasRevolutionaryColors);
+            // Engine doesn't set flags - that's game layer responsibility
+            // Flags byte starts at 0, game layer can set them as needed
+            hotData.flags = 0;
         }
 
         /// <summary>

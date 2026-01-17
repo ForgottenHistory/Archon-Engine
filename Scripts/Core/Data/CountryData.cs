@@ -9,39 +9,38 @@ namespace Core.Data
     /// Country data following dual-layer architecture principles
     /// Hot data: Frequently accessed, performance-critical (8 bytes)
     /// Cold data: Rarely accessed, can be loaded on-demand
+    ///
+    /// ENGINE layer - generic country data only.
+    /// Game-specific data should be stored via customData dictionary in CountryColdData.
     /// </summary>
     [Serializable]
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 1)]
     public struct CountryHotData
     {
         // CRITICAL: This struct must be exactly 8 bytes for performance
-        public ushort tagHash;           // 2 bytes - hash of 3-letter tag (e.g., "ENG")
-        public uint colorRGB;            // 4 bytes - packed RGB color (0xRRGGBB00, alpha in lowest byte)
+        public ushort tagHash;           // 2 bytes - hash of country tag
+        public uint colorRGBA;           // 4 bytes - packed RGBA color
         public byte graphicalCultureId;  // 1 byte - ID for graphical culture
-        public byte flags;               // 1 byte - bit flags for various properties
+        public byte flags;               // 1 byte - generic bit flags (game defines meanings)
 
-        // Bit flags for the flags field
-        public const byte FLAG_HAS_HISTORICAL_IDEAS = 1 << 0;
-        public const byte FLAG_HAS_HISTORICAL_UNITS = 1 << 1;
-        public const byte FLAG_HAS_MONARCH_NAMES = 1 << 2;
-        public const byte FLAG_HAS_REVOLUTIONARY_COLORS = 1 << 3;
-        public const byte FLAG_HAS_PREFERRED_RELIGION = 1 << 4;
-        // 3 bits remaining for future use
-
-        public bool HasHistoricalIdeas => (flags & FLAG_HAS_HISTORICAL_IDEAS) != 0;
-        public bool HasHistoricalUnits => (flags & FLAG_HAS_HISTORICAL_UNITS) != 0;
-        public bool HasMonarchNames => (flags & FLAG_HAS_MONARCH_NAMES) != 0;
-        public bool HasRevolutionaryColors => (flags & FLAG_HAS_REVOLUTIONARY_COLORS) != 0;
-        public bool HasPreferredReligion => (flags & FLAG_HAS_PREFERRED_RELIGION) != 0;
+        // Generic flag accessors - game layer defines what these mean
+        public bool GetFlag(int index) => (flags & (1 << index)) != 0;
+        public void SetFlag(int index, bool value)
+        {
+            if (value)
+                flags |= (byte)(1 << index);
+            else
+                flags &= (byte)~(1 << index);
+        }
 
         /// <summary>
-        /// Convert packed RGB color to Color32 for rendering
+        /// Convert packed RGBA color to Color32 for rendering
         /// </summary>
         public Color32 Color => new Color32(
-            (byte)((colorRGB >> 24) & 0xFF),  // Red
-            (byte)((colorRGB >> 16) & 0xFF),  // Green
-            (byte)((colorRGB >> 8) & 0xFF),   // Blue
-            (byte)(colorRGB & 0xFF)           // Alpha
+            (byte)((colorRGBA >> 24) & 0xFF),  // Red
+            (byte)((colorRGBA >> 16) & 0xFF),  // Green
+            (byte)((colorRGBA >> 8) & 0xFF),   // Blue
+            (byte)(colorRGBA & 0xFF)           // Alpha
         );
 
         /// <summary>
@@ -49,50 +48,62 @@ namespace Core.Data
         /// </summary>
         public void SetColor(Color32 color)
         {
-            colorRGB = ((uint)color.r << 24) | ((uint)color.g << 16) | ((uint)color.b << 8) | color.a;
-        }
-
-        public void SetFlag(byte flag, bool value)
-        {
-            if (value)
-                flags |= flag;
-            else
-                flags &= (byte)~flag;
+            colorRGBA = ((uint)color.r << 24) | ((uint)color.g << 16) | ((uint)color.b << 8) | color.a;
         }
     }
 
     /// <summary>
-    /// Cold data for countries - loaded on-demand, stored separately
-    /// Contains detailed information not needed for core simulation
+    /// Cold data for countries - loaded on-demand, stored separately.
+    /// Contains detailed information not needed for core simulation.
+    ///
+    /// ENGINE layer - generic country data only.
+    /// Game-specific data should be stored in customData dictionary.
     /// </summary>
     [Serializable]
     public class CountryColdData
     {
-        public string tag;                          // 3-letter country tag (e.g., "ENG")
-        public string displayName;                  // Extracted from filename
-        public string graphicalCulture;             // Full graphical culture name
-        public Color32 color;                       // Main country color (from EU4 data)
-        public Color32 revolutionaryColors;         // Alternative color scheme
-        public string preferredReligion;            // Religion preference
+        // Core identity
+        public string tag;                          // Country tag/identifier
+        public string displayName;                  // Display name for UI
 
-        // Historical data - can be large, rarely accessed
-        public List<string> historicalIdeaGroups;   // Idea group progression
-        public List<string> historicalUnits;        // Unit progression
-        public Dictionary<string, int> monarchNames; // Name -> weight mapping
+        // Visual
+        public string graphicalCulture;             // Full graphical culture name
+        public Color32 color;                       // Main country color
 
         // Metadata
         public DateTime lastParsed;                 // When this data was last loaded
-        public int parseTimeMs;                     // Time taken to parse (for performance monitoring)
+        public int parseTimeMs;                     // Time taken to parse
         public bool hasParseErrors;                 // Whether parsing had issues
         public List<string> parseErrors;            // Detailed error messages
 
+        // Game-specific extension point
+        // Games can store arbitrary data here (e.g., historicalIdeas, monarchNames, etc.)
+        public Dictionary<string, object> customData;
+
         public CountryColdData()
         {
-            historicalIdeaGroups = new List<string>();
-            historicalUnits = new List<string>();
-            monarchNames = new Dictionary<string, int>();
             parseErrors = new List<string>();
+            customData = new Dictionary<string, object>();
             lastParsed = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Get custom data with type safety
+        /// </summary>
+        public T GetCustomData<T>(string key, T defaultValue = default)
+        {
+            if (customData != null && customData.TryGetValue(key, out var value) && value is T typedValue)
+                return typedValue;
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Set custom data
+        /// </summary>
+        public void SetCustomData(string key, object value)
+        {
+            customData ??= new Dictionary<string, object>();
+            customData[key] = value;
         }
 
         /// <summary>
@@ -102,35 +113,31 @@ namespace Core.Data
         {
             long memory = 0;
 
-            // String sizes (approximate)
+            // String sizes (approximate, 2 bytes per char in .NET)
             memory += (tag?.Length ?? 0) * 2;
             memory += (displayName?.Length ?? 0) * 2;
             memory += (graphicalCulture?.Length ?? 0) * 2;
-            memory += (preferredReligion?.Length ?? 0) * 2;
-
-            // Collections
-            if (historicalIdeaGroups != null)
-            {
-                foreach (var idea in historicalIdeaGroups)
-                    memory += (idea?.Length ?? 0) * 2;
-            }
-
-            if (historicalUnits != null)
-            {
-                foreach (var unit in historicalUnits)
-                    memory += (unit?.Length ?? 0) * 2;
-            }
-
-            if (monarchNames != null)
-            {
-                foreach (var kvp in monarchNames)
-                    memory += (kvp.Key?.Length ?? 0) * 2 + 4; // string + int
-            }
 
             if (parseErrors != null)
             {
                 foreach (var error in parseErrors)
                     memory += (error?.Length ?? 0) * 2;
+            }
+
+            // Custom data - rough estimate
+            if (customData != null)
+            {
+                foreach (var kvp in customData)
+                {
+                    memory += (kvp.Key?.Length ?? 0) * 2;
+                    // Estimate value size based on type
+                    if (kvp.Value is string s)
+                        memory += s.Length * 2;
+                    else if (kvp.Value is ICollection<object> collection)
+                        memory += collection.Count * 8; // rough estimate
+                    else
+                        memory += 8; // default object reference size
+                }
             }
 
             return memory;
@@ -167,30 +174,20 @@ namespace Core.Data
         /// <summary>
         /// Create hot data from cold data for performance optimization
         /// </summary>
-        public static CountryHotData CreateHotData(CountryColdData coldData, byte graphicalCultureId)
+        public static CountryHotData CreateHotData(CountryColdData coldData, byte graphicalCultureId, byte flags = 0)
         {
             var hotData = new CountryHotData
             {
                 tagHash = ComputeTagHash(coldData.tag),
                 graphicalCultureId = graphicalCultureId,
-                flags = 0
+                flags = flags
             };
 
-            // Set color using the packed format
-            var defaultColor = ParseColor(coldData.tag); // Will be overridden by actual color
-            hotData.SetColor(defaultColor);
-
-            // Set flags based on available data
-            hotData.SetFlag(CountryHotData.FLAG_HAS_HISTORICAL_IDEAS,
-                coldData.historicalIdeaGroups?.Count > 0);
-            hotData.SetFlag(CountryHotData.FLAG_HAS_HISTORICAL_UNITS,
-                coldData.historicalUnits?.Count > 0);
-            hotData.SetFlag(CountryHotData.FLAG_HAS_MONARCH_NAMES,
-                coldData.monarchNames?.Count > 0);
-            hotData.SetFlag(CountryHotData.FLAG_HAS_REVOLUTIONARY_COLORS,
-                coldData.revolutionaryColors.a > 0);
-            hotData.SetFlag(CountryHotData.FLAG_HAS_PREFERRED_RELIGION,
-                !string.IsNullOrEmpty(coldData.preferredReligion));
+            // Set color - use cold data color if available, otherwise generate from tag
+            if (coldData.color.a > 0)
+                hotData.SetColor(coldData.color);
+            else
+                hotData.SetColor(GenerateColorFromTag(coldData.tag));
 
             return hotData;
         }
@@ -208,9 +205,9 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Default color calculation from tag (fallback)
+        /// Generate a consistent color from tag (fallback when no color specified)
         /// </summary>
-        private static Color32 ParseColor(string tag)
+        private static Color32 GenerateColorFromTag(string tag)
         {
             if (string.IsNullOrEmpty(tag))
                 return new Color32(128, 128, 128, 255);
@@ -247,34 +244,15 @@ namespace Core.Data
                 return false;
             }
 
-            if (string.IsNullOrEmpty(coldData.tag) || coldData.tag.Length != 3)
+            if (string.IsNullOrEmpty(coldData.tag))
             {
-                validationErrors.Add($"Invalid tag: '{coldData.tag}' (must be 3 characters)");
+                validationErrors.Add("Tag is empty");
                 isValid = false;
             }
 
             if (string.IsNullOrEmpty(coldData.displayName))
             {
                 validationErrors.Add("Display name is empty");
-                isValid = false;
-            }
-
-            // Check flag consistency
-            if (hotData.HasHistoricalIdeas && (coldData.historicalIdeaGroups?.Count ?? 0) == 0)
-            {
-                validationErrors.Add("HasHistoricalIdeas flag set but no historical idea groups found");
-                isValid = false;
-            }
-
-            if (hotData.HasHistoricalUnits && (coldData.historicalUnits?.Count ?? 0) == 0)
-            {
-                validationErrors.Add("HasHistoricalUnits flag set but no historical units found");
-                isValid = false;
-            }
-
-            if (hotData.HasMonarchNames && (coldData.monarchNames?.Count ?? 0) == 0)
-            {
-                validationErrors.Add("HasMonarchNames flag set but no monarch names found");
                 isValid = false;
             }
 

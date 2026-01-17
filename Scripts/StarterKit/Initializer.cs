@@ -67,6 +67,7 @@ namespace StarterKit
         private UnitSystem unitSystem;
         private BuildingSystem buildingSystem;
         private AISystem aiSystem;
+        private ProvinceHistorySystem provinceHistorySystem;
 
         // Map modes (GAME layer extends ENGINE map modes)
         private FarmDensityMapMode farmDensityMapMode;
@@ -105,6 +106,7 @@ namespace StarterKit
             unitSystem?.Dispose();
             economySystem?.Dispose();
             modifierSystem?.Dispose();
+            provinceHistorySystem?.Dispose();
 
             if (Instance == this)
                 Instance = null;
@@ -234,6 +236,15 @@ namespace StarterKit
 
             yield return null;
 
+            // Create province history system (Pattern 4: Hot/Cold Data Separation demo)
+            // This tracks ownership changes as COLD DATA - only accessed when viewing province details
+            if (logProgress)
+                ArchonLogger.Log("Creating province history system (cold data storage)...", "starter_kit");
+
+            provinceHistorySystem = new ProvinceHistorySystem(gameState, logProgress);
+
+            yield return null;
+
             // Register custom map modes (GAME layer extends ENGINE map modes)
             yield return RegisterMapModes(mapInitializer, gameState);
 
@@ -289,7 +300,7 @@ namespace StarterKit
                         if (logProgress)
                             ArchonLogger.Log("Initializing province info UI (post country selection)...", "starter_kit");
 
-                        provinceInfoUI.Initialize(gameState, selector, highlighter, economySystem, playerState);
+                        provinceInfoUI.Initialize(gameState, selector, highlighter, economySystem, playerState, provinceHistorySystem);
                     }
 
                     if (unitInfoUI != null && unitSystem != null)

@@ -66,3 +66,4 @@
  UI_MOVE_MODE:0 "Move Mode"
  UI_SAVE:0 "Save"
  UI_LOAD:0 "Load"
+ UI_HISTORY:0 "Ownership History"

@@ -125,7 +125,7 @@ namespace Core.Systems.Country
             // Debug: Log color for first few countries
             if (countryId < 5)
             {
-                UnityEngine.Debug.Log($"CountrySystem.RegisterCountry: Country {countryId} ({tag}) - Packed: 0x{hotData.colorRGB:X8}, Color property: R={color.r} G={color.g} B={color.b} A={color.a}");
+                UnityEngine.Debug.Log($"CountrySystem.RegisterCountry: Country {countryId} ({tag}) - Packed: 0x{hotData.colorRGBA:X8}, Color property: R={color.r} G={color.g} B={color.b} A={color.a}");
             }
 
             // Update lookup tables
@@ -172,7 +172,7 @@ namespace Core.Systems.Country
             if (countryId < 5)
             {
                 var hotData = countryHotData[countryId];
-                UnityEngine.Debug.Log($"CountrySystem.GetCountryColor: Country {countryId} ({GetCountryTag(countryId)}) - Packed: 0x{hotData.colorRGB:X8}, Unpacked: R={color.r} G={color.g} B={color.b} A={color.a}");
+                UnityEngine.Debug.Log($"CountrySystem.GetCountryColor: Country {countryId} ({GetCountryTag(countryId)}) - Packed: 0x{hotData.colorRGBA:X8}, Unpacked: R={color.r} G={color.g} B={color.b} A={color.a}");
             }
 
             return color;

@@ -346,38 +346,27 @@ namespace Core.Systems
             writer.Write(data.color.b);
             writer.Write(data.color.a);
 
-            // Revolutionary colors (4 bytes)
-            writer.Write(data.revolutionaryColors.r);
-            writer.Write(data.revolutionaryColors.g);
-            writer.Write(data.revolutionaryColors.b);
-            writer.Write(data.revolutionaryColors.a);
-
-            Core.SaveLoad.SerializationHelper.WriteString(writer, data.preferredReligion ?? "");
-
-            // Historical idea groups
-            writer.Write(data.historicalIdeaGroups?.Count ?? 0);
-            if (data.historicalIdeaGroups != null)
+            // Custom data - serialize string keys and values that are serializable
+            // Note: Only string values are persisted for simplicity; game layer can rebuild complex data
+            int stringCustomDataCount = 0;
+            if (data.customData != null)
             {
-                foreach (var idea in data.historicalIdeaGroups)
-                    Core.SaveLoad.SerializationHelper.WriteString(writer, idea);
-            }
-
-            // Historical units
-            writer.Write(data.historicalUnits?.Count ?? 0);
-            if (data.historicalUnits != null)
-            {
-                foreach (var unit in data.historicalUnits)
-                    Core.SaveLoad.SerializationHelper.WriteString(writer, unit);
-            }
-
-            // Monarch names
-            writer.Write(data.monarchNames?.Count ?? 0);
-            if (data.monarchNames != null)
-            {
-                foreach (var kvp in data.monarchNames)
+                foreach (var kvp in data.customData)
                 {
-                    Core.SaveLoad.SerializationHelper.WriteString(writer, kvp.Key);
-                    writer.Write(kvp.Value);
+                    if (kvp.Value is string)
+                        stringCustomDataCount++;
+                }
+            }
+            writer.Write(stringCustomDataCount);
+            if (data.customData != null)
+            {
+                foreach (var kvp in data.customData)
+                {
+                    if (kvp.Value is string strValue)
+                    {
+                        Core.SaveLoad.SerializationHelper.WriteString(writer, kvp.Key);
+                        Core.SaveLoad.SerializationHelper.WriteString(writer, strValue);
+                    }
                 }
             }
 
@@ -404,36 +393,13 @@ namespace Core.Systems
                 reader.ReadByte()
             );
 
-            // Revolutionary colors
-            data.revolutionaryColors = new Color32(
-                reader.ReadByte(),
-                reader.ReadByte(),
-                reader.ReadByte(),
-                reader.ReadByte()
-            );
-
-            data.preferredReligion = Core.SaveLoad.SerializationHelper.ReadString(reader);
-
-            // Historical idea groups
-            int ideaCount = reader.ReadInt32();
-            data.historicalIdeaGroups = new List<string>(ideaCount);
-            for (int i = 0; i < ideaCount; i++)
-                data.historicalIdeaGroups.Add(Core.SaveLoad.SerializationHelper.ReadString(reader));
-
-            // Historical units
-            int unitCount = reader.ReadInt32();
-            data.historicalUnits = new List<string>(unitCount);
-            for (int i = 0; i < unitCount; i++)
-                data.historicalUnits.Add(Core.SaveLoad.SerializationHelper.ReadString(reader));
-
-            // Monarch names
-            int monarchCount = reader.ReadInt32();
-            data.monarchNames = new Dictionary<string, int>(monarchCount);
-            for (int i = 0; i < monarchCount; i++)
+            // Custom data (string values only)
+            int customDataCount = reader.ReadInt32();
+            for (int i = 0; i < customDataCount; i++)
             {
-                string name = Core.SaveLoad.SerializationHelper.ReadString(reader);
-                int weight = reader.ReadInt32();
-                data.monarchNames[name] = weight;
+                string key = Core.SaveLoad.SerializationHelper.ReadString(reader);
+                string value = Core.SaveLoad.SerializationHelper.ReadString(reader);
+                data.SetCustomData(key, value);
             }
 
             return data;

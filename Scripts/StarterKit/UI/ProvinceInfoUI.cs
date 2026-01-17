@@ -38,23 +38,30 @@ namespace StarterKit
         private Button colonizeButton;
         private const int COLONIZE_COST = 20;
 
+        // History UI (Pattern 4: Hot/Cold Data Separation demo)
+        private VisualElement historyContainer;
+        private Label historyHeaderLabel;
+        private Label historyContentLabel;
+
         // References
         private ProvinceSelector provinceSelector;
         private ProvinceHighlighter provinceHighlighter;
         private EconomySystem economySystem;
         private PlayerState playerState;
         private TerrainRGBLookup terrainLookup;
+        private ProvinceHistorySystem historySystem;
 
         // State
         private ushort currentProvinceID;
 
         public void Initialize(GameState gameStateRef, ProvinceSelector provinceSelectorRef, ProvinceHighlighter highlighterRef = null,
-            EconomySystem economySystemRef = null, PlayerState playerStateRef = null)
+            EconomySystem economySystemRef = null, PlayerState playerStateRef = null, ProvinceHistorySystem historySystemRef = null)
         {
             provinceSelector = provinceSelectorRef;
             provinceHighlighter = highlighterRef;
             economySystem = economySystemRef;
             playerState = playerStateRef;
+            historySystem = historySystemRef;
 
             if (provinceSelectorRef == null)
             {
@@ -180,6 +187,24 @@ namespace StarterKit
 
             colonizeContainer.Add(colonizeButton);
             panelContainer.Add(colonizeContainer);
+
+            // History section (Pattern 4: Hot/Cold Data Separation)
+            // This data is loaded on-demand when viewing a province, NOT every frame
+            historyContainer = new VisualElement();
+            historyContainer.name = "history-container";
+            historyContainer.style.marginTop = SpacingMd;
+            historyContainer.style.display = DisplayStyle.None;
+
+            historyHeaderLabel = CreateSecondaryText(LocalizationManager.Get("UI_HISTORY"));
+            historyHeaderLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+            historyHeaderLabel.style.marginBottom = SpacingXs;
+            historyContainer.Add(historyHeaderLabel);
+
+            historyContentLabel = CreateSecondaryText("");
+            historyContentLabel.style.whiteSpace = WhiteSpace.Normal;
+            historyContainer.Add(historyContentLabel);
+
+            panelContainer.Add(historyContainer);
         }
 
         private void HandleProvinceClicked(ushort provinceID)
@@ -318,6 +343,7 @@ namespace StarterKit
 
             UpdateTerrainLabel();
             UpdateColonizeButton();
+            UpdateHistorySection();
         }
 
         private void UpdateTerrainLabel()
@@ -331,6 +357,69 @@ namespace StarterKit
 
             string ownableStr = ownable ? "" : " (unownable)";
             terrainLabel.text = $"{LocalizationManager.Get("UI_TERRAIN")}: {terrainName} [T{terrainType}]{ownableStr}";
+        }
+
+        private void UpdateHistorySection()
+        {
+            if (historyContainer == null)
+                return;
+
+            // Pattern 4: Hot/Cold Data Separation Demo
+            // This is COLD DATA - only loaded when viewing province, not every frame
+            if (historySystem == null || !historySystem.HasHistory(currentProvinceID))
+            {
+                historyContainer.style.display = DisplayStyle.None;
+                return;
+            }
+
+            var historyData = historySystem.GetProvinceHistory(currentProvinceID);
+            if (historyData == null)
+            {
+                historyContainer.style.display = DisplayStyle.None;
+                return;
+            }
+
+            var history = historyData.GetHistory();
+            if (history.Count == 0)
+            {
+                historyContainer.style.display = DisplayStyle.None;
+                return;
+            }
+
+            historyContainer.style.display = DisplayStyle.Flex;
+
+            // Format history entries (most recent first shown at top)
+            var sb = new System.Text.StringBuilder();
+            for (int i = history.Count - 1; i >= 0; i--)
+            {
+                var record = history[i];
+                string ownerName = GetCountryNameForHistory(record.CountryId);
+
+                if (record.IsCurrent)
+                {
+                    sb.AppendLine($"Day {record.StartDay}: {ownerName} (current)");
+                }
+                else
+                {
+                    sb.AppendLine($"Day {record.StartDay}-{record.EndDay}: {ownerName}");
+                }
+            }
+
+            historyContentLabel.text = sb.ToString().TrimEnd();
+        }
+
+        private string GetCountryNameForHistory(ushort countryId)
+        {
+            if (countryId == 0)
+                return LocalizationManager.Get("UI_UNOWNED");
+
+            var countrySystem = gameState.GetComponent<CountrySystem>();
+            if (countrySystem != null)
+            {
+                var coldData = countrySystem.GetCountryColdData(countryId);
+                return coldData?.displayName ?? $"Country {countryId}";
+            }
+            return $"Country {countryId}";
         }
 
         private void UpdateColonizeButton()

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
 
 namespace Core.Data
@@ -7,7 +6,9 @@ namespace Core.Data
     /// <summary>
     /// Cold data storage for provinces (accessed rarely, loaded on-demand)
     /// This data is NOT synchronized in multiplayer - it's presentation/metadata only
-    /// CRITICAL: Uses FixedPoint64 for all calculations to ensure determinism if data flows to simulation
+    ///
+    /// ENGINE layer - generic province data only.
+    /// Game-specific data (buildings, trade values, etc.) should be stored in customData dictionary.
     /// </summary>
     public class ProvinceColdData
     {
@@ -23,14 +24,15 @@ namespace Core.Data
         // Historical data (bounded to prevent memory growth)
         public CircularBuffer<HistoricalEvent> RecentHistory { get; private set; }
 
-        // Gameplay data that changes infrequently (uses FixedPoint64 for determinism)
+        // Generic modifier storage (uses FixedPoint64 for determinism)
         public Dictionary<string, FixedPoint64> Modifiers { get; private set; }
-        public List<BuildingType> Buildings { get; private set; }
 
-        // Cached expensive calculations (uses FixedPoint64 for determinism)
-        public FixedPoint64 CachedTradeValue { get; set; }
-        public FixedPoint64 CachedSupplyLimit { get; set; }
-        public int CacheFrame { get; set; } // For frame-coherent caching
+        // Game-specific extension point
+        // Games can store arbitrary data here (e.g., buildings, cached calculations, etc.)
+        public Dictionary<string, object> CustomData { get; private set; }
+
+        // Frame-coherent caching support
+        public int CacheFrame { get; set; }
 
         public ProvinceColdData(ushort provinceID)
         {
@@ -44,10 +46,8 @@ namespace Core.Data
             // Fixed-size collections to prevent unbounded growth
             RecentHistory = new CircularBuffer<HistoricalEvent>(100); // Last 100 events only
             Modifiers = new Dictionary<string, FixedPoint64>();
-            Buildings = new List<BuildingType>();
+            CustomData = new Dictionary<string, object>();
 
-            CachedTradeValue = FixedPoint64.Zero;
-            CachedSupplyLimit = FixedPoint64.Zero;
             CacheFrame = -1;
         }
 
@@ -93,34 +93,44 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Add a building
+        /// Get custom data with type safety
         /// </summary>
-        public void AddBuilding(BuildingType building)
+        public T GetCustomData<T>(string key, T defaultValue = default)
         {
-            if (!Buildings.Contains(building))
-            {
-                Buildings.Add(building);
-                InvalidateCache();
-            }
+            if (CustomData != null && CustomData.TryGetValue(key, out var value) && value is T typedValue)
+                return typedValue;
+            return defaultValue;
         }
 
         /// <summary>
-        /// Remove a building
+        /// Set custom data
         /// </summary>
-        public void RemoveBuilding(BuildingType building)
+        public void SetCustomData(string key, object value)
         {
-            if (Buildings.Remove(building))
-            {
-                InvalidateCache();
-            }
+            CustomData ??= new Dictionary<string, object>();
+            CustomData[key] = value;
+            InvalidateCache();
         }
 
         /// <summary>
-        /// Check if province has a specific building
+        /// Remove custom data
         /// </summary>
-        public bool HasBuilding(BuildingType building)
+        public bool RemoveCustomData(string key)
         {
-            return Buildings.Contains(building);
+            if (CustomData != null && CustomData.Remove(key))
+            {
+                InvalidateCache();
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Check if custom data exists
+        /// </summary>
+        public bool HasCustomData(string key)
+        {
+            return CustomData != null && CustomData.ContainsKey(key);
         }
 
         /// <summary>
@@ -132,47 +142,6 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Calculate trade value (cached per frame, uses FixedPoint64 for determinism)
-        /// Note: development parameter must be provided by game layer (engine doesn't know about development)
-        /// </summary>
-        public FixedPoint64 CalculateTradeValue(byte development)
-        {
-            if (CacheFrame == Time.frameCount)
-                return CachedTradeValue;
-
-            // Expensive calculation - only do once per frame
-            // Use deterministic fixed-point math
-            FixedPoint64 baseValue = FixedPoint64.FromInt(development) * FixedPoint64.FromFraction(1, 2); // * 0.5
-            FixedPoint64 modifierBonus = GetModifier("trade_value_modifier");
-            FixedPoint64 buildingBonus = FixedPoint64.FromInt(Buildings.Count * 2); // Simplified calculation
-
-            CachedTradeValue = baseValue + modifierBonus + buildingBonus;
-            CacheFrame = Time.frameCount;
-
-            return CachedTradeValue;
-        }
-
-        /// <summary>
-        /// Calculate supply limit (cached per frame, uses FixedPoint64 for determinism)
-        /// Note: development and fortLevel parameters must be provided by game layer (engine doesn't know about these)
-        /// </summary>
-        public FixedPoint64 CalculateSupplyLimit(byte development, byte fortLevel)
-        {
-            if (CacheFrame == Time.frameCount)
-                return CachedSupplyLimit;
-
-            // Use deterministic fixed-point math
-            FixedPoint64 baseSupply = FixedPoint64.FromInt(development) * FixedPoint64.FromFraction(3, 10); // * 0.3
-            FixedPoint64 fortBonus = FixedPoint64.FromInt(fortLevel) * FixedPoint64.FromFraction(1, 2); // * 0.5
-            FixedPoint64 buildingBonus = HasBuilding(BuildingType.Granary) ? FixedPoint64.FromInt(5) : FixedPoint64.Zero;
-
-            CachedSupplyLimit = baseSupply + fortBonus + buildingBonus;
-            CacheFrame = Time.frameCount;
-
-            return CachedSupplyLimit;
-        }
-
-        /// <summary>
         /// Get estimated memory usage
         /// </summary>
         public int GetEstimatedMemoryUsage()
@@ -181,9 +150,22 @@ namespace Core.Data
             int nameSize = (Name?.Length ?? 0) * 2; // Unicode string
             int historySize = RecentHistory.Count * 32; // Estimated per event
             int modifiersSize = Modifiers.Count * 40; // String reference + FixedPoint64 (8 bytes)
-            int buildingsSize = Buildings.Count * 4; // Enum size
 
-            return baseSize + nameSize + historySize + modifiersSize + buildingsSize;
+            // Custom data estimate
+            int customDataSize = 0;
+            if (CustomData != null)
+            {
+                foreach (var kvp in CustomData)
+                {
+                    customDataSize += (kvp.Key?.Length ?? 0) * 2;
+                    if (kvp.Value is string s)
+                        customDataSize += s.Length * 2;
+                    else
+                        customDataSize += 8; // default object reference
+                }
+            }
+
+            return baseSize + nameSize + historySize + modifiersSize + customDataSize;
         }
     }
 
@@ -247,20 +229,5 @@ namespace Core.Data
         }
     }
 
-    // HistoricalEvent and HistoryEventType are now defined in ProvinceHistoryDatabase.cs
-
-    /// <summary>
-    /// Building types that can be constructed in provinces
-    /// </summary>
-    public enum BuildingType : byte
-    {
-        Farm,           // Increases development
-        Market,         // Increases trade value
-        Fort,           // Increases fortification
-        Temple,         // Religious building
-        Workshop,       // Production building
-        Granary,        // Increases supply limit
-        Road,           // Movement bonus
-        Port            // Naval access
-    }
+    // HistoricalEvent and HistoryEventType are defined in ProvinceHistoryDatabase.cs
 }
