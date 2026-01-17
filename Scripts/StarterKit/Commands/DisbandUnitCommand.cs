@@ -1,5 +1,6 @@
 using Core;
 using Core.Commands;
+using Core.Data.Ids;
 using StarterKit.Validation;
 using Utils;
 
@@ -8,6 +9,7 @@ namespace StarterKit.Commands
     /// <summary>
     /// StarterKit command: Disband a unit.
     /// Demonstrates fluent validation with UnitExists validator.
+    /// Uses type-safe ProvinceId wrapper for compile-time safety.
     /// </summary>
     [Command("disband_unit",
         Aliases = new[] { "disband", "kill" },
@@ -19,7 +21,7 @@ namespace StarterKit.Commands
         public ushort UnitId { get; set; }
 
         // For undo - store unit state before disbanding
-        private ushort previousProvinceId;
+        private ProvinceId previousProvinceId;
         private ushort previousUnitTypeId;
         private string validationError;
 

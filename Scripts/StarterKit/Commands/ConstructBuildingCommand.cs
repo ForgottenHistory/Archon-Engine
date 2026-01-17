@@ -1,5 +1,6 @@
 using Core;
 using Core.Commands;
+using Core.Data.Ids;
 using StarterKit.Validation;
 using Utils;
 
@@ -8,6 +9,7 @@ namespace StarterKit.Commands
     /// <summary>
     /// StarterKit command: Construct a building in a province.
     /// Demonstrates fluent validation with multiple GAME-layer validators.
+    /// Uses type-safe ProvinceId wrapper for compile-time safety.
     /// </summary>
     [Command("build",
         Aliases = new[] { "construct" },
@@ -19,7 +21,7 @@ namespace StarterKit.Commands
         public string BuildingTypeId { get; set; }
 
         [Arg(1, "provinceId")]
-        public ushort ProvinceId { get; set; }
+        public ProvinceId ProvinceId { get; set; }
 
         private string validationError;
 

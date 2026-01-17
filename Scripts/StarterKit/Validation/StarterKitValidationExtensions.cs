@@ -1,3 +1,4 @@
+using Core.Data.Ids;
 using Core.Validation;
 
 namespace StarterKit.Validation
@@ -5,13 +6,14 @@ namespace StarterKit.Validation
     /// <summary>
     /// STARTERKIT - Extension methods for ValidationBuilder.
     /// Demonstrates how GAME layer can extend ENGINE's fluent validation.
+    /// Uses type-safe ProvinceId wrappers for compile-time safety.
     ///
     /// Usage in commands:
     /// public override bool Validate(GameState gs) =>
     ///     Validate.For(gs)
     ///             .Province(provinceId)
     ///             .UnitExists(unitId)
-    ///             .UnitOwnedByPlayer(unitId)
+    ///             .ProvinceOwnedByPlayer(provinceId)
     ///             .Result(out var reason);
     /// </summary>
     public static class StarterKitValidationExtensions
@@ -58,7 +60,7 @@ namespace StarterKit.Validation
         /// <summary>
         /// Validate that a province is owned by the current player.
         /// </summary>
-        public static ValidationBuilder ProvinceOwnedByPlayer(this ValidationBuilder v, ushort provinceId)
+        public static ValidationBuilder ProvinceOwnedByPlayer(this ValidationBuilder v, ProvinceId provinceId)
         {
             var units = Initializer.Instance?.UnitSystem;
             if (units == null)
@@ -96,7 +98,7 @@ namespace StarterKit.Validation
         /// <summary>
         /// Validate that a building can be constructed in a province.
         /// </summary>
-        public static ValidationBuilder CanConstructBuilding(this ValidationBuilder v, ushort provinceId, string buildingTypeId)
+        public static ValidationBuilder CanConstructBuilding(this ValidationBuilder v, ProvinceId provinceId, string buildingTypeId)
         {
             var buildings = Initializer.Instance?.BuildingSystem;
             if (buildings == null)

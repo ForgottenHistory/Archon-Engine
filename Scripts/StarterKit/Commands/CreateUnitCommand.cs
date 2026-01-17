@@ -1,5 +1,6 @@
 using Core;
 using Core.Commands;
+using Core.Data.Ids;
 using StarterKit.Validation;
 using Utils;
 
@@ -8,6 +9,7 @@ namespace StarterKit.Commands
     /// <summary>
     /// StarterKit command: Create a unit at a province.
     /// Demonstrates fluent validation pattern with GAME-layer extensions.
+    /// Uses type-safe ProvinceId wrapper for compile-time safety.
     /// </summary>
     [Command("create_unit",
         Aliases = new[] { "unit", "spawn" },
@@ -19,7 +21,7 @@ namespace StarterKit.Commands
         public string UnitTypeId { get; set; }
 
         [Arg(1, "provinceId")]
-        public ushort ProvinceId { get; set; }
+        public ProvinceId ProvinceId { get; set; }
 
         // For undo
         private ushort createdUnitId;

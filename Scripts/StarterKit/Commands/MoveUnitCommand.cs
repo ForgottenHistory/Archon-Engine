@@ -1,5 +1,6 @@
 using Core;
 using Core.Commands;
+using Core.Data.Ids;
 using StarterKit.Validation;
 using Utils;
 
@@ -8,6 +9,7 @@ namespace StarterKit.Commands
     /// <summary>
     /// StarterKit command: Move a unit to a new province.
     /// Demonstrates fluent validation pattern with GAME-layer extensions.
+    /// Uses type-safe ProvinceId wrapper for compile-time safety.
     /// </summary>
     [Command("move_unit",
         Aliases = new[] { "move" },
@@ -19,10 +21,10 @@ namespace StarterKit.Commands
         public ushort UnitId { get; set; }
 
         [Arg(1, "provinceId")]
-        public ushort TargetProvinceId { get; set; }
+        public ProvinceId TargetProvinceId { get; set; }
 
         // For undo
-        private ushort previousProvinceId;
+        private ProvinceId previousProvinceId;
         private string validationError;
 
         public override bool Validate(GameState gameState)
