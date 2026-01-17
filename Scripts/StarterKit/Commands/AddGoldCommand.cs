@@ -1,12 +1,13 @@
 using Core;
 using Core.Commands;
+using StarterKit.Validation;
 using Utils;
 
 namespace StarterKit.Commands
 {
     /// <summary>
     /// StarterKit command: Add or remove gold from player treasury.
-    /// Demonstrates SimpleCommand pattern - no separate factory class needed.
+    /// Demonstrates SimpleCommand pattern with fluent validation.
     /// </summary>
     [Command("add_gold",
         Aliases = new[] { "gold" },
@@ -19,18 +20,21 @@ namespace StarterKit.Commands
 
         // For undo support
         private int previousGold;
+        private string validationError;
 
         public override bool Validate(GameState gameState)
         {
+            // If removing gold, validate sufficient funds
+            if (Amount < 0)
+            {
+                return Core.Validation.Validate.For(gameState)
+                    .HasGold(-Amount)
+                    .Result(out validationError);
+            }
+
+            // Adding gold always valid (if EconomySystem exists)
             var economy = Initializer.Instance?.EconomySystem;
-            if (economy == null)
-                return false;
-
-            // If removing gold, check if enough exists
-            if (Amount < 0 && economy.Gold < -Amount)
-                return false;
-
-            return true;
+            return economy != null;
         }
 
         public override void Execute(GameState gameState)

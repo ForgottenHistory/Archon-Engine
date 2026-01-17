@@ -1,11 +1,13 @@
 using Core;
 using Core.Commands;
+using StarterKit.Validation;
 using Utils;
 
 namespace StarterKit.Commands
 {
     /// <summary>
     /// StarterKit command: Create a unit at a province.
+    /// Demonstrates fluent validation pattern with GAME-layer extensions.
     /// </summary>
     [Command("create_unit",
         Aliases = new[] { "unit", "spawn" },
@@ -21,22 +23,17 @@ namespace StarterKit.Commands
 
         // For undo
         private ushort createdUnitId;
+        private string validationError;
 
         public override bool Validate(GameState gameState)
         {
-            var units = Initializer.Instance?.UnitSystem;
-            if (units == null)
-                return false;
-
-            // Check unit type exists
-            if (units.GetUnitType(UnitTypeId) == null)
-                return false;
-
-            // Check province is owned by player
-            if (!units.IsProvinceOwnedByPlayer(ProvinceId))
-                return false;
-
-            return true;
+            // Fluent validation: chain checks, short-circuit on first failure
+            // Uses ENGINE's Validate.For() + StarterKit's extension methods
+            return Core.Validation.Validate.For(gameState)
+                .Province(ProvinceId)                       // ENGINE: province ID valid
+                .UnitTypeExists(UnitTypeId)                 // GAME: unit type defined
+                .ProvinceOwnedByPlayer(ProvinceId)          // GAME: player owns province
+                .Result(out validationError);
         }
 
         public override void Execute(GameState gameState)
@@ -53,7 +50,7 @@ namespace StarterKit.Commands
             if (createdUnitId != 0)
                 LogExecution($"Created {UnitTypeId} (ID={createdUnitId}) in province {ProvinceId}");
             else
-                ArchonLogger.LogWarning($"CreateUnitCommand: Failed to create {UnitTypeId}", "starter_kit");
+                ArchonLogger.LogWarning($"CreateUnitCommand: Failed - {validationError ?? "unknown error"}", "starter_kit");
         }
 
         public override void Undo(GameState gameState)

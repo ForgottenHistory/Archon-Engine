@@ -1,11 +1,13 @@
 using Core;
 using Core.Commands;
+using StarterKit.Validation;
 using Utils;
 
 namespace StarterKit.Commands
 {
     /// <summary>
     /// StarterKit command: Construct a building in a province.
+    /// Demonstrates fluent validation with multiple GAME-layer validators.
     /// </summary>
     [Command("build",
         Aliases = new[] { "construct" },
@@ -19,13 +21,16 @@ namespace StarterKit.Commands
         [Arg(1, "provinceId")]
         public ushort ProvinceId { get; set; }
 
+        private string validationError;
+
         public override bool Validate(GameState gameState)
         {
-            var buildings = Initializer.Instance?.BuildingSystem;
-            if (buildings == null)
-                return false;
-
-            return buildings.CanConstruct(ProvinceId, BuildingTypeId, out _);
+            // Fluent validation: province valid, building type exists, can construct
+            return Core.Validation.Validate.For(gameState)
+                .Province(ProvinceId)
+                .BuildingTypeExists(BuildingTypeId)
+                .CanConstructBuilding(ProvinceId, BuildingTypeId)
+                .Result(out validationError);
         }
 
         public override void Execute(GameState gameState)

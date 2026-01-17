@@ -1,11 +1,13 @@
 using Core;
 using Core.Commands;
+using StarterKit.Validation;
 using Utils;
 
 namespace StarterKit.Commands
 {
     /// <summary>
     /// StarterKit command: Move a unit to a new province.
+    /// Demonstrates fluent validation pattern with GAME-layer extensions.
     /// </summary>
     [Command("move_unit",
         Aliases = new[] { "move" },
@@ -21,23 +23,15 @@ namespace StarterKit.Commands
 
         // For undo
         private ushort previousProvinceId;
+        private string validationError;
 
         public override bool Validate(GameState gameState)
         {
-            var units = Initializer.Instance?.UnitSystem;
-            if (units == null)
-                return false;
-
-            // Check unit exists (unitCount > 0 means unit is alive)
-            var unit = units.GetUnit(UnitId);
-            if (unit.unitCount == 0)
-                return false;
-
-            // Check target province is valid
-            if (TargetProvinceId == 0 || TargetProvinceId >= gameState.Provinces.ProvinceCount)
-                return false;
-
-            return true;
+            // Fluent validation: chain checks, short-circuit on first failure
+            return Core.Validation.Validate.For(gameState)
+                .Province(TargetProvinceId)     // ENGINE: target province ID valid
+                .UnitExists(UnitId)             // GAME: unit exists and is alive
+                .Result(out validationError);
         }
 
         public override void Execute(GameState gameState)

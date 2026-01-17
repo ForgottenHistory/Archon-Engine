@@ -1,11 +1,13 @@
 using Core;
 using Core.Commands;
+using StarterKit.Validation;
 using Utils;
 
 namespace StarterKit.Commands
 {
     /// <summary>
     /// StarterKit command: Disband a unit.
+    /// Demonstrates fluent validation with UnitExists validator.
     /// </summary>
     [Command("disband_unit",
         Aliases = new[] { "disband", "kill" },
@@ -19,16 +21,14 @@ namespace StarterKit.Commands
         // For undo - store unit state before disbanding
         private ushort previousProvinceId;
         private ushort previousUnitTypeId;
+        private string validationError;
 
         public override bool Validate(GameState gameState)
         {
-            var units = Initializer.Instance?.UnitSystem;
-            if (units == null)
-                return false;
-
-            // Check unit exists (unitCount > 0 means unit is alive)
-            var unit = units.GetUnit(UnitId);
-            return unit.unitCount > 0;
+            // Fluent validation: unit must exist and be alive
+            return Core.Validation.Validate.For(gameState)
+                .UnitExists(UnitId)
+                .Result(out validationError);
         }
 
         public override void Execute(GameState gameState)
