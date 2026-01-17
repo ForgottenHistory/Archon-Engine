@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
 using Core.Events;
+using Core.Localization;
 using Core.UI;
 
 namespace StarterKit
@@ -67,7 +68,7 @@ namespace StarterKit
             panelContainer.Add(goldIcon);
 
             // Gold label
-            var goldLabel = CreateLabelText("GOLD");
+            var goldLabel = CreateLabelText(LocalizationManager.Get("UI_GOLD").ToUpper());
             goldLabel.style.marginRight = SpacingMd;
             panelContainer.Add(goldLabel);
 
@@ -117,7 +118,8 @@ namespace StarterKit
             if (incomeLabel != null && playerState != null && playerState.HasPlayerCountry)
             {
                 int income = economySystem.GetMonthlyIncomeInt(playerState.PlayerCountryId);
-                incomeLabel.text = $"(+{income}/month)";
+                string perMonth = LocalizationManager.Get("UI_PER_MONTH");
+                incomeLabel.text = $"(+{income}{perMonth})";
             }
         }
 

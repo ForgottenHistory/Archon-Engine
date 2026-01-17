@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
 using Core.Events;
+using Core.Localization;
 using Core.Systems;
 using Core.Units;
 using Core.UI;
@@ -113,11 +114,11 @@ namespace StarterKit
             var titleBar = CreateRow(Justify.SpaceBetween);
             titleBar.style.marginBottom = SpacingMd;
 
-            var titleLabel = CreateHeader("Ledger");
+            var titleLabel = CreateHeader(LocalizationManager.Get("UI_LEDGER"));
             titleBar.Add(titleLabel);
 
             closeButton = new Button(() => Hide());
-            closeButton.text = "X";
+            closeButton.text = LocalizationManager.Get("UI_CLOSE");
             closeButton.AddToClassList("button-close");
             UIHelper.SetSize(closeButton, 24f, 24f);
             closeButton.style.fontSize = FontSizeNormal;
@@ -138,7 +139,8 @@ namespace StarterKit
             panelContainer.Add(tableScrollView);
 
             // Hotkey hint
-            var hintLabel = CreateLabelText($"Press '{toggleKey}' to toggle");
+            string hintText = LocalizationManager.Get("UI_PRESS_TO_TOGGLE").Replace("$KEY", toggleKey.ToString());
+            var hintLabel = CreateLabelText(hintText);
             hintLabel.style.marginTop = SpacingMd;
             UIHelper.SetTextAlign(hintLabel, TextAnchor.MiddleCenter);
             panelContainer.Add(hintLabel);
@@ -151,11 +153,11 @@ namespace StarterKit
             UIHelper.SetPadding(row, SpacingSm, SpacingMd);
             row.style.marginBottom = 2f;
 
-            AddHeaderCell(row, "Country", ColWidthName, SortColumn.Name);
-            AddHeaderCell(row, "Provinces", ColWidthData, SortColumn.Provinces);
-            AddHeaderCell(row, "Units", ColWidthData, SortColumn.Units);
-            AddHeaderCell(row, "Gold", ColWidthData, SortColumn.Gold);
-            AddHeaderCell(row, "Income", ColWidthData, SortColumn.Income);
+            AddHeaderCell(row, LocalizationManager.Get("UI_COUNTRY_NAME"), ColWidthName, SortColumn.Name);
+            AddHeaderCell(row, LocalizationManager.Get("UI_PROVINCES"), ColWidthData, SortColumn.Provinces);
+            AddHeaderCell(row, LocalizationManager.Get("UI_UNITS"), ColWidthData, SortColumn.Units);
+            AddHeaderCell(row, LocalizationManager.Get("UI_GOLD"), ColWidthData, SortColumn.Gold);
+            AddHeaderCell(row, LocalizationManager.Get("UI_INCOME"), ColWidthData, SortColumn.Income);
 
             return row;
         }

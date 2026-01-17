@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
 using Core.Events;
+using Core.Localization;
 using Core.Systems;
 using Core.UI;
 using Map.Core;
@@ -126,12 +127,12 @@ namespace StarterKit
             headerContainer.name = "header";
             headerContainer.style.marginBottom = SpacingXs;
 
-            provinceNameLabel = CreateHeader("Province Name");
+            provinceNameLabel = CreateHeader(LocalizationManager.Get("UI_PROVINCE_NAME"));
             provinceNameLabel.name = "province-name";
             provinceNameLabel.style.flexGrow = 1f;
 
             closeButton = new Button(OnCloseClicked);
-            closeButton.text = "X";
+            closeButton.text = LocalizationManager.Get("UI_CLOSE");
             UIHelper.SetSize(closeButton, 24f, 24f);
             closeButton.style.fontSize = FontSizeNormal;
             closeButton.style.unityFontStyleAndWeight = FontStyle.Bold;
@@ -155,7 +156,7 @@ namespace StarterKit
             ownerColorIndicator = CreateColorIndicator(Color.gray);
             ownerColorIndicator.name = "owner-color";
 
-            ownerLabel = CreateText("Owner");
+            ownerLabel = CreateText(LocalizationManager.Get("UI_OWNER"));
             ownerLabel.name = "owner-label";
 
             ownerContainer.Add(ownerColorIndicator);
@@ -163,7 +164,7 @@ namespace StarterKit
             panelContainer.Add(ownerContainer);
 
             // Terrain type
-            terrainLabel = CreateSecondaryText("Terrain: Unknown");
+            terrainLabel = CreateSecondaryText($"{LocalizationManager.Get("UI_TERRAIN")}: {LocalizationManager.Get("UI_UNKNOWN")}");
             terrainLabel.name = "terrain-label";
             terrainLabel.style.marginTop = SpacingXs;
             panelContainer.Add(terrainLabel);
@@ -174,7 +175,8 @@ namespace StarterKit
             colonizeContainer.style.marginTop = SpacingMd;
             colonizeContainer.style.display = DisplayStyle.None;
 
-            colonizeButton = CreateStyledButton($"Buy Land ({COLONIZE_COST} gold)", OnColonizeClicked);
+            string buyLandText = $"{LocalizationManager.Get("UI_BUY_LAND")} ({COLONIZE_COST} {LocalizationManager.Get("UI_GOLD").ToLower()})";
+            colonizeButton = CreateStyledButton(buyLandText, OnColonizeClicked);
 
             colonizeContainer.Add(colonizeButton);
             panelContainer.Add(colonizeContainer);
@@ -328,7 +330,7 @@ namespace StarterKit
             bool ownable = terrainLookup.IsTerrainOwnable(terrainType);
 
             string ownableStr = ownable ? "" : " (unownable)";
-            terrainLabel.text = $"Terrain: {terrainName} [T{terrainType}]{ownableStr}";
+            terrainLabel.text = $"{LocalizationManager.Get("UI_TERRAIN")}: {terrainName} [T{terrainType}]{ownableStr}";
         }
 
         private void UpdateColonizeButton()
@@ -372,9 +374,12 @@ namespace StarterKit
 
             bool canAfford = economySystem.Gold >= COLONIZE_COST;
             colonizeButton.SetEnabled(canAfford);
+            string buyLand = LocalizationManager.Get("UI_BUY_LAND");
+            string gold = LocalizationManager.Get("UI_GOLD").ToLower();
+            string notEnough = LocalizationManager.Get("UI_NOT_ENOUGH_GOLD");
             colonizeButton.text = canAfford
-                ? $"Buy Land ({COLONIZE_COST} gold)"
-                : $"Buy Land ({COLONIZE_COST} gold) - Not enough gold";
+                ? $"{buyLand} ({COLONIZE_COST} {gold})"
+                : $"{buyLand} ({COLONIZE_COST} {gold}) - {notEnough}";
         }
 
         private bool IsAdjacentToPlayerTerritory(ushort provinceId)

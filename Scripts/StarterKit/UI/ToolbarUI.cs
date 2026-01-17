@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Localization;
 using Core.SaveLoad;
 using Core.UI;
 using Map.MapModes;
@@ -57,19 +58,21 @@ namespace StarterKit
             PositionPanel(top: 10f, right: 10f);
 
             // Ledger button
-            ledgerButton = CreateToolbarButton("Ledger (L)", OnLedgerClicked);
+            ledgerButton = CreateToolbarButton($"{LocalizationManager.Get("UI_LEDGER")} (L)", OnLedgerClicked);
             panelContainer.Add(ledgerButton);
 
             // Map Mode button - toggle between Political and Farm Density
-            mapModeButton = CreateToolbarButton("Map: Political (M)", OnMapModeClicked);
+            string mapMode = LocalizationManager.Get("UI_MAP_MODE");
+            string political = LocalizationManager.Get("UI_MAP_POLITICAL");
+            mapModeButton = CreateToolbarButton($"{mapMode}: {political} (M)", OnMapModeClicked);
             panelContainer.Add(mapModeButton);
 
             // Save button
-            saveButton = CreateToolbarButton("Save (F6)", OnSaveClicked);
+            saveButton = CreateToolbarButton($"{LocalizationManager.Get("UI_SAVE")} (F6)", OnSaveClicked);
             panelContainer.Add(saveButton);
 
             // Load button
-            loadButton = CreateToolbarButton("Load (F7)", OnLoadClicked);
+            loadButton = CreateToolbarButton($"{LocalizationManager.Get("UI_LOAD")} (F7)", OnLoadClicked);
             panelContainer.Add(loadButton);
         }
 
@@ -129,16 +132,19 @@ namespace StarterKit
             // Toggle between Political and Farm Density (Economic) modes
             showingFarmDensity = !showingFarmDensity;
 
+            string mapMode = LocalizationManager.Get("UI_MAP_MODE");
             if (showingFarmDensity)
             {
                 initializer.SetMapMode(MapMode.Economic); // Farm Density is registered as Economic
-                mapModeButton.text = "Map: Farms (M)";
+                string farms = LocalizationManager.Get("UI_MAP_FARMS");
+                mapModeButton.text = $"{mapMode}: {farms} (M)";
                 ArchonLogger.Log("ToolbarUI: Switched to Farm Density map mode", "starter_kit");
             }
             else
             {
                 initializer.SetMapMode(MapMode.Political);
-                mapModeButton.text = "Map: Political (M)";
+                string political = LocalizationManager.Get("UI_MAP_POLITICAL");
+                mapModeButton.text = $"{mapMode}: {political} (M)";
                 ArchonLogger.Log("ToolbarUI: Switched to Political map mode", "starter_kit");
             }
         }

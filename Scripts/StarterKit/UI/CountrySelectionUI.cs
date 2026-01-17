@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Map.Interaction;
 using Core;
+using Core.Localization;
 using Core.UI;
 
 namespace StarterKit
@@ -99,7 +100,7 @@ namespace StarterKit
             contentBox.style.alignItems = Align.Center;
 
             // Instruction label
-            instructionLabel = CreateHeader("Choose a country");
+            instructionLabel = CreateHeader(LocalizationManager.Get("UI_CHOOSE_COUNTRY"));
             instructionLabel.name = "instruction-label";
             instructionLabel.style.marginBottom = SpacingLg;
             instructionLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
@@ -109,7 +110,7 @@ namespace StarterKit
             // Start button
             startButton = new Button(OnStartClicked);
             startButton.name = "start-button";
-            startButton.text = "Start";
+            startButton.text = LocalizationManager.Get("UI_START");
             startButton.style.fontSize = FontSizeHeader - 4;
             startButton.style.color = TextPrimary;
             startButton.style.backgroundColor = buttonColor;
@@ -172,7 +173,9 @@ namespace StarterKit
 
             if (instructionLabel != null)
             {
-                instructionLabel.text = $"Selected: {countryTag}\nClick Start to begin";
+                string selected = LocalizationManager.Get("UI_SELECTED");
+                string clickStart = LocalizationManager.Get("UI_CLICK_START");
+                instructionLabel.text = $"{selected}: {countryTag}\n{clickStart}";
             }
 
             if (logSelection)
