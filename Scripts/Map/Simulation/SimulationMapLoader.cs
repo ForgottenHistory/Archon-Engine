@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Unity.Collections;
 using UnityEngine;
-using Map.Loading.Bitmaps;
+using Map.Loading.Images;
 using Map.Province;
 using Core.Systems;
 using Core.Data;

@@ -3,7 +3,7 @@
 Generate heightmap for Archon Engine.
 
 Creates:
-- heightmap.bmp: Grayscale image where brightness = elevation
+- heightmap.png: Grayscale image where brightness = elevation
   - (0, 0, 0) = lowest point
   - (94, 94, 94) = sea level
   - (255, 255, 255) = highest point
@@ -254,9 +254,9 @@ def generate_heightmap(
         # Draw hexagon with this height
         draw_hexagon(draw, cx, cy, hex_size, (gray, gray, gray))
 
-    # Save as BMP
-    heightmap_path = output_dir / "heightmap.bmp"
-    img.save(heightmap_path, "BMP")
+    # Save as PNG
+    heightmap_path = output_dir / "heightmap.png"
+    img.save(heightmap_path, "PNG")
     print(f"Saved: {heightmap_path}")
 
     # Print statistics

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using Map.Rendering;
-using Map.Loading.Bitmaps;
+using Map.Loading.Images;
 using Core;
 using Utils;
 using static Map.Loading.ProvinceMapProcessor;
@@ -132,8 +132,8 @@ namespace Map.Loading
                 string mapDirectory = System.IO.Path.GetDirectoryName(bmpPath);
                 terrainLoader.LoadAndPopulate(mapDirectory);
 
-                // Load heightmap
-                await heightmapLoader.LoadAndPopulateAsync(bmpPath);
+                // Load heightmap (PNG or BMP)
+                heightmapLoader.LoadAndPopulate(mapDirectory);
 
                 // NOTE: Terrain analysis moved to after ProvinceIDTexture population
                 // See AnalyzeProvinceTerrainAfterMapInit() - called by MapSystemCoordinator
@@ -208,8 +208,8 @@ namespace Map.Loading
                 string mapDirectory = System.IO.Path.GetDirectoryName(bmpPath);
                 terrainLoader.LoadAndPopulate(mapDirectory);
 
-                // Load heightmap
-                await heightmapLoader.LoadAndPopulateAsync(bmpPath);
+                // Load heightmap (PNG or BMP)
+                heightmapLoader.LoadAndPopulate(mapDirectory);
 
                 // Generate normal map from heightmap (GPU compute shader)
                 textureManager.GenerateNormalMapFromHeightmap(

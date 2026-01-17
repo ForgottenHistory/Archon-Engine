@@ -85,7 +85,7 @@
 - **Map.Rendering.Terrain.TerrainRendererContext** - Initialization context struct
 - **Map.Rendering.Terrain.Implementations.DefaultTerrainRenderer** - Default 4-channel blend implementation
 - **Map.Rendering.Terrain.TerrainBlendMapGenerator** - [GPU] Imperator Rome-style 4-channel blend map generation: samples ProvinceIDTexture in configurable radius (default 5x5), counts terrain types via ProvinceTerrainBuffer, outputs DetailIndexTexture (RGBA8: 4 indices) + DetailMaskTexture (RGBA8: 4 weights). Configurable sample radius and blend sharpness. (~50-100ms at load time)
-- **Map.Rendering.Terrain.ProvinceTerrainAnalyzer** - [GPU] Analyze terrain.bmp per province, generate ProvinceTerrainBuffer (65536 entries, uint per province). Feeds TerrainBlendMapGenerator.
+- **Map.Rendering.Terrain.ProvinceTerrainAnalyzer** - [GPU] Analyze terrain.png per province, generate ProvinceTerrainBuffer (65536 entries, uint per province). Feeds TerrainBlendMapGenerator.
 
 ---
 
@@ -137,17 +137,19 @@
 
 ## Loading/
 - **Map.Loading.IMapDataProvider** - Interface for map data sources
-- **Map.Loading.MapDataLoader** - Load map from image files (provinces.bmp/.png, terrain.bmp, heightmap.bmp, world_normal.bmp). Orchestrates terrain blend map generation after terrain analysis.
+- **Map.Loading.MapDataLoader** - Load map from image files (provinces.png/.bmp, terrain.png/.bmp, heightmap.png/.bmp). Prefers PNG, falls back to BMP. Orchestrates terrain blend map generation after terrain analysis.
 - **Map.Loading.ProvinceMapProcessor** - Process loaded province map data. Supports BMP and PNG formats via auto-detection.
 - **Map.Loading.DetailTextureArrayLoader** - Load terrain detail textures into Texture2DArray: scans Assets/Data/textures/terrain_detail/ for {index}_{name}.jpg/png files, supports 0-255 indices, missing textures filled with neutral gray (128,128,128), 512x512 per texture with mipmaps
 - **Map.Loading.NoiseTextureGenerator** - Generate noise textures for terrain variation
 - **Map.Loading.TerrainTypeTextureGenerator** - Generate terrain type textures from province data
 
-### Loading/Bitmaps/
-- **Map.Loading.Bitmaps.BitmapTextureLoader** - Base bitmap texture loading utilities
-- **Map.Loading.Bitmaps.HeightmapBitmapLoader** - Load heightmap bitmap (R8 grayscale)
-- **Map.Loading.Bitmaps.NormalMapBitmapLoader** - Load normal map bitmap (RGB24)
-- **Map.Loading.Bitmaps.TerrainImageLoader** - Load terrain image (PNG or BMP), uses ImageParser
+### Loading/Images/
+- **Map.Loading.Images.ImageParser** - Unified image parser, auto-detects PNG vs BMP format
+- **Map.Loading.Images.PNGParser** - Low-level PNG file parsing
+- **Map.Loading.Images.BMPParser** - Low-level BMP file parsing (legacy support)
+- **Map.Loading.Images.TerrainImageLoader** - Load terrain.png/.bmp, uses ImageParser
+- **Map.Loading.Images.HeightmapImageLoader** - Load heightmap.png/.bmp (R8 grayscale)
+- **Map.Loading.Images.NormalMapImageLoader** - Load world_normal.png/.bmp (RGB24)
 
 ### Loading/Data/
 - **Map.Loading.Data.TerrainColorMapper** - Map terrain colors to terrain types

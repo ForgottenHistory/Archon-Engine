@@ -367,8 +367,8 @@ def main():
         description='Generate terrain map for Archon Engine'
     )
     parser.add_argument(
-        '--heightmap', type=str, default='heightmap.bmp',
-        help='Path to heightmap.bmp (default: heightmap.bmp in output dir)'
+        '--heightmap', type=str, default='heightmap.png',
+        help='Path to heightmap.png (default: heightmap.png in output dir)'
     )
     parser.add_argument(
         '--output', type=str, default='.',

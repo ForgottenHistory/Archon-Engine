@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Unity.Collections;
-using Map.Loading.Bitmaps;
+using Map.Loading.Images;
 using Core.Loaders;
 using System.IO;
 using Utils;

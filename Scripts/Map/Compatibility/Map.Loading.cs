@@ -1,7 +1,7 @@
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-using Map.Loading.Bitmaps;
+using Map.Loading.Images;
 using Map.Rendering;
 using System.Threading.Tasks;
 
