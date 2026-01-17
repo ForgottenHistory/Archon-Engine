@@ -48,6 +48,7 @@ namespace StarterKit
         [SerializeField] private BuildingInfoUI buildingInfoUI;
         [SerializeField] private LedgerUI ledgerUI;
         [SerializeField] private ToolbarUI toolbarUI;
+        [SerializeField] private DiplomacyPanel diplomacyPanel;
 
         [Header("Visualization")]
         [SerializeField] private UnitVisualization unitVisualization;
@@ -296,12 +297,21 @@ namespace StarterKit
                 // Subscribe to initialize UIs after country selection
                 gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(evt =>
                 {
+                    // Initialize diplomacy panel first (so it can be passed to other UIs)
+                    if (diplomacyPanel != null)
+                    {
+                        if (logProgress)
+                            ArchonLogger.Log("Initializing diplomacy panel (post country selection)...", "starter_kit");
+
+                        diplomacyPanel.Initialize(gameState, playerState, economySystem);
+                    }
+
                     if (provinceInfoUI != null)
                     {
                         if (logProgress)
                             ArchonLogger.Log("Initializing province info UI (post country selection)...", "starter_kit");
 
-                        provinceInfoUI.Initialize(gameState, selector, highlighter, economySystem, playerState, provinceHistorySystem);
+                        provinceInfoUI.Initialize(gameState, selector, highlighter, economySystem, playerState, provinceHistorySystem, diplomacyPanel);
                     }
 
                     if (unitInfoUI != null && unitSystem != null)

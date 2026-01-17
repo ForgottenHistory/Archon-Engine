@@ -196,10 +196,11 @@ namespace Core
             ProvinceQueries = new ProvinceQueries(Provinces, Countries, Adjacencies);
             CountryQueries = new CountryQueries(Countries, Provinces, Adjacencies);
 
-            // 5. Initialize systems
+            // 10. Initialize systems
             Provinces.Initialize(EventBus);
             Countries.Initialize(EventBus);
             Time.Initialize(EventBus, Provinces); // Pass ProvinceSystem for buffer swapping
+            Diplomacy.Initialize(); // Initialize DiplomacySystem NativeCollections
 
             IsInitialized = true;
             ArchonLogger.Log("GameState initialization complete", "core_simulation");
@@ -330,6 +331,7 @@ namespace Core
                 Resources?.Shutdown();
                 Units?.Dispose();
                 Pathfinding?.Dispose();  // Dispose NativeList<ushort> neighborBuffer
+                Diplomacy?.Shutdown();   // Dispose DiplomacySystem NativeCollections
                 EventBus?.Dispose();
                 LocalizationManager.Shutdown();
 

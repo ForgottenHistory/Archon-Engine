@@ -117,13 +117,9 @@ namespace StarterKit
             var titleLabel = CreateHeader(LocalizationManager.Get("UI_LEDGER"));
             titleBar.Add(titleLabel);
 
-            closeButton = new Button(() => Hide());
-            closeButton.text = LocalizationManager.Get("UI_CLOSE");
-            closeButton.AddToClassList("button-close");
+            closeButton = CreateStyledButton("✕", Hide);
             UIHelper.SetSize(closeButton, 24f, 24f);
-            closeButton.style.fontSize = FontSizeNormal;
-            closeButton.style.unityFontStyleAndWeight = FontStyle.Bold;
-            UIHelper.SetPadding(closeButton, 0);
+            UIHelper.SetPadding(closeButton, 2f);
             titleBar.Add(closeButton);
 
             panelContainer.Add(titleBar);

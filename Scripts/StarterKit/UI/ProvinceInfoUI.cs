@@ -43,6 +43,11 @@ namespace StarterKit
         private Label historyHeaderLabel;
         private Label historyContentLabel;
 
+        // Diplomacy UI
+        private VisualElement diplomacyContainer;
+        private Button diplomacyButton;
+        private DiplomacyPanel diplomacyPanel;
+
         // References
         private ProvinceSelector provinceSelector;
         private ProvinceHighlighter provinceHighlighter;
@@ -55,13 +60,15 @@ namespace StarterKit
         private ushort currentProvinceID;
 
         public void Initialize(GameState gameStateRef, ProvinceSelector provinceSelectorRef, ProvinceHighlighter highlighterRef = null,
-            EconomySystem economySystemRef = null, PlayerState playerStateRef = null, ProvinceHistorySystem historySystemRef = null)
+            EconomySystem economySystemRef = null, PlayerState playerStateRef = null, ProvinceHistorySystem historySystemRef = null,
+            DiplomacyPanel diplomacyPanelRef = null)
         {
             provinceSelector = provinceSelectorRef;
             provinceHighlighter = highlighterRef;
             economySystem = economySystemRef;
             playerState = playerStateRef;
             historySystem = historySystemRef;
+            diplomacyPanel = diplomacyPanelRef;
 
             if (provinceSelectorRef == null)
             {
@@ -138,13 +145,10 @@ namespace StarterKit
             provinceNameLabel.name = "province-name";
             provinceNameLabel.style.flexGrow = 1f;
 
-            closeButton = new Button(OnCloseClicked);
-            closeButton.text = LocalizationManager.Get("UI_CLOSE");
+            closeButton = CreateStyledButton("✕", OnCloseClicked);
             UIHelper.SetSize(closeButton, 24f, 24f);
-            closeButton.style.fontSize = FontSizeNormal;
-            closeButton.style.unityFontStyleAndWeight = FontStyle.Bold;
             closeButton.style.marginLeft = SpacingMd;
-            UIHelper.SetPadding(closeButton, 0);
+            UIHelper.SetPadding(closeButton, 2f);
 
             headerContainer.Add(provinceNameLabel);
             headerContainer.Add(closeButton);
@@ -205,6 +209,29 @@ namespace StarterKit
             historyContainer.Add(historyContentLabel);
 
             panelContainer.Add(historyContainer);
+
+            // Diplomacy section (shown for provinces owned by other countries)
+            diplomacyContainer = new VisualElement();
+            diplomacyContainer.name = "diplomacy-container";
+            diplomacyContainer.style.marginTop = SpacingMd;
+            diplomacyContainer.style.display = DisplayStyle.None;
+
+            diplomacyButton = CreateStyledButton(LocalizationManager.Get("UI_DIPLOMACY"), OnDiplomacyClicked);
+            diplomacyContainer.Add(diplomacyButton);
+
+            panelContainer.Add(diplomacyContainer);
+        }
+
+        private void OnDiplomacyClicked()
+        {
+            if (currentProvinceID == 0 || diplomacyPanel == null)
+                return;
+
+            ushort ownerID = gameState.ProvinceQueries.GetOwner(currentProvinceID);
+            if (ownerID == 0 || ownerID == playerState?.PlayerCountryId)
+                return;
+
+            diplomacyPanel.ShowForCountry(ownerID);
         }
 
         private void HandleProvinceClicked(ushort provinceID)
@@ -344,6 +371,7 @@ namespace StarterKit
             UpdateTerrainLabel();
             UpdateColonizeButton();
             UpdateHistorySection();
+            UpdateDiplomacyButton();
         }
 
         private void UpdateTerrainLabel()
@@ -420,6 +448,31 @@ namespace StarterKit
                 return coldData?.displayName ?? $"Country {countryId}";
             }
             return $"Country {countryId}";
+        }
+
+        private void UpdateDiplomacyButton()
+        {
+            if (diplomacyContainer == null)
+                return;
+
+            // Only show for provinces owned by other countries
+            if (playerState == null || !playerState.HasPlayerCountry || diplomacyPanel == null)
+            {
+                diplomacyContainer.style.display = DisplayStyle.None;
+                return;
+            }
+
+            ushort owner = gameState.ProvinceQueries.GetOwner(currentProvinceID);
+
+            // Show diplomacy button if province is owned by someone else
+            if (owner != 0 && owner != playerState.PlayerCountryId)
+            {
+                diplomacyContainer.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                diplomacyContainer.style.display = DisplayStyle.None;
+            }
         }
 
         private void UpdateColonizeButton()

@@ -108,14 +108,10 @@ namespace StarterKit
             contentBox.Add(instructionLabel);
 
             // Start button
-            startButton = new Button(OnStartClicked);
+            startButton = CreateStyledButton(LocalizationManager.Get("UI_START"), OnStartClicked);
             startButton.name = "start-button";
-            startButton.text = LocalizationManager.Get("UI_START");
             startButton.style.fontSize = FontSizeHeader - 4;
-            startButton.style.color = TextPrimary;
-            startButton.style.backgroundColor = buttonColor;
             UIHelper.SetPadding(startButton, 12f, 40f);
-            UIHelper.SetBorderRadius(startButton, RadiusMd);
             startButton.SetEnabled(false);
             contentBox.Add(startButton);
 

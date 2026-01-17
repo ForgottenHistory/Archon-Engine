@@ -215,10 +215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456886e2f209a0a4f9686f9be13645f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  labelColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  fontSize: 14
 --- !u!114 &73886534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,10 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb09516ee8303d4d8d53c3789805d4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
   activeSpeedColor: {r: 0.3, g: 0.7, b: 0.3, a: 1}
-  fontSize: 16
 --- !u!114 &225263831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +509,7 @@ MonoBehaviour:
   buildingInfoUI: {fileID: 1161543647}
   ledgerUI: {fileID: 1456546912}
   toolbarUI: {fileID: 1053708175}
+  diplomacyPanel: {fileID: 2069782368}
   unitVisualization: {fileID: 431119}
   initializeOnStart: 1
   logProgress: 1
@@ -585,11 +579,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e89feab80181132449fad2da1fa5aab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
-  buttonColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
-  buttonHoverColor: {r: 0.35, g: 0.35, b: 0.35, a: 1}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  fontSize: 14
 --- !u!114 &1053708176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,10 +643,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f24d2ff2dab7bb849aa733d9fd8b73c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  labelColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  fontSize: 14
 --- !u!114 &1161543648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,11 +741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5404ecba71f0048bfe52125a146f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  labelColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  fontSize: 14
-  headerFontSize: 18
   hoverHighlightColor: {r: 1, g: 1, b: 1, a: 0.3}
   selectionHighlightColor: {r: 1, g: 0.84, b: 0, a: 0.5}
 --- !u!1 &1456546911
@@ -793,12 +773,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de552f4d1323814b8f5bae83260146d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.95}
-  headerColor: {r: 0.2, g: 0.2, b: 0.3, a: 1}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  playerRowColor: {r: 0.2, g: 0.3, b: 0.2, a: 1}
-  alternateRowColor: {r: 0.15, g: 0.15, b: 0.15, a: 1}
-  fontSize: 14
   toggleKey: 108
 --- !u!114 &1456546913
 MonoBehaviour:
@@ -1002,11 +976,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea77db28722a31e49b4c9d24b755e4ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.9}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  goldColor: {r: 1, g: 0.84, b: 0, a: 1}
-  incomeColor: {r: 0.5, g: 1, b: 0.5, a: 1}
-  fontSize: 18
 --- !u!1 &1920970331
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,11 +1006,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5799399ad436c418d1c8bf0ab871d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0.7}
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  fontSize: 24
-  buttonColor: {r: 0.3, g: 0.6, b: 0.9, a: 1}
   countryHighlightColor: {r: 1, g: 0.84, b: 0, a: 0.5}
+  buttonColor: {r: 0.3, g: 0.6, b: 0.9, a: 1}
   logSelection: 1
 --- !u!114 &1920970334
 MonoBehaviour:
@@ -1151,6 +1117,83 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2069782367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2069782371}
+  - component: {fileID: 2069782370}
+  - component: {fileID: 2069782369}
+  - component: {fileID: 2069782368}
+  m_Layer: 0
+  m_Name: Diplomacy UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2069782368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069782367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eab1bce6406c682419a16599eada342d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2069782369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069782367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e89feab80181132449fad2da1fa5aab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2069782370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069782367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 4916e544b871de14bb98836a4377f8e7, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 0}
+  m_SortingOrder: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+--- !u!4 &2069782371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069782367}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17.913025, y: -441.1258, z: -263.4595}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1440,3 +1483,4 @@ SceneRoots:
   - {fileID: 1161543649}
   - {fileID: 1456546914}
   - {fileID: 1053708177}
+  - {fileID: 2069782371}
