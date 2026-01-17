@@ -219,8 +219,8 @@ namespace StarterKit
                         Name = GetCountryName(countryId),
                         Provinces = provinceCount,
                         Units = GetUnitCount(countryId),
-                        Gold = economySystem?.GetCountryGold(countryId) ?? 0,
-                        Income = economySystem?.GetMonthlyIncome(countryId) ?? 0
+                        Gold = economySystem?.GetCountryGoldInt(countryId) ?? 0,
+                        Income = economySystem?.GetMonthlyIncomeInt(countryId) ?? 0
                     };
                     countryDataList.Add(rowData);
                 }

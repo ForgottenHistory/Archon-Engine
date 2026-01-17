@@ -30,11 +30,8 @@ namespace StarterKit
                 return;
             }
 
-            // Subscribe to gold changes (C# event - manual cleanup)
-            if (economySystem != null)
-            {
-                economySystem.OnGoldChanged += OnGoldChanged;
-            }
+            // Subscribe to gold changes via EventBus (Pattern 3)
+            Subscribe<GoldChangedEvent>(OnGoldChanged);
 
             // Subscribe to player country selection
             Subscribe<PlayerCountrySelectedEvent>(OnPlayerCountrySelected);
@@ -47,12 +44,7 @@ namespace StarterKit
 
         protected override void OnDestroy()
         {
-            // C# event - manual cleanup
-            if (economySystem != null)
-            {
-                economySystem.OnGoldChanged -= OnGoldChanged;
-            }
-
+            // EventBus subscriptions auto-disposed by base class
             base.OnDestroy();
         }
 
@@ -103,9 +95,13 @@ namespace StarterKit
             UpdateDisplay();
         }
 
-        private void OnGoldChanged(int oldValue, int newValue)
+        private void OnGoldChanged(GoldChangedEvent evt)
         {
-            UpdateDisplay();
+            // Only update if it's the player's gold that changed
+            if (playerState != null && evt.CountryId == playerState.PlayerCountryId)
+            {
+                UpdateDisplay();
+            }
         }
 
         private void UpdateDisplay()
@@ -118,9 +114,9 @@ namespace StarterKit
                 goldValueLabel.text = economySystem.Gold.ToString();
             }
 
-            if (incomeLabel != null)
+            if (incomeLabel != null && playerState != null && playerState.HasPlayerCountry)
             {
-                int income = economySystem.GetMonthlyIncome();
+                int income = economySystem.GetMonthlyIncomeInt(playerState.PlayerCountryId);
                 incomeLabel.text = $"(+{income}/month)";
             }
         }

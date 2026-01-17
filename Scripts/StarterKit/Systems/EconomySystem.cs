@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.Collections;
 using Core;
+using Core.Data;
 using Core.Events;
 using Core.Systems;
 
@@ -12,6 +13,10 @@ namespace StarterKit
     /// Simple economy for StarterKit.
     /// 1 gold per province + building bonuses, collected monthly.
     /// Tracks gold for ALL countries (for ledger display).
+    ///
+    /// Uses FixedPoint64 for deterministic calculations across all platforms.
+    /// This ensures multiplayer sync - float operations produce different results
+    /// on different CPUs, but FixedPoint64 is identical everywhere.
     /// </summary>
     public class EconomySystem : IDisposable
     {
@@ -21,19 +26,22 @@ namespace StarterKit
         private readonly CompositeDisposable subscriptions = new CompositeDisposable();
         private bool isDisposed;
 
-        // Gold storage for all countries
-        private Dictionary<ushort, int> countryGold = new Dictionary<ushort, int>();
+        // Gold storage for all countries (FixedPoint64 for determinism)
+        private Dictionary<ushort, FixedPoint64> countryGold = new Dictionary<ushort, FixedPoint64>();
 
         // Optional building system for bonus calculation
         private BuildingSystem buildingSystem;
 
         /// <summary>
-        /// Player's gold (convenience property)
+        /// Player's gold (convenience property, returns int for simple display)
         /// </summary>
-        public int Gold => GetCountryGold(playerState?.PlayerCountryId ?? 0);
+        public int Gold => GetCountryGold(playerState?.PlayerCountryId ?? 0).ToInt();
 
-        // Event for UI updates
-        public event Action<int, int> OnGoldChanged; // oldValue, newValue
+        /// <summary>
+        /// Player's gold as FixedPoint64 (for precise calculations)
+        /// </summary>
+        public FixedPoint64 GoldFixed => GetCountryGold(playerState?.PlayerCountryId ?? 0);
+
 
         public EconomySystem(GameState gameStateRef, PlayerState playerStateRef, bool log = true)
         {
@@ -100,14 +108,15 @@ namespace StarterKit
         private void CollectIncomeForCountry(ushort countryId)
         {
             int provinceCount = CountProvinces(countryId);
-            int baseIncome = provinceCount; // 1 gold per province
-            int buildingBonus = CalculateBuildingBonus(countryId);
-            int income = baseIncome + buildingBonus;
+            // Use FixedPoint64 for all calculations - deterministic across platforms
+            FixedPoint64 baseIncome = FixedPoint64.FromInt(provinceCount); // 1 gold per province
+            FixedPoint64 buildingBonus = CalculateBuildingBonus(countryId);
+            FixedPoint64 income = baseIncome + buildingBonus;
 
-            if (income > 0)
+            if (income > FixedPoint64.Zero)
             {
-                int oldGold = GetCountryGold(countryId);
-                int newGold = oldGold + income;
+                FixedPoint64 oldGold = GetCountryGold(countryId);
+                FixedPoint64 newGold = oldGold + income;
                 countryGold[countryId] = newGold;
 
                 // Emit gold changed event
@@ -115,17 +124,17 @@ namespace StarterKit
 
                 if (logCollection && playerState != null && countryId == playerState.PlayerCountryId)
                 {
-                    ArchonLogger.Log($"EconomySystem: Collected {income} gold ({baseIncome} base + {buildingBonus} buildings) from {provinceCount} provinces (Total: {newGold})", "starter_kit");
+                    ArchonLogger.Log($"EconomySystem: Collected {income.ToInt()} gold ({baseIncome.ToInt()} base + {buildingBonus.ToInt()} buildings) from {provinceCount} provinces (Total: {newGold.ToInt()})", "starter_kit");
                 }
             }
         }
 
-        private int CalculateBuildingBonus(ushort countryId)
+        private FixedPoint64 CalculateBuildingBonus(ushort countryId)
         {
             if (buildingSystem == null || gameState?.ProvinceQueries == null)
-                return 0;
+                return FixedPoint64.Zero;
 
-            int totalBonus = 0;
+            FixedPoint64 totalBonus = FixedPoint64.Zero;
 
             // Get all provinces owned by the country (must dispose NativeArray)
             var provinceIds = gameState.ProvinceQueries.GetCountryProvinces(countryId);
@@ -133,7 +142,8 @@ namespace StarterKit
             {
                 foreach (var provinceId in provinceIds)
                 {
-                    totalBonus += buildingSystem.GetProvinceGoldBonus(provinceId);
+                    // Convert int bonus to FixedPoint64
+                    totalBonus = totalBonus + FixedPoint64.FromInt(buildingSystem.GetProvinceGoldBonus(provinceId));
                 }
             }
             finally
@@ -153,31 +163,47 @@ namespace StarterKit
         }
 
         /// <summary>
-        /// Get gold for a specific country.
+        /// Get gold for a specific country as FixedPoint64.
         /// </summary>
-        public int GetCountryGold(ushort countryId)
+        public FixedPoint64 GetCountryGold(ushort countryId)
         {
-            if (countryId == 0) return 0;
-            return countryGold.TryGetValue(countryId, out int gold) ? gold : 0;
+            if (countryId == 0) return FixedPoint64.Zero;
+            return countryGold.TryGetValue(countryId, out FixedPoint64 gold) ? gold : FixedPoint64.Zero;
+        }
+
+        /// <summary>
+        /// Get gold for a specific country as int (for simple display).
+        /// </summary>
+        public int GetCountryGoldInt(ushort countryId)
+        {
+            return GetCountryGold(countryId).ToInt();
         }
 
         /// <summary>
         /// Get monthly income for a country (province count + building bonuses)
         /// </summary>
-        public int GetMonthlyIncome(ushort countryId)
+        public FixedPoint64 GetMonthlyIncome(ushort countryId)
         {
-            return CountProvinces(countryId) + CalculateBuildingBonus(countryId);
+            return FixedPoint64.FromInt(CountProvinces(countryId)) + CalculateBuildingBonus(countryId);
+        }
+
+        /// <summary>
+        /// Get monthly income for a country as int (for simple display)
+        /// </summary>
+        public int GetMonthlyIncomeInt(ushort countryId)
+        {
+            return GetMonthlyIncome(countryId).ToInt();
         }
 
         /// <summary>
         /// Get monthly income for player (convenience)
         /// </summary>
-        public int GetMonthlyIncome()
+        public int GetMonthlyIncomeInt()
         {
             if (playerState == null || !playerState.HasPlayerCountry)
                 return 0;
 
-            return GetMonthlyIncome(playerState.PlayerCountryId);
+            return GetMonthlyIncomeInt(playerState.PlayerCountryId);
         }
 
         /// <summary>
@@ -188,19 +214,27 @@ namespace StarterKit
             if (playerState == null || !playerState.HasPlayerCountry)
                 return;
 
-            AddGoldToCountry(playerState.PlayerCountryId, amount);
+            AddGoldToCountry(playerState.PlayerCountryId, FixedPoint64.FromInt(amount));
         }
 
         /// <summary>
-        /// Add gold to a specific country
+        /// Add gold to a specific country (FixedPoint64 version for precise calculations)
         /// </summary>
-        public void AddGoldToCountry(ushort countryId, int amount)
+        public void AddGoldToCountry(ushort countryId, FixedPoint64 amount)
         {
-            int oldGold = GetCountryGold(countryId);
-            int newGold = oldGold + amount;
+            FixedPoint64 oldGold = GetCountryGold(countryId);
+            FixedPoint64 newGold = oldGold + amount;
             countryGold[countryId] = newGold;
 
             EmitGoldChanged(countryId, oldGold, newGold);
+        }
+
+        /// <summary>
+        /// Add gold to a specific country (int version for simple cases)
+        /// </summary>
+        public void AddGoldToCountry(ushort countryId, int amount)
+        {
+            AddGoldToCountry(countryId, FixedPoint64.FromInt(amount));
         }
 
         /// <summary>
@@ -211,19 +245,19 @@ namespace StarterKit
             if (playerState == null || !playerState.HasPlayerCountry)
                 return false;
 
-            return RemoveGoldFromCountry(playerState.PlayerCountryId, amount);
+            return RemoveGoldFromCountry(playerState.PlayerCountryId, FixedPoint64.FromInt(amount));
         }
 
         /// <summary>
         /// Remove gold from a specific country (returns false if insufficient)
         /// </summary>
-        public bool RemoveGoldFromCountry(ushort countryId, int amount)
+        public bool RemoveGoldFromCountry(ushort countryId, FixedPoint64 amount)
         {
-            int currentGold = GetCountryGold(countryId);
+            FixedPoint64 currentGold = GetCountryGold(countryId);
             if (currentGold < amount)
                 return false;
 
-            int newGold = currentGold - amount;
+            FixedPoint64 newGold = currentGold - amount;
             countryGold[countryId] = newGold;
 
             EmitGoldChanged(countryId, currentGold, newGold);
@@ -231,23 +265,24 @@ namespace StarterKit
         }
 
         /// <summary>
-        /// Emit gold changed event via EventBus and C# event
+        /// Remove gold from a specific country (int version for simple cases)
         /// </summary>
-        private void EmitGoldChanged(ushort countryId, int oldGold, int newGold)
+        public bool RemoveGoldFromCountry(ushort countryId, int amount)
         {
-            // Emit via EventBus for all listeners
+            return RemoveGoldFromCountry(countryId, FixedPoint64.FromInt(amount));
+        }
+
+        /// <summary>
+        /// Emit gold changed event via EventBus (Pattern 3: Event-Driven Architecture)
+        /// </summary>
+        private void EmitGoldChanged(ushort countryId, FixedPoint64 oldGold, FixedPoint64 newGold)
+        {
             gameState.EventBus.Emit(new GoldChangedEvent
             {
                 CountryId = countryId,
-                OldValue = oldGold,
-                NewValue = newGold
+                OldValue = oldGold.ToInt(),
+                NewValue = newGold.ToInt()
             });
-
-            // Also fire C# event for backward compatibility (player only)
-            if (playerState != null && countryId == playerState.PlayerCountryId)
-            {
-                OnGoldChanged?.Invoke(oldGold, newGold);
-            }
         }
 
         /// <summary>
@@ -263,7 +298,8 @@ namespace StarterKit
         // ====================================================================
 
         /// <summary>
-        /// Serialize economy state to byte array
+        /// Serialize economy state to byte array.
+        /// FixedPoint64 uses its RawValue (long) for deterministic serialization.
         /// </summary>
         public byte[] Serialize()
         {
@@ -274,14 +310,16 @@ namespace StarterKit
                 foreach (var kvp in countryGold)
                 {
                     writer.Write(kvp.Key);
-                    writer.Write(kvp.Value);
+                    // Serialize FixedPoint64 as raw long value for determinism
+                    writer.Write(kvp.Value.RawValue);
                 }
                 return ms.ToArray();
             }
         }
 
         /// <summary>
-        /// Deserialize economy state from byte array
+        /// Deserialize economy state from byte array.
+        /// Restores FixedPoint64 from raw long values.
         /// </summary>
         public void Deserialize(byte[] data)
         {
@@ -295,8 +333,9 @@ namespace StarterKit
                 for (int i = 0; i < count; i++)
                 {
                     ushort countryId = reader.ReadUInt16();
-                    int gold = reader.ReadInt32();
-                    countryGold[countryId] = gold;
+                    // Deserialize FixedPoint64 from raw long value
+                    long rawGold = reader.ReadInt64();
+                    countryGold[countryId] = FixedPoint64.FromRaw(rawGold);
                 }
 
                 if (logCollection)
