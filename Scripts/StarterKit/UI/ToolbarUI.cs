@@ -27,8 +27,9 @@ namespace StarterKit
         private LedgerUI ledgerUI;
         private SaveManager saveManager;
 
-        // Map mode state
-        private bool showingFarmDensity = false;
+        // Map mode state - cycles through: Political -> Economic (Farms) -> Terrain -> Political
+        private int currentMapModeIndex = 0;
+        private static readonly MapMode[] mapModeCycle = { MapMode.Political, MapMode.Economic, MapMode.Terrain };
 
         public void Initialize(GameState gameStateRef, LedgerUI ledgerUIRef, SaveManager saveManagerRef)
         {
@@ -129,24 +130,28 @@ namespace StarterKit
                 return;
             }
 
-            // Toggle between Political and Farm Density (Economic) modes
-            showingFarmDensity = !showingFarmDensity;
+            // Cycle through map modes: Political -> Economic (Farms) -> Terrain -> Political
+            currentMapModeIndex = (currentMapModeIndex + 1) % mapModeCycle.Length;
+            MapMode newMode = mapModeCycle[currentMapModeIndex];
 
-            string mapMode = LocalizationManager.Get("UI_MAP_MODE");
-            if (showingFarmDensity)
+            initializer.SetMapMode(newMode);
+            UpdateMapModeButtonText(newMode);
+
+            ArchonLogger.Log($"ToolbarUI: Switched to {newMode} map mode", "starter_kit");
+        }
+
+        private void UpdateMapModeButtonText(MapMode mode)
+        {
+            string mapModeLabel = LocalizationManager.Get("UI_MAP_MODE");
+            string modeName = mode switch
             {
-                initializer.SetMapMode(MapMode.Economic); // Farm Density is registered as Economic
-                string farms = LocalizationManager.Get("UI_MAP_FARMS");
-                mapModeButton.text = $"{mapMode}: {farms} (M)";
-                ArchonLogger.Log("ToolbarUI: Switched to Farm Density map mode", "starter_kit");
-            }
-            else
-            {
-                initializer.SetMapMode(MapMode.Political);
-                string political = LocalizationManager.Get("UI_MAP_POLITICAL");
-                mapModeButton.text = $"{mapMode}: {political} (M)";
-                ArchonLogger.Log("ToolbarUI: Switched to Political map mode", "starter_kit");
-            }
+                MapMode.Political => LocalizationManager.Get("UI_MAP_POLITICAL"),
+                MapMode.Economic => LocalizationManager.Get("UI_MAP_FARMS"),
+                MapMode.Terrain => LocalizationManager.Get("UI_MAP_TERRAIN"),
+                _ => mode.ToString()
+            };
+
+            mapModeButton.text = $"{mapModeLabel}: {modeName} (M)";
         }
 
         private void Update()

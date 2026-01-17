@@ -289,6 +289,18 @@ namespace Core.Systems
             int oldSpeed = gameSpeed;
             gameSpeed = multiplier;
 
+            // CRITICAL: Reset accumulator when speed decreases to prevent "momentum"
+            // Without this, switching from 100x to 1x would continue at high speed
+            // until the old accumulator drains
+            if (multiplier < oldSpeed)
+            {
+                // Clamp accumulator to at most 1 tick worth to ensure immediate response
+                if (accumulator > FixedPoint64.One)
+                {
+                    accumulator = FixedPoint64.FromFloat(0.5f); // Keep partial progress
+                }
+            }
+
             // Speed 0 means paused
             if (multiplier == 0)
             {

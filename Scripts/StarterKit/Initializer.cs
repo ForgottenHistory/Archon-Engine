@@ -71,6 +71,7 @@ namespace StarterKit
 
         // Map modes (GAME layer extends ENGINE map modes)
         private FarmDensityMapMode farmDensityMapMode;
+        private TerrainCostMapMode terrainCostMapMode;
         private MapModeManager mapModeManager;
 
         private bool isInitialized;
@@ -522,7 +523,18 @@ namespace StarterKit
                 });
 
                 if (logProgress)
-                    ArchonLogger.Log("Initializer: FarmDensityMapMode registered (use 'M' key or toolbar to switch)", "starter_kit");
+                    ArchonLogger.Log("Initializer: FarmDensityMapMode registered", "starter_kit");
+            }
+
+            // Create and register Terrain Movement Cost map mode
+            // Demonstrates: ENGINE terrain costs visualized by GAME layer
+            if (gameState.Registries?.Terrains != null && mapModeManager != null)
+            {
+                terrainCostMapMode = new TerrainCostMapMode(gameState, mapModeManager);
+                mapModeManager.RegisterHandler(MapMode.Terrain, terrainCostMapMode);
+
+                if (logProgress)
+                    ArchonLogger.Log("Initializer: TerrainCostMapMode registered", "starter_kit");
             }
 
             yield return null;
@@ -616,6 +628,22 @@ namespace StarterKit
             if (gameState.Pathfinding != null && gameState.Adjacencies.IsInitialized)
             {
                 gameState.Pathfinding.Initialize(gameState.Adjacencies);
+
+                // Set up terrain-based movement costs (Pattern 1: Engine-Game Separation)
+                // ENGINE: TerrainMovementCostCalculator provides terrain cost lookups
+                // GAME: LandUnitCostCalculator adds policy (land units can't cross water)
+                if (gameState.Registries?.Terrains != null && gameState.Registries.Terrains.Count > 0)
+                {
+                    var terrainCalculator = new TerrainMovementCostCalculator(
+                        gameState.Provinces,
+                        gameState.Registries.Terrains);
+                    var landUnitCalculator = new LandUnitCostCalculator(terrainCalculator);
+                    gameState.Pathfinding.SetDefaultCostCalculator(landUnitCalculator);
+
+                    if (logProgress)
+                        ArchonLogger.Log("Initializer: Terrain-based pathfinding enabled", "starter_kit");
+                }
+
                 if (logProgress)
                     ArchonLogger.Log("Initializer: PathfindingSystem initialized", "starter_kit");
             }

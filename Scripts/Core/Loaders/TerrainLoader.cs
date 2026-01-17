@@ -72,15 +72,14 @@ namespace Core.Loaders
                 if (terrainObj == null)
                     continue;
 
-                // Parse terrain properties
+                // Parse ENGINE terrain properties only
+                // GAME layer parses additional fields via its own loader
                 var terrain = new TerrainData
                 {
                     TerrainId = terrainId,
                     Name = FormatTerrainName(key),
-                    IsWater = GetBool(terrainObj, "is_water", false),
                     MovementCost = GetFloat(terrainObj, "movement_cost", 1.0f),
-                    DefenceBonus = GetInt(terrainObj, "defence", 0),
-                    SupplyLimit = GetInt(terrainObj, "supply_limit", 5)
+                    IsWater = GetBool(terrainObj, "is_water", false)
                 };
 
                 // Parse color if present (for reference, mainly used by Map layer)
@@ -115,54 +114,47 @@ namespace Core.Loaders
             return string.Join(" ", words);
         }
 
-        private static bool GetBool(JObject obj, string key, bool defaultValue)
-        {
-            var token = obj[key];
-            return token?.Value<bool>() ?? defaultValue;
-        }
-
         private static float GetFloat(JObject obj, string key, float defaultValue)
         {
             var token = obj[key];
             return token?.Value<float>() ?? defaultValue;
         }
 
-        private static int GetInt(JObject obj, string key, int defaultValue)
+        private static bool GetBool(JObject obj, string key, bool defaultValue)
         {
             var token = obj[key];
-            return token?.Value<int>() ?? defaultValue;
+            return token?.Value<bool>() ?? defaultValue;
         }
 
         private static void CreateDefaultTerrains(Registry<TerrainData> terrainRegistry)
         {
-            // Default terrains matching the typical terrain.json5 order
+            // Default terrains - ENGINE fields only (name, movement_cost, is_water)
+            // GAME layer adds defence, supply, etc. via customData
             var defaultTerrains = new[]
             {
-                ("ocean", "Ocean", true, 1.0f, 0, 0),
-                ("inland_ocean", "Inland Ocean", true, 1.0f, 0, 0),
-                ("grasslands", "Grasslands", false, 1.0f, 0, 8),
-                ("plains", "Plains", false, 1.0f, 0, 8),
-                ("hills", "Hills", false, 1.4f, 1, 5),
-                ("highlands", "Highlands", false, 1.3f, 1, 4),
-                ("mountain", "Mountain", false, 1.5f, 2, 3),
-                ("desert", "Desert", false, 1.1f, 0, 3),
-                ("forest", "Forest", false, 1.25f, 1, 4),
-                ("jungle", "Jungle", false, 1.4f, 1, 3),
-                ("marsh", "Marsh", false, 1.3f, 0, 3),
-                ("snow", "Snow", false, 1.6f, 2, 2),
+                ("ocean", "Ocean", 1.0f, true),
+                ("inland_ocean", "Inland Ocean", 1.0f, true),
+                ("grasslands", "Grasslands", 1.0f, false),
+                ("plains", "Plains", 1.0f, false),
+                ("hills", "Hills", 1.4f, false),
+                ("highlands", "Highlands", 1.3f, false),
+                ("mountain", "Mountain", 1.5f, false),
+                ("desert", "Desert", 1.1f, false),
+                ("forest", "Forest", 1.25f, false),
+                ("jungle", "Jungle", 1.4f, false),
+                ("marsh", "Marsh", 1.3f, false),
+                ("snow", "Snow", 1.6f, false),
             };
 
             byte id = 0;
-            foreach (var (key, name, isWater, moveCost, defence, supply) in defaultTerrains)
+            foreach (var (key, name, moveCost, isWater) in defaultTerrains)
             {
                 var terrain = new TerrainData
                 {
                     TerrainId = id,
                     Name = name,
-                    IsWater = isWater,
                     MovementCost = moveCost,
-                    DefenceBonus = defence,
-                    SupplyLimit = supply
+                    IsWater = isWater
                 };
                 terrainRegistry.Register(key, terrain);
                 id++;

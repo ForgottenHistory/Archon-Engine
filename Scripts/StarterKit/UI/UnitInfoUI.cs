@@ -92,9 +92,9 @@ namespace StarterKit
 
         protected override void CreateUI()
         {
-            // Create panel container - positioned above province info (bottom left, higher up)
+            // Create panel container - positioned above buildings panel (bottom left)
             panelContainer = CreateStyledPanel("unit-info-panel", minWidth: 180f);
-            PositionPanel(bottom: 200f, left: 10f);
+            PositionPanel(bottom: 500f, left: 10f);
 
             // Header
             headerLabel = CreateTitle(LocalizationManager.Get("UI_UNITS"));

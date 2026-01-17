@@ -63,22 +63,40 @@ namespace Core.Registries
         }
     }
 
-    // Placeholder data classes - these will be properly implemented in Phase 3
+    /// <summary>
+    /// ENGINE LAYER: Generic terrain data.
+    /// Contains mechanism (color, movement cost, terrain classification).
+    /// GAME layer extends with policy (defence, supply, attrition) via customData.
+    /// </summary>
     public class TerrainData
     {
         public string Name { get; set; }
         public byte TerrainId { get; set; }
 
-        // Terrain properties (loaded from terrain.json5)
-        public bool IsWater { get; set; }
+        // ENGINE properties (loaded from terrain.json5)
         public float MovementCost { get; set; } = 1.0f;
-        public int DefenceBonus { get; set; }
-        public int SupplyLimit { get; set; } = 5;
+        public bool IsWater { get; set; } // Terrain classification (water vs land)
 
         // Color (from terrain.json5, for Map layer reference)
         public byte ColorR { get; set; }
         public byte ColorG { get; set; }
         public byte ColorB { get; set; }
+
+        // GAME layer extension point
+        public System.Collections.Generic.Dictionary<string, object> CustomData { get; set; }
+
+        public T GetCustomData<T>(string key, T defaultValue = default)
+        {
+            if (CustomData != null && CustomData.TryGetValue(key, out var value) && value is T typedValue)
+                return typedValue;
+            return defaultValue;
+        }
+
+        public void SetCustomData(string key, object value)
+        {
+            CustomData ??= new System.Collections.Generic.Dictionary<string, object>();
+            CustomData[key] = value;
+        }
     }
 
     public class BuildingData

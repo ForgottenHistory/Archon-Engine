@@ -61,6 +61,7 @@
  UI_MAP_MODE:0 "Map"
  UI_MAP_FARMS:0 "Farms"
  UI_MAP_POLITICAL:0 "Political"
+ UI_MAP_TERRAIN:0 "Terrain Cost"
  UI_PER_MONTH:0 "/month"
  UI_MOVE_UNITS:0 "Move Units"
  UI_MOVE_MODE:0 "Move Mode"
