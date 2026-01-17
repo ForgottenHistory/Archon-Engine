@@ -63,12 +63,12 @@ namespace StarterKit
             provinceSelector.OnProvinceRightClicked += HandleProvinceDeselected;
             provinceSelector.OnSelectionCleared += HandleSelectionCleared;
 
-            // Subscribe to unit events for auto-refresh
-            unitSystem.OnUnitCreated += HandleUnitCreated;
-            unitSystem.OnUnitDestroyed += HandleUnitDestroyed;
-            unitSystem.OnUnitMoved += HandleUnitMoved;
+            // Subscribe to unit events for auto-refresh (via EventBus)
+            Subscribe<UnitCreatedEvent>(HandleUnitCreated);
+            Subscribe<UnitDestroyedEvent>(HandleUnitDestroyed);
+            Subscribe<UnitMovedEvent>(HandleUnitMoved);
 
-            // Subscribe to EventBus events
+            // Subscribe to other EventBus events
             Subscribe<GoldChangedEvent>(HandleGoldChanged);
             Subscribe<ProvinceOwnershipChangedEvent>(HandleOwnershipChanged);
 
@@ -85,13 +85,6 @@ namespace StarterKit
                 provinceSelector.OnProvinceClicked -= HandleProvinceClicked;
                 provinceSelector.OnProvinceRightClicked -= HandleProvinceDeselected;
                 provinceSelector.OnSelectionCleared -= HandleSelectionCleared;
-            }
-
-            if (unitSystem != null)
-            {
-                unitSystem.OnUnitCreated -= HandleUnitCreated;
-                unitSystem.OnUnitDestroyed -= HandleUnitDestroyed;
-                unitSystem.OnUnitMoved -= HandleUnitMoved;
             }
 
             base.OnDestroy();
@@ -198,30 +191,26 @@ namespace StarterKit
             Hide();
         }
 
-        private void HandleUnitCreated(ushort unitId)
+        private void HandleUnitCreated(UnitCreatedEvent evt)
         {
-            if (selectedProvinceID != 0)
-            {
-                var unit = unitSystem.GetUnit(unitId);
-                if (unit.provinceID == selectedProvinceID)
-                {
-                    RefreshUnitsList();
-                }
-            }
-        }
-
-        private void HandleUnitDestroyed(ushort unitId)
-        {
-            if (selectedProvinceID != 0)
+            if (selectedProvinceID != 0 && evt.ProvinceID == selectedProvinceID)
             {
                 RefreshUnitsList();
             }
         }
 
-        private void HandleUnitMoved(ushort unitId, ushort fromProvince, ushort toProvince)
+        private void HandleUnitDestroyed(UnitDestroyedEvent evt)
+        {
+            if (selectedProvinceID != 0 && evt.ProvinceID == selectedProvinceID)
+            {
+                RefreshUnitsList();
+            }
+        }
+
+        private void HandleUnitMoved(UnitMovedEvent evt)
         {
             if (selectedProvinceID != 0 &&
-                (fromProvince == selectedProvinceID || toProvince == selectedProvinceID))
+                (evt.OldProvinceID == selectedProvinceID || evt.NewProvinceID == selectedProvinceID))
             {
                 RefreshUnitsList();
             }

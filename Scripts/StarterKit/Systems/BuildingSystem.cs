@@ -2,11 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Core;
+using Core.Data;
 using Core.Loaders;
+using Core.Modifiers;
 using Newtonsoft.Json.Linq;
 
 namespace StarterKit
 {
+    /// <summary>
+    /// Building modifier definition (loaded from JSON5).
+    /// </summary>
+    public struct BuildingModifier
+    {
+        public ModifierType Type;
+        public FixedPoint64 Value;
+        public bool IsMultiplicative;
+        public bool IsCountryWide;
+    }
+
     /// <summary>
     /// Simple building definition.
     /// </summary>
@@ -16,8 +29,10 @@ namespace StarterKit
         public string StringID { get; set; }
         public string Name { get; set; }
         public int Cost { get; set; }
-        public int GoldOutput { get; set; } // Bonus gold per month
         public int MaxPerProvince { get; set; }
+
+        // Modifiers applied when building is constructed
+        public List<BuildingModifier> Modifiers { get; set; } = new List<BuildingModifier>();
     }
 
     /// <summary>
@@ -30,6 +45,7 @@ namespace StarterKit
 
     /// <summary>
     /// Simple building system. Allows constructing buildings that provide bonuses.
+    /// Uses ModifierSystem for province-local and country-wide effects.
     /// </summary>
     public class BuildingSystem : IDisposable
     {
@@ -38,6 +54,7 @@ namespace StarterKit
         private readonly GameState gameState;
         private readonly PlayerState playerState;
         private readonly EconomySystem economySystem;
+        private readonly ModifierSystem modifierSystem;
         private readonly bool logProgress;
         private bool isDisposed;
 
@@ -49,9 +66,6 @@ namespace StarterKit
         // Province buildings (provinceId -> building data)
         private readonly Dictionary<ushort, ProvinceBuildingData> provinceBuildings;
 
-        // Events
-        public event Action<ushort, ushort> OnBuildingConstructed; // provinceId, buildingTypeId
-
         // Public accessor for UI
         public PlayerState PlayerState => playerState;
 
@@ -59,11 +73,12 @@ namespace StarterKit
 
         #region Constructor & Disposal
 
-        public BuildingSystem(GameState gameStateRef, PlayerState playerStateRef, EconomySystem economySystemRef, bool log = true)
+        public BuildingSystem(GameState gameStateRef, PlayerState playerStateRef, EconomySystem economySystemRef, ModifierSystem modifierSystemRef, bool log = true)
         {
             gameState = gameStateRef;
             playerState = playerStateRef;
             economySystem = economySystemRef;
+            modifierSystem = modifierSystemRef;
             logProgress = log;
 
             buildingTypesByString = new Dictionary<string, BuildingType>();
@@ -124,9 +139,35 @@ namespace StarterKit
                 StringID = jObj["id"]?.Value<string>() ?? Path.GetFileNameWithoutExtension(filePath),
                 Name = jObj["name"]?.Value<string>() ?? "Unknown",
                 Cost = jObj["cost"]?["gold"]?.Value<int>() ?? 0,
-                GoldOutput = jObj["modifiers"]?["gold_output"]?.Value<int>() ?? 0,
                 MaxPerProvince = jObj["max_per_province"]?.Value<int>() ?? 1
             };
+
+            // Parse modifiers from JSON5
+            var modifiersObj = jObj["modifiers"] as JObject;
+            if (modifiersObj != null)
+            {
+                foreach (var prop in modifiersObj.Properties())
+                {
+                    string key = prop.Name;
+                    double value = prop.Value.Value<double>();
+
+                    // Convert string key to ModifierType
+                    var modType = ModifierTypeHelper.FromKey(key);
+                    if (modType == null)
+                    {
+                        ArchonLogger.LogWarning($"BuildingSystem: Unknown modifier key '{key}' in {buildingType.StringID}", "starter_kit");
+                        continue;
+                    }
+
+                    buildingType.Modifiers.Add(new BuildingModifier
+                    {
+                        Type = modType.Value,
+                        Value = FixedPoint64.FromDouble(value),
+                        IsMultiplicative = ModifierTypeHelper.IsMultiplicative(modType.Value),
+                        IsCountryWide = ModifierTypeHelper.IsCountryWide(modType.Value)
+                    });
+                }
+            }
 
             return buildingType;
         }
@@ -139,7 +180,10 @@ namespace StarterKit
 
             if (logProgress)
             {
-                ArchonLogger.Log($"BuildingSystem: Registered '{buildingType.Name}' (ID={buildingType.ID}, cost={buildingType.Cost}, gold_output={buildingType.GoldOutput})", "starter_kit");
+                string modifierInfo = buildingType.Modifiers.Count > 0
+                    ? $", modifiers: {buildingType.Modifiers.Count}"
+                    : "";
+                ArchonLogger.Log($"BuildingSystem: Registered '{buildingType.Name}' (ID={buildingType.ID}, cost={buildingType.Cost}{modifierInfo})", "starter_kit");
             }
         }
 
@@ -217,6 +261,7 @@ namespace StarterKit
 
         /// <summary>
         /// Construct a building in a province (instant construction).
+        /// Applies modifiers via ModifierSystem.
         /// </summary>
         public bool Construct(ushort provinceId, string buildingTypeId)
         {
@@ -227,6 +272,7 @@ namespace StarterKit
             }
 
             var buildingType = GetBuildingType(buildingTypeId);
+            ushort ownerId = gameState.ProvinceQueries.GetOwner(provinceId);
 
             // Deduct gold
             economySystem.RemoveGold(buildingType.Cost);
@@ -244,17 +290,22 @@ namespace StarterKit
             }
             data.BuildingCounts[buildingType.ID]++;
 
+            // Apply modifiers via ModifierSystem
+            ApplyBuildingModifiers(provinceId, ownerId, buildingType);
+
             if (logProgress)
             {
                 ArchonLogger.Log($"BuildingSystem: Constructed {buildingType.Name} in province {provinceId}", "starter_kit");
             }
 
-            OnBuildingConstructed?.Invoke(provinceId, buildingType.ID);
+            // Emit event via EventBus (Pattern 3)
+            EmitBuildingConstructed(provinceId, buildingType.ID, ownerId);
             return true;
         }
 
         /// <summary>
         /// Construct a building for AI (no gold cost, no ownership check).
+        /// Applies modifiers via ModifierSystem.
         /// </summary>
         public bool ConstructForAI(ushort provinceId, string buildingTypeId)
         {
@@ -266,6 +317,8 @@ namespace StarterKit
             int currentCount = GetBuildingCount(provinceId, buildingType.ID);
             if (currentCount >= buildingType.MaxPerProvince)
                 return false;
+
+            ushort ownerId = gameState.ProvinceQueries.GetOwner(provinceId);
 
             // Add building to province (no gold cost for AI)
             if (!provinceBuildings.TryGetValue(provinceId, out var data))
@@ -280,8 +333,22 @@ namespace StarterKit
             }
             data.BuildingCounts[buildingType.ID]++;
 
-            OnBuildingConstructed?.Invoke(provinceId, buildingType.ID);
+            // Apply modifiers via ModifierSystem
+            ApplyBuildingModifiers(provinceId, ownerId, buildingType);
+
+            // Emit event via EventBus (Pattern 3)
+            EmitBuildingConstructed(provinceId, buildingType.ID, ownerId);
             return true;
+        }
+
+        private void EmitBuildingConstructed(ushort provinceId, ushort buildingTypeId, ushort countryId)
+        {
+            gameState.EventBus.Emit(new BuildingConstructedEvent
+            {
+                ProvinceId = provinceId,
+                BuildingTypeId = buildingTypeId,
+                CountryId = countryId
+            });
         }
 
         #endregion
@@ -315,24 +382,46 @@ namespace StarterKit
         }
 
         /// <summary>
-        /// Get the total gold output bonus from buildings in a province.
+        /// Apply building modifiers to ModifierSystem.
+        /// Local modifiers go to province scope, country modifiers go to country scope.
         /// </summary>
-        public int GetProvinceGoldBonus(ushort provinceId)
+        private void ApplyBuildingModifiers(ushort provinceId, ushort ownerId, BuildingType buildingType)
         {
-            if (!provinceBuildings.TryGetValue(provinceId, out var data))
-                return 0;
+            if (modifierSystem == null || buildingType.Modifiers.Count == 0)
+                return;
 
-            int bonus = 0;
-            foreach (var kvp in data.BuildingCounts)
+            foreach (var modifier in buildingType.Modifiers)
             {
-                var buildingType = GetBuildingType(kvp.Key);
-                if (buildingType != null)
+                var source = ModifierSource.CreatePermanent(
+                    type: ModifierSource.SourceType.Building,
+                    sourceId: (uint)buildingType.ID,
+                    modifierTypeId: (ushort)modifier.Type,
+                    value: modifier.Value,
+                    isMultiplicative: modifier.IsMultiplicative
+                );
+
+                if (modifier.IsCountryWide)
                 {
-                    bonus += buildingType.GoldOutput * kvp.Value;
+                    // Country-wide modifier (affects all provinces of owner)
+                    if (ownerId > 0)
+                    {
+                        modifierSystem.AddCountryModifier(ownerId, source);
+                        if (logProgress)
+                        {
+                            ArchonLogger.Log($"BuildingSystem: Applied country modifier {modifier.Type} = {modifier.Value.ToFloat():F2} from {buildingType.Name} to country {ownerId}", "starter_kit");
+                        }
+                    }
+                }
+                else
+                {
+                    // Province-local modifier
+                    modifierSystem.AddProvinceModifier(provinceId, source);
+                    if (logProgress)
+                    {
+                        ArchonLogger.Log($"BuildingSystem: Applied province modifier {modifier.Type} = {modifier.Value.ToFloat():F2} from {buildingType.Name} to province {provinceId}", "starter_kit");
+                    }
                 }
             }
-
-            return bonus;
         }
 
         /// <summary>

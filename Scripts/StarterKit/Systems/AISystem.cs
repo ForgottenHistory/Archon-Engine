@@ -11,7 +11,7 @@ namespace StarterKit
 {
     /// <summary>
     /// Simple AI for StarterKit. Non-player countries colonize and build farms on monthly tick.
-    /// AI countries earn and spend gold like the player.
+    /// AI countries use the shared EconomySystem for gold (same as player).
     /// Priority: Colonize first (expand), then build farms (develop).
     /// </summary>
     public class AISystem : IDisposable
@@ -21,6 +21,7 @@ namespace StarterKit
         private readonly GameState gameState;
         private readonly PlayerState playerState;
         private readonly BuildingSystem buildingSystem;
+        private readonly EconomySystem economySystem;
         private readonly bool logProgress;
         private readonly CompositeDisposable subscriptions = new CompositeDisposable();
         private bool isDisposed;
@@ -28,21 +29,18 @@ namespace StarterKit
         // Random for province selection
         private System.Random random;
 
-        // Gold tracking per AI country (countryId -> gold)
-        private readonly Dictionary<ushort, int> aiGold;
-
         // Terrain lookup for ownable checks
         private TerrainRGBLookup terrainLookup;
 
-        public AISystem(GameState gameStateRef, PlayerState playerStateRef, BuildingSystem buildingSystemRef, bool log = true)
+        public AISystem(GameState gameStateRef, PlayerState playerStateRef, BuildingSystem buildingSystemRef, EconomySystem economySystemRef, bool log = true)
         {
             gameState = gameStateRef;
             playerState = playerStateRef;
             buildingSystem = buildingSystemRef;
+            economySystem = economySystemRef;
             logProgress = log;
 
             random = new System.Random();
-            aiGold = new Dictionary<ushort, int>();
 
             // Initialize terrain lookup for ownable checks (use DataDirectory from GameSettings)
             var mapInitializer = UnityEngine.Object.FindFirstObjectByType<MapInitializer>();
@@ -50,22 +48,12 @@ namespace StarterKit
             terrainLookup = new TerrainRGBLookup();
             terrainLookup.Initialize(dataDirectory, false);
 
-            // Pre-allocate gold entries for all countries (zero allocations during gameplay)
-            var countrySystem = gameState.GetComponent<CountrySystem>();
-            if (countrySystem != null)
-            {
-                for (ushort i = 1; i <= countrySystem.CountryCount; i++)
-                {
-                    aiGold[i] = 0;
-                }
-            }
-
             // Subscribe to monthly tick (token auto-disposed on Dispose)
             subscriptions.Add(gameState.EventBus.Subscribe<MonthlyTickEvent>(OnMonthlyTick));
 
             if (logProgress)
             {
-                ArchonLogger.Log($"AISystem: Initialized with {aiGold.Count} country slots", "starter_kit");
+                ArchonLogger.Log("AISystem: Initialized", "starter_kit");
             }
         }
 
@@ -101,51 +89,28 @@ namespace StarterKit
                 if (!countrySystem.HasCountry(countryId))
                     continue;
 
-                // Calculate and add income (same formula as player: provinces + building bonus)
-                int income = CalculateIncome(countryId, provinceSystem);
-                aiGold[countryId] += income;
+                // Gold is managed by EconomySystem (income collected there for all countries)
+                int currentGold = economySystem.GetCountryGoldInt(countryId);
 
                 // Priority 1: Try to colonize if we can afford it (expand first)
-                if (aiGold[countryId] >= COLONIZE_COST)
+                if (currentGold >= COLONIZE_COST)
                 {
                     if (TryColonize(countryId, provinceSystem))
                     {
-                        aiGold[countryId] -= COLONIZE_COST;
+                        economySystem.RemoveGoldFromCountry(countryId, COLONIZE_COST);
                         continue; // Move to next country after colonizing
                     }
                 }
 
                 // Priority 2: Try to build a farm if we can afford it (develop after expanding)
                 var farmType = buildingSystem.GetBuildingType("farm");
-                if (farmType != null && aiGold[countryId] >= farmType.Cost)
+                if (farmType != null && currentGold >= farmType.Cost)
                 {
                     if (TryBuildFarm(countryId, provinceSystem, farmType.Cost))
                     {
-                        aiGold[countryId] -= farmType.Cost;
+                        economySystem.RemoveGoldFromCountry(countryId, farmType.Cost);
                     }
                 }
-            }
-        }
-
-        private int CalculateIncome(ushort countryId, Core.Systems.ProvinceSystem provinceSystem)
-        {
-            var provinces = provinceSystem.GetCountryProvinces(countryId);
-            try
-            {
-                int baseIncome = provinces.Length; // 1 gold per province
-                int buildingBonus = 0;
-
-                // Add building bonuses
-                for (int i = 0; i < provinces.Length; i++)
-                {
-                    buildingBonus += buildingSystem.GetProvinceGoldBonus(provinces[i]);
-                }
-
-                return baseIncome + buildingBonus;
-            }
-            finally
-            {
-                provinces.Dispose();
             }
         }
 

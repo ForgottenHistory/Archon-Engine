@@ -30,4 +30,7 @@ namespace StarterKit
         public ushort CountryId;
         public float TimeStamp { get; set; }
     }
+
+    // NOTE: Unit events (UnitCreatedEvent, UnitDestroyedEvent, UnitMovedEvent) are defined
+    // in Core.Units.UnitEvents - subscribe to those via EventBus directly.
 }

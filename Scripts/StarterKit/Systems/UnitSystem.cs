@@ -40,10 +40,8 @@ namespace StarterKit
         private readonly Dictionary<ushort, UnitType> unitTypesById;
         private ushort nextTypeId = 1;
 
-        // Events
-        public event Action<ushort> OnUnitCreated;
-        public event Action<ushort> OnUnitDestroyed;
-        public event Action<ushort, ushort, ushort> OnUnitMoved; // unitID, fromProvince, toProvince
+        // NOTE: Unit events are emitted by Core.Units.UnitSystem via EventBus.
+        // Subscribe to UnitCreatedEvent, UnitDestroyedEvent, UnitMovedEvent directly.
 
         public UnitSystem(GameState gameStateRef, PlayerState playerStateRef, bool log = true)
         {
@@ -53,11 +51,6 @@ namespace StarterKit
 
             unitTypesByString = new Dictionary<string, UnitType>();
             unitTypesById = new Dictionary<ushort, UnitType>();
-
-            // Subscribe to unit events from Core (tokens auto-disposed on Dispose)
-            subscriptions.Add(gameState.EventBus.Subscribe<UnitCreatedEvent>(OnCoreUnitCreated));
-            subscriptions.Add(gameState.EventBus.Subscribe<UnitDestroyedEvent>(OnCoreUnitDestroyed));
-            subscriptions.Add(gameState.EventBus.Subscribe<UnitMovedEvent>(OnCoreUnitMoved));
 
             if (logProgress)
             {
@@ -287,22 +280,6 @@ namespace StarterKit
         {
             var unitSystem = gameState.Units;
             unitSystem?.DisbandUnit(unitId, DestructionReason.Disbanded);
-        }
-
-        // Core event handlers
-        private void OnCoreUnitCreated(UnitCreatedEvent evt)
-        {
-            OnUnitCreated?.Invoke(evt.UnitID);
-        }
-
-        private void OnCoreUnitDestroyed(UnitDestroyedEvent evt)
-        {
-            OnUnitDestroyed?.Invoke(evt.UnitID);
-        }
-
-        private void OnCoreUnitMoved(UnitMovedEvent evt)
-        {
-            OnUnitMoved?.Invoke(evt.UnitID, evt.OldProvinceID, evt.NewProvinceID);
         }
 
         /// <summary>

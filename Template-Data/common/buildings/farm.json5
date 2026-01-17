@@ -1,0 +1,37 @@
+{
+  // Farm building for StarterKit demo
+  // Demonstrates the modifier system with local and country-wide effects
+  id: "farm",
+  name: "Farm",
+  category: "economic",
+  version: 1,
+
+  cost: {
+    gold: 100
+  },
+
+  // Modifiers applied while building exists
+  // Shows both local (province) and country-wide effects
+  modifiers: {
+    // Flat gold income: +1 gold per farm (additive)
+    local_income_additive: 1,
+
+    // Local modifier: +25% income in this province (multiplicative)
+    local_income_modifier: 0.25,
+
+    // Country modifier: +1% income across all provinces (multiplicative)
+    // This adds up - 10 farms = +10% country-wide income
+    country_income_modifier: 0.01
+  },
+
+  // Max number of this building per province
+  max_per_province: 3,
+
+  // Requirements to build (all optional)
+  requirements: {
+    // min_development: 0,
+    // allowed_terrains: ["plains", "grassland", "hills"],
+    // forbidden_terrains: ["ocean", "mountain"],
+    // is_coastal: false
+  }
+}

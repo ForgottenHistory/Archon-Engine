@@ -54,8 +54,8 @@ namespace StarterKit
             provinceSelector.OnProvinceRightClicked += HandleProvinceDeselected;
             provinceSelector.OnSelectionCleared += HandleSelectionCleared;
 
-            // Subscribe to building events for auto-refresh
-            buildingSystem.OnBuildingConstructed += HandleBuildingConstructed;
+            // Subscribe to building events for auto-refresh (via EventBus)
+            Subscribe<BuildingConstructedEvent>(HandleBuildingConstructed);
 
             // Subscribe to gold changes via EventBus
             Subscribe<GoldChangedEvent>(HandleGoldChanged);
@@ -73,11 +73,6 @@ namespace StarterKit
                 provinceSelector.OnProvinceClicked -= HandleProvinceClicked;
                 provinceSelector.OnProvinceRightClicked -= HandleProvinceDeselected;
                 provinceSelector.OnSelectionCleared -= HandleSelectionCleared;
-            }
-
-            if (buildingSystem != null)
-            {
-                buildingSystem.OnBuildingConstructed -= HandleBuildingConstructed;
             }
 
             base.OnDestroy();
@@ -142,9 +137,9 @@ namespace StarterKit
             Hide();
         }
 
-        private void HandleBuildingConstructed(ushort provinceId, ushort buildingTypeId)
+        private void HandleBuildingConstructed(BuildingConstructedEvent evt)
         {
-            if (provinceId == selectedProvinceID)
+            if (evt.ProvinceId == selectedProvinceID)
             {
                 RefreshBuildingsList();
                 RefreshBuildButtons();
@@ -174,9 +169,9 @@ namespace StarterKit
             }
             buildingEntries.Clear();
 
-            // Update gold bonus
-            int goldBonus = buildingSystem.GetProvinceGoldBonus(selectedProvinceID);
-            goldBonusLabel.text = $"{LocalizationManager.Get("UI_GOLD_BONUS")}: +{goldBonus}";
+            // Update building count (modifiers are handled by ModifierSystem)
+            int totalBuildings = buildingSystem.GetTotalBuildingCount(selectedProvinceID);
+            goldBonusLabel.text = $"{LocalizationManager.Get("UI_BUILDINGS")}: {totalBuildings}";
 
             // Get buildings in province
             var buildings = buildingSystem.GetProvinceBuildings(selectedProvinceID);
@@ -210,12 +205,39 @@ namespace StarterKit
             nameLabel.style.fontSize = FontSizeNormal - 1;
             entry.Add(nameLabel);
 
-            // Effect info
-            var effectLabel = CreateGoldText($"+{buildingType.GoldOutput * count} gold");
+            // Effect info - show modifier summary
+            string effectText = GetBuildingEffectText(buildingType, count);
+            var effectLabel = CreateGoldText(effectText);
             effectLabel.style.fontSize = FontSizeSmall;
             entry.Add(effectLabel);
 
             return entry;
+        }
+
+        private string GetBuildingEffectText(BuildingType buildingType, int count)
+        {
+            if (buildingType.Modifiers.Count == 0)
+                return "";
+
+            var parts = new List<string>();
+            foreach (var modifier in buildingType.Modifiers)
+            {
+                float totalValue = modifier.Value.ToFloat() * count;
+                string sign = totalValue >= 0 ? "+" : "";
+
+                // Format based on modifier type
+                string modName = modifier.Type.ToString();
+                if (modifier.IsMultiplicative)
+                {
+                    parts.Add($"{sign}{totalValue * 100:F0}% {modName}");
+                }
+                else
+                {
+                    parts.Add($"{sign}{totalValue:F1} {modName}");
+                }
+            }
+
+            return string.Join(", ", parts);
         }
 
         private void RefreshBuildButtons()

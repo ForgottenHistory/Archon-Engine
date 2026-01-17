@@ -5,23 +5,30 @@ using Unity.Collections;
 using Core;
 using Core.Data;
 using Core.Events;
+using Core.Modifiers;
 using Core.Systems;
 
 namespace StarterKit
 {
     /// <summary>
     /// Simple economy for StarterKit.
-    /// 1 gold per province + building bonuses, collected monthly.
+    /// 1 gold per province + modifier bonuses, collected monthly.
     /// Tracks gold for ALL countries (for ledger display).
     ///
     /// Uses FixedPoint64 for deterministic calculations across all platforms.
     /// This ensures multiplayer sync - float operations produce different results
     /// on different CPUs, but FixedPoint64 is identical everywhere.
+    ///
+    /// Income Formula (per province):
+    ///   baseIncome = 1 gold
+    ///   localModified = baseIncome * (1 + LocalIncomeModifier)
+    ///   finalIncome = localModified * (1 + CountryIncomeModifier)
     /// </summary>
     public class EconomySystem : IDisposable
     {
         private readonly GameState gameState;
         private readonly PlayerState playerState;
+        private readonly ModifierSystem modifierSystem;
         private readonly bool logCollection;
         private readonly CompositeDisposable subscriptions = new CompositeDisposable();
         private bool isDisposed;
@@ -29,8 +36,10 @@ namespace StarterKit
         // Gold storage for all countries (FixedPoint64 for determinism)
         private Dictionary<ushort, FixedPoint64> countryGold = new Dictionary<ushort, FixedPoint64>();
 
-        // Optional building system for bonus calculation
-        private BuildingSystem buildingSystem;
+        // Income caching (Pattern 11: Dirty flag system)
+        private const int MAX_COUNTRIES = 256;
+        private readonly FixedPoint64[] cachedCountryIncome = new FixedPoint64[MAX_COUNTRIES];
+        private readonly bool[] incomeNeedsRecalculation = new bool[MAX_COUNTRIES];
 
         /// <summary>
         /// Player's gold (convenience property, returns int for simple display)
@@ -43,28 +52,65 @@ namespace StarterKit
         public FixedPoint64 GoldFixed => GetCountryGold(playerState?.PlayerCountryId ?? 0);
 
 
-        public EconomySystem(GameState gameStateRef, PlayerState playerStateRef, bool log = true)
+        public EconomySystem(GameState gameStateRef, PlayerState playerStateRef, ModifierSystem modifierSystemRef, bool log = true)
         {
             gameState = gameStateRef;
             playerState = playerStateRef;
+            modifierSystem = modifierSystemRef;
             logCollection = log;
+
+            // Mark all income as needing recalculation
+            InvalidateAllIncome();
 
             // Subscribe to monthly tick (token auto-disposed on Dispose)
             subscriptions.Add(gameState.EventBus.Subscribe<MonthlyTickEvent>(OnMonthlyTick));
 
+            // Subscribe to province ownership changes to invalidate income cache
+            subscriptions.Add(gameState.EventBus.Subscribe<ProvinceOwnershipChangedEvent>(OnProvinceOwnershipChanged));
+
+            // Subscribe to building construction to invalidate income cache
+            subscriptions.Add(gameState.EventBus.Subscribe<BuildingConstructedEvent>(OnBuildingConstructed));
+
             if (logCollection)
             {
-                ArchonLogger.Log("EconomySystem: Initialized", "starter_kit");
+                ArchonLogger.Log("EconomySystem: Initialized with income caching", "starter_kit");
             }
         }
 
-        /// <summary>
-        /// Set building system for bonus calculation.
-        /// Called after building system is created.
-        /// </summary>
-        public void SetBuildingSystem(BuildingSystem buildingSystemRef)
+        private void OnBuildingConstructed(BuildingConstructedEvent evt)
         {
-            buildingSystem = buildingSystemRef;
+            // Invalidate income for the country that owns the building
+            if (evt.CountryId > 0 && evt.CountryId < MAX_COUNTRIES)
+                incomeNeedsRecalculation[evt.CountryId] = true;
+        }
+
+        private void OnProvinceOwnershipChanged(ProvinceOwnershipChangedEvent evt)
+        {
+            // Invalidate income for both old and new owner
+            if (evt.OldOwner > 0 && evt.OldOwner < MAX_COUNTRIES)
+                incomeNeedsRecalculation[evt.OldOwner] = true;
+            if (evt.NewOwner > 0 && evt.NewOwner < MAX_COUNTRIES)
+                incomeNeedsRecalculation[evt.NewOwner] = true;
+        }
+
+        /// <summary>
+        /// Invalidate income cache for a specific country.
+        /// Call when buildings change or modifiers are added/removed.
+        /// </summary>
+        public void InvalidateCountryIncome(ushort countryId)
+        {
+            if (countryId > 0 && countryId < MAX_COUNTRIES)
+                incomeNeedsRecalculation[countryId] = true;
+        }
+
+        /// <summary>
+        /// Invalidate all income caches.
+        /// Call after load or major changes.
+        /// </summary>
+        public void InvalidateAllIncome()
+        {
+            for (int i = 0; i < MAX_COUNTRIES; i++)
+                incomeNeedsRecalculation[i] = true;
         }
 
         public void Dispose()
@@ -107,11 +153,8 @@ namespace StarterKit
 
         private void CollectIncomeForCountry(ushort countryId)
         {
-            int provinceCount = CountProvinces(countryId);
-            // Use FixedPoint64 for all calculations - deterministic across platforms
-            FixedPoint64 baseIncome = FixedPoint64.FromInt(provinceCount); // 1 gold per province
-            FixedPoint64 buildingBonus = CalculateBuildingBonus(countryId);
-            FixedPoint64 income = baseIncome + buildingBonus;
+            // Use cached income (recalculates only if dirty)
+            FixedPoint64 income = GetCachedIncome(countryId);
 
             if (income > FixedPoint64.Zero)
             {
@@ -124,17 +167,55 @@ namespace StarterKit
 
                 if (logCollection && playerState != null && countryId == playerState.PlayerCountryId)
                 {
-                    ArchonLogger.Log($"EconomySystem: Collected {income.ToInt()} gold ({baseIncome.ToInt()} base + {buildingBonus.ToInt()} buildings) from {provinceCount} provinces (Total: {newGold.ToInt()})", "starter_kit");
+                    int provinceCount = CountProvinces(countryId);
+                    ArchonLogger.Log($"EconomySystem: Collected {income.ToFloat():F1} gold from {provinceCount} provinces (Total: {newGold.ToInt()})", "starter_kit");
                 }
             }
         }
 
-        private FixedPoint64 CalculateBuildingBonus(ushort countryId)
+        /// <summary>
+        /// Get cached income for a country, recalculating only if dirty.
+        /// </summary>
+        private FixedPoint64 GetCachedIncome(ushort countryId)
         {
-            if (buildingSystem == null || gameState?.ProvinceQueries == null)
+            if (countryId == 0 || countryId >= MAX_COUNTRIES)
                 return FixedPoint64.Zero;
 
-            FixedPoint64 totalBonus = FixedPoint64.Zero;
+            // Recalculate if dirty
+            if (incomeNeedsRecalculation[countryId])
+            {
+                cachedCountryIncome[countryId] = CalculateCountryIncome(countryId);
+                incomeNeedsRecalculation[countryId] = false;
+            }
+
+            return cachedCountryIncome[countryId];
+        }
+
+        /// <summary>
+        /// Calculate total income for a country using ModifierSystem.
+        /// Formula per province: (baseIncome + additiveBonus) * (1 + localModifier) * (1 + countryModifier)
+        /// </summary>
+        private FixedPoint64 CalculateCountryIncome(ushort countryId)
+        {
+            if (gameState?.ProvinceQueries == null)
+                return FixedPoint64.Zero;
+
+            FixedPoint64 totalIncome = FixedPoint64.Zero;
+            FixedPoint64 baseIncomePerProvince = FixedPoint64.One; // 1 gold per province
+
+            // Get country-wide income modifier (applies to all provinces)
+            FixedPoint64 countryModifier = FixedPoint64.Zero;
+            if (modifierSystem != null)
+            {
+                // Get the multiplicative modifier value for country income
+                // ModifierSystem stores multiplicative values that get applied as (1 + modifier)
+                var countryMod = modifierSystem.GetCountryModifier(
+                    countryId,
+                    (ushort)ModifierType.CountryIncomeModifier,
+                    FixedPoint64.One);
+                // GetCountryModifier returns base * (1 + modifier), so subtract 1 to get modifier value
+                countryModifier = countryMod - FixedPoint64.One;
+            }
 
             // Get all provinces owned by the country (must dispose NativeArray)
             var provinceIds = gameState.ProvinceQueries.GetCountryProvinces(countryId);
@@ -142,8 +223,31 @@ namespace StarterKit
             {
                 foreach (var provinceId in provinceIds)
                 {
-                    // Convert int bonus to FixedPoint64
-                    totalBonus = totalBonus + FixedPoint64.FromInt(buildingSystem.GetProvinceGoldBonus(provinceId));
+                    // Start with base income
+                    FixedPoint64 provinceIncome = baseIncomePerProvince;
+
+                    if (modifierSystem != null)
+                    {
+                        // Add flat income bonus from buildings (additive modifier)
+                        FixedPoint64 additiveBonus = modifierSystem.GetProvinceModifier(
+                            provinceId,
+                            countryId,
+                            (ushort)ModifierType.LocalIncomeAdditive,
+                            FixedPoint64.Zero);  // Base 0, returns just the additive value
+                        provinceIncome = provinceIncome + additiveBonus;
+
+                        // Apply local income modifier (multiplicative, from buildings in this province)
+                        provinceIncome = modifierSystem.GetProvinceModifier(
+                            provinceId,
+                            countryId,
+                            (ushort)ModifierType.LocalIncomeModifier,
+                            provinceIncome);
+                    }
+
+                    // Apply country-wide modifier
+                    provinceIncome = provinceIncome * (FixedPoint64.One + countryModifier);
+
+                    totalIncome = totalIncome + provinceIncome;
                 }
             }
             finally
@@ -151,7 +255,7 @@ namespace StarterKit
                 provinceIds.Dispose();
             }
 
-            return totalBonus;
+            return totalIncome;
         }
 
         private int CountProvinces(ushort countryId)
@@ -180,11 +284,11 @@ namespace StarterKit
         }
 
         /// <summary>
-        /// Get monthly income for a country (province count + building bonuses)
+        /// Get monthly income for a country (cached, using ModifierSystem)
         /// </summary>
         public FixedPoint64 GetMonthlyIncome(ushort countryId)
         {
-            return FixedPoint64.FromInt(CountProvinces(countryId)) + CalculateBuildingBonus(countryId);
+            return GetCachedIncome(countryId);
         }
 
         /// <summary>

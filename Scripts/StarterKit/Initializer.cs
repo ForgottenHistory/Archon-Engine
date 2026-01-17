@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Core;
+using Core.Modifiers;
 using Core.SaveLoad;
 using Core.Systems;
 using Map.Core;
@@ -61,6 +62,7 @@ namespace StarterKit
 
         // Owned systems (plain classes)
         private PlayerState playerState;
+        private ModifierSystem modifierSystem;
         private EconomySystem economySystem;
         private UnitSystem unitSystem;
         private BuildingSystem buildingSystem;
@@ -102,6 +104,7 @@ namespace StarterKit
             buildingSystem?.Dispose();
             unitSystem?.Dispose();
             economySystem?.Dispose();
+            modifierSystem?.Dispose();
 
             if (Instance == this)
                 Instance = null;
@@ -187,11 +190,19 @@ namespace StarterKit
 
             yield return null;
 
+            // Create modifier system (for building bonuses)
+            if (logProgress)
+                ArchonLogger.Log("Creating modifier system...", "starter_kit");
+
+            modifierSystem = new ModifierSystem();
+
+            yield return null;
+
             // Create economy system
             if (logProgress)
                 ArchonLogger.Log("Creating economy system...", "starter_kit");
 
-            economySystem = new EconomySystem(gameState, playerState, logProgress);
+            economySystem = new EconomySystem(gameState, playerState, modifierSystem, logProgress);
 
             yield return null;
 
@@ -209,12 +220,9 @@ namespace StarterKit
             if (logProgress)
                 ArchonLogger.Log("Creating building system...", "starter_kit");
 
-            buildingSystem = new BuildingSystem(gameState, playerState, economySystem, logProgress);
-            var buildingsPath = System.IO.Path.Combine(GameSettings.Instance.TemplateDataDirectory, "buildings");
+            buildingSystem = new BuildingSystem(gameState, playerState, economySystem, modifierSystem, logProgress);
+            var buildingsPath = System.IO.Path.Combine(GameSettings.Instance.TemplateDataDirectory, "common", "buildings");
             buildingSystem.LoadBuildingTypes(buildingsPath);
-
-            // Link building system to economy for bonus calculation
-            economySystem.SetBuildingSystem(buildingSystem);
 
             yield return null;
 
@@ -222,7 +230,7 @@ namespace StarterKit
             if (logProgress)
                 ArchonLogger.Log("Creating AI system...", "starter_kit");
 
-            aiSystem = new AISystem(gameState, playerState, buildingSystem, logProgress);
+            aiSystem = new AISystem(gameState, playerState, buildingSystem, economySystem, logProgress);
 
             yield return null;
 
@@ -490,11 +498,11 @@ namespace StarterKit
                 farmDensityMapMode = new FarmDensityMapMode(buildingSystem, mapModeManager);
                 mapModeManager.RegisterHandler(MapMode.Economic, farmDensityMapMode);
 
-                // Subscribe to building construction to mark map mode dirty
-                buildingSystem.OnBuildingConstructed += (provinceId, buildingTypeId) =>
+                // Subscribe to building construction to mark map mode dirty (via EventBus)
+                gameState.EventBus.Subscribe<BuildingConstructedEvent>(evt =>
                 {
                     farmDensityMapMode?.MarkDirty();
-                };
+                });
 
                 // Subscribe to province ownership changes to update map mode
                 gameState.EventBus.Subscribe<Core.Systems.ProvinceOwnershipChangedEvent>(evt =>
