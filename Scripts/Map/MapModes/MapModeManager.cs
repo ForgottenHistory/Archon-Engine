@@ -38,6 +38,21 @@ namespace Map.MapModes
         private Dictionary<MapMode, IMapModeHandler> modeHandlers;
         private IMapModeHandler currentHandler;
 
+        // Custom map mode texture array (for GAME-defined map modes)
+        // Each custom map mode gets a slot in this array for instant switching
+        private const int MAX_CUSTOM_MAP_MODES = 16;
+        private Texture2DArray mapModeTextureArray;
+        private Dictionary<int, int> customModeToArrayIndex; // Maps custom mode ID to array index
+        private int nextArrayIndex = 0;
+        private int mapWidth;
+        private int mapHeight;
+
+        // Shader property IDs (cached for performance)
+        private static readonly int MapModePropertyID = Shader.PropertyToID("_MapMode");
+        private static readonly int CustomMapModeIndexPropertyID = Shader.PropertyToID("_CustomMapModeIndex");
+        private static readonly int MapModeTextureArrayPropertyID = Shader.PropertyToID("_MapModeTextureArray");
+        private static readonly int MapModeTextureCountPropertyID = Shader.PropertyToID("_MapModeTextureCount");
+
         // State tracking
         private bool isInitialized = false;
         private float lastUpdateTime;
@@ -161,6 +176,59 @@ namespace Map.MapModes
             dataTextures = new MapModeDataTextures();
             dataTextures.Initialize(textureManager);
             dataTextures.BindToMaterial(mapMaterial);
+
+            // Initialize custom map mode texture array
+            InitializeMapModeTextureArray(textureManager);
+        }
+
+        /// <summary>
+        /// Initialize the texture array for custom GAME map modes.
+        /// Pre-allocates slots for instant switching between modes.
+        /// </summary>
+        private void InitializeMapModeTextureArray(MapTextureManager textureManager)
+        {
+            // Get map dimensions from province ID texture
+            var provinceIDTexture = textureManager.ProvinceIDTexture;
+            if (provinceIDTexture == null)
+            {
+                ArchonLogger.LogWarning("MapModeManager: ProvinceIDTexture not available, using default dimensions", "map_modes");
+                mapWidth = 5632;
+                mapHeight = 2048;
+            }
+            else
+            {
+                mapWidth = provinceIDTexture.width;
+                mapHeight = provinceIDTexture.height;
+            }
+
+            // Create texture array for custom map modes
+            // ARGB32 format for full color support
+            mapModeTextureArray = new Texture2DArray(mapWidth, mapHeight, MAX_CUSTOM_MAP_MODES, TextureFormat.ARGB32, false);
+            mapModeTextureArray.filterMode = FilterMode.Point; // No interpolation for map data
+            mapModeTextureArray.wrapMode = TextureWrapMode.Clamp;
+            mapModeTextureArray.name = "MapModeTextureArray";
+
+            // Initialize with transparent black (alpha=0 means "use default")
+            var clearPixels = new Color32[mapWidth * mapHeight];
+            for (int i = 0; i < clearPixels.Length; i++)
+            {
+                clearPixels[i] = new Color32(0, 0, 0, 0);
+            }
+            for (int slice = 0; slice < MAX_CUSTOM_MAP_MODES; slice++)
+            {
+                mapModeTextureArray.SetPixels32(clearPixels, slice);
+            }
+            mapModeTextureArray.Apply();
+
+            // Initialize custom mode tracking
+            customModeToArrayIndex = new Dictionary<int, int>();
+            nextArrayIndex = 0;
+
+            // Bind to material
+            mapMaterial.SetTexture(MapModeTextureArrayPropertyID, mapModeTextureArray);
+            mapMaterial.SetInt(MapModeTextureCountPropertyID, 0);
+
+            ArchonLogger.Log($"MapModeManager: Initialized texture array ({mapWidth}x{mapHeight}, {MAX_CUSTOM_MAP_MODES} slots)", "map_initialization");
         }
 
         private void InitializeModeHandlers()
@@ -231,6 +299,20 @@ namespace Map.MapModes
             // Set the active handler in the scheduler (architecture compliance)
             updateScheduler?.SetActiveHandler(currentHandler);
 
+            // Set shader properties for mode switching
+            int shaderModeId = currentHandler.ShaderModeID;
+            mapMaterial.SetInt(MapModePropertyID, shaderModeId);
+
+            // For custom modes (ShaderModeID >= 2), set the array index
+            if (shaderModeId >= 2)
+            {
+                int arrayIndex = GetCustomModeArrayIndex(shaderModeId);
+                if (arrayIndex >= 0)
+                {
+                    mapMaterial.SetInt(CustomMapModeIndexPropertyID, arrayIndex);
+                }
+            }
+
             currentHandler.OnActivate(mapMaterial, dataTextures);
 
             if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
@@ -242,24 +324,9 @@ namespace Map.MapModes
                 dataTextures.BindToMaterial(mapMaterial);
             }
 
-            // DEBUG: Verify which texture is actually bound to the material after update
-            var boundPalette = mapMaterial.GetTexture(Shader.PropertyToID("_CountryColorPalette"));
-            ArchonLogger.Log($"MapModeManager: After SetMapMode, material has CountryColorPalette instance {boundPalette?.GetInstanceID()} bound (dataTextures has instance {dataTextures?.CountryColorPalette?.GetInstanceID()})", "map_initialization");
-            if (boundPalette != null && dataTextures?.CountryColorPalette != null)
-            {
-                if (boundPalette.GetInstanceID() == dataTextures.CountryColorPalette.GetInstanceID())
-                {
-                    ArchonLogger.Log("MapModeManager: ✓ Material is bound to the CORRECT texture instance that we're updating", "map_initialization");
-                }
-                else
-                {
-                    ArchonLogger.LogError($"MapModeManager: ✗ Material is bound to WRONG texture! Material has {boundPalette.GetInstanceID()}, but we're updating {dataTextures.CountryColorPalette.GetInstanceID()}", "map_initialization");
-                }
-            }
-
             if (logModeChanges)
             {
-                ArchonLogger.Log($"Switched to {currentMode} mode", "map_initialization");
+                ArchonLogger.Log($"Switched to {currentMode} mode (shader mode {shaderModeId})", "map_initialization");
             }
         }
 
@@ -286,6 +353,63 @@ namespace Map.MapModes
             {
                 currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
                 ArchonLogger.Log($"MapModeManager: Forced texture update for {currentMode} mode", "map_initialization");
+            }
+        }
+
+        /// <summary>
+        /// Force texture update only if the given handler is currently active.
+        /// Called by GradientMapMode.MarkDirty() to trigger event-driven updates.
+        /// </summary>
+        public void ForceUpdateIfActive(IMapModeHandler handler)
+        {
+            if (!isInitialized || currentHandler == null || handler == null) return;
+
+            // Only update if this handler is the currently active one
+            if (currentHandler == handler)
+            {
+                if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
+                {
+                    handler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
+                }
+            }
+        }
+
+        // Deferred update tracking - batches multiple dirty events into single update per frame
+        private bool hasPendingDeferredUpdate = false;
+        private IMapModeHandler pendingDeferredHandler = null;
+
+        /// <summary>
+        /// Request a deferred texture update for next frame.
+        /// Multiple requests within same frame are batched into single update.
+        /// Called by GradientMapMode.MarkDirty() to prevent multiple rebuilds per tick.
+        /// </summary>
+        public void RequestDeferredUpdate(IMapModeHandler handler)
+        {
+            if (!isInitialized || handler == null) return;
+
+            // Only process if this is the active handler
+            if (currentHandler != handler) return;
+
+            // Mark pending - will be processed in LateUpdate
+            if (!hasPendingDeferredUpdate)
+            {
+                hasPendingDeferredUpdate = true;
+                pendingDeferredHandler = handler;
+            }
+        }
+
+        void LateUpdate()
+        {
+            // Process deferred update at end of frame (after all events have fired)
+            if (hasPendingDeferredUpdate && pendingDeferredHandler != null)
+            {
+                if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
+                {
+                    pendingDeferredHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
+                }
+
+                hasPendingDeferredUpdate = false;
+                pendingDeferredHandler = null;
             }
         }
 
@@ -346,14 +470,137 @@ namespace Map.MapModes
             if (!isInitialized || dataTextures == null || mapMaterial == null) return;
 
             dataTextures.BindToMaterial(mapMaterial);
+
+            // Also rebind the texture array
+            if (mapModeTextureArray != null)
+            {
+                mapMaterial.SetTexture(MapModeTextureArrayPropertyID, mapModeTextureArray);
+            }
+
             ArchonLogger.Log($"MapModeManager: Rebound map mode textures to material (CountryColorPalette, etc.)", "map_initialization");
         }
+
+        #region Custom Map Mode Texture Array API
+
+        /// <summary>
+        /// Register a custom map mode and get its array index.
+        /// Called by GAME layer when creating custom map modes.
+        /// </summary>
+        /// <param name="customModeId">Unique ID for this custom mode (typically ShaderModeID from handler)</param>
+        /// <returns>Array index for this mode's texture slice, or -1 if full</returns>
+        public int RegisterCustomMapMode(int customModeId)
+        {
+            if (mapModeTextureArray == null)
+            {
+                ArchonLogger.LogError("MapModeManager: Texture array not initialized", "map_modes");
+                return -1;
+            }
+
+            // Check if already registered
+            if (customModeToArrayIndex.TryGetValue(customModeId, out int existingIndex))
+            {
+                return existingIndex;
+            }
+
+            // Check capacity
+            if (nextArrayIndex >= MAX_CUSTOM_MAP_MODES)
+            {
+                ArchonLogger.LogError($"MapModeManager: Cannot register custom mode {customModeId} - texture array full ({MAX_CUSTOM_MAP_MODES} max)", "map_modes");
+                return -1;
+            }
+
+            // Assign next slot
+            int arrayIndex = nextArrayIndex++;
+            customModeToArrayIndex[customModeId] = arrayIndex;
+
+            mapMaterial.SetInt(MapModeTextureCountPropertyID, nextArrayIndex);
+
+            ArchonLogger.Log($"MapModeManager: Registered custom map mode {customModeId} at array index {arrayIndex}", "map_initialization");
+            return arrayIndex;
+        }
+
+        /// <summary>
+        /// Update a custom map mode's texture data (CPU pixel array version).
+        /// Called by GAME map mode handlers when their data changes (dirty).
+        /// NOTE: This is SLOW due to GPU→CPU→GPU roundtrip. Prefer BindCustomMapModeRenderTexture().
+        /// </summary>
+        /// <param name="arrayIndex">Index returned from RegisterCustomMapMode</param>
+        /// <param name="pixels">Color data for the entire map</param>
+        public void UpdateCustomMapModeTexture(int arrayIndex, Color32[] pixels)
+        {
+            if (mapModeTextureArray == null || arrayIndex < 0 || arrayIndex >= MAX_CUSTOM_MAP_MODES)
+            {
+                ArchonLogger.LogError($"MapModeManager: Invalid array index {arrayIndex}", "map_modes");
+                return;
+            }
+
+            if (pixels.Length != mapWidth * mapHeight)
+            {
+                ArchonLogger.LogError($"MapModeManager: Pixel array size mismatch. Expected {mapWidth * mapHeight}, got {pixels.Length}", "map_modes");
+                return;
+            }
+
+            mapModeTextureArray.SetPixels32(pixels, arrayIndex);
+            mapModeTextureArray.Apply();
+
+            if (logTextureUpdates)
+            {
+                ArchonLogger.Log($"MapModeManager: Updated custom map mode texture at index {arrayIndex}", "map_modes");
+            }
+        }
+
+        /// <summary>
+        /// Copy a RenderTexture to the texture array using GPU-to-GPU copy.
+        /// This is the FAST path - no CPU roundtrip, stays entirely on GPU.
+        /// Called by GradientMapMode after compute shader dispatch.
+        /// </summary>
+        public void CopyRenderTextureToArray(int arrayIndex, RenderTexture sourceTexture)
+        {
+            if (mapModeTextureArray == null || sourceTexture == null) return;
+            if (arrayIndex < 0 || arrayIndex >= MAX_CUSTOM_MAP_MODES) return;
+
+            // GPU-to-GPU copy - no CPU sync needed
+            // Graphics.CopyTexture copies directly on GPU, no ReadPixels/SetPixels
+            Graphics.CopyTexture(sourceTexture, 0, 0, mapModeTextureArray, arrayIndex, 0);
+
+            if (logTextureUpdates)
+            {
+                ArchonLogger.Log($"MapModeManager: GPU copied RenderTexture to array index {arrayIndex}", "map_modes");
+            }
+        }
+
+        /// <summary>
+        /// Get the dimensions of the map mode texture array.
+        /// GAME map modes need this to create correctly sized pixel arrays.
+        /// </summary>
+        public (int width, int height) GetMapDimensions()
+        {
+            return (mapWidth, mapHeight);
+        }
+
+        /// <summary>
+        /// Get the array index for a registered custom mode.
+        /// Returns -1 if not registered.
+        /// </summary>
+        public int GetCustomModeArrayIndex(int customModeId)
+        {
+            return customModeToArrayIndex.TryGetValue(customModeId, out int index) ? index : -1;
+        }
+
+        #endregion
 
         void OnDestroy()
         {
             currentHandler?.OnDeactivate(mapMaterial);
             dataTextures?.Dispose();
             updateScheduler?.Dispose();
+
+            // Dispose texture array
+            if (mapModeTextureArray != null)
+            {
+                Object.Destroy(mapModeTextureArray);
+                mapModeTextureArray = null;
+            }
 
             // Dispose all map mode handlers to prevent ComputeBuffer leaks
             if (modeHandlers != null)
@@ -367,6 +614,8 @@ namespace Map.MapModes
                 }
                 modeHandlers.Clear();
             }
+
+            customModeToArrayIndex?.Clear();
         }
     }
 }

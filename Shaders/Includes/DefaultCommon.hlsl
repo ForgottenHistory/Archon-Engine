@@ -22,6 +22,8 @@ CBUFFER_START(UnityPerMaterial)
     float4 _MainTex_ST;
 
     int _MapMode;
+    int _CustomMapModeIndex;  // Index into _MapModeTextureArray for GAME-defined map modes
+    int _MapModeTextureCount; // Number of registered map mode textures
 
     // Tessellation parameters
     float _HeightScale;
@@ -136,6 +138,11 @@ TEXTURE2D(_HighlightTexture); SAMPLER(sampler_HighlightTexture);
 TEXTURE2D(_FogOfWarTexture); SAMPLER(sampler_FogOfWarTexture);
 TEXTURE2D(_OverlayTexture); SAMPLER(sampler_OverlayTexture);
 TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); // For SRP Batcher
+
+// Map Mode Texture Array - ENGINE mechanism for GAME-defined map modes
+// Each GAME map mode registers its own texture at an index
+// Switching map modes = changing _CustomMapModeIndex, instant GPU-side
+TEXTURE2D_ARRAY(_MapModeTextureArray); SAMPLER(sampler_MapModeTextureArray);
 
 // CRITICAL: Include BezierCurves.hlsl to define BezierSegment struct
 #include "../BezierCurves.hlsl"

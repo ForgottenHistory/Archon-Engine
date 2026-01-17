@@ -2,105 +2,176 @@ using UnityEngine;
 using Unity.Collections;
 using Core.Queries;
 using Map.Rendering;
-using Map.MapModes.Colorization;
 
 namespace Map.MapModes
 {
     /// <summary>
     /// ENGINE LAYER - Generic gradient-based map mode handler
     ///
-    /// Responsibilities:
-    /// - Analyze value distribution across provinces (min/max/avg)
-    /// - Normalize values to 0-1 range
-    /// - Apply color gradient via GPU compute shader
-    /// - Provide generic tooltip formatting
-    ///
     /// Architecture:
     /// - Pure mechanism, no game-specific knowledge
-    /// - Concrete map modes provide: gradient colors, data access, tooltips
-    /// - Reusable for any numeric province data (development, income, manpower, etc.)
-    /// - GPU compute shader for colorization (1ms vs 105ms CPU)
+    /// - Concrete GAME modes override: GetGradient(), GetValueForProvince()
+    /// - Uses GPU compute shader for fast colorization (~1ms vs 125ms CPU)
+    /// - Uses MapModeManager's texture array for instant mode switching
     ///
     /// Performance:
-    /// - Single pass for stats analysis (CPU)
-    /// - GPU compute shader for texture update (~1ms for 11.5M pixels)
-    /// - O(N) where N = province count (data gathering only)
+    /// - GPU compute shader processes 11.5M pixels in ~1ms
+    /// - Texture updates only when dirty (data changed)
+    /// - Mode switching is instant (just changes shader int)
     ///
-    /// Usage (Game Layer):
-    /// public class DevelopmentMapMode : GradientMapMode
+    /// Usage (GAME Layer):
+    /// public class FarmDensityMapMode : GradientMapMode
     /// {
-    ///     protected override ColorGradient GetGradient() => ColorGradient.RedToYellow();
-    ///     protected override float GetValueForProvince(ushort id) => hegemon.GetDevelopment(id);
-    ///     // ... provide game-specific data access
+    ///     protected override ColorGradient GetGradient() => new ColorGradient(...);
+    ///     protected override float GetValueForProvince(ushort id) => buildingSystem.GetFarmCount(id);
     /// }
     /// </summary>
     public abstract class GradientMapMode : IMapModeHandler
     {
         // Special colors (can be overridden by subclasses)
         protected virtual Color32 OceanColor => new Color32(25, 25, 112, 255);    // Dark blue
-        protected virtual Color32 UnknownColor => new Color32(64, 64, 64, 255);   // Dark gray
+        protected virtual Color32 UnownedColor => new Color32(128, 128, 128, 255); // Gray for unowned land
 
         // Dirty flag for optimization - skip updates when data hasn't changed
         private bool isDirty = true;
 
-        // Pluggable colorizer from registry (replaces hardcoded GradientComputeDispatcher)
-        private IMapModeColorizer colorizer;
-        private bool colorizerInitialized = false;
+        // Texture array integration
+        private MapModeManager mapModeManager;
+        private int textureArrayIndex = -1;
+        private int mapWidth;
+        private int mapHeight;
+        private bool isRegistered = false;
+
+        // GPU compute shader resources
+        private ComputeShader gradientCompute;
+        private int colorizeKernel;
+        private ComputeBuffer provinceValueBuffer;
+        private ComputeBuffer gradientColorsBuffer;
+        private RenderTexture outputTexture;
+        private RenderTexture provinceIDTexture;
+
+        // Province value cache (sent to GPU)
+        private float[] provinceValues;
 
         /// <summary>
         /// Mark this map mode as dirty (needs recalculation)
         /// Call this when underlying data changes (province ownership, development, etc.)
+        /// The texture will be updated on the next frame via RequestDeferredUpdate(),
+        /// but ONLY if this map mode is currently active.
         /// </summary>
         public void MarkDirty()
         {
             isDirty = true;
+
+            // Only request update if this mode is currently active
+            // This prevents expensive texture rebuilds for inactive map modes
+            mapModeManager?.RequestDeferredUpdate(this);
         }
 
         /// <summary>
-        /// Called when map mode is activated - always mark dirty to ensure first update
-        /// Subclasses should call base.OnMapModeActivated() if they override OnActivate
+        /// Check if this map mode is currently the active one
         /// </summary>
-        protected void OnMapModeActivated()
+        public bool IsActive => mapModeManager != null && mapModeManager.GetHandler(mapModeManager.CurrentMode) == this;
+
+        /// <summary>
+        /// Register with MapModeManager to get a texture array slot.
+        /// Called during initialization.
+        /// </summary>
+        protected void RegisterWithMapModeManager(MapModeManager manager)
         {
-            isDirty = true; // Always update when activated
+            if (isRegistered) return;
 
-            // Get colorizer from registry on first activation (Pattern 20: Pluggable Implementation)
-            if (colorizer == null)
+            mapModeManager = manager;
+            if (mapModeManager == null)
             {
-                var registry = MapRendererRegistry.Instance;
-                if (registry != null)
-                {
-                    // Get default colorizer (or custom if configured)
-                    colorizer = registry.GetDefaultMapModeColorizer();
-                }
+                ArchonLogger.LogError($"{Name}: MapModeManager is null, cannot register", "map_modes");
+                return;
+            }
 
-                // Fallback: create default colorizer directly if registry not available
-                if (colorizer == null)
+            // Register and get array index
+            textureArrayIndex = mapModeManager.RegisterCustomMapMode(ShaderModeID);
+            if (textureArrayIndex < 0)
+            {
+                ArchonLogger.LogError($"{Name}: Failed to register with MapModeManager", "map_modes");
+                return;
+            }
+
+            // Get map dimensions
+            (mapWidth, mapHeight) = mapModeManager.GetMapDimensions();
+
+            // Initialize GPU resources
+            InitializeGPUResources();
+
+            isRegistered = true;
+            isDirty = true; // Force initial update
+
+            ArchonLogger.Log($"{Name}: Registered with MapModeManager at index {textureArrayIndex} ({mapWidth}x{mapHeight})", "map_modes");
+        }
+
+        /// <summary>
+        /// Initialize GPU compute shader and buffers
+        /// </summary>
+        private void InitializeGPUResources()
+        {
+            // Load compute shader
+            gradientCompute = Resources.Load<ComputeShader>("GradientMapMode");
+
+            #if UNITY_EDITOR
+            if (gradientCompute == null)
+            {
+                string[] guids = UnityEditor.AssetDatabase.FindAssets("GradientMapMode t:ComputeShader");
+                if (guids.Length > 0)
                 {
-                    ArchonLogger.LogWarning("GradientMapMode: Registry not available, creating fallback GradientMapModeColorizer", "map_modes");
-                    colorizer = new GradientMapModeColorizer();
+                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+                    gradientCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
                 }
+            }
+            #endif
+
+            if (gradientCompute == null)
+            {
+                ArchonLogger.LogError($"{Name}: GradientMapMode compute shader not found!", "map_modes");
+                return;
+            }
+
+            colorizeKernel = gradientCompute.FindKernel("ColorizeGradient");
+
+            // Allocate province value buffer (max 65536 provinces)
+            provinceValues = new float[65536];
+            provinceValueBuffer = new ComputeBuffer(65536, sizeof(float));
+
+            // Allocate gradient colors buffer (5 colors max for flexibility)
+            gradientColorsBuffer = new ComputeBuffer(5, sizeof(float) * 4);
+
+            // Create output render texture
+            outputTexture = new RenderTexture(mapWidth, mapHeight, 0, RenderTextureFormat.ARGB32);
+            outputTexture.enableRandomWrite = true;
+            outputTexture.filterMode = FilterMode.Point;
+            outputTexture.Create();
+
+            // Get province ID texture reference
+            var textureManager = Object.FindFirstObjectByType<MapTextureManager>();
+            if (textureManager != null)
+            {
+                provinceIDTexture = textureManager.ProvinceIDTexture;
+            }
+
+            if (provinceIDTexture == null)
+            {
+                ArchonLogger.LogError($"{Name}: ProvinceIDTexture not found!", "map_modes");
             }
         }
 
         /// <summary>
-        /// Initialize the colorizer if not already done.
-        /// Called lazily when first update is needed.
+        /// Called when map mode is activated.
+        /// Subclasses should call base.OnMapModeActivated() if they override OnActivate.
         /// </summary>
-        private void EnsureColorizerInitialized(MapModeDataTextures dataTextures)
+        protected void OnMapModeActivated()
         {
-            if (colorizerInitialized || colorizer == null) return;
-
-            var context = new MapModeColorizerContext
+            if (!isRegistered)
             {
-                TextureManager = null, // Not needed for basic colorization
-                MapWidth = dataTextures.ProvinceDevelopmentTexture?.width ?? 0,
-                MapHeight = dataTextures.ProvinceDevelopmentTexture?.height ?? 0,
-                MaxProvinces = 65536
-            };
-
-            colorizer.Initialize(context);
-            colorizerInitialized = true;
+                ArchonLogger.LogWarning($"{Name}: Activated but not registered with MapModeManager", "map_modes");
+            }
         }
 
         // IMapModeHandler implementation
@@ -167,15 +238,13 @@ namespace Map.MapModes
                                           CountryQueries countryQueries, ProvinceMapping provinceMapping,
                                           object gameProvinceSystem = null)
         {
-            // Optimization: Skip update if data hasn't changed
-            if (!isDirty)
-            {
-                return;
-            }
+            // Skip if not dirty
+            if (!isDirty) return;
 
-            if (dataTextures?.ProvinceDevelopmentTexture == null)
+            // Ensure we're registered and have GPU resources
+            if (!isRegistered || gradientCompute == null || provinceIDTexture == null)
             {
-                ArchonLogger.LogError($"{Name}: Development texture not available", "map_modes");
+                ArchonLogger.LogWarning($"{Name}: Not properly initialized, skipping texture update", "map_modes");
                 return;
             }
 
@@ -190,33 +259,28 @@ namespace Map.MapModes
                 return;
             }
 
-            // Phase 1: Analyze value distribution
-            var stats = AnalyzeValueDistribution(allProvinces, provinceQueries, gameProvinceSystem);
+            // Phase 1: Calculate province values and stats (CPU - fast, just province count iterations)
+            var stats = CalculateProvinceValues(allProvinces, provinceQueries, gameProvinceSystem);
 
-            // Phase 2: Update texture with gradient colors
-            // Note: Always update even with 0 valid provinces to clear texture properly
-            UpdateGradientTexture(dataTextures, allProvinces, provinceQueries, provinceMapping,
-                                 gameProvinceSystem, stats);
+            // Phase 2: Run GPU compute shader to colorize (GPU - fast, ~1ms)
+            RunGPUColorization(stats);
 
-            if (stats.ValidProvinces == 0)
-            {
-                ArchonLogger.Log($"{Name}: No valid provinces with data - texture cleared", "map_modes");
-            }
+            // Phase 3: Copy to texture array (GPU-to-GPU, no CPU roundtrip)
+            CopyToTextureArray();
 
-            // Clear dirty flag - data is now up to date
+            // Clear dirty flag
             isDirty = false;
 
             var elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
-
             ArchonLogger.Log($"{Name}: Updated {stats.ValidProvinces} provinces in {elapsed:F2}ms " +
-                           $"[Range: {stats.MinValue:F1}-{stats.MaxValue:F1}, Avg: {stats.AvgValue:F1}]", "map_modes");
+                           $"[Range: {stats.MinValue:F1}-{stats.MaxValue:F1}]", "map_modes");
         }
 
         /// <summary>
-        /// Analyze value distribution across all provinces
+        /// Calculate province values and normalize them for GPU
         /// </summary>
-        private ValueStats AnalyzeValueDistribution(NativeArray<ushort> provinces, ProvinceQueries provinceQueries,
-                                                    object gameProvinceSystem)
+        private ValueStats CalculateProvinceValues(NativeArray<ushort> provinces, ProvinceQueries provinceQueries,
+                                                   object gameProvinceSystem)
         {
             var stats = new ValueStats
             {
@@ -224,150 +288,157 @@ namespace Map.MapModes
                 MaxValue = float.MinValue
             };
 
+            // Initialize all values to -1 (skip/ocean)
+            for (int i = 0; i < provinceValues.Length; i++)
+            {
+                provinceValues[i] = -1f;
+            }
+
             float totalValue = 0f;
             int validCount = 0;
 
+            // First pass: collect raw values and find min/max
             for (int i = 0; i < provinces.Length; i++)
             {
                 var provinceId = provinces[i];
+                if (provinceId == 0) continue;
 
-                // Get value from concrete implementation
                 float value = GetValueForProvince(provinceId, provinceQueries, gameProvinceSystem);
 
-                // Skip invalid provinces (zero or negative values)
-                if (value <= 0f)
+                if (value < 0f)
+                {
+                    provinceValues[provinceId] = -1f; // Skip (ocean/invalid)
                     continue;
+                }
 
-                totalValue += value;
-                validCount++;
+                provinceValues[provinceId] = value; // Store raw value for now
 
-                if (value < stats.MinValue) stats.MinValue = value;
-                if (value > stats.MaxValue) stats.MaxValue = value;
+                if (value > 0f)
+                {
+                    totalValue += value;
+                    validCount++;
+
+                    if (value < stats.MinValue) stats.MinValue = value;
+                    if (value > stats.MaxValue) stats.MaxValue = value;
+                }
             }
 
             stats.ValidProvinces = validCount;
             stats.AvgValue = validCount > 0 ? totalValue / validCount : 0f;
 
+            // Handle edge cases
+            if (stats.MinValue == float.MaxValue) stats.MinValue = 0f;
+            if (stats.MaxValue == float.MinValue) stats.MaxValue = 1f;
+
+            // Second pass: normalize values to [0,1] range for GPU
+            float valueRange = stats.MaxValue - stats.MinValue;
+            bool uniformValues = valueRange < 0.001f;
+
+            for (int i = 0; i < provinces.Length; i++)
+            {
+                var provinceId = provinces[i];
+                if (provinceId == 0) continue;
+
+                float value = provinceValues[provinceId];
+                if (value < 0f) continue; // Keep -1 for skipped provinces
+
+                if (value == 0f)
+                {
+                    // Zero = show as minimum (0.0)
+                    provinceValues[provinceId] = 0f;
+                }
+                else
+                {
+                    // Normalize to [0,1]
+                    provinceValues[provinceId] = uniformValues ? 0f : Mathf.Clamp01((value - stats.MinValue) / valueRange);
+                }
+            }
+
             return stats;
         }
 
         /// <summary>
-        /// Update texture with gradient colors based on province values
-        /// Uses pluggable colorizer from registry (Pattern 20) for GPU compute
+        /// Run GPU compute shader to colorize provinces
         /// </summary>
-        private void UpdateGradientTexture(MapModeDataTextures dataTextures, NativeArray<ushort> provinces,
-                                          ProvinceQueries provinceQueries, ProvinceMapping provinceMapping,
-                                          object gameProvinceSystem, ValueStats stats)
+        private void RunGPUColorization(ValueStats stats)
         {
-            var texture = dataTextures.ProvinceDevelopmentTexture;
-            if (texture == null)
-            {
-                ArchonLogger.LogError($"{Name}: ProvinceDevelopmentTexture is null", "map_modes");
-                return;
-            }
+            // Upload province values to GPU
+            provinceValueBuffer.SetData(provinceValues);
 
-            // Check colorizer is available
-            if (colorizer == null)
-            {
-                ArchonLogger.LogError($"{Name}: Colorizer not available!", "map_modes");
-                return;
-            }
-
-            // Ensure colorizer is initialized (lazy init)
-            EnsureColorizerInitialized(dataTextures);
-
-            // Get gradient from concrete implementation
+            // Upload gradient colors
             var gradient = GetGradient();
+            var gradientColors = new Vector4[5];
+            gradientColors[0] = ColorToVector4(gradient.Evaluate(0f));
+            gradientColors[1] = ColorToVector4(gradient.Evaluate(0.25f));
+            gradientColors[2] = ColorToVector4(gradient.Evaluate(0.5f));
+            gradientColors[3] = ColorToVector4(gradient.Evaluate(0.75f));
+            gradientColors[4] = ColorToVector4(gradient.Evaluate(1f));
+            gradientColorsBuffer.SetData(gradientColors);
 
-            // Calculate value range for normalization
-            float valueRange = stats.MaxValue - stats.MinValue;
-            bool uniformValues = valueRange < 0.001f; // Handle edge case where all values are the same
+            // Set textures
+            gradientCompute.SetTexture(colorizeKernel, "ProvinceIDTexture", provinceIDTexture);
+            gradientCompute.SetTexture(colorizeKernel, "OutputTexture", outputTexture);
 
-            // Build province values array (normalized to 0-1)
-            // Array is indexed by provinceID, size must be at least max provinceID + 1
-            int maxProvinceId = 0;
-            for (int i = 0; i < provinces.Length; i++)
-            {
-                if (provinces[i] > maxProvinceId)
-                    maxProvinceId = provinces[i];
-            }
+            // Set buffers
+            gradientCompute.SetBuffer(colorizeKernel, "ProvinceValueBuffer", provinceValueBuffer);
+            gradientCompute.SetBuffer(colorizeKernel, "GradientColors", gradientColorsBuffer);
 
-            float[] provinceValues = new float[maxProvinceId + 1];
+            // Set parameters
+            gradientCompute.SetInt("MapWidth", mapWidth);
+            gradientCompute.SetInt("MapHeight", mapHeight);
+            gradientCompute.SetVector("OceanColor", ColorToVector4(OceanColor));
 
-            // Populate normalized values
-            for (int i = 0; i < provinces.Length; i++)
-            {
-                var provinceId = provinces[i];
-
-                // Get value from concrete implementation
-                float value = GetValueForProvince(provinceId, provinceQueries, gameProvinceSystem);
-
-                // Skip invalid provinces (use negative value to indicate "skip" to GPU shader)
-                if (value <= 0f)
-                {
-                    provinceValues[provinceId] = -1f; // Negative = skip (compute shader will use ocean color)
-                    continue;
-                }
-
-                // Normalize value to 0-1 range
-                // Note: Minimum value normalizes to 0.0, which is a VALID value (not skipped)
-                float normalizedValue = uniformValues ? 0.5f : (value - stats.MinValue) / valueRange;
-                provinceValues[provinceId] = normalizedValue;
-            }
-
-            // Get province ID texture from data textures
-            var provinceIDTexture = dataTextures.ProvinceIDTexture as RenderTexture;
-            if (provinceIDTexture == null)
-            {
-                ArchonLogger.LogError($"{Name}: ProvinceIDTexture is not a RenderTexture!", "map_modes");
-                return;
-            }
-
-            var outputTexture = texture as RenderTexture;
-            if (outputTexture == null)
-            {
-                ArchonLogger.LogError($"{Name}: ProvinceDevelopmentTexture is not a RenderTexture!", "map_modes");
-                return;
-            }
-
-            // Build style params for colorizer
-            var styleParams = new ColorizationStyleParams
-            {
-                Gradient = gradient,
-                OceanColor = OceanColor,
-                NoDataColor = UnknownColor,
-                DiscreteBands = 0,
-                ShowValueLabels = false,
-                AnimationTime = Time.time
-            };
-
-            // Dispatch via pluggable colorizer
-            colorizer.Colorize(provinceIDTexture, outputTexture, provinceValues, styleParams);
+            // Dispatch compute shader (8x8 thread groups)
+            int groupsX = Mathf.CeilToInt(mapWidth / 8f);
+            int groupsY = Mathf.CeilToInt(mapHeight / 8f);
+            gradientCompute.Dispatch(colorizeKernel, groupsX, groupsY, 1);
         }
 
         /// <summary>
-        /// Helper method for subclasses to disable all map mode keywords
+        /// Copy GPU output to texture array using GPU-to-GPU copy (no CPU roundtrip).
+        /// Uses Graphics.CopyTexture which stays entirely on GPU.
+        /// </summary>
+        private void CopyToTextureArray()
+        {
+            // GPU-to-GPU copy - no ReadPixels, no CPU sync, stays on GPU
+            mapModeManager.CopyRenderTextureToArray(textureArrayIndex, outputTexture);
+        }
+
+        private Vector4 ColorToVector4(Color32 color)
+        {
+            return new Vector4(color.r / 255f, color.g / 255f, color.b / 255f, color.a / 255f);
+        }
+
+        private Vector4 ColorToVector4(Color color)
+        {
+            return new Vector4(color.r, color.g, color.b, color.a);
+        }
+
+        /// <summary>
+        /// Helper method for subclasses to disable all map mode keywords (legacy compatibility)
         /// </summary>
         protected void DisableAllMapModeKeywords(Material mapMaterial)
         {
-            mapMaterial.DisableKeyword("MAP_MODE_POLITICAL");
-            mapMaterial.DisableKeyword("MAP_MODE_TERRAIN");
-            mapMaterial.DisableKeyword("MAP_MODE_DEVELOPMENT");
+            // No longer needed - mode switching is int-based now
+            // Kept for GAME layer backward compatibility
         }
 
         /// <summary>
-        /// Helper method for subclasses to enable a specific keyword
+        /// Helper method for subclasses to enable a specific keyword (legacy compatibility)
         /// </summary>
         protected void EnableMapModeKeyword(Material mapMaterial, string keyword)
         {
-            mapMaterial.EnableKeyword(keyword);
+            // No longer needed - mode switching is int-based now
+            // Kept for GAME layer backward compatibility
         }
 
         /// <summary>
-        /// Helper method for subclasses to set shader mode
+        /// Helper method for subclasses to set shader mode (legacy compatibility)
         /// </summary>
         protected void SetShaderMode(Material mapMaterial, int modeID)
         {
+            // Now handled by MapModeManager.SetMapMode()
+            // Kept for GAME layer backward compatibility
             mapMaterial.SetInt("_MapMode", modeID);
         }
 
@@ -400,15 +471,24 @@ namespace Map.MapModes
 
         /// <summary>
         /// Dispose resources
-        /// Call when map mode is no longer needed (e.g., scene cleanup)
-        /// Note: Colorizer is managed by MapRendererRegistry, only clear local reference
         /// </summary>
         public void Dispose()
         {
-            // Don't dispose colorizer - it's owned by MapRendererRegistry
-            // Just clear local reference
-            colorizer = null;
-            colorizerInitialized = false;
+            provinceValueBuffer?.Release();
+            provinceValueBuffer = null;
+
+            gradientColorsBuffer?.Release();
+            gradientColorsBuffer = null;
+
+            if (outputTexture != null)
+            {
+                outputTexture.Release();
+                Object.Destroy(outputTexture);
+                outputTexture = null;
+            }
+
+            mapModeManager = null;
+            isRegistered = false;
         }
     }
 }

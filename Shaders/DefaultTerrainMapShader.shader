@@ -32,7 +32,14 @@ Shader "Archon/DefaultTerrain"
         _TessellationMinDistance ("Tessellation Min Distance", Float) = 50.0
 
         // Map visualization settings
-        [Enum(Political, 0, Terrain, 1, Development, 2, Culture, 3, OwnerDebug, 4)] _MapMode ("Map Mode", Int) = 0
+        // Mode 0: Political, Mode 1: Terrain, Mode 2+: Custom GAME modes via texture array
+        [Enum(Political, 0, Terrain, 1, Custom, 2)] _MapMode ("Map Mode", Int) = 0
+        _CustomMapModeIndex ("Custom Map Mode Index", Int) = 0
+        _MapModeTextureCount ("Map Mode Texture Count", Int) = 0
+
+        // Map Mode Texture Array - GAME modes write their visualization here
+        // ENGINE samples from this array when _MapMode >= 2
+        _MapModeTextureArray ("Map Mode Texture Array", 2DArray) = "" {}
 
         // Border visualization (configurable from GAME layer)
         // 0=None, 1=DistanceField, 2=PixelPerfect, 3=MeshGeometry
@@ -149,8 +156,8 @@ Shader "Archon/DefaultTerrain"
             #pragma domain Domain
             #pragma fragment frag
 
-            // Shader variants for different map modes
-            #pragma multi_compile_local _ MAP_MODE_POLITICAL MAP_MODE_TERRAIN MAP_MODE_DEVELOPMENT MAP_MODE_CULTURE MAP_MODE_DEBUG MAP_MODE_BORDERS
+            // Map mode switching is now int-based (_MapMode), not keyword-based
+            // This enables unlimited GAME-defined map modes via texture array
 
             // Terrain detail mapping (only in tessellated shader)
             #pragma multi_compile_local _ TERRAIN_DETAIL_MAPPING

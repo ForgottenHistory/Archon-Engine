@@ -8,7 +8,9 @@ using Core.SaveLoad;
 using Core.Systems;
 using Map.Core;
 using Map.Interaction;
+using Map.MapModes;
 using ProvinceSystem;
+using StarterKit.MapModes;
 
 namespace StarterKit
 {
@@ -63,6 +65,10 @@ namespace StarterKit
         private UnitSystem unitSystem;
         private BuildingSystem buildingSystem;
         private AISystem aiSystem;
+
+        // Map modes (GAME layer extends ENGINE map modes)
+        private FarmDensityMapMode farmDensityMapMode;
+        private MapModeManager mapModeManager;
 
         private bool isInitialized;
 
@@ -219,6 +225,9 @@ namespace StarterKit
             aiSystem = new AISystem(gameState, playerState, buildingSystem, logProgress);
 
             yield return null;
+
+            // Register custom map modes (GAME layer extends ENGINE map modes)
+            yield return RegisterMapModes(mapInitializer, gameState);
 
             // Hook up SaveManager for StarterKit systems
             SetupSaveManager(gameState);
@@ -425,6 +434,95 @@ namespace StarterKit
 
             if (logProgress)
                 ArchonLogger.Log("SaveManager hooks configured (F6=Save, F7=Load)", "starter_kit");
+        }
+
+        #endregion
+
+        #region Map Mode Registration
+
+        /// <summary>
+        /// Register custom map modes with the ENGINE's MapModeManager.
+        /// Demonstrates: GAME layer (StarterKit) extends ENGINE (Map.MapModes) with custom visualization.
+        /// </summary>
+        private IEnumerator RegisterMapModes(MapInitializer mapInitializerRef, GameState gameState)
+        {
+            if (mapInitializerRef == null)
+            {
+                if (logProgress)
+                    ArchonLogger.LogWarning("Initializer: MapInitializer not available - skipping map mode registration", "starter_kit");
+                yield break;
+            }
+
+            mapModeManager = mapInitializerRef.MapModeManager;
+            if (mapModeManager == null)
+            {
+                if (logProgress)
+                    ArchonLogger.LogWarning("Initializer: MapModeManager not available - skipping map mode registration", "starter_kit");
+                yield break;
+            }
+
+            // Check if MapModeManager is initialized
+            if (!mapModeManager.IsInitialized)
+            {
+                // Initialize MapModeManager if not already done
+                // ENGINE provides mechanism, GAME controls when to initialize
+                var mapSystemCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
+                if (mapSystemCoordinator != null && mapInitializerRef.MeshRenderer != null)
+                {
+                    var material = mapInitializerRef.MeshRenderer.sharedMaterial;
+                    mapModeManager.Initialize(gameState, material, mapSystemCoordinator.ProvinceMapping, buildingSystem);
+
+                    if (logProgress)
+                        ArchonLogger.Log("Initializer: MapModeManager initialized", "starter_kit");
+                }
+                else
+                {
+                    ArchonLogger.LogWarning("Initializer: Cannot initialize MapModeManager - missing dependencies", "starter_kit");
+                    yield break;
+                }
+            }
+
+            yield return null;
+
+            // Create and register Farm Density map mode
+            if (buildingSystem != null && mapModeManager != null)
+            {
+                farmDensityMapMode = new FarmDensityMapMode(buildingSystem, mapModeManager);
+                mapModeManager.RegisterHandler(MapMode.Economic, farmDensityMapMode);
+
+                // Subscribe to building construction to mark map mode dirty
+                buildingSystem.OnBuildingConstructed += (provinceId, buildingTypeId) =>
+                {
+                    farmDensityMapMode?.MarkDirty();
+                };
+
+                // Subscribe to province ownership changes to update map mode
+                gameState.EventBus.Subscribe<Core.Systems.ProvinceOwnershipChangedEvent>(evt =>
+                {
+                    farmDensityMapMode?.MarkDirty();
+                });
+
+                if (logProgress)
+                    ArchonLogger.Log("Initializer: FarmDensityMapMode registered (use 'M' key or toolbar to switch)", "starter_kit");
+            }
+
+            yield return null;
+        }
+
+        /// <summary>
+        /// Set the current map mode. Called by ToolbarUI.
+        /// </summary>
+        public void SetMapMode(MapMode mode)
+        {
+            mapModeManager?.SetMapMode(mode);
+        }
+
+        /// <summary>
+        /// Get the current map mode.
+        /// </summary>
+        public MapMode GetCurrentMapMode()
+        {
+            return mapModeManager?.CurrentMode ?? MapMode.Political;
         }
 
         #endregion

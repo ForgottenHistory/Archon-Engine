@@ -19,6 +19,7 @@ A lightweight implementation showing how to build a game on Archon-Engine. Use i
 StarterKit/
 ├── Initializer.cs          # Entry point, coordinates all systems
 ├── Commands/               # Console commands for state changes
+├── MapModes/               # Custom map modes (extends ENGINE map system)
 ├── State/                  # Player state and events
 ├── Systems/                # Game systems (economy, units, buildings, AI)
 ├── UI/                     # All UI components
@@ -76,7 +77,7 @@ Commands use ENGINE infrastructure (`Core.Commands`).
 | **UnitInfoUI** | Unit list, creation, and movement |
 | **BuildingInfoUI** | Building list and construction |
 | **LedgerUI** | Country statistics table (L key) |
-| **ToolbarUI** | Top-right buttons (Ledger, Save, Load) |
+| **ToolbarUI** | Top-right buttons (Ledger, Map Mode, Save, Load) |
 
 ### Event-Driven UI Pattern
 
@@ -104,6 +105,51 @@ This avoids polling in `Update()` and unnecessary refreshes.
 | Component | Purpose |
 |-----------|---------|
 | **UnitVisualization** | Renders unit sprites on map |
+
+---
+
+## Map Modes (`MapModes/`)
+
+Custom map modes extend ENGINE's `GradientMapMode` to visualize GAME data:
+
+| Component | Purpose |
+|-----------|---------|
+| **FarmDensityMapMode** | Heatmap showing farms built per province |
+
+### Using Map Modes
+
+- **M key** or **toolbar button** - Toggle between Political and Farm Density modes
+- Farm Density shows: white (no farms) → yellow → orange (max farms)
+
+### Creating Custom Map Modes
+
+1. Create class extending `GradientMapMode`
+2. Override abstract methods:
+   - `GetGradient()` - Define color stops
+   - `GetValueForProvince()` - Return data value for each province
+3. Register in `Initializer.RegisterMapModes()`
+
+Example (FarmDensityMapMode):
+```csharp
+public class FarmDensityMapMode : GradientMapMode
+{
+    protected override ColorGradient GetGradient()
+    {
+        return new ColorGradient(
+            new Color32(240, 240, 220, 255),  // No farms
+            new Color32(255, 200, 50, 255),   // Some farms
+            new Color32(200, 80, 0, 255)      // Max farms
+        );
+    }
+
+    protected override float GetValueForProvince(ushort provinceId, ...)
+    {
+        return buildingSystem.GetBuildingCount(provinceId, farmTypeId);
+    }
+}
+```
+
+This demonstrates **Pattern 1 (Engine-Game Separation)**: ENGINE provides the gradient map mode mechanism, GAME provides the policy (what data to visualize).
 
 ---
 
@@ -178,6 +224,7 @@ Create `Template-Data/buildings/mybuilding.json5`:
 
 ## Architecture Patterns Used
 
+- **Pattern 1 (Engine-Game Separation)** - ENGINE mechanism + GAME policy (map modes)
 - **Pattern 2 (Command)** - All state changes through commands
 - **Pattern 3 (Event-Driven)** - EventBus subscriptions, zero-allocation events
 - **Pattern 14 (Save/Load)** - Binary serialization with callbacks

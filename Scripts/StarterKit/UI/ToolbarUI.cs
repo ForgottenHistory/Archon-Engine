@@ -3,24 +3,31 @@ using UnityEngine.UIElements;
 using Core;
 using Core.SaveLoad;
 using Core.UI;
+using Map.MapModes;
 
 namespace StarterKit
 {
     /// <summary>
     /// STARTERKIT - Simple toolbar with common actions.
-    /// Positioned in top right corner. Shows: Ledger, Save, Load buttons.
+    /// Positioned in top right corner. Shows: Ledger, Map Mode, Save, Load buttons.
     /// Hidden until player selects a country.
+    ///
+    /// Demonstrates: UI integration with map mode system (ENGINE mechanism, GAME policy)
     /// </summary>
     public class ToolbarUI : StarterKitPanel
     {
         // UI Elements
         private Button ledgerButton;
+        private Button mapModeButton;
         private Button saveButton;
         private Button loadButton;
 
         // References
         private LedgerUI ledgerUI;
         private SaveManager saveManager;
+
+        // Map mode state
+        private bool showingFarmDensity = false;
 
         public void Initialize(GameState gameStateRef, LedgerUI ledgerUIRef, SaveManager saveManagerRef)
         {
@@ -52,6 +59,10 @@ namespace StarterKit
             // Ledger button
             ledgerButton = CreateToolbarButton("Ledger (L)", OnLedgerClicked);
             panelContainer.Add(ledgerButton);
+
+            // Map Mode button - toggle between Political and Farm Density
+            mapModeButton = CreateToolbarButton("Map: Political (M)", OnMapModeClicked);
+            panelContainer.Add(mapModeButton);
 
             // Save button
             saveButton = CreateToolbarButton("Save (F6)", OnSaveClicked);
@@ -103,6 +114,41 @@ namespace StarterKit
             else
             {
                 ArchonLogger.LogWarning("ToolbarUI: SaveManager not available", "starter_kit");
+            }
+        }
+
+        private void OnMapModeClicked()
+        {
+            var initializer = Initializer.Instance;
+            if (initializer == null)
+            {
+                ArchonLogger.LogWarning("ToolbarUI: Initializer not available for map mode switch", "starter_kit");
+                return;
+            }
+
+            // Toggle between Political and Farm Density (Economic) modes
+            showingFarmDensity = !showingFarmDensity;
+
+            if (showingFarmDensity)
+            {
+                initializer.SetMapMode(MapMode.Economic); // Farm Density is registered as Economic
+                mapModeButton.text = "Map: Farms (M)";
+                ArchonLogger.Log("ToolbarUI: Switched to Farm Density map mode", "starter_kit");
+            }
+            else
+            {
+                initializer.SetMapMode(MapMode.Political);
+                mapModeButton.text = "Map: Political (M)";
+                ArchonLogger.Log("ToolbarUI: Switched to Political map mode", "starter_kit");
+            }
+        }
+
+        private void Update()
+        {
+            // Keyboard shortcut: M to toggle map mode
+            if (Input.GetKeyDown(KeyCode.M) && isVisible)
+            {
+                OnMapModeClicked();
             }
         }
     }

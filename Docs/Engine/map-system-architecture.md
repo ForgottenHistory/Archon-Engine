@@ -131,6 +131,55 @@ Compute shader detects province boundaries:
 
 ---
 
+## GPU-Only Pipeline (Critical)
+
+**Never bring GPU data back to CPU unless absolutely necessary.**
+
+### The Problem
+GPU→CPU transfers (e.g., `ReadPixels`, `GetPixels32`) force synchronization:
+- CPU stalls waiting for GPU to complete all work
+- Typical stall: 100-200ms for full map texture
+- Destroys frame rate, causes visible hitches
+
+### The Rule
+```
+CPU → GPU: Allowed (upload data)
+GPU → GPU: Preferred (compute shader → texture → shader)
+GPU → CPU: Avoid (forces sync stall)
+```
+
+### Correct Patterns
+
+**Map Mode Updates:**
+1. CPU calculates per-province values (fast, ~3000 items)
+2. GPU compute shader colorizes pixels (parallel, ~1ms)
+3. `Graphics.CopyTexture` copies to texture array (GPU-to-GPU, <1ms)
+4. Fragment shader samples from array (instant)
+
+**Never do this:**
+```csharp
+// ❌ WRONG - GPU→CPU sync stall (100-200ms)
+RenderTexture.active = renderTexture;
+texture.ReadPixels(rect, 0, 0);
+texture.Apply();
+var pixels = texture.GetPixels32();
+targetTexture.SetPixels32(pixels);
+targetTexture.Apply();
+```
+
+**Do this instead:**
+```csharp
+// ✅ CORRECT - GPU-to-GPU copy (<1ms)
+Graphics.CopyTexture(sourceRenderTexture, 0, 0, targetTextureArray, sliceIndex, 0);
+```
+
+### When GPU→CPU is Acceptable
+- Initialization (runs once at startup)
+- Debug/diagnostic readback (not in production)
+- Save system (can afford the stall)
+
+---
+
 ## Key Constraints
 
 ### Province ID Texture
@@ -147,6 +196,7 @@ Compute shader detects province boundaries:
 - Explicit synchronization between passes
 - Avoid UAV/SRV binding conflicts
 - Y-flip only in fragment shader, not compute
+- Use `RWTexture2D` for all RenderTexture access (even read-only)
 
 ---
 
