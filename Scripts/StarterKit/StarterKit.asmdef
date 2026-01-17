@@ -4,7 +4,8 @@
     "references": [
         "Core",
         "MapAssembly",
-        "Utils"
+        "Utils",
+        "Unity.Collections"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Collections;
 using Core;
 using Core.Events;
+using Core.Queries;
 using Core.Systems;
 using Map.Core;
 using Map.Rendering.Terrain;
@@ -13,6 +15,8 @@ namespace StarterKit
     /// Simple AI for StarterKit. Non-player countries colonize and build farms on monthly tick.
     /// AI countries use the shared EconomySystem for gold (same as player).
     /// Priority: Colonize first (expand), then build farms (develop).
+    ///
+    /// Demonstrates: ProvinceQueryBuilder for fluent province filtering.
     /// </summary>
     public class AISystem : IDisposable
     {
@@ -116,115 +120,90 @@ namespace StarterKit
 
         private bool TryColonize(ushort countryId, Core.Systems.ProvinceSystem provinceSystem)
         {
-            // Get owned provinces
-            var ownedProvinces = provinceSystem.GetCountryProvinces(countryId);
-            try
+            // Use ProvinceQueryBuilder (ENGINE) to find unowned provinces bordering our country
+            // Then apply GAME-layer filter for ownable terrain
+            using var query = new ProvinceQueryBuilder(provinceSystem, gameState.Adjacencies);
+            using var candidates = query
+                .BorderingCountry(countryId)  // Adjacent to our provinces
+                .IsUnowned()                   // Not owned by anyone
+                .Execute(Allocator.Temp);
+
+            if (candidates.Length == 0)
+                return false;
+
+            // GAME-layer filter: only ownable terrain (ENGINE doesn't know about this concept)
+            var colonizeCandidates = new List<ushort>();
+            for (int i = 0; i < candidates.Length; i++)
             {
-                if (ownedProvinces.Length == 0)
-                    return false;
+                ushort provinceId = candidates[i];
+                ushort terrainType = provinceSystem.GetProvinceTerrain(provinceId);
 
-                // Find all unowned, ownable neighbor provinces
-                var colonizeCandidates = new List<ushort>();
-
-                for (int i = 0; i < ownedProvinces.Length; i++)
+                if (terrainLookup == null || terrainLookup.IsTerrainOwnable(terrainType))
                 {
-                    ushort ownedProvince = ownedProvinces[i];
-
-                    // Get neighbors of this owned province
-                    using (var neighbors = gameState.Adjacencies.GetNeighbors(ownedProvince))
-                    {
-                        for (int j = 0; j < neighbors.Length; j++)
-                        {
-                            ushort neighborId = neighbors[j];
-
-                            // Check if unowned
-                            ushort owner = gameState.ProvinceQueries.GetOwner(neighborId);
-                            if (owner != 0)
-                                continue;
-
-                            // Check if terrain is ownable
-                            ushort terrainType = gameState.ProvinceQueries.GetTerrain(neighborId);
-                            if (terrainLookup != null && !terrainLookup.IsTerrainOwnable(terrainType))
-                                continue;
-
-                            // Avoid duplicates (same province may neighbor multiple owned provinces)
-                            if (!colonizeCandidates.Contains(neighborId))
-                            {
-                                colonizeCandidates.Add(neighborId);
-                            }
-                        }
-                    }
+                    colonizeCandidates.Add(provinceId);
                 }
-
-                if (colonizeCandidates.Count == 0)
-                    return false;
-
-                // Pick random province to colonize
-                ushort targetProvince = colonizeCandidates[random.Next(colonizeCandidates.Count)];
-
-                // Colonize (set owner)
-                gameState.Provinces.SetProvinceOwner(targetProvince, countryId);
-
-                if (logProgress)
-                {
-                    ArchonLogger.Log($"AISystem: Country {countryId} colonized province {targetProvince} (spent {COLONIZE_COST} gold)", "starter_kit");
-                }
-
-                return true;
             }
-            finally
+
+            if (colonizeCandidates.Count == 0)
+                return false;
+
+            // Pick random province to colonize
+            ushort targetProvince = colonizeCandidates[random.Next(colonizeCandidates.Count)];
+
+            // Colonize (set owner)
+            gameState.Provinces.SetProvinceOwner(targetProvince, countryId);
+
+            if (logProgress)
             {
-                ownedProvinces.Dispose();
+                ArchonLogger.Log($"AISystem: Country {countryId} colonized province {targetProvince} (spent {COLONIZE_COST} gold)", "starter_kit");
             }
+
+            return true;
         }
 
         private bool TryBuildFarm(ushort countryId, Core.Systems.ProvinceSystem provinceSystem, int cost)
         {
-            // Get owned provinces (must dispose NativeArray)
-            var provinces = provinceSystem.GetCountryProvinces(countryId);
-            try
+            var farmType = buildingSystem.GetBuildingType("farm");
+            if (farmType == null)
+                return false;
+
+            // Use ProvinceQueryBuilder (ENGINE) to get all provinces owned by this country
+            using var query = new ProvinceQueryBuilder(provinceSystem, gameState.Adjacencies);
+            using var ownedProvinces = query
+                .OwnedBy(countryId)
+                .Execute(Allocator.Temp);
+
+            if (ownedProvinces.Length == 0)
+                return false;
+
+            // GAME-layer filter: provinces that can have more farms
+            var validProvinces = new List<ushort>();
+            for (int i = 0; i < ownedProvinces.Length; i++)
             {
-                if (provinces.Length == 0)
-                    return false;
+                ushort provinceId = ownedProvinces[i];
+                int farmCount = buildingSystem.GetBuildingCount(provinceId, farmType.ID);
 
-                // Find provinces that can have more farms
-                var farmType = buildingSystem.GetBuildingType("farm");
-                if (farmType == null)
-                    return false;
-
-                var validProvinces = new List<ushort>();
-                for (int i = 0; i < provinces.Length; i++)
+                if (farmCount < farmType.MaxPerProvince)
                 {
-                    ushort provinceId = provinces[i];
-                    int farmCount = buildingSystem.GetBuildingCount(provinceId, farmType.ID);
-
-                    // Check if below max
-                    if (farmCount < farmType.MaxPerProvince)
-                    {
-                        validProvinces.Add(provinceId);
-                    }
+                    validProvinces.Add(provinceId);
                 }
-
-                if (validProvinces.Count == 0)
-                    return false;
-
-                // Pick random province
-                ushort targetProvince = validProvinces[random.Next(validProvinces.Count)];
-
-                // Build farm
-                bool success = buildingSystem.ConstructForAI(targetProvince, "farm");
-
-                if (success && logProgress)
-                {
-                    ArchonLogger.Log($"AISystem: Country {countryId} built farm in province {targetProvince} (spent {cost} gold)", "starter_kit");
-                }
-
-                return success;
             }
-            finally
+
+            if (validProvinces.Count == 0)
+                return false;
+
+            // Pick random province
+            ushort targetProvince = validProvinces[random.Next(validProvinces.Count)];
+
+            // Build farm
+            bool success = buildingSystem.ConstructForAI(targetProvince, "farm");
+
+            if (success && logProgress)
             {
-                provinces.Dispose();
+                ArchonLogger.Log($"AISystem: Country {countryId} built farm in province {targetProvince} (spent {cost} gold)", "starter_kit");
             }
+
+            return success;
         }
 
         public void Dispose()
