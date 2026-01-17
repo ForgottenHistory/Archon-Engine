@@ -120,14 +120,15 @@ namespace Core.Loaders
             // Load and parse JSON5
             JObject json = Json5Loader.LoadJson5File(filePath);
 
-            // Extract country data
+            // Extract country data - ENGINE layer only parses generic fields
+            // Game-specific fields (religion, revolutionary colors, etc.) should be
+            // parsed by game layer loaders and stored in CountryColdData.customData
             var rawData = new RawCountryData
             {
-                tag = new FixedString64Bytes(countryTag),
-                historicalScore = Json5Loader.GetInt(json, "historical_score", 0)
+                tag = new FixedString64Bytes(countryTag)
             };
 
-            // Handle optional string fields
+            // Handle optional graphical culture
             string graphicalCulture = Json5Loader.GetString(json, "graphical_culture", "");
             if (!string.IsNullOrEmpty(graphicalCulture))
             {
@@ -140,36 +141,12 @@ namespace Core.Loaders
                 rawData.hasGraphicalCulture = false;
             }
 
-            string preferredReligion = Json5Loader.GetString(json, "preferred_religion", "");
-            if (!string.IsNullOrEmpty(preferredReligion))
-            {
-                rawData.preferredReligion = new FixedString64Bytes(preferredReligion);
-                rawData.hasPreferredReligion = true;
-            }
-            else
-            {
-                rawData.preferredReligion = new FixedString64Bytes("unknown");
-                rawData.hasPreferredReligion = false;
-            }
-
-            // Handle historical score
-            rawData.hasHistoricalScore = rawData.historicalScore > 0;
-
             // Extract color array [R, G, B] using shared utility
             var defaultGray = new Color32(128, 128, 128, 255);
             var color = Json5Loader.GetColor32(json, "color", defaultGray);
             rawData.colorR = color.r;
             rawData.colorG = color.g;
             rawData.colorB = color.b;
-
-            // Extract revolutionary colors [R, G, B] using shared utility
-            var revolutionaryColor = Json5Loader.GetColor32(json, "revolutionary_colors", color);
-            rawData.revolutionaryColorR = revolutionaryColor.r;
-            rawData.revolutionaryColorG = revolutionaryColor.g;
-            rawData.revolutionaryColorB = revolutionaryColor.b;
-            rawData.hasRevolutionaryColors = (revolutionaryColor.r != color.r ||
-                                              revolutionaryColor.g != color.g ||
-                                              revolutionaryColor.b != color.b);
 
             return rawData;
         }

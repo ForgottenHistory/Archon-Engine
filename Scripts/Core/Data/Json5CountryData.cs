@@ -1,5 +1,4 @@
 using Unity.Collections;
-using Unity.Mathematics;
 using System;
 using UnityEngine;
 
@@ -8,49 +7,34 @@ namespace Core.Data
     /// <summary>
     /// Burst-compatible struct for country data extracted from JSON5
     /// Used as intermediate format between JSON parsing and burst processing
+    ///
+    /// ENGINE layer - generic country data only.
+    /// Game-specific fields (religion, revolutionary colors, etc.) should be
+    /// parsed by game layer and stored in CountryColdData.customData.
     /// </summary>
     [Serializable]
     public struct RawCountryData
     {
+        // Core identity
         public FixedString64Bytes tag;
         public FixedString64Bytes graphicalCulture;
-        public FixedString64Bytes preferredReligion;
 
         // Color information (RGB values 0-255)
         public byte colorR;
         public byte colorG;
         public byte colorB;
 
-        // Revolutionary colors
-        public byte revolutionaryColorR;
-        public byte revolutionaryColorG;
-        public byte revolutionaryColorB;
-
-        // Numeric values
-        public int historicalScore;
-
         // Flags for optional data
         public bool hasGraphicalCulture;
-        public bool hasPreferredReligion;
-        public bool hasHistoricalScore;
-        public bool hasRevolutionaryColors;
 
         public static RawCountryData Invalid => new RawCountryData
         {
             tag = new FixedString64Bytes("---"),
             graphicalCulture = new FixedString64Bytes("unknown"),
-            preferredReligion = new FixedString64Bytes("unknown"),
             colorR = 128,
             colorG = 128,
             colorB = 128,
-            revolutionaryColorR = 0,
-            revolutionaryColorG = 0,
-            revolutionaryColorB = 0,
-            historicalScore = 0,
-            hasGraphicalCulture = false,
-            hasPreferredReligion = false,
-            hasHistoricalScore = false,
-            hasRevolutionaryColors = false
+            hasGraphicalCulture = false
         };
 
         /// <summary>
@@ -59,14 +43,6 @@ namespace Core.Data
         public Color32 GetColor()
         {
             return new Color32(colorR, colorG, colorB, 255);
-        }
-
-        /// <summary>
-        /// Get the revolutionary color as Unity Color32
-        /// </summary>
-        public Color32 GetRevolutionaryColor()
-        {
-            return new Color32(revolutionaryColorR, revolutionaryColorG, revolutionaryColorB, 255);
         }
     }
 

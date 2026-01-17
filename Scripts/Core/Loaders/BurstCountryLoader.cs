@@ -158,24 +158,18 @@ namespace Core.Loaders
 
         /// <summary>
         /// Create cold data from raw JSON5 data (main thread only - can use reference types)
+        /// ENGINE layer only populates generic fields.
+        /// Game-specific data should be populated by game layer loaders.
         /// </summary>
         private static CountryColdData CreateColdDataFromRaw(RawCountryData raw)
         {
-            var coldData = new CountryColdData
+            return new CountryColdData
             {
                 tag = raw.tag.ToString(),
                 displayName = raw.tag.ToString(), // Use tag as display name for now
                 graphicalCulture = raw.hasGraphicalCulture ? raw.graphicalCulture.ToString() : "westerngfx",
                 color = raw.GetColor()
             };
-
-            // Store game-specific data in customData if present
-            if (raw.hasPreferredReligion)
-                coldData.SetCustomData("preferredReligion", raw.preferredReligion.ToString());
-            if (raw.hasRevolutionaryColors)
-                coldData.SetCustomData("revolutionaryColors", raw.GetRevolutionaryColor());
-
-            return coldData;
         }
     }
 }

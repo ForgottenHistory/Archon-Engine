@@ -32,38 +32,22 @@ namespace Core.Jobs
 
         /// <summary>
         /// Process a single province's raw data into final game state
+        /// ENGINE layer only processes generic fields (provinceID, owner, controller)
+        /// Game-specific fields (culture, religion, development, etc.) should be
+        /// processed by game layer jobs/loaders
         /// </summary>
         private ProvinceInitialState ProcessSingleProvince(RawProvinceData raw)
         {
             // Create initial state
             var state = ProvinceInitialState.Create(raw.provinceID);
 
-            // Copy string data
+            // Copy ownership data (generic - all games have ownership)
             state.OwnerTag = raw.owner;
             state.ControllerTag = raw.controller;
-            state.Culture = raw.culture;
-            state.Religion = raw.religion;
-            state.TradeGood = raw.tradeGood;
-
-            // Copy numeric data (need explicit casts to byte with bounds checking)
-            state.BaseTax = (byte)Unity.Mathematics.math.clamp(raw.baseTax, 0, 255);
-            state.BaseProduction = (byte)Unity.Mathematics.math.clamp(raw.baseProduction, 0, 255);
-            state.BaseManpower = (byte)Unity.Mathematics.math.clamp(raw.baseManpower, 0, 255);
-            state.CenterOfTrade = (byte)Unity.Mathematics.math.clamp(raw.centerOfTrade, 0, 255);
-
-            // Pack boolean flags into Flags byte
-            state.PackFlags(raw.isCity, raw.hre);
 
             // Set default terrain - will be overwritten by ProvinceTerrainAnalyzer (Map layer)
             // Use terrain ID 1 (grasslands) instead of 0 (ocean)
             state.Terrain = 1;
-
-            // Note: extraCost from raw data is not stored in ProvinceInitialState
-            // It's part of the detailed province data, not the hot simulation state
-            // Terrain type is set by ProvinceTerrainAnalyzer based on terrain.bmp analysis
-
-            // Calculate development
-            state.CalculateDevelopment();
 
             // Apply validation if enabled
             if (validateData)
@@ -82,20 +66,17 @@ namespace Core.Jobs
 
         /// <summary>
         /// Validate province data and fix common issues
+        /// ENGINE layer only validates generic fields
         /// </summary>
         private void ValidateProvinceData(ref ProvinceInitialState state)
         {
-            // Ensure minimum values
-            if (state.BaseTax < 1) state.BaseTax = 1;
-            if (state.BaseProduction < 1) state.BaseProduction = 1;
-            if (state.BaseManpower < 1) state.BaseManpower = 1;
-
-            // Validate center of trade levels
-            if (state.CenterOfTrade > 3) state.CenterOfTrade = 3;
+            // ENGINE layer has minimal validation for generic fields
+            // Game-specific validation should be done by game layer
         }
 
         /// <summary>
         /// Apply default values for missing data
+        /// ENGINE layer only sets defaults for generic fields
         /// </summary>
         private void ApplyDefaultValues(ref ProvinceInitialState state)
         {
@@ -105,23 +86,6 @@ namespace Core.Jobs
                 // Set default values - use empty default() constructor which is Burst-compatible
                 state.OwnerTag = default;
                 state.ControllerTag = default;
-            }
-
-            // Check if trade good is empty
-            if (state.TradeGood.Length == 0)
-            {
-                state.TradeGood = default;
-            }
-
-            // Set default culture and religion for empty/uninitialized provinces
-            if (state.Culture.Length == 0)
-            {
-                state.Culture = default;
-            }
-
-            if (state.Religion.Length == 0)
-            {
-                state.Religion = default;
             }
         }
     }

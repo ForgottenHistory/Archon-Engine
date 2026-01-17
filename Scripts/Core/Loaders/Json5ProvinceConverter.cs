@@ -103,19 +103,15 @@ namespace Core.Loaders
             JObject effectiveState = ApplyHistoricalEventsToStartDate(json, 1444, 11, 11);
 
             // Extract province data from EFFECTIVE state (after applying historical events)
+            // ENGINE layer only parses generic fields (provinceID, owner, controller)
+            // Game-specific fields (culture, religion, development, etc.) should be
+            // parsed by game layer loaders and stored in ProvinceColdData.CustomData
             var rawData = new RawProvinceData
             {
-                provinceID = provinceID,
-                baseTax = Json5Loader.GetInt(effectiveState, "base_tax", 1),
-                baseProduction = Json5Loader.GetInt(effectiveState, "base_production", 1),
-                baseManpower = Json5Loader.GetInt(effectiveState, "base_manpower", 1),
-                isCity = Json5Loader.GetBool(effectiveState, "is_city", false),
-                hre = Json5Loader.GetBool(effectiveState, "hre", false),
-                centerOfTrade = Json5Loader.GetInt(effectiveState, "center_of_trade", 0),
-                extraCost = Json5Loader.GetInt(effectiveState, "extra_cost", 0)
+                provinceID = provinceID
             };
 
-            // Handle optional string fields (from effective state)
+            // Handle owner (generic - all games have ownership)
             string owner = Json5Loader.GetString(effectiveState, "owner", "");
             if (!string.IsNullOrEmpty(owner) && owner != "---")
             {
@@ -128,6 +124,7 @@ namespace Core.Loaders
                 rawData.hasOwner = false;
             }
 
+            // Handle controller (generic - defaults to owner)
             string controller = Json5Loader.GetString(effectiveState, "controller", "");
             if (!string.IsNullOrEmpty(controller) && controller != "---")
             {
@@ -138,54 +135,6 @@ namespace Core.Loaders
             {
                 rawData.controller = rawData.owner; // Default to owner
                 rawData.hasController = rawData.hasOwner;
-            }
-
-            string culture = Json5Loader.GetString(effectiveState, "culture", "");
-            if (!string.IsNullOrEmpty(culture))
-            {
-                rawData.culture = new FixedString64Bytes(culture);
-                rawData.hasCulture = true;
-            }
-            else
-            {
-                rawData.culture = new FixedString64Bytes("unknown");
-                rawData.hasCulture = false;
-            }
-
-            string religion = Json5Loader.GetString(effectiveState, "religion", "");
-            if (!string.IsNullOrEmpty(religion))
-            {
-                rawData.religion = new FixedString64Bytes(religion);
-                rawData.hasReligion = true;
-            }
-            else
-            {
-                rawData.religion = new FixedString64Bytes("unknown");
-                rawData.hasReligion = false;
-            }
-
-            string tradeGood = Json5Loader.GetString(effectiveState, "trade_goods", "");
-            if (!string.IsNullOrEmpty(tradeGood))
-            {
-                rawData.tradeGood = new FixedString64Bytes(tradeGood);
-                rawData.hasTradeGood = true;
-            }
-            else
-            {
-                rawData.tradeGood = new FixedString64Bytes("unknown");
-                rawData.hasTradeGood = false;
-            }
-
-            string capital = Json5Loader.GetString(effectiveState, "capital", "");
-            if (!string.IsNullOrEmpty(capital))
-            {
-                rawData.capital = new FixedString64Bytes(capital);
-                rawData.hasCapital = true;
-            }
-            else
-            {
-                rawData.capital = new FixedString64Bytes("");
-                rawData.hasCapital = false;
             }
 
             return rawData;
