@@ -8,7 +8,7 @@ namespace Core.Diplomacy
     /// Burst-compiled job for marking decayed opinion modifiers
     ///
     /// ARCHITECTURE: Flat storage with relationship keys
-    /// - All modifiers stored in single NativeList<ModifierWithKey>
+    /// - All modifiers stored in single NativeList{ModifierWithKey}
     /// - Job marks decayed modifiers (parallel READ-ONLY operation)
     /// - Main thread compacts array SEQUENTIALLY (deterministic order preserved)
     ///
@@ -18,7 +18,7 @@ namespace Core.Diplomacy
     /// - Insertion order preserved (append-only)
     /// - Result identical across all game clients
     ///
-    /// Performance Target: <5ms for 610k modifiers (parallel SIMD processing)
+    /// Performance Target: &lt;5ms for 610k modifiers (parallel SIMD processing)
     /// </summary>
     [BurstCompile(CompileSynchronously = true, OptimizeFor = OptimizeFor.Performance)]
     public struct DecayModifiersJob : IJobParallelFor

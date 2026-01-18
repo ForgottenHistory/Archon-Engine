@@ -23,9 +23,9 @@ namespace Core.Diplomacy
     ///
     /// Performance Targets (Paradox Scale):
     /// - 1000 countries, 30k active relationships
-    /// - GetOpinion() <0.1ms (O(1) cache + O(m) modifiers)
-    /// - IsAtWar() <0.01ms (HashSet O(1))
-    /// - DecayOpinionModifiers() <5ms for 610k modifiers (Burst parallel)
+    /// - GetOpinion() &lt;0.1ms (O(1) cache + O(m) modifiers)
+    /// - IsAtWar() &lt;0.01ms (HashSet O(1))
+    /// - DecayOpinionModifiers() &lt;5ms for 610k modifiers (Burst parallel)
     ///
     /// Pattern Compliance:
     /// - Pattern 6: Facade (delegates to specialized managers)

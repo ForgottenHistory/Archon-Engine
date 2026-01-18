@@ -17,7 +17,7 @@ namespace Core
     /// <summary>
     /// Central hub for all game data access - follows hub-and-spoke architecture
     /// Provides unified access to all game systems without owning the data
-    /// Performance: All queries should be <0.01ms, zero allocations during gameplay
+    /// Performance: All queries should be &lt;0.01ms, zero allocations during gameplay
     ///
     /// ARCHITECTURE: Engine-Game Separation
     /// - Core systems (Provinces, Countries, Time) are owned by Engine

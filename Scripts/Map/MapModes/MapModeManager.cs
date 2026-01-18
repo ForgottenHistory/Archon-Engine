@@ -11,7 +11,7 @@ namespace Map.MapModes
     /// <summary>
     /// Central manager for the map mode system
     /// Handles mode switching, texture updates, and handler coordination
-    /// Performance: <0.1ms mode switching, efficient texture scheduling
+    /// Performance: &lt;0.1ms mode switching, efficient texture scheduling
     /// </summary>
     public class MapModeManager : MonoBehaviour
     {

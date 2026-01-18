@@ -25,7 +25,7 @@ namespace Core.Systems
     /// {
     ///     public override string SystemName => "Economy";
     ///
-    ///     protected override IEnumerable<GameSystem> GetDependencies()
+    ///     protected override IEnumerable{GameSystem} GetDependencies()
     ///     {
     ///         yield return timeManager;
     ///         yield return provinceSystem;

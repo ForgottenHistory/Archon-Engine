@@ -9,7 +9,7 @@ namespace Core.Diplomacy
     /// Architecture:
     /// - Struct (not class) for Burst compatibility
     /// - NativeList for modifiers (dynamic growth, zero GC)
-    /// - Stored in NativeList<DiplomacyColdDataNative> in DiplomacySystem
+    /// - Stored in NativeList{DiplomacyColdDataNative} in DiplomacySystem
     ///
     /// Memory: ~24 bytes + modifiers
     /// </summary>

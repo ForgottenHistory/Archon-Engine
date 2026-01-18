@@ -30,7 +30,7 @@ namespace Core.Diplomacy
         /// <summary>
         /// Decay all opinion modifiers and remove fully decayed ones
         /// Called monthly by DiplomacyMonthlyTickHandler
-        /// Target: <5ms for 610k modifiers (with Burst compilation)
+        /// Target: &lt;5ms for 610k modifiers (with Burst compilation)
         /// </summary>
         public static void DecayOpinionModifiers(
             int currentTick,

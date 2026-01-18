@@ -8,7 +8,7 @@ namespace Core.Queries
     /// <summary>
     /// High-performance country data access layer
     /// Provides optimized queries for country/nation information
-    /// Performance: All basic queries <0.01ms, cached complex queries
+    /// Performance: All basic queries &lt;0.01ms, cached complex queries
     /// </summary>
     public class CountryQueries
     {
@@ -37,7 +37,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get country color - most common query (must be ultra-fast)
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public Color32 GetColor(ushort countryId)
         {
@@ -46,7 +46,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get country tag (3-letter code like "ENG", "FRA")
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public string GetTag(ushort countryId)
         {
@@ -55,7 +55,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get country ID from tag
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public ushort GetIdFromTag(string tag)
         {
@@ -64,7 +64,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get graphical culture ID for unit graphics
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public byte GetGraphicalCulture(ushort countryId)
         {
@@ -73,7 +73,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get complete country hot data (8-byte struct)
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public CountryHotData GetHotData(ushort countryId)
         {
@@ -82,7 +82,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get country cold data (detailed information, lazy-loaded)
-        /// Performance target: <0.1ms if cached, variable if loading
+        /// Performance target: &lt;0.1ms if cached, variable if loading
         /// </summary>
         public CountryColdData GetColdData(ushort countryId)
         {
@@ -91,7 +91,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Check if country exists
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public bool Exists(ushort countryId)
         {
@@ -100,7 +100,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Check if country has specific flag/feature
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public bool HasFlag(ushort countryId, byte flag)
         {
@@ -121,7 +121,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get number of provinces owned by this country
-        /// Performance target: <0.01ms if cached, <5ms if calculating
+        /// Performance target: &lt;0.01ms if cached, &lt;5ms if calculating
         /// </summary>
         public int GetProvinceCount(ushort countryId)
         {
@@ -145,7 +145,7 @@ namespace Core.Queries
         /// <summary>
         /// Get provinces owned by this country
         /// Returns native array that must be disposed by caller
-        /// Performance target: <5ms for 10k provinces
+        /// Performance target: &lt;5ms for 10k provinces
         /// </summary>
         public NativeArray<ushort> GetProvinces(ushort countryId, Allocator allocator = Allocator.TempJob)
         {
@@ -158,7 +158,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get total land area (non-ocean provinces) owned by this country
-        /// Performance target: <0.01ms if cached, <5ms if calculating
+        /// Performance target: &lt;0.01ms if cached, &lt;5ms if calculating
         /// </summary>
         public int GetLandProvinceCount(ushort countryId)
         {
@@ -312,7 +312,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Compare two countries by province count
-        /// Performance target: <0.1ms
+        /// Performance target: &lt;0.1ms
         /// </summary>
         public int CompareProvinceCount(ushort countryId1, ushort countryId2)
         {
@@ -329,7 +329,7 @@ namespace Core.Queries
         /// <summary>
         /// Get all active country IDs
         /// Returns native array that must be disposed by caller
-        /// Performance target: <1ms
+        /// Performance target: &lt;1ms
         /// </summary>
         public NativeArray<ushort> GetAllCountryIds(Allocator allocator = Allocator.TempJob)
         {
@@ -338,7 +338,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get total number of countries in the system
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public int GetTotalCountryCount()
         {
@@ -351,7 +351,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get country statistics for debugging/UI (engine-only data - no game-specific fields)
-        /// Performance target: <50ms for 256 countries
+        /// Performance target: &lt;50ms for 256 countries
         /// Note: Development statistics removed (game-specific). Use HegemonCountryQueries for game stats.
         /// </summary>
         public CountryStatistics GetCountryStatistics()

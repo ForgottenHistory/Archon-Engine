@@ -5,7 +5,7 @@ namespace Core.Diplomacy
     ///
     /// ARCHITECTURE:
     /// - Enables flat storage without range tracking
-    /// - allModifiers = NativeList<ModifierWithKey> (all modifiers from all relationships)
+    /// - allModifiers = NativeList{ModifierWithKey} (all modifiers from all relationships)
     /// - GetOpinion filters by relationshipKey
     /// - Burst job processes entire array in parallel
     ///

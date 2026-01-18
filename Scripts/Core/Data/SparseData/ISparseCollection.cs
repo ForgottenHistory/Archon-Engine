@@ -12,7 +12,7 @@ namespace Core.Data.SparseData
     ///
     /// Pattern: Interface with generic implementation
     /// - ISparseCollection provides type-erased contract
-    /// - SparseCollectionManager<TKey, TValue> implements typed operations
+    /// - SparseCollectionManager{TKey, TValue} implements typed operations
     ///
     /// Use case: Central management in game systems
     /// - Track memory usage across all sparse collections

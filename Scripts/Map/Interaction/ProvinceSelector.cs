@@ -149,7 +149,7 @@ namespace Map.Interaction
 
         /// <summary>
         /// Get province ID at world position using raycast + texture lookup
-        /// Uses texture-based lookup for optimal performance (<1ms)
+        /// Uses texture-based lookup for optimal performance (&lt;1ms)
         /// </summary>
         /// <param name="worldPosition">World position to query</param>
         /// <returns>Province ID at position, or 0 if invalid</returns>

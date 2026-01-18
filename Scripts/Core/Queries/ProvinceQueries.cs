@@ -9,7 +9,7 @@ namespace Core.Queries
     /// <summary>
     /// High-performance province data access layer
     /// Provides optimized queries for province information
-    /// Performance: All basic queries <0.01ms, cached complex queries
+    /// Performance: All basic queries &lt;0.01ms, cached complex queries
     /// </summary>
     public class ProvinceQueries : System.IDisposable
     {
@@ -38,7 +38,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get province owner - most common query (must be ultra-fast)
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public ushort GetOwner(ushort provinceId)
         {
@@ -49,7 +49,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get province terrain type (now ushort)
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public ushort GetTerrain(ushort provinceId)
         {
@@ -58,7 +58,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get complete province state (8-byte struct)
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public ProvinceState GetProvinceState(ushort provinceId)
         {
@@ -67,7 +67,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Check if province exists
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public bool Exists(ushort provinceId)
         {
@@ -76,7 +76,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Check if province is owned by any country
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public bool IsOwned(ushort provinceId)
         {
@@ -85,7 +85,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Check if province is ocean
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public bool IsOcean(ushort provinceId)
         {
@@ -99,7 +99,7 @@ namespace Core.Queries
         /// <summary>
         /// Get all provinces owned by a specific country
         /// Returns native array that must be disposed by caller
-        /// Performance target: <5ms for 10k provinces
+        /// Performance target: &lt;5ms for 10k provinces
         /// </summary>
         public NativeArray<ushort> GetCountryProvinces(ushort countryId, Allocator allocator = Allocator.TempJob)
         {
@@ -109,7 +109,7 @@ namespace Core.Queries
         /// <summary>
         /// Get all provinces owned by a specific country (fills existing NativeList)
         /// Zero-allocation overload for hot paths (monthly tick, etc.)
-        /// Performance target: <5ms for 10k provinces
+        /// Performance target: &lt;5ms for 10k provinces
         /// </summary>
         public void GetCountryProvinces(ushort countryId, NativeList<ushort> resultBuffer)
         {
@@ -120,7 +120,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get number of provinces owned by a country
-        /// Performance target: <2ms for 10k provinces
+        /// Performance target: &lt;2ms for 10k provinces
         /// </summary>
         public int GetCountryProvinceCount(ushort countryId)
         {
@@ -133,7 +133,7 @@ namespace Core.Queries
         /// <summary>
         /// Get provinces by terrain type
         /// Returns native array that must be disposed by caller
-        /// Performance target: <5ms for 10k provinces
+        /// Performance target: &lt;5ms for 10k provinces
         /// </summary>
         public NativeArray<ushort> GetProvincesByTerrain(ushort terrainType, Allocator allocator = Allocator.TempJob)
         {
@@ -160,7 +160,7 @@ namespace Core.Queries
         /// <summary>
         /// Get unowned provinces (available for colonization)
         /// Returns native array that must be disposed by caller
-        /// Performance target: <5ms for 10k provinces
+        /// Performance target: &lt;5ms for 10k provinces
         /// </summary>
         public NativeArray<ushort> GetUnownedProvinces(Allocator allocator = Allocator.TempJob)
         {
@@ -170,7 +170,7 @@ namespace Core.Queries
         /// <summary>
         /// Get ocean provinces
         /// Returns native array that must be disposed by caller
-        /// Performance target: <5ms for 10k provinces
+        /// Performance target: &lt;5ms for 10k provinces
         /// </summary>
         public NativeArray<ushort> GetOceanProvinces(Allocator allocator = Allocator.TempJob)
         {
@@ -180,7 +180,7 @@ namespace Core.Queries
         /// <summary>
         /// Get land provinces (non-ocean)
         /// Returns native array that must be disposed by caller
-        /// Performance target: <5ms for 10k provinces
+        /// Performance target: &lt;5ms for 10k provinces
         /// </summary>
         public NativeArray<ushort> GetLandProvinces(Allocator allocator = Allocator.TempJob)
         {
@@ -210,7 +210,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get the color of the country that owns this province
-        /// Performance target: <0.01ms
+        /// Performance target: &lt;0.01ms
         /// </summary>
         public UnityEngine.Color32 GetProvinceOwnerColor(ushort provinceId)
         {
@@ -220,7 +220,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get the tag of the country that owns this province
-        /// Performance target: <0.01ms
+        /// Performance target: &lt;0.01ms
         /// </summary>
         public string GetProvinceOwnerTag(ushort provinceId)
         {
@@ -230,7 +230,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Check if two provinces are owned by the same country
-        /// Performance target: <0.01ms
+        /// Performance target: &lt;0.01ms
         /// </summary>
         public bool ShareSameOwner(ushort provinceId1, ushort provinceId2)
         {
@@ -338,7 +338,7 @@ namespace Core.Queries
         /// Get provinces owned by countries with a specific tag pattern
         /// Example: Get all provinces owned by countries with tags starting with "GER"
         /// Returns native array that must be disposed by caller
-        /// Performance target: <10ms for 10k provinces
+        /// Performance target: &lt;10ms for 10k provinces
         /// </summary>
         public NativeArray<ushort> GetProvincesByOwnerTag(string tagPattern, Allocator allocator = Allocator.TempJob)
         {
@@ -386,7 +386,7 @@ namespace Core.Queries
         /// <summary>
         /// Get all active province IDs
         /// Returns native array that must be disposed by caller
-        /// Performance target: <1ms for 10k provinces
+        /// Performance target: &lt;1ms for 10k provinces
         /// </summary>
         public NativeArray<ushort> GetAllProvinceIds(Allocator allocator = Allocator.TempJob)
         {
@@ -395,7 +395,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get total number of provinces in the system
-        /// Performance target: <0.001ms
+        /// Performance target: &lt;0.001ms
         /// </summary>
         public int GetTotalProvinceCount()
         {
@@ -404,7 +404,7 @@ namespace Core.Queries
 
         /// <summary>
         /// Get province statistics for debugging/UI (engine-only data)
-        /// Performance target: <10ms for 10k provinces
+        /// Performance target: &lt;10ms for 10k provinces
         /// Note: Development stats removed (game-specific)
         /// </summary>
         public ProvinceStatistics GetProvinceStatistics()

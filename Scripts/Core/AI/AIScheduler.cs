@@ -16,7 +16,7 @@ namespace Core.AI
     /// - Timeout: Execution timeout prevents runaway goals
     ///
     /// Performance Target:
-    /// - <5ms per hourly tick for typical load
+    /// - &lt;5ms per hourly tick for typical load
     /// - Near AI processed frequently, far AI processed rarely
     ///
     /// Scheduling Strategy:

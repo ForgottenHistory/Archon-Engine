@@ -7,7 +7,7 @@ namespace Map.MapModes
     /// <summary>
     /// Interface for map mode handlers following the new architecture
     /// Each map mode is responsible for its own data textures and rendering logic
-    /// Performance: <0.1ms mode switching, specialized texture updates
+    /// Performance: &lt;0.1ms mode switching, specialized texture updates
     /// </summary>
     public interface IMapModeHandler
     {

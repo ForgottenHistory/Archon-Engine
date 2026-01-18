@@ -12,7 +12,7 @@ namespace Core.Diplomacy
     ///
     /// Pattern 3: Event-Driven Architecture (Zero-Allocation)
     /// - Events are structs (no boxing)
-    /// - EventBus uses EventQueue<T> wrapper
+    /// - EventBus uses EventQueue{T} wrapper
     /// - Frame-coherent processing
     /// </summary>
 

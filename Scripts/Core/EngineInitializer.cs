@@ -16,7 +16,7 @@ namespace Core
     /// <summary>
     /// ENGINE LAYER: Master coordinator for engine initialization and data loading
     /// Orchestrates the complete loading pipeline from files to ready-to-play state
-    /// Performance: Target <5 seconds for 10k provinces, <100MB memory during loading
+    /// Performance: Target &lt;5 seconds for 10k provinces, &lt;100MB memory during loading
     /// </summary>
     public class EngineInitializer : MonoBehaviour
     {

@@ -15,7 +15,7 @@ namespace Core.Diplomacy
     /// Memory: Variable (~200 bytes + modifiers)
     ///
     /// Storage Pattern:
-    /// Dictionary<(ushort, ushort), DiplomacyColdData> coldData;
+    /// Dictionary{(ushort, ushort), DiplomacyColdData} coldData;
     /// - Same key as RelationData
     /// - Only created when modifiers exist
     /// </summary>

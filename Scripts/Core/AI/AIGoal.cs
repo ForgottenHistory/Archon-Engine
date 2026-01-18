@@ -21,7 +21,7 @@ namespace Core.AI
     ///
     /// Performance:
     /// - No Burst compilation (goals need GameState access)
-    /// - Target: <5ms for 10 AI evaluations
+    /// - Target: &lt;5ms for 10 AI evaluations
     ///
     /// ENGINE-GAME Separation:
     /// - ENGINE: Abstract base class (mechanism)

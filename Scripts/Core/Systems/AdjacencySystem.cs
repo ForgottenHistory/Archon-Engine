@@ -67,7 +67,7 @@ namespace Core.Systems
     /// Populated from FastAdjacencyScanner during map initialization.
     ///
     /// Architecture:
-    /// - Dictionary<ushort, HashSet<ushort>>: provinceID → set of neighbor IDs
+    /// - Dictionary{ushort, HashSet{ushort}}: provinceID → set of neighbor IDs
     /// - Bidirectional: if A is adjacent to B, then B is adjacent to A
     /// - Read-only after initialization
     ///
@@ -107,7 +107,7 @@ namespace Core.Systems
 
         /// <summary>
         /// Initialize adjacency data from FastAdjacencyScanner results
-        /// Converts from Dictionary<int, HashSet<int>> to Dictionary<ushort, HashSet<ushort>>
+        /// Converts from Dictionary{int, HashSet{int}} to Dictionary{ushort, HashSet{ushort}}
         /// Also builds native MultiHashMap for Burst job compatibility
         /// </summary>
         public void SetAdjacencies(Dictionary<int, HashSet<int>> scanResults)

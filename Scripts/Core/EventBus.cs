@@ -10,7 +10,7 @@ namespace Core
     /// Features: Type-safe events, zero-allocation processing, frame-coherent batching
     /// Performance: ZERO allocations during gameplay (no boxing), batch event processing
     ///
-    /// Architecture: Uses typed EventQueue<T> wrapper to avoid boxing and reflection
+    /// Architecture: Uses typed EventQueue{T} wrapper to avoid boxing and reflection
     /// See: Assets/Archon-Engine/Docs/Engine/data-flow-architecture.md
     /// </summary>
     public class EventBus : IDisposable

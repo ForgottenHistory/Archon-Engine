@@ -32,7 +32,7 @@ namespace Core.Diplomacy
     /// Memory: 16 bytes per relationship
     ///
     /// Storage Pattern:
-    /// Dictionary<(ushort, ushort), RelationData> relations;
+    /// Dictionary{(ushort, ushort), RelationData} relations;
     /// - Key: (country1, country2) sorted pair
     /// - Value: this struct
     /// - Only store relationships that exist (sparse)
