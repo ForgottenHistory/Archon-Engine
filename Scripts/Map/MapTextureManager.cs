@@ -56,17 +56,16 @@ namespace Map.Rendering
         // Expose texture sets for direct access (needed for parameter binding)
         public DynamicTextureSet DynamicTextures => dynamicTextures;
 
-        void Awake()
-        {
-            InitializeTextures();
-        }
+        private bool isInitialized = false;
 
         /// <summary>
-        /// Initialize all texture sets
+        /// Initialize texture manager. Called by ArchonEngine after GameSettings is registered.
         /// </summary>
-        private void InitializeTextures()
+        public void Initialize()
         {
-            // Clamp upscale factor
+            if (isInitialized) return;
+            isInitialized = true;
+
             // Create specialized texture sets (all at base resolution)
             coreTextures = new CoreTextureSet(mapWidth, mapHeight, logTextureCreation);
             visualTextures = new VisualTextureSet(mapWidth, mapHeight, normalMapWidth, normalMapHeight, logTextureCreation);
@@ -234,7 +233,8 @@ namespace Map.Rendering
             mapHeight = newHeight;
 
             ReleaseTextures();
-            InitializeTextures();
+            isInitialized = false;
+            Initialize();
         }
 
         /// <summary>

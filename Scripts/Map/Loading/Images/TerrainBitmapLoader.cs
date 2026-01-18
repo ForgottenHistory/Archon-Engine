@@ -170,10 +170,10 @@ namespace Map.Loading.Images
                 }
             }
 
-            var coordinator = Object.FindFirstObjectByType<Rendering.MapRenderingCoordinator>();
-            if (coordinator != null && coordinator.MapMaterial != null)
+            var mapSystemCoordinator = Object.FindFirstObjectByType<Core.MapSystemCoordinator>();
+            if (mapSystemCoordinator != null && mapSystemCoordinator.MeshRenderer?.sharedMaterial != null)
             {
-                textureManager.BindTexturesToMaterial(coordinator.MapMaterial);
+                textureManager.BindTexturesToMaterial(mapSystemCoordinator.MeshRenderer.sharedMaterial);
             }
         }
     }

@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Core;
 using Core.Modifiers;
+using Engine;
 using Core.SaveLoad;
 using Core.Systems;
 using Map.Core;
@@ -16,11 +16,11 @@ using StarterKit.MapModes;
 namespace StarterKit
 {
     /// <summary>
-    /// Coordinates EngineMapInitializer + StarterKit systems.
-    /// Use this as the entry point for StarterKit scenes.
-    /// Owns PlayerState and EconomySystem as plain classes.
+    /// GAME layer initializer for StarterKit.
+    /// Waits for ArchonEngine to initialize, then creates game-specific systems.
     ///
     /// Access via Initializer.Instance for commands and other systems.
+    /// Access ENGINE via ArchonEngine.Instance.
     /// </summary>
     public class Initializer : MonoBehaviour
     {
@@ -35,9 +35,6 @@ namespace StarterKit
         #endregion
 
         #region Serialized Fields
-
-        [Header("Engine References")]
-        [SerializeField] private EngineMapInitializer engineMapInitializer;
 
         [Header("UI Components")]
         [SerializeField] private CountrySelectionUI countrySelectionUI;
@@ -142,9 +139,7 @@ namespace StarterKit
             if (logProgress)
                 ArchonLogger.Log("=== Starting StarterKit initialization ===", "starter_kit");
 
-            // Find references if not assigned
-            if (engineMapInitializer == null)
-                engineMapInitializer = FindFirstObjectByType<EngineMapInitializer>();
+            // Find UI references if not assigned
             if (countrySelectionUI == null)
                 countrySelectionUI = FindFirstObjectByType<CountrySelectionUI>();
             if (resourceBarUI == null)
@@ -164,35 +159,32 @@ namespace StarterKit
             if (unitVisualization == null)
                 unitVisualization = FindFirstObjectByType<UnitVisualization>();
 
-            // Validate engine initializer
-            if (engineMapInitializer == null)
+            // Wait for ArchonEngine to initialize
+            if (logProgress)
+                ArchonLogger.Log("Waiting for ArchonEngine...", "starter_kit");
+
+            var engine = ArchonEngine.Instance;
+            if (engine == null)
             {
-                ArchonLogger.LogError("Initializer: EngineMapInitializer not found!", "starter_kit");
+                ArchonLogger.LogError("Initializer: ArchonEngine not found!", "starter_kit");
                 yield break;
             }
 
-            // Wait for EngineMapInitializer to complete
-            if (logProgress)
-                ArchonLogger.Log("Waiting for engine + map initialization...", "starter_kit");
-
-            while (!engineMapInitializer.IsInitialized)
+            while (!engine.IsInitialized)
             {
                 yield return null;
             }
 
             if (logProgress)
-                ArchonLogger.Log("Engine + map initialization complete", "starter_kit");
+                ArchonLogger.Log("ArchonEngine ready", "starter_kit");
 
-            // Get GameState and TimeManager
-            var gameState = GameState.Instance;
-            if (gameState == null)
-            {
-                ArchonLogger.LogError("Initializer: GameState not found!", "starter_kit");
-                yield break;
-            }
-
-            var timeManager = FindFirstObjectByType<TimeManager>();
-            var mapInitializer = FindFirstObjectByType<MapInitializer>();
+            // Access ENGINE systems via facade
+            var gameState = engine.GameState;
+            var timeManager = engine.TimeManager;
+            var selector = engine.ProvinceSelector;
+            var highlighter = engine.ProvinceHighlighter;
+            var saveManager = engine.SaveManager;
+            mapModeManager = engine.MapModeManager;
 
             // Scan province adjacencies (required for colonization neighbor check)
             yield return ScanProvinceAdjacencies(gameState);
@@ -226,7 +218,7 @@ namespace StarterKit
                 ArchonLogger.Log("Creating unit system...", "starter_kit");
 
             unitSystem = new UnitSystem(gameState, playerState, logProgress);
-            var unitsPath = System.IO.Path.Combine(GameSettings.Instance.TemplateDataDirectory, "units");
+            var unitsPath = System.IO.Path.Combine(GameSettings.Instance.DataDirectory, "units");
             unitSystem.LoadUnitTypes(unitsPath);
 
             yield return null;
@@ -236,7 +228,7 @@ namespace StarterKit
                 ArchonLogger.Log("Creating building system...", "starter_kit");
 
             buildingSystem = new BuildingSystem(gameState, playerState, economySystem, modifierSystem, logProgress);
-            var buildingsPath = System.IO.Path.Combine(GameSettings.Instance.TemplateDataDirectory, "common", "buildings");
+            var buildingsPath = System.IO.Path.Combine(GameSettings.Instance.DataDirectory, "common", "buildings");
             buildingSystem.LoadBuildingTypes(buildingsPath);
 
             yield return null;
@@ -259,10 +251,10 @@ namespace StarterKit
             yield return null;
 
             // Register custom map modes (GAME layer extends ENGINE map modes)
-            yield return RegisterMapModes(mapInitializer, gameState);
+            yield return RegisterMapModes(gameState);
 
             // Hook up SaveManager for StarterKit systems
-            SetupSaveManager(gameState);
+            SetupSaveManager(gameState, saveManager);
 
             yield return null;
 
@@ -272,7 +264,6 @@ namespace StarterKit
 
             if (toolbarUI != null)
             {
-                var saveManager = FindFirstObjectByType<SaveManager>();
                 toolbarUI.Initialize(gameState, ledgerUI, saveManager);
             }
 
@@ -300,13 +291,8 @@ namespace StarterKit
             yield return null;
 
             // Province info UI and Unit info UI - initialize after country is selected
-            if (mapInitializer != null)
-            {
-                var selector = mapInitializer.ProvinceSelector;
-                var highlighter = mapInitializer.ProvinceHighlighter;
-
-                // Subscribe to initialize UIs after country selection
-                gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(evt =>
+            // Subscribe to initialize UIs after country selection
+            gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(evt =>
                 {
                     // Initialize diplomacy panel first (so it can be passed to other UIs)
                     if (diplomacyPanel != null)
@@ -357,7 +343,6 @@ namespace StarterKit
                         ledgerUI.Initialize(gameState, economySystem, unitSystem, playerState);
                     }
                 });
-            }
 
             yield return null;
 
@@ -381,13 +366,12 @@ namespace StarterKit
         /// <summary>
         /// Hook up SaveManager callbacks for StarterKit systems
         /// </summary>
-        private void SetupSaveManager(GameState gameState)
+        private void SetupSaveManager(GameState gameState, SaveManager saveManager)
         {
-            var saveManager = FindFirstObjectByType<SaveManager>();
             if (saveManager == null)
             {
                 if (logProgress)
-                    ArchonLogger.LogWarning("Initializer: SaveManager not found - save/load disabled", "starter_kit");
+                    ArchonLogger.LogWarning("Initializer: SaveManager not available - save/load disabled", "starter_kit");
                 return;
             }
 
@@ -459,8 +443,7 @@ namespace StarterKit
                     ArchonLogger.Log("Initializer: Post-load finalization...", "starter_kit");
 
                 // CRITICAL: Refresh all map visuals from loaded state
-                var mapCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
-                mapCoordinator?.RefreshAllVisuals();
+                ArchonEngine.Instance?.RefreshAllVisuals();
 
                 // Refresh resource bar UI
                 resourceBarUI?.RefreshDisplay();
@@ -485,16 +468,8 @@ namespace StarterKit
         /// Register custom map modes with the ENGINE's MapModeManager.
         /// Demonstrates: GAME layer (StarterKit) extends ENGINE (Map.MapModes) with custom visualization.
         /// </summary>
-        private IEnumerator RegisterMapModes(MapInitializer mapInitializerRef, GameState gameState)
+        private IEnumerator RegisterMapModes(GameState gameState)
         {
-            if (mapInitializerRef == null)
-            {
-                if (logProgress)
-                    ArchonLogger.LogWarning("Initializer: MapInitializer not available - skipping map mode registration", "starter_kit");
-                yield break;
-            }
-
-            mapModeManager = mapInitializerRef.MapModeManager;
             if (mapModeManager == null)
             {
                 if (logProgress)
@@ -507,11 +482,10 @@ namespace StarterKit
             {
                 // Initialize MapModeManager if not already done
                 // ENGINE provides mechanism, GAME controls when to initialize
-                var mapSystemCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
-                if (mapSystemCoordinator != null && mapInitializerRef.MeshRenderer != null)
+                var engine = ArchonEngine.Instance;
+                if (engine.ProvinceMapping != null && engine.MapMaterial != null)
                 {
-                    var material = mapInitializerRef.MeshRenderer.sharedMaterial;
-                    mapModeManager.Initialize(gameState, material, mapSystemCoordinator.ProvinceMapping, buildingSystem);
+                    mapModeManager.Initialize(gameState, engine.MapMaterial, engine.ProvinceMapping, buildingSystem);
 
                     if (logProgress)
                         ArchonLogger.Log("Initializer: MapModeManager initialized", "starter_kit");
@@ -587,18 +561,26 @@ namespace StarterKit
         /// </summary>
         private IEnumerator ScanProvinceAdjacencies(GameState gameState)
         {
+            // Skip if already initialized by ArchonEngine
+            if (gameState.Adjacencies.IsInitialized)
+            {
+                if (logProgress)
+                    ArchonLogger.Log("Adjacencies already initialized by ArchonEngine - skipping scan", "starter_kit");
+                yield break;
+            }
+
             if (logProgress)
                 ArchonLogger.Log("Scanning province adjacencies...", "starter_kit");
 
-            var mapSystemCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
-            if (mapSystemCoordinator == null || mapSystemCoordinator.ProvinceMapping == null)
+            var engine = ArchonEngine.Instance;
+            if (engine.ProvinceMapping == null)
             {
-                ArchonLogger.LogWarning("Initializer: MapSystemCoordinator or ProvinceMapping not found - skipping adjacency scan", "starter_kit");
+                ArchonLogger.LogWarning("Initializer: ProvinceMapping not found - skipping adjacency scan", "starter_kit");
                 yield break;
             }
 
             // Get the province color texture
-            var provinceMapTexture = mapSystemCoordinator.TextureManager.ProvinceColorTexture;
+            var provinceMapTexture = engine.TextureManager?.ProvinceColorTexture;
             if (provinceMapTexture == null)
             {
                 ArchonLogger.LogWarning("Initializer: ProvinceColorTexture not found - skipping adjacency scan", "starter_kit");
@@ -629,7 +611,7 @@ namespace StarterKit
             var colorToIdMap = new Dictionary<Color32, int>(new Color32Comparer());
 
             // Build color → ID map from ProvinceMapping
-            var allProvinces = mapSystemCoordinator.ProvinceMapping.GetAllProvinces();
+            var allProvinces = engine.ProvinceMapping.GetAllProvinces();
             foreach (var kvp in allProvinces)
             {
                 ushort provinceId = kvp.Key;

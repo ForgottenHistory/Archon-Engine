@@ -8,14 +8,16 @@ namespace Map.Rendering
 {
     /// <summary>
     /// Simple bridge component that listens to province change events
-    /// and updates textures via MapTexturePopulator
-    /// Replaces the complex SimulationTextureUpdater with a lightweight event-driven approach
+    /// and updates textures via MapTexturePopulator.
+    /// Replaces the complex SimulationTextureUpdater with a lightweight event-driven approach.
+    ///
+    /// Configuration comes from GameSettings - no Inspector assignments needed.
     /// </summary>
     public class TextureUpdateBridge : MonoBehaviour
     {
-        [Header("Configuration")]
-        [SerializeField] private bool logUpdates = false;
-        [SerializeField] private float batchUpdateDelay = 0.1f; // Batch updates for performance
+        // Logging and timing from GameSettings
+        private bool LogUpdates => GameSettings.Instance?.ShouldLog(LogLevel.Debug) ?? false;
+        private float BatchUpdateDelay => GameSettings.Instance?.TextureUpdateBatchDelay ?? 0.1f;
 
         // References
         private GameState gameState;
@@ -31,19 +33,22 @@ namespace Map.Rendering
         private bool isInitialized = false;
 
         /// <summary>
-        /// Initialize the bridge with required components
+        /// Initialize the bridge with required components.
         /// </summary>
-        public void Initialize(GameState gameState, MapTextureManager textureManager,
-                             MapTexturePopulator texturePopulator, ProvinceMapping provinceMapping)
+        public void Initialize(
+            GameState gameState,
+            MapTextureManager textureManager,
+            MapTexturePopulator texturePopulator,
+            ProvinceMapping provinceMapping,
+            OwnerTextureDispatcher ownerDispatcher = null,
+            BorderComputeDispatcher borderDispatcher = null)
         {
             this.gameState = gameState;
             this.textureManager = textureManager;
             this.texturePopulator = texturePopulator;
             this.provinceMapping = provinceMapping;
-
-            // Find rendering dispatchers for border updates
-            ownerTextureDispatcher = FindFirstObjectByType<OwnerTextureDispatcher>();
-            borderDispatcher = FindFirstObjectByType<BorderComputeDispatcher>();
+            this.ownerTextureDispatcher = ownerDispatcher;
+            this.borderDispatcher = borderDispatcher;
 
             if (gameState?.EventBus != null)
             {
@@ -52,7 +57,7 @@ namespace Map.Rendering
 
                 isInitialized = true;
 
-                if (logUpdates)
+                if (LogUpdates)
                 {
                     ArchonLogger.Log("TextureUpdateBridge: Initialized and subscribed to province events", "map_rendering");
                 }
@@ -67,7 +72,7 @@ namespace Map.Rendering
         {
             // Process batched updates
             if (isInitialized && pendingProvinceUpdates.Count > 0 &&
-                Time.time - lastBatchTime > batchUpdateDelay)
+                Time.time - lastBatchTime > BatchUpdateDelay)
             {
                 ProcessPendingUpdates();
             }
@@ -84,7 +89,7 @@ namespace Map.Rendering
             pendingProvinceUpdates.Add(ownershipEvent.ProvinceId);
             lastBatchTime = Time.time;
 
-            if (logUpdates)
+            if (LogUpdates)
             {
                 ArchonLogger.Log($"TextureUpdateBridge: Province {ownershipEvent.ProvinceId} ownership changed: {ownershipEvent.OldOwner} → {ownershipEvent.NewOwner}", "map_rendering");
             }
@@ -125,7 +130,7 @@ namespace Map.Rendering
 
             var updateTime = (Time.realtimeSinceStartup - startTime) * 1000f;
 
-            if (logUpdates)
+            if (LogUpdates)
             {
                 ArchonLogger.Log($"TextureUpdateBridge: Updated {changedProvinces.Length} provinces in {updateTime:F2}ms", "map_rendering");
             }

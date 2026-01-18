@@ -1,12 +1,10 @@
 {
-    "name": "StarterKit",
-    "rootNamespace": "StarterKit",
+    "name": "Engine",
+    "rootNamespace": "Engine",
     "references": [
         "Core",
         "MapAssembly",
-        "Engine",
-        "Utils",
-        "Unity.Collections"
+        "Utils"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

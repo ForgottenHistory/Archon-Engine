@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Core;
 using Core.Events;
 using Core.Units;
-using Map.Core;
 using Map.Rendering;
 using Map.Utils;
 
@@ -68,23 +67,16 @@ namespace StarterKit
             gameState = gameStateRef;
             unitSystem = unitSystemRef;
 
-            // Find map dependencies
-            var coordinator = FindFirstObjectByType<MapSystemCoordinator>();
-            if (coordinator == null || coordinator.ProvinceMapping == null)
+            // Get map dependencies from ArchonEngine
+            var engine = Engine.ArchonEngine.Instance;
+            if (engine == null || engine.ProvinceMapping == null || engine.TextureManager == null)
             {
-                ArchonLogger.LogError("UnitVisualization: MapSystemCoordinator or ProvinceMapping not found", "starter_kit");
-                return;
-            }
-
-            var mapInitializer = FindFirstObjectByType<MapInitializer>();
-            if (mapInitializer == null || mapInitializer.TextureManager == null)
-            {
-                ArchonLogger.LogError("UnitVisualization: MapInitializer or TextureManager not found", "starter_kit");
+                ArchonLogger.LogError("UnitVisualization: ArchonEngine, ProvinceMapping, or TextureManager not found", "starter_kit");
                 return;
             }
 
             // Find map mesh
-            var meshRenderer = FindFirstObjectByType<MeshRenderer>();
+            var meshRenderer = engine.MapMeshRenderer;
             if (meshRenderer == null)
             {
                 ArchonLogger.LogError("UnitVisualization: Map MeshRenderer not found", "starter_kit");
@@ -94,10 +86,10 @@ namespace StarterKit
             // Initialize province center lookup (shared ENGINE utility)
             centerLookup = new ProvinceCenterLookup();
             centerLookup.Initialize(
-                coordinator.ProvinceMapping,
+                engine.ProvinceMapping,
                 meshRenderer.transform,
-                mapInitializer.TextureManager.MapWidth,
-                mapInitializer.TextureManager.MapHeight
+                engine.TextureManager.MapWidth,
+                engine.TextureManager.MapHeight
             );
 
             if (!centerLookup.IsInitialized)

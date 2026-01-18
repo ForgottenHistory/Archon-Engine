@@ -80,23 +80,32 @@ namespace Map.Rendering
         // Context for renderer initialization
         private BorderRendererContext rendererContext;
 
-        void Awake()
+        private bool isInitialized = false;
+
+        /// <summary>
+        /// Initialize the border system. Called by ArchonEngine during controlled initialization.
+        /// </summary>
+        public void Initialize()
         {
+            if (isInitialized) return;
+
             // Initialize helper classes
             shaderManager = new BorderShaderManager(logPerformance);
             parameterBinder = new BorderParameterBinder();
 
             // Debug: Check if compute shaders are assigned
-            ArchonLogger.Log($"BorderComputeDispatcher.Awake: borderDetectionCompute={borderDetectionCompute != null}, borderCurveRasterizerCompute={borderCurveRasterizerCompute != null}, borderSDFCompute={borderSDFCompute != null}", "map_initialization");
+            ArchonLogger.Log($"BorderComputeDispatcher.Initialize: borderDetectionCompute={borderDetectionCompute != null}, borderCurveRasterizerCompute={borderCurveRasterizerCompute != null}, borderSDFCompute={borderSDFCompute != null}", "map_initialization");
 
             // Initialize shaders
             shaderManager.InitializeKernels(borderDetectionCompute, borderCurveRasterizerCompute, borderSDFCompute);
 
             // Debug: Check if initialization succeeded
-            ArchonLogger.Log($"BorderComputeDispatcher.Awake: shaderManager.IsInitialized()={shaderManager.IsInitialized()}", "map_initialization");
+            ArchonLogger.Log($"BorderComputeDispatcher.Initialize: shaderManager.IsInitialized()={shaderManager.IsInitialized()}", "map_initialization");
 
             // Sync serialized parameters to parameter binder
             SyncParametersToHelper();
+
+            isInitialized = true;
         }
 
         void Update()

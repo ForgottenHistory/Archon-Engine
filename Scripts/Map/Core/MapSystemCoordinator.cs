@@ -3,7 +3,6 @@ using Map.Rendering;
 using Map.MapModes;
 using Map.Loading;
 using Map.Interaction;
-using Map.Simulation;
 using Core;
 using Utils;
 using static Map.Loading.ProvinceMapProcessor;
@@ -11,376 +10,365 @@ using static Map.Loading.ProvinceMapProcessor;
 namespace Map.Core
 {
     /// <summary>
-    /// Central coordinator for the entire map system
-    /// Manages all map components internally without exposing them to MapGenerator
-    /// Follows facade pattern to simplify MapGenerator's responsibilities
+    /// Coordinator for map system runtime operations.
+    ///
+    /// IMPORTANT: This class does NOT initialize components.
+    /// All components must be initialized by ArchonEngine BEFORE calling Configure().
+    /// This class only coordinates runtime operations (map loading, rendering, interaction).
     /// </summary>
     public class MapSystemCoordinator : MonoBehaviour
     {
-        [Header("Configuration")]
-        [SerializeField] private bool logSystemProgress = true;
+        #region Configuration (Injected via Configure method)
 
-        // Progress callback for loading screen
-        public System.Action<float, string> OnGenerationProgress;
-
-        // Internal components - not exposed to MapGenerator
-        private MeshRenderer meshRenderer;
         private Camera mapCamera;
+        private MeshRenderer meshRenderer;
+        private GameSettings gameSettings;
+
+        private bool LogProgress => gameSettings?.ShouldLog(LogLevel.Info) ?? false;
+
+        #endregion
+
+        #region Component References (All injected, NOT initialized here)
+
+        // Components injected by ArchonEngine (already initialized)
         private MapTextureManager textureManager;
         private BorderComputeDispatcher borderDispatcher;
-        private OwnerTextureDispatcher ownerTextureDispatcher;  // GPU owner texture population
+        private OwnerTextureDispatcher ownerTextureDispatcher;
+        private ProvinceTerrainAnalyzer terrainAnalyzer;
+        private Map.Rendering.Terrain.TerrainBlendMapGenerator blendMapGenerator;
+
+        // Components that may be on the GameObject (optional)
         private MapModeManager mapModeManager;
+        private ProvinceSelector provinceSelector;
+        private ProvinceHighlighter provinceHighlighter;
+        private TextureUpdateBridge textureUpdateBridge;
+        private FogOfWarSystem fogOfWarSystem;
+
+        // Plain C# classes (created here, not MonoBehaviours)
         private ProvinceMapProcessor provinceProcessor;
         private MapDataLoader dataLoader;
-        private MapRenderingCoordinator renderingCoordinator;
-        private ProvinceSelector provinceSelector;
         private MapTexturePopulator texturePopulator;
-        private TextureUpdateBridge textureUpdateBridge;
 
-        // Only expose what MapGenerator actually needs
+        #endregion
+
+        #region Public API
+
+        /// <summary>Province color-to-ID mapping for texture lookups.</summary>
         public ProvinceMapping ProvinceMapping { get; private set; }
+
+        /// <summary>Map texture manager for province textures.</summary>
         public MapTextureManager TextureManager => textureManager;
 
-        /// <summary>
-        /// Get the map plane transform for border mesh scaling
-        /// </summary>
-        public Transform GetMapPlaneTransform() => meshRenderer?.transform;
+        /// <summary>Province selector for mouse interaction.</summary>
+        public ProvinceSelector ProvinceSelector => provinceSelector;
+
+        /// <summary>Province highlighter for selection visuals.</summary>
+        public ProvinceHighlighter ProvinceHighlighter => provinceHighlighter;
+
+        /// <summary>Map mode manager for visualization modes.</summary>
+        public MapModeManager MapModeManager => mapModeManager;
+
+        /// <summary>Border compute dispatcher for border rendering.</summary>
+        public BorderComputeDispatcher BorderDispatcher => borderDispatcher;
+
+        /// <summary>Camera used for map rendering.</summary>
+        public Camera MapCamera => mapCamera;
+
+        /// <summary>Mesh renderer for the map quad.</summary>
+        public MeshRenderer MeshRenderer => meshRenderer;
+
+        /// <summary>Data directory from GameSettings.</summary>
+        public string DataDirectory => gameSettings?.DataDirectory;
+
+        /// <summary>True when map system is fully initialized.</summary>
+        public bool IsInitialized { get; private set; }
+
+        /// <summary>Progress callback for loading screen (0-100, status message).</summary>
+        public System.Action<float, string> OnProgress;
+
+        /// <summary>Completion callback (success, message).</summary>
+        public System.Action<bool, string> OnComplete;
+
+        #endregion
+
+        #region Initialization
 
         /// <summary>
-        /// Initialize the entire map system with proper references
+        /// Configure the coordinator with required references and already-initialized components.
+        /// All components must be initialized by ArchonEngine BEFORE calling this method.
         /// </summary>
-        public void InitializeSystem(Camera camera, MeshRenderer renderer)
+        public void Configure(
+            Camera camera,
+            MeshRenderer mesh,
+            GameSettings settings,
+            MapTextureManager textures,
+            BorderComputeDispatcher borders,
+            OwnerTextureDispatcher ownerDispatcher,
+            ProvinceTerrainAnalyzer terrain,
+            Map.Rendering.Terrain.TerrainBlendMapGenerator blendGen)
         {
-            // Set references FIRST
             mapCamera = camera;
-            meshRenderer = renderer;
+            meshRenderer = mesh;
+            gameSettings = settings;
 
-            if (logSystemProgress)
-            {
-                ArchonLogger.Log("MapSystemCoordinator: Initializing complete map system...", "map_initialization");
-            }
+            // Store already-initialized components (DO NOT call Initialize on these)
+            textureManager = textures;
+            borderDispatcher = borders;
+            ownerTextureDispatcher = ownerDispatcher;
+            terrainAnalyzer = terrain;
+            blendMapGenerator = blendGen;
 
-            InitializeAllComponents();
-            SetupDependencies();
-
-            if (logSystemProgress)
-            {
-                ArchonLogger.Log("MapSystemCoordinator: Map system initialization complete", "map_initialization");
-            }
+            // Get optional components from GameObject
+            mapModeManager = GetComponent<MapModeManager>();
+            provinceSelector = GetComponent<ProvinceSelector>();
+            provinceHighlighter = GetComponent<ProvinceHighlighter>();
+            textureUpdateBridge = GetComponent<TextureUpdateBridge>();
+            fogOfWarSystem = GetComponent<FogOfWarSystem>();
         }
 
         /// <summary>
-        /// Generate map from files (legacy method)
+        /// Initialize the map system with simulation data.
+        /// Call this after Configure() and after simulation is ready.
         /// </summary>
-        public async System.Threading.Tasks.Task<bool> GenerateMapFromFiles(string bitmapPath, string csvPath, bool useDefinition)
+        public async void Initialize(SimulationDataReadyEvent simulationData)
         {
-            try
+            if (LogProgress)
+                ArchonLogger.Log($"MapSystemCoordinator: Starting map loading with {simulationData.ProvinceCount} provinces", "map_initialization");
+
+            // Validate that Configure() was called with required components
+            if (!ValidateConfiguration())
+                return;
+
+            // Create plain C# helper classes (these are NOT MonoBehaviours)
+            ReportProgress(0f, "Creating data loaders...");
+            provinceProcessor = new ProvinceMapProcessor();
+            dataLoader = new MapDataLoader(LogProgress);
+            dataLoader.Initialize(provinceProcessor, borderDispatcher, textureManager, terrainAnalyzer, blendMapGenerator, gameSettings.DataDirectory);
+            texturePopulator = new MapTexturePopulator(ownerTextureDispatcher, LogProgress);
+
+            // Initialize FogOfWarSystem if available
+            var gameState = GameState.Instance;
+            if (fogOfWarSystem != null && gameState != null)
             {
-                // Load province data
-                var provinceResult = await dataLoader.LoadFromFilesAsync(bitmapPath, csvPath, useDefinition);
-                if (!provinceResult.HasValue)
-                {
-                    ArchonLogger.LogError("MapSystemCoordinator: Failed to load province data from files", "core_simulation");
-                    return false;
-                }
-
-                // Convert and populate
-                ProvinceMapping = ConvertProvinceResultToMapping(provinceResult.Value, textureManager);
-                texturePopulator.PopulateFromProvinceResult(provinceResult.Value, textureManager, ProvinceMapping);
-                provinceResult.Value.Dispose();
-
-                // Setup rendering
-                renderingCoordinator.SetupMapRendering();
-                provinceSelector.Initialize(textureManager, meshRenderer.transform);
-
-                // Note: MapModeManager initialization is controlled by GAME layer
-                // ENGINE provides mechanism, GAME controls initialization flow
-
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                ArchonLogger.LogError($"MapSystemCoordinator: Exception during file-based generation: {e.Message}", "core_simulation");
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Generate map from simulation data (preferred method)
-        /// </summary>
-        public async System.Threading.Tasks.Task<bool> GenerateMapFromSimulation(SimulationDataReadyEvent simulationData, string bitmapPath, string csvPath, bool useDefinition)
-        {
-            try
-            {
-                // Load province data with simulation integration (0-40% of generation)
-                OnGenerationProgress?.Invoke(0f, "Loading province bitmap...");
-                var provinceResult = await dataLoader.LoadFromSimulationAsync(simulationData, bitmapPath, csvPath, useDefinition);
-                if (!provinceResult.HasValue)
-                {
-                    ArchonLogger.LogError("MapSystemCoordinator: Failed to load province data from simulation", "core_simulation");
-                    return false;
-                }
-
-                OnGenerationProgress?.Invoke(40f, "Province bitmap loaded");
-
-                // Convert and populate with simulation data (40-80% of generation)
-                OnGenerationProgress?.Invoke(40f, "Validating provinces...");
-                var gameState = FindFirstObjectByType<GameState>();
-                ProvinceMapping = ConvertProvinceResultWithSimulationData(provinceResult.Value, textureManager, gameState);
-
-                OnGenerationProgress?.Invoke(50f, "Populating textures...");
-                texturePopulator.PopulateWithSimulationData(provinceResult.Value, textureManager, ProvinceMapping, gameState);
-                provinceResult.Value.Dispose();
-
-                OnGenerationProgress?.Invoke(80f, "Textures populated");
-
-                // Setup rendering (80-95% of generation)
-                OnGenerationProgress?.Invoke(80f, "Setting up rendering...");
-                renderingCoordinator.SetupMapRendering();
-                provinceSelector.Initialize(textureManager, meshRenderer.transform);
-
-                OnGenerationProgress?.Invoke(90f, "Rendering configured");
-
-                // Note: MapModeManager initialization is controlled by GAME layer
-                // ENGINE provides mechanism, GAME controls initialization flow
-
-                // Initialize TextureUpdateBridge for runtime texture updates (95-97%)
-                OnGenerationProgress?.Invoke(95f, "Initializing texture updates...");
-                if (textureUpdateBridge != null && gameState != null)
-                {
-                    textureUpdateBridge.Initialize(gameState, textureManager, texturePopulator, ProvinceMapping);
-
-                    if (logSystemProgress)
-                    {
-                        ArchonLogger.Log("MapSystemCoordinator: Initialized TextureUpdateBridge for runtime updates", "map_initialization");
-                    }
-                }
-                else if (logSystemProgress)
-                {
-                    ArchonLogger.LogWarning("MapSystemCoordinator: TextureUpdateBridge not available - runtime texture updates disabled", "core_simulation");
-                }
-
-                // NOTE: Smooth border initialization moved to HegemonMapPhaseHandler
-                // Must be AFTER AdjacencySystem.SetAdjacencies() is called
-                // (AdjacencySystem instance exists but is empty at this point)
-
-                OnGenerationProgress?.Invoke(100f, "Map generation complete");
-
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                ArchonLogger.LogError($"MapSystemCoordinator: Exception during simulation-based generation: {e.Message}\n{e.StackTrace}", "core_simulation");
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Get province ID at world position
-        /// </summary>
-        public ushort GetProvinceAtWorldPosition(Vector3 worldPosition)
-        {
-            return provinceSelector?.GetProvinceAtWorldPosition(worldPosition) ?? 0;
-        }
-
-        /// <summary>
-        /// Set map mode
-        /// </summary>
-        public void SetMapMode(int modeId)
-        {
-            mapModeManager?.SetMapMode((Map.MapModes.MapMode)modeId);
-        }
-
-        /// <summary>
-        /// Handle simulation ready event (called by MapInitializer after components are initialized)
-        /// </summary>
-        public async void HandleSimulationReady(SimulationDataReadyEvent simulationData, string bitmapPath, string csvPath, bool useDefinition)
-        {
-            if (logSystemProgress)
-            {
-                ArchonLogger.Log($"MapSystemCoordinator: Handling simulation ready with {simulationData.ProvinceCount} provinces", "map_initialization");
+                fogOfWarSystem.Initialize(gameState.ProvinceQueries, gameState.Provinces.Capacity);
             }
 
-            // Get components from MapInitializer (which already initialized them)
-            var initializer = GetComponent<MapInitializer>();
-            if (initializer == null)
+            // Load and process map data (20-80%)
+            ReportProgress(20f, "Loading province data...");
+            bool success = await GenerateMap(simulationData);
+
+            if (!success)
             {
-                ArchonLogger.LogError("MapSystemCoordinator: MapInitializer not found - cannot proceed", "core_simulation");
+                ReportError("Map generation failed");
                 return;
             }
 
-            // Get initialized components from MapInitializer
-            textureManager = initializer.TextureManager;
-            borderDispatcher = initializer.BorderDispatcher;
-            ownerTextureDispatcher = initializer.OwnerTextureDispatcher;  // GPU owner texture dispatcher
-            mapModeManager = initializer.MapModeManager;
-            provinceProcessor = initializer.ProvinceProcessor;
-            dataLoader = initializer.DataLoader;
-            renderingCoordinator = initializer.RenderingCoordinator;
-            provinceSelector = initializer.ProvinceSelector;
-            texturePopulator = initializer.TexturePopulator;
-            textureUpdateBridge = initializer.TextureUpdateBridge;
-            mapCamera = initializer.MapCamera;
-            meshRenderer = initializer.MeshRenderer;
+            // Setup rendering (80-90%)
+            ReportProgress(80f, "Setting up rendering...");
+            SetupRendering();
 
-            if (logSystemProgress)
+            // Setup interaction (90-95%)
+            ReportProgress(90f, "Setting up interaction...");
+            SetupInteraction();
+
+            // Terrain analysis (95-100%)
+            ReportProgress(95f, "Analyzing terrain...");
+            AnalyzeTerrain();
+
+            // Complete
+            IsInitialized = true;
+            ReportProgress(100f, "Map ready");
+
+            if (LogProgress)
+                ArchonLogger.Log("MapSystemCoordinator: Map loading complete", "map_initialization");
+
+            OnComplete?.Invoke(true, "Map initialized successfully");
+        }
+
+        private bool ValidateConfiguration()
+        {
+            if (textureManager == null)
             {
-                ArchonLogger.Log($"MapSystemCoordinator: Received camera reference: {(mapCamera != null ? mapCamera.name : "null")}", "map_initialization");
-                ArchonLogger.Log($"MapSystemCoordinator: Received meshRenderer reference: {(meshRenderer != null ? meshRenderer.name : "null")}", "map_initialization");
+                ReportError("MapTextureManager not configured - call Configure() first");
+                return false;
             }
 
             if (meshRenderer == null)
             {
-                ArchonLogger.LogError("MapSystemCoordinator: MeshRenderer reference not found from MapInitializer", "core_simulation");
-                return;
+                ReportError("MeshRenderer not configured - call Configure() first");
+                return false;
             }
 
-            // Generate map from simulation data using provided paths
-            bool success = await GenerateMapFromSimulation(simulationData, bitmapPath, csvPath, useDefinition);
-
-            if (success)
+            if (gameSettings == null)
             {
-                if (logSystemProgress)
-                {
-                    ArchonLogger.Log($"MapSystemCoordinator: Map generation complete. Rendering {simulationData.ProvinceCount} provinces.", "map_initialization");
-                }
+                ReportError("GameSettings not configured - call Configure() first");
+                return false;
+            }
 
-                // CRITICAL: Analyze terrain AFTER ProvinceIDTexture is populated
-                // This determines dominant terrain type per province for hybrid terrain rendering
-                var gameState = Object.FindFirstObjectByType<global::Core.GameState>();
-                if (gameState != null && dataLoader != null)
+            if (mapCamera == null)
+            {
+                mapCamera = Camera.main;
+                if (mapCamera == null)
                 {
-                    dataLoader.AnalyzeProvinceTerrainAfterMapInit(gameState);
+                    ReportError("No camera found for map rendering");
+                    return false;
                 }
             }
 
-            // Notify MapInitializer that initialization is complete
-            var mapInitializer = GetComponent<MapInitializer>();
-            if (mapInitializer != null)
+            return true;
+        }
+
+        #endregion
+
+        #region Map Generation
+
+        private async System.Threading.Tasks.Task<bool> GenerateMap(SimulationDataReadyEvent simulationData)
+        {
+            try
             {
-                mapInitializer.SetInitialized(success);
-            }
-        }
-
-        private void InitializeAllComponents()
-        {
-            // Core components
-            textureManager = GetOrCreateComponent<MapTextureManager>();
-            borderDispatcher = GetOrCreateComponent<BorderComputeDispatcher>();
-            ownerTextureDispatcher = GetOrCreateComponent<OwnerTextureDispatcher>();  // GPU owner texture population
-            mapModeManager = GetOrCreateComponent<MapModeManager>();
-            dataLoader = GetOrCreateComponent<MapDataLoader>();
-            renderingCoordinator = GetOrCreateComponent<MapRenderingCoordinator>();
-            provinceSelector = GetOrCreateComponent<ProvinceSelector>();
-            texturePopulator = GetOrCreateComponent<MapTexturePopulator>();
-
-            // Non-component objects
-            provinceProcessor = new ProvinceMapProcessor();
-        }
-
-        private void SetupDependencies()
-        {
-            // Setup component dependencies
-            borderDispatcher?.SetTextureManager(textureManager);
-            ownerTextureDispatcher?.SetTextureManager(textureManager);  // GPU owner texture dispatcher
-            dataLoader?.Initialize(provinceProcessor, borderDispatcher, textureManager);
-            renderingCoordinator?.Initialize(textureManager, mapModeManager, meshRenderer, mapCamera);
-        }
-
-        private T GetOrCreateComponent<T>() where T : Component
-        {
-            var component = GetComponent<T>();
-            if (component == null)
-            {
-                component = gameObject.AddComponent<T>();
-                if (logSystemProgress)
+                // Build paths from GameSettings
+                string bitmapPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.bmp");
+                if (!System.IO.File.Exists(bitmapPath))
                 {
-                    ArchonLogger.Log($"MapSystemCoordinator: Created {typeof(T).Name} component", "map_initialization");
+                    string pngPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.png");
+                    if (System.IO.File.Exists(pngPath))
+                        bitmapPath = pngPath;
                 }
+
+                string csvPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "definition.csv");
+                bool useDefinition = System.IO.File.Exists(csvPath);
+
+                // Load province data
+                var provinceResult = await dataLoader.LoadFromSimulationAsync(simulationData, bitmapPath, csvPath, useDefinition);
+                if (!provinceResult.HasValue)
+                {
+                    ArchonLogger.LogError("MapSystemCoordinator: Failed to load province data", "map_initialization");
+                    return false;
+                }
+
+                ReportProgress(50f, "Province data loaded");
+
+                // Convert to mapping with simulation validation
+                var gameState = GameState.Instance;
+                ProvinceMapping = ConvertProvinceResult(provinceResult.Value, gameState);
+
+                if (ProvinceMapping == null)
+                {
+                    provinceResult.Value.Dispose();
+                    return false;
+                }
+
+                ReportProgress(60f, "Populating textures...");
+
+                // Populate textures
+                texturePopulator.PopulateWithSimulationData(provinceResult.Value, textureManager, ProvinceMapping, gameState);
+                provinceResult.Value.Dispose();
+
+                ReportProgress(80f, "Textures populated");
+                return true;
             }
-            return component;
-        }
-
-        // Simplified conversion methods (moved from MapGenerator)
-        private ProvinceMapping ConvertProvinceResultToMapping(ProvinceMapResult provinceResult, MapTextureManager textureManager)
-        {
-            if (!provinceResult.IsSuccess)
-                return null;
-
-            var mapping = new ProvinceMapping();
-
-            // Build color mappings
-            var colorMappingEnumerator = provinceResult.ProvinceMappings.ColorToProvinceID.GetEnumerator();
-            while (colorMappingEnumerator.MoveNext())
+            catch (System.Exception e)
             {
-                int rgb = colorMappingEnumerator.Current.Key;
-                int provinceID = colorMappingEnumerator.Current.Value;
-
-                byte r = (byte)((rgb >> 16) & 0xFF);
-                byte g = (byte)((rgb >> 8) & 0xFF);
-                byte b = (byte)(rgb & 0xFF);
-                var color = new Color32(r, g, b, 255);
-
-                mapping.AddProvince((ushort)provinceID, color);
+                ArchonLogger.LogError($"MapSystemCoordinator: Exception during map generation: {e.Message}\n{e.StackTrace}", "map_initialization");
+                return false;
             }
-
-            return mapping;
         }
 
-        private ProvinceMapping ConvertProvinceResultWithSimulationData(ProvinceMapResult provinceResult, MapTextureManager textureManager, GameState gameState)
+        private ProvinceMapping ConvertProvinceResult(ProvinceMapResult provinceResult, GameState gameState)
         {
             if (!provinceResult.IsSuccess || gameState == null)
                 return null;
 
             var mapping = new ProvinceMapping();
-
-            // BUG FIX: bitmapProvinceID is a definition ID (from definition.csv), not a runtime ID
-            // Must use ProvinceRegistry.ExistsByDefinition() instead of ProvinceQueries.Exists()
-            // ProvinceRegistry maps: definition ID (sparse: 1, 10, 1299, etc.) → runtime ID (dense: 1, 2, 334, etc.)
             var provinceRegistry = gameState.Registries?.Provinces;
+
             if (provinceRegistry == null)
             {
-                ArchonLogger.LogError("MapSystemCoordinator: GameState.Registries not set! Cannot validate provinces.", "map_initialization");
+                ArchonLogger.LogError("MapSystemCoordinator: GameState.Registries not set!", "map_initialization");
                 return null;
             }
 
-            // Build mappings with simulation validation
             var colorMappingEnumerator = provinceResult.ProvinceMappings.ColorToProvinceID.GetEnumerator();
-            int totalBitmapProvinces = 0;
-            int validatedProvinces = 0;
-            int skippedProvinces = 0;
+            int total = 0, validated = 0, skipped = 0;
 
             while (colorMappingEnumerator.MoveNext())
             {
                 int rgb = colorMappingEnumerator.Current.Key;
                 int bitmapProvinceID = colorMappingEnumerator.Current.Value;
-                totalBitmapProvinces++;
+                total++;
 
                 byte r = (byte)((rgb >> 16) & 0xFF);
                 byte g = (byte)((rgb >> 8) & 0xFF);
                 byte b = (byte)(rgb & 0xFF);
                 var color = new Color32(r, g, b, 255);
 
-                // Check if province exists by definition ID (from definition.csv)
                 if (provinceRegistry.ExistsByDefinition(bitmapProvinceID))
                 {
                     mapping.AddProvince((ushort)bitmapProvinceID, color);
-                    validatedProvinces++;
+                    validated++;
                 }
                 else
                 {
-                    skippedProvinces++;
-                    // Log first few skipped provinces for debugging
-                    if (skippedProvinces <= 10)
-                    {
-                        ArchonLogger.Log($"MapSystemCoordinator: Skipping province {bitmapProvinceID} RGB({r},{g},{b}) - not in registry", "map_initialization");
-                    }
+                    skipped++;
                 }
             }
 
-            ArchonLogger.Log($"MapSystemCoordinator: Province mapping complete - {totalBitmapProvinces} in bitmap, {validatedProvinces} validated, {skippedProvinces} skipped", "map_initialization");
+            if (LogProgress)
+                ArchonLogger.Log($"MapSystemCoordinator: Mapping complete - {total} total, {validated} validated, {skipped} skipped", "map_initialization");
+
             return mapping;
         }
+
+        #endregion
+
+        #region Rendering Setup
+
+        private void SetupRendering()
+        {
+            // Setup material with textures
+            if (meshRenderer != null && textureManager != null)
+            {
+                var material = meshRenderer.sharedMaterial;
+                if (material != null)
+                {
+                    textureManager.BindTexturesToMaterial(material);
+
+                    if (LogProgress)
+                        ArchonLogger.Log("MapSystemCoordinator: Textures bound to material", "map_initialization");
+                }
+            }
+
+            // Initialize texture update bridge for runtime updates
+            var gameState = GameState.Instance;
+            if (textureUpdateBridge != null && gameState != null)
+            {
+                textureUpdateBridge.Initialize(gameState, textureManager, texturePopulator, ProvinceMapping, ownerTextureDispatcher, borderDispatcher);
+            }
+        }
+
+        private void SetupInteraction()
+        {
+            if (provinceSelector != null && textureManager != null && meshRenderer != null)
+            {
+                provinceSelector.Initialize(textureManager, meshRenderer.transform);
+
+                if (LogProgress)
+                    ArchonLogger.Log("MapSystemCoordinator: Province selector initialized", "map_initialization");
+            }
+        }
+
+        private void AnalyzeTerrain()
+        {
+            var gameState = GameState.Instance;
+            if (gameState != null && dataLoader != null)
+            {
+                dataLoader.AnalyzeProvinceTerrainAfterMapInit(gameState);
+            }
+        }
+
+        #endregion
+
+        #region Runtime API
 
         /// <summary>
         /// Refresh all map visuals from current simulation state.
@@ -395,33 +383,62 @@ namespace Map.Core
                 return;
             }
 
-            if (logSystemProgress)
+            if (LogProgress)
                 ArchonLogger.Log("MapSystemCoordinator: Refreshing all map visuals...", "map_rendering");
 
-            // 1. Refresh owner texture (province colors from ownership)
-            if (ownerTextureDispatcher != null && gameState.ProvinceQueries != null)
+            // Refresh owner texture
+            if (ownerTextureDispatcher != null)
             {
                 ownerTextureDispatcher.PopulateOwnerTexture(gameState.ProvinceQueries);
-                if (logSystemProgress)
-                    ArchonLogger.Log("MapSystemCoordinator: Owner texture refreshed", "map_rendering");
             }
 
-            // 2. Refresh borders
+            // Refresh borders
             if (borderDispatcher != null)
             {
                 borderDispatcher.DetectBorders();
-                if (logSystemProgress)
-                    ArchonLogger.Log("MapSystemCoordinator: Borders refreshed", "map_rendering");
             }
 
-            // 3. Force texture update bridge to process any pending updates
+            // Force texture update bridge to process pending updates
             if (textureUpdateBridge != null)
             {
                 textureUpdateBridge.ForceUpdate();
             }
 
-            if (logSystemProgress)
-                ArchonLogger.Log("MapSystemCoordinator: All map visuals refreshed", "map_rendering");
+            if (LogProgress)
+                ArchonLogger.Log("MapSystemCoordinator: Visuals refreshed", "map_rendering");
         }
+
+        /// <summary>
+        /// Get province ID at world position.
+        /// </summary>
+        public ushort GetProvinceAtWorldPosition(Vector3 worldPosition)
+        {
+            return provinceSelector?.GetProvinceAtWorldPosition(worldPosition) ?? 0;
+        }
+
+        /// <summary>
+        /// Get the map plane transform for border mesh scaling.
+        /// </summary>
+        public Transform GetMapPlaneTransform() => meshRenderer?.transform;
+
+        #endregion
+
+        #region Helpers
+
+        private void ReportProgress(float progress, string status)
+        {
+            if (LogProgress)
+                ArchonLogger.Log($"MapSystemCoordinator: [{progress:F0}%] {status}", "map_initialization");
+
+            OnProgress?.Invoke(progress, status);
+        }
+
+        private void ReportError(string error)
+        {
+            ArchonLogger.LogError($"MapSystemCoordinator: {error}", "map_initialization");
+            OnComplete?.Invoke(false, error);
+        }
+
+        #endregion
     }
 }

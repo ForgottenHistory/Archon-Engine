@@ -36,9 +36,16 @@ namespace Map.Rendering
         private TerrainRGBLookup rgbLookup;
         private TerrainBitmapReader bitmapReader;
         private TerrainOverrideApplicator overrideApplicator;
+        private bool isInitialized = false;
 
-        void Awake()
+        /// <summary>
+        /// Initialize terrain analyzer. Called by ArchonEngine after GameSettings is registered.
+        /// </summary>
+        public void Initialize(string dataDirectory)
         {
+            if (isInitialized) return;
+            isInitialized = true;
+
             if (terrainAnalyzerCompute == null)
             {
                 Debug.LogError("ProvinceTerrainAnalyzer: No compute shader assigned!");
@@ -48,10 +55,6 @@ namespace Map.Rendering
             // Find kernel indices
             countVotesKernel = terrainAnalyzerCompute.FindKernel("CountVotes");
             determineWinnerKernel = terrainAnalyzerCompute.FindKernel("DetermineWinner");
-
-            // Initialize components - get DataDirectory from GameSettings via MapInitializer
-            var mapInitializer = FindFirstObjectByType<MapInitializer>();
-            string dataDirectory = mapInitializer?.DataDirectory;
 
             rgbLookup = new TerrainRGBLookup();
             if (!rgbLookup.Initialize(dataDirectory, logAnalysis))

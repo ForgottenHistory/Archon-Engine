@@ -3,6 +3,18 @@ using UnityEngine;
 namespace Core
 {
     /// <summary>
+    /// Logging verbosity level for all engine and game systems.
+    /// </summary>
+    public enum LogLevel
+    {
+        None = 0,      // No logging
+        Errors = 1,    // Only errors
+        Warnings = 2,  // Errors and warnings
+        Info = 3,      // Normal operational info
+        Debug = 4      // Verbose debug output
+    }
+
+    /// <summary>
     /// ScriptableObject configuration for game initialization and data loading.
     /// Access via GameSettings.Instance after initialization.
     /// </summary>
@@ -27,16 +39,7 @@ namespace Core
 
         [Header("Data File Paths")]
         [Tooltip("Root data directory containing all game data")]
-        public string DataDirectory = "Assets/Data";
-
-        [Tooltip("Template data directory for StarterKit (units, buildings, etc.)")]
-        public string TemplateDataDirectory = "Assets/Archon-Engine/Template-Data";
-
-        [Tooltip("Map data directory")]
-        public string MapDirectory = "Assets/Map";
-
-        [Tooltip("Debug/Screenshots output directory")]
-        public string DebugOutputDirectory = "Assets/Game/Debug/Screenshots";
+        public string DataDirectory = "Assets/Archon-Engine/Template-Data";
 
         [Header("Loading Configuration")]
         [Tooltip("Enable parallel loading where possible")]
@@ -57,14 +60,31 @@ namespace Core
         public int RetryAttempts = 1;
 
         [Header("Development Options")]
-        [Tooltip("Enable verbose logging during development")]
-        public bool EnableVerboseLogging = false;
-
         [Tooltip("Enable memory leak detection")]
         public bool EnableMemoryLeakDetection = false;
 
         [Tooltip("Skip cache warming for faster iteration")]
         public bool SkipCacheWarming = false;
+
+        [Header("Logging")]
+        [Tooltip("Global logging verbosity level for all systems")]
+        public LogLevel LogLevel = LogLevel.Warnings;
+
+        [Header("Map Rendering")]
+        [Tooltip("Automatically update borders when ownership changes")]
+        public bool AutoUpdateBorders = true;
+
+        [Tooltip("Automatically update map mode textures")]
+        public bool AutoUpdateMapModeTextures = true;
+
+        [Tooltip("Delay between batched texture updates (seconds)")]
+        [Range(0.05f, 1f)]
+        public float TextureUpdateBatchDelay = 0.1f;
+
+        /// <summary>
+        /// Check if logging is enabled at the specified level.
+        /// </summary>
+        public bool ShouldLog(LogLevel level) => LogLevel >= level;
 
         /// <summary>
         /// Validate that all required paths exist and are accessible

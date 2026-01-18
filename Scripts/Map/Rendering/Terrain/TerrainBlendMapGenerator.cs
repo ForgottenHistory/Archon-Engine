@@ -52,9 +52,16 @@ namespace Map.Rendering.Terrain
 
         // Pluggable renderer support
         private bool rendererRegistered = false;
+        private bool isInitialized = false;
 
-        void Awake()
+        /// <summary>
+        /// Initialize compute shader kernels. Called by ArchonEngine.
+        /// </summary>
+        public void InitializeKernels()
         {
+            if (isInitialized) return;
+            isInitialized = true;
+
             if (terrainBlendMapCompute == null)
             {
                 ArchonLogger.LogError("TerrainBlendMapGenerator: No compute shader assigned!", "map_rendering");
@@ -70,6 +77,7 @@ namespace Map.Rendering.Terrain
         /// </summary>
         public void Initialize(MapTextureManager textureManager)
         {
+            InitializeKernels();
             RegisterDefaultRenderer(textureManager);
         }
 

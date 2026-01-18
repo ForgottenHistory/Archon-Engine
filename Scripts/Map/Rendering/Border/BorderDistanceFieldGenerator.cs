@@ -39,9 +39,15 @@ namespace Map.Rendering
 
         // References
         private MapTextureManager textureManager;
+        private bool isInitialized = false;
 
-        void Awake()
+        /// <summary>
+        /// Initialize compute shader kernels. Called by ArchonEngine.
+        /// </summary>
+        public void Initialize()
         {
+            if (isInitialized) return;
+            isInitialized = true;
             InitializeKernels();
         }
 

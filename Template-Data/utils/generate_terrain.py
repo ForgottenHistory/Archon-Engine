@@ -83,7 +83,7 @@ def get_default_terrain_colors() -> dict:
         "coastal_desert": (203, 191, 103),
         "savannah":       (180, 160, 80),
         "forest":         (42, 55, 22),
-        "jungle":         (254, 254, 254),
+        "jungle":         (0, 100, 0),
         "marsh":          (75, 147, 174),
     }
 

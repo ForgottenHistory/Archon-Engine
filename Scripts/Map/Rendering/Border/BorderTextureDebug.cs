@@ -26,7 +26,7 @@ namespace Map.Rendering
                 return;
             }
 
-            string debugDir = GameSettings.Instance?.DebugOutputDirectory ?? "Assets/Game/Debug/Screenshots";
+            string debugDir = "Assets/Archon-Engine/Debug/Screenshots";
             string path = Path.Combine(debugDir, "distance_field_texture.png");
             SaveRenderTextureToFile(textureManager.DistanceFieldTexture, path);
             AssetDatabase.Refresh();

@@ -22,7 +22,7 @@ namespace Map.Integration
 
         [Header("Settings")]
         [SerializeField] private bool autoSyncChanges = true;
-        [Tooltip("Leave empty to use GameSettings.MapDirectory/provinces.bmp")]
+        [Tooltip("Leave empty to use GameSettings.DataDirectory/map/provinces.bmp")]
         [SerializeField] private string provinceBitmapPath = "";
 
         /// <summary>
@@ -34,9 +34,9 @@ namespace Map.Integration
                 return provinceBitmapPath;
 
             if (GameSettings.Instance != null)
-                return System.IO.Path.Combine(GameSettings.Instance.MapDirectory, "provinces.bmp");
+                return System.IO.Path.Combine(GameSettings.Instance.DataDirectory, "map", "provinces.bmp");
 
-            return "Assets/Map/provinces.bmp"; // Fallback
+            return "Assets/Archon-Engine/Template-Data/map/provinces.bmp"; // Fallback
         }
         [SerializeField] private bool detectNeighbors = true;
         [SerializeField] private bool includeOceanNeighbors = true;

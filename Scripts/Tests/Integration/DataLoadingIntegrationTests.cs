@@ -144,7 +144,7 @@ namespace Tests.Integration
             // Set permissive settings for testing
             settings.UseGracefulDegradation = true;
             settings.EnableDataValidation = true;
-            settings.EnableVerboseLogging = true;
+            settings.LogLevel = LogLevel.Debug;
         }
 
 

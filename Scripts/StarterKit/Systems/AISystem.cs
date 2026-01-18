@@ -6,7 +6,6 @@ using Core;
 using Core.Events;
 using Core.Queries;
 using Core.Systems;
-using Map.Core;
 using Map.Rendering.Terrain;
 
 namespace StarterKit
@@ -47,8 +46,8 @@ namespace StarterKit
             random = new System.Random();
 
             // Initialize terrain lookup for ownable checks (use DataDirectory from GameSettings)
-            var mapInitializer = UnityEngine.Object.FindFirstObjectByType<MapInitializer>();
-            string dataDirectory = mapInitializer?.DataDirectory;
+            var engine = Engine.ArchonEngine.Instance;
+            string dataDirectory = engine?.GameSettings?.DataDirectory;
             terrainLookup = new TerrainRGBLookup();
             terrainLookup.Initialize(dataDirectory, false);
 

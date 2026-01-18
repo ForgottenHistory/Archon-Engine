@@ -13,11 +13,17 @@ MonoBehaviour:
   m_Name: TemplateSettings
   m_EditorClassIdentifier: 
   DataDirectory: Assets/Archon-Engine/Template-Data
+  TemplateDataDirectory: Assets/Archon-Engine/Template-Data
+  MapDirectory: Assets/Archon-Engine/Template-Data/Map
+  DebugOutputDirectory: Assets/Game/Debug/Screenshots
   EnableParallelLoading: 1
   EnableDataValidation: 1
   UseGracefulDegradation: 1
   ShowDetailedErrors: 1
   RetryAttempts: 1
-  EnableVerboseLogging: 1
   EnableMemoryLeakDetection: 0
   SkipCacheWarming: 0
+  LogLevel: 2
+  AutoUpdateBorders: 1
+  AutoUpdateMapModeTextures: 1
+  TextureUpdateBatchDelay: 0.1

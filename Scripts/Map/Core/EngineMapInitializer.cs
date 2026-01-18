@@ -16,7 +16,7 @@ namespace Map.Core
     {
         [Header("Engine References")]
         [SerializeField] private EngineInitializer engineInitializer;
-        [SerializeField] private MapInitializer mapInitializer;
+        [SerializeField] private MapSystemCoordinator mapSystemCoordinator;
         [SerializeField] private VisualStyleManager visualStyleManager;
 
         [Header("Camera")]
@@ -46,8 +46,8 @@ namespace Map.Core
             // Find references if not assigned
             if (engineInitializer == null)
                 engineInitializer = FindFirstObjectByType<EngineInitializer>();
-            if (mapInitializer == null)
-                mapInitializer = FindFirstObjectByType<MapInitializer>();
+            if (mapSystemCoordinator == null)
+                mapSystemCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
             if (visualStyleManager == null)
                 visualStyleManager = FindFirstObjectByType<VisualStyleManager>();
 
@@ -57,9 +57,9 @@ namespace Map.Core
                 ArchonLogger.LogError("EngineMapInitializer: EngineInitializer not found!", "map_initialization");
                 yield break;
             }
-            if (mapInitializer == null)
+            if (mapSystemCoordinator == null)
             {
-                ArchonLogger.LogError("EngineMapInitializer: MapInitializer not found!", "map_initialization");
+                ArchonLogger.LogError("EngineMapInitializer: MapSystemCoordinator not found!", "map_initialization");
                 yield break;
             }
 
@@ -107,16 +107,20 @@ namespace Map.Core
             if (logProgress)
                 ArchonLogger.Log("[3/6] Starting map initialization...", "map_initialization");
 
-            mapInitializer.StartMapInitialization();
+            // Create simulation data from current GameState
+            var gameState = GameState.Instance;
+            var simulationData = new SimulationDataReadyEvent
+            {
+                ProvinceCount = gameState?.Provinces?.ProvinceCount ?? 0,
+                CountryCount = gameState?.Countries?.CountryCount ?? 0
+            };
+            mapSystemCoordinator.Initialize(simulationData);
 
             // Wait for map to complete
-            while (!mapInitializer.IsInitialized)
+            while (!mapSystemCoordinator.IsInitialized)
             {
                 yield return null;
             }
-
-            // Initialize province selector (needs mesh to be ready)
-            mapInitializer.InitializeProvinceSelectorWithMesh();
 
             // Initialize map modes (ENGINE-only political mode)
             if (logProgress)
@@ -163,8 +167,7 @@ namespace Map.Core
         /// </summary>
         private IEnumerator InitializeBorderSystem()
         {
-            var mapSystemCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
-            var gameState = FindFirstObjectByType<GameState>();
+            var gameState = GameState.Instance;
 
             if (mapSystemCoordinator == null || gameState == null)
             {
@@ -172,7 +175,7 @@ namespace Map.Core
                 yield break;
             }
 
-            var borderDispatcher = mapSystemCoordinator.GetComponent<BorderComputeDispatcher>();
+            var borderDispatcher = mapSystemCoordinator.BorderDispatcher;
             if (borderDispatcher == null)
             {
                 ArchonLogger.LogWarning("EngineMapInitializer: BorderComputeDispatcher not found", "map_initialization");
@@ -221,18 +224,16 @@ namespace Map.Core
         /// </summary>
         private IEnumerator InitializeMapModes()
         {
-            var mapModeManager = FindFirstObjectByType<MapModeManager>();
-            var gameState = FindFirstObjectByType<GameState>();
-            var mapSystemCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
-            var mapRenderingCoordinator = FindFirstObjectByType<MapRenderingCoordinator>();
+            var mapModeManager = mapSystemCoordinator?.MapModeManager;
+            var gameState = GameState.Instance;
 
-            if (mapModeManager == null || gameState == null || mapSystemCoordinator == null || mapRenderingCoordinator == null)
+            if (mapModeManager == null || gameState == null || mapSystemCoordinator == null)
             {
                 ArchonLogger.LogError("EngineMapInitializer: Missing dependencies for map mode initialization", "map_initialization");
                 yield break;
             }
 
-            var material = mapRenderingCoordinator.MapMaterial;
+            var material = mapSystemCoordinator.MeshRenderer?.sharedMaterial;
             if (material == null)
             {
                 ArchonLogger.LogError("EngineMapInitializer: Map material not ready", "map_initialization");

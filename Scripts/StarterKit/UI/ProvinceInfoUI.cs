@@ -5,7 +5,6 @@ using Core.Events;
 using Core.Localization;
 using Core.Systems;
 using Core.UI;
-using Map.Core;
 using Map.Interaction;
 using Map.Rendering.Terrain;
 
@@ -77,8 +76,8 @@ namespace StarterKit
             }
 
             // Initialize terrain lookup for ownable checks
-            var mapInitializer = Object.FindFirstObjectByType<MapInitializer>();
-            string dataDirectory = mapInitializer?.DataDirectory;
+            var engine = Engine.ArchonEngine.Instance;
+            string dataDirectory = engine?.GameSettings?.DataDirectory;
             terrainLookup = new TerrainRGBLookup();
             terrainLookup.Initialize(dataDirectory, false);
 

@@ -7,43 +7,47 @@ using Core;
 namespace Archon.Engine.Map
 {
     /// <summary>
-    /// ENGINE: Manages and applies visual styles to the rendering system
-    /// Bridge between visual style configuration (ScriptableObject) and rendering mechanism (MapTextureManager, shaders)
+    /// ENGINE: Manages and applies visual styles to the rendering system.
+    /// Bridge between visual style configuration (ScriptableObject) and rendering mechanism.
+    ///
+    /// Configuration is provided via Configure() method from ArchonEngine.
+    /// No Inspector assignments needed - all references injected at runtime.
     /// </summary>
     public class VisualStyleManager : MonoBehaviour
     {
-        [Header("Visual Style")]
-        [Tooltip("Active visual style configuration")]
-        [SerializeField] private VisualStyleConfiguration activeStyle;
+        // Configuration (injected via Configure method)
+        private VisualStyleConfiguration activeStyle;
+        private MeshRenderer mapMeshRenderer;
 
-        [Header("References")]
-        [SerializeField] private MeshRenderer mapMeshRenderer;
-        [SerializeField] private bool logStyleApplication = true;
+        private bool LogStyle => GameSettings.Instance?.ShouldLog(LogLevel.Info) ?? false;
 
+        // Cached component references
         private MapTextureManager textureManager;
         private BorderComputeDispatcher borderDispatcher;
         private Material runtimeMaterial;  // Instance of the style's material
 
-        void Start()
+        /// <summary>
+        /// Configure the manager with required references.
+        /// Must be called before ApplyStyle().
+        /// </summary>
+        public void Configure(MeshRenderer meshRenderer, VisualStyleConfiguration style = null)
         {
-            // Find ENGINE components
-            textureManager = FindFirstObjectByType<MapTextureManager>();
-            borderDispatcher = FindFirstObjectByType<BorderComputeDispatcher>();
+            mapMeshRenderer = meshRenderer;
+            activeStyle = style;
+        }
 
-            if (logStyleApplication)
+        /// <summary>
+        /// Set component references. Called by ArchonEngine after components are created.
+        /// </summary>
+        public void SetComponents(MapTextureManager texManager, BorderComputeDispatcher borders)
+        {
+            textureManager = texManager;
+            borderDispatcher = borders;
+
+            if (LogStyle)
             {
-                ArchonLogger.Log($"VisualStyleManager.Start: textureManager={textureManager != null}, borderDispatcher={borderDispatcher != null}", "map_rendering");
+                ArchonLogger.Log($"VisualStyleManager: Components set - textureManager={textureManager != null}, borderDispatcher={borderDispatcher != null}", "map_rendering");
             }
-
-            // Find map mesh renderer if not assigned
-            if (mapMeshRenderer == null)
-            {
-                mapMeshRenderer = FindFirstObjectByType<MeshRenderer>();
-            }
-
-            // NOTE: Do NOT apply style here!
-            // VisualStyleManager is now passive - initialization layer controls when to apply
-            // This ensures style is applied BEFORE map loads, so textures bind to correct material
         }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace Archon.Engine.Map
 
             activeStyle = style;
 
-            if (logStyleApplication)
+            if (LogStyle)
             {
                 ArchonLogger.Log($"VisualStyleManager: Applying visual style '{style.styleName}'", "map_rendering");
                 style.LogConfiguration();
@@ -102,7 +106,7 @@ namespace Archon.Engine.Map
             ApplyFogOfWarSettings(style.fogOfWar);
             ApplyTessellationSettings(style.tessellation);
 
-            if (logStyleApplication)
+            if (LogStyle)
             {
                 ArchonLogger.Log($"VisualStyleManager: ✓ Visual style '{style.styleName}' applied successfully", "map_rendering");
                 ArchonLogger.Log($"  Material: {runtimeMaterial.name}", "map_rendering");
@@ -142,7 +146,7 @@ namespace Archon.Engine.Map
             runtimeMaterial.SetFloat("_GradientAlphaInside", borders.gradientAlphaInside);
             runtimeMaterial.SetFloat("_GradientAlphaOutside", borders.gradientAlphaOutside);
 
-            if (logStyleApplication)
+            if (LogStyle)
             {
                 ArchonLogger.Log($"VisualStyleManager: Border style applied - Rendering: {borders.renderingMode} (shader mode={renderingModeValue}), Country: {borders.countryBorderStrength:P0}, Province: {borders.provinceBorderStrength:P0}", "map_rendering");
             }
@@ -203,7 +207,7 @@ namespace Archon.Engine.Map
                         renderer.ApplyToMaterial(runtimeMaterial, styleParams);
                     }
 
-                    if (logStyleApplication)
+                    if (LogStyle)
                     {
                         ArchonLogger.Log($"VisualStyleManager: Using custom renderer '{effectiveRendererId}' from registry", "map_rendering");
                     }
@@ -244,14 +248,14 @@ namespace Archon.Engine.Map
                             syncRequest.WaitForCompletion();
                         }
 
-                        if (logStyleApplication)
+                        if (LogStyle)
                         {
                             ArchonLogger.Log("VisualStyleManager: Populated owner texture for border detection (GPU synced)", "map_rendering");
                         }
                     }
 
                     borderDispatcher.DetectBorders();
-                    if (logStyleApplication)
+                    if (LogStyle)
                     {
                         ArchonLogger.Log($"VisualStyleManager: Applied borders - Renderer: {effectiveRendererId}, Mode: {style.borders.borderMode}", "map_rendering");
                     }
@@ -307,7 +311,7 @@ namespace Archon.Engine.Map
             runtimeMaterial.SetFloat("_DetailTiling", colors.detailTiling);
             runtimeMaterial.SetFloat("_DetailStrength", colors.detailStrength);
 
-            if (logStyleApplication)
+            if (LogStyle)
             {
                 ArchonLogger.Log($"VisualStyleManager: Detail mapping - Tiling: {colors.detailTiling}, Strength: {colors.detailStrength}", "map_rendering");
             }
@@ -365,7 +369,7 @@ namespace Archon.Engine.Map
             runtimeMaterial.SetFloat("_FogNoiseStrength", fogOfWar.noiseStrength);
             runtimeMaterial.SetFloat("_FogNoiseSpeed", fogOfWar.noiseSpeed);
 
-            if (logStyleApplication)
+            if (LogStyle)
             {
                 ArchonLogger.Log($"VisualStyleManager: Fog of war {(fogOfWar.enabled ? "enabled" : "disabled")}", "map_rendering");
             }
@@ -390,12 +394,12 @@ namespace Archon.Engine.Map
                 runtimeMaterial.SetFloat("_TessellationMinDistance", tessellation.tessellationMinDistance);
                 runtimeMaterial.SetFloat("_TessellationMaxDistance", tessellation.tessellationMaxDistance);
 
-                if (logStyleApplication)
+                if (LogStyle)
                 {
                     ArchonLogger.Log($"VisualStyleManager: Tessellation settings applied (height: {tessellation.heightScale}, factor: {tessellation.tessellationFactor}, range: {tessellation.tessellationMinDistance}-{tessellation.tessellationMaxDistance})", "map_rendering");
                 }
             }
-            else if (logStyleApplication)
+            else if (LogStyle)
             {
                 ArchonLogger.Log("VisualStyleManager: Tessellation settings skipped (shader does not support tessellation)", "map_rendering");
             }

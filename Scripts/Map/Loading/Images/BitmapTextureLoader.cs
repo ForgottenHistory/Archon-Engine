@@ -127,10 +127,10 @@ namespace Map.Loading.Images
             }
 
             // Also bind to coordinator material for safety
-            var renderingCoordinator = Object.FindFirstObjectByType<Rendering.MapRenderingCoordinator>();
-            if (renderingCoordinator != null && renderingCoordinator.MapMaterial != null)
+            var mapSystemCoordinator = Object.FindFirstObjectByType<Core.MapSystemCoordinator>();
+            if (mapSystemCoordinator != null && mapSystemCoordinator.MeshRenderer?.sharedMaterial != null)
             {
-                textureManager.BindTexturesToMaterial(renderingCoordinator.MapMaterial);
+                textureManager.BindTexturesToMaterial(mapSystemCoordinator.MeshRenderer.sharedMaterial);
 
                 // Rebind map mode textures (CountryColorPalette, etc.)
                 var mapModeManager = Object.FindFirstObjectByType<MapModes.MapModeManager>();
