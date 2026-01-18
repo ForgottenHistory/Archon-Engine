@@ -23,6 +23,7 @@ StarterKit/
 ├── State/                  # Player state and events
 ├── Systems/                # Game systems (economy, units, buildings, AI)
 ├── UI/                     # All UI components
+├── Validation/             # GAME-layer validation extensions
 └── Visualization/          # Visual representation (unit sprites, etc.)
 ```
 
@@ -36,6 +37,34 @@ StarterKit/
 | **UnitSystem** | Military units with movement and combat stats |
 | **BuildingSystem** | Province buildings that provide bonuses |
 | **AISystem** | Basic AI that builds and expands |
+
+### ProvinceQueryBuilder Pattern
+
+AISystem demonstrates using ENGINE's fluent query builders with GAME-layer post-filtering:
+
+```csharp
+// ENGINE query: find unowned provinces bordering our country
+using var query = new ProvinceQueryBuilder(provinceSystem, adjacencySystem);
+using var candidates = query
+    .BorderingCountry(countryId)  // Adjacent to our provinces
+    .IsUnowned()                   // Not owned by anyone
+    .Execute(Allocator.Temp);
+
+// GAME-layer filter: only ownable terrain (ENGINE doesn't know this concept)
+for (int i = 0; i < candidates.Length; i++)
+{
+    if (terrainLookup.IsTerrainOwnable(provinceSystem.GetProvinceTerrain(candidates[i])))
+        colonizeCandidates.Add(candidates[i]);
+}
+```
+
+Available ENGINE query filters:
+- `.OwnedBy(countryId)` / `.ControlledBy(countryId)`
+- `.IsOwned()` / `.IsUnowned()`
+- `.IsLand()` / `.BorderingCountry(countryId)`
+- `.AdjacentTo(provinceId)` / `.WithTerrain(terrainType)`
+
+Terminal operations: `.Execute()`, `.Count()`, `.Any()`, `.FirstOrDefault()`
 
 ---
 
@@ -63,6 +92,40 @@ All state changes go through commands (Pattern 2):
 
 Commands use ENGINE infrastructure (`Core.Commands`).
 
+### Fluent Validation Pattern
+
+Commands use ENGINE's fluent validation with GAME-layer extensions:
+
+```csharp
+public override bool Validate(GameState gameState)
+{
+    return Core.Validation.Validate.For(gameState)
+        .Province(ProvinceId)              // ENGINE validator
+        .UnitTypeExists(UnitTypeId)        // GAME extension
+        .ProvinceOwnedByPlayer(ProvinceId) // GAME extension
+        .Result(out validationError);
+}
+```
+
+GAME-layer validators in `Validation/StarterKitValidationExtensions.cs`:
+- `UnitExists(unitId)` - Unit is alive
+- `UnitTypeExists(typeId)` - Unit type defined
+- `ProvinceOwnedByPlayer(provinceId)` - Player owns province
+- `BuildingTypeExists(typeId)` - Building type defined
+- `CanConstructBuilding(provinceId, typeId)` - Construction allowed
+- `HasGold(amount)` - Player has sufficient gold
+
+### Type-Safe ID Wrappers
+
+Commands use `ProvinceId` instead of raw `ushort` for compile-time safety:
+
+```csharp
+[Arg(1, "provinceId")]
+public ProvinceId ProvinceId { get; set; }  // Not ushort!
+```
+
+Implicit conversions mean this is backward compatible with existing code.
+
 ---
 
 ## UI Components (`UI/`)
@@ -76,6 +139,7 @@ Commands use ENGINE infrastructure (`Core.Commands`).
 | **ProvinceInfoPresenter** | Data formatting for province panel |
 | **UnitInfoUI** | Unit list, creation, and movement |
 | **BuildingInfoUI** | Building list and construction |
+| **DiplomacyPanel** | War/peace management with other countries (D key) |
 | **LedgerUI** | Country statistics table (L key) |
 | **ToolbarUI** | Top-right buttons (Ledger, Map Mode, Save, Load) |
 
@@ -224,9 +288,15 @@ Create `Template-Data/buildings/mybuilding.json5`:
 
 ## Architecture Patterns Used
 
-- **Pattern 1 (Engine-Game Separation)** - ENGINE mechanism + GAME policy (map modes)
-- **Pattern 2 (Command)** - All state changes through commands
+- **Pattern 1 (Engine-Game Separation)** - ENGINE mechanism + GAME policy (map modes, validation extensions, query post-filtering)
+- **Pattern 2 (Command)** - All state changes through commands with fluent validation
 - **Pattern 3 (Event-Driven)** - EventBus subscriptions, zero-allocation events
-- **Pattern 14 (Save/Load)** - Binary serialization with callbacks
-- **Pattern 15 (Phase Init)** - Coroutine-based initialization
+- **Pattern 7 (Registry)** - Type-safe ID wrappers (`ProvinceId`, `CountryId`)
+- **Pattern 14 (Hybrid Save/Load)** - Binary serialization with callbacks
+- **Pattern 15 (Phase-Based Init)** - Coroutine-based initialization
 - **Pattern 19 (UI Presenter)** - Separated view/presenter components
+
+### ENGINE Features Demonstrated
+
+- **Fluent Validation** - `Core.Validation.Validate.For(gs).Province(id).Result()` with GAME extensions
+- **Query Builders** - `ProvinceQueryBuilder`, `CountryQueryBuilder` for fluent filtering
