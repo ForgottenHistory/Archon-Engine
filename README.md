@@ -39,6 +39,30 @@ Archon-Engine is designed to be generic infrastructure, providing everything you
 
 **This does NOT mean it will be easy developing.** I've tried my best to make it approachable with Wiki, StarterKit, API page, various docs etc. However Grand Strategy is inherently complex and it will still take a LONG time to get going.
 
+## Installation
+
+### Option 1: Git Submodule (Recommended)
+```bash
+cd YourUnityProject/Assets
+git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engine
+```
+
+### Option 2: Manual Download
+1. Download/clone the repository
+2. Copy the `Archon-Engine` folder into your Unity project's `Assets/` folder
+
+### After Installation
+1. Open your Unity project - let it import and compile
+2. Install required package: **Window → Package Manager → + → Add by name** → `com.unity.nuget.newtonsoft-json`
+3. Open the StarterKit scene: `Assets/Archon-Engine/Scenes/StarterKit.unity`
+4. Press Play to verify everything works
+
+### Requirements
+- Unity 6000+ (2023.3+, latest LTS recommended)
+- Universal Render Pipeline (URP)
+- Burst Compiler enabled
+- UI Toolkit
+
 ## Core Architecture
 
 **Dual-Layer Design**
@@ -182,16 +206,6 @@ WIP 3D map with texturing
 
 ![Heightmap-example](Promotion-Assets/Images/tessallation_heightmap.png)
 3D tessallated terrain WIP.
-
-## Technical Requirements
-
-- Unity 2023.3+ (6000+, preferably latest LTS version)
-- Universal Render Pipeline (URP)
-- IL2CPP scripting backend (Mono is fine for development though)
-- Burst Compiler enabled
-- UI Toolkit
-
-Currently testing [MoonSharp](https://github.com/k0dep/MoonSharp.git#2.0.0) for Lua scripting. To enable, add MOONSHARP_ENABLED in Project Settings → Player → Scripting Define Symbols.
 
 ## License
 

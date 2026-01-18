@@ -6,10 +6,55 @@ This guide will help you understand Archon Engine and get a development environm
 
 Before starting, ensure you have:
 
-- **Unity 2022.3 LTS** or newer (2023.x recommended)
+- **Unity 6000+** (2023.3+, latest LTS recommended)
 - **Git** for version control
 - Intermediate C# knowledge
 - Familiarity with Unity's component system
+
+## Installation
+
+### Option 1: Git Submodule (Recommended)
+
+If your project uses Git, add Archon as a submodule:
+
+```bash
+cd YourUnityProject/Assets
+git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engine
+```
+
+This keeps Archon versioned separately and makes updates easy with `git submodule update`.
+
+### Option 2: Manual Download
+
+1. Download or clone the Archon-Engine repository
+2. Copy the entire `Archon-Engine` folder into your Unity project's `Assets/` folder
+
+### After Installation
+
+1. **Open Unity** - Let it import all assets and compile scripts (may take a few minutes)
+
+2. **Install required packages** via Package Manager (**Window → Package Manager**):
+   - Click **+ → Add package by name**
+   - Enter: `com.unity.nuget.newtonsoft-json`
+   - Click Add
+
+3. **Verify URP is configured**:
+   - Check **Edit → Project Settings → Graphics** has a URP asset assigned
+   - If not, create one: **Assets → Create → Rendering → URP Asset**
+
+4. **Test the StarterKit**:
+   - Open scene: `Assets/Archon-Engine/Scenes/StarterKit.unity`
+   - Press Play
+   - You should see a map with provinces, be able to click on them, and see UI panels
+
+### Troubleshooting Installation
+
+| Issue | Solution |
+|-------|----------|
+| Pink/magenta materials | URP not configured - assign URP asset in Graphics settings |
+| Compiler errors about Json | Install Newtonsoft Json.NET package |
+| Nothing renders | Check MapGenerator has mesh renderer assigned in Inspector |
+| Console spam on Play | Check Logs/ folder for detailed error info |
 
 ## Understanding the Architecture
 
