@@ -37,6 +37,8 @@ Archon-Engine is designed to be generic infrastructure, providing everything you
 
 **This not a dunk on Paradox.** I love their games. I just wish they didn't lag so goddamn much.
 
+**This does NOT mean it will be easy developing.** I've tried my best to make it approachable with Wiki, StarterKit, API page, various docs etc. However Grand Strategy is inherently complex and it will still take a LONG time to get going.
+
 ## Core Architecture
 
 **Dual-Layer Design**
