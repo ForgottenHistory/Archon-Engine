@@ -4,17 +4,16 @@ A Unity-based game engine for grand strategy games, built around a dual-layer ar
 
 ![Archon-Engine](Promotion-Assets/Images/hero2.png)
 
-APIs should be stable by 2026 Q1. Until a release pops up, production use is discouraged. Free open-source game demo will be released in 2026 Q2 to showcase practical integration.
-
-**GAME DATA IS NOT PROVIDED IN PROJECT!**
-
-There is no *"How To Get Started"* guide yet, partly because I'm trying to figure how to get it going too. It's not exactly a small project to develop nor work with. I'll try my best to create something eventually however expect this to be a complex project and it should be treated as such.
+APIs should be stable by 2026 Q1. Until a release pops up, production use is discouraged.
 
 **Quick Links:**
-- [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Architecture overview
-- [Docs/CURRENT_FEATURES.md](Docs/CURRENT_FEATURES.md) - Complete feature list
+- [Getting Started](Docs/Wiki/Getting-Started.md) - Setup and first steps
+- [Your First Game](Docs/Wiki/Your-First-Game.md) - Build a working game
+- [Cookbook](Docs/Wiki/Cookbook.md) - Quick API recipes
+- [Architecture Overview](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - System design
+- [Feature List](Docs/CURRENT_FEATURES.md) - Complete feature list
 
-Documentation is extensive and I *try* to keep it up to date. However expect some sloppyness.
+**Note:** Game data (maps, scenarios) is not included - you'll need to provide your own or use the StarterKit's template data.
 
 ![Flat-Map](Promotion-Assets/Images/flat_map.png)
 2D map loaded using Europa Universalis 4 data.
@@ -106,26 +105,28 @@ Assets/Archon-Engine/
 
 ## StarterKit
 
-A minimal working game template demonstrating ENGINE patterns. Use it as a learning reference or starting point for new games. Currently WIP.
+A complete 7,000+ line game template demonstrating all ENGINE patterns. Use it as a learning reference or starting point for new games.
 
 **Scene:** `Assets/Archon-Engine/Scenes/StarterKit.unity`
 
-**What's Included (WORK IN PROGRESS):**
-- **EconomySystem** - Simple gold economy (1 gold/province/month + building bonuses)
-- **UnitSystem** - Military units with movement and combat stats
-- **BuildingSystem** - Province buildings with instant construction
-- **AISystem** - Basic AI that builds in owned provinces
-- **Command Pattern** - All state changes through commands (add_gold, create_unit, build, etc.)
-- **UI Components** - Country selection, resource bar, province info, unit management
+**What's Included:**
+- **EconomySystem** - Gold economy with province income and building bonuses
+- **UnitSystem** - Military units with movement, and visualization
+- **BuildingSystem** - Province buildings with construction and effects
+- **AISystem** - Goal-oriented AI (economy, expansion)
+- **DiplomacySystem** - War, peace, relations, and opinion modifiers
+- **Command Pattern** - All state changes through validated commands
+- **Map Modes** - Political, economic, diplomatic visualization
+- **UI Components** - Country selection, resource bar, province info, unit management, tooltips
 
 **Data Files:**
 - Unit types: `Template-Data/units/*.json5`
 - Building types: `Template-Data/buildings/*.json5`
 
-StarterKit demonstrates the recommended patterns without the complexity of a full game implementation. See [Scripts/StarterKit/README.md](Scripts/StarterKit/README.md) for details.
+See [Scripts/StarterKit/README.md](Scripts/StarterKit/README.md) for implementation details.
 
 ![StarterKit](Promotion-Assets/Images/StarterKit.png)
-*Work in progress. Generated template data as I can't share real game data, for obvious reasons.*
+*Template data shown - provide your own game data for production use.*
 
 ## Development Status
 
@@ -137,11 +138,10 @@ StarterKit demonstrates the recommended patterns without the complexity of a ful
 - Zero-allocation EventBus and performance optimizations
 - AI system with goal-oriented behavior
 
-**Game Layer (In Progress):**
+**Map Layer (In Progress):**
 
 As in, practical implementation of core systems.
 
-- Core pillars (Economy, Military, Diplomacy, AI)
 - Vector like borders, razor thin
 - 3D terrain tessallation and smart texturing for realistic terrain
 
@@ -150,16 +150,28 @@ As in, practical implementation of core systems.
 
 **Planned Features:**
 - Multiplayer (lockstep command synchronization)
-- Modding API (C# scripting support)
-- Advanced AI
+- Modding API (scripting support)
 
 ## Documentation
 
+**Getting Started:**
+- [Getting Started](Docs/Wiki/Getting-Started.md) - Installation and setup
+- [Your First Game](Docs/Wiki/Your-First-Game.md) - Step-by-step tutorial
+- [Cookbook](Docs/Wiki/Cookbook.md) - Quick API recipes
+
+**Feature Guides:** [Docs/Wiki/](Docs/Wiki/)
+- Commands, Events, Economy, Buildings, Units, Map Modes
+- AI, Diplomacy, Time System, Save/Load, Modifiers
+- Queries, Pathfinding, Map Rendering, UI Patterns
+
+**Troubleshooting:** [Docs/Wiki/](Docs/Wiki/)
+- Performance issues, GPU/rendering, common mistakes
+
 **Architecture:**
-- [Docs/Engine/master-architecture-document.md](Docs/Engine/master-architecture-document.md) - Complete architecture
-- [Docs/Engine/ARCHITECTURE_OVERVIEW.md](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Quick overview
-- [Scripts/Core/FILE_REGISTRY.md](Scripts/Core/FILE_REGISTRY.md) - Core layer catalog
-- [Scripts/Map/FILE_REGISTRY.md](Scripts/Map/FILE_REGISTRY.md) - Map layer catalog
+- [Architecture Overview](Docs/Engine/ARCHITECTURE_OVERVIEW.md) - Quick overview
+- [Master Architecture](Docs/Engine/master-architecture-document.md) - Complete reference
+- [Core FILE_REGISTRY](Scripts/Core/FILE_REGISTRY.md) - Core layer catalog
+- [Map FILE_REGISTRY](Scripts/Map/FILE_REGISTRY.md) - Map layer catalog
 
 ## Screenshots
 

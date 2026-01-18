@@ -24,7 +24,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SimpleCommand
     path: Scripts/Core/Commands/SimpleCommand.cs
-    startLine: 24
+    startLine: 25
   assemblies:
   - Core
   namespace: Core.Commands
@@ -91,7 +91,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Validate
     path: Scripts/Core/Commands/SimpleCommand.cs
-    startLine: 32
+    startLine: 33
   assemblies:
   - Core
   namespace: Core.Commands
@@ -125,7 +125,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Execute
     path: Scripts/Core/Commands/SimpleCommand.cs
-    startLine: 37
+    startLine: 38
   assemblies:
   - Core
   namespace: Core.Commands
@@ -157,7 +157,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Undo
     path: Scripts/Core/Commands/SimpleCommand.cs
-    startLine: 42
+    startLine: 43
   assemblies:
   - Core
   namespace: Core.Commands
@@ -189,7 +189,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Serialize
     path: Scripts/Core/Commands/SimpleCommand.cs
-    startLine: 51
+    startLine: 52
   assemblies:
   - Core
   namespace: Core.Commands
@@ -221,7 +221,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Deserialize
     path: Scripts/Core/Commands/SimpleCommand.cs
-    startLine: 63
+    startLine: 64
   assemblies:
   - Core
   namespace: Core.Commands
